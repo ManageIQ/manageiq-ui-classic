@@ -1,9 +1,10 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils'; // Import act
+import { renderWithRedux } from '../helpers/mountForm';
 import CopyCatalogForm from '../../components/copy-catalog-form/copy-catalog-form';
 import '../helpers/miqAjaxButton';
-import { mount } from '../helpers/mountForm';
 
 describe('Copy catalog form', () => {
   let initialProps;
@@ -21,39 +22,54 @@ describe('Copy catalog form', () => {
     copySavedUrl = '/catalog/servicetemplate_copy_saved';
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
 
-    fetchMock.getOnce('/catalog/servicetemplates_names', { names: ['Template1', 'Template2'] });
+    fetchMock.getOnce('/catalog/servicetemplates_names', {
+      names: ['Template1', 'Template2'],
+    });
   });
 
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('should handle cancel', async () => {
-    const wrapper = mount(<CopyCatalogForm {...initialProps} />);
+  it('should handle cancel', async() => {
+    const user = userEvent.setup();
+    const { container } = renderWithRedux(
+      <CopyCatalogForm {...initialProps} />
+    );
 
-    await act(async() => {
-      await new Promise((resolve) => setImmediate(resolve));
-      wrapper.update();
-      wrapper.find('button.cds--btn--secondary').first().simulate('click');
+    await waitFor(() => {
+      expect(
+        container.querySelector('button.cds--btn--secondary')
+      ).toBeInTheDocument();
     });
+
+    const cancelButton = container.querySelector('button.cds--btn--secondary');
+    await user.click(cancelButton);
 
     expect(spyMiqAjaxButton).toHaveBeenCalledWith(cancelUrl);
   });
 
   it('should handle submit', async() => {
+    const user = userEvent.setup();
     const postData = '{"id":"10000000000000","name":"Copy of Template1","copy_tags":false}';
     fetchMock.postOnce('/catalog/save_copy_catalog', {});
 
-    const wrapper = mount(<CopyCatalogForm {...initialProps} />);
-
-    await act(async() => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for the form to initialize
-      wrapper.update();
-      wrapper.find('form').simulate('submit');
-      await new Promise((resolve) => setImmediate(resolve)); // Wait for any asynchronous actions triggered by submit
+    const { container } = renderWithRedux(
+      <CopyCatalogForm {...initialProps} />
+    );
+    let submitButton;
+    await waitFor(() => {
+      submitButton = container.querySelector('button.cds--btn--primary');
+      expect(submitButton).not.toBeDisabled();
     });
+    await user.click(submitButton);
 
-    expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
+    await waitFor(() => {
+      expect(fetchMock.called('/catalog/save_copy_catalog')).toBe(true);
+    });
+    await waitFor(() => {
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
+    });
     expect(fetchMock.lastOptions().body).toEqual(postData);
   });
 });

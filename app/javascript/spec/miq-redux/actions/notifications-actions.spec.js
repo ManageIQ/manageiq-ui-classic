@@ -77,7 +77,7 @@ describe('Notifications actions tests', () => {
     return expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch markNotificationRead correctly', (done) => {
+  it('should dispatch markNotificationRead correctly', async () => {
     const store = mockStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
@@ -88,10 +88,8 @@ describe('Notifications actions tests', () => {
       payload: '10000000003625',
       type: MARK_NOTIFICATION_READ,
     };
-    return store.dispatch(markNotificationRead(notification)).then(() => {
-      expect(store.getActions()).toEqual([expectedPayload]);
-      done();
-    });
+    await store.dispatch(markNotificationRead(notification));
+    expect(store.getActions()).toEqual([expectedPayload]);
   });
 
   it('should dispatch removeToastNotification correctly', () => {
@@ -104,21 +102,18 @@ describe('Notifications actions tests', () => {
     return expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch markAllRead correctly', (done) => {
+  it('should dispatch markAllRead correctly', async () => {
     const store = mockStore(initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.postOnce('/api/notifications/', { action: 'mark_as_seen', resources });
     const expectedPayload = {
       type: MARK_ALL_READ,
     };
-    return store.dispatch(markAllRead(store.getState().notificationReducer.notifications))
-      .then(() => {
-        expect(store.getActions()).toEqual([expectedPayload]);
-        done();
-      });
+    await store.dispatch(markAllRead(store.getState().notificationReducer.notifications));
+    expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch clearNotification correctly', (done) => {
+  it('should dispatch clearNotification correctly', async () => {
     const store = mockStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
@@ -130,14 +125,11 @@ describe('Notifications actions tests', () => {
     const expectedPayload = expect.objectContaining({
       type: CLEAR_NOTIFICATION,
     });
-    return store.dispatch(clearNotification(notification, true))
-      .then(() => {
-        expect(store.getActions()).toEqual([expectedPayload]);
-        done();
-      });
+    await store.dispatch(clearNotification(notification, true));
+    expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch clearAll correctly', (done) => {
+  it('should dispatch clearAll correctly', async () => {
     const store = mockStore(initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
@@ -145,14 +137,11 @@ describe('Notifications actions tests', () => {
     const expectedPayload = expect.objectContaining({
       type: CLEAR_ALL,
     });
-    return store.dispatch(clearAll(store.getState().notificationReducer.notifications))
-      .then(() => {
-        expect(store.getActions()).toEqual([expectedPayload]);
-        done();
-      });
+    await store.dispatch(clearAll(store.getState().notificationReducer.notifications));
+    expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch toggleMaxNotifications correctly', (done) => {
+  it('should dispatch toggleMaxNotifications correctly', async () => {
     const store = mockStore(initialState);
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
     const expectedPayload = [
@@ -163,10 +152,7 @@ describe('Notifications actions tests', () => {
         type: TOGGLE_MAX_NOTIFICATIONS,
       }),
     ];
-    return store.dispatch(toggleMaxNotifications())
-      .then(() => {
-        expect(store.getActions()).toEqual(expectedPayload);
-        done();
-      });
+    await store.dispatch(toggleMaxNotifications());
+    expect(store.getActions()).toEqual(expectedPayload);
   });
 });

@@ -1,23 +1,16 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import VisualSettingsForm from '../../components/visual-settings-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('visual settings form', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
-  window.locales = [];
-
   const shortcuts = '/api/shortcuts?expand=resources&attributes=description,url';
   const users = '/api/users/1?attributes=settings';
 
-  it('calls the API endpoints to preseed the form', async(done) => {
+  window.locales = [];
+
+  beforeEach(() => {
     fetchMock.get(shortcuts, {
       resources: [
         {
@@ -26,32 +19,34 @@ describe('visual settings form', () => {
         },
       ],
     });
-
     fetchMock.get(users, { settings: {} });
-
     fetchMock.get('/api', { timezones: [] });
+  });
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<VisualSettingsForm recordId="1" />);
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
+
+  it('calls the API endpoints to preseed the form', async() => {
+    const { container } = renderWithRedux(<VisualSettingsForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-
-    wrapper.update();
 
     expect(fetchMock.called(shortcuts)).toBe(true);
     expect(fetchMock.called(users)).toBe(true);
     expect(fetchMock.called('/api')).toBe(true);
-
-    done();
   });
 
-  it('matches the snapshot', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = shallow(<VisualSettingsForm recordId="1" />);
+  it('matches the snapshot', async() => {
+    const { container } = renderWithRedux(<VisualSettingsForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

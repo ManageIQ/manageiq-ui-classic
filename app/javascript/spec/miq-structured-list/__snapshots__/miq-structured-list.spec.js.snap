@@ -1,1015 +1,3864 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Structured list component should render a miq_policy_set show page without double escaping strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_policy_set"
->
-  <AccordionItem
-    open={true}
-    title="Policies"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_policy_set cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_policy_set"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_policy_set"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "& Application SLA &",
-            },
-            Object {
-              "icon": "pficon pficon-image",
-              "onclick": Object {
-                "url": "/miq_policy/show/1",
-              },
-              "title": "View this Policy",
-              "value": "description one &&",
-            },
-            Object {
-              "icon": "pficon pficon-container-node",
-              "onclick": Object {
-                "url": "/miq_policy/show/2",
-              },
-              "title": "View this Policy",
-              "value": "description two &&",
-            },
-            Object {
-              "icon": "pficon pficon-virtual-machine",
-              "onclick": Object {
-                "url": "/miq_policy/show/3",
-              },
-              "title": "View this Policy",
-              "value": "description three &&",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-42"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Policies
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-42"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_policy_set"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      & Application SLA &
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="1"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-image"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description one &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="2"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-container-node"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description two &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="3"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-virtual-machine"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description three &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a multilink_list table 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion multilink_table"
->
-  <AccordionItem
-    open={true}
-    title="Some OpenStack Stuff"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion multilink_table cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list multilink_table"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="multilink_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=1&status=running",
-                  "title": "Show list of running Aodh",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Aodh",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=1&status=all",
-                  "title": "Show list of all Aodh",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Aodh",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Aodh",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=2&status=running",
-                  "title": "Show list of running Ceilometer",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Ceilometer",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=2&status=all",
-                  "title": "Show list of all Ceilometer",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Ceilometer",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Ceilometer",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=3&status=running",
-                  "title": "Show list of running Cinder",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Cinder",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=3&status=all",
-                  "title": "Show list of all Cinder",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Cinder",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Cinder",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=4&status=running",
-                  "title": "Show list of running Glance",
-                  "value": "Running (2)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Glance",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=4&status=all",
-                  "title": "Show list of all Glance",
-                  "value": "All (2)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Glance",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Glance",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=5&status=running",
-                  "title": "Show list of running Gnocchi",
-                  "value": "Running (2)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Gnocchi",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=5&status=all",
-                  "title": "Show list of all Gnocchi",
-                  "value": "All (2)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Gnocchi",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Gnocchi",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=6&status=running",
-                  "title": "Show list of running Heat",
-                  "value": "Running (4)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Heat",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=6&status=all",
-                  "title": "Show list of all Heat",
-                  "value": "All (4)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Heat",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Heat",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of running Keystone",
-                  "value": "Running (0)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Keystone",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=7&status=all",
-                  "title": "Show list of all Keystone",
-                  "value": "All (1)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Keystone",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Keystone",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=8&status=running",
-                  "title": "Show list of running Nova",
-                  "value": "Running (5)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Nova",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=8&status=all",
-                  "title": "Show list of all Nova",
-                  "value": "All (10)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Nova",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Nova",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=9&status=running",
-                  "title": "Show list of running Swift",
-                  "value": "Running (14)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Swift",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=9&status=all",
-                  "title": "Show list of all Swift",
-                  "value": "All (14)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Swift",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Swift",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-4"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Some OpenStack Stuff
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-4"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list multilink_table"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Aodh
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=1&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=1&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Aodh"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Aodh"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=1&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=1&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Aodh"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Aodh"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Aodh"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Aodh"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Ceilometer
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=2&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=2&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Ceilometer"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Ceilometer"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=2&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=2&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Ceilometer"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Ceilometer"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Ceilometer"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Ceilometer"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Cinder
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=3&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=3&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Cinder"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Cinder"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=3&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=3&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Cinder"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Cinder"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (3)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Cinder"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Cinder"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="3"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Glance
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=4&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=4&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Glance"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Glance"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (2)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=4&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=4&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Glance"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Glance"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (2)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Glance"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Glance"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="4"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Gnocchi
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=5&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=5&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Gnocchi"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Gnocchi"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (2)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=5&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=5&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Gnocchi"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Gnocchi"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (2)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Gnocchi"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Gnocchi"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="5"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Heat
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=6&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=6&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Heat"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Heat"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (4)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=6&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=6&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Heat"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Heat"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (4)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Heat"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Heat"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="6"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Keystone
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Running (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=7&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=7&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Keystone"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Keystone"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (1)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Keystone"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Keystone"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="7"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Nova
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=8&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=8&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Nova"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Nova"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (5)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=8&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=8&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Nova"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Nova"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (10)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Nova"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Nova"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="8"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Swift
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=9&status=running"
+                    to="/host/host_services/18?db=host&host_service_group=9&status=running"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of running Swift"
+                      >
+                        <i
+                          class="pficon pficon-ok"
+                          title="Show list of running Swift"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        Running (14)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Failed (0)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="/host/host_services/18?db=host&host_service_group=9&status=all"
+                    to="/host/host_services/18?db=host&host_service_group=9&status=all"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="cell icon"
+                        title="Show list of all Swift"
+                      >
+                        <i
+                          class="pficon pficon-service"
+                          title="Show list of all Swift"
+                        />
+                      </div>
+                      <div
+                        class="expand wrap_text"
+                      >
+                        All (14)
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value sub_items"
+                  dir="auto"
+                  role="cell"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="Show list of configuration files of Swift"
+                    >
+                      <i
+                        class="fa fa-file-o"
+                        title="Show list of configuration files of Swift"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Configuration (0)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a operation_range table 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion operation_ranges"
->
-  <AccordionItem
-    open={true}
-    title="Operation Ranges"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion operation_ranges cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list operation_ranges"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="operation_ranges"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "no-hover",
-              "label": "CPU",
-              "value": Array [
-                Object {
-                  "label": "Max",
-                  "value": "Not Available",
-                },
-                Object {
-                  "label": "High",
-                  "value": "0 MHz",
-                },
-                Object {
-                  "label": "Average",
-                  "value": "0 MHz",
-                },
-                Object {
-                  "label": "Low",
-                  "value": "0 MHz",
-                },
-              ],
-            },
-            Object {
-              "hoverClass": "no-hover",
-              "label": "CPU Usage",
-              "value": Array [
-                Object {
-                  "label": "Max",
-                  "value": "Not Available",
-                },
-                Object {
-                  "label": "High",
-                  "value": "0.00%",
-                },
-                Object {
-                  "label": "Average",
-                  "value": "0.00%",
-                },
-                Object {
-                  "label": "Low",
-                  "value": "0.00%",
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-14"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Operation Ranges
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-14"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list operation_ranges"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Max"
+                        >
+                          Max
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Not Available
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="High"
+                        >
+                          High
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Average"
+                        >
+                          Average
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Low"
+                        >
+                          Low
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Usage
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Max"
+                        >
+                          Max
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Not Available
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="High"
+                        >
+                          High
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Average"
+                        >
+                          Average
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Low"
+                        >
+                          Low
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a report_information page without double escaping strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_report_schedules"
->
-  <AccordionItem
-    open={true}
-    title="report_information"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_report_schedules cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_report_schedules"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_report_schedules"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Last Run Time",
-              "value": "& 2022-12-07 02:00:00 UTC &",
-            },
-            Object {
-              "label": "Next Run Time",
-              "value": "& 2022-12-07 02:00:00 UTC &&",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-47"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          report_information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-47"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_report_schedules"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Last Run Time
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      & 2022-12-07 02:00:00 UTC &
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Next Run Time
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      & 2022-12-07 02:00:00 UTC &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a simple_table 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion simple_table"
->
-  <AccordionItem
-    open={true}
-    title="Firewall Rules"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion simple_table cds--accordion--start"
   >
-    <MiqStructuredListMessage
-      title="Firewall Rules"
-    />
-  </AccordionItem>
-</Accordion>
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-21"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Firewall Rules
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-21"
+        >
+          <div
+            class="miq-structured-list-notification"
+          >
+            <div
+              class="miq-notification-message-container alert alert-info"
+            >
+              <span
+                class="pficon pficon-info"
+              />
+              <strong>
+                No entries found for firewall rules
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a simple_table with generic data 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion simple_table"
->
-  <AccordionItem
-    open={true}
-    title="Foo Bar"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion simple_table cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list simple_table"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="simple_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "bar",
-              "label": "foo",
-              "value": "bar",
-            },
-            Object {
-              "hoverClass": "bar",
-              "label": "mrkef?",
-              "value": "v zime!",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-3"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Foo Bar
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-3"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list simple_table"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  foo
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      bar
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  mrkef?
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      v zime!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a simple_table with sortable and expandable data 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion simple_table"
->
-  <AccordionItem
-    open={true}
-    title="Build Instances"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion simple_table cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list simple_table"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListHeader
-        headers={
-          Array [
-            "Name",
-            "Phase",
-            "Message",
-            "Reason",
-            "Pod",
-            "Output Image",
-            "Start Timestamp",
-            Object {
-              "sortable": "desc",
-              "value": "Completion Timestamp",
-            },
-            "Duration",
-          ]
-        }
-      />
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="simple_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Array [
-              "cart-1",
-              "Complete",
-              Object {
-                "expandable": true,
-                "value": null,
-              },
-              null,
-              "No Pod",
-              Object {
-                "expandable": true,
-                "value": "docker-registry.default.svc:5000/coolstore/cart:latest",
-              },
-              "2018-01-13T23:53:59Z",
-              "2018-01-13T23:57:57Z",
-              "3m58s",
-            ],
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-23"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Build Instances
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-23"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list simple_table"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-thead"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row cds--structured-list-row--header-row"
+                role="row"
+                tabindex="0"
+              >
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Name
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Phase
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Message
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Reason
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Pod
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Output Image
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Start Timestamp
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  <div
+                    class="sortable_header"
+                  >
+                    <div
+                      class="pull-left"
+                    >
+                      Completion Timestamp
+                    </div>
+                    <div
+                      class="pull-right"
+                    >
+                      <i
+                        class="fa fa-sort-desc"
+                      />
+                    </div>
+                  </div>
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Duration
+                </span>
+              </div>
+            </div>
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    cart-1
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    Complete
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="wrap_text"
+                    />
+                    <div
+                      class="pull-right"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="wrap_text"
+                  />
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    No Pod
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      docker-registry.default.svc:5000/coolstore/cart:latest
+                    </div>
+                    <div
+                      class="pull-right"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    2018-01-13T23:53:59Z
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    2018-01-13T23:57:57Z
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    3m58s
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a table_list_view table 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion table_list_view"
->
-  <AccordionItem
-    open={true}
-    title="Tables with the Most Rows"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion table_list_view cds--accordion--start"
   >
-    <MiqStructuredListMessage
-      title="Tables with the Most Rows"
-    />
-  </AccordionItem>
-</Accordion>
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-26"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Tables with the Most Rows
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-26"
+        >
+          <div
+            class="miq-structured-list-notification"
+          >
+            <div
+              class="miq-notification-message-container alert alert-info"
+            >
+              <span
+                class="pficon pficon-info"
+              />
+              <strong>
+                No entries found for tables with the most rows
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render a tag_group table 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion tag_group"
->
-  <AccordionItem
-    open={true}
-    title="Smart Management"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion tag_group cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list tag_group"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="tag_group"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "no-hover",
-              "icon": "pficon pficon-zone",
-              "label": "Managed by Zone",
-              "value": "default",
-            },
-            Object {
-              "hoverClass": "no-hover",
-              "label": "My Company X Tags",
-              "value": Array [
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Dan Test",
-                  "value": Array [
-                    "Test 1",
-                  ],
-                },
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Demo bla",
-                  "value": Array [
-                    "Policy",
-                    "2",
-                  ],
-                },
-              ],
-            },
-            Object {
-              "label": "Other Tags",
-              "title": "All Other Tags",
-              "value": Array [
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Test",
-                  "value": Array [
-                    "Test 1",
-                  ],
-                },
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Demo 2",
-                  "value": Array [
-                    "Policy",
-                    "2",
-                    "3",
-                  ],
-                },
-                Object {
-                  "link": "You clicked on Demo 3",
-                  "title": "Click to display the item",
-                  "value": Array [
-                    "Demo 3",
-                  ],
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-17"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Smart Management
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-17"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list tag_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Managed by Zone
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                    >
+                      <i
+                        class="pficon pficon-zone"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      default
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  My Company X Tags
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Dan Test"
+                        >
+                          Dan Test
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Test 1
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Demo bla"
+                        >
+                          Demo bla
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Policy
+2
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Other Tags
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title="All Other Tags"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Test"
+                        >
+                          Test
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Test 1
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Demo 2"
+                        >
+                          Demo 2
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Policy
+2
+3
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title="Click to display the item"
+                      >
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Demo 3
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render catalog_data with escaped strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion catalog_list_view"
->
-  <AccordionItem
-    open={true}
-    title="Basic Information"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion catalog_list_view cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list catalog_list_view"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="catalog_list_view"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Name / Description",
-              "value": "GCE Catalog item / Test &",
-            },
-            Object {
-              "label": "Catalog",
-              "value": "My Own && Catalog",
-            },
-            Object {
-              "label": "Zone",
-              "value": "Google",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-33"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Basic Information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-33"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list catalog_list_view"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Name / Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      GCE Catalog item / Test &
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Catalog
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      My Own && Catalog
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Zone
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Google
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render code mirror component 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_summary code_mirror"
->
-  <AccordionItem
-    open={true}
-    title="Automation Method Data"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_summary code_mirror cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_summary code_mirror"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={true}
-        mode="miq_summary code_mirror"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Label",
-              "value": "Value",
-            },
-            Object {
-              "label": "",
-              "title": "code mirror",
-              "value": Object {
-                "input": "code_mirror",
-                "props": Object {
-                  "mode": "ruby",
-                  "payload": "
-  def notify(level, message, subject)
-    $evm.create_notification(:audience => 'user', :level => level, :message => message)
-  end",
-                },
-              },
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-64"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Automation Method Data
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-64"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_summary code_mirror"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Value
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title="code mirror"
+                >
+                  <div
+                    class="react-codemirror2 miq-codemirror miq-structured-list-code-mirror"
+                  >
+                    <div
+                      class="CodeMirror cm-s-eclipse"
+                      translate="no"
+                    >
+                      <div
+                        style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 0px;"
+                      >
+                        <textarea
+                          autocapitalize="off"
+                          autocorrect="off"
+                          spellcheck="false"
+                          style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline: none;"
+                          tabindex="0"
+                        />
+                      </div>
+                      <div
+                        class="CodeMirror-vscrollbar"
+                        cm-not-content="true"
+                        style="display: block; bottom: 0px;"
+                        tabindex="-1"
+                      >
+                        <div
+                          style="min-width: 1px; height: 54px;"
+                        />
+                      </div>
+                      <div
+                        class="CodeMirror-hscrollbar"
+                        cm-not-content="true"
+                        style="display: block; right: 0px; left: 0px;"
+                        tabindex="-1"
+                      >
+                        <div
+                          style="height: 100%; min-height: 1px; width: 53px;"
+                        />
+                      </div>
+                      <div
+                        class="CodeMirror-scrollbar-filler"
+                        cm-not-content="true"
+                      />
+                      <div
+                        class="CodeMirror-gutter-filler"
+                        cm-not-content="true"
+                      />
+                      <div
+                        class="CodeMirror-scroll"
+                        tabindex="-1"
+                      >
+                        <div
+                          class="CodeMirror-sizer"
+                          style="margin-left: 0px; min-width: 3px; padding-right: 0px; padding-bottom: 0px;"
+                        >
+                          <div
+                            style="position: relative;"
+                          >
+                            <div
+                              class="CodeMirror-lines"
+                              role="presentation"
+                            >
+                              <div
+                                role="presentation"
+                                style="position: relative; outline: none;"
+                              >
+                                <div
+                                  class="CodeMirror-measure"
+                                />
+                                <div
+                                  class="CodeMirror-measure"
+                                >
+                                  <pre
+                                    class="CodeMirror-line"
+                                    role="presentation"
+                                  >
+                                    <span
+                                      role="presentation"
+                                      style="padding-right: .1px;"
+                                    >
+                                        end
+                                    </span>
+                                  </pre>
+                                </div>
+                                <div
+                                  style="position: relative; z-index: 1;"
+                                />
+                                <div
+                                  class="CodeMirror-cursors"
+                                />
+                                <div
+                                  class="CodeMirror-code"
+                                  role="presentation"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          style="position: absolute; height: 50px; width: 1px; border-bottom: 0px solid transparent;"
+                        />
+                        <div
+                          class="CodeMirror-gutters"
+                        >
+                          <div
+                            class="CodeMirror-gutter CodeMirror-linenumbers"
+                            style="width: 1px;"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render miq policy data without double escaping strings 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_policy_details"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_policy_details"
-    rows={
-      Array [
-        Object {
-          "label": "Active",
-          "value": "Yes &",
-        },
-        Object {
-          "label": "Created",
-          "value": "By Username Thor Odinson && at 2020-10-10 15T $UTC",
-        },
-        Object {
-          "label": "Last Updated",
-          "value": "By Username Lord Loki && at 2020-10-10 15T $UTC &",
-        },
-        Object {
-          "icon": "pficon pficon-close",
-          "onclick": Object {
-            "url": "/miq_action/show/1",
-          },
-          "title": "View this Action",
-          "value": "Test &&",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_policy_details"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Active
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Yes &
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Created
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              By Username Thor Odinson && at 2020-10-10 15T $UTC
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Last Updated
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              By Username Lord Loki && at 2020-10-10 15T $UTC &
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="3"
+        title="View this Action"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this Action"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="cell icon"
+              title="View this Action"
+            >
+              <i
+                class="pficon pficon-close"
+                title="View this Action"
+              />
+            </div>
+            <div
+              class="expand wrap_text"
+            >
+              Test &&
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Structured list component should render miq_ae_class_list_view with escaped strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion table_list_view"
->
-  <AccordionItem
-    open={true}
-    title="Properties"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion table_list_view cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list table_list_view"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="table_list_view"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Fully Qualified Name",
-              "value": "ManageIQ / Automation Management / Test &",
-            },
-            Object {
-              "label": "Name",
-              "value": "Thor Odinson",
-            },
-            Object {
-              "label": "Instances",
-              "value": "1 &",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-50"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Properties
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-50"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list table_list_view"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Fully Qualified Name
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      ManageIQ / Automation Management / Test &
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Name
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Thor Odinson
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Instances
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      1 &
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render miq_alert_show page without double escaping strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_id"
->
-  <AccordionItem
-    open={true}
-    title="Belongs to Alert profiles"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_alert_id cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_alert_id"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_id"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "onclick": Object {
-                "url": "/miq_alert_set/show/1",
-              },
-              "title": "View this Alert Profile",
-              "value": "view this &&",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-27"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Belongs to Alert profiles
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-27"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_alert_id"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="0"
+                title="View this Alert Profile"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Alert Profile"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Alert Profile"
+                    >
+                      <i
+                        class="pficon pficon-warning-triangle-o"
+                        title="View this Alert Profile"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      view this &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render miq_reports_data without double escaping strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_policy_set"
->
-  <AccordionItem
-    open={true}
-    title="Policies"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_policy_set cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_policy_set"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_policy_set"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "& Application SLA &",
-            },
-            Object {
-              "icon": "pficon pficon-image",
-              "onclick": Object {
-                "url": "/miq_policy/show/1",
-              },
-              "title": "View this Policy",
-              "value": "description one &&",
-            },
-            Object {
-              "icon": "pficon pficon-container-node",
-              "onclick": Object {
-                "url": "/miq_policy/show/2",
-              },
-              "title": "View this Policy",
-              "value": "description two &&",
-            },
-            Object {
-              "icon": "pficon pficon-virtual-machine",
-              "onclick": Object {
-                "url": "/miq_policy/show/3",
-              },
-              "title": "View this Policy",
-              "value": "description three &&",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-37"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Policies
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-37"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_policy_set"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      & Application SLA &
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="1"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-image"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description one &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="2"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-container-node"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description two &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="3"
+                title="View this Policy"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Policy"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                      title="View this Policy"
+                    >
+                      <i
+                        class="pficon pficon-virtual-machine"
+                        title="View this Policy"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      description three &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render report_schedule page without double escaping strings 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_report_schedule_info"
->
-  <AccordionItem
-    open={true}
-    title="Schedule Info"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_report_schedule_info cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_report_schedule_info"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_report_schedule_info"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "My_Host Network Information &&",
-            },
-            Object {
-              "label": "Active",
-              "value": "True &&",
-            },
-            Object {
-              "label": "E-Mail after Running",
-              "value": "True &&",
-            },
-            Object {
-              "label": "From E-mail",
-              "value": "(Default: test@test.com) &&",
-            },
-            Object {
-              "label": "Run At",
-              "value": "&& Run once on Thu Nov 15 01:10:00 UTC 2018 &&",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-58"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Schedule Info
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-58"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_report_schedule_info"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      My_Host Network Information &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Active
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      True &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  E-Mail after Running
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      True &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="3"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  From E-mail
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      (Default: test@test.com) &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="4"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Run At
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      && Run once on Thu Nov 15 01:10:00 UTC 2018 &&
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Structured list component should render settings list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list selected_server_roles"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="selected_server_roles"
-    rows={
-      Array [
-        Object {
-          "icon": "pficon pficon-server fa-5x",
-        },
-        Object {
-          "label": "Server",
-          "value": "EVM(17)",
-        },
-        Object {
-          "label": "IP Address",
-          "value": "127.1.1.0",
-        },
-        Object {
-          "label": "Status",
-          "value": "Active",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list selected_server_roles"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="cell icon"
+            >
+              <i
+                class="pficon pficon-server fa-5x"
+              />
+            </div>
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Server
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              EVM(17)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          IP Address
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              127.1.1.0
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="3"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Status
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Active
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Structured list component should render strings without double escaping strings 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_summary miq_host_devices"
->
-  <MiqStructuredListBody
-    clickEvents={true}
-    mode="miq_summary miq_host_devices"
-    onClick={[MockFunction]}
-    rows={
-      Array [
-        Object {
-          "cells": Object {
-            "icon": "pficon pficon-unknown",
-            "label": "Catch All",
-            "value": "< A test to HTML's \\"Escape\\" logic Hello&Goodbye >",
-          },
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_summary miq_host_devices"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        >
+          Catch All
+        </div>
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="cell icon"
+            >
+              <i
+                class="pficon pficon-unknown"
+              />
+            </div>
+            <div
+              class="expand wrap_text"
+            >
+              &lt; A test to HTML's "Escape" logic Hello&Goodbye &gt;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

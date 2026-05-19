@@ -1,11 +1,9 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 
 import FlavorForm from '../../components/flavor-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Flavor form component', () => {
   const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_create_flavor&filter[]=supports_create_flavor=true';
@@ -22,29 +20,23 @@ describe('Flavor form component', () => {
     fetchMock.restore();
   });
 
-  it('matches the snapshot', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = shallow(<FlavorForm redirect="" />);
+  it('matches the snapshot', async() => {
+    const { container } = renderWithRedux(<FlavorForm redirect="" />);
+
+    await waitFor(() => {
+      expect(container.firstChild).toBeInTheDocument();
     });
 
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-
-    done();
+    expect(container).toMatchSnapshot();
   });
 
-  it('loads providers via the API', async(done) => {
+  it('loads providers via the API', async() => {
     fetchMock.get(emsUrl, emsList);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<FlavorForm redirect="" />);
+    renderWithRedux(<FlavorForm redirect="" />);
+
+    await waitFor(() => {
+      expect(fetchMock.called(emsUrl)).toBe(true);
     });
-
-    wrapper.update();
-    expect(fetchMock.called(emsUrl)).toBe(true);
-
-    done();
   });
 });

@@ -1,14 +1,11 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
-import '../helpers/miqSparkle';
-import { mount } from '../helpers/mountForm';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import PxeIsoImageForm from '../../components/pxe-iso-image-form/index';
+import '../helpers/miqSparkle';
 
 describe('Pxe Edit Iso Image Form Component', () => {
-
   const api = {
     resources: [
       {
@@ -27,17 +24,20 @@ describe('Pxe Edit Iso Image Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render editing a iso image', async (done) => {
-    fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
-    fetchMock.get('/api/iso_images/1', { pxe_image_type_id: '1', });
-    let wrapper;
+  it('should render editing a iso image', async() => {
+    fetchMock.get(
+      '/api/pxe_image_types?attributes=name,id&expand=resources',
+      api
+    );
+    fetchMock.get('/api/iso_images/1', { pxe_image_type_id: '1' });
 
-    await act(async () => {
-      wrapper = mount(<PxeIsoImageForm recordId="1" />);
+    const { container } = renderWithRedux(<PxeIsoImageForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

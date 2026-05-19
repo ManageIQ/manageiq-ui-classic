@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { shallowToJson } from 'enzyme-to-json';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import PasswordField from '../../components/async-credentials/password-field';
 
 let mockChangeSpy;
@@ -11,6 +11,9 @@ jest.mock('@@ddf', () => ({
     renderForm: ([secret]) => <MockDummyComponent {...secret} />,
     change: mockChangeSpy,
     getState: mockGetStateSpy,
+    getFieldState: (fieldName) => ({
+      initial: `value-${fieldName}`,
+    }),
   }),
   componentTypes: {
     TEXT_FIELD: 'text-field',
@@ -18,16 +21,12 @@ jest.mock('@@ddf', () => ({
 }));
 
 const MockDummyComponent = ({
-  buttonLabel,
-  editMode, // eslint-disable-line
-  isDisabled,
-  helperText, // eslint-disable-line
-  setEditMode,
-  validate, // eslint-disable-line
-  validateOnMount, // eslint-disable-line
-  ...props
-}) => <button {...props} onClick={setEditMode} disabled={isDisabled} type="button">{buttonLabel || 'Dummy'}</button>;
-
+  buttonLabel, isDisabled, setEditMode, ...props
+}) => (
+  <button {...props} onClick={setEditMode} disabled={isDisabled} type="button">
+    {buttonLabel || 'Dummy'}
+  </button>
+);
 
 describe('Secret switch field component', () => {
   let initialProps;
@@ -36,7 +35,11 @@ describe('Secret switch field component', () => {
     mockChangeSpy = jest.fn();
     mockGetStateSpy = jest.fn().mockReturnValue({
       values: {},
-      initialValues: { foo: 'value-foo', bar: 'value-bar', nonAsync: 'non-async' },
+      initialValues: {
+        foo: 'value-foo',
+        bar: 'value-bar',
+        nonAsync: 'non-async',
+      },
     });
     initialProps = {
       edit: false,
@@ -49,34 +52,50 @@ describe('Secret switch field component', () => {
   });
 
   it('should render correctly in non edit mode', () => {
-    const wrapper = mount(<PasswordField {...initialProps} />);
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<PasswordField {...initialProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('should render correctly in edit mode', () => {
-    const wrapper = mount(<PasswordField {...initialProps} edit />);
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<PasswordField {...initialProps} edit />);
+    expect(container).toMatchSnapshot();
   });
 
-  /**
-   * Hooks are not supported in enzyme jest.
-   * Instead of adding another testing utilities we can wait for while until its added or until we know enzyme will not support hooks
-   * and we can use another library
-   * https://github.com/airbnb/enzyme/issues/2011
-   */
-  it('should render correctly switch to editing', () => {
-    const wrapper = mount(<PasswordField {...initialProps} edit />);
-    expect(wrapper.find(MockDummyComponent)).toHaveLength(0);
-    wrapper.find('button').simulate('click');
-    wrapper.update();
-    expect(wrapper.find(MockDummyComponent)).toHaveLength(1);
+  it('should render correctly switch to editing', async() => {
+    const user = userEvent.setup();
+    render(<PasswordField {...initialProps} edit />);
+
+    // Initially, MockDummyComponent (Cancel button) should not be present
+    expect(screen.queryByText('Cancel')).not.toBeInTheDocument();
+
+    // Click the edit button (the one with Edit icon)
+    const editButton = screen.getByRole('button', { name: /change/i });
+    await user.click(editButton);
+
+    // After clicking, MockDummyComponent should be rendered with "Cancel" text
+    await waitFor(() => {
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
   });
 
-  it('should render correctly reset sercret field', () => {
-    const wrapper = mount(<PasswordField {...initialProps} edit />);
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find(MockDummyComponent)).toHaveLength(1);
-    wrapper.find('button').simulate('click');
+  it('should render correctly reset secret field', async() => {
+    const user = userEvent.setup();
+    render(<PasswordField {...initialProps} edit />);
+
+    // Click the edit button to enter edit mode
+    const editButton = screen.getByRole('button', { name: /change/i });
+    await user.click(editButton);
+
+    // Wait for MockDummyComponent (Cancel button) to appear
+    await waitFor(() => {
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
+
+    // Click the cancel button (MockDummyComponent button)
+    const cancelButton = screen.getByText('Cancel');
+    await user.click(cancelButton);
+
+    // Verify that change was called with undefined to reset the field
     expect(mockChangeSpy).toHaveBeenCalledWith('foo', undefined);
   });
 });

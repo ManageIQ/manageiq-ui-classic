@@ -1,171 +1,493 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Search Bar component should render the search bar component 1`] = `
-<div
-  className="search_bar"
->
-  <Form
-    id="search-bar-form"
-    method="post"
-    onSubmit={[Function]}
+<div>
+  <div
+    class="search_bar"
   >
-    <input
-      name="authenticity_token"
-      type="hidden"
-      value=""
-    />
-    <TextInput
-      hideLabel={true}
-      id="search_text"
-      labelText="Search"
-      name="search[text]"
-      onChange={[Function]}
-      placeholder="Search"
-      title="Search by Name within results"
-      value=""
-    />
-    <Button
-      className="search_button"
-      disabled={false}
-      hasIconOnly={true}
-      iconDescription="Search"
-      onClick={[Function]}
-      renderIcon={[Function]}
-      size="md"
-      tooltipPosition="bottom"
-    />
-  </Form>
-  <Button
-    data-target="#advsearchModal"
-    data-toggle="modal"
-    disabled={false}
-    hasIconOnly={true}
-    iconDescription="Advanced Search"
-    id="adv_search"
-    onClick={[Function]}
-    renderIcon={[Function]}
-    size="md"
-    title={"Advanced Search"}
-    tooltipAlignment="end"
-    tooltipPosition="bottom"
-    type="button"
-  />
+    <form
+      class="cds--form"
+      id="search-bar-form"
+      method="post"
+    >
+      <input
+        name="authenticity_token"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label cds--visually-hidden"
+            dir="auto"
+            for="search_text"
+          >
+            Search
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="search_text"
+              name="search[text]"
+              placeholder="Search"
+              title="Search by Name within results"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-2"
+            class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-2"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Search
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
+    </form>
+    <span
+      class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom-end cds--tooltip cds--icon-tooltip"
+    >
+      <div
+        class="cds--tooltip-trigger__wrapper"
+      >
+        <button
+          aria-labelledby="tooltip-5"
+          class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+          data-target="#advsearchModal"
+          data-toggle="modal"
+          id="adv_search"
+          title="Advanced Search"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+        </button>
+      </div>
+      <span
+        aria-hidden="true"
+        class="cds--popover"
+        id="tooltip-5"
+        role="tooltip"
+      >
+        <span
+          class="cds--popover-content cds--tooltip-content"
+        >
+          Advanced Search
+        </span>
+        <span
+          class="cds--popover-caret"
+        />
+      </span>
+    </span>
+  </div>
 </div>
 `;
 
 exports[`Search Bar component should render the search bar component with advanced search 1`] = `
-<div
-  className="search_bar"
->
-  <Form
-    id="search-bar-form"
-    method="post"
-    onSubmit={[Function]}
+<div>
+  <div
+    class="search_bar"
   >
-    <input
-      name="authenticity_token"
-      type="hidden"
-      value=""
-    />
-    <TextInput
-      hideLabel={true}
-      id="search_text"
-      labelText="Search"
-      name="search[text]"
-      onChange={[Function]}
-      placeholder="Search"
-      title="Search by Name within results"
-      value=""
-    />
-    <Button
-      className="search_button"
-      disabled={false}
-      hasIconOnly={true}
-      iconDescription="Search"
-      onClick={[Function]}
-      renderIcon={[Function]}
-      size="md"
-      tooltipPosition="bottom"
-    />
-  </Form>
-  <Button
-    data-target="#advsearchModal"
-    data-toggle="modal"
-    disabled={false}
-    hasIconOnly={true}
-    iconDescription="Advanced Search"
-    id="adv_search"
-    onClick={[Function]}
-    renderIcon={[Function]}
-    size="md"
-    title={"Advanced Search"}
-    tooltipAlignment="end"
-    tooltipPosition="bottom"
-    type="button"
-  />
+    <form
+      class="cds--form"
+      id="search-bar-form"
+      method="post"
+    >
+      <input
+        name="authenticity_token"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label cds--visually-hidden"
+            dir="auto"
+            for="search_text"
+          >
+            Search
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="search_text"
+              name="search[text]"
+              placeholder="Search"
+              title="Search by Name within results"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-8"
+            class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-8"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Search
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
+    </form>
+    <span
+      class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom-end cds--tooltip cds--icon-tooltip"
+    >
+      <div
+        class="cds--tooltip-trigger__wrapper"
+      >
+        <button
+          aria-labelledby="tooltip-11"
+          class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+          data-target="#advsearchModal"
+          data-toggle="modal"
+          id="adv_search"
+          title="Advanced Search"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+        </button>
+      </div>
+      <span
+        aria-hidden="true"
+        class="cds--popover"
+        id="tooltip-11"
+        role="tooltip"
+      >
+        <span
+          class="cds--popover-content cds--tooltip-content"
+        >
+          Advanced Search
+        </span>
+        <span
+          class="cds--popover-caret"
+        />
+      </span>
+    </span>
+  </div>
 </div>
 `;
 
 exports[`Search Bar component should render the search bar component with search text and advanced search 1`] = `
-<div
-  className="search_bar"
->
-  <Form
-    id="search-bar-form"
-    method="post"
-    onSubmit={[Function]}
+<div>
+  <div
+    class="search_bar"
   >
-    <input
-      name="authenticity_token"
-      type="hidden"
-      value=""
-    />
-    <TextInput
-      hideLabel={true}
-      id="search_text"
-      labelText="Search"
-      name="search[text]"
-      onChange={[Function]}
-      placeholder="Search"
-      title="Search by Name within results"
-      value="nameSearch"
-    />
-    <Button
-      disabled={false}
-      hasIconOnly={true}
-      iconDescription="Clear"
-      kind="secondary"
-      onClick={[Function]}
-      renderIcon={[Function]}
-      size="md"
-      tooltipPosition="bottom"
-      type="reset"
-    />
-    <Button
-      className="search_button"
-      disabled={false}
-      hasIconOnly={true}
-      iconDescription="Search"
-      onClick={[Function]}
-      renderIcon={[Function]}
-      size="md"
-      tooltipPosition="bottom"
-    />
-  </Form>
-  <Button
-    data-target="#advsearchModal"
-    data-toggle="modal"
-    disabled={false}
-    hasIconOnly={true}
-    iconDescription="Advanced Search"
-    id="adv_search"
-    onClick={[Function]}
-    renderIcon={[Function]}
-    size="md"
-    title={"Advanced Search"}
-    tooltipAlignment="end"
-    tooltipPosition="bottom"
-    type="button"
-  />
+    <form
+      class="cds--form"
+      id="search-bar-form"
+      method="post"
+    >
+      <input
+        name="authenticity_token"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label cds--visually-hidden"
+            dir="auto"
+            for="search_text"
+          >
+            Search
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="search_text"
+              name="search[text]"
+              placeholder="Search"
+              title="Search by Name within results"
+              type="text"
+              value="nameSearch"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-14"
+            class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
+            type="reset"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-14"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Clear
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-17"
+            class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-17"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Search
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
+    </form>
+    <span
+      class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom-end cds--tooltip cds--icon-tooltip"
+    >
+      <div
+        class="cds--tooltip-trigger__wrapper"
+      >
+        <button
+          aria-labelledby="tooltip-20"
+          class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+          data-target="#advsearchModal"
+          data-toggle="modal"
+          id="adv_search"
+          title="Advanced Search"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+        </button>
+      </div>
+      <span
+        aria-hidden="true"
+        class="cds--popover"
+        id="tooltip-20"
+        role="tooltip"
+      >
+        <span
+          class="cds--popover-content cds--tooltip-content"
+        >
+          Advanced Search
+        </span>
+        <span
+          class="cds--popover-caret"
+        />
+      </span>
+    </span>
+  </div>
 </div>
 `;

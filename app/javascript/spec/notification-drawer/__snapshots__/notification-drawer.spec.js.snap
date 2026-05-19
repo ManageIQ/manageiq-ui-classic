@@ -1,1265 +1,532 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Notification drawer tests should render correctly 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <NotificationDrawer
-    jsRequest={false}
+<div>
+  <div
+    id="miq-notifications-drawer-container"
   >
     <div
-      id="miq-notifications-drawer-container"
+      class="notification-drawer "
     >
       <div
-        className="notification-drawer "
+        class="panel-header"
       >
-        <div
-          className="panel-header"
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
         >
-          <Button
-            className="collapsed heading-icon"
-            hasIconOnly={true}
-            iconDescription="collapsed"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            renderIcon={[Function]}
+          <div
+            class="cds--tooltip-trigger__wrapper"
           >
-            <ForwardRef
-              align="top"
-              autoAlign={false}
-              className="collapsed heading-icon"
-              dropShadow={false}
-              highContrast={true}
-              kind="primary"
-              label="collapsed"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              renderIcon={null}
+            <button
+              aria-labelledby="tooltip-2"
+              class="collapsed heading-icon cds--btn cds--btn--primary cds--btn--icon-only"
+              type="button"
             >
-              <ForwardRef
-                align="top"
-                autoAlign={false}
-                className="cds--icon-tooltip"
-                closeOnActivation={true}
-                defaultOpen={false}
-                dropShadow={false}
-                enterDelayMs={100}
-                highContrast={true}
-                label="collapsed"
-                leaveDelayMs={100}
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <Popover
-                  align="top"
-                  autoAlign={false}
-                  className="cds--tooltip cds--icon-tooltip"
-                  dropShadow={false}
-                  highContrast={true}
-                  onKeyDown={[Function]}
-                  onMouseLeave={[Function]}
-                  open={false}
+                <path
+                  d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-2"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              collapsed
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+        <h3
+          class="notification-title"
+        >
+          Notifications
+        </h3>
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-labelledby="tooltip-5"
+              class="heading-icon closeIcon cds--btn cds--btn--primary cds--btn--icon-only"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 32 32"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-5"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Close
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </div>
+      <div
+        class="notification-content"
+      >
+        <div>
+          <ul
+            class="cds--accordion Notification-accordion cds--accordion--start"
+          >
+            <li
+              class="cds--accordion__item"
+            >
+              <button
+                aria-controls="accordion-item-20"
+                aria-expanded="false"
+                class="cds--accordion__heading"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="cds--accordion__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <span
-                    className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                    onKeyDown={[Function]}
-                    onMouseLeave={[Function]}
+                  <path
+                    d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                  />
+                </svg>
+                <div
+                  class="cds--accordion__title"
+                  dir="auto"
+                >
+                  <div
+                    class="events-count"
+                  >
+                    <span>
+                      Events
+                    </span>
+                    <span>
+                      2 New
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <div
+                class="cds--accordion__wrapper"
+              >
+                <div
+                  class="cds--accordion__content"
+                  id="accordion-item-20"
+                >
+                  <div
+                    class="notification-accordion-content"
                   >
                     <div
-                      className="cds--tooltip-trigger__wrapper"
+                      class="notification-content-messages"
                     >
-                      <ForwardRef(ButtonBase)
-                        aria-labelledby="tooltip-2"
-                        className="collapsed heading-icon"
-                        hasIconOnly={true}
-                        kind="primary"
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onKeyDown={[Function]}
-                        onMouseDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                        onMouseMove={[Function]}
-                        onTouchStart={[Function]}
-                        renderIcon={null}
-                      >
-                        <button
-                          aria-labelledby="tooltip-2"
-                          className="collapsed heading-icon cds--btn cds--btn--primary cds--btn--icon-only"
-                          disabled={false}
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onKeyDown={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseEnter={[Function]}
-                          onMouseLeave={[Function]}
-                          onMouseMove={[Function]}
-                          onTouchStart={[Function]}
-                          type="button"
-                        >
-                          <renderIcon>
-                            <ForwardRef(ChevronLeft)
-                              size={16}
-                            >
-                              <Icon
-                                fill="currentColor"
-                                height={16}
-                                viewBox="0 0 16 16"
-                                width={16}
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <svg
-                                  aria-hidden={true}
-                                  fill="currentColor"
-                                  focusable="false"
-                                  height={16}
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 16 16"
-                                  width={16}
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
-                                  />
-                                </svg>
-                              </Icon>
-                            </ForwardRef(ChevronLeft)>
-                          </renderIcon>
-                        </button>
-                      </ForwardRef(ButtonBase)>
-                    </div>
-                    <PopoverContent
-                      aria-hidden="true"
-                      className="cds--tooltip-content"
-                      id="tooltip-2"
-                      onMouseEnter={[Function]}
-                      role="tooltip"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="cds--popover"
-                        id="tooltip-2"
-                        onMouseEnter={[Function]}
-                        role="tooltip"
-                      >
-                        <span
-                          className="cds--popover-content cds--tooltip-content"
-                        >
-                          collapsed
-                        </span>
-                        <span
-                          className="cds--popover-caret"
-                        />
-                      </span>
-                    </PopoverContent>
-                  </span>
-                </Popover>
-              </ForwardRef>
-            </ForwardRef>
-          </Button>
-          <h3
-            className="notification-title"
-          >
-            Notifications
-          </h3>
-          <Button
-            className="heading-icon closeIcon"
-            hasIconOnly={true}
-            iconDescription="Close"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            renderIcon={[Function]}
-          >
-            <ForwardRef
-              align="top"
-              autoAlign={false}
-              className="heading-icon closeIcon"
-              dropShadow={false}
-              highContrast={true}
-              kind="primary"
-              label="Close"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              renderIcon={null}
-            >
-              <ForwardRef
-                align="top"
-                autoAlign={false}
-                className="cds--icon-tooltip"
-                closeOnActivation={true}
-                defaultOpen={false}
-                dropShadow={false}
-                enterDelayMs={100}
-                highContrast={true}
-                label="Close"
-                leaveDelayMs={100}
-              >
-                <Popover
-                  align="top"
-                  autoAlign={false}
-                  className="cds--tooltip cds--icon-tooltip"
-                  dropShadow={false}
-                  highContrast={true}
-                  onKeyDown={[Function]}
-                  onMouseLeave={[Function]}
-                  open={false}
-                >
-                  <span
-                    className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                    onKeyDown={[Function]}
-                    onMouseLeave={[Function]}
-                  >
-                    <div
-                      className="cds--tooltip-trigger__wrapper"
-                    >
-                      <ForwardRef(ButtonBase)
-                        aria-labelledby="tooltip-5"
-                        className="heading-icon closeIcon"
-                        hasIconOnly={true}
-                        kind="primary"
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onKeyDown={[Function]}
-                        onMouseDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                        onMouseMove={[Function]}
-                        onTouchStart={[Function]}
-                        renderIcon={null}
-                      >
-                        <button
-                          aria-labelledby="tooltip-5"
-                          className="heading-icon closeIcon cds--btn cds--btn--primary cds--btn--icon-only"
-                          disabled={false}
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onKeyDown={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseEnter={[Function]}
-                          onMouseLeave={[Function]}
-                          onMouseMove={[Function]}
-                          onTouchStart={[Function]}
-                          type="button"
-                        >
-                          <renderIcon>
-                            <ForwardRef(Close)
-                              size={16}
-                            >
-                              <Icon
-                                fill="currentColor"
-                                height={16}
-                                viewBox="0 0 32 32"
-                                width={16}
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <svg
-                                  aria-hidden={true}
-                                  fill="currentColor"
-                                  focusable="false"
-                                  height={16}
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 32 32"
-                                  width={16}
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                                  />
-                                </svg>
-                              </Icon>
-                            </ForwardRef(Close)>
-                          </renderIcon>
-                        </button>
-                      </ForwardRef(ButtonBase)>
-                    </div>
-                    <PopoverContent
-                      aria-hidden="true"
-                      className="cds--tooltip-content"
-                      id="tooltip-5"
-                      onMouseEnter={[Function]}
-                      role="tooltip"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="cds--popover"
-                        id="tooltip-5"
-                        onMouseEnter={[Function]}
-                        role="tooltip"
-                      >
-                        <span
-                          className="cds--popover-content cds--tooltip-content"
-                        >
-                          Close
-                        </span>
-                        <span
-                          className="cds--popover-caret"
-                        />
-                      </span>
-                    </PopoverContent>
-                  </span>
-                </Popover>
-              </ForwardRef>
-            </ForwardRef>
-          </Button>
-        </div>
-        <div
-          className="notification-content"
-        >
-          <div>
-            <Accordion
-              align="start"
-              className="Notification-accordion"
-            >
-              <AccordionProvider
-                disabled={false}
-              >
-                <ul
-                  className="cds--accordion Notification-accordion cds--accordion--start"
-                >
-                  <AccordionItem
-                    title={
                       <div
-                        className="events-count"
+                        aria-labelledby="actionable-notification-10"
+                        class="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--error cds--actionable-notification--hide-close-button"
+                        role="alert"
                       >
-                        <span>
-                          Events
-                        </span>
-                        <span>
-                          2 New
-                        </span>
-                      </div>
-                    }
-                  >
-                    <li
-                      className="cds--accordion__item"
-                    >
-                      <defaultRenderToggle
-                        aria-controls="accordion-item-20"
-                        aria-expanded={false}
-                        className="cds--accordion__heading"
-                        disabled={false}
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        type="button"
-                      >
-                        <button
-                          aria-controls="accordion-item-20"
-                          aria-expanded={false}
-                          className="cds--accordion__heading"
-                          disabled={false}
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          type="button"
+                        <span
+                          class="cds--visually-hidden"
+                          role="link"
+                          tabindex="0"
                         >
-                          <ForwardRef(ChevronRight)
-                            className="cds--accordion__arrow"
-                          >
-                            <Icon
-                              className="cds--accordion__arrow"
-                              fill="currentColor"
-                              height={16}
-                              viewBox="0 0 16 16"
-                              width={16}
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <svg
-                                aria-hidden={true}
-                                className="cds--accordion__arrow"
-                                fill="currentColor"
-                                focusable="false"
-                                height={16}
-                                preserveAspectRatio="xMidYMid meet"
-                                viewBox="0 0 16 16"
-                                width={16}
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                                />
-                              </svg>
-                            </Icon>
-                          </ForwardRef(ChevronRight)>
-                          <ForwardRef
-                            as="div"
-                            className="cds--accordion__title"
-                          >
-                            <div
-                              className="cds--accordion__title"
-                              dir="auto"
-                            >
-                              <div
-                                className="events-count"
-                              >
-                                <span>
-                                  Events
-                                </span>
-                                <span>
-                                  2 New
-                                </span>
-                              </div>
-                            </div>
-                          </ForwardRef>
-                        </button>
-                      </defaultRenderToggle>
-                      <div
-                        className="cds--accordion__wrapper"
-                        onTransitionEnd={[Function]}
-                      >
+                          Focus sentinel
+                        </span>
                         <div
-                          className="cds--accordion__content"
-                          id="accordion-item-20"
+                          class="cds--actionable-notification__focus-wrapper"
                         >
                           <div
-                            className="notification-accordion-content"
+                            class="cds--actionable-notification__details"
                           >
-                            <div
-                              className="notification-content-messages"
+                            <svg
+                              aria-hidden="true"
+                              class="cds--inline-notification__icon"
+                              fill="currentColor"
+                              focusable="false"
+                              height="20"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 20 20"
+                              width="20"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <ActionableNotification
-                                className="notification-item-wrapper unread"
-                                hideCloseButton={true}
-                                inline={true}
-                                key="10000000003625"
-                                kind="error"
-                                lowContrast={true}
-                                role="alert"
-                                statusIconDescription="error"
-                                subtitle={
-                                  <div
-                                    className="subtitle-div"
-                                  >
-                                    <div
-                                      className="subtitle-div-notification-menu"
-                                    >
-                                      <OverflowMenu
-                                        aria-label="open and close options"
-                                        flipped={true}
-                                        floatingmenu="true"
-                                        id="10000000003625"
-                                      >
-                                        <ForwardRef
-                                          aria-label="View details"
-                                          className="overflow-options details-10000000003625"
-                                          disabled={false}
-                                          itemText="View details"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                        <ForwardRef
-                                          aria-label="Mark as read"
-                                          className="overflow-options markasread-10000000003625"
-                                          disabled={false}
-                                          hasDivider={true}
-                                          itemText="Mark as read"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                        <ForwardRef
-                                          aria-label="Remove"
-                                          className="overflow-options remove-10000000003625"
-                                          isDelete={true}
-                                          itemText="Remove"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                      </OverflowMenu>
-                                    </div>
-                                    <div
-                                      className="subtitle-div-notification-time"
-                                    >
-                                      <span
-                                        className="notification-time"
-                                      >
-                                        Invalid date
-                                         
-                                        |
-                                         
-                                        Invalid date
-                                      </span>
-                                    </div>
-                                  </div>
-                                }
-                                title="Plan has completed with errors"
-                              >
-                                <div
-                                  aria-labelledby="actionable-notification-10"
-                                  className="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--error cds--actionable-notification--hide-close-button"
-                                  onBlur={[Function]}
-                                  onKeyDown={[Function]}
-                                  role="alert"
-                                >
-                                  <span
-                                    className="cds--visually-hidden"
-                                    role="link"
-                                    tabIndex={0}
-                                  >
-                                    Focus sentinel
-                                  </span>
-                                  <div
-                                    className="cds--actionable-notification__focus-wrapper"
-                                  >
-                                    <div
-                                      className="cds--actionable-notification__details"
-                                    >
-                                      <NotificationIcon
-                                        iconDescription="error"
-                                        kind="error"
-                                        notificationType="inline"
-                                      >
-                                        <ForwardRef(ErrorFilled)
-                                          className="cds--inline-notification__icon"
-                                          size={20}
-                                        >
-                                          <Icon
-                                            className="cds--inline-notification__icon"
-                                            fill="currentColor"
-                                            height={20}
-                                            viewBox="0 0 20 20"
-                                            width={20}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <svg
-                                              aria-hidden={true}
-                                              className="cds--inline-notification__icon"
-                                              fill="currentColor"
-                                              focusable="false"
-                                              height={20}
-                                              preserveAspectRatio="xMidYMid meet"
-                                              viewBox="0 0 20 20"
-                                              width={20}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <path
-                                                d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
-                                              />
-                                              <path
-                                                d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
-                                                data-icon-path="inner-path"
-                                                opacity="0"
-                                              />
-                                              <title>
-                                                error
-                                              </title>
-                                            </svg>
-                                          </Icon>
-                                        </ForwardRef(ErrorFilled)>
-                                      </NotificationIcon>
-                                      <div
-                                        className="cds--actionable-notification__text-wrapper"
-                                      >
-                                        <div
-                                          className="cds--actionable-notification__content"
-                                        >
-                                          <ForwardRef
-                                            as="div"
-                                            className="cds--actionable-notification__title"
-                                            id="actionable-notification-10"
-                                          >
-                                            <div
-                                              className="cds--actionable-notification__title"
-                                              dir="auto"
-                                              id="actionable-notification-10"
-                                            >
-                                              Plan has completed with errors
-                                            </div>
-                                          </ForwardRef>
-                                          <ForwardRef
-                                            as="div"
-                                            className="cds--actionable-notification__subtitle"
-                                            id="actionable-notification-subtitle-11"
-                                          >
-                                            <div
-                                              className="cds--actionable-notification__subtitle"
-                                              dir="auto"
-                                              id="actionable-notification-subtitle-11"
-                                            >
-                                              <div
-                                                className="subtitle-div"
-                                              >
-                                                <div
-                                                  className="subtitle-div-notification-menu"
-                                                >
-                                                  <OverflowMenu
-                                                    aria-label="open and close options"
-                                                    flipped={true}
-                                                    floatingmenu="true"
-                                                    id="10000000003625"
-                                                  >
-                                                    <ForwardRef
-                                                      aria-label="open and close options"
-                                                      flipped={true}
-                                                      floatingmenu="true"
-                                                      id="10000000003625"
-                                                    >
-                                                      <span
-                                                        className="cds--overflow-menu__wrapper"
-                                                      >
-                                                        <ForwardRef
-                                                          aria-expanded={false}
-                                                          aria-haspopup={true}
-                                                          className="cds--overflow-menu cds--overflow-menu--md"
-                                                          floatingmenu="true"
-                                                          id="10000000003625"
-                                                          kind="ghost"
-                                                          label="Options"
-                                                          onClick={[Function]}
-                                                          size="md"
-                                                          type="button"
-                                                        >
-                                                          <ForwardRef
-                                                            autoAlign={false}
-                                                            className="cds--icon-tooltip"
-                                                            closeOnActivation={true}
-                                                            defaultOpen={false}
-                                                            dropShadow={false}
-                                                            enterDelayMs={100}
-                                                            highContrast={true}
-                                                            label="Options"
-                                                            leaveDelayMs={100}
-                                                          >
-                                                            <Popover
-                                                              align="top"
-                                                              autoAlign={false}
-                                                              className="cds--tooltip cds--icon-tooltip"
-                                                              dropShadow={false}
-                                                              highContrast={true}
-                                                              onKeyDown={[Function]}
-                                                              onMouseLeave={[Function]}
-                                                              open={false}
-                                                            >
-                                                              <span
-                                                                className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                                                                onKeyDown={[Function]}
-                                                                onMouseLeave={[Function]}
-                                                              >
-                                                                <div
-                                                                  className="cds--tooltip-trigger__wrapper"
-                                                                >
-                                                                  <ForwardRef(ButtonBase)
-                                                                    aria-expanded={false}
-                                                                    aria-haspopup={true}
-                                                                    aria-labelledby="tooltip-8"
-                                                                    className="cds--overflow-menu cds--overflow-menu--md"
-                                                                    floatingmenu="true"
-                                                                    hasIconOnly={true}
-                                                                    id="10000000003625"
-                                                                    kind="ghost"
-                                                                    onBlur={[Function]}
-                                                                    onClick={[Function]}
-                                                                    onFocus={[Function]}
-                                                                    onMouseDown={[Function]}
-                                                                    onMouseEnter={[Function]}
-                                                                    onMouseLeave={[Function]}
-                                                                    onMouseMove={[Function]}
-                                                                    onTouchStart={[Function]}
-                                                                    size="md"
-                                                                    type="button"
-                                                                  >
-                                                                    <button
-                                                                      aria-expanded={false}
-                                                                      aria-haspopup={true}
-                                                                      aria-labelledby="tooltip-8"
-                                                                      className="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
-                                                                      disabled={false}
-                                                                      floatingmenu="true"
-                                                                      id="10000000003625"
-                                                                      onBlur={[Function]}
-                                                                      onClick={[Function]}
-                                                                      onFocus={[Function]}
-                                                                      onMouseDown={[Function]}
-                                                                      onMouseEnter={[Function]}
-                                                                      onMouseLeave={[Function]}
-                                                                      onMouseMove={[Function]}
-                                                                      onTouchStart={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(OverflowMenuVertical)
-                                                                        aria-label="Options"
-                                                                        className="cds--overflow-menu__icon"
-                                                                      >
-                                                                        <Icon
-                                                                          aria-label="Options"
-                                                                          className="cds--overflow-menu__icon"
-                                                                          fill="currentColor"
-                                                                          height={16}
-                                                                          viewBox="0 0 32 32"
-                                                                          width={16}
-                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                        >
-                                                                          <svg
-                                                                            aria-label="Options"
-                                                                            className="cds--overflow-menu__icon"
-                                                                            fill="currentColor"
-                                                                            focusable="false"
-                                                                            height={16}
-                                                                            preserveAspectRatio="xMidYMid meet"
-                                                                            role="img"
-                                                                            viewBox="0 0 32 32"
-                                                                            width={16}
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                          >
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="8"
-                                                                              r="2"
-                                                                            />
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="16"
-                                                                              r="2"
-                                                                            />
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="24"
-                                                                              r="2"
-                                                                            />
-                                                                          </svg>
-                                                                        </Icon>
-                                                                      </ForwardRef(OverflowMenuVertical)>
-                                                                    </button>
-                                                                  </ForwardRef(ButtonBase)>
-                                                                </div>
-                                                                <PopoverContent
-                                                                  aria-hidden="true"
-                                                                  className="cds--tooltip-content"
-                                                                  id="tooltip-8"
-                                                                  onMouseEnter={[Function]}
-                                                                  role="tooltip"
-                                                                >
-                                                                  <span
-                                                                    aria-hidden="true"
-                                                                    className="cds--popover"
-                                                                    id="tooltip-8"
-                                                                    onMouseEnter={[Function]}
-                                                                    role="tooltip"
-                                                                  >
-                                                                    <span
-                                                                      className="cds--popover-content cds--tooltip-content"
-                                                                    >
-                                                                      Options
-                                                                    </span>
-                                                                    <span
-                                                                      className="cds--popover-caret"
-                                                                    />
-                                                                  </span>
-                                                                </PopoverContent>
-                                                              </span>
-                                                            </Popover>
-                                                          </ForwardRef>
-                                                        </ForwardRef>
-                                                      </span>
-                                                    </ForwardRef>
-                                                  </OverflowMenu>
-                                                </div>
-                                                <div
-                                                  className="subtitle-div-notification-time"
-                                                >
-                                                  <span
-                                                    className="notification-time"
-                                                  >
-                                                    Invalid date
-                                                     
-                                                    |
-                                                     
-                                                    Invalid date
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </ForwardRef>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className="cds--actionable-notification__button-wrapper"
-                                    />
-                                  </div>
-                                  <span
-                                    className="cds--visually-hidden"
-                                    role="link"
-                                    tabIndex={0}
-                                  >
-                                    Focus sentinel
-                                  </span>
-                                </div>
-                              </ActionableNotification>
-                              <ActionableNotification
-                                className="notification-item-wrapper unread"
-                                hideCloseButton={true}
-                                inline={true}
-                                key="10000000003624"
-                                kind="success"
-                                lowContrast={true}
-                                role="alert"
-                                statusIconDescription="success"
-                                subtitle={
-                                  <div
-                                    className="subtitle-div"
-                                  >
-                                    <div
-                                      className="subtitle-div-notification-menu"
-                                    >
-                                      <OverflowMenu
-                                        aria-label="open and close options"
-                                        flipped={true}
-                                        floatingmenu="true"
-                                        id="10000000003624"
-                                      >
-                                        <ForwardRef
-                                          aria-label="View details"
-                                          className="overflow-options details-10000000003624"
-                                          disabled={true}
-                                          itemText="View details"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                        <ForwardRef
-                                          aria-label="Mark as read"
-                                          className="overflow-options markasread-10000000003624"
-                                          disabled={false}
-                                          hasDivider={true}
-                                          itemText="Mark as read"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                        <ForwardRef
-                                          aria-label="Remove"
-                                          className="overflow-options remove-10000000003624"
-                                          isDelete={true}
-                                          itemText="Remove"
-                                          onClick={[Function]}
-                                          onKeyDown={[Function]}
-                                          requireTitle={true}
-                                        />
-                                      </OverflowMenu>
-                                    </div>
-                                    <div
-                                      className="subtitle-div-notification-time"
-                                    >
-                                      <span
-                                        className="notification-time"
-                                      >
-                                        Invalid date
-                                         
-                                        |
-                                         
-                                        Invalid date
-                                      </span>
-                                    </div>
-                                  </div>
-                                }
-                                title="Plan has completed successfully"
-                              >
-                                <div
-                                  aria-labelledby="actionable-notification-15"
-                                  className="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--success cds--actionable-notification--hide-close-button"
-                                  onBlur={[Function]}
-                                  onKeyDown={[Function]}
-                                  role="alert"
-                                >
-                                  <span
-                                    className="cds--visually-hidden"
-                                    role="link"
-                                    tabIndex={0}
-                                  >
-                                    Focus sentinel
-                                  </span>
-                                  <div
-                                    className="cds--actionable-notification__focus-wrapper"
-                                  >
-                                    <div
-                                      className="cds--actionable-notification__details"
-                                    >
-                                      <NotificationIcon
-                                        iconDescription="success"
-                                        kind="success"
-                                        notificationType="inline"
-                                      >
-                                        <ForwardRef(CheckmarkFilled)
-                                          className="cds--inline-notification__icon"
-                                          size={20}
-                                        >
-                                          <Icon
-                                            className="cds--inline-notification__icon"
-                                            fill="currentColor"
-                                            height={20}
-                                            viewBox="0 0 20 20"
-                                            width={20}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <svg
-                                              aria-hidden={true}
-                                              className="cds--inline-notification__icon"
-                                              fill="currentColor"
-                                              focusable="false"
-                                              height={20}
-                                              preserveAspectRatio="xMidYMid meet"
-                                              viewBox="0 0 20 20"
-                                              width={20}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <path
-                                                d="M10,1c-4.9,0-9,4.1-9,9s4.1,9,9,9s9-4,9-9S15,1,10,1z M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
-                                              />
-                                              <path
-                                                d="M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
-                                                data-icon-path="inner-path"
-                                                fill="none"
-                                                opacity="0"
-                                              />
-                                              <title>
-                                                success
-                                              </title>
-                                            </svg>
-                                          </Icon>
-                                        </ForwardRef(CheckmarkFilled)>
-                                      </NotificationIcon>
-                                      <div
-                                        className="cds--actionable-notification__text-wrapper"
-                                      >
-                                        <div
-                                          className="cds--actionable-notification__content"
-                                        >
-                                          <ForwardRef
-                                            as="div"
-                                            className="cds--actionable-notification__title"
-                                            id="actionable-notification-15"
-                                          >
-                                            <div
-                                              className="cds--actionable-notification__title"
-                                              dir="auto"
-                                              id="actionable-notification-15"
-                                            >
-                                              Plan has completed successfully
-                                            </div>
-                                          </ForwardRef>
-                                          <ForwardRef
-                                            as="div"
-                                            className="cds--actionable-notification__subtitle"
-                                            id="actionable-notification-subtitle-16"
-                                          >
-                                            <div
-                                              className="cds--actionable-notification__subtitle"
-                                              dir="auto"
-                                              id="actionable-notification-subtitle-16"
-                                            >
-                                              <div
-                                                className="subtitle-div"
-                                              >
-                                                <div
-                                                  className="subtitle-div-notification-menu"
-                                                >
-                                                  <OverflowMenu
-                                                    aria-label="open and close options"
-                                                    flipped={true}
-                                                    floatingmenu="true"
-                                                    id="10000000003624"
-                                                  >
-                                                    <ForwardRef
-                                                      aria-label="open and close options"
-                                                      flipped={true}
-                                                      floatingmenu="true"
-                                                      id="10000000003624"
-                                                    >
-                                                      <span
-                                                        className="cds--overflow-menu__wrapper"
-                                                      >
-                                                        <ForwardRef
-                                                          aria-expanded={false}
-                                                          aria-haspopup={true}
-                                                          className="cds--overflow-menu cds--overflow-menu--md"
-                                                          floatingmenu="true"
-                                                          id="10000000003624"
-                                                          kind="ghost"
-                                                          label="Options"
-                                                          onClick={[Function]}
-                                                          size="md"
-                                                          type="button"
-                                                        >
-                                                          <ForwardRef
-                                                            autoAlign={false}
-                                                            className="cds--icon-tooltip"
-                                                            closeOnActivation={true}
-                                                            defaultOpen={false}
-                                                            dropShadow={false}
-                                                            enterDelayMs={100}
-                                                            highContrast={true}
-                                                            label="Options"
-                                                            leaveDelayMs={100}
-                                                          >
-                                                            <Popover
-                                                              align="top"
-                                                              autoAlign={false}
-                                                              className="cds--tooltip cds--icon-tooltip"
-                                                              dropShadow={false}
-                                                              highContrast={true}
-                                                              onKeyDown={[Function]}
-                                                              onMouseLeave={[Function]}
-                                                              open={false}
-                                                            >
-                                                              <span
-                                                                className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                                                                onKeyDown={[Function]}
-                                                                onMouseLeave={[Function]}
-                                                              >
-                                                                <div
-                                                                  className="cds--tooltip-trigger__wrapper"
-                                                                >
-                                                                  <ForwardRef(ButtonBase)
-                                                                    aria-expanded={false}
-                                                                    aria-haspopup={true}
-                                                                    aria-labelledby="tooltip-13"
-                                                                    className="cds--overflow-menu cds--overflow-menu--md"
-                                                                    floatingmenu="true"
-                                                                    hasIconOnly={true}
-                                                                    id="10000000003624"
-                                                                    kind="ghost"
-                                                                    onBlur={[Function]}
-                                                                    onClick={[Function]}
-                                                                    onFocus={[Function]}
-                                                                    onMouseDown={[Function]}
-                                                                    onMouseEnter={[Function]}
-                                                                    onMouseLeave={[Function]}
-                                                                    onMouseMove={[Function]}
-                                                                    onTouchStart={[Function]}
-                                                                    size="md"
-                                                                    type="button"
-                                                                  >
-                                                                    <button
-                                                                      aria-expanded={false}
-                                                                      aria-haspopup={true}
-                                                                      aria-labelledby="tooltip-13"
-                                                                      className="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
-                                                                      disabled={false}
-                                                                      floatingmenu="true"
-                                                                      id="10000000003624"
-                                                                      onBlur={[Function]}
-                                                                      onClick={[Function]}
-                                                                      onFocus={[Function]}
-                                                                      onMouseDown={[Function]}
-                                                                      onMouseEnter={[Function]}
-                                                                      onMouseLeave={[Function]}
-                                                                      onMouseMove={[Function]}
-                                                                      onTouchStart={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(OverflowMenuVertical)
-                                                                        aria-label="Options"
-                                                                        className="cds--overflow-menu__icon"
-                                                                      >
-                                                                        <Icon
-                                                                          aria-label="Options"
-                                                                          className="cds--overflow-menu__icon"
-                                                                          fill="currentColor"
-                                                                          height={16}
-                                                                          viewBox="0 0 32 32"
-                                                                          width={16}
-                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                        >
-                                                                          <svg
-                                                                            aria-label="Options"
-                                                                            className="cds--overflow-menu__icon"
-                                                                            fill="currentColor"
-                                                                            focusable="false"
-                                                                            height={16}
-                                                                            preserveAspectRatio="xMidYMid meet"
-                                                                            role="img"
-                                                                            viewBox="0 0 32 32"
-                                                                            width={16}
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                          >
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="8"
-                                                                              r="2"
-                                                                            />
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="16"
-                                                                              r="2"
-                                                                            />
-                                                                            <circle
-                                                                              cx="16"
-                                                                              cy="24"
-                                                                              r="2"
-                                                                            />
-                                                                          </svg>
-                                                                        </Icon>
-                                                                      </ForwardRef(OverflowMenuVertical)>
-                                                                    </button>
-                                                                  </ForwardRef(ButtonBase)>
-                                                                </div>
-                                                                <PopoverContent
-                                                                  aria-hidden="true"
-                                                                  className="cds--tooltip-content"
-                                                                  id="tooltip-13"
-                                                                  onMouseEnter={[Function]}
-                                                                  role="tooltip"
-                                                                >
-                                                                  <span
-                                                                    aria-hidden="true"
-                                                                    className="cds--popover"
-                                                                    id="tooltip-13"
-                                                                    onMouseEnter={[Function]}
-                                                                    role="tooltip"
-                                                                  >
-                                                                    <span
-                                                                      className="cds--popover-content cds--tooltip-content"
-                                                                    >
-                                                                      Options
-                                                                    </span>
-                                                                    <span
-                                                                      className="cds--popover-caret"
-                                                                    />
-                                                                  </span>
-                                                                </PopoverContent>
-                                                              </span>
-                                                            </Popover>
-                                                          </ForwardRef>
-                                                        </ForwardRef>
-                                                      </span>
-                                                    </ForwardRef>
-                                                  </OverflowMenu>
-                                                </div>
-                                                <div
-                                                  className="subtitle-div-notification-time"
-                                                >
-                                                  <span
-                                                    className="notification-time"
-                                                  >
-                                                    Invalid date
-                                                     
-                                                    |
-                                                     
-                                                    Invalid date
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </ForwardRef>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className="cds--actionable-notification__button-wrapper"
-                                    />
-                                  </div>
-                                  <span
-                                    className="cds--visually-hidden"
-                                    role="link"
-                                    tabIndex={0}
-                                  >
-                                    Focus sentinel
-                                  </span>
-                                </div>
-                              </ActionableNotification>
+                              <path
+                                d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                              />
+                              <path
+                                d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                                data-icon-path="inner-path"
+                                opacity="0"
+                              />
+                              <title>
+                                error
+                              </title>
+                            </svg>
+                            <div
+                              class="cds--actionable-notification__text-wrapper"
+                            >
                               <div
-                                className="maxnotifications-text"
+                                class="cds--actionable-notification__content"
                               >
-                                <span>
-                                  Showing 100 items out of 2 total.
-                                </span>
-                                <Button
-                                  id="toggleMaxNotifications"
-                                  kind="ghost"
-                                  onClick={[Function]}
+                                <div
+                                  class="cds--actionable-notification__title"
+                                  dir="auto"
+                                  id="actionable-notification-10"
                                 >
-                                  <ForwardRef(ButtonBase)
-                                    id="toggleMaxNotifications"
-                                    kind="ghost"
-                                    onClick={[Function]}
+                                  Plan has completed with errors
+                                </div>
+                                <div
+                                  class="cds--actionable-notification__subtitle"
+                                  dir="auto"
+                                  id="actionable-notification-subtitle-11"
+                                >
+                                  <div
+                                    class="subtitle-div"
                                   >
-                                    <button
-                                      className="cds--btn cds--btn--ghost"
-                                      disabled={false}
-                                      id="toggleMaxNotifications"
-                                      onClick={[Function]}
-                                      type="button"
+                                    <div
+                                      class="subtitle-div-notification-menu"
                                     >
-                                      Show all (may take a while)
-                                    </button>
-                                  </ForwardRef(ButtonBase)>
-                                </Button>
+                                      <span
+                                        class="cds--overflow-menu__wrapper"
+                                      >
+                                        <span
+                                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                                        >
+                                          <div
+                                            class="cds--tooltip-trigger__wrapper"
+                                          >
+                                            <button
+                                              aria-expanded="false"
+                                              aria-haspopup="true"
+                                              aria-labelledby="tooltip-8"
+                                              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                                              floatingmenu="true"
+                                              id="10000000003625"
+                                              type="button"
+                                            >
+                                              <svg
+                                                aria-label="Options"
+                                                class="cds--overflow-menu__icon"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                role="img"
+                                                viewBox="0 0 32 32"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <circle
+                                                  cx="16"
+                                                  cy="8"
+                                                  r="2"
+                                                />
+                                                <circle
+                                                  cx="16"
+                                                  cy="16"
+                                                  r="2"
+                                                />
+                                                <circle
+                                                  cx="16"
+                                                  cy="24"
+                                                  r="2"
+                                                />
+                                              </svg>
+                                            </button>
+                                          </div>
+                                          <span
+                                            aria-hidden="true"
+                                            class="cds--popover"
+                                            id="tooltip-8"
+                                            role="tooltip"
+                                          >
+                                            <span
+                                              class="cds--popover-content cds--tooltip-content"
+                                            >
+                                              Options
+                                            </span>
+                                            <span
+                                              class="cds--popover-caret"
+                                            />
+                                          </span>
+                                        </span>
+                                      </span>
+                                    </div>
+                                    <div
+                                      class="subtitle-div-notification-time"
+                                    >
+                                      <span
+                                        class="notification-time"
+                                      >
+                                        Invalid date
+                                         
+                                        |
+                                         
+                                        Invalid date
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                            <div
-                              className="notification-footer"
+                          </div>
+                          <div
+                            class="cds--actionable-notification__button-wrapper"
+                          />
+                        </div>
+                        <span
+                          class="cds--visually-hidden"
+                          role="link"
+                          tabindex="0"
+                        >
+                          Focus sentinel
+                        </span>
+                      </div>
+                      <div
+                        aria-labelledby="actionable-notification-15"
+                        class="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--success cds--actionable-notification--hide-close-button"
+                        role="alert"
+                      >
+                        <span
+                          class="cds--visually-hidden"
+                          role="link"
+                          tabindex="0"
+                        >
+                          Focus sentinel
+                        </span>
+                        <div
+                          class="cds--actionable-notification__focus-wrapper"
+                        >
+                          <div
+                            class="cds--actionable-notification__details"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="cds--inline-notification__icon"
+                              fill="currentColor"
+                              focusable="false"
+                              height="20"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 20 20"
+                              width="20"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <Button
-                                disabled={false}
-                                id="markAllReadBtn"
-                                kind="ghost"
-                                onClick={[Function]}
+                              <path
+                                d="M10,1c-4.9,0-9,4.1-9,9s4.1,9,9,9s9-4,9-9S15,1,10,1z M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                              />
+                              <path
+                                d="M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                                opacity="0"
+                              />
+                              <title>
+                                success
+                              </title>
+                            </svg>
+                            <div
+                              class="cds--actionable-notification__text-wrapper"
+                            >
+                              <div
+                                class="cds--actionable-notification__content"
                               >
-                                <ForwardRef(ButtonBase)
-                                  disabled={false}
-                                  id="markAllReadBtn"
-                                  kind="ghost"
-                                  onClick={[Function]}
+                                <div
+                                  class="cds--actionable-notification__title"
+                                  dir="auto"
+                                  id="actionable-notification-15"
                                 >
-                                  <button
-                                    className="cds--btn cds--btn--ghost"
-                                    disabled={false}
-                                    id="markAllReadBtn"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    Mark All Read
-                                  </button>
-                                </ForwardRef(ButtonBase)>
-                              </Button>
-                              <Button
-                                disabled={false}
-                                id="clearAllBtn"
-                                kind="ghost"
-                                onClick={[Function]}
-                              >
-                                <ForwardRef(ButtonBase)
-                                  disabled={false}
-                                  id="clearAllBtn"
-                                  kind="ghost"
-                                  onClick={[Function]}
+                                  Plan has completed successfully
+                                </div>
+                                <div
+                                  class="cds--actionable-notification__subtitle"
+                                  dir="auto"
+                                  id="actionable-notification-subtitle-16"
                                 >
-                                  <button
-                                    className="cds--btn cds--btn--ghost"
-                                    disabled={false}
-                                    id="clearAllBtn"
-                                    onClick={[Function]}
-                                    type="button"
+                                  <div
+                                    class="subtitle-div"
                                   >
-                                    Clear All
-                                  </button>
-                                </ForwardRef(ButtonBase)>
-                              </Button>
+                                    <div
+                                      class="subtitle-div-notification-menu"
+                                    >
+                                      <span
+                                        class="cds--overflow-menu__wrapper"
+                                      >
+                                        <span
+                                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                                        >
+                                          <div
+                                            class="cds--tooltip-trigger__wrapper"
+                                          >
+                                            <button
+                                              aria-expanded="false"
+                                              aria-haspopup="true"
+                                              aria-labelledby="tooltip-13"
+                                              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                                              floatingmenu="true"
+                                              id="10000000003624"
+                                              type="button"
+                                            >
+                                              <svg
+                                                aria-label="Options"
+                                                class="cds--overflow-menu__icon"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                role="img"
+                                                viewBox="0 0 32 32"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <circle
+                                                  cx="16"
+                                                  cy="8"
+                                                  r="2"
+                                                />
+                                                <circle
+                                                  cx="16"
+                                                  cy="16"
+                                                  r="2"
+                                                />
+                                                <circle
+                                                  cx="16"
+                                                  cy="24"
+                                                  r="2"
+                                                />
+                                              </svg>
+                                            </button>
+                                          </div>
+                                          <span
+                                            aria-hidden="true"
+                                            class="cds--popover"
+                                            id="tooltip-13"
+                                            role="tooltip"
+                                          >
+                                            <span
+                                              class="cds--popover-content cds--tooltip-content"
+                                            >
+                                              Options
+                                            </span>
+                                            <span
+                                              class="cds--popover-caret"
+                                            />
+                                          </span>
+                                        </span>
+                                      </span>
+                                    </div>
+                                    <div
+                                      class="subtitle-div-notification-time"
+                                    >
+                                      <span
+                                        class="notification-time"
+                                      >
+                                        Invalid date
+                                         
+                                        |
+                                         
+                                        Invalid date
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                          <div
+                            class="cds--actionable-notification__button-wrapper"
+                          />
                         </div>
+                        <span
+                          class="cds--visually-hidden"
+                          role="link"
+                          tabindex="0"
+                        >
+                          Focus sentinel
+                        </span>
                       </div>
-                    </li>
-                  </AccordionItem>
-                </ul>
-              </AccordionProvider>
-            </Accordion>
-          </div>
+                      <div
+                        class="maxnotifications-text"
+                      >
+                        <span>
+                          Showing 100 items out of 2 total.
+                        </span>
+                        <button
+                          class="cds--btn cds--btn--ghost"
+                          id="toggleMaxNotifications"
+                          type="button"
+                        >
+                          Show all (may take a while)
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="notification-footer"
+                    >
+                      <button
+                        class="cds--btn cds--btn--ghost"
+                        id="markAllReadBtn"
+                        type="button"
+                      >
+                        Mark All Read
+                      </button>
+                      <button
+                        class="cds--btn cds--btn--ghost"
+                        id="clearAllBtn"
+                        type="button"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </NotificationDrawer>
-</Provider>
+  </div>
+</div>
 `;

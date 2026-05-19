@@ -1,10 +1,95 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MiqPolicySetStructuredList should render policy set info structured list 1`] = `
+exports[`MiqConditionStructuredList should render condition expression structured list 1`] = `
 <div>
   <div
     aria-label="Structured list"
-    class="cds--structured-list miq-structured-list miq_policy_set_info"
+    class="cds--structured-list miq-structured-list miq_condition_expression"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression1
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression3
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition info structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_info"
     role="table"
   >
     <div
@@ -44,11 +129,11 @@ exports[`MiqPolicySetStructuredList should render policy set info structured lis
 </div>
 `;
 
-exports[`MiqPolicySetStructuredList should render policy set notes structured list 1`] = `
+exports[`MiqConditionStructuredList should render condition notes structured list 1`] = `
 <div>
   <div
     aria-label="Structured list"
-    class="cds--structured-list miq-structured-list miq_policy_set_notes"
+    class="cds--structured-list miq-structured-list miq_condition_notes"
     role="table"
   >
     <div
@@ -106,11 +191,11 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
 </div>
 `;
 
-exports[`MiqPolicySetStructuredList should render policy set structured list 1`] = `
+exports[`MiqConditionStructuredList should render condition policy structured list 1`] = `
 <div>
   <div
     aria-label="Structured list"
-    class="cds--structured-list miq-structured-list miq_policy_set"
+    class="cds--structured-list miq-structured-list miq_condition_policies"
     role="table"
   >
     <div
@@ -121,13 +206,13 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
         class="cds--structured-list-row clickable"
         role="row"
         tabindex="0"
-        title="View this Container Image Policy"
+        title="View this model policy"
       >
         <div
           class="cds--structured-list-td label_header object_item"
           dir="auto"
           role="cell"
-          title="View this Container Image Policy"
+          title="View this model policy"
         >
           <div
             class="content"
@@ -142,13 +227,13 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
         class="cds--structured-list-row clickable"
         role="row"
         tabindex="1"
-        title="View this Container Image Policy"
+        title="View this model policy"
       >
         <div
           class="cds--structured-list-td label_header object_item"
           dir="auto"
           role="cell"
-          title="View this Container Image Policy"
+          title="View this model policy"
         >
           <div
             class="content"
@@ -163,13 +248,13 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
         class="cds--structured-list-row clickable"
         role="row"
         tabindex="2"
-        title="View this Container Image Policy"
+        title="View this model policy"
       >
         <div
           class="cds--structured-list-td label_header object_item"
           dir="auto"
           role="cell"
-          title="View this Container Image Policy"
+          title="View this model policy"
         >
           <div
             class="content"
@@ -180,45 +265,88 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition scope structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_scope"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
       <div
-        class="cds--structured-list-row clickable"
+        class="cds--structured-list-row not-clickable"
         role="row"
-        tabindex="3"
-        title="View this Container Node Policy"
+        tabindex="0"
+        title=""
       >
         <div
           class="cds--structured-list-td label_header object_item"
           dir="auto"
           role="cell"
-          title="View this Container Node Policy"
+          title=""
         >
           <div
-            class="content"
+            class="content color"
           >
             <div
-              class="wrap_text"
-            />
+              class="expand wrap_text"
+            >
+              Expression1
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="cds--structured-list-row clickable"
+        class="cds--structured-list-row not-clickable"
         role="row"
-        tabindex="4"
-        title="View this VM and Instance Policy"
+        tabindex="1"
+        title=""
       >
         <div
           class="cds--structured-list-td label_header object_item"
           dir="auto"
           role="cell"
-          title="View this VM and Instance Policy"
+          title=""
         >
           <div
-            class="content"
+            class="content color"
           >
             <div
-              class="wrap_text"
-            />
+              class="expand wrap_text"
+            >
+              Expression2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression3
+            </div>
           </div>
         </div>
       </div>

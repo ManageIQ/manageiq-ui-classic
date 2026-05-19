@@ -1,55 +1,129 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`match snapshot 1`] = `
-<Dropdown
-  className="tag-select"
-  defaultValue="placeholder"
-  disabled={false}
-  id="dropdown-tag-select"
-  items={
-    Array [
-      Object {
-        "key": 1,
-        "label": "Asterix",
-        "value": 1,
-      },
-      Object {
-        "key": 2,
-        "label": "Obelix",
-        "value": 2,
-      },
-    ]
-  }
-  key="1"
-  label="Obelix"
-  onChange={[Function]}
-  titleText=""
-/>
+exports[`ValueSelector component should match snapshot 1`] = `
+<div>
+  <div
+    class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+  >
+    
+    <div
+      class="cds--dropdown cds--list-box"
+      id="dropdown-tag-select"
+    >
+      <button
+        aria-activedescendant=""
+        aria-controls="downshift-0-menu"
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="downshift-0-label"
+        class="cds--list-box__field"
+        id="downshift-0-toggle-button"
+        role="combobox"
+        tabindex="0"
+        title="Obelix"
+        type="button"
+      >
+        <span
+          class="cds--list-box__label"
+        >
+          Obelix
+        </span>
+        <div
+          class="cds--list-box__menu-icon"
+        >
+          <svg
+            aria-label="Open menu"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            name="chevron--down"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+            <title>
+              Open menu
+            </title>
+          </svg>
+        </div>
+      </button>
+      
+      <ul
+        aria-labelledby="downshift-0-label"
+        class="cds--list-box__menu"
+        id="downshift-0-menu"
+        role="listbox"
+      />
+    </div>
+  </div>
+</div>
 `;
 
-exports[`match snapshot without multiple values 1`] = `
-<Dropdown
-  className="tag-select"
-  defaultValue="placeholder"
-  disabled={false}
-  id="dropdown-tag-select"
-  items={
-    Array [
-      Object {
-        "key": 1,
-        "label": "Asterix",
-        "value": 1,
-      },
-      Object {
-        "key": 2,
-        "label": "Obelix",
-        "value": 2,
-      },
-    ]
-  }
-  key="1"
-  label="Obelix"
-  onChange={[Function]}
-  titleText=""
-/>
+exports[`ValueSelector component should match snapshot without multiple values 1`] = `
+<div>
+  <div
+    class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+  >
+    
+    <div
+      class="cds--dropdown cds--list-box"
+      id="dropdown-tag-select"
+    >
+      <button
+        aria-activedescendant=""
+        aria-controls="downshift-2-menu"
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="downshift-2-label"
+        class="cds--list-box__field"
+        id="downshift-2-toggle-button"
+        role="combobox"
+        tabindex="0"
+        title="Obelix"
+        type="button"
+      >
+        <span
+          class="cds--list-box__label"
+        >
+          Obelix
+        </span>
+        <div
+          class="cds--list-box__menu-icon"
+        >
+          <svg
+            aria-label="Open menu"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            name="chevron--down"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+            <title>
+              Open menu
+            </title>
+          </svg>
+        </div>
+      </button>
+      
+      <ul
+        aria-labelledby="downshift-2-label"
+        class="cds--list-box__menu"
+        id="downshift-2-menu"
+        role="listbox"
+      />
+    </div>
+  </div>
+</div>
 `;

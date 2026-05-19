@@ -1,15 +1,13 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import OpsTenantForm from '../../components/ops-tenant-form/ops-tenant-form';
-import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import '../helpers/miqSparkle';
-import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
-import '../helpers/sprintf';
 
 describe('OpstTenantForm', () => {
   let initialProps;
@@ -17,6 +15,7 @@ describe('OpstTenantForm', () => {
   const sparkleOffSpy = jest.spyOn(window, 'miqSparkleOff');
   const flashSpy = jest.spyOn(window, 'add_flash');
   const flashLaterSpy = jest.spyOn(window, 'miqFlashLater');
+
   beforeEach(() => {
     initialProps = {
       recordId: null,
@@ -34,115 +33,145 @@ describe('OpstTenantForm', () => {
     flashLaterSpy.mockReset();
   });
 
-  it('should mount form without initialValues', async(done) => {
-    fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,ancestry,divisible`, {
-      name: 'foo',
-    });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} />);
-    });
+  it('should mount form without initialValues', async() => {
+    fetchMock.getOnce(
+      `/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,ancestry,divisible`,
+      {
+        name: 'foo',
+      }
+    );
+    renderWithRedux(<OpsTenantForm {...initialProps} />);
 
-    wrapper.update();
-    expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({});
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
+    });
+    expect(screen.getByLabelText(/Name/i)).toHaveValue('');
     expect(fetchMock.calls().length).toEqual(0);
     expect(sparkleOnSpy).not.toHaveBeenCalled();
     expect(sparkleOffSpy).not.toHaveBeenCalled();
-    done();
   });
 
-  it('should mount and set initialValues', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible', {
-      name: 'foo',
-    });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    });
+  it('should mount and set initialValues', async() => {
+    fetchMock.getOnce(
+      '/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible',
+      {
+        name: 'foo',
+      }
+    );
+    renderWithRedux(<OpsTenantForm {...initialProps} recordId={123} />);
 
-    wrapper.update();
-    expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({
-      name: 'foo',
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     });
+    expect(screen.getByLabelText(/Name/i)).toHaveValue('foo');
     expect(fetchMock.calls()).toHaveLength(1);
     expect(sparkleOnSpy).toHaveBeenCalled();
     expect(sparkleOffSpy).toHaveBeenCalled();
-    done();
   });
 
-  it('should call miqRedirectBack when canceling form', async(done) => {
+  it('should call miqRedirectBack when canceling form', async() => {
+    const user = userEvent.setup();
     fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
       resources: [],
     });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} />);
-    });
+    renderWithRedux(<OpsTenantForm {...initialProps} />);
 
-    wrapper.find('button.cds--btn--secondary').first().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Project was canceled by the user.', 'warning', '/foo/bar');
-    done();
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
+    });
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Creation of new Project was canceled by the user.',
+      'warning',
+      '/foo/bar'
+    );
   });
 
-  it('should correctly add new entity.', async(done) => {
+  it('should correctly add new entity.', async() => {
+    const user = userEvent.setup();
     fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     fetchMock.postOnce('/api/tenants', {});
-    const wrapper = mount(<OpsTenantForm {...initialProps} />);
-    wrapper.find('input').at(0).simulate('change', { target: { value: 'foo' } });
-    wrapper.find('input').at(1).simulate('change', { target: { value: 'bar' } });
+    const { container } = renderWithRedux(<OpsTenantForm {...initialProps} />);
 
-    wrapper.update();
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
+    });
+    const nameInput = screen.getByLabelText(/Name/i);
+    const descriptionInput = screen.getByLabelText(/Description/i);
+    await user.type(nameInput, 'foo');
+    await user.type(descriptionInput, 'bar');
 
-    setTimeout(async() => {
-      await act(async() => {
-        wrapper.find('form').simulate('submit');
-      });
-      expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
-        name: 'foo',
-        description: 'bar',
-        divisible: false,
-        parent: { id: null },
-      });
-      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully added.', 'success', '/foo/bar');
-      done();
-    }, 500);
-  });
+    let submitButton;
+    await waitFor(() => {
+      submitButton = container.querySelector('button.cds--btn--primary');
+      expect(submitButton).not.toBeDisabled();
+    });
+    await user.click(submitButton);
 
-  it('should correctly edit existing entity.', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible', {
+    await waitFor(() => {
+      expect(fetchMock.called('/api/tenants')).toBe(true);
+    });
+    expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
       name: 'foo',
       description: 'bar',
-      ancestry: null,
       divisible: false,
+      parent: { id: null },
     });
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Project "foo" has been successfully added.',
+      'success',
+      '/foo/bar'
+    );
+  });
+
+  it('should correctly edit existing entity.', async() => {
+    const user = userEvent.setup();
+    fetchMock.getOnce(
+      '/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible',
+      {
+        name: 'foo',
+        description: 'bar',
+        ancestry: null,
+        divisible: false,
+      }
+    );
     fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     fetchMock.putOnce('/api/tenants/123', {});
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    });
+    const { container } = renderWithRedux(
+      <OpsTenantForm {...initialProps} recordId={123} />
+    );
 
-    wrapper.update();
-
-    await act(async() => {
-      wrapper.find('input').at(1).simulate('change', { target: { value: 'desc' } });
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    setTimeout(async() => {
-      await act(async() => {
-        wrapper.find('form').simulate('submit');
-      });
-      expect(JSON.parse(fetchMock.calls()[2][1].body)).toEqual({
-        name: 'foo',
-        description: 'desc',
-        divisible: false,
-      });
-      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully saved.', 'success', '/foo/bar');
-      done();
-    }, 500);
+    const descriptionInput = screen.getByLabelText(/Description/i);
+    await user.clear(descriptionInput);
+    await user.type(descriptionInput, 'desc');
+
+    let submitButton;
+    await waitFor(() => {
+      submitButton = container.querySelector('button.cds--btn--primary');
+      expect(submitButton).not.toBeDisabled();
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/tenants/123')).toBe(true);
+    });
+    expect(JSON.parse(fetchMock.calls()[2][1].body)).toEqual({
+      name: 'foo',
+      description: 'desc',
+      divisible: false,
+    });
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Project "foo" has been successfully saved.',
+      'success',
+      '/foo/bar'
+    );
   });
 });

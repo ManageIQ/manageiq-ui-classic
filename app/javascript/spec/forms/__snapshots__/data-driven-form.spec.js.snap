@@ -1,3 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataDrivenForm should render correctly 1`] = `"<form class=\\"cds--form form-0-2-3 form-react\\" novalidate=\\"\\"><div class=\\"cds--form-item cds--text-input-wrapper\\"><div class=\\"cds--text-input__label-wrapper\\"><label for=\\"name\\" class=\\"cds--label\\" dir=\\"auto\\">label</label></div><div class=\\"cds--text-input__field-outer-wrapper\\"><div class=\\"cds--text-input__field-wrapper\\"><input id=\\"name\\" type=\\"text\\" class=\\"cds--text-input\\" name=\\"name\\" value=\\"\\"><span class=\\"cds--text-input__counter-alert\\" role=\\"alert\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\"></span></div></div></div><div class=\\"cds--btn-set\\"><button variant=\\"primary\\" class=\\"cds--btn cds--btn--primary cds--btn--disabled\\" disabled=\\"\\" type=\\"submit\\">Save</button></div></form>"`;
+exports[`DataDrivenForm should render correctly 1`] = `
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="name"
+        >
+          label
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="name"
+            name="name"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+`;

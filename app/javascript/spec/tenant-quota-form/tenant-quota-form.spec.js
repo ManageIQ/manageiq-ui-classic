@@ -1,14 +1,12 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
-import '../helpers/miqSparkle';
-import { mount } from '../helpers/mountForm';
+import { screen, waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import TenantQuotaForm from '../../components/tenant-quota-form/index';
+import '../helpers/miqSparkle';
 
 describe('Tenant Quota Form Component', () => {
-  const api = {
+  const quotaDefinitions = {
     data: {
       quota_definitions: {
         definition1: {
@@ -27,11 +25,11 @@ describe('Tenant Quota Form Component', () => {
     },
   };
 
-  const api2 = {
+  const noQuotas = {
     resources: [],
   };
 
-  const api3 = {
+  const existingQuotas = {
     resources: [
       {
         href: 'http://localhost:3000/api/tenants/1/quotas/1',
@@ -44,38 +42,45 @@ describe('Tenant Quota Form Component', () => {
     ],
   };
 
+  beforeEach(() => {
+    fetchMock.get('/api/tenants/1', { name: 'Test Tenant' });
+    fetchMock.once('/api/tenants/1/quotas', quotaDefinitions);
+  });
+
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
   });
 
-  it('should render the manage quotas form for a tenant no quotas defined', async(done) => {
-    fetchMock.get('/api/tenants/1', { name: 'Test Tenant' });
-    fetchMock.once('/api/tenants/1/quotas', api);
-    fetchMock.get('/api/tenants/1/quotas?expand=resources', api2);
-    let wrapper;
+  it('should render the manage quotas form for a tenant no quotas defined', async() => {
+    fetchMock.get('/api/tenants/1/quotas?expand=resources', noQuotas);
 
-    await act(async() => {
-      wrapper = mount(<TenantQuotaForm recordId="1" />);
+    const { container } = renderWithRedux(<TenantQuotaForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render the manage quotas form for a tenant with 1 quota already defined', async(done) => {
-    fetchMock.get('/api/tenants/1', { name: 'Test Tenant' });
-    fetchMock.once('/api/tenants/1/quotas', api);
-    fetchMock.get('/api/tenants/1/quotas?expand=resources', api3);
-    let wrapper;
+  it('should render the manage quotas form for a tenant with 1 quota already defined', async() => {
+    fetchMock.get('/api/tenants/1/quotas?expand=resources', existingQuotas);
 
-    await act(async() => {
-      wrapper = mount(<TenantQuotaForm recordId="1" />);
+    const { container } = renderWithRedux(<TenantQuotaForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 });

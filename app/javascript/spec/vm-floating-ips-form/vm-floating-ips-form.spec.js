@@ -1,10 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
+import { waitFor } from '@testing-library/react';
 import VmFloatingIPsForm from '../../components/vm-floating-ips/vm-floating-ips-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Associate / Disassociate form component', () => {
   const samplerecordId = '1';
@@ -23,7 +21,10 @@ describe('Associate / Disassociate form component', () => {
 
   beforeEach(() => {
     fetchMock.get(`/api/vms/${samplerecordId}`, sampleCloudTennantId);
-    fetchMock.get(`/api/floating_ips?expand=resources&filter[]=cloud_tenant_id=${sampleCloudTennantId.cloud_tenant_id}`, sampleFloatingIpChoice);
+    fetchMock.get(
+      `/api/floating_ips?expand=resources&filter[]=cloud_tenant_id=${sampleCloudTennantId.cloud_tenant_id}`,
+      sampleFloatingIpChoice
+    );
   });
 
   afterEach(() => {
@@ -31,46 +32,42 @@ describe('Associate / Disassociate form component', () => {
     fetchMock.restore();
   });
 
-  it('should render form', (done) => {
-    const wrapper = shallow(<VmFloatingIPsForm />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render form', async() => {
+    const { container } = renderWithRedux(<VmFloatingIPsForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render associate form variant', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate />);
-    });
+  it('should render associate form variant', async() => {
+    const { container } = renderWithRedux(
+      <VmFloatingIPsForm recordId={samplerecordId} isAssociate />
+    );
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render disassociate form variant', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />);
-    });
+  it('should render disassociate form variant', async() => {
+    const { container } = renderWithRedux(
+      <VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />
+    );
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
-  /*
- * Submit Logic
- */
+  /**
+   * Submit Logic
+   */
 
-  it('should submit Associate API call', async(done) => {
+  it('should submit Associate API call', async() => {
     const submitData = {
       action: 'associate',
       resource: {
@@ -78,12 +75,18 @@ describe('Associate / Disassociate form component', () => {
       },
     };
     fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
-    const wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const { container } = renderWithRedux(
+      <VmFloatingIPsForm recordId={samplerecordId} isAssociate />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit Disassociate API call', async(done) => {
+  it('should submit Disassociate API call', async() => {
     const submitData = {
       action: 'disassociate',
       resource: {
@@ -91,8 +94,14 @@ describe('Associate / Disassociate form component', () => {
       },
     };
     fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
-    const wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const { container } = renderWithRedux(
+      <VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 });

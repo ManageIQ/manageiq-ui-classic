@@ -1,3 +1,357 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Orcherstration Stack form should render copy variant 1`] = `ReactWrapper {}`;
+exports[`Orcherstration Stack form should render copy variant 1`] = `
+<div>
+  <div
+    class="cds--css-grid"
+  >
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                name="name"
+                type="text"
+                value="bar"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--text-area__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="description"
+            >
+              Description
+            </label>
+          </div>
+          <div
+            class="cds--text-area__wrapper"
+          >
+            <textarea
+              aria-invalid="false"
+              class="cds--text-area"
+              id="description"
+              name="description"
+              placeholder=""
+              rows="4"
+              style="width: 100%;"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-area__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+        <div
+          class=""
+          id="template-type"
+          name="template-type"
+        />
+        <div
+          class=""
+          id="provider-type"
+          name="provider-type"
+        />
+        <div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              class="cds--checkbox"
+              id="draft"
+              name="draft"
+              type="checkbox"
+              value=""
+            />
+            <label
+              class="cds--checkbox-label"
+              for="draft"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                Draft
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+        </div>
+        <div
+          class=""
+          id="code-section"
+          name="code-section"
+        >
+          <fieldset
+            class="cds--fieldset"
+          >
+            <legend
+              class="cds--label"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Content
+            </legend>
+            <div
+              class="cds--form-item"
+            >
+              <fieldset
+                class="cds--radio-button-group cds--radio-button-group--label-right"
+              >
+                <div
+                  class="cds--radio-button-wrapper"
+                >
+                  <input
+                    checked=""
+                    class="cds--radio-button"
+                    id="radio-button-33"
+                    name="--content--mode"
+                    type="radio"
+                    value="yaml"
+                  />
+                  <label
+                    class="cds--radio-button__label"
+                    for="radio-button-33"
+                  >
+                    <span
+                      class="cds--radio-button__appearance"
+                    />
+                    <span
+                      class="cds--radio-button__label-text"
+                      dir="auto"
+                    >
+                      yaml
+                      
+                    </span>
+                  </label>
+                </div>
+                <div
+                  class="cds--radio-button-wrapper"
+                >
+                  <input
+                    class="cds--radio-button"
+                    id="radio-button-34"
+                    name="--content--mode"
+                    type="radio"
+                    value="json"
+                  />
+                  <label
+                    class="cds--radio-button__label"
+                    for="radio-button-34"
+                  >
+                    <span
+                      class="cds--radio-button__appearance"
+                    />
+                    <span
+                      class="cds--radio-button__label-text"
+                      dir="auto"
+                    >
+                      json
+                      
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="cds--radio-button__validation-msg"
+              />
+            </div>
+            <div
+              class="react-codemirror2 miq-codemirror "
+            >
+              <div
+                class="CodeMirror cm-s-eclipse CodeMirror-wrap"
+                translate="no"
+              >
+                <div
+                  style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 0px;"
+                >
+                  <textarea
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline: none;"
+                    tabindex="0"
+                  />
+                </div>
+                <div
+                  class="CodeMirror-vscrollbar"
+                  cm-not-content="true"
+                  style="display: block; bottom: 0px;"
+                  tabindex="-1"
+                >
+                  <div
+                    style="min-width: 1px; height: 53px;"
+                  />
+                </div>
+                <div
+                  class="CodeMirror-hscrollbar"
+                  cm-not-content="true"
+                  tabindex="-1"
+                >
+                  <div
+                    style="height: 100%; min-height: 1px; width: 0px;"
+                  />
+                </div>
+                <div
+                  class="CodeMirror-scrollbar-filler"
+                  cm-not-content="true"
+                />
+                <div
+                  class="CodeMirror-gutter-filler"
+                  cm-not-content="true"
+                />
+                <div
+                  class="CodeMirror-scroll"
+                  tabindex="-1"
+                >
+                  <div
+                    class="CodeMirror-sizer"
+                    style="margin-left: 0px; padding-right: 0px; padding-bottom: 0px;"
+                  >
+                    <div
+                      style="position: relative;"
+                    >
+                      <div
+                        class="CodeMirror-lines"
+                        role="presentation"
+                      >
+                        <div
+                          role="presentation"
+                          style="position: relative; outline: none;"
+                        >
+                          <div
+                            class="CodeMirror-measure"
+                          />
+                          <div
+                            class="CodeMirror-measure"
+                          >
+                            <pre
+                              class="CodeMirror-line"
+                              role="presentation"
+                            >
+                              <span
+                                role="presentation"
+                                style="padding-right: .1px;"
+                              >
+                                content edited
+                              </span>
+                            </pre>
+                          </div>
+                          <div
+                            style="position: relative; z-index: 1;"
+                          />
+                          <div
+                            class="CodeMirror-cursors"
+                          />
+                          <div
+                            class="CodeMirror-code"
+                            role="presentation"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style="position: absolute; height: 50px; width: 1px; border-bottom: 0px solid transparent;"
+                  />
+                  <div
+                    class="CodeMirror-gutters"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="CodeMirror-gutter CodeMirror-lint-markers"
+                    />
+                    <div
+                      class="CodeMirror-gutter CodeMirror-linenumbers"
+                      style="width: 1px;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cds--form__helper-text"
+            >
+              Select the format type above to apply syntax highlighting for better readability
+            </div>
+          </fieldset>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary"
+            type="submit"
+            variant="primary"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

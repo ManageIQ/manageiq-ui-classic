@@ -1,15 +1,10 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import AnsibleRepositoryForm from '../../components/ansible-repository-form';
 
-require('../helpers/set_fixtures_helper.js');
-require('../helpers/old_js_file_require_helper.js');
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
-
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
+import '../helpers/miqSparkle';
 
 describe('Ansible Repository form component', () => {
   let submitSpyMiqSparkleOn;
@@ -31,6 +26,17 @@ describe('Ansible Repository form component', () => {
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
+    // Mock the provider API call that happens on component mount
+    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', {
+      resources: [{ href: 'http://localhost:3000/api/providers/2' }],
+    });
+    // Mock the credentials API call for the form schema
+    fetchMock.get(
+      `/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending`,
+      {
+        resources: [{ id: '149', name: 'Test Credential' }],
+      }
+    );
   });
 
   afterEach(() => {
@@ -40,29 +46,28 @@ describe('Ansible Repository form component', () => {
     submitSpyMiqSparkleOff.mockRestore();
   });
 
-  it('should render add form', (done) => {
-    const wrapper = shallow(<AnsibleRepositoryForm />);
+  it('should render add form', async() => {
+    const { container } = renderWithRedux(<AnsibleRepositoryForm />);
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit variant', async(done) => {
-    fetchMock.get(`/api/configuration_script_sources/23?attributes=${attributes.join(',')}`, repositoryMock);
-    const wrapper = shallow(<AnsibleRepositoryForm repositoryId="31" />);
+  it('should render edit variant', async() => {
+    fetchMock.get(`/api/configuration_script_sources/31?attributes=${attributes.join(',')}`, repositoryMock);
+    const { container } = renderWithRedux(<AnsibleRepositoryForm repositoryId="31" />);
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit add form', async(done) => {
-    const wrapper = shallow(<AnsibleRepositoryForm />);
+  it('should submit add form', async() => {
     const data = {
       authentication_id: '149',
       description: 'playbooks for testing',
@@ -73,15 +78,17 @@ describe('Ansible Repository form component', () => {
       manager_provider: { href: 'http://localhost:3000/api/providers/2' },
     };
     fetchMock.postOnce('/api/configuration_script_sources/', data);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+
+    const { container } = renderWithRedux(<AnsibleRepositoryForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit edit form', async(done) => {
-    const wrapper = shallow(<AnsibleRepositoryForm />);
+  it('should submit edit form', async() => {
     fetchMock.get(`/api/configuration_script_sources/23?attributes=${attributes.join(',')}`, repositoryMock);
     const data = {
       authentication_id: null,
@@ -92,10 +99,13 @@ describe('Ansible Repository form component', () => {
       verify_ssl: false,
     };
     fetchMock.postOnce('/api/configuration_script_sources/23', data);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+
+    const { container } = renderWithRedux(<AnsibleRepositoryForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 });

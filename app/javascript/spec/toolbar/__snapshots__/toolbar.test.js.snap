@@ -1,3 +1,808 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolbar Well it works ;-) 1`] = `ShallowWrapper {}`;
+exports[`Toolbar Well it works ;-) 1`] = `
+<div>
+  <div
+    class="toolbar-pf-actions miq-toolbar-actions"
+  >
+    <div
+      class="miq-toolbar-group form-group"
+    >
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-2"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="history_choice"
+              title="History"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="fa fa-arrow-left fa-lg"
+                />
+                <svg
+                  aria-label="History"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  History
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-2"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              History
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <button
+        class="btn btn-default toolbar-button"
+        id="summary_reload"
+        name="summary_reload"
+        title="Refresh this page"
+        type="button"
+      >
+        <i
+          class="fa fa-refresh fa-lg"
+        />
+      </button>
+    </div>
+    <div
+      class="miq-toolbar-group form-group"
+    >
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-5"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_vmdb_choice"
+              title="Configuration"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="fa fa-cog fa-lg"
+                />
+                <svg
+                  aria-label="Configuration"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Configuration
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-5"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Configuration
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-8"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_policy_choice"
+              title="Policy"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="fa fa-shield fa-lg"
+                />
+                <svg
+                  aria-label="Policy"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Policy
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-8"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Policy
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-11"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_lifecycle_choice"
+              title="Lifecycle"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="fa fa-recycle fa-lg"
+                />
+                <svg
+                  aria-label="Lifecycle"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Lifecycle
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-11"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Lifecycle
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-14"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_monitoring_choice"
+              title="Monitoring"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="ff ff-monitoring fa-lg"
+                />
+                <svg
+                  aria-label="Monitoring"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Monitoring
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-14"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Monitoring
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-17"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_power_choice"
+              title="VM Power Functions"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="fa fa-power-off fa-lg"
+                />
+                <svg
+                  aria-label="Power"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Power
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-17"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Power
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-20"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="vm_remote_access_choice"
+              title="VM Remote Access"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="pficon pficon-screen fa-lg"
+                />
+                <svg
+                  aria-label="Access"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  Access
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-20"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Access
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      class="miq-toolbar-group form-group"
+    >
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-23"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="custom_24"
+              title="group1"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="ff ff-class fa-lg"
+                  style="color: rgb(163, 65, 171);"
+                />
+                <svg
+                  aria-label="group1"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  group1
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-23"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              group1
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-26"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="custom_28"
+              title="group2"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="ff ff-cloud-object-store fa-lg"
+                  style="color: rgb(80, 34, 155);"
+                />
+                <svg
+                  aria-label="group2"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  group2
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-26"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              group2
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--overflow-menu__wrapper"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-29"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+              floatingmenu="true"
+              id="custom_84"
+              title="test"
+              type="button"
+            >
+              <div
+                class="toolbar-overflow"
+              >
+                <i
+                  class="pficon pficon-save fa-lg"
+                />
+                <svg
+                  aria-label="test"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+                <span>
+                  test
+                </span>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-29"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              test
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <div
+        class="btn-group kebab"
+      >
+        <span
+          class="cds--overflow-menu__wrapper"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="tooltip-32"
+                class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-label="Options"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="16"
+                    cy="8"
+                    r="2"
+                  />
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="2"
+                  />
+                  <circle
+                    cx="16"
+                    cy="24"
+                    r="2"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-32"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Options
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="miq-toolbar-group form-group"
+    >
+      <button
+        class="btn btn-default toolbar-button"
+        id="vm_download_pdf"
+        name="vm_download_pdf"
+        title="Print or export summary"
+        type="button"
+      >
+        <i
+          class="pficon pficon-print fa-lg"
+        />
+      </button>
+    </div>
+    <div
+      class="toolbar-pf-action-right"
+    >
+      <div
+        class="form-group toolbar-pf-view-selector"
+      >
+        <button
+          class="btn btn-link"
+          data-send_checked=""
+          data-url="/show_list"
+          data-url_parms="?type=grid"
+          id="view_grid"
+          name="view_grid"
+          title="Grid View"
+          type="button"
+        >
+          <i
+            class="fa fa-th"
+          />
+        </button>
+        <button
+          class="btn btn-link"
+          data-send_checked=""
+          data-url="/show_list"
+          data-url_parms="?type=tile"
+          id="view_tile"
+          name="view_tile"
+          title="Tile View"
+          type="button"
+        >
+          <i
+            class="fa fa-th-large"
+          />
+        </button>
+        <button
+          class="btn btn-link active"
+          data-send_checked=""
+          data-url="/show_list"
+          data-url_parms="?type=list"
+          disabled=""
+          id="view_list"
+          name="view_list"
+          title="List View"
+          type="button"
+        >
+          <i
+            class="fa fa-th-list"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
