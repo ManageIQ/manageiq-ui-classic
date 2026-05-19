@@ -98,27 +98,26 @@ const RoutersForm = ({ routerId }) => {
       API.get(`/api/network_routers/${routerId}?attributes=cloud_network.cloud_subnets.ids,external_gateway_info`)
         .then((initialValues) => {
           const data = formatInitialData(initialValues);
-          API.get(
-            `/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=${data.cloud_network_id}`
-          ).then((data) => {
-            let subnets = data.resources;
-            subnets = subnets.map(({ id, name }) => ({ label: name, value: id }));
-            setState((state) => ({
-              ...state,
-              subnets,
-            }));
-          });
-          setState({
+          Promise.all([
+          API.get(`/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=${data.cloud_network_id}`),
+          API.options(`/api/network_routers/${routerId}`)
+        ]).then(([subnetsResponse, optionsResponse]) => {
+          const subnets = subnetsResponse.resources.map(({ id, name }) => ({ 
+            label: name, 
+            value: id 
+          }));
+          loadSchema({})(optionsResponse);
+          setState((state) => ({
+            ...state,
             initialValues,
+            subnets,
             isLoading: false,
-          });
-          API.options(`/api/network_routers/${routerId}`).then(
-            loadSchema({})
-          );
+          }));
           miqSparkleOff();
         });
-    }
-  }, [routerId]);
+      })
+  }
+}, [routerId]);
 
   const onSubmit = (values) => {
     const resources = getSubmitData(values);
