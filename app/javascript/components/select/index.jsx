@@ -64,7 +64,7 @@ SelectWithOnChange.defaultProps = {
   isDisabled: undefined,
   loadOptions: undefined,
   onChange: undefined,
-  options: [],
+  options: undefined,
   placeholder: `<${__('Choose')}>`,
 };
 
