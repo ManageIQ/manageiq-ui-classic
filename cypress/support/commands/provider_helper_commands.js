@@ -642,8 +642,13 @@ function selectProviderAndDeleteWithOptionalFlashMessage({
 /**
  * Generates a test suite for validating the add form of a provider
  * @param {Object} providerConfig - The provider configuration object
+ * @param {Object} testOptions - Test configuration options
+ * @param {boolean} testOptions.isAzureStack - Whether the provider is Azure Stack (requires special handling)
+ * @param {boolean} testOptions.isAmazonEc2 - Whether the provider is Amazon EC2 (includes refresh operation test)
  */
-function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
+function generateAddFormValidationTests(providerConfig, testOptions = {}) {
+  const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
+  
   describe(`Validate ${providerConfig.type} add form`, () => {
     it('Validate visibility of elements', () => {
       cy.validateProviderFormFields(providerConfig, false);
@@ -667,12 +672,12 @@ function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
       );
     });
 
-    it('Verify successful validate + add/refresh/delete operations', () => {
+    it(`Verify successful validate + add/${isAmazonEc2 ? 'refresh/' : ''}delete operations`, () => {
       /**
        * The provider's unique name is set in nameValue variable
        */
       const uniqueId = generateUniqueIdentifier();
-      const nameValue = `${providerConfig.nameValue} - verify-validate-add-refresh-and-delete-operations - ${uniqueId}`;
+      const nameValue = `${providerConfig.nameValue} - verify-validate-add-${isAmazonEc2 ? 'refresh-' : ''}and-delete-operations - ${uniqueId}`;
       const hostValue = `${slugifyWith(
         providerConfig.type,
         '-'
@@ -685,14 +690,24 @@ function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
       assertValidationSuccessMessage();
       cy.interceptAddProviderApi({ isAzureStack });
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGES.OPERATION_SAVED);
-      // Refresh
-      selectCreatedProvider(nameValue);
-      cy.expect_browser_confirm_with_text({
-        confirmTriggerFn: () =>
-          cy.toolbar('Configuration', 'Refresh Relationships and Power States'),
-        containsText: FLASH_MESSAGES.REFRESH_OPERATION,
-      });
-      cy.expect_flash(flashClassMap.success, FLASH_MESSAGES.REFRESH_OPERATION);
+
+      if (isAmazonEc2) {
+        // Refresh
+        selectCreatedProvider(nameValue);
+        cy.expect_browser_confirm_with_text({
+          confirmTriggerFn: () =>
+            cy.toolbar(
+              'Configuration',
+              'Refresh Relationships and Power States'
+            ),
+          containsText: FLASH_MESSAGES.REFRESH_OPERATION,
+        });
+        cy.expect_flash(
+          flashClassMap.success,
+          FLASH_MESSAGES.REFRESH_OPERATION
+        );
+      }
+      
       // Delete
       // FIXME: remove this block once bug is fixed
       // Bug: After refresh, config option other than add remains disabled and requires any action to be performed to enable it back
@@ -711,9 +726,13 @@ function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
 /**
  * Generates a test suite for validating the edit form of a provider
  * @param {Object} providerConfig - The provider configuration object
- * @param {boolean} isAzureStack - Whether the provider is Azure Stack (requires special handling)
+ * @param {Object} testOptions - Test configuration options
+ * @param {boolean} testOptions.isAzureStack - Whether the provider is Azure Stack (requires special handling)
+ * @param {boolean} testOptions.isAmazonEc2 - Whether the provider is Amazon EC2
  */
-function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
+function generateEditFormValidationTests(providerConfig, testOptions = {}) {
+  const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
+
   describe(`Validate ${providerConfig.type} edit form`, () => {
     /**
      * The provider's unique name is set in this variable at the start of each test
@@ -735,34 +754,36 @@ function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
       cy.validateProviderFormFields(providerConfig, true);
     });
 
-    it("Should show the error message from the task_results API upon validation failure and validate reset & cancel buttons' behavior", () => {
-      // TODO: Replace with better data set-up approach
-      const uniqueId = generateUniqueIdentifier();
-      nameFieldValue = `${providerConfig.nameValue} - verify-edit-form-validation-error - ${uniqueId}`;
-      hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
-      addProviderAndOpenEditForm(
-        providerConfig,
-        nameFieldValue,
-        hostValue,
-        isAzureStack
-      );
-      updateProviderFieldsForEdit(providerConfig.type);
-      cy.providerValidation({
-        stubErrorResponse: true,
-        errorMessage: providerConfig.validationError,
+    if (isAmazonEc2) {
+      it("Should show the error message from the task_results API upon validation failure and validate reset & cancel buttons' behavior", () => {
+        // TODO: Replace with better data set-up approach
+        const uniqueId = generateUniqueIdentifier();
+        nameFieldValue = `${providerConfig.nameValue} - verify-edit-form-validation-error - ${uniqueId}`;
+        hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
+        addProviderAndOpenEditForm(
+          providerConfig,
+          nameFieldValue,
+          hostValue,
+          false
+        );
+        updateProviderFieldsForEdit(providerConfig.type);
+        cy.providerValidation({
+          stubErrorResponse: true,
+          errorMessage: providerConfig.validationError,
+        });
+        assertValidationFailureMessage();
+        cy.getFormButtonByTypeWithText({ buttonText: 'Reset' })
+          .should('be.enabled')
+          .click();
+        cy.getFormButtonByTypeWithText({
+          buttonText: 'Cancel',
+        }).click();
+        cy.expect_flash(
+          flashClassMap.success,
+          FLASH_MESSAGES.OPERATION_CANCELLED
+        );
       });
-      assertValidationFailureMessage();
-      cy.getFormButtonByTypeWithText({ buttonText: 'Reset' })
-        .should('be.enabled')
-        .click();
-      cy.getFormButtonByTypeWithText({
-        buttonText: 'Cancel',
-      }).click();
-      cy.expect_flash(
-        flashClassMap.success,
-        FLASH_MESSAGES.OPERATION_CANCELLED
-      );
-    });
+    }
 
     it('Verify successful validate + edit operation', () => {
       // TODO: Replace with better data set-up approach
@@ -821,9 +842,12 @@ function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
 /**
  * Generates a test suite for validating the name uniqueness of a provider
  * @param {Object} providerConfig - The provider configuration object
- * @param {boolean} isAzureStack - Whether the provider is Azure Stack (requires special handling)
+ * @param {Object} testOptions - Test configuration options
+ * @param {boolean} testOptions.isAzureStack - Whether the provider is Azure Stack (requires special handling)
  */
-function generateNameUniquenessTests(providerConfig, isAzureStack = false) {
+function generateNameUniquenessTests(providerConfig, testOptions = {}) {
+  const { isAzureStack = false } = testOptions;
+
   describe(`${providerConfig.type} provider name uniqueness validation`, () => {
     /**
      * The provider's unique name is set in this variable at the start of the test
@@ -862,11 +886,14 @@ function generateNameUniquenessTests(providerConfig, isAzureStack = false) {
  * @param {Object} providerConfig - The provider configuration object
  */
 export function generateProviderTests(providerConfig) {
-  const isAzureStack = providerConfig.type === PROVIDER_TYPES.AZURE_STACK;
+  const testOptions = {
+    isAzureStack: providerConfig.type === PROVIDER_TYPES.AZURE_STACK,
+    isAmazonEc2: providerConfig.type === PROVIDER_TYPES.AMAZON_EC2,
+  };
 
   describe(`Validate cloud provider type: ${providerConfig.type}`, () => {
-    generateAddFormValidationTests(providerConfig, isAzureStack);
-    generateEditFormValidationTests(providerConfig, isAzureStack);
-    generateNameUniquenessTests(providerConfig, isAzureStack);
+    generateAddFormValidationTests(providerConfig, testOptions);
+    generateEditFormValidationTests(providerConfig, testOptions);
+    generateNameUniquenessTests(providerConfig, testOptions);
   });
 }
