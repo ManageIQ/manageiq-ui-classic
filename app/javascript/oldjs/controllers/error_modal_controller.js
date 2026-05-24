@@ -9,6 +9,7 @@ function ErrorModalController($timeout) {
 
   listenToRx(function(event) {
     if ('serverError' in event) {
+      console.log(event.serverError.headers.get('content-type'));
       $timeout(function() {
         $ctrl.show(event.serverError, event.source, event.backendName);
       });

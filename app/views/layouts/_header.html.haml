@@ -15,6 +15,7 @@
                           :miqGroups => groups}, :id => 'main-menu')
 
 = react('ToastList')
+= react('MiqErrorModal')
 = react('MiqAboutModal', {:dialogClassName => ::Settings.server.custom_login_logo ? 'whitelabel' : ''})
 
 = render :partial => "layouts/spinner"
