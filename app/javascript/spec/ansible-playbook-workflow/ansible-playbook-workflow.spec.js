@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import AnsiblePlaybookWorkflow from '../../components/ansible-playbook-workflow';
 import { ansiblePlaybookData } from './ansible-playbook-workflow.data';

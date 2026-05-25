@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import SettingsLabelTagMapping from '../../components/settings-label-tag-mapping';
 import { settingsLabelTagMappingData } from './data';

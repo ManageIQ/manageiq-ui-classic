@@ -1,4 +1,3 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender } from '@testing-library/react';
 

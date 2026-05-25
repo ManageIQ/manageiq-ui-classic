@@ -1,4 +1,3 @@
-import React from 'react';
 import { waitFor } from '@testing-library/react';
 import { renderWithRedux } from '../helpers/mountForm';
 import PxeIsoDatastoreForm from '../../components/pxe-iso-datastore-form/index';

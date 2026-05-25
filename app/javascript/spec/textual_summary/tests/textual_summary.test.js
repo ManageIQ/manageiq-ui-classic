@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { TextualSummary } from '../../../components/textual_summary/index';
 import { summary1 } from '../data/textual_summary';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import IconOrImage from '../../../components/textual_summary/icon_or_image';
 

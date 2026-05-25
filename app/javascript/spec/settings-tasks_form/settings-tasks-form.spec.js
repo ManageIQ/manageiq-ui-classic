@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import SettingsTasksForm from '../../components/settings-tasks-form';

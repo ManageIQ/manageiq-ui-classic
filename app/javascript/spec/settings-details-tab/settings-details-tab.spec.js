@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock';
 import { render, waitFor } from '@testing-library/react';
 import SettingsDetailsTab from '../../components/settings-details-tab';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { TaggingConnected } from '../containers/tagging';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
