@@ -1,4 +1,3 @@
-import React from 'react';
 import { pick } from 'lodash';
 import AsyncAction from '../async-action-button';
 

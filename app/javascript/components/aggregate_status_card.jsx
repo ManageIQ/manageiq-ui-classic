@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Quadicon } from './quadicon';
 import PfAggregateStatusCard from './pf_aggregate_status_card';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './action-form.schema';

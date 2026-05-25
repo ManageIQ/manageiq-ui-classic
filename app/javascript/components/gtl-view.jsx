@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 import { http } from '../http_api';

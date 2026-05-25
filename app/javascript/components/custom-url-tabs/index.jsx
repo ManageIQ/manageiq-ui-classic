@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, TabList, Tab, Modal } from '@carbon/react';
 import { checkForFormChanges } from './helper';

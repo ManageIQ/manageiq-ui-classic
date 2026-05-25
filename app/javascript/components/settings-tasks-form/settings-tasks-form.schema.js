@@ -1,4 +1,3 @@
-import React from 'react';
 import { componentTypes, validatorTypes } from '@@ddf';
 import Icon from './icons';
 

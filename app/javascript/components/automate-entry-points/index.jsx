@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Checkbox, Loading, Modal, ModalBody,
 } from '@carbon/react';

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { OverflowMenu, OverflowMenuItem } from '@carbon/react';
 import { ChevronDown } from '@carbon/react/icons';

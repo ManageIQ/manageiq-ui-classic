@@ -1,4 +1,3 @@
-import React from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './vm-floating-ips-form.schema';

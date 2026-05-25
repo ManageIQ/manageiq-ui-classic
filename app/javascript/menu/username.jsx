@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { SideNavItems, SideNavItem, Button } from '@carbon/react';
 import { UserAvatar } from '@carbon/react/icons';

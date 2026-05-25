@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@carbon/react';
 import { ChevronDown } from '@carbon/react/icons';
 import PropTypes from 'prop-types';

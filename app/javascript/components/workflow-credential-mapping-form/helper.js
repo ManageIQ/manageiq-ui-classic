@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import MiqDataTable from '../miq-data-table';
 

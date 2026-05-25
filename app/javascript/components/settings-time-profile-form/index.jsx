@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
 import PropTypes from 'prop-types';

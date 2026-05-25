@@ -1,4 +1,3 @@
-import React from 'react';
 import { refresh } from './refresh.js';
 
 function click(url, e) {

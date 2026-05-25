@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-form.schema';

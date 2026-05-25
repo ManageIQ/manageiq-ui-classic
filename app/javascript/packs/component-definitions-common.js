@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BreadcrumbsBar } from '../components/breadcrumbs';
 import { MainMenu, Navbar } from '../menu';
 import { Quadicon } from '../components/quadicon';

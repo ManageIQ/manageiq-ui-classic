@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@carbon/react';
 import MiqStructuredListContent from '../miq-structured-list-content';

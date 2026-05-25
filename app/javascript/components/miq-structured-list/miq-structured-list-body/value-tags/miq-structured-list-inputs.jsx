@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, TextArea, Dropdown } from '@carbon/react';
 import { Controlled as CodeMirror } from 'react-codemirror2';

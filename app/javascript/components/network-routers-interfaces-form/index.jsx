@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './network-routers-interfaces-form.schema';

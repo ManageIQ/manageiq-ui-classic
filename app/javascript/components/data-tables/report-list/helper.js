@@ -1,5 +1,4 @@
 /* eslint-disable radix */
-import React from 'react';
 
 /** Icons used in report list. */
 const ReportIcons = {

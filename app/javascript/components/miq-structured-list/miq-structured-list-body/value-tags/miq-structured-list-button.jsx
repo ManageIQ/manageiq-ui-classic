@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import { customOnClickHandler } from '../../../../helpers/custom-click-handler';

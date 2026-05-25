@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { StructuredListWrapper, Accordion, AccordionItem } from '@carbon/react';

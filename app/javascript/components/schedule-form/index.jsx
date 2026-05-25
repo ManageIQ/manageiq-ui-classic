@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';

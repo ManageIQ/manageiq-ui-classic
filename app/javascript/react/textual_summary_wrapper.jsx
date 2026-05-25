@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { TextualSummary } from '../components/textual_summary';
 import textualSummaryGenericClick from './textual_summary_click';

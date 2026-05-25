@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { MeterChart } from '@carbon/charts-react';
 import { Loading } from '@carbon/react';

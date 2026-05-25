@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Table = ({ children, ...props }) => <table {...props}>{children}</table>;

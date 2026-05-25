@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 import { CellAction } from '../../miq-data-table/helper';

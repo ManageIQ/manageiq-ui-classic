@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from '@carbon/react';
 import miqRedirectBack from '../../../helpers/miq-redirect-back';

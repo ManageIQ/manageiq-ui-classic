@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import { Button } from '@carbon/react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';

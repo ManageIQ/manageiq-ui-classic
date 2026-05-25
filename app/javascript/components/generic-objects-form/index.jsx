@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';

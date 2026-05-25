@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import { Button, TextInput } from '@carbon/react';
 import { TrashCan } from '@carbon/react/icons';

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Search as SearchIcon } from '@carbon/react/icons';
