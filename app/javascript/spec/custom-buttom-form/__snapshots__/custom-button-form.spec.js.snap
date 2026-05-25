@@ -267,7 +267,7 @@ exports[`Custom Button form component should add a new generic object custom but
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-14-label"
+          id="downshift-12-label"
         >
           Dialog
         </label>
@@ -280,10 +280,10 @@ exports[`Custom Button form component should add a new generic object custom but
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-14-menu"
+              aria-controls="downshift-12-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-14-label"
+              aria-labelledby="downshift-12-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -297,11 +297,11 @@ exports[`Custom Button form component should add a new generic object custom but
             />
             
             <button
-              aria-controls="downshift-14-menu"
+              aria-controls="downshift-12-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-14-toggle-button"
+              id="downshift-12-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -324,9 +324,9 @@ exports[`Custom Button form component should add a new generic object custom but
           </div>
           
           <ul
-            aria-labelledby="downshift-14-label"
+            aria-labelledby="downshift-12-label"
             class="cds--list-box__menu"
-            id="downshift-14-menu"
+            id="downshift-12-menu"
             role="listbox"
           />
         </div>
@@ -1254,7 +1254,7 @@ exports[`Custom Button form component should edit a generic object custom button
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-16-label"
+          id="downshift-14-label"
         >
           Dialog
         </label>
@@ -1267,10 +1267,10 @@ exports[`Custom Button form component should edit a generic object custom button
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-16-menu"
+              aria-controls="downshift-14-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-16-label"
+              aria-labelledby="downshift-14-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -1305,11 +1305,11 @@ exports[`Custom Button form component should edit a generic object custom button
               </svg>
             </button>
             <button
-              aria-controls="downshift-16-menu"
+              aria-controls="downshift-14-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-16-toggle-button"
+              id="downshift-14-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1332,9 +1332,9 @@ exports[`Custom Button form component should edit a generic object custom button
           </div>
           
           <ul
-            aria-labelledby="downshift-16-label"
+            aria-labelledby="downshift-14-label"
             class="cds--list-box__menu"
-            id="downshift-16-menu"
+            id="downshift-14-menu"
             role="listbox"
           />
         </div>
@@ -1817,7 +1817,7 @@ exports[`Custom Button form component should render the adding form for generic 
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-5-label"
+          id="downshift-4-label"
         >
           Dialog
         </label>
@@ -1830,10 +1830,10 @@ exports[`Custom Button form component should render the adding form for generic 
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-5-menu"
+              aria-controls="downshift-4-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-5-label"
+              aria-labelledby="downshift-4-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -1847,11 +1847,11 @@ exports[`Custom Button form component should render the adding form for generic 
             />
             
             <button
-              aria-controls="downshift-5-menu"
+              aria-controls="downshift-4-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-5-toggle-button"
+              id="downshift-4-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1874,9 +1874,9 @@ exports[`Custom Button form component should render the adding form for generic 
           </div>
           
           <ul
-            aria-labelledby="downshift-5-label"
+            aria-labelledby="downshift-4-label"
             class="cds--list-box__menu"
-            id="downshift-5-menu"
+            id="downshift-4-menu"
             role="listbox"
           />
         </div>
@@ -2804,7 +2804,7 @@ exports[`Custom Button form component should render the editing form for generic
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-7-label"
+          id="downshift-6-label"
         >
           Dialog
         </label>
@@ -2817,10 +2817,10 @@ exports[`Custom Button form component should render the editing form for generic
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-7-menu"
+              aria-controls="downshift-6-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-7-label"
+              aria-labelledby="downshift-6-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -2855,11 +2855,11 @@ exports[`Custom Button form component should render the editing form for generic
               </svg>
             </button>
             <button
-              aria-controls="downshift-7-menu"
+              aria-controls="downshift-6-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-7-toggle-button"
+              id="downshift-6-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -2882,9 +2882,9 @@ exports[`Custom Button form component should render the editing form for generic
           </div>
           
           <ul
-            aria-labelledby="downshift-7-label"
+            aria-labelledby="downshift-6-label"
             class="cds--list-box__menu"
-            id="downshift-7-menu"
+            id="downshift-6-menu"
             role="listbox"
           />
         </div>
