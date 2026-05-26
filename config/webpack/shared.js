@@ -23,7 +23,6 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 const gettextDir = i18n;
 
 const sharedPackages = [
-  // manageiq-providers-lenovo, manageiq-providers-nxst & bluecf-customization need this to resolve the Carbon package
   '@carbon/react',
   'angular',
   'connected-react-router',
