@@ -27,19 +27,21 @@ module.exports = [
     // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
     exclude: /node_modules\/(?!(@carbon|es-toolkit))/,
   },
-
-  {
-    test: require.resolve('bootstrap-datepicker'),
-    use: 'imports-loader?exports=>undefined,define=>undefined',
-  },
-  {
-    test: require.resolve('bootstrap-select'),
-    use: 'imports-loader?module=>undefined,define=>undefined,this=>window',
-  },
   {
     // matches both the actual path and the aliased one
     test: /gettext_i18n_rails_js.*jed\.js/,
-    use: 'imports-loader?exports=>undefined,define=>undefined,this=>window',
+    use: {
+      loader: 'imports-loader',
+      options: {
+        wrapper: {
+          thisArg: 'window',
+          args: {
+            exports: 'undefined',
+            define: 'undefined',
+          },
+        },
+      },
+    },
   },
   {
     test: /\.(jpg|jpeg|png|gif|svg|eot|ttf|woff|woff2)$/i,
