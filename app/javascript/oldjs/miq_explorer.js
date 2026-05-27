@@ -1,5 +1,5 @@
 /* global miqAccordionSwap miqAddNodeChildren miqAsyncAjax miqBuildCalendar miqButtons miqDeleteTreeCookies miqDomElementExists miqExpandParentNodes miqInitDashboardCols
- * miqInitAccordions miqInitMainContent miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts */
+ * miqInitAccordions miqInitMainContent miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject */
 ManageIQ.explorer = {};
 
 ManageIQ.explorer.updateElement = function(element, options) {
@@ -292,11 +292,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (!_.isUndefined(data.activateNode)) {
     miqExpandParentNodes(data.activateNode.activeTree, data.activateNode.osf);
     miqTreeActivateNodeSilently(data.activateNode.activeTree, data.activateNode.osf);
-  }
-
-  if (_.isObject(data.chartData)) {
-    ManageIQ.charts.chartData = data.chartData;
-    load_c3_charts();
   }
 
   if (data.resetOneTrans) {
