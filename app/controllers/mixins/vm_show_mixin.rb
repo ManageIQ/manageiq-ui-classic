@@ -40,11 +40,13 @@ module Mixins
         set_form_locals_for_file_upload
       end
 
-      if params[:id]
+      if params[:id] && params[:id] != "root"
         # if you click on a link to VM on a dashboard widget that will redirect you
         # to explorer with params[:id] and you get into the true branch
         redirected = set_elements_and_redirect_unauthorized_user
       else
+        # Reset to root node when accessing from sidebar or when id=root
+        self.x_node = "root" if params[:id] == "root" || self.x_node.nil?
         set_active_elements(allowed_features.first) unless @upload_sysprep_file || @upload_user_script
       end
 

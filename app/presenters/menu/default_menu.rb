@@ -93,7 +93,7 @@ module Menu
           Menu::Item.new('ems_infra',         N_('Providers'),         'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
           Menu::Item.new('ems_cluster',       N_("Clusters"),          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
           Menu::Item.new('host',              N_("Hosts"),             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
-          Menu::Item.new('vm_infra',          N_('Virtual Machines'),  'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
+          Menu::Item.new('vm_infra',          N_('Virtual Machines'),  'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer?id=root'),
           Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
