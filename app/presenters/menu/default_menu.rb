@@ -60,7 +60,7 @@ module Menu
         Menu::Section.new(:svc, N_("Services"), 'carbon--ToolBox', [
                             Menu::Item.new('services', N_('My Services'), 'service', {:feature => 'service_show_list'}, '/service/show_list'),
                             Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
-                            Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
+                            Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer?id=root'),
                             Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request/show_list?typ=service')
                           ])
       end
