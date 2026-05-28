@@ -359,13 +359,19 @@ class CatalogController < ApplicationController
     end
 
     if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
-      @nodetype, id = parse_nodetype_and_id(params[:id])
-      self.x_active_tree   = 'sandt_tree'
-      self.x_active_accord = 'sandt'
-      st = ServiceTemplate.find(params[:id].split("-").last)
-      prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
-      self.x_node = "#{prefix}#{id}"
-      get_node_info(x_node)
+      if params[:id] == "root"
+        # Reset to root node when accessing from sidebar
+        self.x_node = "root"
+        @in_a_form = false
+      else
+        @nodetype, id = parse_nodetype_and_id(params[:id])
+        self.x_active_tree   = 'sandt_tree'
+        self.x_active_accord = 'sandt'
+        st = ServiceTemplate.find(params[:id].split("-").last)
+        prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
+        self.x_node = "#{prefix}#{id}"
+        get_node_info(x_node)
+      end
     else
       @in_a_form = false
     end
@@ -2546,6 +2552,12 @@ class CatalogController < ApplicationController
         {:title => _("Catalogs")},
       ],
     }
+  end
+
+  # Override to force root node when accessing from sidebar with id=root
+  def x_node_right_cell
+    return "root" if params[:id] == "root"
+    super
   end
 
   menu_section :svc
