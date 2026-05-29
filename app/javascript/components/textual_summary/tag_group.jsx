@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import MiqStructuredList from '../miq-structured-list';
 

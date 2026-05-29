@@ -1,5 +1,4 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import React from 'react';
 import { loadProviderCapabilities, parseCapabilitiesForPhysical } from '../../helpers/storage_manager/load-provider-capabilities';
 import { getProviderCapabilities } from '../../helpers/storage_manager/filter-by-capabilities-utils';
 

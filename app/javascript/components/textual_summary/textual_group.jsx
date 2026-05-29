@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import GenericGroup from './generic_group';
 import TagGroup from './tag_group';

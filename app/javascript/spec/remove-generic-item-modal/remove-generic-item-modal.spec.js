@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';

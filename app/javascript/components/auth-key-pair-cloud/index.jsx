@@ -1,4 +1,3 @@
-import React from 'react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './auth-key-pair-cloud-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';

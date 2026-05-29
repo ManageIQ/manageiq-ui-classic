@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, Button, SideNavItems, SideNavItem } from '@carbon/react';
 import { Collaborate } from '@carbon/react/icons';

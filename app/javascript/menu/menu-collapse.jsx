@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight } from '@carbon/react/icons';
 import { SideNavItems, SideNavItem } from '@carbon/react';

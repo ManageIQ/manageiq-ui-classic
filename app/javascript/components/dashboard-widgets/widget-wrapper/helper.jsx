@@ -1,5 +1,4 @@
 /* eslint-disable no-alert */
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { OverflowMenuItem, Loading } from '@carbon/react';
 import classNames from 'classnames';

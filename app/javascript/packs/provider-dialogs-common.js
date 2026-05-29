@@ -1,4 +1,3 @@
-import React from 'react';
 import renderModal from '../provider-dialogs/modal';
 
 function reactModal(buttonData) {

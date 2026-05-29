@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import MiqStructuredList from '../../components/miq-structured-list';
 import {

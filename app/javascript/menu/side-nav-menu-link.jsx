@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, SideNavIcon, SideNavLink } from '@carbon/react';
 import { ChevronRight } from '@carbon/react/icons';

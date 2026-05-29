@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import datastoreSchema from './datastore-via-git.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';

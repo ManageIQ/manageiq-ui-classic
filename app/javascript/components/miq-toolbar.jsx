@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { Toolbar } from './toolbar';

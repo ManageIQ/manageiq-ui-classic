@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search } from '@carbon/react/icons';
 
 const NoRecordsFound = () => (

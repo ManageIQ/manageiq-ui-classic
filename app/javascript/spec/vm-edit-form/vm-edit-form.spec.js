@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import VmEditForm from '../../components/vm-edit-form';

@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import React from 'react';
 import PropTypes from 'prop-types';
 import { tableData, onSelectRender } from './helper';
 import MiqDataTable from '../../miq-data-table';

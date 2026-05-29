@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import { FormLabel, Button } from '@carbon/react';
 import { Close } from '@carbon/react/icons';

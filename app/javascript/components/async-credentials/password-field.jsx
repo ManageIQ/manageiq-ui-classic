@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormGroup, TextInput, Button, Grid, Column,

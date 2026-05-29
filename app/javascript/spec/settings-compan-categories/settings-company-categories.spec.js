@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import SettingsCompanyCategories from '../../components/settings-company-categories';
 import { settingsCompanyCategoriesData } from './data';

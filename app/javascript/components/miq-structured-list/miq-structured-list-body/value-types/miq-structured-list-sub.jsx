@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { StructuredListCell } from '@carbon/react';
 import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-conditional-tag';

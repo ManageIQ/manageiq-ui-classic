@@ -250,7 +250,7 @@ module.exports = [
       'react/prefer-es6-class': ['error', 'always'],
       'react/prefer-read-only-props': 'off',
       'react/prefer-stateless-function': ['error', { ignorePureComponents: true }],
-      'react/react-in-jsx-scope': 'error',
+      'react/react-in-jsx-scope': 'off',
       'react/require-default-props': ['error', { forbidDefaultForRequired: true }],
       'react/require-optimization': ['off', { allowDecorators: [] }],
       'react/require-render-return': 'error',

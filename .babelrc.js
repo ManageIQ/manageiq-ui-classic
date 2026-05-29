@@ -14,7 +14,12 @@ module.exports = {
         useBuiltIns: 'entry',
       },
     ],
-    require('@babel/preset-react').default,
+    [
+      require('@babel/preset-react').default,
+      {
+        runtime: 'automatic',
+      },
+    ],
   ],
   plugins: [
     require('@babel/plugin-transform-class-properties').default,

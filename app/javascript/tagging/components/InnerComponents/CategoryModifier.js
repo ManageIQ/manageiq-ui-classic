@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, FormGroup } from '@carbon/react';
 import TagSelector from './TagSelector';

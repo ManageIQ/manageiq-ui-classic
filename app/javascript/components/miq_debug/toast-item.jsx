@@ -1,4 +1,3 @@
-import React from 'react';
 import { isPlainObject, isArray } from 'lodash';
 
 const level2class = {

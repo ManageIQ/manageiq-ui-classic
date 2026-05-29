@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { SideNavItems, SideNavLink } from '@carbon/react';
 import SideNavMenuLink from './side-nav-menu-link';

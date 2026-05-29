@@ -1,5 +1,5 @@
 /* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check", "silent_activate", "select_node"]}] */
-import React, { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tree, Node } from 'react-wooden-tree';
