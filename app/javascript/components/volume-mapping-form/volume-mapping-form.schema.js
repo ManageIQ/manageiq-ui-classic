@@ -164,8 +164,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'host_initiator_group_id',
         label: __('Host Initiator Group:'),
         isRequired: true,
-        helperText: __('This list does not include host initiator groups which have no host initiators or which are '
-          + 'already mapped to the selected volume.'),
+        helperText: __('This list does not include host initiator groups which have no host initiators or which are already mapped to the selected volume.'),
         validate: [
           { type: validatorTypes.REQUIRED },
           { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
