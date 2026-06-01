@@ -285,8 +285,11 @@ class StorageController < ApplicationController
     @in_a_form = false
     if params[:id] # If a tree node id came in, show in one of the trees
       if params[:id] == "root"
-        # Reset to root when accessing from sidebar
+        # Reset to root when accessing from sidebar and clear filters
         self.x_node = "root"
+        @sb[:storage_search_text] = {} if @sb[:storage_search_text]
+        session[:edit] = @edit = nil
+        session[:adv_search]['Storage'] = nil if session[:adv_search]
       else
         nodetype, id = params[:id].split("-")
         # treebuilder initializes x_node to root first time in locals_for_render,
