@@ -237,9 +237,18 @@ module Mixins
     # return correct node to right cell
     def x_node_right_cell
       # Reset to root when accessing from sidebar with id=root
-      return "root" if params[:id] == "root"
-      
+      if params[:id] == "root"
+        clear_search_text_on_root_reset
+        return "root"
+      end
+
       @sb[@sb[:active_accord]].presence || x_node
+    end
+
+    # Clear search text when resetting to root node
+    def clear_search_text_on_root_reset
+      search_text_key = :"#{controller_name}_search_text"
+      @sb[search_text_key] = {} if @sb[search_text_key]
     end
 
     def x_node_text_from_session

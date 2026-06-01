@@ -3,6 +3,13 @@ module Mixins
     extend ActiveSupport::Concern
 
     def explorer
+      # Clear filters when resetting to root (before get_session_data restores them)
+      if params[:id] == "root"
+        session[:vm_filters] = nil
+        session[:adv_search] = nil if session[:adv_search]
+        @edit = nil
+      end
+
       @explorer = true
       @lastaction = "explorer"
       @timeline = @timeline_filter = true # need to set these to load timelines on vm show screen
@@ -46,7 +53,10 @@ module Mixins
         redirected = set_elements_and_redirect_unauthorized_user
       else
         # Reset to root node when accessing from sidebar or when id=root
-        self.x_node = "root" if params[:id] == "root" || self.x_node.nil?
+        if params[:id] == "root" || self.x_node.nil?
+          self.x_node = "root"
+          clear_search_text_on_root_reset if params[:id] == "root" && respond_to?(:clear_search_text_on_root_reset, true)
+        end
         set_active_elements(allowed_features.first) unless @upload_sysprep_file || @upload_user_script
       end
 
