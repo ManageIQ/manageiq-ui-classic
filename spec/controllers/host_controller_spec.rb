@@ -64,6 +64,14 @@ describe HostController do
       expect(response.status).to eq(200)
     end
 
+    it 'returns an error when trying to edit a host that does not support editing' do
+      session[:host_items] = [h1.id, h2.id]
+
+      get :edit
+      expect(controller.send(:flash_errors?)).to be_truthy
+      expect(response.status).to eq(302)
+    end
+
     it "when VM Right Size Recommendations is pressed" do
       expect(controller).to receive(:vm_right_size)
       post :button, :params => {:pressed => 'vm_right_size', :format => :js}
