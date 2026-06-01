@@ -2554,11 +2554,6 @@ class CatalogController < ApplicationController
     }
   end
 
-  # Override to force root node when accessing from sidebar with id=root
-  def x_node_right_cell
-    return "root" if params[:id] == "root"
-    super
-  end
 
   menu_section :svc
   feature_for_actions %w[ab_button_new ab_button_edit ab_group_new ab_group_edit], *EXP_EDITOR_ACTIONS

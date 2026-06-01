@@ -73,11 +73,6 @@ class VmOrTemplateController < ApplicationController
     }
   end
 
-  # Override to force root node when accessing from sidebar with id=root
-  def x_node_right_cell
-    return "root" if params[:id] == "root"
-    super
-  end
 
   menu_section :svc
   has_custom_buttons

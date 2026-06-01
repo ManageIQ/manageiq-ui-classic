@@ -236,6 +236,9 @@ module Mixins
 
     # return correct node to right cell
     def x_node_right_cell
+      # Reset to root when accessing from sidebar with id=root
+      return "root" if params[:id] == "root"
+      
       @sb[@sb[:active_accord]].presence || x_node
     end
 
