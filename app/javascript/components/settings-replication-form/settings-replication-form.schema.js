@@ -57,10 +57,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
         type: 'edit',
         rowId,
         label: __('Confirm Edit'),
-        message: __(
-          'An updated subscription must point to the same database with which it was originally created. '
-          + 'Failure to do so will result in undefined behavior. Do you want to continue?'
-        ),
+        message: __('An updated subscription must point to the same database with which it was originally created. Failure to do so will result in undefined behavior. Do you want to continue?'),
       });
     } else {
       // New records: open edit modal directly

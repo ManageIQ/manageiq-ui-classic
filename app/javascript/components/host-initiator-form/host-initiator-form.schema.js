@@ -153,8 +153,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
               {
                 type: 'pattern',
                 pattern: '^[a-z0-9:.-]*$',
-                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), '
-                  + 'periods (.) or colons (:)'),
+                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), periods (.) or colons (:)'),
               },
               {
                 type: 'max-length',
