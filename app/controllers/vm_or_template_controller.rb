@@ -73,7 +73,6 @@ class VmOrTemplateController < ApplicationController
     }
   end
 
-
   menu_section :svc
   has_custom_buttons
   feature_for_actions ['vm_show', 'miq_template_show'], :groups, :users, :patches

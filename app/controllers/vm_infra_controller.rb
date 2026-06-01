@@ -90,7 +90,6 @@ class VmInfraController < ApplicationController
     }
   end
 
-
   menu_section :inf
   feature_for_actions %w[vms_filter_accord templates_filter_accord], *ADV_SEARCH_ACTIONS
   feature_for_actions 'vm_show', :groups, :users, :patches
