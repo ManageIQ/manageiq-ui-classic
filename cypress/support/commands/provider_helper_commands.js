@@ -1,21 +1,12 @@
 import {
   SELECT_OPTIONS,
   TAB_LABELS,
-  FIELD_LABELS,
   VALIDATION_MESSAGES,
   PROVIDER_TYPES,
   REGION_OPTIONS,
   FLASH_MESSAGES,
 } from '../../e2e/ui/Compute/Clouds/Providers/provider-factory';
 import { flashClassMap } from '../assertions/assertion_constants';
-
-/**
- * Generates a unique identifier using timestamp
- * @returns {string}
- */
-function generateUniqueIdentifier() {
-  return new Date().getTime();
-}
 
 /**
  * Transforms any text string into a slug format using the given seperator('-', '_')
@@ -31,14 +22,12 @@ function slugifyWith(text, separator) {
 /**
  * Fills common form fields that are present in all provider forms
  * @param {Object} providerConfig - The provider configuration object
- * @param {string} nameValue - The name to use for the provider
  */
-function fillCommonFormFields(providerConfig, nameValue) {
-  cy.getFormSelectFieldById({ selectId: 'type' }).select(providerConfig.type);
-  cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(nameValue);
-  cy.getFormSelectFieldById({ selectId: 'zone_id' }).select(
-    SELECT_OPTIONS.ZONE_DEFAULT
-  );
+function fillCommonFormFields(providerConfig) {
+  const commonValues = providerConfig.formValues.common;
+  cy.getFormSelectFieldById({ selectId: 'type' }).select(commonValues.type);
+  cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(commonValues.name);
+  cy.getFormSelectFieldById({ selectId: 'zone_id' }).select(commonValues.zone_id);
 }
 
 /**
@@ -92,68 +81,68 @@ function fillFormFields(fields, values) {
 /**
  * Fills a provider form based on provider configuration
  * @param {Object} providerConfig - The provider configuration object
- * @param {string} nameValue - The name to use for the provider
- * @param {string} hostValue - The hostname to use for the provider
  */
 Cypress.Commands.add(
   'fillProviderForm',
-  (providerConfig, nameValue, hostValue) => {
-    fillCommonFormFields(providerConfig, nameValue);
+  (providerConfig) => {
+    fillCommonFormFields(providerConfig);
     const defaultTabKey = slugifyWith(TAB_LABELS.DEFAULT, '_');
     const defaultTabFormFields = providerConfig.formFields[defaultTabKey];
     const defaultTabFormValues = providerConfig.formValues[defaultTabKey];
     if (defaultTabFormFields && defaultTabFormValues) {
       fillFormFields(defaultTabFormFields, defaultTabFormValues);
     }
-
-    // Since the host value needs to be unique per test, it's passed as a parameter instead of
-    // being hardcoded in the static formValues object. Only the default field is used(endpoints.default.hostname)
-    if (hostValue) {
-      const defaultHostFieldId = 'endpoints.default.hostname';
-      const defaultHostFieldExists = providerConfig.formFields[
-        defaultTabKey
-      ].find((fieldObject) => fieldObject.id === defaultHostFieldId);
-      if (defaultHostFieldExists) {
-        cy.getFormInputFieldByIdAndType({
-          inputId: defaultHostFieldId,
-        }).type(hostValue);
-      }
-    }
   }
 );
 
 /**
  * Validates common form fields that are present in all provider forms
+ * @param {Object} providerConfig - The provider configuration object
  * @param {boolean} isEdit - Whether the form is in edit mode
  */
-function validateCommonFormFields(providerType, isEdit) {
-  cy.getFormLabelByForAttribute({ forValue: 'type' })
-    .should('be.visible')
-    .and('contain.text', FIELD_LABELS.TYPE);
-  if (isEdit) {
-    cy.getFormSelectFieldById({ selectId: 'type' })
+function validateCommonFormFields(providerConfig, isEdit) {
+  const commonFields = providerConfig.formFields.common;
+
+  commonFields.forEach((field) => {
+    const labelElement = cy.getFormLabelByForAttribute({ forValue: field.id })
       .should('be.visible')
-      .and('be.disabled')
-      .find('option:selected')
-      .should('have.text', providerType);
-  } else {
-    cy.getFormSelectFieldById({ selectId: 'type' })
-      .should('be.visible')
-      .and('be.enabled')
-      .select(providerType);
-  }
-  cy.getFormLabelByForAttribute({ forValue: 'name' })
-    .should('be.visible')
-    .and('contain.text', FIELD_LABELS.NAME);
-  cy.getFormInputFieldByIdAndType({ inputId: 'name' })
-    .should('be.visible')
-    .and('be.enabled');
-  cy.getFormLabelByForAttribute({ forValue: 'zone_id' })
-    .should('be.visible')
-    .and('contain.text', FIELD_LABELS.ZONE);
-  cy.getFormSelectFieldById({ selectId: 'zone_id' })
-    .should('be.visible')
-    .and('be.enabled');
+      .and('contain.text', field.label);
+
+    // Validate required field indicator (asterisk)
+    if (field.required) {
+      labelElement.find('span.ddorg__carbon-component-mapper_is-required')
+        .should('be.visible')
+        .and('contain.text', '*');
+    }
+
+    switch (field.type) {
+      case 'select':
+        if (field.id === 'type' && isEdit) {
+          // Type field is disabled in edit mode
+          cy.getFormSelectFieldById({ selectId: field.id })
+            .should('be.visible')
+            .and('be.disabled')
+            .find('option:selected')
+            .should('have.text', providerConfig.type);
+        } else {
+          cy.getFormSelectFieldById({ selectId: field.id })
+            .should('be.visible')
+            .and('be.enabled');
+          // Select the type if it's the type field in add mode
+          if (field.id === 'type' && !isEdit) {
+            cy.getFormSelectFieldById({ selectId: field.id }).select(providerConfig.type);
+          }
+        }
+        break;
+      case 'text':
+        cy.getFormInputFieldByIdAndType({ inputId: field.id })
+          .should('be.visible')
+          .and('be.enabled');
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -165,10 +154,17 @@ function validateFormFields(fields, isEdit) {
   fields.forEach((field) => {
     // Skip label validation for placeholder fields in edit mode
     if (!(isEdit && field.isPlaceholderInEditMode)) {
-      cy.getFormLabelByForAttribute({ forValue: field.id })
+      const labelElement = cy.getFormLabelByForAttribute({ forValue: field.id })
         .scrollIntoView()
         .should('be.visible')
         .and('contain.text', field.label);
+
+      // Validate required field indicator (asterisk)
+      if (field.required) {
+        labelElement.find('.ddorg__carbon-component-mapper_is-required')
+          .should('be.visible')
+          .and('contain.text', '*');
+      }
     }
 
     switch (field.type) {
@@ -335,7 +331,7 @@ function setupTabForValidation(tab, providerConfig) {
  * @param {boolean} isEdit - Whether the form is in edit mode
  */
 Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
-  validateCommonFormFields(providerConfig.type, isEdit);
+  validateCommonFormFields(providerConfig, isEdit);
   providerConfig.tabs.forEach((tab) => {
     // If not on the default tab, switch to it
     if (tab !== TAB_LABELS.DEFAULT) {
@@ -462,27 +458,20 @@ Cypress.Commands.add(
 );
 
 /**
- * Adds a provider and opens the edit form
+ * Opens the edit form for a provider that was created
  * @param {Object} providerConfig - The provider configuration object
- * @param {string} nameValue - The name to use for the provider
- * @param {string} hostValue - The hostname to use for the provider (optional)
  * @param {boolean} isAzureStack - Whether the provider is Azure Stack, which requires special handling when opening edit form
  */
-function addProviderAndOpenEditForm(
+function openEditFormForCreatedProvider(
   providerConfig,
-  nameValue,
-  hostValue,
   isAzureStack
 ) {
-  cy.fillProviderForm(providerConfig, nameValue, hostValue);
-  cy.providerValidation({
-    stubErrorResponse: false,
-  });
-  cy.interceptAddProviderApi({ isAzureStack });
+  const nameValue = providerConfig.formValues.common.name;
   selectCreatedProvider(nameValue);
   // Azure-Stack needs to be handled differently, add similar cases if needed
   // These APIs help populate the form fields
   if (isAzureStack) {
+    const hostValue = providerConfig.formValues.default?.['endpoints.default.hostname'];
     // TODO: Switch to cy.interceptApi once its enhanced to support multiple api intercepts from a single event
     cy.intercept(
       'GET',
@@ -648,18 +637,14 @@ function selectProviderAndDeleteWithOptionalFlashMessage({
  */
 function generateAddFormValidationTests(providerConfig, testOptions = {}) {
   const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
-  
+
   describe(`Validate ${providerConfig.type} add form`, () => {
     it('Validate visibility of elements', () => {
       cy.validateProviderFormFields(providerConfig, false);
     });
 
     it('Should show the error message from the task_results API upon validation failure and validate cancel button behavior', () => {
-      cy.fillProviderForm(
-        providerConfig,
-        providerConfig.nameValue,
-        'manageiq.example.com'
-      );
+      cy.fillProviderForm(providerConfig);
       cy.providerValidation({
         stubErrorResponse: true,
         errorMessage: providerConfig.validationError,
@@ -673,16 +658,8 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
     });
 
     it(`Verify successful validate + add/${isAmazonEc2 ? 'refresh/' : ''}delete operations`, () => {
-      /**
-       * The provider's unique name is set in nameValue variable
-       */
-      const uniqueId = generateUniqueIdentifier();
-      const nameValue = `${providerConfig.nameValue} - verify-validate-add-${isAmazonEc2 ? 'refresh-' : ''}and-delete-operations - ${uniqueId}`;
-      const hostValue = `${slugifyWith(
-        providerConfig.type,
-        '-'
-      )}-${uniqueId}.com`;
-      cy.fillProviderForm(providerConfig, nameValue, hostValue);
+      const nameValue = providerConfig.formValues.common.name;
+      cy.fillProviderForm(providerConfig);
       //Add
       cy.providerValidation({
         stubErrorResponse: false,
@@ -707,7 +684,7 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
           FLASH_MESSAGES.REFRESH_OPERATION
         );
       }
-      
+
       // Delete
       // FIXME: remove this block once bug is fixed
       // Bug: After refresh, config option other than add remains disabled and requires any action to be performed to enable it back
@@ -719,6 +696,10 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
         createdProviderName: nameValue,
         assertDeleteFlashMessage: true,
       });
+    });
+
+    after(() => {
+      cy.appDbState('restore');
     });
   });
 }
@@ -734,38 +715,14 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
   const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
 
   describe(`Validate ${providerConfig.type} edit form`, () => {
-    /**
-     * The provider's unique name is set in this variable at the start of each test
-     */
-    let nameFieldValue;
-    let hostValue;
-
     it('Validate visibility of elements', () => {
-      // TODO: Replace with better data set-up approach
-      const uniqueId = generateUniqueIdentifier();
-      nameFieldValue = `${providerConfig.nameValue} - verify-edit-form-elements - ${uniqueId}`;
-      hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
-      addProviderAndOpenEditForm(
-        providerConfig,
-        nameFieldValue,
-        hostValue,
-        isAzureStack
-      );
+      openEditFormForCreatedProvider(providerConfig, isAzureStack);
       cy.validateProviderFormFields(providerConfig, true);
     });
 
     if (isAmazonEc2) {
       it("Should show the error message from the task_results API upon validation failure and validate reset & cancel buttons' behavior", () => {
-        // TODO: Replace with better data set-up approach
-        const uniqueId = generateUniqueIdentifier();
-        nameFieldValue = `${providerConfig.nameValue} - verify-edit-form-validation-error - ${uniqueId}`;
-        hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
-        addProviderAndOpenEditForm(
-          providerConfig,
-          nameFieldValue,
-          hostValue,
-          false
-        );
+        openEditFormForCreatedProvider(providerConfig, false);
         updateProviderFieldsForEdit(providerConfig.type);
         cy.providerValidation({
           stubErrorResponse: true,
@@ -786,16 +743,7 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
     }
 
     it('Verify successful validate + edit operation', () => {
-      // TODO: Replace with better data set-up approach
-      const uniqueId = generateUniqueIdentifier();
-      nameFieldValue = `${providerConfig.nameValue} - verify-validate-and-edit-operations - ${uniqueId}`;
-      hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
-      addProviderAndOpenEditForm(
-        providerConfig,
-        nameFieldValue,
-        hostValue,
-        isAzureStack
-      );
+      openEditFormForCreatedProvider(providerConfig, isAzureStack);
       // Update fields based on provider type
       updateProviderFieldsForEdit(providerConfig.type);
       cy.providerValidation({
@@ -842,36 +790,12 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
 /**
  * Generates a test suite for validating the name uniqueness of a provider
  * @param {Object} providerConfig - The provider configuration object
- * @param {Object} testOptions - Test configuration options
- * @param {boolean} testOptions.isAzureStack - Whether the provider is Azure Stack (requires special handling)
  */
-function generateNameUniquenessTests(providerConfig, testOptions = {}) {
-  const { isAzureStack = false } = testOptions;
-
+function generateNameUniquenessTests(providerConfig) {
   describe(`${providerConfig.type} provider name uniqueness validation`, () => {
-    /**
-     * The provider's unique name is set in this variable at the start of the test
-     */
-    let nameFieldValue;
-    let hostValue;
-
-    beforeEach(() => {
-      // TODO: Replace with better data set-up approach
-      const uniqueId = generateUniqueIdentifier();
-      nameFieldValue = `${providerConfig.nameValue} - verify-duplicate-restriction - ${uniqueId}`;
-      hostValue = `${slugifyWith(providerConfig.type, '-')}-${uniqueId}.com`;
-
-      cy.fillProviderForm(providerConfig, nameFieldValue, hostValue);
-      cy.providerValidation({
-        stubErrorResponse: false,
-      });
-      cy.interceptAddProviderApi({ isAzureStack });
-    });
-
     it('Should display error on duplicate name usage', () => {
       cy.toolbar('Configuration', 'Add a New Cloud Provider');
-      // Add same name as above
-      cy.fillProviderForm(providerConfig, nameFieldValue, hostValue);
+      cy.fillProviderForm(providerConfig);
       assertNameAlreadyExistsError();
     });
 

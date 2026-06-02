@@ -80,8 +80,7 @@ export const REGION_OPTIONS = {
 export const FIELD_VALUES = {
   TEST_NAME: 'Test Name:',
   TENANT_ID: '101',
-  SUBSCRIPTION_ID: 'z565815f-05b6-402f-1999-045155da7dq4',
-  ENDPOINT_URL: '/api',
+  SUBSCRIPTION_ID: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   CLIENT_ID: 'manageiq.example.com',
   CLIENT_KEY: 'test_client_key',
   PORT: '3000',
@@ -94,11 +93,9 @@ export const FIELD_VALUES = {
   CLOUD_API_KEY: 'fake-ibm-cloud-api-key-for-testing',
   GUID: 'fake-guid-0000-0000-0000-000000000000',
   PROJECT_ID: 'fake-miq-project-id-for-testing',
-  ASSUME_ROLE: 'arn:aws:iam::000000000000:role/FakeTestRole',
   ACCESS_KEY_ID: 'FAKE-ACCESS-KEY-ID-FOR-TESTING',
   SECRET_ACCESS_KEY: 'fake-secret-access-key-for-testing-do-not-use',
   DOMAIN_ID_DEFAULT: 'default',
-  PROVIDER_REGION: 'RegionOne',
 };
 
 // Common flash message text snippets
@@ -156,7 +153,6 @@ export const PROVIDER_TYPES = {
 function createProviderConfig(type, config = {}) {
   const baseConfig = {
     type,
-    nameValue: `${FIELD_VALUES.TEST_NAME} ${type}`,
     validationError: VALIDATION_ERRORS[type.replace(/\s+/g, '_').toUpperCase()],
     formFields: {
       common: [
@@ -185,8 +181,22 @@ function createProviderConfig(type, config = {}) {
     fieldSelectionValues: {},
   };
 
-  // Merge with provided config
-  return { ...baseConfig, ...config };
+  // Deep merge formValues and formFields to preserve common values
+  const mergedConfig = { ...baseConfig, ...config };
+  if (config.formFields) {
+    mergedConfig.formFields = {
+      ...baseConfig.formFields,
+      ...config.formFields,
+    };
+  }
+  if (config.formValues) {
+    mergedConfig.formValues = {
+      ...baseConfig.formValues,
+      ...config.formValues,
+    };
+  }
+
+  return mergedConfig;
 }
 
 /**
@@ -272,6 +282,7 @@ function getVMwareVcloudProviderConfig() {
     formValues: {
       default: {
         api_version: SELECT_OPTIONS.API_VERSION_V5,
+        'endpoints.default.hostname': 'vmware-vcloud.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -541,6 +552,7 @@ function getAzureStackProviderConfig() {
         api_version: SELECT_OPTIONS.API_VERSION_2017,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'azure-stack.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -580,7 +592,7 @@ function getAzureProviderConfig() {
           label: FIELD_LABELS.ENDPOINT_URL,
           id: 'endpoints.default.url',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.CLIENT_ID,
@@ -602,7 +614,6 @@ function getAzureProviderConfig() {
         provider_region: REGION_OPTIONS.CENTRAL_INDIA,
         uid_ems: FIELD_VALUES.TENANT_ID,
         subscription: FIELD_VALUES.SUBSCRIPTION_ID,
-        'endpoints.default.url': FIELD_VALUES.ENDPOINT_URL,
         'authentications.default.userid': FIELD_VALUES.CLIENT_ID,
         'authentications.default.password': FIELD_VALUES.CLIENT_KEY,
       },
@@ -629,7 +640,7 @@ function getAmazonEC2ProviderConfig() {
           label: FIELD_LABELS.ENDPOINT_URL,
           id: 'endpoints.default.url',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.ASSUME_ROLE_ARN,
@@ -670,8 +681,6 @@ function getAmazonEC2ProviderConfig() {
     formValues: {
       default: {
         provider_region: REGION_OPTIONS.CANADA,
-        'endpoints.default.url': FIELD_VALUES.ENDPOINT_URL,
-        'authentications.default.service_account': FIELD_VALUES.ASSUME_ROLE,
         'authentications.default.userid': FIELD_VALUES.ACCESS_KEY_ID,
         'authentications.default.password': FIELD_VALUES.SECRET_ACCESS_KEY,
       },
@@ -691,6 +700,12 @@ function getIBMPowerVCProviderConfig() {
         {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
+          type: 'text',
+          required: false,
+        },
+        {
+          label: FIELD_LABELS.DOMAIN_ID,
+          id: 'uid_ems',
           type: 'text',
           required: true,
         },
@@ -788,6 +803,7 @@ function getIBMPowerVCProviderConfig() {
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
         'endpoints.default.port': FIELD_VALUES.PORT,
+        'endpoints.default.hostname': 'ibm-powervc.example.com',
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
       },
@@ -813,7 +829,7 @@ function getIBMCICProviderConfig() {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.API_VERSION,
@@ -911,11 +927,11 @@ function getIBMCICProviderConfig() {
     },
     formValues: {
       default: {
-        provider_region: FIELD_VALUES.PROVIDER_REGION,
         api_version: SELECT_OPTIONS.API_VERSION_V3,
         uid_ems: FIELD_VALUES.DOMAIN_ID_DEFAULT,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'ibm-cic.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -948,7 +964,7 @@ function getOpenStackProviderConfig() {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.OPENSTACK_INFRA_PROVIDER,
@@ -1052,11 +1068,11 @@ function getOpenStackProviderConfig() {
     },
     formValues: {
       default: {
-        provider_region: FIELD_VALUES.PROVIDER_REGION,
         api_version: SELECT_OPTIONS.API_VERSION_V3,
         uid_ems: FIELD_VALUES.DOMAIN_ID_DEFAULT,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'openstack.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
