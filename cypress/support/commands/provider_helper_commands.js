@@ -5,6 +5,7 @@ import {
   PROVIDER_TYPES,
   REGION_OPTIONS,
   FLASH_MESSAGES,
+  getProviderFactoryConfig,
 } from '../../e2e/ui/Compute/Clouds/Providers/provider-factory';
 import { flashClassMap } from '../assertions/assertion_constants';
 
@@ -639,6 +640,11 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
   const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
 
   describe(`Validate ${providerConfig.type} add form`, () => {
+    beforeEach(() => {
+      cy.menu('Compute', 'Clouds', 'Providers');
+      cy.toolbar('Configuration', 'Add a New Cloud Provider');
+    });
+
     it('Validate visibility of elements', () => {
       cy.validateProviderFormFields(providerConfig, false);
     });
@@ -712,9 +718,19 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
  * @param {boolean} testOptions.isAmazonEc2 - Whether the provider is Amazon EC2
  */
 function generateEditFormValidationTests(providerConfig, testOptions = {}) {
+  const { factoryName, factoryConfig } = getProviderFactoryConfig(providerConfig);
   const { isAzureStack = false, isAmazonEc2 = false } = testOptions;
 
   describe(`Validate ${providerConfig.type} edit form`, () => {
+    beforeEach(() => {
+      cy.appFactories([
+        ['create', factoryName, factoryConfig],
+      ]).then((createdProviderData) => {
+        expect(createdProviderData.length).to.equal(1);
+        cy.menu('Compute', 'Clouds', 'Providers');
+      });
+    });
+
     it('Validate visibility of elements', () => {
       openEditFormForCreatedProvider(providerConfig, isAzureStack);
       cy.validateProviderFormFields(providerConfig, true);
@@ -792,9 +808,20 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
  * @param {Object} providerConfig - The provider configuration object
  */
 function generateNameUniquenessTests(providerConfig) {
+  const { factoryName, factoryConfig } = getProviderFactoryConfig(providerConfig);
+
   describe(`${providerConfig.type} provider name uniqueness validation`, () => {
+    beforeEach(() => {
+      cy.appFactories([
+        ['create', factoryName, factoryConfig],
+      ]).then((createdProviderData) => {
+        expect(createdProviderData.length).to.equal(1);
+        cy.menu('Compute', 'Clouds', 'Providers');
+        cy.toolbar('Configuration', 'Add a New Cloud Provider');
+      });
+    });
+
     it('Should display error on duplicate name usage', () => {
-      cy.toolbar('Configuration', 'Add a New Cloud Provider');
       cy.fillProviderForm(providerConfig);
       assertNameAlreadyExistsError();
     });

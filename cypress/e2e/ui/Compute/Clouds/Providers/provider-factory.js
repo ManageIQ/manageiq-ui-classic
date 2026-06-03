@@ -55,24 +55,24 @@ export const SELECT_OPTIONS = {
   EVENT_STREAM_TYPE_AMQP: 'AMQP',
   EVENT_STREAM_TYPE_STF: 'STF',
   ENABLED: 'Enabled',
-  API_VERSION_V3: 'Keystone V3',
-  API_VERSION_V5: 'vCloud API 5.5',
+  API_VERSION_V3: 'v3',
+  API_VERSION_V5: '5.5',
   API_VERSION_V9: 'vCloud API 9.0',
   API_VERSION_2017: 'V2017_03_09',
   ZONE_DEFAULT: 'default',
-  SECURITY_PROTOCOL_SSL: 'SSL',
+  SECURITY_PROTOCOL_SSL: 'ssl-with-validation',
   SECURITY_PROTOCOL_NON_SSL: 'Non-SSL',
 };
 
 // Common region options
 export const REGION_OPTIONS = {
-  CENTRAL_INDIA: 'Central India',
+  CENTRAL_INDIA: 'centralindia',
   CENTRAL_US: 'Central US',
   HYDERABAD: 'ap-hyderabad-1',
   MELBOURNE: 'ap-melbourne-1',
-  AUSTRALIA: 'Australia (Sydney)',
+  AUSTRALIA: 'au-syd',
   SPAIN: 'EU Spain (Madrid)',
-  CANADA: 'Canada (Central)',
+  CANADA: 'ca-central-1',
   ASIA_PACIFIC: 'Asia Pacific (Malaysia)',
 };
 
@@ -143,6 +143,143 @@ export const PROVIDER_TYPES = {
   IBM_CIC: 'IBM Cloud Infrastructure Center',
   OPENSTACK: 'OpenStack',
 };
+
+/**
+ * Gets the factory name and configuration object for creating a cloud provider
+ * @param {Object} providerConfig - The provider configuration object
+ * @returns {Object} Object containing factoryName and factoryConfig
+ * @example
+ * const { factoryName, factoryConfig } = getProviderFactoryConfig(providerConfig);
+ * cy.appFactories([['create', factoryName, factoryConfig]]);
+ */
+export function getProviderFactoryConfig(providerConfig) {
+  const { formValues, type: providerType } = providerConfig;
+  const defaultFormValues = formValues?.default;
+  const baseConfig = {
+    name: formValues.common.name,
+  };
+  const withDefaultAuth = {
+    ...baseConfig,
+    authtype: 'default',
+  };
+  const withHostAndPort = {
+    hostname: defaultFormValues?.['endpoints.default.hostname'],
+    port: defaultFormValues?.['endpoints.default.port'],
+  };
+  const withEndpoint = {
+    ...withHostAndPort,
+    security_protocol:
+      defaultFormValues?.['endpoints.default.security_protocol'],
+  };
+  const withTenantIdAndApiVersion = {
+    uid_ems: defaultFormValues.uid_ems,
+    api_version: defaultFormValues.api_version,
+  };
+
+  switch (providerType) {
+    case PROVIDER_TYPES.AMAZON_EC2:
+      return {
+        factoryName: 'ems_amazon',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.AZURE:
+      return {
+        factoryName: 'ems_azure',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+          uid_ems: defaultFormValues.uid_ems,
+          subscription: defaultFormValues.subscription,
+        },
+      };
+    case PROVIDER_TYPES.GOOGLE_COMPUTE:
+      return {
+        factoryName: 'ems_google',
+        factoryConfig: {
+          ...withDefaultAuth,
+          project: defaultFormValues.project,
+        },
+      };
+    case PROVIDER_TYPES.OPENSTACK:
+      return {
+        factoryName: 'ems_openstack_with_authentication',
+        factoryConfig: {
+          ...baseConfig,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.VMWARE_VCLOUD:
+      return {
+        factoryName: 'ems_vmware_cloud',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withHostAndPort,
+          api_version: defaultFormValues.api_version,
+        },
+      };
+    case PROVIDER_TYPES.ORACLE_CLOUD:
+      return {
+        factoryName: 'ems_oracle_cloud_with_authentication',
+        factoryConfig: {
+          ...baseConfig,
+          provider_region: defaultFormValues.provider_region,
+          uid_ems: defaultFormValues.uid_ems,
+        },
+      };
+    case PROVIDER_TYPES.IBM_CLOUD_VPC:
+      return {
+        factoryName: 'ems_ibm_cloud_vpc',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.IBM_POWER_SYSTEMS:
+      return {
+        factoryName: 'ems_ibm_cloud_power_virtual_servers_cloud',
+        factoryConfig: {
+          ...withDefaultAuth,
+          uid_ems: defaultFormValues.uid_ems,
+        },
+      };
+    case PROVIDER_TYPES.AZURE_STACK:
+      return {
+        factoryName: 'ems_azure_stack',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+          subscription: defaultFormValues.subscription,
+        },
+      };
+    case PROVIDER_TYPES.IBM_POWERVC:
+      return {
+        factoryName: 'ems_ibm_power_vc',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          uid_ems: defaultFormValues.uid_ems,
+          api_version: SELECT_OPTIONS.API_VERSION_V3, // for rendering the domain ID field
+        },
+      };
+    case PROVIDER_TYPES.IBM_CIC:
+      return {
+        factoryName: 'ems_ibm_cic',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+        },
+      };
+    default:
+      cy.logAndThrowError(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
+  }
+}
 
 /**
  * Creates a provider configuration object with all necessary properties
