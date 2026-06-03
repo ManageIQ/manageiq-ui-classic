@@ -194,7 +194,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_power_state
-    textual_power_state_whitelisted(@record.state)
+    textual_power_state_whitelisted(@record.normalized_state)
   end
 
   def textual_lockdown_mode

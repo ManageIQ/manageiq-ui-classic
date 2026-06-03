@@ -38,6 +38,31 @@ describe HostHelper::TextualSummary do
     guid
   )
 
+  describe '.textual_power_state' do
+    subject { textual_power_state }
+    {
+      'on'      => {:fonticon => 'currentstate-on', :background => 'green'},
+      'off'     => {:fonticon => 'currentstate-off', :background => 'black'},
+      'archive' => {:fonticon => 'fa fa-archive', :background => nil},
+    }.each do |state, quad_icon|
+      context "when normalized_state is #{state}" do
+        before do
+          allow(@record).to receive(:normalized_state).and_return(state)
+          allow(QuadiconHelper).to receive(:machine_state).with(state).and_return(quad_icon)
+        end
+
+        it "returns the whitelisted power state for #{state}" do
+          expect(subject).to eq(
+            :label      => 'Power State',
+            :value      => state,
+            :icon       => quad_icon[:fonticon],
+            :background => quad_icon[:background]
+          )
+        end
+      end
+    end
+  end
+
   include_examples "textual_group", "Relationships", %i(
     ems
     cluster
