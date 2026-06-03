@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GitDomainRefreshForm component should render correctly 1`] = `
+<div>
+  <div
+    class="git-domain-refresh-form"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="ref_type"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+            >
+              *
+            </span>
+            Branch/Tag
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="ref_type"
+              name="ref_type"
+              title="Branch"
+            >
+              <option
+                class="cds--select-option"
+                label="Branch"
+                value="branch"
+              >
+                Branch
+              </option>
+              <option
+                class="cds--select-option"
+                label="Tag"
+                value="tag"
+              >
+                Tag
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="branch_name"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+            >
+              *
+            </span>
+            Branches
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="branch_name"
+              name="branch_name"
+              title="origin/main"
+            >
+              <option
+                class="cds--select-option"
+                label="origin/main"
+                value="origin/main"
+              >
+                origin/main
+              </option>
+              <option
+                class="cds--select-option"
+                label="origin/develop"
+                value="origin/develop"
+              >
+                origin/develop
+              </option>
+              <option
+                class="cds--select-option"
+                label="origin/feature/test"
+                value="origin/feature/test"
+              >
+                origin/feature/test
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+          variant="primary"
+        >
+          Save
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

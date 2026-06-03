@@ -182,6 +182,7 @@ import WorkflowRepositoryForm from '../components/workflow-repository-form';
 import XmlHolder from '../components/XmlHolder';
 import ZoneForm from '../components/zone-form';
 import MiqAeClass from '../components/miq-ae-class';
+import GitDomainRefreshForm from '../components/git-domain-refresh-form';
 
 /**
 * Add component definitions to this file.
@@ -244,6 +245,7 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GenericObjectForm', GenericObjectForm);
+ManageIQ.component.addReact('GitDomainRefreshForm', GitDomainRefreshForm);
 ManageIQ.component.addReact('GroupForm', GroupForm);
 ManageIQ.component.addReact('GtlView', GtlView);
 ManageIQ.component.addReact('HeatChart', HeatChart);

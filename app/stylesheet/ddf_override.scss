@@ -570,3 +570,22 @@ form .miq-validation-button, .miq-async-action-button {
     }
   }
 }
+
+.git-domain-refresh-form {
+  .cds--form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .cds--label {
+      margin-bottom: 0.5rem;
+    }
+    
+    .cds--select,
+    .cds--dropdown,
+    .cds--list-box__wrapper {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

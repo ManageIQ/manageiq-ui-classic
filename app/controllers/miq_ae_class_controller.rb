@@ -1815,17 +1815,13 @@ class MiqAeClassController < ApplicationController
     if params[:button] == "save"
       begin
         git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
-        add_flash(_("Successfully refreshed!"), :info)
-      rescue MiqException::Error => err
-        add_flash(err.message, :error)
+        render :json => {:message => _("Successfully refreshed!"), :level => "success"}
+      rescue => err
+        render :json => {:message => err.message, :level => "error"}, :status => 400
       end
     else
-      add_flash(_("Git based refresh canceled"), :info)
+      render :json => {:message => _("Git based refresh canceled"), :level => "warning"}
     end
-
-    session[:edit] = nil
-    @in_a_form = false
-    replace_right_cell(:replace_trees => [:ae])
   end
 
   def namespace
@@ -2803,7 +2799,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def git_refresh
-    @in_a_form = true
+    @in_a_form = false
     @explorer = true
 
     session[:changed] = true
@@ -2831,17 +2827,14 @@ class MiqAeClassController < ApplicationController
     update_partial_div = :main_div
     update_partial = "git_domain_refresh"
 
-    presenter.update(update_partial_div, r[:partial => update_partial])
-
-    action_url = "refresh_git_domain"
-    presenter.show(:paging_div, :form_buttons_div)
-    presenter.update(:form_buttons_div, r[
-      :partial => "layouts/x_edit_buttons",
+    presenter.update(update_partial_div, r[
+      :partial => update_partial,
       :locals  => {
-        :record_id  => git_repo.id,
-        :action_url => action_url,
-        :serialize  => true,
-        :no_reset   => true
+        :git_repo_id  => @git_repo_id,
+        :ref_type     => @ref_type,
+        :ref_name     => @ref_name,
+        :branch_names => @branch_names,
+        :tag_names    => @tag_names
       }
     ])
 
