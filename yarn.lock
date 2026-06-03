@@ -1721,9 +1721,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^3.0.10":
-  version: 3.0.10
-  resolution: "@cypress/request@npm:3.0.10"
+"@cypress/request@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "@cypress/request@npm:4.0.1"
   dependencies:
     aws-sign2: "npm:~0.7.0"
     aws4: "npm:^1.8.0"
@@ -1738,12 +1738,11 @@ __metadata:
     json-stringify-safe: "npm:~5.0.1"
     mime-types: "npm:~2.1.19"
     performance-now: "npm:^2.1.0"
-    qs: "npm:~6.14.1"
+    qs: "npm:^6.15.2"
     safe-buffer: "npm:^5.1.2"
     tough-cookie: "npm:^5.0.0"
     tunnel-agent: "npm:^0.6.0"
-    uuid: "npm:^8.3.2"
-  checksum: 10/23c86075f5fbbd4a56403cb98dbce92b2bc33cbb0ec5779d7cb45c9ad50b5d056ff73037f11680842bb2bc4f2b79b995d91880ca7e9a893b8be650d93fad2e33
+  checksum: 10/7facc78b2940f5f7d12bc1f31c07fbf78bb71ce32c304551fccd265c77f564f093c3a1dd871048d744525f84013ae291de7654c93ffcbec54cab2a0b15e0d20f
   languageName: node
   linkType: hard
 
@@ -4197,15 +4196,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yauzl@npm:^2.9.1":
-  version: 2.10.3
-  resolution: "@types/yauzl@npm:2.10.3"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/5ee966ea7bd6b2802f31ad4281c92c4c0b6dfa593c378a2582c58541fa113bec3d70eb0696b34ad95e8e6861a884cba6c3e351285816693ed176222f840a8c08
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/project-service@npm:8.59.3":
   version: 8.59.3
   resolution: "@typescript-eslint/project-service@npm:8.59.3"
@@ -5819,13 +5809,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer-crc32@npm:~0.2.3":
-  version: 0.2.13
-  resolution: "buffer-crc32@npm:0.2.13"
-  checksum: 10/06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
-  languageName: node
-  linkType: hard
-
 "buffer-from@npm:^1.0.0":
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
@@ -6920,11 +6903,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:~15.14.2":
-  version: 15.14.2
-  resolution: "cypress@npm:15.14.2"
+"cypress@npm:~15.16.0":
+  version: 15.16.0
+  resolution: "cypress@npm:15.16.0"
   dependencies:
-    "@cypress/request": "npm:^3.0.10"
+    "@cypress/request": "npm:^4.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
     "@types/sinonjs__fake-timers": "npm:8.1.1"
     "@types/sizzle": "npm:^2.3.2"
@@ -6944,7 +6927,6 @@ __metadata:
     eventemitter2: "npm:6.4.7"
     execa: "npm:4.1.0"
     executable: "npm:^4.1.1"
-    extract-zip: "npm:2.0.1"
     fs-extra: "npm:^9.1.0"
     hasha: "npm:5.2.2"
     is-installed-globally: "npm:~0.4.0"
@@ -6963,10 +6945,10 @@ __metadata:
     tree-kill: "npm:1.2.2"
     tslib: "npm:1.14.1"
     untildify: "npm:^4.0.0"
-    yauzl: "npm:^2.10.0"
+    yauzl: "npm:^3.3.1"
   bin:
     cypress: bin/cypress
-  checksum: 10/1bec4c0d3313490f8c748d7173d125ea2657d37019a9e4a2cdf89feee06a1d101ce3432a555adb5dacaa1b6e2535f78b7a83bb53ade220b9cae19b2ce4927cb6
+  checksum: 10/a485b4ce2e535d5fb33cbfeb01e51a310b081f89150d56f7c49a0bd9105264f04f74add517811002c8617b640110e8d6940700aa6acc006b1fb313aee9650b78
   languageName: node
   linkType: hard
 
@@ -8831,23 +8813,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:2.0.1":
-  version: 2.0.1
-  resolution: "extract-zip@npm:2.0.1"
-  dependencies:
-    "@types/yauzl": "npm:^2.9.1"
-    debug: "npm:^4.1.1"
-    get-stream: "npm:^5.1.0"
-    yauzl: "npm:^2.10.0"
-  dependenciesMeta:
-    "@types/yauzl":
-      optional: true
-  bin:
-    extract-zip: cli.js
-  checksum: 10/8cbda9debdd6d6980819cc69734d874ddd71051c9fe5bde1ef307ebcedfe949ba57b004894b585f758b7c9eeeea0e3d87f2dda89b7d25320459c2c9643ebb635
-  languageName: node
-  linkType: hard
-
 "extsprintf@npm:1.3.0":
   version: 1.3.0
   resolution: "extsprintf@npm:1.3.0"
@@ -8934,15 +8899,6 @@ __metadata:
   dependencies:
     bser: "npm:2.1.1"
   checksum: 10/4f95d336fb805786759e383fd7fff342ceb7680f53efcc0ef82f502eb479ce35b98e8b207b6dfdfeea0eba845862107dc73813775fc6b56b3098c6e90a2dad77
-  languageName: node
-  linkType: hard
-
-"fd-slicer@npm:~1.1.0":
-  version: 1.1.0
-  resolution: "fd-slicer@npm:1.1.0"
-  dependencies:
-    pend: "npm:~1.2.0"
-  checksum: 10/db3e34fa483b5873b73f248e818f8a8b59a6427fd8b1436cd439c195fdf11e8659419404826059a642b57d18075c856d06d6a50a1413b714f12f833a9341ead3
   languageName: node
   linkType: hard
 
@@ -9486,7 +9442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-stream@npm:^5.0.0, get-stream@npm:^5.1.0":
+"get-stream@npm:^5.0.0":
   version: 5.2.0
   resolution: "get-stream@npm:5.2.0"
   dependencies:
@@ -12333,7 +12289,7 @@ __metadata:
     connected-react-router: "npm:~6.9.0"
     core-js: "npm:~3.49.0"
     css-loader: "npm:^5.0.0"
-    cypress: "npm:~15.14.2"
+    cypress: "npm:~15.16.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.3.2"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
@@ -14266,21 +14222,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.12.3, qs@npm:~6.15.1":
+"qs@npm:^6.12.3, qs@npm:^6.15.2, qs@npm:~6.15.1":
   version: 6.15.2
   resolution: "qs@npm:6.15.2"
   dependencies:
     side-channel: "npm:^1.1.0"
   checksum: 10/7a934b2dba40654cf9878dab7c1e7ad56c6186265509727fbece67dadc38fd5d67715b61b6ef938e5a0475faeee701d18ec0a7ce420ad64367caad7f1bdb66e2
-  languageName: node
-  linkType: hard
-
-"qs@npm:~6.14.1":
-  version: 6.14.2
-  resolution: "qs@npm:6.14.2"
-  dependencies:
-    side-channel: "npm:^1.1.0"
-  checksum: 10/682933a85bb4b7bd0d66e13c0a40d9e612b5e4bcc2cb9238f711a9368cd22d91654097a74fff93551e58146db282c56ac094957dfdc60ce64ea72c3c9d7779ac
   languageName: node
   linkType: hard
 
@@ -18238,13 +18185,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yauzl@npm:^2.10.0":
-  version: 2.10.0
-  resolution: "yauzl@npm:2.10.0"
+"yauzl@npm:^3.3.1":
+  version: 3.3.2
+  resolution: "yauzl@npm:3.3.2"
   dependencies:
-    buffer-crc32: "npm:~0.2.3"
-    fd-slicer: "npm:~1.1.0"
-  checksum: 10/1e4c311050dc0cf2ee3dbe8854fe0a6cde50e420b3e561a8d97042526b4cf7a0718d6c8d89e9e526a152f4a9cec55bcea9c3617264115f48bd6704cf12a04445
+    pend: "npm:~1.2.0"
+  checksum: 10/81a313d9a2fa65f72d4049ce22609227eccdf8676a95bddf7ad13cbf21f77819c3da1a872627cfcc8b85e4922336e4f3657322a168f5ee77bf850b6239538011
   languageName: node
   linkType: hard
 
