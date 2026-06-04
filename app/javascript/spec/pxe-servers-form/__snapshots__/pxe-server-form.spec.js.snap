@@ -213,7 +213,7 @@ exports[`PxeServersForm should render correctly 1`] = `
             <input
               name="authentication.valid"
               type="hidden"
-              value="false"
+              value=""
             />
             <button
               class="miq-validation-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary cds--btn--disabled"
@@ -222,6 +222,11 @@ exports[`PxeServersForm should render correctly 1`] = `
             >
               Validate
             </button>
+            <div
+              class="ddorg__carbon-error-helper-text"
+            >
+              Validation Required
+            </div>
           </div>
           <div
             class="cds--form-item cds--text-input-wrapper"
