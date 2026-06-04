@@ -93,16 +93,27 @@ const AsyncCredentials = ({
             const isDirty = Object.keys(dirtyFields).some((field) =>
               dirtyFields[field] && dependencies.includes(field));
 
-            // The field itself is valid if there are no modifications since the last validation or the initial values
-            const isValid = isEqual(currentValues, lastValid) || !isDirty;
+            // The field itself is valid in these cases:
+            // 1. Validation passed and values haven't changed: isEqual(currentValues, lastValid)
+            // 2. Edit mode, not dirty, and no validation run yet: (edit && !isDirty && !lastValid)
+            const isValidationPassed = lastValid && isEqual(currentValues, lastValid);
+            const isEditModeInitial = edit && !isDirty && !lastValid;
+            const isValid = isValidationPassed || isEditModeInitial;
+            // Field value should be:
+            // - true: when validation passed or edit mode initial state (passes REQUIRED validator)
+            // - undefined: when validation is required (fails REQUIRED validator, shows "Validation Required")
+            const fieldValue = isValid ? true : undefined;
             const dv = validateDependentFields();
 
             useEffect(() => {
               // The list of registered fields shows up after this render, so the validation has to happen
               // with a delay and has to be pulled back via the state.
-              setTimeout(() => setState((state) => ({ ...state, depsValid: dv })));
-              formOptions.change(name, isValid);
-            }, [isValid, name, dv]);
+              const timeoutId = setTimeout(() => setState((state) => ({ ...state, depsValid: dv })));
+              formOptions.change(name, fieldValue);
+              
+              // Cancel the timeout if component unmounts
+              return () => clearTimeout(timeoutId);
+            }, [fieldValue, name, dv]);
 
             return (
               <>
