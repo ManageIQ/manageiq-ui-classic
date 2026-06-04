@@ -1,9 +1,13 @@
 - options = @edit || @options
 - id = options.try(:[], :req_id) || "new"
-- headers_data = options[:configured_system_headers].map { |key, text| {:header_text => text, :text => text, :sort_choice => key, :sort_data => options[:configured_system_sortcol] == text ? options.dig(:configured_system_sortdir) : 'NONE'} }
+- headers_data = options[:configured_system_headers].map do |key, text|
+  - sort_data = options[:configured_system_sortcol] == text ? options[:configured_system_sortdir] : 'NONE'
+  - {:header_text => text, :text => text, :sort_choice => key, :sort_data => sort_data}
 - rows_data = @configured_systems.map do |system|
-  - cells = options[:configured_system_headers].keys.map { |key| {:text => system.send(key).to_s} }
+  - cells = options[:configured_system_headers].keys.map do |key|
+    - {:text => system.send(key).to_s}
   - {:id => system.id.to_s, :cells => cells, :clickable => false}
-- initial_data = {:headers => headers_data, :rows => rows_data, :recordId => id, :fieldId => field_id}
+- initial_data = {:headers => headers_data, :rows => rows_data, :recordId => id,
+  :fieldId => field_id}
 
 = react('ProvConfiguredSystemGrid', :initialData => initial_data)
