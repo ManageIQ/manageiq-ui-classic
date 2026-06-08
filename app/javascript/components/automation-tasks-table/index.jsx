@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import NoRecordsFound from '../no-records-found';
@@ -49,5 +48,3 @@ AutomationTasksTable.propTypes = {
 };
 
 export default AutomationTasksTable;
-
-// Made with Bob
