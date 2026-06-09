@@ -1912,6 +1912,9 @@ Rails.application.routes.draw do
         ae_method_operations
         show
         edit_class_record
+        instance_form_data
+        new_instance_react
+        edit_instance_react
       ],
       :post => %w[
         add_update_method
@@ -1920,6 +1923,9 @@ Rails.application.routes.draw do
         ae_tree_select_toggle
         change_tab
         copy_objects
+        copy_objects_save
+        get_automate_tree_data
+        get_namespace_path
         create
         create_instance
         create_method
@@ -1955,6 +1961,8 @@ Rails.application.routes.draw do
         x_history
         x_show
         class_update
+        instance_create
+        instance_update
       ] + adv_search_post +
         exp_post
     },

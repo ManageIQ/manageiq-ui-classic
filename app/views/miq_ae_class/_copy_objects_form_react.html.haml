@@ -1,0 +1,2 @@
+= render :partial => "layouts/flash_msg"
+= react('CopyObjectsForm', {:recordId => @edit[:rec_id], :editData => {:typ => @edit[:typ].to_s, :domain_name => @edit[:domain_name], :domain_id => @edit[:domain_id], :domains => @edit[:domains], :selected_items => @edit[:selected_items], :new => {:domain => @edit[:new][:domain], :override_source => @edit[:new][:override_source], :override_existing => @edit[:new][:override_existing], :namespace => @edit[:new][:namespace], :new_name => @edit[:new][:new_name]}}})
