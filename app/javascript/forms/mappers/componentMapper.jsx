@@ -19,6 +19,8 @@ import ApFileTab from '../../components/ap-form/file-tab';
 import ApRegistryTab from '../../components/ap-form/registry-tab';
 import ApEventLogTab from '../../components/ap-form/event-log-tab';
 import ExpressionEditorField from '../../components/condition-form/expression-editor-field';
+import NamespaceSelector from '../../components/miq-ae-class/namespace-selector';
+import SelectedItemsTable from '../../components/miq-ae-class/selected-items-table';
 
 const mapper = {
   ...componentMapper,
@@ -32,6 +34,8 @@ const mapper = {
   'validate-credentials': AsyncCredentials,
   'selected-groups-list': SelectedGroupsList,
   'sortable-list': SortableList,
+  'namespace-selector': NamespaceSelector,
+  'selected-items-table': SelectedItemsTable,
   [componentTypes.SELECT]: Select,
   'font-icon-picker': FontIconPicker,
   'font-icon-picker-ddf': FontIconPickerDdf, // used for react form pages

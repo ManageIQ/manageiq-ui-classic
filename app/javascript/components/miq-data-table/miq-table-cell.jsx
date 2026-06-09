@@ -80,17 +80,14 @@ const MiqTableCell = ({
   };
 
   const returnIcon = (icon, style, styledIconClass, longerTextClass, index = undefined) => {
-    const extraProps = {};
-    if (index !== undefined) {
-      extraProps.key = index.toString();
-    }
+    const key = index !== undefined ? index.toString() : undefined;
     if (icon.startsWith('carbon--')) {
       const IconElement = carbonizeIcon(icon);
       return (
-        <IconElement aria-label={icon} className={classNames('icon', 'carbon-icons-style', icon)} style={style} {...extraProps} />
+        <IconElement key={key} aria-label={icon} className={classNames('icon', 'carbon-icons-style', icon)} style={style} />
       );
     }
-    return (<i className={classNames('fa-lg', 'icon', icon, styledIconClass, longerTextClass)} style={style} {...extraProps} />);
+    return (<i key={key} className={classNames('fa-lg', 'icon', icon, styledIconClass, longerTextClass)} style={style} />);
   };
 
   /** Function to render icon(s) in cell. */

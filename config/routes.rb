@@ -1910,6 +1910,9 @@ Rails.application.routes.draw do
         ae_method_operations
         show
         edit_class_record
+        instance_form_data
+        new_instance
+        edit_instance
       ],
       :post => %w[
         add_update_method
@@ -1918,6 +1921,7 @@ Rails.application.routes.draw do
         ae_tree_select_toggle
         change_tab
         copy_objects
+        copy_objects_save
         create
         create_instance
         create_method
@@ -1934,9 +1938,7 @@ Rails.application.routes.draw do
         fields_form_field_changed
         fields_seq_edit
         fields_seq_field_changed
-        form_copy_objects_field_changed
         form_field_changed
-        form_instance_field_changed
         form_method_field_changed
         reload
         tree_select
