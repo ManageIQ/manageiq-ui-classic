@@ -1,6 +1,7 @@
 = render :partial => "layouts/flash_msg"
 
 - formatted_timestamps = @timestamps.map do |ts|
-  - { :formatted => h(format_timezone(ts, Time.zone, "view")), :relative => "#{h(time_ago_in_words(ts.in_time_zone(Time.zone)))} ago" }
+  - {:formatted => h(format_timezone(ts, Time.zone, "view")),
+     :relative  => "#{h(time_ago_in_words(ts.in_time_zone(Time.zone)))} ago"}
 
 = react('DriftHistory', {:timestamps => formatted_timestamps.to_json})
