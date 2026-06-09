@@ -1,4 +1,5 @@
 @use '@carbon/styles/scss/components/button';
+@use '@carbon/react/scss/spacing' as *;
 
 form .miq-validation-button, .miq-async-action-button {
   display: flex;
@@ -521,17 +522,15 @@ form .miq-validation-button, .miq-async-action-button {
 
     .btnRight {
       margin-right: 8px;
-      width: 20%;
     }
 
     .cds--btn {
       margin-right: 8px;
-      width: 20%;
     }
   }
 
-  .cds--form-item.cds--text-input-wrapper {
-    margin-bottom: 40px;
+  .cds--form-item {
+    margin-bottom: $spacing-06;
   }
 
   #code-section {
