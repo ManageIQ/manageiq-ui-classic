@@ -457,3 +457,18 @@ table.miq_preview {
     padding-left: 24px;
   }
 }
+
+.drift-history-table {
+  .drift-history-checkbox-cell {
+    width: 50px;
+    
+    .cds--checkbox-wrapper {
+      padding-top: 10px;
+      padding-left: 5px;
+    }
+    
+    .cds--checkbox-label {
+      margin-bottom: 0;
+    }
+  }
+}
