@@ -139,3 +139,36 @@ Cypress.Commands.add('getFormToggleButtonById', ({ toggleId }) => {
   }
   return cy.get(`form button#${toggleId}.cds--toggle__button`);
 });
+
+/**
+ * Selects a namespace from the namespace tree modal opened via the namespace selector component.
+ * Opens the tree modal, expands to the target domain, selects the target namespace, and applies.
+ *
+ * @param {Object} options - The options object.
+ * @param {string} options.domainName - The name of the domain to click in the tree (required).
+ * @param {string} options.namespaceName - The name of the namespace node to click in the tree (required).
+ *
+ * Example:
+ *   cy.selectNamespaceFromTree({ domainName: 'TargetDomain', namespaceName: 'TargetNamespace' });
+ */
+Cypress.Commands.add('selectNamespaceFromTree', ({ domainName, namespaceName }) => {
+  if (!domainName) {
+    cy.logAndThrowError('cy.selectNamespaceFromTree: required object key missing - domainName');
+  }
+  if (!namespaceName) {
+    cy.logAndThrowError('cy.selectNamespaceFromTree: required object key missing - namespaceName');
+  }
+
+  cy.get('.namespace-selector-wrapper').should('be.visible');
+  cy.get('.namespace-selector-buttons button').first().click();
+
+  cy.get('.cds--modal.is-visible').should('be.visible');
+  cy.get('.ae-namespace-tree-scroll').should('be.visible');
+  cy.get('.ae-ns-loading').should('not.exist');
+
+  cy.get('.ae-ns-node-domain').contains(domainName).click();
+  cy.get('.ae-ns-node:not(.ae-ns-node-domain)').contains(namespaceName).click();
+  cy.get('.cds--modal.is-visible .cds--btn--primary').contains('Apply').click();
+
+  cy.get('input#namespace').should('not.have.value', '');
+});

@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useCallback, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -31,7 +33,14 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [confirmModal, setConfirmModal] = useState(null);
-  const modalRef = useRef(null);
+  const modalRef = useCallback((node) => {
+    if (node) {
+      const firstInput = node.querySelector('input, textarea, select');
+      if (firstInput) {
+        firstInput.focus();
+      }
+    }
+  }, []);
   const formApiRef = useRef(null);
 
   const handleModalClose = () => {
@@ -66,16 +75,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     }
     setConfirmModal(null);
   };
-
-  useEffect(() => {
-    if (isModalOpen && modalRef.current) {
-      // Prevent close button from getting focus and showing tooltip
-      const firstInput = modalRef.current.querySelector('input, textarea, select');
-      if (firstInput) {
-        setTimeout(() => firstInput.focus(), 100);
-      }
-    }
-  }, [isModalOpen]);
 
   const componentMapper = {
     ...mapper,
@@ -171,7 +170,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       .filter((sub) => !sub.remove)
       .map((sub) => {
         // Remove newRecord flag using destructuring
-        // eslint-disable-next-line no-unused-vars
         const { newRecord, ...subscriptionWithoutNewRecordFlag } = sub;
         return subscriptionWithoutNewRecordFlag;
       });
