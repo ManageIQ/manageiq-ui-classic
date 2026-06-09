@@ -10,13 +10,13 @@ describe "miq_ae_class/_instance_fields.html.haml" do
                       :ae_instances  => ae_instances,
                       :ae_fields     => ae_fields)
 
-      assign(:in_a_form, false)
-      assign(:ae_class, MiqAeClass.where(:name => 'FRED').first)
-      assign(:record, MiqAeInstance.where(:name => 'BARNEY').first)
+      @ae_class = MiqAeClass.where(:name => 'FRED').first
+      @record   = MiqAeInstance.where(:name => 'BARNEY').first
     end
 
     it "Check instance", :js => true do
-      render :template => "miq_ae_class/_instance_fields"
+      render :partial => "miq_ae_class/instance_fields",
+             :locals  => {:ae_class => @ae_class, :record => @record}
       expect(response).to have_text('ae_var1')
       expect(response).to have_text('hello world')
     end

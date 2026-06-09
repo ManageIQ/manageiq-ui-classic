@@ -1,0 +1,65 @@
+@use '@carbon/react/scss/spacing' as *;
+
+.namespace-selector-wrapper {
+  .namespace-selector-row {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-03;
+
+    .namespace-selector-input {
+      flex: 1;
+
+      // The parent dialog-provision-form applies margin-bottom to all .cds--form-item.
+      // Inside a flex row this collapses alignment — suppress it here.
+      .cds--form-item {
+        margin-bottom: 0;
+      }
+    }
+
+    .namespace-selector-buttons {
+      display: flex;
+      flex-shrink: 0;
+      gap: $spacing-02;
+      padding-bottom: 1px;
+    }
+  }
+}
+
+// instance-form.jsx layout helpers
+.ae-main-info-section {
+  margin-bottom: 20px;
+}
+
+.ae-form-button-wrapper {
+  margin-top: 20px;
+}
+
+// instance-fields-table.jsx layout helper
+.ae-instance-fields-table {
+  margin-top: 16px;
+}
+
+// selected-items-table.jsx layout helper
+.ae-selected-items-table {
+  margin-bottom: 16px;
+}
+
+// namespace-tree-modal.jsx layout helpers
+.ae-namespace-tree-scroll {
+  margin-bottom: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.ae-namespace-selected-path {
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+}
+
+.ae-namespace-domain-checkbox {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
