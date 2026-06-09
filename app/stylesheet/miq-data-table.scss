@@ -463,12 +463,22 @@ table.miq_preview {
     width: 50px;
     
     .cds--checkbox-wrapper {
-      padding-top: 10px;
       padding-left: 5px;
+      vertical-align: middle;
     }
     
     .cds--checkbox-label {
       margin-bottom: 0;
+    }
+  }
+
+  .cds--data-table-content {
+    th {
+      vertical-align: middle;
+    }
+
+    td {
+      vertical-align: middle;
     }
   }
 }
