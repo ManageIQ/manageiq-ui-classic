@@ -15,8 +15,13 @@
   - elsif node.first == "g" || (node.last == "g" && @edit)
     = render :partial => "rbac_group_details"
   - elsif node.first == "ur" || (node.last == "ur" && @edit)
-    = render :partial => "rbac_role_details"
+    - locals = {:edit           => @edit,
+                :role           => @role,
+                :rbac_menu_tree => @rbac_menu_tree}
+    = render :partial => "rbac_role_details", :locals => locals
   - elsif node.first == "tn" || (node.last == "tn" && @edit)
     = render :partial => "rbac_tenant_details"
   - else
-    = miq_summary_rbac_details(@users_count, @groups_count, @roles_count, @tenants_count)
+    - summary_args = [@users_count, @groups_count,
+                      @roles_count, @tenants_count]
+    = miq_summary_rbac_details(*summary_args)
