@@ -1,0 +1,235 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DomainsPriorityForm component should render correctly 1`] = `
+<div>
+  <div
+    class="domains-priority-form"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class="sortable-list-wrapper"
+      >
+        <div
+          class="cds--label"
+        >
+          Domains:
+          <span
+            class="cds--label-required"
+          >
+            *
+          </span>
+        </div>
+        <div
+          class="cds--form__helper-text"
+        >
+          Drag and drop to reorder domains. Higher priority domains are listed first.
+        </div>
+        <div
+          class="sortable-list"
+        >
+          <div
+            aria-label="ManageIQ. Press arrow keys to reorder."
+            class="sortable-list-item "
+            draggable="true"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              aria-hidden="true"
+              class="sortable-list-item__icon"
+              fill="currentColor"
+              focusable="false"
+              height="20"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 6H14V10H10z"
+              />
+              <path
+                d="M18 6H22V10H18z"
+              />
+              <path
+                d="M10 14H14V18H10z"
+              />
+              <path
+                d="M18 14H22V18H18z"
+              />
+              <path
+                d="M10 22H14V26H10z"
+              />
+              <path
+                d="M18 22H22V26H18z"
+              />
+            </svg>
+            <span
+              class="sortable-list-item__text"
+            >
+              ManageIQ
+            </span>
+          </div>
+          <div
+            aria-label="RedHat. Press arrow keys to reorder."
+            class="sortable-list-item "
+            draggable="true"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              aria-hidden="true"
+              class="sortable-list-item__icon"
+              fill="currentColor"
+              focusable="false"
+              height="20"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 6H14V10H10z"
+              />
+              <path
+                d="M18 6H22V10H18z"
+              />
+              <path
+                d="M10 14H14V18H10z"
+              />
+              <path
+                d="M18 14H22V18H18z"
+              />
+              <path
+                d="M10 22H14V26H10z"
+              />
+              <path
+                d="M18 22H22V26H18z"
+              />
+            </svg>
+            <span
+              class="sortable-list-item__text"
+            >
+              RedHat
+            </span>
+          </div>
+          <div
+            aria-label="CustomDomain. Press arrow keys to reorder."
+            class="sortable-list-item "
+            draggable="true"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              aria-hidden="true"
+              class="sortable-list-item__icon"
+              fill="currentColor"
+              focusable="false"
+              height="20"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 6H14V10H10z"
+              />
+              <path
+                d="M18 6H22V10H18z"
+              />
+              <path
+                d="M10 14H14V18H10z"
+              />
+              <path
+                d="M18 14H22V18H18z"
+              />
+              <path
+                d="M10 22H14V26H10z"
+              />
+              <path
+                d="M18 22H22V26H18z"
+              />
+            </svg>
+            <span
+              class="sortable-list-item__text"
+            >
+              CustomDomain
+            </span>
+          </div>
+          <div
+            aria-label="TestDomain (Locked). Press arrow keys to reorder."
+            class="sortable-list-item "
+            draggable="true"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              aria-hidden="true"
+              class="sortable-list-item__icon"
+              fill="currentColor"
+              focusable="false"
+              height="20"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 6H14V10H10z"
+              />
+              <path
+                d="M18 6H22V10H18z"
+              />
+              <path
+                d="M10 14H14V18H10z"
+              />
+              <path
+                d="M18 14H22V18H18z"
+              />
+              <path
+                d="M10 22H14V26H10z"
+              />
+              <path
+                d="M18 22H22V26H18z"
+              />
+            </svg>
+            <span
+              class="sortable-list-item__text"
+            >
+              TestDomain (Locked)
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+          variant="primary"
+        >
+          Save
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Reset
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

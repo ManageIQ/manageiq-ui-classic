@@ -165,6 +165,12 @@ describe MiqAeClassController do
     end
   end
 
+  describe "#domains_priority_edit" do
+    it "routes with POST" do
+      expect(post("/miq_ae_class/domains_priority_edit")).to route_to("miq_ae_class#domains_priority_edit")
+    end
+  end
+
   describe "#validate_method_data" do
     it "routes with POST" do
       expect(post("/miq_ae_class/validate_method_data")).to route_to("miq_ae_class#validate_method_data")
