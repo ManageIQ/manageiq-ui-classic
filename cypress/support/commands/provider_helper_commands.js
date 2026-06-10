@@ -576,6 +576,10 @@ function assertNameAlreadyExistsError() {
 Cypress.Commands.add(
   'providerValidation',
   ({ stubErrorResponse, errorMessage }) => {
+    cy.contains(
+      '.ddorg__carbon-error-helper-text',
+      VALIDATION_MESSAGES.VALIDATION_REQUIRED
+    ).should('be.visible');
     let response = { state: 'Finished', status: 'Error' };
     if (stubErrorResponse) {
       response = {
@@ -651,11 +655,22 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
 
     it('Should show the error message from the task_results API upon validation failure and validate cancel button behavior', () => {
       cy.fillProviderForm(providerConfig);
+      // Verify submit button stays disabled after required fields are filled
+      // and before validation is triggered
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Add',
+        buttonType: 'submit',
+      }).should('be.disabled');
       cy.providerValidation({
         stubErrorResponse: true,
         errorMessage: providerConfig.validationError,
       });
       assertValidationFailureMessage();
+      // Verify submit button remains disabled when validation fails
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Add',
+        buttonType: 'submit',
+      }).should('be.disabled');
       cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' }).click();
       cy.expect_flash(
         flashClassMap.success,
@@ -666,11 +681,22 @@ function generateAddFormValidationTests(providerConfig, testOptions = {}) {
     it(`Verify successful validate + add/${isAmazonEc2 ? 'refresh/' : ''}delete operations`, () => {
       const nameValue = providerConfig.formValues.common.name;
       cy.fillProviderForm(providerConfig);
+      // Verify submit button stays disabled after required fields are filled
+      // and before validation is triggered
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Add',
+        buttonType: 'submit',
+      }).should('be.disabled');
       //Add
       cy.providerValidation({
         stubErrorResponse: false,
       });
       assertValidationSuccessMessage();
+      // Verify submit button is enabled when validation succeeds
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Add',
+        buttonType: 'submit',
+      }).should('be.enabled');
       cy.interceptAddProviderApi({ isAzureStack });
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGES.OPERATION_SAVED);
 
@@ -740,11 +766,22 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
       it("Should show the error message from the task_results API upon validation failure and validate reset & cancel buttons' behavior", () => {
         openEditFormForCreatedProvider(providerConfig, false);
         updateProviderFieldsForEdit(providerConfig.type);
+        // Verify submit button stays disabled after a required field is updated
+        // and before validation is triggered
+        cy.getFormButtonByTypeWithText({
+          buttonText: 'Save',
+          buttonType: 'submit',
+        }).should('be.disabled');
         cy.providerValidation({
           stubErrorResponse: true,
           errorMessage: providerConfig.validationError,
         });
         assertValidationFailureMessage();
+        // Verify submit button remains disabled when validation fails
+        cy.getFormButtonByTypeWithText({
+          buttonText: 'Save',
+          buttonType: 'submit',
+        }).should('be.disabled');
         cy.getFormButtonByTypeWithText({ buttonText: 'Reset' })
           .should('be.enabled')
           .click();
@@ -762,10 +799,21 @@ function generateEditFormValidationTests(providerConfig, testOptions = {}) {
       openEditFormForCreatedProvider(providerConfig, isAzureStack);
       // Update fields based on provider type
       updateProviderFieldsForEdit(providerConfig.type);
+      // Verify submit button stays disabled after a required field is updated
+      // and before validation is triggered
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Save',
+        buttonType: 'submit',
+      }).should('be.disabled');
       cy.providerValidation({
         stubErrorResponse: false,
       });
       assertValidationSuccessMessage();
+      // Verify submit button is enabled when validation succeeds
+      cy.getFormButtonByTypeWithText({
+        buttonText: 'Save',
+        buttonType: 'submit',
+      }).should('be.enabled');
       // Azure Stack needs to be handled differently, add similar cases if needed
       if (isAzureStack) {
         cy.interceptApi({
