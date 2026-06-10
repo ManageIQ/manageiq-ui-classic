@@ -60,7 +60,7 @@ describe('PxeServersForm', () => {
     });
   });
 
-  it('should successfully call add action while editing', async () => {
+  it('should successfully call add action with NFS URI (no authentication)', async () => {
     fetchMock
       .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', {
         resources: [],
@@ -113,6 +113,113 @@ describe('PxeServersForm', () => {
       uri: 'nfs://foo/bar',
       authentication: {},
     });
+  });
+
+  it('should successfully validate credentials and submit with SMB URI', async () => {
+    fetchMock
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', {
+        resources: [],
+      })
+      .getOnce(
+        '/api/pxe_servers?expand=resources&filter[]=name==%27my%20name%27',
+        { resources: [] }
+      )
+      .postOnce('/pxe/pxe_server_async_cred_validation', {
+        status: 'Ok',
+        message: 'Validation successful',
+      })
+      .postOnce('/api/pxe_servers', {});
+
+    const user = userEvent.setup();
+    const { container } = renderWithRedux(<PxeServersForm {...initialProps} />);
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
+    const nameInput = container.querySelector('input[name="name"]');
+    const uriInput = container.querySelector('input[name="uri"]');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'my name');
+    await user.clear(uriInput);
+    await user.type(uriInput, 'smb://foo/bar');
+    await waitFor(() => {
+      expect(container.querySelector('input[name="authentication.userid"]')).toBeInTheDocument();
+    });
+    const usernameInput = container.querySelector('input[name="authentication.userid"]');
+    const passwordInput = container.querySelector('input[name="authentication.password"]');
+    await user.type(usernameInput, 'testuser');
+    await user.type(passwordInput, 'testpass');
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    // Verify submit button remains disabled after required fields are filled and before validation completes
+    expect(submitButton).toBeDisabled();
+    const validateButton = screen.getByRole('button', { name: /validate/i });
+    await user.click(validateButton);
+    await waitFor(() => {
+      expect(fetchMock.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
+    });
+    // Verify submit button is enabled after successful validation
+    expect(submitButton).not.toBeDisabled();
+    await user.click(submitButton);
+    await waitFor(() => {
+      expect(fetchMock.calls('/api/pxe_servers', 'POST').length).toBe(1);
+    });
+    const [_url, payload] = fetchMock.lastCall();
+    expect(JSON.parse(payload.body)).toEqual({
+      name: 'my name',
+      uri: 'smb://foo/bar',
+      authentication: {
+        userid: 'testuser',
+        password: 'testpass',
+      },
+    });
+  });
+
+  it('should keep submit button disabled when validation fails', async () => {
+    fetchMock
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', {
+        resources: [],
+      })
+      .getOnce(
+        '/api/pxe_servers?expand=resources&filter[]=name==%27my%20name%27',
+        { resources: [] }
+      )
+      .postOnce('/pxe/pxe_server_async_cred_validation', {
+        status: 'error',
+        message: 'Invalid credentials',
+      });
+
+    const user = userEvent.setup();
+    const { container } = renderWithRedux(<PxeServersForm {...initialProps} />);
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
+    const nameInput = container.querySelector('input[name="name"]');
+    const uriInput = container.querySelector('input[name="uri"]');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'my name');
+    await user.clear(uriInput);
+    await user.type(uriInput, 'smb://foo/bar');
+    await waitFor(() => {
+      expect(container.querySelector('input[name="authentication.userid"]')).toBeInTheDocument();
+    });
+    const usernameInput = container.querySelector('input[name="authentication.userid"]');
+    const passwordInput = container.querySelector('input[name="authentication.password"]');
+    await user.type(usernameInput, 'baduser');
+    await user.type(passwordInput, 'badpass');
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    // Verify submit button remains disabled after required fields are filled and before validation completes
+    expect(submitButton).toBeDisabled();
+    const validateButton = screen.getByRole('button', { name: /validate/i });
+    await user.click(validateButton);
+    await waitFor(() => {
+      expect(fetchMock.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
+    });
+    await waitFor(() => {
+      expect(screen.getByText(/invalid credentials/i)).toBeInTheDocument();
+    });
+    // Submit button should remain disabled
+    expect(submitButton).toBeDisabled();
   });
 
   it('should successfully call cancel add server action', async () => {
