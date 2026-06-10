@@ -4,8 +4,6 @@ import { getProviderConfig, PROVIDER_TYPES } from './provider-factory';
 describe('Automate Cloud Provider form operations: Compute > Clouds > Providers > Configuration > Add a New Cloud Provider', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu('Compute', 'Clouds', 'Providers');
-    cy.toolbar('Configuration', 'Add a New Cloud Provider');
   });
 
   // Generate tests for VMware vCloud provider
