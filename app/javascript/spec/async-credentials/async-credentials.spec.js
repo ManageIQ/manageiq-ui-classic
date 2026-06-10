@@ -19,6 +19,7 @@ const RendererWrapper = ({ asyncValidate, onSubmit, ...props }) => (
           component: 'async-credentials',
           name: 'validate_credentials',
           asyncValidate,
+          isRequired: true,
           fields: [
             {
               component: 'text-field',
