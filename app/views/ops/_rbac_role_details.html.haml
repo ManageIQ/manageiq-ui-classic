@@ -4,13 +4,9 @@
 - role_restrictions = role_restrictions.sort
 - select_options =  [["-1", "<#{_('None')}>"]] + role_restrictions
 - if edit
-  :ruby
-    role_id = edit[:role_id] || "new"
-    url = url_for_only_path(:action => 'rbac_role_save', :id => role_id)
-    custom_props = rbac_role_product_features(rbac_menu_tree)
+  - custom_props = rbac_role_product_features(rbac_menu_tree)
   = react('RbacRoleForm',
           :selectOptions           => select_options,
-          :url                     => url,
           :customProps             => custom_props,
           :role                    => role,
           :existingProductFeatures => role.miq_product_features)

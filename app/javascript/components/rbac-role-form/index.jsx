@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { Loading, Button } from '@carbon/react';
 import createSchema from './rbac-role-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import miqFlash from '../../helpers/miq-flash';
 
 let idCounter = 0;
 
@@ -16,7 +15,7 @@ let modified = false;
 let features = new Set();
 const RbacRoleForm = (props) => {
   const {
-    selectOptions, url, customProps, role, existingProductFeatures,
+    selectOptions, customProps, role, existingProductFeatures,
   } = props;
 
   const generateId = () => {
@@ -134,7 +133,13 @@ const RbacRoleForm = (props) => {
   useEffect(() => {
     if (isEdit) {
       miqSparkleOn();
-      http.get(`rbac_role_get_values/${role.id}`).then((roleValues) => {
+      API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
+        const roleValues = {
+          name: response.name,
+          vm_restriction: response.settings?.restrictions?.vms,
+          service_template_restriction: response.settings?.restrictions?.service_templates,
+          miqProductFeatures: response.miq_product_features || [],
+        };
         if (roleValues) {
           const bsTree = JSON.parse(customProps.bs_tree);
           const nodes = bsTree.map(transformTree);
@@ -187,32 +192,51 @@ const RbacRoleForm = (props) => {
     const treeValues = checkedBoxes.map((feature) => feature.split('#')[0]);
     const splitValues = treeValues.map((string) => string.split('__')[1]);
     const productFeatures = splitValues;
-    values.tree_dropdown = splitValues;
 
-    if (values.vm_restriction === '-1') {
-      values.vm_restriction = '';
-    }
-
-    if (values.service_template_restriction === '-1') {
-      values.service_template_restriction = '';
-    }
-
-    // do split to get rid of id on submit
-    const params = {
+    // Build resource object
+    const resource = {
       name: values.name,
-      vm_restriction: values.vm_restriction,
-      service_template_restriction: values.service_template_restriction,
-      features: productFeatures,
+      features: productFeatures.map((identifier) => ({ identifier })),
     };
 
-    http.post(url, params)
+    // Add settings.restrictions if any restrictions are set
+    const restrictions = {};
+    if (values.vm_restriction && values.vm_restriction !== '-1') {
+      restrictions.vms = values.vm_restriction;
+    }
+    if (values.service_template_restriction && values.service_template_restriction !== '-1') {
+      restrictions.service_templates = values.service_template_restriction;
+    }
+    if (Object.keys(restrictions).length > 0) {
+      resource.settings = { restrictions };
+    }
+
+    // Build API payload
+    let payload;
+    let apiUrl;
+
+    if (isEdit) {
+      // For edit, use POST with action: "edit" and wrap in resource
+      apiUrl = `/api/roles/${role.id}`;
+      payload = {
+        action: 'edit',
+        resource,
+      };
+    } else {
+      // For create, use POST without action wrapper
+      apiUrl = '/api/roles';
+      payload = resource;
+    }
+
+    return API.post(apiUrl, payload)
       .then(() => {
-        const confirmation = sprintf(__('Role "%s" was saved'), params.name);
-        miqRedirectBack(sprintf(confirmation), 'success', '/ops/explorer');
+        const confirmation = sprintf(__('Role "%s" was saved'), resource.name);
+        miqRedirectBack(confirmation, 'success', '/ops/explorer');
       })
       .catch((error) => {
         miqSparkleOff();
-        miqFlash('error', error);
+        const message = error.data?.error?.message || error.message || __('An error occurred while saving the role');
+        miqRedirectBack(message, 'error', '/ops/explorer');
       });
   };
 
@@ -228,19 +252,23 @@ const RbacRoleForm = (props) => {
   const onReset = () => {
     features = new Set();
     idCounter = 0;
-    http.get(`rbac_role_get_values/${role.id}`).then((roleValues) => {
-      if (roleValues) {
-        if (roleValues.miqProductFeatures) {
-          const bsTree = JSON.parse(customProps.bs_tree);
-          const nodes = bsTree.map(transformTree);
-          roleValues.miqProductFeatures.forEach((productFeature) => {
-            findCheck(productFeature.identifier, nodes[0]);
-          });
-        }
-        setFormData({
-          ...formData, isLoading: false, initialValues: roleValues, checked: features,
+    API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
+      const roleValues = {
+        name: response.name,
+        vm_restriction: response.settings?.restrictions?.vms,
+        service_template_restriction: response.settings?.restrictions?.service_templates,
+        miqProductFeatures: response.miq_product_features || [],
+      };
+      if (roleValues.miqProductFeatures) {
+        const bsTree = JSON.parse(customProps.bs_tree);
+        const nodes = bsTree.map(transformTree);
+        roleValues.miqProductFeatures.forEach((productFeature) => {
+          findCheck(productFeature.identifier, nodes[0]);
         });
       }
+      setFormData({
+        ...formData, isLoading: false, initialValues: roleValues, checked: features,
+      });
     });
   };
 
@@ -329,7 +357,6 @@ const FormTemplate = ({
 
 RbacRoleForm.propTypes = {
   selectOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
-  url: PropTypes.string,
   customProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]).isRequired,
   role: PropTypes.shape({
     id: PropTypes.number,
@@ -345,7 +372,6 @@ RbacRoleForm.propTypes = {
 };
 
 RbacRoleForm.defaultProps = {
-  url: '',
   role: undefined,
   existingProductFeatures: undefined,
 };

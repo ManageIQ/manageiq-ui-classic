@@ -8,17 +8,24 @@ describe('Rbac Role Form Component', () => {
   const RbacRoleEditData = {
     id: 90,
     name: 'test',
-    vm_restriction: 'user',
-    service_template_restriction: 'user',
-    miqProductFeatures: [{ identifier: 'add_global_filter' }],
+    settings: {
+      restrictions: {
+        vms: 'user',
+        service_templates: 'user',
+      },
+    },
+    miq_product_features: [{ identifier: 'add_global_filter' }],
   };
 
   const RbacRoleCopyData = {
     id: null,
     name: 'copy of test',
-    vm_restriction: 'user',
-    service_template_restriction: 'user',
-    featureswithId: ['109__add_global_filter#1433'],
+    settings: {
+      restrictions: {
+        vms: 'user',
+        service_templates: 'user',
+      },
+    },
   };
 
   const selectOptions = [
@@ -57,8 +64,6 @@ describe('Rbac Role Form Component', () => {
         selectOptions={selectOptions}
         customProps={customProps}
         role={{ id: null, name: null }}
-        url="/ops/rbac_role_add"
-        getURL="/ops/rbac_role_get_values"
       />
     );
 
@@ -68,15 +73,13 @@ describe('Rbac Role Form Component', () => {
   });
 
   it('render edit rbac role form', async() => {
-    fetchMock.get(`rbac_role_get_values/${RbacRoleEditData.id}`, RbacRoleEditData);
+    fetchMock.get(`/api/roles/${RbacRoleEditData.id}?expand=resources&attributes=miq_product_features`, RbacRoleEditData);
 
     const { container } = renderWithRedux(
       <RbacRoleForm
         selectOptions={selectOptions}
         customProps={customProps}
         role={RbacRoleEditData}
-        url="/ops/rbac_role_edit"
-        getURL="/ops/rbac_role_get_values"
       />
     );
 
@@ -91,8 +94,6 @@ describe('Rbac Role Form Component', () => {
         selectOptions={selectOptions}
         customProps={customProps}
         role={RbacRoleCopyData}
-        url="/ops/rbac_role_copy"
-        getURL="/ops/rbac_role_get_values"
         existingProductFeatures={[{ identifier: 'add_global_filter' }]}
       />
     );

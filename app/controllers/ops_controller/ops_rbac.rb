@@ -111,38 +111,8 @@ module OpsController::OpsRbac
   def rbac_role_edit
     assert_privileges("rbac_role_edit")
     @hide_bottom_bar = true
-    case params[:button]
-    when 'cancel'      then rbac_edit_cancel('role')
-    when 'save', 'add' then rbac_edit_save_or_add('role', 'miq_user_role')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or form load
-    end
-  end
-
-  def rbac_role_save
-    @hide_bottom_bar = true
-    if params[:id] != 'new'
-      assert_privileges("rbac_role_edit")
-      rbac_edit_reset_react('edit', 'role', MiqUserRole)
-    else
-      assert_privileges("rbac_role_add")
-      rbac_edit_reset_react('new', 'role', MiqUserRole)
-    end
-  end
-
-  def rbac_role_get_values
-    assert_privileges("rbac_role_edit")
-    unless params[:id]
-      obj = find_checked_items
-      @_params[:id] = obj[0]
-    end
-    @hide_bottom_bar = true
-    role = MiqUserRole.find_by(:id => params[:id])
-    render :json => {
-      :name                         => role.name,
-      :vm_restriction               => role[:settings] && role[:settings][:restrictions][:vms],
-      :service_template_restriction => role[:settings] && role[:settings][:restrictions][:service_templates],
-      :miqProductFeatures           => role.miq_product_features,
-    }
+    # React form handles all interactions; this action only loads the page
+    rbac_edit_reset(params[:typ], 'role', MiqUserRole)
   end
 
   def rbac_tenant_add
@@ -659,63 +629,22 @@ module OpsController::OpsRbac
     replace_right_cell(:nodetype => x_node)
   end
 
-  def rbac_edit_reset_react(operation, what, klass)
-    key = what.to_sym
-    if operation != "new"
-      record = MiqUserRole.find_by(:id => params[:id])
-    end
-
-    case operation
-    when "new"
-      # create new record
-      @record = klass.new
-      if key == :role
-        @record.miq_product_features = [MiqProductFeature.find_by(:identifier => MiqProductFeature.feature_root)]
-      end
-    when "copy"
-      # copy existing record
-      @record = record.clone
-      @record.miq_product_features = record.miq_product_features
-      @record.read_only = false
-    else
-      # use existing record
-      @record = record
-    end
-    @sb[:typ] = operation
-
-    rbac_role_set_form_vars
-    rbac_role_get_form_vars
-
-    rbac_edit_save_or_add('role', 'miq_user_role')
-  end
-
   def rbac_edit_save_or_add(what, rbac_suffix = what)
     key         = what.to_sym
     id          = params[:id] || "new"
     add_pressed = params[:button] == "add"
 
+    return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
+
     case key
-    when :user
-      return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
-      record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
-      validated = rbac_user_validate?
-      rbac_user_set_record_vars(record)
-    when :group
-      return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
+    when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
       rbac_group_set_record_description_role(record) # Set new Description, Role and Tenant for a new Group
       rbac_group_set_record_vars(record) if validated
-    when :role
-      record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
-      validated = rbac_role_validate?
-      rbac_role_set_record_vars(record)
     end
 
     if record.valid? && validated && record.save!
-      populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, @edit))
       subkey = key == :group ? :description : :name
@@ -785,7 +714,6 @@ module OpsController::OpsRbac
 
     case rec_type
     when "group" then rbac_group_get_form_vars
-    when "role"  then rbac_role_get_form_vars
     end
 
     session[:changed] = changed = @edit[:new] != @edit[:current]
@@ -1272,47 +1200,6 @@ module OpsController::OpsRbac
     end
   end
 
-  def rbac_role_get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:vm_restriction] = params[:vm_restriction].to_sym if params[:vm_restriction]
-    @edit[:new][:service_template_restriction] = params[:service_template_restriction].to_sym if params[:service_template_restriction]
-    @edit[:new][:features] = params[:features] if params[:features]
-    @edit[:new][:features].uniq!
-    @edit[:new][:features].sort!
-  end
-
-  # Set role record variables to new values
-  def rbac_role_set_record_vars(role)
-    role.name = params[:name]
-    role.settings ||= {}
-    role.settings[:restrictions] ||= {}
-    if params[:vm_restriction] == :none
-      role.settings[:restrictions].delete(:vms)
-    else
-      role.settings[:restrictions][:vms] = params[:vm_restriction]
-    end
-    if params[:service_template_restriction] == :none
-      role.settings[:restrictions].delete(:service_templates)
-    else
-      role.settings[:restrictions][:service_templates] = params[:service_template_restriction]
-    end
-    role.settings = nil if role.settings[:restrictions].blank?
-  end
-
-  def populate_role_features(role)
-    role.miq_product_features =
-      MiqProductFeature.find_all_by_identifier(rbac_compact_features(params[:features]))
-    User.current_user.reload
-  end
-
-  # Validate some of the role fields
-  def rbac_role_validate?
-    if @edit[:new][:features].empty?
-      add_flash(_("At least one Product Feature must be selected"), :error)
-      return false
-    end
-    true
-  end
 
   # Validate some of the role fields
   def rbac_group_validate?

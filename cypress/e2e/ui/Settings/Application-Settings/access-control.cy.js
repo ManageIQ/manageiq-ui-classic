@@ -148,7 +148,7 @@ function fillRoleForm({
 function saveRole(buttonText = 'Add') {
   cy.interceptApi({
     alias: 'saveRoleApi',
-    urlPattern: /\/ops\/rbac_role_(add|edit|copy)$/,
+    urlPattern: /\/api\/roles(\/\d+)?$/,
     waitOnlyIfRequestIntercepted: true,
     triggerFn: () =>
       cy

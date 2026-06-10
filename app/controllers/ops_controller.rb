@@ -167,7 +167,6 @@ class OpsController < ApplicationController
 
     @timeline = @timeline_filter = true # Load timeline JS modules
     return if params[:edit_key] && !load_edit(params[:edit_key], "explorer")
-
     @breadcrumbs = []
     build_accordions_and_trees
 
@@ -186,9 +185,9 @@ class OpsController < ApplicationController
       session[:changed] = !flash_errors?
     end
     # setting active record object here again, since they are no longer there due to redirect
-    @ldap_group = @edit[:ldap_group] if params[:cls_id] && params.expect(:cls_id).split('_')[0] == "lg"
+    @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && %w[settings_import settings_import_tags].exclude?(@sb[:active_subtab])))
+    if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w[settings_import settings_import_tags].include?(@sb[:active_subtab])))
       edit_changed?
     end
     # do not show buttons, when settings_workers - it uses react form buttons
@@ -200,9 +199,7 @@ class OpsController < ApplicationController
 
   def accordion_select
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
-    raise ActionController::ParameterMissing, :id unless params[:id]
-
-    self.x_active_accord = params.expect(:id).sub(/_accord$/, '')
+    self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
 
     assert_accordion_and_tree_privileges(x_active_tree)
@@ -223,7 +220,7 @@ class OpsController < ApplicationController
     tree_selected_model
     set_active_tab(params[:id])
     session[:changed] = false
-    self.x_node = params[:id] # params[:action] == "x_show"
+    self.x_node = params[:id] #params[:action] == "x_show"
     get_node_info(params[:id])
     replace_right_cell(:nodetype => @nodetype)
   end
@@ -238,7 +235,7 @@ class OpsController < ApplicationController
     if params[:tab]
       @edit = session[:edit]
       @scan = @edit[:scan]
-      case params.expect(:tab).split("_")[0]
+      case params[:tab].split("_")[0]
       when "new"
         redirect_to(:action => "ap_new", :tab => params[:tab], :id => (@scan.id || "new").to_s)
       when "edit"
@@ -456,8 +453,7 @@ class OpsController < ApplicationController
 
   def set_form_locals
     locals = {}
-    case x_active_tree
-    when :diagnostics_tree
+    if x_active_tree == :diagnostics_tree
       if @sb[:active_tab] == "diagnostics_cu_repair"
         action_url = "cu_repair"
         locals[:submit_button] = true
@@ -468,7 +464,7 @@ class OpsController < ApplicationController
         action_url = "old_dialogs_update"
         record_id = my_server.id
       end
-    when :settings_tree
+    elsif x_active_tree == :settings_tree
       if @sb[:active_tab] == 'settings_tags' && %w[settings_import settings_import_tags].include?(@sb[:active_subtab])
         action_url = "apply_imports"
         record_id = @sb[:active_tab].split("settings_").last
@@ -493,14 +489,14 @@ class OpsController < ApplicationController
       elsif %w[settings_evm_servers settings_list].include?(@sb[:active_tab]) && @in_a_form
         if %w[ap_copy ap_edit ap_host_edit ap_vm_edit].include?(@sb[:action])
           action_url = "ap_edit"
-          record_id = @edit[:scan_id] || nil
+          record_id = @edit[:scan_id] ? @edit[:scan_id] : nil
         elsif %w[schedule_add schedule_edit].include?(@sb[:action])
           action_url = "schedule_edit"
-          record_id = @edit[:sched_id] || nil
+          record_id = @edit[:sched_id] ? @edit[:sched_id] : nil
         elsif %w[zone_edit zone_new].include?(@sb[:action])
           locals[:serialize] = true
           action_url = "zone_edit"
-          record_id = @edit[:zone_id] || nil
+          record_id = @edit[:zone_id] ? @edit[:zone_id] : nil
         end
       elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_my_company_categories" && @in_a_form
         action_url = "category_edit"
@@ -514,13 +510,16 @@ class OpsController < ApplicationController
         locals[:no_cancel] = true
         locals[:serialize] = true if @sb[:active_tab] == "settings_advanced"
       end
-    when :rbac_tree
+    elsif x_active_tree == :rbac_tree
       if %w[rbac_user_add rbac_user_copy rbac_user_edit].include?(@sb[:action])
         action_url = "rbac_user_edit"
-        record_id = @edit[:user_id] || nil
+        record_id = @edit[:user_id] ? @edit[:user_id] : nil
+      elsif %w[rbac_role_add rbac_role_copy rbac_role_edit].include?(@sb[:action])
+        action_url = "rbac_role_edit"
+        record_id = @edit[:role_id] ? @edit[:role_id] : nil
       elsif %w[rbac_group_add rbac_group_edit].include?(@sb[:action])
         action_url = "rbac_group_edit"
-        record_id = @edit[:group_id] || nil
+        record_id = @edit[:group_id] ? @edit[:group_id] : nil
       elsif %w[rbac_group_tags_edit rbac_user_tags_edit rbac_tenant_tags_edit].include?(@sb[:action])
         action_url = "rbac_tags_edit"
         locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
@@ -538,7 +537,6 @@ class OpsController < ApplicationController
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid, show_list = true)
     return if params[:cls_id] # no need to do get_node_info if redirected from show_product_update
-
     @nodetype = valid_active_node(treenodeid).split("-").first
     @show_list = show_list
     if @replace_trees
@@ -609,7 +607,7 @@ class OpsController < ApplicationController
     end
   end
 
-  def diagnostics_replace_right_cell(_nodetype, presenter)
+  def diagnostics_replace_right_cell(nodetype, presenter)
     # need to refresh all_tabs for server by roles and roles by servers screen
     # to show correct buttons on screen when tree node is selected
     if %w[accordion_select change_tab explorer tree_select].include?(params[:action]) ||
@@ -663,7 +661,7 @@ class OpsController < ApplicationController
       # when editing/adding schedule in settings tree
       presenter.update(:settings_list, r[:partial => "schedule_form"])
       presenter[:build_calendar] = {
-        :date_from => 1.month.ago.in_time_zone(@edit[:tz]),
+        :date_from => (Time.zone.now - 1.month).in_time_zone(@edit[:tz]),
       }
       @right_cell_text = if !@schedule.id
                            _("Adding a new Schedule")
@@ -738,13 +736,11 @@ class OpsController < ApplicationController
     presenter[:osf_node] = x_node
     presenter.reset_one_trans
     presenter.focus('server_name')
-    if @ajax_action
-      presenter[:ajax_action] = {
-        :controller => controller_name,
-        :action     => @ajax_action,
-        :record_id  => @record.id
-      }
-    end
+    presenter[:ajax_action] = {
+      :controller => controller_name,
+      :action     => @ajax_action,
+      :record_id  => @record.id
+    } if @ajax_action
   end
 
   def custom_toolbar_explorer
@@ -775,7 +771,7 @@ class OpsController < ApplicationController
 
   def handle_bottom_cell(nodetype, presenter, locals)
     # Handle bottom cell
-    if @pages || (@in_a_form && locals[:action_url] != "rbac_tags_edit")
+    if @pages || @in_a_form && locals[:action_url] != "rbac_tags_edit"
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
@@ -791,10 +787,6 @@ class OpsController < ApplicationController
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
     if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
-      presenter.hide(:form_buttons_div)
-    end
-
-    if @hide_bottom_bar
       presenter.hide(:form_buttons_div)
     end
   end
