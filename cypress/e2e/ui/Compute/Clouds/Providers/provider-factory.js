@@ -55,24 +55,24 @@ export const SELECT_OPTIONS = {
   EVENT_STREAM_TYPE_AMQP: 'AMQP',
   EVENT_STREAM_TYPE_STF: 'STF',
   ENABLED: 'Enabled',
-  API_VERSION_V3: 'Keystone V3',
-  API_VERSION_V5: 'vCloud API 5.5',
+  API_VERSION_V3: 'v3',
+  API_VERSION_V5: '5.5',
   API_VERSION_V9: 'vCloud API 9.0',
   API_VERSION_2017: 'V2017_03_09',
   ZONE_DEFAULT: 'default',
-  SECURITY_PROTOCOL_SSL: 'SSL',
+  SECURITY_PROTOCOL_SSL: 'ssl-with-validation',
   SECURITY_PROTOCOL_NON_SSL: 'Non-SSL',
 };
 
 // Common region options
 export const REGION_OPTIONS = {
-  CENTRAL_INDIA: 'Central India',
+  CENTRAL_INDIA: 'centralindia',
   CENTRAL_US: 'Central US',
   HYDERABAD: 'ap-hyderabad-1',
   MELBOURNE: 'ap-melbourne-1',
-  AUSTRALIA: 'Australia (Sydney)',
+  AUSTRALIA: 'au-syd',
   SPAIN: 'EU Spain (Madrid)',
-  CANADA: 'Canada (Central)',
+  CANADA: 'ca-central-1',
   ASIA_PACIFIC: 'Asia Pacific (Malaysia)',
 };
 
@@ -80,8 +80,7 @@ export const REGION_OPTIONS = {
 export const FIELD_VALUES = {
   TEST_NAME: 'Test Name:',
   TENANT_ID: '101',
-  SUBSCRIPTION_ID: 'z565815f-05b6-402f-1999-045155da7dq4',
-  ENDPOINT_URL: '/api',
+  SUBSCRIPTION_ID: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   CLIENT_ID: 'manageiq.example.com',
   CLIENT_KEY: 'test_client_key',
   PORT: '3000',
@@ -94,11 +93,9 @@ export const FIELD_VALUES = {
   CLOUD_API_KEY: 'fake-ibm-cloud-api-key-for-testing',
   GUID: 'fake-guid-0000-0000-0000-000000000000',
   PROJECT_ID: 'fake-miq-project-id-for-testing',
-  ASSUME_ROLE: 'arn:aws:iam::000000000000:role/FakeTestRole',
   ACCESS_KEY_ID: 'FAKE-ACCESS-KEY-ID-FOR-TESTING',
   SECRET_ACCESS_KEY: 'fake-secret-access-key-for-testing-do-not-use',
   DOMAIN_ID_DEFAULT: 'default',
-  PROVIDER_REGION: 'RegionOne',
 };
 
 // Common flash message text snippets
@@ -148,6 +145,143 @@ export const PROVIDER_TYPES = {
 };
 
 /**
+ * Gets the factory name and configuration object for creating a cloud provider
+ * @param {Object} providerConfig - The provider configuration object
+ * @returns {Object} Object containing factoryName and factoryConfig
+ * @example
+ * const { factoryName, factoryConfig } = getProviderFactoryConfig(providerConfig);
+ * cy.appFactories([['create', factoryName, factoryConfig]]);
+ */
+export function getProviderFactoryConfig(providerConfig) {
+  const { formValues, type: providerType } = providerConfig;
+  const defaultFormValues = formValues?.default;
+  const baseConfig = {
+    name: formValues.common.name,
+  };
+  const withDefaultAuth = {
+    ...baseConfig,
+    authtype: 'default',
+  };
+  const withHostAndPort = {
+    hostname: defaultFormValues?.['endpoints.default.hostname'],
+    port: defaultFormValues?.['endpoints.default.port'],
+  };
+  const withEndpoint = {
+    ...withHostAndPort,
+    security_protocol:
+      defaultFormValues?.['endpoints.default.security_protocol'],
+  };
+  const withTenantIdAndApiVersion = {
+    uid_ems: defaultFormValues.uid_ems,
+    api_version: defaultFormValues.api_version,
+  };
+
+  switch (providerType) {
+    case PROVIDER_TYPES.AMAZON_EC2:
+      return {
+        factoryName: 'ems_amazon',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.AZURE:
+      return {
+        factoryName: 'ems_azure',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+          uid_ems: defaultFormValues.uid_ems,
+          subscription: defaultFormValues.subscription,
+        },
+      };
+    case PROVIDER_TYPES.GOOGLE_COMPUTE:
+      return {
+        factoryName: 'ems_google',
+        factoryConfig: {
+          ...withDefaultAuth,
+          project: defaultFormValues.project,
+        },
+      };
+    case PROVIDER_TYPES.OPENSTACK:
+      return {
+        factoryName: 'ems_openstack_with_authentication',
+        factoryConfig: {
+          ...baseConfig,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.VMWARE_VCLOUD:
+      return {
+        factoryName: 'ems_vmware_cloud',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withHostAndPort,
+          api_version: defaultFormValues.api_version,
+        },
+      };
+    case PROVIDER_TYPES.ORACLE_CLOUD:
+      return {
+        factoryName: 'ems_oracle_cloud_with_authentication',
+        factoryConfig: {
+          ...baseConfig,
+          provider_region: defaultFormValues.provider_region,
+          uid_ems: defaultFormValues.uid_ems,
+        },
+      };
+    case PROVIDER_TYPES.IBM_CLOUD_VPC:
+      return {
+        factoryName: 'ems_ibm_cloud_vpc',
+        factoryConfig: {
+          ...withDefaultAuth,
+          provider_region: defaultFormValues.provider_region,
+        },
+      };
+    case PROVIDER_TYPES.IBM_POWER_SYSTEMS:
+      return {
+        factoryName: 'ems_ibm_cloud_power_virtual_servers_cloud',
+        factoryConfig: {
+          ...withDefaultAuth,
+          uid_ems: defaultFormValues.uid_ems,
+        },
+      };
+    case PROVIDER_TYPES.AZURE_STACK:
+      return {
+        factoryName: 'ems_azure_stack',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+          subscription: defaultFormValues.subscription,
+        },
+      };
+    case PROVIDER_TYPES.IBM_POWERVC:
+      return {
+        factoryName: 'ems_ibm_power_vc',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          uid_ems: defaultFormValues.uid_ems,
+          api_version: SELECT_OPTIONS.API_VERSION_V3, // for rendering the domain ID field
+        },
+      };
+    case PROVIDER_TYPES.IBM_CIC:
+      return {
+        factoryName: 'ems_ibm_cic',
+        factoryConfig: {
+          ...withDefaultAuth,
+          ...withEndpoint,
+          ...withTenantIdAndApiVersion,
+        },
+      };
+    default:
+      cy.logAndThrowError(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
+  }
+}
+
+/**
  * Creates a provider configuration object with all necessary properties
  * @param {string} type - The provider type
  * @param {Object} config - Additional configuration options
@@ -156,7 +290,6 @@ export const PROVIDER_TYPES = {
 function createProviderConfig(type, config = {}) {
   const baseConfig = {
     type,
-    nameValue: `${FIELD_VALUES.TEST_NAME} ${type}`,
     validationError: VALIDATION_ERRORS[type.replace(/\s+/g, '_').toUpperCase()],
     formFields: {
       common: [
@@ -185,8 +318,22 @@ function createProviderConfig(type, config = {}) {
     fieldSelectionValues: {},
   };
 
-  // Merge with provided config
-  return { ...baseConfig, ...config };
+  // Deep merge formValues and formFields to preserve common values
+  const mergedConfig = { ...baseConfig, ...config };
+  if (config.formFields) {
+    mergedConfig.formFields = {
+      ...baseConfig.formFields,
+      ...config.formFields,
+    };
+  }
+  if (config.formValues) {
+    mergedConfig.formValues = {
+      ...baseConfig.formValues,
+      ...config.formValues,
+    };
+  }
+
+  return mergedConfig;
 }
 
 /**
@@ -272,6 +419,7 @@ function getVMwareVcloudProviderConfig() {
     formValues: {
       default: {
         api_version: SELECT_OPTIONS.API_VERSION_V5,
+        'endpoints.default.hostname': 'vmware-vcloud.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -541,6 +689,7 @@ function getAzureStackProviderConfig() {
         api_version: SELECT_OPTIONS.API_VERSION_2017,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'azure-stack.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -580,7 +729,7 @@ function getAzureProviderConfig() {
           label: FIELD_LABELS.ENDPOINT_URL,
           id: 'endpoints.default.url',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.CLIENT_ID,
@@ -602,7 +751,6 @@ function getAzureProviderConfig() {
         provider_region: REGION_OPTIONS.CENTRAL_INDIA,
         uid_ems: FIELD_VALUES.TENANT_ID,
         subscription: FIELD_VALUES.SUBSCRIPTION_ID,
-        'endpoints.default.url': FIELD_VALUES.ENDPOINT_URL,
         'authentications.default.userid': FIELD_VALUES.CLIENT_ID,
         'authentications.default.password': FIELD_VALUES.CLIENT_KEY,
       },
@@ -629,7 +777,7 @@ function getAmazonEC2ProviderConfig() {
           label: FIELD_LABELS.ENDPOINT_URL,
           id: 'endpoints.default.url',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.ASSUME_ROLE_ARN,
@@ -670,8 +818,6 @@ function getAmazonEC2ProviderConfig() {
     formValues: {
       default: {
         provider_region: REGION_OPTIONS.CANADA,
-        'endpoints.default.url': FIELD_VALUES.ENDPOINT_URL,
-        'authentications.default.service_account': FIELD_VALUES.ASSUME_ROLE,
         'authentications.default.userid': FIELD_VALUES.ACCESS_KEY_ID,
         'authentications.default.password': FIELD_VALUES.SECRET_ACCESS_KEY,
       },
@@ -691,6 +837,12 @@ function getIBMPowerVCProviderConfig() {
         {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
+          type: 'text',
+          required: false,
+        },
+        {
+          label: FIELD_LABELS.DOMAIN_ID,
+          id: 'uid_ems',
           type: 'text',
           required: true,
         },
@@ -788,6 +940,7 @@ function getIBMPowerVCProviderConfig() {
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
         'endpoints.default.port': FIELD_VALUES.PORT,
+        'endpoints.default.hostname': 'ibm-powervc.example.com',
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
       },
@@ -813,7 +966,7 @@ function getIBMCICProviderConfig() {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.API_VERSION,
@@ -911,11 +1064,11 @@ function getIBMCICProviderConfig() {
     },
     formValues: {
       default: {
-        provider_region: FIELD_VALUES.PROVIDER_REGION,
         api_version: SELECT_OPTIONS.API_VERSION_V3,
         uid_ems: FIELD_VALUES.DOMAIN_ID_DEFAULT,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'ibm-cic.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
@@ -948,7 +1101,7 @@ function getOpenStackProviderConfig() {
           label: FIELD_LABELS.PROVIDER_REGION,
           id: 'provider_region',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           label: FIELD_LABELS.OPENSTACK_INFRA_PROVIDER,
@@ -1052,11 +1205,11 @@ function getOpenStackProviderConfig() {
     },
     formValues: {
       default: {
-        provider_region: FIELD_VALUES.PROVIDER_REGION,
         api_version: SELECT_OPTIONS.API_VERSION_V3,
         uid_ems: FIELD_VALUES.DOMAIN_ID_DEFAULT,
         'endpoints.default.security_protocol':
           SELECT_OPTIONS.SECURITY_PROTOCOL_SSL,
+        'endpoints.default.hostname': 'openstack.example.com',
         'endpoints.default.port': FIELD_VALUES.PORT,
         'authentications.default.userid': FIELD_VALUES.USERNAME,
         'authentications.default.password': FIELD_VALUES.PASSWORD,
