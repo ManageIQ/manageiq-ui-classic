@@ -97,7 +97,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         id: 'compliant-resources-button',
         skipSubmit: true,
         hideField: !edit,
-        condition: { when: 'compression', isNotEmpty: true },
+        condition: { when: 'compression', is: (value) => value && value !== '-1' },
         fields: [
           {
             component: componentTypes.SWITCH,
@@ -111,7 +111,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         name: 'storage_resource_id',
         id: 'storage_resource_id',
         label: __('Storage Resources'),
-        condition: { when: 'compression', isNotEmpty: true },
+        condition: { when: 'compression', is: (value) => value && value !== '-1' },
         onInputChange: () => null,
         isRequired: true,
         helperText: __('Select storage resources to attach to the service. Volumes for this service will be created on these resources.'),
