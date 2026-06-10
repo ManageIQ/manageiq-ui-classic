@@ -291,7 +291,7 @@ exports[`Physical storage form component should render adding form variant 1`] =
       <input
         name="Validate"
         type="hidden"
-        value="true"
+        value=""
       />
       <button
         class="miq-validation-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary cds--btn--disabled"
@@ -300,6 +300,11 @@ exports[`Physical storage form component should render adding form variant 1`] =
       >
         Validate
       </button>
+      <div
+        class="ddorg__carbon-error-helper-text"
+      >
+        Validation Required
+      </div>
       <div
         class="cds--btn-set"
       >
@@ -594,7 +599,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
       <input
         name="Validate"
         type="hidden"
-        value="false"
+        value=""
       />
       <button
         class="miq-validation-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary cds--btn--disabled"
@@ -603,6 +608,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
       >
         Validate
       </button>
+      <div
+        class="ddorg__carbon-error-helper-text"
+      >
+        Validation Required
+      </div>
       <div
         class="cds--btn-set"
       >

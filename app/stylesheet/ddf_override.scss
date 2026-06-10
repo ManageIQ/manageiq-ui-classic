@@ -4,6 +4,11 @@ form .miq-validation-button, .miq-async-action-button {
   display: flex;
   align-items: center;
 }
+// Override margin-bottom from carbon-component-mapper tabs component
+[class*="tab-"] > .miq-validation-button:not(:last-child),
+[class*="tab-"] > .cds--fieldset:not(:last-child) {
+  margin-bottom: 0;
+}
 #code-section {
   .cds--form-item {
     margin-bottom: 15px;
@@ -606,6 +611,33 @@ form .miq-validation-button, .miq-async-action-button {
     
     .cds--btn--secondary {
       margin-left: 0;
+    }
+  }
+}
+
+.rbac-role-form {
+  .access-restriction-orchestration, .access-restriction-catalog {
+    margin-top: 3%;
+  }
+
+  .access-restriction-catalog {
+    margin-bottom: 3%;
+  }
+  
+  .role-information {
+    font-size: x-large;
+    font-weight: lighter;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  
+  .custom-button-wrapper {
+    margin-top: 2%;
+    padding-bottom: 5%;
+  
+    .cds--btn--primary, .cds--btn--secondary {
+        margin-right: 3%;
+        width: 20%;
     }
   }
 }
