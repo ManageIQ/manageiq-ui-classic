@@ -165,7 +165,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostFeatureButton,
           :options      => {:feature => :standby}),
         button(
           :host_shutdown,
@@ -178,7 +177,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :confirm      => N_("Shutdown the selected items?"),
           :enabled      => false,
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostFeatureButtonWithDisable,
           :options      => {:feature => :shutdown}),
         button(
           :host_reboot,
@@ -191,7 +189,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :confirm      => N_("Restart the selected items?"),
           :enabled      => false,
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostFeatureButton,
           :options      => {:feature => :reboot}),
         separator,
         button(
@@ -203,7 +200,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Power On the selected items?"),
-          :klass        => ApplicationHelper::Button::HostFeatureButton,
           :options      => {:feature => :start},
           :enabled      => false,
           :onwhen       => "1+"),
@@ -216,7 +212,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Power Off the selected items?"),
-          :klass        => ApplicationHelper::Button::HostFeatureButton,
           :options      => {:feature => :stop},
           :enabled      => false,
           :onwhen       => "1+"),
@@ -229,7 +224,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Reset the selected items?"),
-          :klass        => ApplicationHelper::Button::HostFeatureButtonWithDisable,
           :options      => {:feature => :reset},
           :enabled      => false,
           :onwhen       => "1+"),

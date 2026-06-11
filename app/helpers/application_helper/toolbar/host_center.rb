@@ -141,7 +141,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Enter Maintenance Mode'),
           :icon    => "pficon pficon-maintenance",
           :confirm => N_("Put this item into Maintenance Mode?"),
-          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :enter_maint_mode}),
         button(
           :host_exit_maint_mode,
@@ -150,7 +150,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Exit Maintenance Mode'),
           :icon    => "pficon pficon-maintenance",
           :confirm => N_("Take this item out of Maintenance Mode?"),
-          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :exit_maint_mode}),
         button(
           :host_standby,
@@ -159,7 +159,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Enter Standby Mode'),
           :icon    => "pficon pficon-asleep fa-lg",
           :confirm => N_("Shutdown this item to Standby Mode?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :standby}),
         button(
           :host_shutdown,
@@ -168,7 +168,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Shutdown'),
           :icon    => "fa fa-stop fa-lg",
           :confirm => N_("Shutdown this item?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButtonWithDisable,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :shutdown}),
         button(
           :host_reboot,
@@ -177,7 +177,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Restart'),
           :icon    => "pficon pficon-restart fa-lg",
           :confirm => N_("Restart this item?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :reboot}),
         separator,
         button(
@@ -187,7 +187,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Power On'),
           :icon    => "pficon pficon-on fa-lg",
           :confirm => N_("Power On this item?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :start}),
         button(
           :host_stop,
@@ -196,7 +196,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Power Off'),
           :icon    => "pficon pficon-off fa-lg",
           :confirm => N_("Power Off this item?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :stop}),
         button(
           :host_reset,
@@ -205,7 +205,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Reset'),
           :icon    => "fa fa-refresh fa-lg",
           :confirm => N_("Reset this item?"),
-          :klass   => ApplicationHelper::Button::HostFeatureButtonWithDisable,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :reset}),
       ]
     ),
