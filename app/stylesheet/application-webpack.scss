@@ -19,7 +19,9 @@
 @use './notifications';
 @use './quadicon';
 @use './search-bar';
+@use './selected-groups-list';
 @use './settings';
+@use './sortable-list';
 @use './responsive_layout';
 @use './tags';
 @use './tree';
@@ -27,7 +29,6 @@
 @use './widget';
 @use './workflows';
 @use './cloud-container-projects-dashboard';
-@use './selected-groups-list';
 @import url('~c3/c3.css');
 @import url('~patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.css');
 @import url('~angular-patternfly/dist/styles/angular-patternfly.css');

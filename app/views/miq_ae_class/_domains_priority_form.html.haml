@@ -1,16 +1,1 @@
-#domains_list
-  .row
-    .col-md-7.col-sm-10.col-xs-10
-      = _("Domains:")
-      = select_tag('seq_fields[]',
-        options_for_select(@edit[:new][:domain_order], @selected),
-        :multiple => true, :class  => "form-control", :style => "overflow-x: scroll;", :size => 20, :id => "seq_fields")
-      %small= _('* Select one or more consecutive groups to move up or down.')
-
-    - button_params = @edit[:new][:domain_order].length >= 2 ? [[_("Move selected fields up"),   'domains_list', 'up',    'fa-angle-up'],
-                                                                [_("Move selected fields down"), 'domains_list', 'down',  'fa-angle-down']] : []
-    = render :partial => "shared/views/seq_selector_buttons",
-             :locals  => {:fields_count  => @edit[:new][:domain_order].length,
-                          :button_params => button_params,
-                          :button_action => 'priority_form_field_changed',
-                          :id            => 'priority__edit'}
+= react('DomainsPriorityForm', :domainOrder => @domain_order)

@@ -595,6 +595,26 @@ form .miq-validation-button, .miq-async-action-button {
   }
 }
 
+.domains-priority-form {
+  .cds--btn-set {
+    .cds--btn {
+      margin-right: 20px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    
+    .cds--btn--primary {
+      margin-left: 0;
+    }
+    
+    .cds--btn--secondary {
+      margin-left: 0;
+    }
+  }
+}
+
 .rbac-role-form {
   .access-restriction-orchestration, .access-restriction-catalog {
     margin-top: 3%;
