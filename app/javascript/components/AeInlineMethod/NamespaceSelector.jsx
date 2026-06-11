@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Loading } from '@carbon/react';
 import { debounce } from 'lodash';
 import FilterNamespace from './FilterNamespace';
@@ -17,7 +17,7 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
 
   /** Loads the domains and stores in domainData for 60 seconds. */
   const { data: domainsData, isLoading: domainsLoading } = useQuery(
-    'domainsData',
+    ['domainsData'],
     async() => (await http.get(namespaceUrls.aeDomainsUrl)).domains,
     {
       staleTime: 60000,
