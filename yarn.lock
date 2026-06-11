@@ -1555,7 +1555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.79.0":
+"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.82.0":
   version: 11.82.0
   resolution: "@carbon/icons-react@npm:11.82.0"
   dependencies:
@@ -1568,7 +1568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/layout@npm:^11.52.0, @carbon/layout@npm:^11.53.0":
+"@carbon/layout@npm:^11.53.0":
   version: 11.53.0
   resolution: "@carbon/layout@npm:11.53.0"
   dependencies:
@@ -1586,16 +1586,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:~1.106.0":
-  version: 1.106.0
-  resolution: "@carbon/react@npm:1.106.0"
+"@carbon/react@npm:~1.109.0":
+  version: 1.109.0
+  resolution: "@carbon/react@npm:1.109.0"
   dependencies:
     "@babel/runtime": "npm:^7.27.3"
     "@carbon/feature-flags": "npm:^1.3.0"
-    "@carbon/icons-react": "npm:^11.79.0"
-    "@carbon/layout": "npm:^11.52.0"
-    "@carbon/styles": "npm:^1.105.0"
-    "@carbon/utilities": "npm:^0.19.0"
+    "@carbon/icons-react": "npm:^11.82.0"
+    "@carbon/layout": "npm:^11.53.0"
+    "@carbon/styles": "npm:^1.108.0"
+    "@carbon/utilities": "npm:^0.20.0"
     "@floating-ui/react": "npm:^0.27.4"
     "@ibm/telemetry-js": "npm:^1.5.0"
     classnames: "npm:2.5.1"
@@ -1612,11 +1612,11 @@ __metadata:
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-is: ^16.13.1 || ^17.0.2 || ^18.3.1 || ^19.0.0
     sass: ^1.33.0
-  checksum: 10/60600013de0e7da60c6eef0d59e489294c24f3c7f74a12838f7a13d7f656b030b2fc09781587995c9a33df1e10da02e69034708567f514ec69485f7f0f29ced4
+  checksum: 10/10887412f2f2ea5a96e5076ba33a0f3792583024b4ddcc2389b6a3d8d87ae429c4fe81123fc92898b8e85ff2a7c3d1b97f656e8a4f24c4e00eb7787ad2fc9838
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.105.0":
+"@carbon/styles@npm:^1.108.0":
   version: 1.108.0
   resolution: "@carbon/styles@npm:1.108.0"
   dependencies:
@@ -1670,13 +1670,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/utilities@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@carbon/utilities@npm:0.19.0"
+"@carbon/utilities@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "@carbon/utilities@npm:0.20.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.6.1"
     "@internationalized/number": "npm:^3.6.1"
-  checksum: 10/4dc0974c3e4163be8a71ded52a81bb27ceb978f89563b3f2007c22b2caf0912cf7f140eed8de7fef59c0116b44fc702f0603becad1cef487418aac6a5b08f5c2
+  checksum: 10/73db30ea14723db48521ed72d7fc1a756e14b6deeecbefdb2e7143705b668b72cc4ce06e2e3baa7d31d4dc454d0ede76bdf0289a1b50509f5d6686f30d2ff060
   languageName: node
   linkType: hard
 
@@ -12302,7 +12302,7 @@ __metadata:
     "@babel/register": "npm:~7.28.0"
     "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
-    "@carbon/react": "npm:~1.106.0"
+    "@carbon/react": "npm:~1.109.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.1.13"
     "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
     "@eslint/js": "npm:~9.7.0"
