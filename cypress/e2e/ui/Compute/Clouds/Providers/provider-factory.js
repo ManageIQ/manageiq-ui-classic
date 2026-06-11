@@ -112,6 +112,7 @@ export const VALIDATION_MESSAGES = {
   FAILED: 'Validation failed',
   SUCCESSFUL: 'Validation successful',
   NAME_ALREADY_EXISTS: 'already exists',
+  VALIDATION_REQUIRED: 'Validation Required',
 };
 
 // Provider-specific validation error messages
