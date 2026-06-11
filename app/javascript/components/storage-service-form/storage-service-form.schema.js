@@ -111,7 +111,18 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         name: 'storage_resource_id',
         id: 'storage_resource_id',
         label: __('Storage Resources'),
-        condition: { when: 'compression', is: (value) => value && value !== '-1' },
+        condition: {
+          and: [
+            {
+              when: 'compression',
+              is: (value) => value && value !== '-1',
+            },
+            ...(!edit ? [{
+              when: 'ems_id',
+              is: (value) => value && value !== '-1',
+            }] : []),
+          ],
+        },
         onInputChange: () => null,
         isRequired: true,
         helperText: __('Select storage resources to attach to the service. Volumes for this service will be created on these resources.'),
