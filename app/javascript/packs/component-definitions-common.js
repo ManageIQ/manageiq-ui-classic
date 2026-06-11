@@ -19,6 +19,7 @@ import AttachDetachCloudVolumeForm from '../components/cloud-volume-form/attach-
 import AuthKeypairCloudForm from '../components/auth-key-pair-cloud';
 import AutomateSimulationForm from '../components/automate-simulation-form';
 import AutomationSimulation from '../components/AutomationSimulation';
+import AutomationTasksTable from '../components/automation-tasks-table';
 import ButtonList from '../components/data-tables/button-list';
 import ButtonGroupList from '../components/data-tables/button-group-list';
 import CatalogForm from '../components/catalog-form/catalog-form';
@@ -204,6 +205,7 @@ ManageIQ.component.addReact('AttachDetachCloudVolumeForm', AttachDetachCloudVolu
 ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
 ManageIQ.component.addReact('AutomateSimulationForm', AutomateSimulationForm);
 ManageIQ.component.addReact('AutomationSimulation', AutomationSimulation);
+ManageIQ.component.addReact('AutomationTasksTable', AutomationTasksTable);
 ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);
 ManageIQ.component.addReact('ButtonList', ButtonList);
 ManageIQ.component.addReact('ButtonGroupList', ButtonGroupList);
