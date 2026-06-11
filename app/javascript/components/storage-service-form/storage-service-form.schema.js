@@ -126,20 +126,32 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
           const selectedResources = stateValues.storage_resource_id ? stateValues.storage_resource_id : [];
           const capabilityValues = [];
 
-          const capabilityNames = fields.find((object) => object.id === 'required_capabilities')
-            .fields.map((capability) => capability.id);
-          capabilityNames.forEach((capabilityName) => capabilityValues.push(stateValues[capabilityName]));
+          const capabilityNames = fields
+            ?.find((object) => object?.id === 'required_capabilities')
+            ?.fields?.map((capability) => capability.id) || [];
 
-          return {
-            key: JSON.stringify(capabilityValues),
-            loadOptions: async() => {
-              providerCapabilities = await getProviderCapabilities(emsId);
-              const filteredResources = await filterResourcesByCapabilities(capabilityValues, providerCapabilities);
-              stateValues.storage_resource_id = filterSelectedResources(selectedResources, filteredResources);
+          capabilityNames?.forEach((capabilityName) =>
+            capabilityValues.push(stateValues[capabilityName]));
+          if (capabilityValues?.length) {
+            return {
+              key: JSON.stringify(capabilityValues),
+              loadOptions: async() => {
+                providerCapabilities = await getProviderCapabilities(emsId);
+                const filteredResources = await filterResourcesByCapabilities(
+                  capabilityValues,
+                  providerCapabilities
+                );
+                stateValues.storage_resource_id = filterSelectedResources(
+                  selectedResources,
+                  filteredResources
+                );
 
-              return filteredResources;
-            },
-          };
+                return filteredResources;
+              },
+            };
+          }
+
+          return null;
         },
       },
     ],
