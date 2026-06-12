@@ -121,12 +121,22 @@ module ApplicationController::ReportDownloads
     result = MiqReportResult.for_user(current_user).find(params[:id])
 
     @options = report_print_options(result.report, result) # used by the layouts/print
+
+    # Prepare data for React component
+    @report_data = {
+      :headers   => result.report.headers,
+      :col_order => result.report.col_order,
+      :title     => result.report.title
+    }
+
     render(
       :template => 'layouts/print/report',
       :layout   => 'layouts/print',
       :locals   => {
-        :report => result.report,
-        :data   => result.html_rows.join
+        :report      => result.report,
+        :data        => result.html_rows.join,
+        :report_data => @report_data,
+        :table_data  => result.table.data
       }
     )
   end
