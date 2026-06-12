@@ -229,26 +229,6 @@ describe MiqAeToolsController do
     end
   end
 
-  describe "#review_import" do
-    include_context "valid session"
-
-    let(:params) { {:import_file_upload_id => "123"} }
-
-    before do
-      session[:flash_msgs] = [{:message => 'the message'}]
-      bypass_rescue
-    end
-
-    it "assigns the import file upload id" do
-      get :review_import, :params => params
-      expect(assigns(:import_file_upload_id)).to eq("123")
-    end
-
-    it "assigns the message" do
-      get :review_import, :params => params
-      expect(assigns(:message)).to include("the message")
-    end
-  end
 
   describe "#retrieve_git_datastore" do
     include_context "valid session"
@@ -447,21 +427,25 @@ describe MiqAeToolsController do
     end
 
     shared_examples_for "MiqAeToolsController#upload_import_file that does not upload a file" do
-      it "redirects with a warning message" do
+      it "returns JSON with a warning message" do
         post :upload_import_file, :params => params, :xhr => true
-        expect(response).to redirect_to(:action => :review_import)
-        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Use the Choose file button to locate an import file", :level => :warning)]
+        expect(response.status).to eq(200)
+        expect(response.content_type).to include('application/json')
+        json_response = response.parsed_body
+        expect(json_response['message']).to eq("Use the Choose file button to locate an import file")
+        expect(json_response['level']).to eq('warning')
       end
     end
 
     context "when an upload file is given" do
       let(:automate_import_service) { double("AutomateImportService") }
+      let(:import_file_upload) { double("ImportFileUpload", :id => 123) }
       let(:params) { {:upload => {:file => upload_file}} }
       let(:upload_file) { fixture_file_upload("files/dummy_file.yml", "text/yml") }
 
       before do
         allow(AutomateImportService).to receive(:new).and_return(automate_import_service)
-        allow(automate_import_service).to receive(:store_for_import).with("the yaml data\n").and_return(123)
+        allow(automate_import_service).to receive(:store_for_import).with("the yaml data\n").and_return(import_file_upload)
       end
 
       it "stores the file for import" do
@@ -469,13 +453,14 @@ describe MiqAeToolsController do
         post :upload_import_file, :params => params, :xhr => true
       end
 
-      it "redirects to review_import" do
+      it "returns JSON with success message and import_file_upload_id" do
         post :upload_import_file, :params => params, :xhr => true
-        expect(response).to redirect_to(
-          :action                => :review_import,
-          :import_file_upload_id => 123,
-        )
-        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Import file was uploaded successfully", :level => :success)]
+        expect(response.status).to eq(200)
+        expect(response.content_type).to include('application/json')
+        json_response = response.parsed_body
+        expect(json_response['import_file_upload_id']).to eq(123)
+        expect(json_response['message']).to eq("Import file was uploaded successfully")
+        expect(json_response['level']).to eq('success')
       end
     end
 
