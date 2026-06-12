@@ -1795,20 +1795,6 @@ class MiqAeClassController < ApplicationController
     tree_select
   end
 
-  def refresh_git_domain
-    assert_privileges("miq_ae_git_refresh")
-    if params[:button] == "save"
-      begin
-        git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
-        render :json => {:message => _("Successfully refreshed!"), :level => "success"}
-      rescue => err
-        render :json => {:message => err.message, :level => "error"}, :status => 400
-      end
-    else
-      render :json => {:message => _("Git based refresh canceled"), :level => "warning"}
-    end
-  end
-
   def namespace
     assert_privileges("miq_ae_namespace_edit")
     render :json => find_record_with_rbac(MiqAeNamespace, params[:id]).attributes.slice('name', 'description', 'enabled')
@@ -2805,6 +2791,7 @@ class MiqAeClassController < ApplicationController
     presenter.update(update_partial_div, r[
       :partial => update_partial,
       :locals  => {
+        :domain_id    => params[:id],
         :git_repo_id  => @git_repo_id,
         :ref_type     => @ref_type,
         :ref_name     => @ref_name,

@@ -122,8 +122,8 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
     it('Refreshes git domain with a new branch', () => {
       cy.toolbar('Configuration', 'Refresh with a new branch or tag');
 
-      // Intercept the POST request
-      cy.intercept('POST', '/miq_ae_class/refresh_git_domain').as('refreshGitDomain');
+      // Intercept the API POST request
+      cy.intercept('POST', '/api/automate_domains/*').as('refreshGitDomain');
 
       // Verify initial branch is selected
       cy.getFormSelectFieldById({ selectId: 'ref_type' }).should('have.value', 'branch');
@@ -144,13 +144,17 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
 
           // Verify the request was made with correct body including the selected branch
           cy.wait('@refreshGitDomain').then((interception) => {
-            expect(interception.request.body).to.have.property('git_repo_id');
-            expect(interception.request.body).to.have.property('git_branch_or_tag', selectedBranch);
-            expect(interception.request.body).to.have.property('button', 'save');
+            const body = typeof interception.request.body === 'string'
+              ? JSON.parse(interception.request.body)
+              : interception.request.body;
+            expect(body).to.have.property('action', 'refresh_from_source');
+            expect(body).to.have.property('resource');
+            expect(body.resource).to.have.property('ref_type', 'branch');
+            expect(body.resource).to.have.property('ref', selectedBranch);
           });
 
           // Verify success flash message appears
-          cy.expect_flash(flashClassMap.success, 'Successfully refreshed');
+          cy.expect_flash(flashClassMap.success, 'Refreshing Automate Domain');
 
           // Verify the explorer title shows the updated branch
           cy.get('#explorer_title_text').should('contain', selectedBranch);
@@ -162,8 +166,8 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
     it('Refreshes git domain with a tag', () => {
       cy.toolbar('Configuration', 'Refresh with a new branch or tag');
 
-      // Intercept the POST request
-      cy.intercept('POST', '/miq_ae_class/refresh_git_domain').as('refreshGitDomain');
+      // Intercept the API POST request
+      cy.intercept('POST', '/api/automate_domains/*').as('refreshGitDomain');
 
       // Switch to tag type
       cy.getFormSelectFieldById({ selectId: 'ref_type' }).select('tag');
@@ -185,13 +189,17 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
 
         // Verify the request was made with correct body including the selected tag
         cy.wait('@refreshGitDomain').then((interception) => {
-          expect(interception.request.body).to.have.property('git_repo_id');
-          expect(interception.request.body).to.have.property('git_branch_or_tag', selectedTag);
-          expect(interception.request.body).to.have.property('button', 'save');
+          const body = typeof interception.request.body === 'string'
+            ? JSON.parse(interception.request.body)
+            : interception.request.body;
+          expect(body).to.have.property('action', 'refresh_from_source');
+          expect(body).to.have.property('resource');
+          expect(body.resource).to.have.property('ref_type', 'tag');
+          expect(body.resource).to.have.property('ref', selectedTag);
         });
 
         // Verify success flash message appears
-        cy.expect_flash(flashClassMap.success, 'Successfully refreshed');
+        cy.expect_flash(flashClassMap.success, 'Refreshing Automate Domain');
 
         // Verify the explorer title shows the updated tag
         cy.get('#explorer_title_text').should('contain', selectedTag);

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import { http } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './git-domain-refresh-form.schema';
 
@@ -11,6 +10,7 @@ const REF_TYPES = {
 const DEFAULT_BRANCH = 'origin/master';
 
 const GitDomainRefreshForm = ({
+  domainId,
   gitRepoId,
   refType: initialRefType,
   refName: initialRefName,
@@ -30,22 +30,45 @@ const GitDomainRefreshForm = ({
 
     const gitBranchOrTag = values.ref_type === REF_TYPES.BRANCH ? values.branch_name : values.tag_name;
 
-    const params = {
-      git_repo_id: gitRepoId,
-      git_branch_or_tag: gitBranchOrTag,
-      button: 'save',
+    const payload = {
+      action: 'refresh_from_source',
+      resource: {
+        ref_type: values.ref_type,
+        ref: gitBranchOrTag,
+      },
     };
 
-    return http.post('/miq_ae_class/refresh_git_domain', params, { skipErrors: [400] })
+    return API.post(`/api/automate_domains/${domainId}`, payload, { skipErrors: [400] })
       .then((response) => {
-        const message = response.message || __('Successfully refreshed!');
-        const level = response.level || 'success';
-        miqRedirectBack(message, level, '/miq_ae_class/explorer');
+        const { task_id: taskId, success, message } = response;
+        if (success && taskId) {
+          // Wait for the async task to complete before redirecting
+          return API.wait_for_task(taskId)
+            .then(() => {
+              const successMessage = message || __('Successfully refreshed!');
+              miqRedirectBack(successMessage, 'success', '/miq_ae_class/explorer');
+            })
+            .catch((error) => {
+              const errorMessage = error.data?.error?.message || error.message || __('Failed to refresh domain');
+              miqRedirectBack(errorMessage, 'error', '/miq_ae_class/explorer');
+            })
+            .finally(() => {
+              // Clean up the task after completion
+              if (taskId) {
+                API.delete(`/api/tasks/${taskId}`).catch(() => {
+                  // Ignore cleanup errors
+                });
+              }
+            });
+        }
+        // If no taskId or not successful, handle as error
+        const errorMessage = message || __('Failed to refresh domain');
+        miqRedirectBack(errorMessage, 'error', '/miq_ae_class/explorer');
+        return Promise.reject(new Error(errorMessage));
       })
       .catch((error) => {
-        const message = error.data?.message || error.message;
-        const level = error.data?.level || 'error';
-        miqRedirectBack(message, level, '/miq_ae_class/explorer');
+        const message = error.data?.error?.message || error.message || __('Failed to refresh domain');
+        miqRedirectBack(message, 'error', '/miq_ae_class/explorer');
       });
   };
 
@@ -72,6 +95,7 @@ const GitDomainRefreshForm = ({
 };
 
 GitDomainRefreshForm.propTypes = {
+  domainId: PropTypes.string.isRequired,
   gitRepoId: PropTypes.string.isRequired,
   refType: PropTypes.string,
   refName: PropTypes.string,
