@@ -14,12 +14,13 @@ const ReportPrintTable = ({ report, data }) => (
       </thead>
       <tbody>
         {data.map((row) => {
-          const rowKey = row.id || Object.keys(row).filter((key) => key.startsWith('col-')).map((key) => row[key]).join('-');
+          // Create a unique key from the row data
+          const rowKey = JSON.stringify(row);
           return (
             <tr key={rowKey}>
-              {Object.keys(row).filter((key) => key.startsWith('col-')).sort().map((key) => (
-                <td key={key}>
-                  {row[key] || ''}
+              {row.map((cell) => (
+                <td key={`${rowKey}-${cell}`}>
+                  {cell !== null && cell !== undefined ? cell : ''}
                 </td>
               ))}
             </tr>
@@ -33,11 +34,11 @@ const ReportPrintTable = ({ report, data }) => (
 ReportPrintTable.propTypes = {
   report: PropTypes.shape({
     headers: PropTypes.arrayOf(PropTypes.string).isRequired,
-    col_order: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
+    col_order: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])).isRequired,
     column_is_hidden: PropTypes.arrayOf(PropTypes.bool),
   }).isRequired,
   data: PropTypes.arrayOf(
-    PropTypes.shape({})
+    PropTypes.oneOfType([PropTypes.object, PropTypes.array])
   ).isRequired,
 };
 
