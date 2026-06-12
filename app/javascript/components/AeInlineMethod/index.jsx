@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { useState, useEffect, useMemo } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
 import {
   Modal, Button, ModalBody, Accordion, AccordionItem,
@@ -13,7 +13,7 @@ import { formatListMethods, methodListHeaders, namespaceUrls } from './helper';
 
 /** Component to render a tree and to select an embedded method. */
 const AeInlineMethod = ({ type, selected }) => {
-  const queryClient = new QueryClient();
+  const queryClient = useMemo(() => new QueryClient(), []);
 
   const [data, setData] = useState({
     isModalOpen: false,
