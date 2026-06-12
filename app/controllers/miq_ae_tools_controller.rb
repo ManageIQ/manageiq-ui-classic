@@ -135,9 +135,10 @@ class MiqAeToolsController < ApplicationController
   def import_via_git
     assert_privileges('miq_ae_class_import_export')
     begin
+      git_repo = GitRepository.find(params[:git_repo_id])
       git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
 
-      add_flash(_("Imported from git"), :info)
+      add_flash(_("Imported %{git_url}@%{branch_or_tag}") % {:git_url => git_repo.url, :branch_or_tag => params[:git_branch_or_tag]}, :success)
     rescue StandardError => error
       add_flash(_("Error: import failed: %{message}") % {:message => error.message}, :error)
     end
@@ -189,26 +190,28 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   def upload_import_file
     assert_privileges('miq_ae_class_import_export')
-    redirect_options = {:action => :review_import}
 
     upload_file = params.fetch_path(:upload, :file)
 
     if upload_file.blank?
       add_flash(_("Use the Choose file button to locate an import file"), :warning)
+      response_data = {
+        :message => @flash_array.first[:message],
+        :level   => @flash_array.first[:level]
+      }
     else
-      import_file_upload_id = automate_import_service.store_for_import(upload_file.read)
+      import_file_upload = automate_import_service.store_for_import(upload_file.read)
       add_flash(_("Import file was uploaded successfully"), :success)
-      redirect_options[:import_file_upload_id] = import_file_upload_id
+      response_data = {
+        :import_file_upload_id => import_file_upload.id,
+        :message               => @flash_array.first[:message],
+        :level                 => @flash_array.first[:level]
+      }
     end
 
-    flash_to_session
-    redirect_to(redirect_options)
-  end
-
-  def review_import
-    assert_privileges('miq_ae_class_import_export')
-    @import_file_upload_id = params[:import_file_upload_id]
-    @message = @flash_array.first.to_json
+    respond_to do |format|
+      format.json { render :json => response_data, :status => 200 }
+    end
   end
 
   def retrieve_git_datastore

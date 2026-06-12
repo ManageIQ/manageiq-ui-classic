@@ -2009,7 +2009,6 @@ Rails.application.routes.draw do
         get_form_targets
         resolve
         resolve_automate_simulation
-        review_import
         get_simulation_form_vars
       ],
       :post => %w[

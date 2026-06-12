@@ -15,7 +15,6 @@ describe MiqAeToolsController do
     fetch_log
     import_export
     log
-    review_import
   ).each do |action|
     describe "##{action}" do
       it "routes with GET" do
