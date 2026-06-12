@@ -4,14 +4,14 @@ import ReportPrintView from '../../components/report-print-view';
 describe('ReportPrintView', () => {
   const mockReport = {
     headers: ['Name', 'Status', 'Date'],
-    col_order: [0, 1, 2],
+    col_order: ['name', 'status', 'date'],
     title: 'Test Report',
   };
 
   const mockData = [
-    { 'col-0': 'Item 1', 'col-1': 'Active', 'col-2': '2024-01-01' },
-    { 'col-0': 'Item 2', 'col-1': 'Inactive', 'col-2': '2024-01-02' },
-    { 'col-0': 'Item 3', 'col-1': 'Pending', 'col-2': '2024-01-03' },
+    ['Item 1', 'Active', '2024-01-01'],
+    ['Item 2', 'Inactive', '2024-01-02'],
+    ['Item 3', 'Pending', '2024-01-03'],
   ];
 
   it('renders table with headers and data', () => {
