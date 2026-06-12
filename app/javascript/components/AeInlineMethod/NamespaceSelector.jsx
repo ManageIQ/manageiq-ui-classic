@@ -16,21 +16,19 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
   const [filterData, setFilterData] = useState({ searchText: '', selectedDomain: '' });
 
   /** Loads the domains and stores in domainData for 60 seconds. */
-  const { data: domainsData, isLoading: domainsLoading } = useQuery(
-    ['domainsData'],
-    async() => (await http.get(namespaceUrls.aeDomainsUrl)).domains,
-    {
-      staleTime: 60000,
-    }
-  );
+  const { data: domainsData, isLoading: domainsLoading } = useQuery({
+    queryKey: ['domainsData'],
+    queryFn: async() => (await http.get(namespaceUrls.aeDomainsUrl)).domains,
+    staleTime: 60000,
+  });
 
   /** Loads the methods and stores in methodsData for 60 seconds.
    * If condition works on page load
    * Else part would work if there is a change in filterData.
    */
-  const { data, isLoading: methodsLoading } = useQuery(
-    ['methodsData', filterData.searchText, filterData.selectedDomain],
-    async() => {
+  const { data, isLoading: methodsLoading } = useQuery({
+    queryKey: ['methodsData', filterData.searchText, filterData.selectedDomain],
+    queryFn: async() => {
       if (!filterData.searchText && !filterData.selectedDomain) {
         const response = await http.get(namespaceUrls.aeMethodsUrl);
         return formatMethods(response.methods);
@@ -39,12 +37,10 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
       const response = await http.get(url);
       return formatMethods(response.methods);
     },
-    {
-      keepPreviousData: true,
-      refetchOnWindowFocus: false,
-      staleTime: 60000,
-    }
-  );
+    placeholderData: (previousData) => previousData,
+    refetchOnWindowFocus: false,
+    staleTime: 60000,
+  });
 
   /** Debounce the search text by delaying the text input provided to the API. */
   const debouncedSearch = debounce((newFilterData) => {
@@ -100,7 +96,7 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
 
 NamespaceSelector.propTypes = {
   onSelectMethod: PropTypes.func.isRequired,
-  selectedIds: PropTypes.arrayOf(PropTypes.any).isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
 };
 
 export default NamespaceSelector;
