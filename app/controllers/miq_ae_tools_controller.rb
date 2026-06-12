@@ -135,9 +135,10 @@ class MiqAeToolsController < ApplicationController
   def import_via_git
     assert_privileges('miq_ae_class_import_export')
     begin
+      git_repo = GitRepository.find(params[:git_repo_id])
       git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
 
-      add_flash(_("Imported from git"), :info)
+      add_flash(_("Imported %{git_url}@%{branch_or_tag}") % {:git_url => git_repo.url, :branch_or_tag => params[:git_branch_or_tag]}, :success)
     rescue StandardError => error
       add_flash(_("Error: import failed: %{message}") % {:message => error.message}, :error)
     end

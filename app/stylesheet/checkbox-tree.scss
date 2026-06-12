@@ -9,5 +9,65 @@
 
   .checkbox-tree-title {
     display: inline-flex;
-  }  
+  }
+
+  .checkbox-tree-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .checkbox-tree-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+
+    // Override react-checkbox-tree styles to match Carbon design
+    .react-checkbox-tree {
+      font-size: 0.875rem;
+
+      ol {
+        padding-left: 0;
+        list-style: none;
+      }
+
+      .rct-node {
+        padding: 0.25rem 0;
+      }
+
+      .rct-text {
+        display: flex;
+        align-items: center;
+      }
+
+      .rct-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+
+  .checkbox-tree-selection-count {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #525252;
+  }
+
+  .checkbox-tree-error {
+    margin-top: 0.5rem;
+    color: #da1e28;
+    font-size: 0.75rem;
+  }
+
+  .checkbox-tree-empty {
+    padding: 1rem;
+    text-align: center;
+    color: #525252;
+    font-style: italic;
+  }
 }

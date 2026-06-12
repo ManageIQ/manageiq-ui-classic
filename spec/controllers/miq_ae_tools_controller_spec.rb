@@ -495,9 +495,11 @@ describe MiqAeToolsController do
   describe "#import_via_git" do
     let(:params) { {:git_repo_id => "123", :git_branch_or_tag => "branch_or_tag"} }
     let(:git_based_domain_import_service) { double("GitBasedDomainImportService") }
+    let(:git_repo) { double("GitRepository", :url => "https://example.com/repo.git") }
 
     before do
       allow(GitBasedDomainImportService).to receive(:new).and_return(git_based_domain_import_service)
+      allow(GitRepository).to receive(:find).with("123").and_return(git_repo)
     end
 
     context "when there are no errors while importing" do
@@ -508,7 +510,7 @@ describe MiqAeToolsController do
 
       it "responds with a success message" do
         post :import_via_git, :params => params, :xhr => true
-        expect(response.body).to eq([{:message => "Imported from git", :level => :info}].to_json)
+        expect(response.body).to eq([{:message => "Imported https://example.com/repo.git@branch_or_tag", :level => :success}].to_json)
       end
     end
 
