@@ -193,13 +193,16 @@ module OpsController::Settings::Tags
     case params[:button]
     when "add"
       entry = category.entries.create(:name => params[:name], :description => params[:description])
+      AuditEvent.success(ce_created_audit(entry))
       response = {:type => 'success', :entry => entry, :category_id => params[:id]}
     when "save"
       entry = category.entries.find(params[:entry_id])
+      old_entry = {:name => entry.name, :description => entry.description}
       session[:entry] = entry
       entry.name        = params[:name]
       entry.description = params[:description]
       entry.save
+      AuditEvent.success(ce_saved_audit(entry, old_entry))
       response = {:type => 'success', :entry => entry, :category_id => params[:id]}
     end
     unless entry.errors.empty?
@@ -247,32 +250,30 @@ module OpsController::Settings::Tags
 
   # Build the audit object when a record is created, including all of the new fields
   def ce_created_audit(entry)
-    msg = _("Category %{description} [%{name}] record created (") % {:description => @cat.description,
+    category = Classification.find_by(:id => entry.parent_id)
+    msg = _("Category %{description} [%{name}] record created (") % {:description => category.description,
                                                                      :name        => entry.name}
     event = "classification_entry_add"
-    i = 0
-    params["entry"].each do |k, _v|
-      msg += ", " if i.positive?
-      i += 1
-      msg = msg + k.to_s + ":[" + params["entry"][k].to_s + "]"
-    end
+    entry_params = {:name => entry.name, :description => entry.description}
+    msg += entry_params.map { |k, v| "#{k}:[#{v}]" }.join(", ")
     msg += ")"
     {:event => event, :target_id => entry.id, :target_class => entry.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   # Build the audit object when a record is saved, including all of the changed fields
-  def ce_saved_audit(entry)
-    msg = _("Category %{description} [%{name}] record updated (") % {:description => @cat.description,
+  def ce_saved_audit(entry, old_entry)
+    category = Classification.find_by(:id => entry.parent_id)
+    msg = _("Category %{description} [%{name}] record updated (") % {:description => category.description,
                                                                      :name        => entry.name}
     event = "classification_entry_update"
     i = 0
-    if entry.name != session[:entry].name
+    if entry.name != old_entry[:name]
       i += 1
-      msg += _("name:[%{session}] to [%{name}]") % {:session => session[:entry].name, :name => entry.name}
+      msg += _("name:[%{session}] to [%{name}]") % {:session => old_entry[:name], :name => entry.name}
     end
-    if entry.description != session[:entry].description
+    if entry.description != old_entry[:description]
       msg += ", " if i.positive?
-      msg += _("description:[%{session}] to [%{name}]") % {:session => session[:entry].description,
+      msg += _("description:[%{session}] to [%{name}]") % {:session => old_entry[:description],
                                                            :name    => entry.description}
     end
     msg += ")"
