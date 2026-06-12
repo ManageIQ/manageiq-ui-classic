@@ -34,6 +34,7 @@
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
     "@carbon/charts-react": "~1.27.3",
+    "@carbon/icons-react": "^11.82.0",
     "@carbon/react": "~1.106.0",
     "@data-driven-forms/carbon-component-mapper": "~4.2.0",
     "@data-driven-forms/react-form-renderer": "~4.2.0",
