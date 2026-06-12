@@ -1,5 +1,6 @@
 = render :partial => "layouts/flash_msg"
 = react('GitDomainRefreshForm',
+        :domainId    => domain_id.to_s,
         :gitRepoId   => git_repo_id.to_s,
         :refType     => ref_type || 'branch',
         :refName     => ref_name || 'origin/master',
