@@ -12,7 +12,7 @@ import { CellAction } from '../miq-data-table/helper';
 import { formatListMethods, methodListHeaders, namespaceUrls } from './helper';
 
 /** Component to render a tree and to select an embedded method. */
-const AeInlineMethod = ({ type, selected }) => {
+const AeInlineMethod = ({ selected }) => {
   const queryClient = useMemo(() => new QueryClient(), []);
 
   const [data, setData] = useState({
@@ -86,44 +86,41 @@ const AeInlineMethod = ({ type, selected }) => {
 
   /** Function to render the modal with namespace selector component. */
   const renderModalSelector = () => (
-    <>
-      {data.isModalOpen && (
-        <Modal
-          size="lg"
-          modalHeading={
-            data.selectedIds.length === 0
-              ? __('Select methods')
-              : `${__('Selected methods')} - ${data.selectedIds.length}`
-          }
-          className="ae-inline-method-modal"
-          open
-          primaryButtonText={__('OK')}
-          secondaryButtonText={__('Cancel')}
-          onRequestClose={() => showModal(false)}
-          onRequestSubmit={() => submitModal()}
-          primaryButtonDisabled={
-            data.selectedIds.length > 20 || data.selectedIds.length === 0
-          }
-        >
-          <ModalBody>
-            <QueryClientProvider client={queryClient}>
-              {data.notification && (
-                <NotificationMessage
-                  type="error"
-                  message={__('Cannot select more than 20 items')}
-                />
-              )}
-              <NamespaceSelector
-                onSelectMethod={({ selectedItems, cellType, checked }) =>
-                  onSelectMethod(selectedItems, cellType, checked)
-                }
-                selectedIds={data.selectedIds}
+    data.isModalOpen && (
+      <Modal
+        size="lg"
+        modalHeading={
+          data.selectedIds.length === 0
+            ? __('Select methods')
+            : `${__('Selected methods')} - ${data.selectedIds.length}`
+        }
+        className="ae-inline-method-modal"
+        open
+        primaryButtonText={__('OK')}
+        secondaryButtonText={__('Cancel')}
+        onRequestClose={() => showModal(false)}
+        onRequestSubmit={() => submitModal()}
+        primaryButtonDisabled={
+          data.selectedIds.length > 20 || data.selectedIds.length === 0
+        }
+      >
+        <ModalBody>
+          <QueryClientProvider client={queryClient}>
+            {data.notification && (
+              <NotificationMessage
+                type="error"
+                message={__('Cannot select more than 20 items')}
               />
-            </QueryClientProvider>
-          </ModalBody>
-        </Modal>
-      )}
-    </>
+            )}
+            <NamespaceSelector
+              onSelectMethod={({ selectedItems, cellType, checked }) =>
+                onSelectMethod(selectedItems, cellType, checked)}
+              selectedIds={data.selectedIds}
+            />
+          </QueryClientProvider>
+        </ModalBody>
+      </Modal>
+    )
   );
 
   /** Function to render the contents of the list. */
@@ -190,8 +187,9 @@ const AeInlineMethod = ({ type, selected }) => {
 export default AeInlineMethod;
 
 AeInlineMethod.propTypes = {
-  type: PropTypes.string.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.any),
+  selected: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  })),
 };
 
 AeInlineMethod.defaultProps = {
