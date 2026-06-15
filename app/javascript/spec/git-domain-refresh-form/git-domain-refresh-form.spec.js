@@ -4,13 +4,11 @@ import fetchMock from 'fetch-mock';
 
 import GitDomainRefreshForm from '../../components/git-domain-refresh-form';
 import { renderWithRedux } from '../helpers/mountForm';
-import { http } from '../../http_api';
 
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import '../helpers/miqSparkle';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-jest.mock('../../http_api');
 
 describe('GitDomainRefreshForm component', () => {
   let initialProps;
@@ -18,6 +16,7 @@ describe('GitDomainRefreshForm component', () => {
 
   beforeEach(() => {
     initialProps = {
+      domainId: '123',
       gitRepoId: '789',
       branchNames: ['origin/main', 'origin/develop', 'origin/feature/test'],
       tagNames: ['v1.0.0', 'v1.1.0', 'v2.0.0'],
@@ -119,9 +118,15 @@ describe('GitDomainRefreshForm component', () => {
   it('should call correct API endpoint on submit with branch', async() => {
     const user = userEvent.setup();
 
-    http.post = jest.fn().mockResolvedValue({
-      message: 'Successfully Refreshed!',
-      level: 'success',
+    API.post = jest.fn().mockResolvedValue({
+      task_id: '123',
+      success: true,
+      message: 'Refreshing Automate Domain',
+    });
+
+    API.wait_for_task = jest.fn().mockResolvedValue({
+      state: 'Finished',
+      status: 'Ok',
     });
 
     renderWithRedux(<GitDomainRefreshForm {...initialProps} />);
@@ -137,20 +142,26 @@ describe('GitDomainRefreshForm component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(http.post).toHaveBeenCalledWith(
-        '/miq_ae_class/refresh_git_domain',
+      expect(API.post).toHaveBeenCalledWith(
+        '/api/automate_domains/123',
         expect.objectContaining({
-          git_repo_id: '789',
-          git_branch_or_tag: 'origin/develop',
-          button: 'save',
+          action: 'refresh_from_source',
+          resource: {
+            ref_type: 'branch',
+            ref: 'origin/develop',
+          },
         }),
         { skipErrors: [400] }
       );
     });
 
+    await waitFor(() => {
+      expect(API.wait_for_task).toHaveBeenCalledWith('123');
+    });
+
     expect(miqSparkleOn).toHaveBeenCalled();
     expect(miqRedirectBack).toHaveBeenCalledWith(
-      'Successfully Refreshed!',
+      'Refreshing Automate Domain',
       'success',
       '/miq_ae_class/explorer'
     );
@@ -159,9 +170,15 @@ describe('GitDomainRefreshForm component', () => {
   it('should call correct API endpoint on submit with tag', async() => {
     const user = userEvent.setup();
 
-    http.post = jest.fn().mockResolvedValue({
-      message: 'Successfully Refreshed!',
-      level: 'success',
+    API.post = jest.fn().mockResolvedValue({
+      task_id: '456',
+      success: true,
+      message: 'Refreshing Automate Domain',
+    });
+
+    API.wait_for_task = jest.fn().mockResolvedValue({
+      state: 'Finished',
+      status: 'Ok',
     });
 
     renderWithRedux(<GitDomainRefreshForm {...initialProps} />);
@@ -180,20 +197,26 @@ describe('GitDomainRefreshForm component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(http.post).toHaveBeenCalledWith(
-        '/miq_ae_class/refresh_git_domain',
+      expect(API.post).toHaveBeenCalledWith(
+        '/api/automate_domains/123',
         expect.objectContaining({
-          git_repo_id: '789',
-          git_branch_or_tag: 'v2.0.0',
-          button: 'save',
+          action: 'refresh_from_source',
+          resource: {
+            ref_type: 'tag',
+            ref: 'v2.0.0',
+          },
         }),
         { skipErrors: [400] }
       );
     });
 
+    await waitFor(() => {
+      expect(API.wait_for_task).toHaveBeenCalledWith('456');
+    });
+
     expect(miqSparkleOn).toHaveBeenCalled();
     expect(miqRedirectBack).toHaveBeenCalledWith(
-      'Successfully Refreshed!',
+      'Refreshing Automate Domain',
       'success',
       '/miq_ae_class/explorer'
     );
