@@ -33,12 +33,6 @@ namespace :update do
 end
 
 namespace :webpack do
-  task :server do
-    root = ManageIQ::UI::Classic::Engine.root
-    webpack_dev_server = root.join("bin", "webpack-dev-server").to_s
-    system(webpack_dev_server) || abort("\n== webpack-dev-server failed ==")
-  end
-
   def run_webpack(task)
     if %w(spec spec:jest).include? ENV['TEST_SUITE']
       warn "Skipping webpack:#{task} on travis #{ENV['TEST_SUITE']}"
