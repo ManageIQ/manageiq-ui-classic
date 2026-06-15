@@ -33,12 +33,6 @@ namespace :update do
 end
 
 namespace :webpack do
-  task :server do
-    root = ManageIQ::UI::Classic::Engine.root
-    webpack_dev_server = root.join("bin", "webpack-dev-server").to_s
-    system(webpack_dev_server) || abort("\n== webpack-dev-server failed ==")
-  end
-
   def run_webpack(task)
     if %w(spec spec:jest).include? ENV['TEST_SUITE']
       warn "Skipping webpack:#{task} on travis #{ENV['TEST_SUITE']}"
@@ -139,6 +133,25 @@ unless Rake::Task.task_defined?("webpacker")
   load 'tasks/webpacker/check_node.rake'             # needed by verify_install
   load 'tasks/webpacker/check_yarn.rake'             # needed by verify_install
   load 'tasks/webpacker/check_webpack_binstubs.rake' # needed by verify_install
+end
+
+# TODO: Remove this override once migrated to webpack v5 and reconfigured webpack-dev-server v5
+# Override webpacker:check_webpack_binstubs to only check for bin/webpack
+# (webpack-dev-server has been removed as it's incompatible with webpack v4)
+if Rake::Task.task_defined?('webpacker:check_webpack_binstubs')
+  Rake::Task['webpacker:check_webpack_binstubs'].clear
+end
+
+namespace :webpacker do
+  desc "Verifies that bin/webpack is present."
+  task :check_webpack_binstubs do
+    unless File.exist?("bin/webpack")
+      puts "Webpack binstub not found.\n" \
+           "Make sure the bin directory or binstubs are not included in .gitignore\n" \
+           "Exiting!"
+      exit!
+    end
+  end
 end
 
 # original webpacker:compile still gets autoloaded during bin/update
