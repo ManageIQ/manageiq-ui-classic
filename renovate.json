@@ -10,7 +10,8 @@
         "commands": [
           "yarn test -u"
         ],
-        "fileFilters": ["**/*.snap"]
+        "fileFilters": ["**/*.snap"],
+        "executionMode": "branch"
       }
     }
   ]
