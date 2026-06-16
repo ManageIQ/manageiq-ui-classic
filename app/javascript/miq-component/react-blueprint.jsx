@@ -28,7 +28,11 @@ export default (ReactElement, mapPropsToInteract = () => undefined) => {
     },
 
     destroy(instance, unmountFrom) {
-      ReactDOM.unmountComponentAtNode(unmountFrom);
+      const root = roots.get(unmountFrom);
+      if (root) {
+        root.unmount();
+        roots.delete(unmountFrom);
+      }
     },
 
     component: ReactElement,
