@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { OverflowMenuItem, Loading } from '@carbon/react';
 import classNames from 'classnames';
 import WidgetChart from '../widget-chart';
@@ -159,7 +159,8 @@ const menuItemOnClick = (menuItems, widgetId, dataMethod, href, buttonTitle, wid
     const oldDiv = document.getElementById('lightbox_div');
     const widget = model(false, widgetId, widgetModel, widgetType);
     const newDiv = document.createElement('div');
-    ReactDOM.render(<WidgetZoom widgetTitle={widgetTitle} widget={widget} footer={footer(widgetModel, lastRun, nextRun)} />, newDiv);
+    const root = createRoot(newDiv);
+    root.render(<WidgetZoom widgetTitle={widgetTitle} widget={widget} footer={footer(widgetModel, lastRun, nextRun)} />);
     oldDiv.parentNode.replaceChild(newDiv, oldDiv);
     $('#lightbox-panel').fadeIn(300);
     return;

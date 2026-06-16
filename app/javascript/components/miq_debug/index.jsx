@@ -1,10 +1,11 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { ToastWrapper } from './toast-wrapper.jsx';
 
 const state = {
   items: [],
   keyCounter: 0,
+  root: null,
 
   add: (item) => {
     state.items = [...state.items, item];
@@ -28,8 +29,12 @@ const state = {
 
 // render once, and set state.render
 export const renderToastWrapper = (element) => {
+  if (!state.root) {
+    state.root = createRoot(element);
+  }
+  
   const render = ({ items, clear, remove, disable }) => {
-    ReactDOM.render(<ToastWrapper items={items} clear={clear} remove={remove} disable={disable} />, element);
+    state.root.render(<ToastWrapper items={items} clear={clear} remove={remove} disable={disable} />);
   };
   state.render = () => render(state);
 
