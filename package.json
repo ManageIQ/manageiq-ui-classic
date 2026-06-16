@@ -136,7 +136,7 @@
     "imports-loader": "~1.2.0",
     "jasmine-jquery": "~2.1.1",
     "jest": "~26.6.3",
-    "js-yaml": "~3.14.0",
+    "js-yaml": "~4.2.0",
     "node-fetch": "~2.7.0",
     "path-complete-extname": "~1.0.0",
     "postcss-loader": "~4.3.0",
