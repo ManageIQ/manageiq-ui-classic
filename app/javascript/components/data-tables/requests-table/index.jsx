@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
@@ -6,6 +5,7 @@ import MiqDataTable from '../../miq-data-table';
 
 const RequestsTable = ({
   initialData,
+  locale,
 }) => {
   const [tableHeaders, setTableHeaders] = useState([
     { key: 'time', header: __('Time'), sortData: { isFilteredBy: false } },
@@ -102,18 +102,24 @@ const RequestsTable = ({
 
   useEffect(() => {
     const rows = [];
-    // const timeNow = Date.now();
+    const timezone = ManageIQ.timezone || 'UTC';
+    moment.locale(locale || 'en');
+
     initialData.forEach((object, index) => {
-      // Format timestamp using ManageIQ timezone to match the "Created On" field
-      const timezone = ManageIQ.timezone || 'UTC';
       const formattedTime = object.created_at
-        ? moment(object.created_at).tz(timezone).format('MM/DD/YYYY HH:mm:ss z')
+        ? moment(object.created_at).tz(timezone).format('L HH:mm:ss z')
         : 'unknown';
+      const relativeTime = object.created_at
+        ? moment(object.created_at).tz(timezone).fromNow()
+        : '';
 
       rows[index] = {
         id: index.toString(),
         clickable: null,
-        time: { text: formattedTime },
+        time: {
+          text: formattedTime,
+          title: relativeTime,
+        },
         severity: { text: object.severity ? object.severity : 'unknown' },
         message: { text: object.message ? object.message : '' },
       };
@@ -144,10 +150,12 @@ RequestsTable.propTypes = {
     severity: PropTypes.string,
     message: PropTypes.string,
   })),
+  locale: PropTypes.string,
 };
 
 RequestsTable.defaultProps = {
   initialData: [],
+  locale: 'en',
 };
 
 export default RequestsTable;
