@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   ComposedModal, ModalHeader, ModalFooter, ModalBody,
 } from '@carbon/react';
@@ -32,7 +32,8 @@ export default function renderModal(title = __('Modal'), Inner = () => <div>Empt
 
   const output = modal(title, Inner, close, removeId);
 
-  ReactDOM.render(output, div);
+  const root = createRoot(div);
+  root.render(output);
 }
 
 function modal(title, Inner, closed, removeId) {
