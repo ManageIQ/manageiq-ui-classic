@@ -1,6 +1,7 @@
-/* eslint-disable no-undef */
+
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import MiqDataTable from '../../miq-data-table';
 
 const RequestsTable = ({
@@ -35,15 +36,23 @@ const RequestsTable = ({
       case 'severity':
         if (direction === 'DESC') {
           temp.sort((x, y) => {
-            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) { return -1; }
-            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) { return 1; }
+            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'ASC';
         } else if (direction === 'ASC') {
           temp.reverse((x, y) => {
-            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) { return -1; }
-            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) { return 1; }
+            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'DESC';
@@ -57,15 +66,23 @@ const RequestsTable = ({
       case 'message':
         if (direction === 'DESC') {
           temp.sort((x, y) => {
-            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) { return -1; }
-            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) { return 1; }
+            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'ASC';
         } else if (direction === 'ASC') {
           temp.reverse((x, y) => {
-            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) { return -1; }
-            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) { return 1; }
+            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'DESC';
@@ -87,11 +104,16 @@ const RequestsTable = ({
     const rows = [];
     // const timeNow = Date.now();
     initialData.forEach((object, index) => {
+      // Format timestamp using ManageIQ timezone to match the "Created On" field
+      const timezone = ManageIQ.timezone || 'UTC';
+      const formattedTime = object.created_at
+        ? moment(object.created_at).tz(timezone).format('MM/DD/YYYY HH:mm:ss z')
+        : 'unknown';
+
       rows[index] = {
         id: index.toString(),
         clickable: null,
-        // TODO: Discuss Converting Time to x seconds/minutes/hours ago
-        time: { text: object.created_at ? new Date(object.created_at).toLocaleString() : 'unknown' },
+        time: { text: formattedTime },
         severity: { text: object.severity ? object.severity : 'unknown' },
         message: { text: object.message ? object.message : '' },
       };
@@ -117,7 +139,11 @@ const RequestsTable = ({
 };
 
 RequestsTable.propTypes = {
-  initialData: PropTypes.arrayOf(PropTypes.any),
+  initialData: PropTypes.arrayOf(PropTypes.shape({
+    created_at: PropTypes.string,
+    severity: PropTypes.string,
+    message: PropTypes.string,
+  })),
 };
 
 export default RequestsTable;
