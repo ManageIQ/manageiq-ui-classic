@@ -40,13 +40,15 @@ const PxeWindowsImageEditForm = ({
   };
 
   return (
-    <MiqFormRenderer
-      schema={createSchema(pxeImageTypes)}
-      initialValues={initialValues}
-      canReset
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    />
+    <div className="pxe-windows-image-form">
+      <MiqFormRenderer
+        schema={createSchema(pxeImageTypes)}
+        initialValues={initialValues}
+        canReset
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+      />
+    </div>
   );
 };
 
