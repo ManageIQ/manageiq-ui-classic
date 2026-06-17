@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Retirement Form Component should render a new Retirement form 1`] = `
 <div>
@@ -102,7 +102,7 @@ exports[`Retirement Form Component should render a new Retirement form 1`] = `
                   <input
                     class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                     id="retirementDate"
-                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                     type="text"
                     variant="date-time"
                   />
@@ -267,7 +267,7 @@ exports[`Retirement Form Component should submit Retirement Form with correct da
                   <input
                     class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                     id="retirementDate"
-                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                     type="text"
                     variant="date-time"
                   />
@@ -321,7 +321,7 @@ exports[`Retirement Form Component should submit Retirement Form with correct da
                 id="retirementTime"
                 maxlength="5"
                 name="retirementTime"
-                pattern="(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+                pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?"
                 placeholder="hh:mm"
                 type="text"
                 value="12:50"

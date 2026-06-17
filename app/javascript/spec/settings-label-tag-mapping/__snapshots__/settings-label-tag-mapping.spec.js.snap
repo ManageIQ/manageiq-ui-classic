@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMapping component with warning 1`] = `
 <div>

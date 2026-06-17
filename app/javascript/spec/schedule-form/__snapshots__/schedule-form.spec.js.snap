@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Schedule form component should render edit form when filter_type is not null 1`] = `
 <div>
@@ -1103,7 +1103,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                   <input
                     class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                     id="start_date"
-                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                     type="text"
                   />
                   
@@ -1156,7 +1156,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                 id="start_time"
                 maxlength="5"
                 name="start_hour"
-                pattern="(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+                pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?"
                 placeholder="hh:mm"
                 type="text"
                 value="12:50"
@@ -2776,7 +2776,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                   <input
                     class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                     id="start_date"
-                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                     type="text"
                   />
                   
@@ -2829,7 +2829,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                 id="start_time"
                 maxlength="5"
                 name="start_hour"
-                pattern="(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+                pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?"
                 placeholder="hh:mm"
                 type="text"
                 value="12:50"
@@ -3888,7 +3888,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                   <input
                     class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                     id="start_date"
-                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                     type="text"
                   />
                   
@@ -3941,7 +3941,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                 id="start_time"
                 maxlength="5"
                 name="start_hour"
-                pattern="(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+                pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?"
                 placeholder="hh:mm"
                 type="text"
                 value=""

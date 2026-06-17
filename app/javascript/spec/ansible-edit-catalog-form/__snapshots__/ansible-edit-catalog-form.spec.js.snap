@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Ansible playbook edit catalog Form Component should not render some fields in retirement tab when repository id is not present in retirement section 1`] = `
 <div>

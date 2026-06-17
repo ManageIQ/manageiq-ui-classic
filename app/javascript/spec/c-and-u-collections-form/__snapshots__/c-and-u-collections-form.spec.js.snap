@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsCURepair form 1`] = `
 <div>
@@ -115,7 +115,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                 <input
                   class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                   id="startDate"
-                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                  pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
                 
@@ -172,7 +172,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                 <input
                   class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                   id="endDate"
-                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                  pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
                 
@@ -351,7 +351,7 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
                 <input
                   class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                   id="startDate"
-                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                  pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
                 
@@ -408,7 +408,7 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
                 <input
                   class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
                   id="endDate"
-                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                  pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
                 
