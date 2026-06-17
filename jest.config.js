@@ -3,6 +3,10 @@ const resolveModule = (name) => `<rootDir>/node_modules/${name}`;
 
 module.exports = {
   verbose: true,
+  testEnvironment: 'jest-environment-jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   globals: {
     __testing__: true,
     getJSONFixture: true,
@@ -10,7 +14,6 @@ module.exports = {
   roots: ['app/javascript'],
   setupFilesAfterEnv: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
-  testURL: 'http://localhost',
   moduleFileExtensions: [
     'js',
     'jsx',
