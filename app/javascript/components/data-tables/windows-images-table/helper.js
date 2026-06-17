@@ -1,7 +1,7 @@
 /** Function to handle the onclick event for rows in table. */
 export const onSelectRender = (selectedRow) => {
   miqSparkleOn();
-  miqTreeActivateNode('pxe_servers_tree', `pi-${selectedRow.id}`);
+  miqTreeActivateNode('pxe_servers_tree', `wi-${selectedRow.id}`);
   miqSparkleOff();
 };
 
