@@ -155,30 +155,6 @@ module PxeController::PxeServers
     end
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def pxe_wimg_form_field_changed
-    assert_privileges("pxe_wimg_edit")
-    return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
-    pxe_wimg_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def pxe_img_form_field_changed
-    assert_privileges("pxe_image_edit")
-    return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
-    pxe_img_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
   def pxe_server_async_cred_validation
     begin
       assert_privileges(feature_by_action)
@@ -191,13 +167,6 @@ module PxeController::PxeServers
   end
 
   private #######################
-
-  # Get variables from edit form
-  def pxe_img_get_form_vars
-    @img = @edit[:img]
-    @edit[:new][:img_type] = params[:image_typ] if params[:image_typ]
-    @edit[:new][:default_for_windows] = params[:default_for_windows] == "1" if params[:default_for_windows]
-  end
 
   # Set form variables for edit
   def pxe_img_set_form_vars
@@ -216,17 +185,6 @@ module PxeController::PxeServers
     session[:edit] = @edit
   end
 
-  def pxe_img_set_record_vars(img)
-    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
-    img.default_for_windows = @edit[:new][:default_for_windows]
-  end
-
-  # Get variables from edit form
-  def pxe_wimg_get_form_vars
-    @wimg = @edit[:wimg]
-    @edit[:new][:img_type] = params[:image_typ] if params[:image_typ]
-  end
-
   # Set form variables for edit
   def pxe_wimg_set_form_vars
     @edit = {}
@@ -241,10 +199,6 @@ module PxeController::PxeServers
 
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
-  end
-
-  def pxe_wimg_set_record_vars(wimg)
-    wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
   end
 
   # Common Schedule button handler routines
