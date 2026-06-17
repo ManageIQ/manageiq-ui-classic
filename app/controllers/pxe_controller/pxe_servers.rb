@@ -91,26 +91,26 @@ module PxeController::PxeServers
       update_img = find_record_with_rbac(PxeImage, params[:id])
       update_img.pxe_image_type = params[:image_typ].blank? ? nil : PxeImageType.find(params[:image_typ])
       update_img.default_for_windows = params[:default_for_windows] == "1"
-      
+
       if update_img.save
         edit_hash = {
-          :new => {
-            :img_type => params[:image_typ],
+          :new     => {
+            :img_type            => params[:image_typ],
             :default_for_windows => params[:default_for_windows] == "1"
           },
           :current => {
-            :img_type => update_img.pxe_image_type_id_was,
+            :img_type            => update_img.pxe_image_type_id_was,
             :default_for_windows => update_img.default_for_windows_was
           }
         }
         AuditEvent.success(build_saved_audit(update_img, edit_hash))
-        render :json => { :message => "PXE Image \"#{update_img.name}\" was saved" }, :status => 200
+        render :json => {:message => "PXE Image \"#{update_img.name}\" was saved"}, :status => 200
       else
         error_messages = []
         update_img.errors.each do |error|
           error_messages << "#{error.attribute.to_s.capitalize} #{error.message}"
         end
-        render :json => { :error => error_messages.join(", ") }, :status => 400
+        render :json => {:error => error_messages.join(", ")}, :status => 400
       end
     when nil
       @img = PxeImage.find(params[:id])
@@ -127,10 +127,10 @@ module PxeController::PxeServers
     when "save"
       update_wimg = find_record_with_rbac(WindowsImage, params[:id])
       update_wimg.pxe_image_type = params[:image_typ].blank? ? nil : PxeImageType.find(params[:image_typ])
-      
+
       if update_wimg.save
         edit_hash = {
-          :new => {
+          :new     => {
             :img_type => params[:image_typ]
           },
           :current => {
@@ -138,13 +138,13 @@ module PxeController::PxeServers
           }
         }
         AuditEvent.success(build_saved_audit(update_wimg, edit_hash))
-        render :json => { :message => "Windows Image \"#{update_wimg.name}\" was saved" }, :status => 200
+        render :json => {:message => "Windows Image \"#{update_wimg.name}\" was saved"}, :status => 200
       else
         error_messages = []
         update_wimg.errors.each do |error|
           error_messages << "#{error.attribute.to_s.capitalize} #{error.message}"
         end
-        render :json => { :error => error_messages.join(", ") }, :status => 400
+        render :json => {:error => error_messages.join(", ")}, :status => 400
       end
     when nil
       @wimg = WindowsImage.find(params[:id])
