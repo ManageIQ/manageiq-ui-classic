@@ -1,10 +1,10 @@
 import { onCustomAction } from '../../toolbar-actions/custom-action';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 import '../../packs/toolbar-actions-common.js'; // subscribeToRx
-
+global.jasmine = {};
 import '../helpers/angular';
 import '../helpers/API';
-import 'angular-mocks';
+require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {

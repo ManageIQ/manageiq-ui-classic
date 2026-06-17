@@ -1,8 +1,9 @@
 import * as deleteActions from '../../toolbar-actions/delete';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 
+global.jasmine = {};
 import '../helpers/angular';
-import 'angular-mocks';
+require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
