@@ -30,6 +30,7 @@ const AutomationTasksTable = ({ tasks }) => {
         headers={headers}
         rows={rows}
         mode="automation-tasks-table"
+        sortable={false}
       />
     </div>
   );
