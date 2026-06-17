@@ -80,256 +80,56 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                 <thead>
                   <tr>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-309"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Name header in ascending order
+                        Name
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-309"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Name
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-310"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Host File header in ascending order
+                        Host File
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-310"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Host File
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-311"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Disconnect header in ascending order
+                        Disconnect
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-311"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Disconnect
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-312"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Actions header in ascending order
+                        Actions
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-312"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Actions
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                   </tr>
                 </thead>
@@ -492,697 +292,147 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-281"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-281"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-282"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Type header in ascending order
+                      Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-282"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-283"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Size header in ascending order
+                      Size
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-283"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Size
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-284"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Unit header in ascending order
+                      Unit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-284"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Unit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-285"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Mode header in ascending order
+                      Mode
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-285"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Mode
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-286"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Controller Type header in ascending order
+                      Controller Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-286"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Controller Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-287"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Dependent header in ascending order
+                      Dependent
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-287"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Dependent
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-288"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Delete Backing header in ascending order
+                      Delete Backing
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-288"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Delete Backing
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-289"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Bootable header in ascending order
+                      Bootable
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-289"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Bootable
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-290"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Resize header in ascending order
+                      Resize
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-290"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Resize
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-291"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-291"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -1410,319 +660,69 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-295"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-295"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-296"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by MAC address header in ascending order
+                      MAC address
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-296"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          MAC address
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-297"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by vLan header in ascending order
+                      vLan
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-297"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          vLan
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-298"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Edit header in ascending order
+                      Edit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-298"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Edit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-299"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-299"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -1756,256 +756,56 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-300"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-300"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-301"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Host File header in ascending order
+                      Host File
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-301"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Host File
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-302"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Disconnect header in ascending order
+                      Disconnect
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-302"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Disconnect
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-303"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Actions header in ascending order
+                      Actions
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-303"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Actions
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -4051,697 +2851,147 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-2"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-2"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-3"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Type header in ascending order
+                      Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-3"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-4"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Size header in ascending order
+                      Size
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-4"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Size
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-5"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Unit header in ascending order
+                      Unit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-5"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Unit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-6"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Mode header in ascending order
+                      Mode
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-6"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Mode
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-7"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Controller Type header in ascending order
+                      Controller Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-7"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Controller Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-8"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Dependent header in ascending order
+                      Dependent
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-8"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Dependent
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-9"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Delete Backing header in ascending order
+                      Delete Backing
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-9"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Delete Backing
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-10"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Bootable header in ascending order
+                      Bootable
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-10"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Bootable
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-11"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Resize header in ascending order
+                      Resize
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-11"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Resize
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-12"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-12"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -4969,319 +3219,69 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-16"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-16"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-17"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by MAC address header in ascending order
+                      MAC address
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-17"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          MAC address
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-18"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by vLan header in ascending order
+                      vLan
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-18"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          vLan
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-19"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Edit header in ascending order
+                      Edit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-19"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Edit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-20"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-20"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -5399,256 +3399,56 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                 <thead>
                   <tr>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-23"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Name header in ascending order
+                        Name
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-23"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Name
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-24"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Host File header in ascending order
+                        Host File
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-24"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Host File
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-25"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Disconnect header in ascending order
+                        Disconnect
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-25"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Disconnect
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                     <th
-                      aria-sort="none"
-                      class="miq-data-table-header cds--table-sort__header"
+                      class="miq-data-table-header"
                       scope="col"
                     >
                       <div
-                        class="cds--table-sort__description"
-                        id="table-sort-26"
+                        class="cds--table-header-label"
                       >
-                        Click to sort rows by Actions header in ascending order
+                        Actions
+                        <div
+                          class="cds--table-header-label--decorator-inner"
+                        />
                       </div>
-                      <button
-                        aria-describedby="table-sort-26"
-                        class="miq-data-table-header cds--table-sort"
-                        type="button"
-                      >
-                        <span
-                          class="cds--table-sort__flex"
-                        >
-                          <div
-                            class="cds--table-header-label"
-                          >
-                            Actions
-                          </div>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                            />
-                          </svg>
-                          <svg
-                            aria-hidden="true"
-                            class="cds--table-sort__icon-unsorted"
-                            fill="currentColor"
-                            focusable="false"
-                            height="20"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 32 32"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                            />
-                            <path
-                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                            />
-                          </svg>
-                          <div
-                            class="cds--table-header-label--decorator-inner"
-                          />
-                        </span>
-                      </button>
                     </th>
                   </tr>
                 </thead>
@@ -6283,697 +4083,147 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-223"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-223"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-224"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Type header in ascending order
+                      Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-224"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-225"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Size header in ascending order
+                      Size
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-225"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Size
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-226"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Unit header in ascending order
+                      Unit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-226"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Unit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-227"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Mode header in ascending order
+                      Mode
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-227"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Mode
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-228"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Controller Type header in ascending order
+                      Controller Type
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-228"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Controller Type
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-229"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Dependent header in ascending order
+                      Dependent
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-229"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Dependent
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-230"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Delete Backing header in ascending order
+                      Delete Backing
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-230"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Delete Backing
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-231"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Bootable header in ascending order
+                      Bootable
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-231"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Bootable
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-232"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Resize header in ascending order
+                      Resize
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-232"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Resize
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-233"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-233"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -7203,319 +4453,69 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-237"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-237"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-238"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by MAC address header in ascending order
+                      MAC address
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-238"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          MAC address
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-239"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by vLan header in ascending order
+                      vLan
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-239"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          vLan
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-240"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Edit header in ascending order
+                      Edit
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-240"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Edit
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header header-button cds--table-sort__header"
+                    class="miq-data-table-header header-button"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-241"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Action header in ascending order
+                      Action
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-241"
-                      class="miq-data-table-header header-button cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Action
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
@@ -7549,256 +4549,56 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
               <thead>
                 <tr>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-242"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Name header in ascending order
+                      Name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-242"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Name
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-243"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Host File header in ascending order
+                      Host File
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-243"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Host File
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-244"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Disconnect header in ascending order
+                      Disconnect
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-244"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Disconnect
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                   <th
-                    aria-sort="none"
-                    class="miq-data-table-header cds--table-sort__header"
+                    class="miq-data-table-header"
                     scope="col"
                   >
                     <div
-                      class="cds--table-sort__description"
-                      id="table-sort-245"
+                      class="cds--table-header-label"
                     >
-                      Click to sort rows by Actions header in ascending order
+                      Actions
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
                     </div>
-                    <button
-                      aria-describedby="table-sort-245"
-                      class="miq-data-table-header cds--table-sort"
-                      type="button"
-                    >
-                      <span
-                        class="cds--table-sort__flex"
-                      >
-                        <div
-                          class="cds--table-header-label"
-                        >
-                          Actions
-                        </div>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                          />
-                        </svg>
-                        <svg
-                          aria-hidden="true"
-                          class="cds--table-sort__icon-unsorted"
-                          fill="currentColor"
-                          focusable="false"
-                          height="20"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 32 32"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                          />
-                          <path
-                            d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                          />
-                        </svg>
-                        <div
-                          class="cds--table-header-label--decorator-inner"
-                        />
-                      </span>
-                    </button>
                   </th>
                 </tr>
               </thead>
