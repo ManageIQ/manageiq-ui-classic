@@ -16,6 +16,7 @@ import {
   formCatalogData,
 } from './helper';
 
+import { setLocationHref } from '../../helpers/window-location';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const AnsiblePlayBookEditCatalogForm = ({ initialData }) => {
@@ -136,7 +137,7 @@ const AnsiblePlayBookEditCatalogForm = ({ initialData }) => {
     const msg = sprintf(__('Edit of Catalog Item %s was cancelled by the user'), data.formData.description);
     // eslint-disable-next-line no-undef
     miqFlashLater({ message: msg });
-    window.location.href = '/catalog/explorer?';
+    setLocationHref('/catalog/explorer?');
   };
 
   const onSubmit = (values) => {

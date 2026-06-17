@@ -7,6 +7,7 @@ import { Toolbar } from './toolbar';
 import DashboardToolbar from './dashboard_toolbar';
 import { convertMultParamsToRailsMultParams } from '../toolbar-actions/util';
 import { sendDataWithRx } from '../miq_observable';
+import { locationReplace } from '../helpers/window-location';
 
 /* global miqJqueryRequest, miqSerializeForm */
 /* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
@@ -107,7 +108,7 @@ const onViewClick = (button) => {
     const delimiter = (button.url === '/') ? '' : '/';
     const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
 
-    window.location.replace(['/', ManageIQ.controller, button.url, tail, button.url_parms].join(''));
+    locationReplace(['/', ManageIQ.controller, button.url, tail, button.url_parms].join(''));
   } else {
     onClick(button);
   }
