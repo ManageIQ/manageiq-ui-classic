@@ -107,7 +107,6 @@
     "@babel/plugin-transform-optional-chaining": "~7.28.6",
     "@babel/preset-env": "~7.29.0",
     "@babel/preset-react": "~7.28.0",
-    "@babel/register": "~7.28.0",
     "@babel/runtime-corejs3": "~7.29.0",
     "@eslint/js": "~9.7.0",
     "@testing-library/jest-dom": "~6.9.1",

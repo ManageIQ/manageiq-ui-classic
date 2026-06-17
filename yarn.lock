@@ -1401,21 +1401,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:~7.28.0":
-  version: 7.28.6
-  resolution: "@babel/register@npm:7.28.6"
-  dependencies:
-    clone-deep: "npm:^4.0.1"
-    find-cache-dir: "npm:^2.0.0"
-    make-dir: "npm:^2.1.0"
-    pirates: "npm:^4.0.6"
-    source-map-support: "npm:^0.5.16"
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 10/fdbdcb97f35222c175af004221108d85444cb94c7a68a592b07f5de97b9d32e673044dd45a825624679dfd51e726db78bc85278bc2a9c7a619d37412e52c53e1
-  languageName: node
-  linkType: hard
-
 "@babel/runtime-corejs3@npm:~7.29.0":
   version: 7.29.7
   resolution: "@babel/runtime-corejs3@npm:7.29.7"
@@ -8359,7 +8344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-cache-dir@npm:^2.0.0, find-cache-dir@npm:^2.1.0":
+"find-cache-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "find-cache-dir@npm:2.1.0"
   dependencies:
@@ -11286,7 +11271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
+"make-dir@npm:^2.0.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
   dependencies:
@@ -11335,7 +11320,6 @@ __metadata:
     "@babel/plugin-transform-optional-chaining": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.29.0"
     "@babel/preset-react": "npm:~7.28.0"
-    "@babel/register": "npm:~7.28.0"
     "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
     "@carbon/react": "npm:~1.106.0"
@@ -12676,7 +12660,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pirates@npm:^4.0.6, pirates@npm:^4.0.7":
+"pirates@npm:^4.0.7":
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
   checksum: 10/2427f371366081ae42feb58214f04805d6b41d6b84d74480ebcc9e0ddbd7105a139f7c653daeaf83ad8a1a77214cf07f64178e76de048128fec501eab3305a96
@@ -14267,7 +14251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.16, source-map-support@npm:~0.5.12":
+"source-map-support@npm:~0.5.12":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:

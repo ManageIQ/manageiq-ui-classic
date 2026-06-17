@@ -1,6 +1,3 @@
-const babelConfig = require('../.babelrc.js');
-require('@babel/register').default(babelConfig);
-
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 
