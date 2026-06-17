@@ -87,39 +87,36 @@ module PxeController::PxeServers
   def pxe_image_edit
     assert_privileges("pxe_image_edit")
     case params[:button]
-    when "cancel"
-      add_flash(_("Edit of PXE Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:img].name})
-      @edit = session[:edit] = nil # clean out the saved info
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
     when "save"
-      return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
       update_img = find_record_with_rbac(PxeImage, params[:id])
-      pxe_img_set_record_vars(update_img)
-      if update_img.valid? && !flash_errors? && update_img.save!
-        add_flash(_("PXE Image \"%{name}\" was saved") % {:name => update_img.name})
-        AuditEvent.success(build_saved_audit(update_img, @edit))
-        refresh_trees = @edit[:new][:default_for_windows] == @edit[:current][:default_for_windows] ? [] : [:pxe_server]
-        @edit = session[:edit] = nil # clean out the saved info
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => refresh_trees)
+      update_img.pxe_image_type = params[:image_typ].blank? ? nil : PxeImageType.find(params[:image_typ])
+      update_img.default_for_windows = params[:default_for_windows] == "1"
+      
+      if update_img.save
+        edit_hash = {
+          :new => {
+            :img_type => params[:image_typ],
+            :default_for_windows => params[:default_for_windows] == "1"
+          },
+          :current => {
+            :img_type => update_img.pxe_image_type_id_was,
+            :default_for_windows => update_img.default_for_windows_was
+          }
+        }
+        AuditEvent.success(build_saved_audit(update_img, edit_hash))
+        render :json => { :message => "PXE Image \"#{update_img.name}\" was saved" }, :status => 200
       else
+        error_messages = []
         update_img.errors.each do |error|
-          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
+          error_messages << "#{error.attribute.to_s.capitalize} #{error.message}"
         end
-        @in_a_form = true
-        @changed = true
-        javascript_flash
-        return
+        render :json => { :error => error_messages.join(", ") }, :status => 400
       end
-    when "reset", nil
+    when nil
       @img = PxeImage.find(params[:id])
       pxe_img_set_form_vars
       @in_a_form = true
       session[:changed] = false
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
       replace_right_cell(:nodetype => "pi")
     end
   end
@@ -168,6 +165,18 @@ module PxeController::PxeServers
     assert_privileges("pxe_wimg_edit")
     return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
     pxe_wimg_get_form_vars
+    render :update do |page|
+      page << javascript_prologue
+      changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(changed)
+    end
+  end
+
+  # AJAX driven routine to check for changes in ANY field on the form
+  def pxe_img_form_field_changed
+    assert_privileges("pxe_image_edit")
+    return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
+    pxe_img_get_form_vars
     render :update do |page|
       page << javascript_prologue
       changed = (@edit[:new] != @edit[:current])
