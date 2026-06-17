@@ -16,9 +16,6 @@ require('../app/javascript/oldjs/miq_global.js');
 
 require('@testing-library/jest-dom');
 
-// TODO: These mocks(getSelection, MutationObserver & createRange) can likely be removed
-// after upgrading Jest to the latest version & adding jest-environment-jsdom if needed
-
 // Mock getSelection for @testing-library/user-event, user-event looks for 
 // element.ownerDocument.getSelection, so we need to mock it on document
 document.getSelection = () => ({
@@ -26,18 +23,6 @@ document.getSelection = () => ({
   addRange: () => {},
   rangeCount: 0,
 });
-
-// Mock MutationObserver for @testing-library/dom waitFor
-global.MutationObserver = class {
-  constructor(callback) {
-    this.callback = callback;
-  }
-  disconnect() {}
-  observe() {}
-  takeRecords() {
-    return [];
-  }
-};
 
 // Mock createRange for @testing-library/user-event selectOptions
 // Looks like the current jsdom has incomplete Range API implementation
