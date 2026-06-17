@@ -2658,13 +2658,11 @@ Rails.application.routes.draw do
         iso_datastore_list
         iso_image_edit
         pxe_image_edit
-        pxe_img_form_field_changed
         pxe_image_type_edit
         pxe_image_type_list
         pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit
-        pxe_wimg_form_field_changed
         reload
         tagging_edit
         template_list
