@@ -124,38 +124,33 @@ module PxeController::PxeServers
   def pxe_wimg_edit
     assert_privileges("pxe_wimg_edit")
     case params[:button]
-    when "cancel"
-      add_flash(_("Edit of Windows Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:wimg].name})
-      @edit = session[:edit] = nil # clean out the saved info
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
     when "save"
-      return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
       update_wimg = find_record_with_rbac(WindowsImage, params[:id])
-      pxe_wimg_set_record_vars(update_wimg)
-      if update_wimg.valid? && !flash_errors? && update_wimg.save!
-        add_flash(_("Windows Image \"%{name}\" was saved") % {:name => update_wimg.name})
-        AuditEvent.success(build_saved_audit(update_wimg, @edit))
-        @edit = session[:edit] = nil # clean out the saved info
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node)
+      update_wimg.pxe_image_type = params[:image_typ].blank? ? nil : PxeImageType.find(params[:image_typ])
+      
+      if update_wimg.save
+        edit_hash = {
+          :new => {
+            :img_type => params[:image_typ]
+          },
+          :current => {
+            :img_type => update_wimg.pxe_image_type_id_was
+          }
+        }
+        AuditEvent.success(build_saved_audit(update_wimg, edit_hash))
+        render :json => { :message => "Windows Image \"#{update_wimg.name}\" was saved" }, :status => 200
       else
+        error_messages = []
         update_wimg.errors.each do |error|
-          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
+          error_messages << "#{error.attribute.to_s.capitalize} #{error.message}"
         end
-        @in_a_form = true
-        @changed = true
-        javascript_flash
-        return
+        render :json => { :error => error_messages.join(", ") }, :status => 400
       end
-    when "reset", nil
+    when nil
       @wimg = WindowsImage.find(params[:id])
       pxe_wimg_set_form_vars
       @in_a_form = true
       session[:changed] = false
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
       replace_right_cell(:nodetype => "wi")
     end
   end

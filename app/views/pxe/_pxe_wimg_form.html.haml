@@ -1,17 +1,1 @@
-- url = url_for_only_path(:action => 'pxe_wimg_form_field_changed', :id => (@wimg.id || "new"))
-#form_div
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Basic Information')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _('Type')
-      .col-md-8
-        - img_types = [["<#{_('Unknown')}>", nil]] + @edit[:pxe_image_types]
-        = select_tag("image_typ",
-                      options_for_select(img_types, @edit[:new][:img_type]),
-                      :class    => "selectpicker")
-        :javascript
-           miqInitSelectPicker();
-           miqSelectPickerEvent("image_typ", "#{url}")
+= react('PxeWindowsImageEditForm', {:recordId => @wimg.id.to_s, :imgType => @edit[:new][:img_type], :pxeImageTypes => @edit[:pxe_image_types]})
