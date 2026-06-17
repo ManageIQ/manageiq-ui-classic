@@ -122,6 +122,18 @@ Object.defineProperty(Array.prototype, 'flat', {
  */
 jest.mock('../app/javascript/helpers/miq-redirect-back', () => jest.fn());
 
+/**
+ * Mock location helper to avoid jsdom navigation errors and enable easy testing
+ * This provides mockable alternatives to window.location which is non-configurable in jsdom
+ */
+jest.mock('../app/javascript/helpers/window-location', () => ({
+  getLocation: jest.fn().mockReturnValue({
+    pathname: '',
+  }),
+  locationAssign: jest.fn(),
+  setLocationHref: jest.fn(),
+}));
+
 // Mock ResizeObserver for Carbon v11 components
 Object.defineProperty(window, 'ResizeObserver', {
   writable: true,
