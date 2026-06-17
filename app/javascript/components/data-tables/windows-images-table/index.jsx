@@ -13,6 +13,7 @@ const WindowsImagesTable = ({
       <MiqDataTable
         rows={rows}
         headers={headers}
+        isSortable={false}
         onCellClick={(selectedRow) => onSelect(selectedRow)}
       />
     )
