@@ -17,67 +17,17 @@ exports[`PxeTemplateFolders Component should render with empty folders array 1`]
           <thead>
             <tr>
               <th
-                aria-sort="none"
-                class="miq-data-table-header cds--table-sort__header"
+                class="miq-data-table-header"
                 scope="col"
               >
                 <div
-                  class="cds--table-sort__description"
-                  id="table-sort-1"
+                  class="cds--table-header-label"
                 >
-                  Click to sort rows by Name header in ascending order
+                  Name
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
                 </div>
-                <button
-                  aria-describedby="table-sort-1"
-                  class="miq-data-table-header cds--table-sort"
-                  type="button"
-                >
-                  <span
-                    class="cds--table-sort__flex"
-                  >
-                    <div
-                      class="cds--table-header-label"
-                    >
-                      Name
-                    </div>
-                    <svg
-                      aria-hidden="true"
-                      class="cds--table-sort__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height="20"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 32 32"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                      />
-                    </svg>
-                    <svg
-                      aria-hidden="true"
-                      class="cds--table-sort__icon-unsorted"
-                      fill="currentColor"
-                      focusable="false"
-                      height="20"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 32 32"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                      />
-                      <path
-                        d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                      />
-                    </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
-                  </span>
-                </button>
               </th>
             </tr>
           </thead>
@@ -144,67 +94,17 @@ exports[`PxeTemplateFolders Component should render with folders data 1`] = `
           <thead>
             <tr>
               <th
-                aria-sort="none"
-                class="miq-data-table-header cds--table-sort__header"
+                class="miq-data-table-header"
                 scope="col"
               >
                 <div
-                  class="cds--table-sort__description"
-                  id="table-sort-3"
+                  class="cds--table-header-label"
                 >
-                  Click to sort rows by Name header in ascending order
+                  Name
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
                 </div>
-                <button
-                  aria-describedby="table-sort-3"
-                  class="miq-data-table-header cds--table-sort"
-                  type="button"
-                >
-                  <span
-                    class="cds--table-sort__flex"
-                  >
-                    <div
-                      class="cds--table-header-label"
-                    >
-                      Name
-                    </div>
-                    <svg
-                      aria-hidden="true"
-                      class="cds--table-sort__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height="20"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 32 32"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                      />
-                    </svg>
-                    <svg
-                      aria-hidden="true"
-                      class="cds--table-sort__icon-unsorted"
-                      fill="currentColor"
-                      focusable="false"
-                      height="20"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 32 32"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                      />
-                      <path
-                        d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                      />
-                    </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
-                  </span>
-                </button>
               </th>
             </tr>
           </thead>
