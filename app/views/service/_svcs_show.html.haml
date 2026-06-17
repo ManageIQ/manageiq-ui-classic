@@ -3,22 +3,15 @@
     %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header("details") do
         = _("Details")
-      - if @record.type == "ServiceTerraformTemplate"   
-        - stack = @record.try(:stack, "Provision")
-        = miq_tab_header("output") do
-          = _("Output")
-      - if @record.type == "ServiceAnsiblePlaybook"
+      - if @record.respond_to?(:job)
         - provision_job = @record.try(:job, "Provision")
         - retirement_job = @record.try(:job, "Retirement")
-        = miq_tab_header("provisioning") do
-          = _("Provisioning")
+        - if provision_job
+          = miq_tab_header("provisioning") do
+            = _("Provisioning")
         - if retirement_job
           = miq_tab_header("retirement") do
             = _("Retirement")
-      -if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
-        - job = @record.try(:job)
-        = miq_tab_header("tower_job") do
-          = _("Job")
     .tab-content
       = miq_tab_content("details", 'default', :class => 'cm-tab') do
         = render :partial => "layouts/textual_groups_generic"
@@ -33,28 +26,18 @@
               = _('VMs')
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
-      
-      - if @record.type == "ServiceTerraformTemplate"
-        = miq_tab_content("output", 'default', :class => 'cm-tab') do
-          - if stack
-            = react('ServiceDetailStdout', { :taskid => stack.raw_stdout_via_worker(User.current_user&.userid, 'html')});
 
-      - if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
-        = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
-          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
-          - if job && job.respond_to?(:raw_stdout_via_worker)
-            = react('ServiceDetailStdout', { :taskid => @record.job.raw_stdout_via_worker(User.current_user&.userid, 'html')})
-
-      - if @record.type == "ServiceAnsiblePlaybook"
+      - if provision_job
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list, :tab_id => "provisioning"}
-          - if provision_job
-            = react('ServiceDetailStdout', { :taskid => provision_job.raw_stdout_via_worker(User.current_user&.userid, 'html')});
+          - if provision_job.respond_to?(:raw_stdout_via_worker)
+            = react('ServiceDetailStdout', {:taskid => provision_job.raw_stdout_via_worker(User.current_user&.userid, 'html')});
 
-        - if retirement_job
-          = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
-            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
-            = react('ServiceDetailStdout', { :taskid => retirement_job.raw_stdout_via_worker(User.current_user&.userid, 'html')})
+      - if retirement_job
+        = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
+          - if retirement_job.respond_to?(:raw_stdout_via_worker)
+            = react('ServiceDetailStdout', {:taskid => retirement_job.raw_stdout_via_worker(User.current_user&.userid, 'html')})
 
 :javascript
   miq_tabs_init('#services_tab');
