@@ -28,16 +28,6 @@ describe('RemoveCatalogItemModal', () => {
   const store = configureStore()({});
   const dispatchMock = jest.spyOn(store, 'dispatch');
 
-  beforeEach(() => {
-    global.window ??= Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: 'http://example.com',
-      },
-      writable: true,
-    });
-  });
-
   afterEach(() => {
     fetchMock.reset();
   });
