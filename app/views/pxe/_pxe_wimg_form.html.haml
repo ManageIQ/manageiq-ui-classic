@@ -1,5 +1,5 @@
 = render :partial => "layouts/flash_msg"
 = react('PxeWindowsImageEditForm',
-        {:recordId => @wimg.id.to_s,
-         :imgType => @edit[:new][:img_type],
+        {:recordId      => @wimg.id.to_s,
+         :imgType       => @edit[:new][:img_type],
          :pxeImageTypes => @edit[:pxe_image_types]})
