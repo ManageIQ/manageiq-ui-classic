@@ -5,14 +5,30 @@ import MiqDataTable from '../../miq-data-table';
 
 const RequestsTable = ({
   initialData,
-  locale,
+  userId,
 }) => {
+  const [userLocale, setUserLocale] = useState('en');
   const [tableHeaders, setTableHeaders] = useState([
     { key: 'time', header: __('Time'), sortData: { isFilteredBy: false } },
     { key: 'severity', header: __('Severity'), sortData: { isFilteredBy: false } },
     { key: 'message', header: __('Message'), sortData: { isFilteredBy: false } },
   ]);
   const [tableRows, setTableRows] = useState([]);
+
+  // Fetch user's locale setting from API
+  useEffect(() => {
+    if (userId) {
+      API.get(`/api/users/${userId}?attributes=settings`).then(({ settings }) => {
+        if (settings?.display?.locale && settings.display.locale !== 'default') {
+          // Convert underscore format (e.g., 'zh_CN') to hyphen format (e.g., 'zh-CN') for moment.js
+          setUserLocale(settings.display.locale.replace('_', '-'));
+        }
+      }).catch(() => {
+        // If API call fails, keep default locale
+        setUserLocale('en');
+      });
+    }
+  }, [userId]);
 
   const onSort = ({ key, sortData: { sortDirection } }) => {
     const temp = [...tableRows];
@@ -103,7 +119,7 @@ const RequestsTable = ({
   useEffect(() => {
     const rows = [];
     const timezone = ManageIQ.timezone || 'UTC';
-    moment.locale(locale || 'en');
+    moment.locale(userLocale);
 
     initialData.forEach((object, index) => {
       const formattedTime = object.created_at
@@ -125,7 +141,7 @@ const RequestsTable = ({
       };
     });
     setTableRows(() => (rows));
-  }, [initialData]);
+  }, [initialData, userLocale]);
 
   return (
     tableRows.length > 0 && (
@@ -150,12 +166,12 @@ RequestsTable.propTypes = {
     severity: PropTypes.string,
     message: PropTypes.string,
   })),
-  locale: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 RequestsTable.defaultProps = {
   initialData: [],
-  locale: 'en',
+  userId: null,
 };
 
 export default RequestsTable;
