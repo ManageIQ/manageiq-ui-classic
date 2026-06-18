@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import VmEditForm from '../../components/vm-edit-form';
+import { renderWithRedux } from '../helpers/mountForm';
 
 import '../helpers/miqAjaxButton';
 
@@ -68,8 +69,41 @@ describe('VM Edit form component', () => {
     fetchMock.restore();
     submitSpy.mockRestore();
   });
-  it('should render vm edit form', () => {
-    const { container } = render(
+  it('should render vm edit form', async() => {
+    const parentVMOptions = {
+      resources: [
+        {
+          id: '4698',
+          name: 'billy_cloudformator',
+          location: '5b0a20b7-3583-49fc-a1e1-e64e528476d6.ovf',
+        },
+      ],
+    };
+
+    const parentTemplateOptions = {
+      resources: [
+        {
+          id: '4668',
+          name: 'win2012-temp',
+          location: '73c9b538-a84c-462f-a7f9-2c08fc3e212a.ovf',
+        },
+      ],
+    };
+
+    fetchMock.getOnce(
+      `/api/vms/?filter[]=ems_id=56&expand=resources`,
+      parentVMOptions
+    );
+    fetchMock.getOnce(
+      `/api/templates/?filter[]=ems_id=56&expand=resources`,
+      parentTemplateOptions
+    );
+    fetchMock.getOnce(
+      `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
+      vmInitialValues
+    );
+
+    const { container } = renderWithRedux(
       <VmEditForm
         recordId="4671"
         emsId="56"
@@ -77,8 +111,15 @@ describe('VM Edit form component', () => {
         isTemplate={false}
       />
     );
+
+    // Wait for form to be fully rendered
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
     expect(container).toMatchSnapshot();
   });
+
   it('should edit vm with a parent and children', async() => {
     const parentVMOptions = {
       resources: [
@@ -137,7 +178,7 @@ describe('VM Edit form component', () => {
       vmInitialValues
     );
     fetchMock.postOnce('/api/vms/4671', data);
-    const { container } = render(
+    const { container } = renderWithRedux(
       <VmEditForm
         recordId="4671"
         emsId="56"
@@ -145,8 +186,15 @@ describe('VM Edit form component', () => {
         isTemplate={false}
       />
     );
+
+    // Wait for form to be fully rendered
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
     expect(container).toMatchSnapshot();
   });
+
   it('should edit vm with no parent or children', async() => {
     const parentVMOptions = {
       resources: [
@@ -201,7 +249,7 @@ describe('VM Edit form component', () => {
       vmInitialValues
     );
     fetchMock.postOnce('/api/vms/4671', data);
-    const { container } = render(
+    const { container } = renderWithRedux(
       <VmEditForm
         recordId="4671"
         emsId="56"
@@ -209,8 +257,15 @@ describe('VM Edit form component', () => {
         isTemplate={false}
       />
     );
+
+    // Wait for form to be fully rendered
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
     expect(container).toMatchSnapshot();
   });
+
   it('should edit template with a parent and children', async() => {
     const parentVMOptions = {
       resources: [
@@ -268,7 +323,7 @@ describe('VM Edit form component', () => {
       templateInitialValues
     );
     fetchMock.postOnce('/api/templates/2686', data);
-    const { container } = render(
+    const { container } = renderWithRedux(
       <VmEditForm
         recordId="2686"
         emsId="22"
@@ -276,8 +331,15 @@ describe('VM Edit form component', () => {
         isTemplate
       />
     );
+
+    // Wait for form to be fully rendered
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
     expect(container).toMatchSnapshot();
   });
+
   it('should edit template with no parent and children', async() => {
     const parentVMOptions = {
       resources: [
@@ -332,7 +394,7 @@ describe('VM Edit form component', () => {
       templateInitialValues
     );
     fetchMock.postOnce('/api/templates/2686', data);
-    const { container } = render(
+    const { container } = renderWithRedux(
       <VmEditForm
         recordId="2686"
         emsId="22"
@@ -340,6 +402,12 @@ describe('VM Edit form component', () => {
         isTemplate
       />
     );
+
+    // Wait for form to be fully rendered
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
     expect(container).toMatchSnapshot();
   });
 });

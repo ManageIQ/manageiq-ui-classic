@@ -1,8 +1,9 @@
 import * as deleteActions from '../../toolbar-actions/delete';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 
+global.jasmine = {};
 import '../helpers/angular';
-import 'angular-mocks';
+require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
@@ -45,12 +46,11 @@ describe('Toolbar actions', () => {
   });
 
   describe('showMessage', () => {
-    let addFlash;
+    const addFlash = jest.fn();
 
     beforeEach(() => {
-      addFlash = jasmine.createSpy('add_flash');
       window.add_flash = addFlash;
-      window.sprintf = jasmine.createSpy('sprintf').and.callFake(window.sprintf);
+      window.sprintf = jest.fn().mockImplementation(window.sprintf);
     });
 
     it('calls show message with object', () => {

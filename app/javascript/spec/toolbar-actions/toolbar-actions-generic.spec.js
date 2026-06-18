@@ -1,10 +1,10 @@
 import { onCustomAction } from '../../toolbar-actions/custom-action';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 import '../../packs/toolbar-actions-common.js'; // subscribeToRx
-
+global.jasmine = {};
 import '../helpers/angular';
 import '../helpers/API';
-import 'angular-mocks';
+require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
@@ -31,12 +31,12 @@ describe('Toolbar actions', () => {
     let add_flash;
 
     beforeEach(() => {
-      spyOn(window.vanillaJsAPI, 'post').and.returnValue(Promise.resolve({
+      jest.spyOn(window.vanillaJsAPI, 'post').mockReturnValue(Promise.resolve({
         results: [
           { success: true, message: 'some' },
         ],
       }));
-      add_flash = jasmine.createSpy('add_flash');
+      add_flash = jest.fn();
       window.add_flash = add_flash;
     });
 
@@ -49,7 +49,7 @@ describe('Toolbar actions', () => {
       expect(window.vanillaJsAPI.post)
         .toHaveBeenCalledWith(
           '/api/some-entity',
-          jasmine.objectContaining(payload),
+          expect.objectContaining(payload),
         );
     });
 

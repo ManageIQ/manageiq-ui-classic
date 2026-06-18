@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Attach / Detach form component should render Attach Cloud Volume to the Selected Instance form 1`] = `
 <div>

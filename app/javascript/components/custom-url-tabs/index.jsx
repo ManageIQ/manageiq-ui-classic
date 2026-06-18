@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, TabList, Tab, Modal } from '@carbon/react';
 import { checkForFormChanges } from './helper';
+import { locationReplace } from '../../helpers/window-location';
 
 const CustomURLTabs = ({
   tabs, path, currentTab, checkForChanges,
@@ -19,7 +20,7 @@ const CustomURLTabs = ({
         }));
         document.getElementById(id).parentElement.classList.add(activeTabClassName);
       } else {
-        window.location.replace(`${path}${id}?uib-tab=${id}`);
+        locationReplace(`${path}${id}?uib-tab=${id}`);
       }
     }
   };
@@ -62,7 +63,7 @@ const CustomURLTabs = ({
               showConfirm: false,
             }));
           }}
-          onRequestSubmit={() => window.location.replace(url)}
+          onRequestSubmit={() => locationReplace(url)}
           onSecondarySubmit={() => {
             setState((state) => ({
               ...state,

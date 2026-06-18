@@ -1,8 +1,9 @@
 /* global miqFlashLater */
+import { setLocationHref } from "./window-location";
 
 const miqRedirectBack = (message, flashType, redirectUrl) => {
   miqFlashLater({ message, level: flashType });
-  window.location.href = redirectUrl;
+  setLocationHref(redirectUrl);
 };
 
 export default miqRedirectBack;

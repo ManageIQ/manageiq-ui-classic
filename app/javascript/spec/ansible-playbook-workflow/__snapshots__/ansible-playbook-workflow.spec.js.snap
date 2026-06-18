@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWorkflow with payload 1`] = `
 <div>
@@ -192,7 +192,7 @@ exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWork
                         >
                           <span
                             role="presentation"
-                            style="padding-right: .1px;"
+                            style="padding-right: 0.1px;"
                           >
                                     with_items: "{{ ec2.instances }}"
                           </span>

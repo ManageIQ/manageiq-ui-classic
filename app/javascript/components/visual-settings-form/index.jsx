@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
+import { locationReload } from '../../helpers/window-location';
 
 const VisualSettingsForm = ({ recordId }) => {
   const [{
@@ -43,7 +44,7 @@ const VisualSettingsForm = ({ recordId }) => {
     settings.perpage.reports = parseInt(settings.perpage.reports, 10);
     miqSparkleOn();
     API.patch(`/api/users/${recordId}`, { settings }).then(() => {
-      window.location.reload();
+      locationReload();
       add_flash(__('User Interface settings saved'), 'success');
     }).catch(miqSparkleOff);
   };

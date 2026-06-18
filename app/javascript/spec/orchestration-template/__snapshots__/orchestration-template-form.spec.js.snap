@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Orcherstration Stack form should render copy variant 1`] = `
 <div>
@@ -288,7 +288,7 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                             >
                               <span
                                 role="presentation"
-                                style="padding-right: .1px;"
+                                style="padding-right: 0.1px;"
                               >
                                 content edited
                               </span>

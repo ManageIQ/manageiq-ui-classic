@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Tenant Quota Form Component should render the manage quotas form for a tenant no quotas defined 1`] = `
 <div>
