@@ -487,14 +487,16 @@ exports[`Network Router form component should render edit variant 1`] = `
       class="cds--btn-set"
     >
       <button
-        class="cds--btn cds--btn--primary"
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
         type="submit"
         variant="primary"
       >
         Save
       </button>
       <button
-        class="cds--btn cds--btn--secondary"
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
         type="button"
       >
         Reset
