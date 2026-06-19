@@ -1,4 +1,4 @@
-import { setLocationHref } from "../../helpers/window-location";
+import { setLocationHref } from '../../helpers/window-location';
 
 export const newCountText = function(count) {
   // eslint-disable-next-line no-undef
@@ -16,5 +16,5 @@ export const getNotficationStatusIconName = (notification) => (
   }[notification.type] || '');
 
 export const viewDetails = function(notification) {
-  setLocationHref(`/restful_redirect?${$.param(notification.data.link)}`)
+  setLocationHref(`/restful_redirect?${$.param(notification.data.link)}`);
 };
