@@ -26,7 +26,7 @@ const ProviderForm = ({
 }) => {
   const edit = !!providerId;
   const [{ fields, initialValues }, setState] = useState({});
-
+  const [providerOptionloading, setProviderOptionloading] = useState(false);
   const submitLabel = edit ? __('Save') : __('Add');
 
   const commonFields = [
@@ -81,10 +81,15 @@ const ProviderForm = ({
     isRequired: true,
     options: providers,
     onChange: (value) => {
-      if (value !== '-1') {
-        loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
-          fields: [firstField, ...fields],
-        })));
+     if (value !== '-1') {
+      setProviderOptionloading(true);
+      loadProviderFields(value)
+        .then((fields) =>
+          setState(({ fields: [firstField] }) => ({
+            fields: [firstField, ...fields],
+          }))
+        )
+        .finally(() => setProviderOptionloading(false));
       } else {
         setState(({ fields: [firstField] }) => ({
           fields: [firstField,
@@ -151,6 +156,8 @@ const ProviderForm = ({
   };
 
   const onSubmit = ({ type, ..._data }, { getState }) => {
+    // safety check to stop user from submitting during loading of provider
+    if (providerOptionloading) return;
     if (type !== '-1') {
       miqSparkleOn();
 
@@ -210,6 +217,7 @@ const ProviderForm = ({
             canReset={edit}
             clearOnUnmount
             keepDirtyOnReinitilize
+            isProviderOptionLoading={providerOptionloading}
           />
         </EditingContext.Provider>
       ) }

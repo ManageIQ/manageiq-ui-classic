@@ -48,6 +48,7 @@ const MiqFormRenderer = ({
   schema: { fields, ...schema },
   initialize,
   onSubmit,
+  isProviderOptionLoading,
   ...props
 }) => {
   const { current: MiqFormTemplate } = useRef((props) => (
@@ -69,6 +70,12 @@ const MiqFormRenderer = ({
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
       onSubmit={submitWrapper(onSubmit)}
       onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+      validate={(_) => {
+        // simulating a rule to disable button when select dropdown option changes.
+        if (isProviderOptionLoading) {
+          return { _error: 'Loading...' };
+        }
+      }}
       {...props}
     />
   );
@@ -99,7 +106,7 @@ MiqFormRenderer.defaultProps = {
   schema: {
     fields: [],
   },
-  disableSubmit: ['pristine', 'invalid'],
+  disableSubmit: ['pristine', 'invalid', 'submitting'],
   canReset: false,
   showFormControls: true,
   initialize: undefined,
