@@ -46,6 +46,13 @@ const settingsTags = {
   map_tags: __('Map Tags'),
 };
 
+/** Tab labels used for settings zone tabs. */
+const settingsZone = {
+  evm_servers: __('Zone'),
+  smartproxy_affinity: __('SmartProxy Affinity'),
+  advanced: __('Advanced'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -55,6 +62,7 @@ export const labelConfig = (type) => {
     CATALOG_REQUEST_INFO: requestInfo,
     SETTINGS: settings,
     SETTINGS_TAGS: settingsTags,
+    SETTINGS_ZONE: settingsZone,
   };
 
   return configMap[type];

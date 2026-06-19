@@ -4,19 +4,17 @@
   - when :settings_tree
     - if selected?(x_node, "z")
       = render :partial => "layouts/flash_msg"
-      %ul.nav.nav-tabs{'role' => 'tablist'}
-        = miq_tab_header("settings_evm_servers", @sb[:active_tab]) do
-          = _("Zone")
-        = miq_tab_header("settings_smartproxy_affinity", @sb[:active_tab]) do
-          = _("SmartProxy Affinity")
-        = miq_tab_header("settings_advanced", @sb[:active_tab]) do
-          = _("Advanced")
-      .tab-content
-        = miq_tab_content("settings_smartproxy_affinity", @sb[:active_tab]) do
-          = render :partial => "settings_smartproxy_affinity_tab"
-        = miq_tab_content("settings_evm_servers", @sb[:active_tab]) do
+      #settings-zone-tabs-wrapper
+        = react('MiqCustomTab', {:containerId => 'settings-zone-tabs',
+                                 :tabLabels   => settings_zone_tab_configuration,
+                                 :type        => 'SETTINGS_ZONE',
+                                 :activeTab   => settings_zone_tab_index(@sb[:active_tab])})
+      #settings-zone-tabs
+        = settings_zone_tab_content(:evm_servers) do
           = render :partial => "settings_evm_servers_tab"
-        = miq_tab_content("settings_advanced", @sb[:active_tab]) do
+        = settings_zone_tab_content(:smartproxy_affinity) do
+          = render :partial => "settings_smartproxy_affinity_tab"
+        = settings_zone_tab_content(:advanced) do
           = render :partial => "settings_advanced_tab"
     - elsif selected?(x_node, "svr")
       = render :partial => "layouts/flash_msg"
