@@ -8,8 +8,12 @@ const getPageRangeText = (_current, total) => sprintf(n__(`of %d page`, `of %d p
 
 const MiqPagination = ({
   pageOptions: {
-    page, pageSizes, pageSize, totalItems, onPageChange,
-  },
+    page = 1,
+    pageSizes = [5, 10, 20, 50, 100, 200],
+    pageSize = 20,
+    totalItems = 10,
+    onPageChange,
+  } = {},
 }) => (
   <fieldset className="miq-fieldset">
     <legend className="miq-fieldset-legend legend-search">{__('Pagination')}</legend>
@@ -39,15 +43,6 @@ MiqPagination.propTypes = {
     pageSize: PropTypes.number,
     onPageChange: PropTypes.func.isRequired,
   }),
-};
-
-MiqPagination.defaultProps = {
-  pageOptions: {
-    totalItems: 10,
-    page: 1,
-    pageSizes: [5, 10, 20, 50, 100, 200],
-    pageSize: 20,
-  },
 };
 
 export default MiqPagination;

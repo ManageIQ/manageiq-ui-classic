@@ -3,7 +3,7 @@ import { tableData, onSelectRender } from './helper';
 import MiqDataTable from '../../miq-data-table';
 
 const PxeImagesTable = ({
-  initialData,
+  initialData = [],
 }) => {
   const { headers, rows } = tableData(initialData);
   const onSelect = (selectedRow) => onSelectRender(selectedRow);
@@ -30,8 +30,4 @@ PxeImagesTable.propTypes = {
     kernel: PropTypes.string,
     default_for_windows: PropTypes.bool,
   })),
-};
-
-PxeImagesTable.defaultProps = {
-  initialData: [],
 };

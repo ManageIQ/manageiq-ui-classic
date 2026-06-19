@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { SideNavItems, SideNavItem, Button } from '@carbon/react';
 import { UserAvatar } from '@carbon/react/icons';
 
-const Username = ({ applianceName, currentUser, expanded }) => {
+const Username = ({ applianceName, currentUser, expanded = false }) => {
   const title = `${currentUser.name} | ${currentUser.userid} | ${applianceName}`;
 
   return (
@@ -45,10 +45,6 @@ Username.propTypes = {
     userid: PropTypes.string,
   }).isRequired,
   expanded: PropTypes.bool,
-};
-
-Username.defaultProps = {
-  expanded: false,
 };
 
 export default Username;

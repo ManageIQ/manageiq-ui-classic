@@ -3,7 +3,10 @@ import { GroupedBarChart } from '@carbon/charts-react';
 import { getYAxisValue } from './helpers';
 
 const GroupBarChart = ({
-  data, format, size, title,
+  data = null,
+  format = null,
+  size = '400px',
+  title = '',
 }) => {
   const options = {
     title,
@@ -37,13 +40,6 @@ GroupBarChart.propTypes = {
   format: PropTypes.instanceOf(Object),
   size: PropTypes.string,
   title: PropTypes.string,
-};
-
-GroupBarChart.defaultProps = {
-  data: null,
-  format: null,
-  size: '400px',
-  title: '',
 };
 
 export default GroupBarChart;

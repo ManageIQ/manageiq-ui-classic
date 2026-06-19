@@ -3,7 +3,10 @@ import { ChevronLeft, ChevronRight } from '@carbon/react/icons';
 import { SideNavItems, SideNavItem } from '@carbon/react';
 
 const MenuCollapse = ({
-  expanded, toggle, onFocus, open,
+  expanded = false,
+  toggle,
+  onFocus,
+  open = false,
 }) => (
   <div className="menu-collapse">
     <SideNavItems className="menu-collapse-list">
@@ -32,11 +35,6 @@ MenuCollapse.propTypes = {
   toggle: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
   open: PropTypes.bool,
-};
-
-MenuCollapse.defaultProps = {
-  expanded: false,
-  open: false,
 };
 
 export default MenuCollapse;

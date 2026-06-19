@@ -76,8 +76,4 @@ PolicyProfileForm.propTypes = {
   recordId: PropTypes.string,
 };
 
-PolicyProfileForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default PolicyProfileForm;

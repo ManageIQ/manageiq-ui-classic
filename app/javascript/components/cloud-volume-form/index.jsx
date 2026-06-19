@@ -101,9 +101,5 @@ CloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
 };
-CloudVolumeForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
-};
 
 export default CloudVolumeForm;

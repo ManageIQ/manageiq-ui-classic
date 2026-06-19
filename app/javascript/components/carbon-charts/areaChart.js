@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { AreaChart } from '@carbon/charts-react';
 
-const AreaChartGraph = ({ data, title }) => {
+const AreaChartGraph = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     axes: {
@@ -30,11 +33,6 @@ const AreaChartGraph = ({ data, title }) => {
 AreaChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-AreaChartGraph.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default AreaChartGraph;

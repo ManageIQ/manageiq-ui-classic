@@ -6,7 +6,7 @@ import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-acti
 import { labelConfig, tabText } from './helper';
 
 const MiqCustomTab = ({
-  containerId, tabLabels, type, activeTab, subtab, tabLength, disableInactive,
+  containerId, tabLabels, type, activeTab, subtab, tabLength, disableInactive = false,
 }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
@@ -171,11 +171,4 @@ MiqCustomTab.propTypes = {
   subtab: PropTypes.number,
   tabLength: PropTypes.number,
   disableInactive: PropTypes.bool,
-};
-
-MiqCustomTab.defaultProps = {
-  activeTab: undefined,
-  subtab: undefined,
-  tabLength: undefined,
-  disableInactive: false,
 };

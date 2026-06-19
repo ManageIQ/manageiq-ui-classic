@@ -26,7 +26,10 @@ export const carbonizeIcon = (classname, options = undefined) => {
   );
 };
 
-const MiqIcon = ({ icon, size }) => {
+const MiqIcon = ({
+  icon,
+  size = 16,
+}) => {
   const IconElement = carbonizeIcon(icon, { size });
   return <IconElement style={{ marginBottom: '-4px' }} />;
 };
@@ -34,10 +37,6 @@ const MiqIcon = ({ icon, size }) => {
 MiqIcon.propTypes = {
   icon: PropTypes.string.isRequired,
   size: PropTypes.number,
-};
-
-MiqIcon.defaultProps = {
-  size: 16,
 };
 
 export default MiqIcon;

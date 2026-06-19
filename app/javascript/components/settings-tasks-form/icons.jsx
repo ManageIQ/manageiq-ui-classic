@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 import { carbonizeIcon } from '../../menu/icon';
 
 const Icon = ({
-  text, icon, color, size,
+  text,
+  icon,
+  color = 'black',
+  size = 16,
 }) => {
   const IconElement = carbonizeIcon(icon, { size });
   return (
@@ -20,9 +23,4 @@ Icon.propTypes = {
   icon: PropTypes.string.isRequired,
   color: PropTypes.string,
   size: PropTypes.number,
-};
-
-Icon.defaultProps = {
-  color: 'black',
-  size: 16,
 };

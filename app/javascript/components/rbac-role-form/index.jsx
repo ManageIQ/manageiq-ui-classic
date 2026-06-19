@@ -371,11 +371,6 @@ RbacRoleForm.propTypes = {
   existingProductFeatures: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-RbacRoleForm.defaultProps = {
-  role: undefined,
-  existingProductFeatures: undefined,
-};
-
 FormTemplate.propTypes = {
   formFields: PropTypes.arrayOf(
     PropTypes.shape({ selectOptions: PropTypes.arrayOf(PropTypes.string) }),
@@ -384,11 +379,6 @@ FormTemplate.propTypes = {
     PropTypes.shape({ role: PropTypes.shape({}) }),
   ),
   roleId: PropTypes.number,
-};
-
-FormTemplate.defaultProps = {
-  formFields: undefined,
-  roleId: undefined,
 };
 
 export default RbacRoleForm;

@@ -36,7 +36,7 @@ const toolbarGroupHasContent = (group) =>
     && group.filter((item) => item
       && isVisibleButtonOrSelect(item)).length !== 0;
 
-export const ButtonCase = forwardRef(({ item, index, onClick }, ref) => {
+export const ButtonCase = forwardRef(({ item, index = 0, onClick }, ref) => {
   if (isButton(item) || isButtonTwoState(item)) {
     return <ToolbarButton key={index} {...item} onClick={onClick} />;
   } if (isButtonSelect(item) && (item.items.length > 0)) {
@@ -52,10 +52,6 @@ ButtonCase.propTypes = {
   item: PropTypes.objectOf(PropTypes.any).isRequired,
   index: PropTypes.number,
   onClick: PropTypes.func.isRequired,
-};
-
-ButtonCase.defaultProps = {
-  index: 0,
 };
 
 /* custom buttons have ID's starting with this: */
@@ -109,15 +105,22 @@ ToolbarGroup.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export const Toolbar = (props) => (
-  <CountContext.Provider value={props.count}>
+export const Toolbar = ({
+  count = 0,
+  kebabLimit = 3,
+  groups,
+  onClick,
+  onViewClick,
+  views,
+}) => (
+  <CountContext.Provider value={count}>
     <div className="toolbar-pf-actions miq-toolbar-actions">
-      { props.groups
+      { groups
         .filter(toolbarGroupHasContent)
         .map((group, index) =>
           // eslint-disable-next-line react/no-array-index-key
-          <ToolbarGroup key={index} ref={ref} onClick={props.onClick} group={collapseCustomGroups(group, props.kebabLimit)} />)}
-      <ToolbarView onClick={props.onViewClick} views={props.views} />
+          <ToolbarGroup key={index} ref={ref} onClick={onClick} group={collapseCustomGroups(group, kebabLimit)} />)}
+      <ToolbarView onClick={onViewClick} views={views} />
     </div>
   </CountContext.Provider>
 );
@@ -129,9 +132,4 @@ Toolbar.propTypes = {
   views: PropTypes.arrayOf(PropTypes.any).isRequired, // array of view buttons
   onClick: PropTypes.func.isRequired,
   onViewClick: PropTypes.func.isRequired,
-};
-
-Toolbar.defaultProps = {
-  count: 0,
-  kebabLimit: 3,
 };

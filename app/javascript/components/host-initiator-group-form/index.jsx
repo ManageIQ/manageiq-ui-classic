@@ -82,9 +82,5 @@ HostInitiatorGroupForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
 };
-HostInitiatorGroupForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
-};
 
 export default HostInitiatorGroupForm;

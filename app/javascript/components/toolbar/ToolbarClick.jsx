@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import PropTypes from 'prop-types';
 
 import { adjustColor } from './utility';
@@ -9,24 +8,24 @@ const iconStyle = ({ color, enabled, text }) => (
     : { color: adjustColor(color, enabled) }
 );
 
-export const ToolbarClick = (props) => (
+export const ToolbarClick = ({ title = null, text = null, id = null, hidden = null, img_url = null, icon = null, ...props }) => (
   <span
     tabIndex={0}
     role="button"
-    title={props.title}
-    style={props.hidden ? { display: 'none !important' } : {}}
-    name={props.id}
-    id={props.id}
+    title={title}
+    style={hidden ? { display: 'none !important' } : {}}
+    name={id}
+    id={id}
   >
-    { props.icon && <i className={props.icon} style={iconStyle(props)} /> }
-    { props.img_url && !props.icon
+    { icon && <i className={icon} style={iconStyle({ color: props.color, enabled: props.enabled, text })} /> }
+    { img_url && !icon
       && (
         <img
-          alt={props.title}
-          src={props.img_url}
+          alt={title}
+          src={img_url}
         />
       )}
-    <span>{props.text}</span>
+    <span>{text}</span>
   </span>
 );
 
@@ -37,13 +36,4 @@ ToolbarClick.propTypes = {
   hidden: PropTypes.bool,
   img_url: PropTypes.string,
   icon: PropTypes.string,
-};
-
-ToolbarClick.defaultProps = {
-  title: null,
-  text: null,
-  id: null,
-  hidden: null,
-  img_url: null,
-  icon: null,
 };

@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { LineChart } from '@carbon/charts-react';
 
-const LineChartGraph = ({ data, title }) => {
+const LineChartGraph = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     axes: {
@@ -30,11 +33,6 @@ const LineChartGraph = ({ data, title }) => {
 LineChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-LineChartGraph.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default LineChartGraph;

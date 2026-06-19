@@ -21,7 +21,3 @@ export default MiqStructuredListText;
 MiqStructuredListText.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.bool]),
 };
-
-MiqStructuredListText.defaultProps = {
-  value: undefined,
-};

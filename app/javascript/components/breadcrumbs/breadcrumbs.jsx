@@ -42,7 +42,11 @@ const renderItems = ({ items, controllerName }) => items
     );
   });
 
-export const Breadcrumbs = ({ items, title, controllerName }) => (
+export const Breadcrumbs = ({
+  items = null,
+  title,
+  controllerName,
+}) => (
   <Breadcrumb noTrailingSlash>
     {items && renderItems({ items, controllerName })}
     <BreadcrumbItem isCurrentPage>
@@ -62,8 +66,4 @@ Breadcrumbs.propTypes = {
     url: PropTypes.string,
   })),
   title: PropTypes.string.isRequired,
-};
-
-Breadcrumbs.defaultProps = {
-  items: null,
 };

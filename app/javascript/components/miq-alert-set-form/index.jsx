@@ -117,8 +117,4 @@ MiqAlertSetForm.propTypes = {
   mode: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-MiqAlertSetForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default MiqAlertSetForm;

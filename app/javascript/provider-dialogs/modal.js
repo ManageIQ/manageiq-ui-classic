@@ -19,7 +19,7 @@ function closeModal(id) {
   divs[divs.length - 1].remove(); // the div closest to body
 }
 
-export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>, closefunc) {
+export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>, closefunc = () => {}) {
   const div = document.createElement('div');
   document.body.appendChild(div);
   const removeId = 'provider-dialogs';

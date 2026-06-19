@@ -7,7 +7,9 @@ const submitForm = (values) =>
   http.post('/miq_ae_tools/retrieve_git_datastore', values)
     .then((data) => add_flash(data[0].message, data[0].level));
 
-const ImportDatastoreViaGit = ({ disableSubmit }) => (
+const ImportDatastoreViaGit = ({
+  disableSubmit = false,
+}) => (
   <div style={{ paddingBottom: 16 }}>
     {disableSubmit
     && (
@@ -24,10 +26,6 @@ const ImportDatastoreViaGit = ({ disableSubmit }) => (
 
 ImportDatastoreViaGit.propTypes = {
   disableSubmit: PropTypes.bool,
-};
-
-ImportDatastoreViaGit.defaultProps = {
-  disableSubmit: false,
 };
 
 export default ImportDatastoreViaGit;

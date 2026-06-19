@@ -8,8 +8,4 @@ MiqMarkdown.propTypes = {
   content: PropTypes.string,
 };
 
-MiqMarkdown.defaultProps = {
-  content: undefined,
-};
-
 export default MiqMarkdown;

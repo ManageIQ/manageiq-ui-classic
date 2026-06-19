@@ -21,7 +21,12 @@ const initialData = [
 ];
 
 const AutomateEntryPoints = ({
-  selectedValue, showModal, includeDomainPrefix, setSelectedValue, setShowModal, setIncludeDomainPrefix,
+  selectedValue = {},
+  showModal = false,
+  includeDomainPrefix = false,
+  setSelectedValue,
+  setShowModal,
+  setIncludeDomainPrefix,
 }) => {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(true);
@@ -137,8 +142,6 @@ const AutomateEntryPoints = ({
   wrappedOnLoadData.propTypes = {
     element: PropTypes.objectOf({ children: PropTypes.array, id: PropTypes.number }).isRequired,
   };
-  wrappedOnLoadData.defaultProps = {
-  };
 
   const onSelect = (value) => {
     if (value.isBranch === false && value.isSelected) {
@@ -159,7 +162,9 @@ const AutomateEntryPoints = ({
     }
   };
 
-  const FolderIcon = ({ isOpen }) =>
+  const FolderIcon = ({
+    isOpen = false,
+  }) =>
     (isOpen ? (
       <FolderOpen size={16} className="icon" />
     ) : (
@@ -168,9 +173,6 @@ const AutomateEntryPoints = ({
 
   FolderIcon.propTypes = {
     isOpen: PropTypes.bool,
-  };
-  FolderIcon.defaultProps = {
-    isOpen: false,
   };
 
   const FileIcon = () => <Document size={16} className="icon" />;
@@ -263,14 +265,6 @@ AutomateEntryPoints.propTypes = {
   setSelectedValue: PropTypes.func.isRequired,
   setShowModal: PropTypes.func.isRequired,
   setIncludeDomainPrefix: PropTypes.func,
-};
-
-AutomateEntryPoints.defaultProps = {
-  selected: '',
-  selectedValue: {},
-  showModal: false,
-  includeDomainPrefix: false,
-  setIncludeDomainPrefix: undefined,
 };
 
 export default AutomateEntryPoints;

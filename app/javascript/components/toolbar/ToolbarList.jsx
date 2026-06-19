@@ -11,7 +11,13 @@ import { carbonizeIcon } from '../../menu/icon';
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
   const {
-    items, title, id, text, icon, color, onClick,
+    items = null,
+    title = null,
+    id,
+    text = null,
+    icon = null,
+    color = null,
+    onClick,
   } = props;
   // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
@@ -99,12 +105,4 @@ ToolbarList.propTypes = {
   color: PropTypes.string,
   text: PropTypes.string,
   title: PropTypes.string,
-};
-
-ToolbarList.defaultProps = {
-  color: null,
-  text: null,
-  icon: null,
-  title: null,
-  items: null,
 };

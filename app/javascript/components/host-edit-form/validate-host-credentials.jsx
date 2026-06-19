@@ -5,7 +5,15 @@ import { pick } from 'lodash';
 import AsyncCredentials from '../async-credentials/async-credentials';
 import EditingContext from './editing-context';
 
-const ValidateHostCredentials = ({ ...props }) => {
+const ValidateHostCredentials = ({
+  validateLabel = __('Validate'),
+  validationProgressLabel = __('Validating'),
+  validationSuccessLabel = __('Validation successful'),
+  validateDefaultError = __('Validation Required'),
+  validationDependencies = [],
+  isRequired,
+  ...props
+}) => {
   const { ids, initialValues } = useContext(EditingContext);
 
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
@@ -27,17 +35,25 @@ const ValidateHostCredentials = ({ ...props }) => {
   });
 
   // The order of props is important here, because they have to be overridden
-  return <AsyncCredentials {...props} asyncValidate={asyncValidate} edit={!!ids} />;
+  return (
+    <AsyncCredentials
+      {...props}
+      validateLabel={validateLabel}
+      validationProgressLabel={validationProgressLabel}
+      validationSuccessLabel={validationSuccessLabel}
+      validateDefaultError={validateDefaultError}
+      validationDependencies={validationDependencies}
+      isRequired={isRequired}
+      asyncValidate={asyncValidate}
+      edit={!!ids}
+    />
+  );
 };
 
 ValidateHostCredentials.propTypes = {
   ...AsyncCredentials.propTypes,
   asyncValidate: PropTypes.func,
   validation: PropTypes.bool,
-};
-ValidateHostCredentials.defaultProps = {
-  validation: true,
-  ...AsyncCredentials.defaultProps,
 };
 
 export default ValidateHostCredentials;

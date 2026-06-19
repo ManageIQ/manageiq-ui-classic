@@ -11,7 +11,13 @@ import miqRedirectBack from '../../../helpers/miq-redirect-back';
 import { API } from '../../../http_api';
 
 const CustomButtonForm = ({
-  recId, url, appliesToClass, appliesToId, customButtonGroupId, distinctInstances, ansiblePlaybooks,
+  recId,
+  url = '',
+  appliesToClass = '',
+  appliesToId,
+  customButtonGroupId,
+  distinctInstances = [],
+  ansiblePlaybooks = [],
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, roles, serviceDialogs,
@@ -102,7 +108,9 @@ const CustomButtonForm = ({
 };
 
 const FormTemplate = ({
-  formFields, recId, modified,
+  formFields = [],
+  recId,
+  modified = false,
 }) => {
   const {
     handleSubmit, onReset, onCancel, getState,
@@ -157,26 +165,10 @@ CustomButtonForm.propTypes = {
   customButtonGroupId: PropTypes.string,
 };
 
-CustomButtonForm.defaultProps = {
-  recId: undefined,
-  url: '',
-  distinctInstances: [],
-  ansiblePlaybooks: [],
-  appliesToClass: '',
-  appliesToId: undefined,
-  customButtonGroupId: undefined,
-};
-
 FormTemplate.propTypes = {
   recId: PropTypes.number,
   formFields: PropTypes.arrayOf(PropTypes.any),
   modified: PropTypes.bool,
-};
-
-FormTemplate.defaultProps = {
-  recId: undefined,
-  formFields: [],
-  modified: false,
 };
 
 export default CustomButtonForm;

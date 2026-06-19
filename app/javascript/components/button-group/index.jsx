@@ -11,7 +11,13 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
 
 const GroupForm = ({
-  recId, availableFields, fields, url, appliesToClass, appliesToId, isGenericObject,
+  recId,
+  availableFields = [],
+  fields = [],
+  url = '',
+  appliesToClass = '',
+  appliesToId,
+  isGenericObject = false,
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, options,
@@ -142,7 +148,9 @@ const GroupForm = ({
 };
 
 const FormTemplate = ({
-  formFields, recId, modified,
+  formFields = [],
+  recId,
+  modified = false,
 }) => {
   const {
     handleSubmit, onReset, onCancel, getState,
@@ -197,26 +205,10 @@ GroupForm.propTypes = {
   isGenericObject: PropTypes.bool,
 };
 
-GroupForm.defaultProps = {
-  recId: undefined,
-  availableFields: [],
-  fields: [],
-  url: '',
-  appliesToClass: '',
-  appliesToId: undefined,
-  isGenericObject: false,
-};
-
 FormTemplate.propTypes = {
   recId: PropTypes.number,
   formFields: PropTypes.arrayOf(PropTypes.any),
   modified: PropTypes.bool,
-};
-
-FormTemplate.defaultProps = {
-  recId: undefined,
-  formFields: [],
-  modified: false,
 };
 
 export default GroupForm;

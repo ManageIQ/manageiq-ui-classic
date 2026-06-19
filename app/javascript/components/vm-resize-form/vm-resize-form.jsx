@@ -66,9 +66,4 @@ VmResizeForm.propTypes = {
   vmCloudResizeFormId: PropTypes.string,
 };
 
-VmResizeForm.defaultProps = {
-  recordId: undefined,
-  vmCloudResizeFormId: undefined,
-};
-
 export default VmResizeForm;

@@ -123,8 +123,5 @@ const EmbeddedTerraformCredentialMappingForm = ({ recordId }) => {
 EmbeddedTerraformCredentialMappingForm.propTypes = {
   recordId: PropTypes.string,
 };
-EmbeddedTerraformCredentialMappingForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default EmbeddedTerraformCredentialMappingForm;

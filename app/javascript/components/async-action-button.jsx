@@ -16,17 +16,17 @@ const extractNames = (schema) => {
 };
 
 const AsyncAction = ({
-  actionLabel,
-  actionProgressLabel,
-  actionSuccessLabel,
-  actionDefaultError,
+  actionLabel = __('Perform Action'),
+  actionProgressLabel = __('In Progress'),
+  actionSuccessLabel = __('Action successful'),
+  actionDefaultError = __('Action Required'),
   helperText,
   fields,
   name,
   asyncAction,
-  actionDependencies,
+  actionDependencies = [],
   isRequired,
-  edit,
+  edit = false,
 }) => {
   const formOptions = useFormApi();
 
@@ -143,18 +143,6 @@ AsyncAction.propTypes = {
   isRequired: PropTypes.bool,
   name: PropTypes.string.isRequired,
   actionDependencies: PropTypes.arrayOf(PropTypes.string),
-};
-
-AsyncAction.defaultProps = {
-  actionLabel: __('Perform Action'),
-  actionProgressLabel: __('In Progress'),
-  actionSuccessLabel: __('Action successful'),
-  actionDefaultError: __('Action Required'),
-  asyncAction: undefined,
-  helperText: undefined,
-  edit: false,
-  actionDependencies: [],
-  isRequired: undefined,
 };
 
 export default AsyncAction;

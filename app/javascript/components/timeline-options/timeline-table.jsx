@@ -1,7 +1,17 @@
 import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 
-const TimelineTable = ({ data }) => {
+const TimelineTable = ({
+  data = [{
+    timestamp: '',
+    event_type: '',
+    source: '',
+    group_level: '',
+    provider: '',
+    host: '',
+    message: '',
+  }],
+}) => {
   // TODO Commented out columns exist in certain pages but not other
   // we need to figure out how to distinguish when which columns are used
   const headers = [
@@ -82,18 +92,6 @@ const TimelineTable = ({ data }) => {
 
 TimelineTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-};
-
-TimelineTable.defaultProps = {
-  data: [{
-    timestamp: '',
-    event_type: '',
-    source: '',
-    group_level: '',
-    provider: '',
-    host: '',
-    message: '',
-  }],
 };
 
 export default TimelineTable;

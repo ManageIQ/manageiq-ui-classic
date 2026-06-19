@@ -23,8 +23,3 @@ NotificationMessage.propTypes = {
   type: PropTypes.string,
   message: PropTypes.string,
 };
-
-NotificationMessage.defaultProps = {
-  type: undefined,
-  message: undefined,
-};

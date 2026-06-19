@@ -28,8 +28,3 @@ MiqStructuredListObject.propTypes = {
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
-
-MiqStructuredListObject.defaultProps = {
-  row: undefined,
-  onClick: undefined,
-};

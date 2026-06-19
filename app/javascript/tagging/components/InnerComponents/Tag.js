@@ -4,7 +4,11 @@ import { Close } from '@carbon/react/icons';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 const Tag = ({
-  onTagDeleteClick, tagCategory, tagValue, truncate, showCloseButton,
+  onTagDeleteClick,
+  tagCategory,
+  tagValue,
+  truncate,
+  showCloseButton = false,
 }) => {
   if (showCloseButton) {
     return (
@@ -54,12 +58,6 @@ Tag.propTypes = {
   tagValue: TaggingPropTypes.value,
   truncate: PropTypes.func.isRequired,
   showCloseButton: PropTypes.bool,
-};
-
-Tag.defaultProps = {
-  tagCategory: undefined,
-  tagValue: undefined,
-  showCloseButton: false,
 };
 
 export default Tag;

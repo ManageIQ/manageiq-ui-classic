@@ -49,22 +49,18 @@ KebabListItem.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-KebabListItem.defaultProps = {
-  item: null,
-};
-
-export const DropDownMenu = forwardRef((props, _ref) => (
-  <SideNavItems className="button_groups">
-    {props.items.map((item) => KebabListItem(item, props))}
-  </SideNavItems>
-));
+export const DropDownMenu = forwardRef((props, _ref) => {
+  const { items = null } = props;
+  
+  return (
+    <SideNavItems className="button_groups">
+      {items.map((item) => KebabListItem(item, props))}
+    </SideNavItems>
+  );
+});
 
 DropDownMenu.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
-};
-
-DropDownMenu.defaultProps = {
-  items: null,
 };
 
 export const ToolbarKebab = forwardRef((props, ref) => (
@@ -83,12 +79,4 @@ ToolbarKebab.propTypes = {
   color: PropTypes.string,
   text: PropTypes.string,
   title: PropTypes.string,
-};
-
-ToolbarKebab.defaultProps = {
-  color: null,
-  text: null,
-  icon: null,
-  title: null,
-  items: null,
 };

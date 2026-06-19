@@ -75,8 +75,5 @@ HostInitiatorForm.propTypes = {
 HostInitiatorForm.propTypes = {
   storageManagerId: PropTypes.string,
 };
-HostInitiatorForm.defaultProps = {
-  storageManagerId: undefined,
-};
 
 export default HostInitiatorForm;

@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 
-const WidgetFooter = ({ lastRun, nextRun }) => (
+const WidgetFooter = ({
+  lastRun = 'Never',
+  nextRun = 'Never',
+}) => (
   <div className="card-pf-footer">
     {__('Updated On ')}
     {lastRun}
@@ -13,11 +16,6 @@ const WidgetFooter = ({ lastRun, nextRun }) => (
 WidgetFooter.propTypes = {
   lastRun: PropTypes.string,
   nextRun: PropTypes.string,
-};
-
-WidgetFooter.defaultProps = {
-  lastRun: 'Never',
-  nextRun: 'Never',
 };
 
 export default WidgetFooter;

@@ -13,7 +13,13 @@ const FontIconPickerDdf = (props) => {
   const {
     labelText,
     FormGroupProps,
-    iconTypes, selected, iconChange,
+    iconTypes = {
+      ff: 'Font Fabulous',
+      pficon: 'PatternFly',
+      fa: 'Font Awesome',
+    },
+    selected,
+    iconChange,
   } = useFieldApi(prepareProps(props));
 
   const [{
@@ -77,15 +83,6 @@ const FontIconPickerDdf = (props) => {
 FontIconPickerDdf.propTypes = {
   iconTypes: PropTypes.objectOf(PropTypes.any),
   selected: PropTypes.string,
-};
-
-FontIconPickerDdf.defaultProps = {
-  selected: undefined,
-  iconTypes: {
-    ff: 'Font Fabulous',
-    pficon: 'PatternFly',
-    fa: 'Font Awesome',
-  },
 };
 
 export default FontIconPickerDdf;

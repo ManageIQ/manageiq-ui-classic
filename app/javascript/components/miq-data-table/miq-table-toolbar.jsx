@@ -6,7 +6,10 @@ import {
 } from '@carbon/react';
 
 const MiqTableToolbar = ({
-  toolbarMenu, onMenuSelect, onToolBarSearch, clearFilter,
+  toolbarMenu = [],
+  onMenuSelect,
+  onToolBarSearch,
+  clearFilter,
 }) => {
   const [selectedMenu, setSelectedMenu] = useState(toolbarMenu ? toolbarMenu[0] : '');
 
@@ -50,13 +53,6 @@ MiqTableToolbar.propTypes = {
   onMenuSelect: PropTypes.func,
   onToolBarSearch: PropTypes.func,
   clearFilter: PropTypes.func,
-};
-
-MiqTableToolbar.defaultProps = {
-  toolbarMenu: [],
-  onMenuSelect: undefined,
-  onToolBarSearch: undefined,
-  clearFilter: undefined,
 };
 
 export default MiqTableToolbar;

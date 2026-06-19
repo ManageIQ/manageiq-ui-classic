@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import { Form, Grid, Column } from '@carbon/react';
 
-const TagModifier = ({ header, hideHeader, children }) => (
+const TagModifier = ({
+  header = __('Add/Modify tag'),
+  hideHeader = false,
+  children,
+}) => (
   <>
     { !hideHeader
       && (
@@ -19,11 +23,6 @@ TagModifier.propTypes = {
   header: PropTypes.string,
   hideHeader: PropTypes.bool,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-};
-
-TagModifier.defaultProps = {
-  header: __('Add/Modify tag'),
-  hideHeader: false,
 };
 
 export default TagModifier;

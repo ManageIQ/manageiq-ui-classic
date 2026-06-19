@@ -36,7 +36,12 @@ const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, ne
 
 // SideNavMenuItem can't render an icon, SideNavLink can
 const MenuItem = forwardRef(({
-  active, href, icon, id, title, type,
+  active = false,
+  href,
+  icon,
+  id,
+  title,
+  type = 'default',
 }, ref) => (
   <SideNavLink id={itemId(id)} isActive={active} ref={ref} renderIcon={carbonizeIcon(icon)} {...linkProps({ type, href, id })}>
     {__(title)}
@@ -52,14 +57,16 @@ MenuItem.propTypes = {
   type: PropTypes.string,
 };
 
-MenuItem.defaultProps = {
-  active: false,
-  href: undefined,
-  type: 'default',
-};
-
 const MenuSection = forwardRef(({
-  active, expanded, hover, icon, id, items, title, onSelect, itemPosition,
+  active = false,
+  expanded,
+  hover = false,
+  icon,
+  id,
+  items,
+  title,
+  onSelect,
+  itemPosition,
 }, ref) => (
   <SideNavMenuLink
     expanded={expanded}
@@ -89,12 +96,6 @@ MenuSection.propTypes = {
   itemPosition: PropTypes.number.isRequired,
 };
 
-MenuSection.defaultProps = {
-  active: false,
-  hover: false,
-  icon: undefined,
-};
-
 const FirstLevel = forwardRef(({
   activeSection, expanded, menu, onSelect,
 }, ref) => (
@@ -108,10 +109,6 @@ FirstLevel.propTypes = {
   expanded: PropTypes.bool.isRequired,
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
   onSelect: PropTypes.func.isRequired,
-};
-
-FirstLevel.defaultProps = {
-  activeSection: undefined,
 };
 
 export default FirstLevel;

@@ -83,9 +83,4 @@ ActionForm.propTypes = {
   inventoryType: PropTypes.string,
 };
 
-ActionForm.defaultProps = {
-  recordId: undefined,
-  inventoryType: undefined,
-};
-
 export default ActionForm;

@@ -8,7 +8,10 @@ import { API } from '../../http_api';
 import { confirmPasswordValidation } from './helper';
 
 const UserForm = ({
-  id, copyUserId, disabled, dbMode,
+  id,
+  copyUserId,
+  disabled = false,
+  dbMode,
 }) => {
   const [{
     initialValues, isLoading, editMode, groups, selectedGroups, // Use to populate the custom component
@@ -173,12 +176,6 @@ UserForm.propTypes = {
   copyUserId: PropTypes.number,
   disabled: PropTypes.bool,
   dbMode: PropTypes.string.isRequired,
-};
-
-UserForm.defaultProps = {
-  id: undefined,
-  copyUserId: undefined,
-  disabled: false,
 };
 
 export default UserForm;

@@ -4,7 +4,12 @@ import HeatMapChartGraph from './HeatMapChartGraph';
 import { http } from '../../../http_api';
 
 const HeatChart = ({
-  providerId, apiUrl, dataPoint1, dataPoint2, dataPointAvailable, title,
+  providerId,
+  apiUrl,
+  dataPoint1,
+  dataPoint2 = '',
+  dataPointAvailable = true,
+  title,
 }) => {
   const [data, setCardData] = useState({ loading: true });
 
@@ -46,11 +51,6 @@ HeatChart.propTypes = {
   dataPoint2: PropTypes.string,
   dataPointAvailable: PropTypes.bool,
   title: PropTypes.string.isRequired,
-};
-
-HeatChart.defaultProps = {
-  dataPointAvailable: true,
-  dataPoint2: '',
 };
 
 export default HeatChart;

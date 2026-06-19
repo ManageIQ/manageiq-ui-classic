@@ -119,8 +119,4 @@ EmbeddedTerraformRepositoryForm.propTypes = {
   repositoryId: PropTypes.string,
 };
 
-EmbeddedTerraformRepositoryForm.defaultProps = {
-  repositoryId: undefined,
-};
-
 export default EmbeddedTerraformRepositoryForm;

@@ -62,8 +62,4 @@ CloudTenantForm.propTypes = {
   recordId: PropTypes.string,
 };
 
-CloudTenantForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default CloudTenantForm;
