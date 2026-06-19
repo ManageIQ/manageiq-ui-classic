@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`PxeImagesTable component should not render table when initialData is empty 1`] = `<div />`;
+
+exports[`PxeImagesTable component should render the table with data 1`] = `
+<div>
+  <div
+    class="miq-data-table"
+  >
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <thead>
+          <tr>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Name
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Description
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Kernel
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Windows Boot Env
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class="clickable-row"
+            tabindex="0"
+            title="Click to view details"
+          >
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Image 1"
+                >
+                  Test Image 1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Description 1"
+                >
+                  Test Description 1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="vmlinuz"
+                >
+                  vmlinuz
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Yes"
+                >
+                  Yes
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="1"
+            title="Click to view details"
+          >
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Image 2"
+                >
+                  Test Image 2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Description 2"
+                >
+                  Test Description 2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="bzImage"
+                >
+                  bzImage
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title=""
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
