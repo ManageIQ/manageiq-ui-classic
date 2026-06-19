@@ -29,8 +29,4 @@ FileUploadComponent.propTypes = {
   type: PropTypes.string,
 };
 
-FileUploadComponent.defaultProps = {
-  type: undefined,
-};
-
 export default FileUploadComponent;

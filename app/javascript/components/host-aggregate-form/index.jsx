@@ -56,8 +56,5 @@ const HostAggregateForm = ({ recordId }) => {
 HostAggregateForm.propTypes = {
   recordId: PropTypes.string,
 };
-HostAggregateForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default HostAggregateForm;

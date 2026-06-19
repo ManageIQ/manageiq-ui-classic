@@ -12,8 +12,8 @@ const DEFAULT_BRANCH = 'origin/master';
 const GitDomainRefreshForm = ({
   domainId,
   gitRepoId,
-  refType: initialRefType,
-  refName: initialRefName,
+  refType: initialRefType = REF_TYPES.BRANCH,
+  refName: initialRefName = DEFAULT_BRANCH,
   branchNames,
   tagNames,
 }) => {
@@ -93,11 +93,6 @@ GitDomainRefreshForm.propTypes = {
   refName: PropTypes.string,
   branchNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   tagNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-GitDomainRefreshForm.defaultProps = {
-  refType: REF_TYPES.BRANCH,
-  refName: DEFAULT_BRANCH,
 };
 
 export default GitDomainRefreshForm;

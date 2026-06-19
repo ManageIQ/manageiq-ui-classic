@@ -12,13 +12,13 @@ import TreeViewBase from './base';
 
 const TreeViewSelector = ({
   loadData,
-  lazyLoadData,
-  identifier,
-  isClearable,
-  modalLabel,
-  clearLabel,
-  closeLabel,
-  selectLabel,
+  lazyLoadData = () => undefined,
+  identifier = (node) => node.attr.key,
+  isClearable = false,
+  modalLabel = __('Toggle'),
+  clearLabel = __('Clear'),
+  closeLabel = __('Close'),
+  selectLabel = __('Select'),
   ...props
 }) => {
   const [{ show, active }, setState] = useState({});
@@ -124,17 +124,6 @@ TreeViewSelector.propTypes = {
   clearLabel: PropTypes.string,
   selectLabel: PropTypes.string,
   closeLabel: PropTypes.string,
-};
-
-TreeViewSelector.defaultProps = {
-  lazyLoadData: () => undefined,
-  isClearable: false,
-  identifier: (node) => node.attr.key,
-  label: undefined,
-  modalLabel: __('Toggle'),
-  clearLabel: __('Clear'),
-  selectLabel: __('Select'),
-  closeLabel: __('Close'),
 };
 
 export default TreeViewSelector;

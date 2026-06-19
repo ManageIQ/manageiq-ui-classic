@@ -89,8 +89,5 @@ const AnsibleCredentialsForm = ({ recordId }) => {
 AnsibleCredentialsForm.propTypes = {
   recordId: PropTypes.string,
 };
-AnsibleCredentialsForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default AnsibleCredentialsForm;

@@ -36,8 +36,4 @@ WidgetMenu.propTypes = {
   widgetModel: PropTypes.arrayOf(PropTypes.any),
 };
 
-WidgetMenu.defaultProps = {
-  widgetModel: undefined,
-};
-
 export default WidgetMenu;

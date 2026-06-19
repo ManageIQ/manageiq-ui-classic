@@ -88,8 +88,4 @@ PxeServersForm.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-PxeServersForm.defaultProps = {
-  id: undefined,
-};
-
 export default PxeServersForm;

@@ -86,14 +86,3 @@ Quaditem.propTypes = {
   color: PropTypes.string,
   piechart: PropTypes.number,
 };
-
-Quaditem.defaultProps = {
-  fonticon: undefined,
-  fileicon: undefined,
-  text: undefined,
-  background: undefined,
-  color: undefined,
-  piechart: undefined,
-  tooltip: undefined,
-  className: undefined,
-};

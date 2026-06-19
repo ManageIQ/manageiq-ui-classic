@@ -7,9 +7,23 @@ import { EditOff } from '@carbon/react/icons';
 
 import { useFieldApi, componentTypes } from '@@ddf';
 
-const EditPasswordField = ({ componentClass, ...props }) => {
+const EditPasswordField = ({
+  componentClass = componentTypes.TEXT_FIELD,
+  ...props
+}) => {
   const {
-    labelText, validateOnMount, isDisabled, editMode, setEditMode, buttonLabel, input, meta, icon, kind, ...rest
+    labelText,
+    validateOnMount,
+    isDisabled = false,
+    editMode,
+    setEditMode,
+    buttonLabel,
+    input,
+    meta,
+    icon,
+    kind,
+    helperText,
+    ...rest
   } = useFieldApi(prepareProps(props));
 
   const invalid = (meta.touched || validateOnMount) && meta.error;
@@ -93,12 +107,6 @@ EditPasswordField.propTypes = {
   setEditMode: PropTypes.func.isRequired,
   helperText: PropTypes.string,
   componentClass: PropTypes.string,
-};
-
-EditPasswordField.defaultProps = {
-  isDisabled: false,
-  helperText: undefined,
-  componentClass: componentTypes.TEXT_FIELD,
 };
 
 export default EditPasswordField;

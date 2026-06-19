@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 
 const RequestsTable = ({
-  initialData,
+  initialData = [],
 }) => {
   const [tableHeaders, setTableHeaders] = useState([
     { key: 'time', header: __('Time'), sortData: { isFilteredBy: false } },
@@ -118,10 +118,6 @@ const RequestsTable = ({
 
 RequestsTable.propTypes = {
   initialData: PropTypes.arrayOf(PropTypes.any),
-};
-
-RequestsTable.defaultProps = {
-  initialData: [],
 };
 
 export default RequestsTable;

@@ -117,8 +117,4 @@ NetworkFloatingIPsForm.propTypes = {
   recordId: PropTypes.string,
 };
 
-NetworkFloatingIPsForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default NetworkFloatingIPsForm;

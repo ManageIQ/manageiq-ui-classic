@@ -3,7 +3,10 @@ import { LineChart } from '@carbon/charts-react';
 import { getYAxisValue } from './helpers';
 
 const LineChartGraph = ({
-  data, format, size, title,
+  data = null,
+  format = null,
+  size = '400px',
+  title = '',
 }) => {
   const options = {
     title,
@@ -38,13 +41,6 @@ LineChartGraph.propTypes = {
   format: PropTypes.instanceOf(Object),
   size: PropTypes.string,
   title: PropTypes.string,
-};
-
-LineChartGraph.defaultProps = {
-  data: null,
-  format: null,
-  size: '400px',
-  title: '',
 };
 
 export default LineChartGraph;

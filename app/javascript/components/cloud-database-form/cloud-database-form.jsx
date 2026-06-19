@@ -87,8 +87,4 @@ CloudDatabaseForm.propTypes = {
   recordId: PropTypes.string,
 };
 
-CloudDatabaseForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default CloudDatabaseForm;

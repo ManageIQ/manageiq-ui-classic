@@ -106,8 +106,4 @@ TimelineOptions.propTypes = {
   submitChosenFormOptions: PropTypes.func,
 };
 
-TimelineOptions.defaultProps = {
-  submitChosenFormOptions: undefined,
-};
-
 export default TimelineOptions;

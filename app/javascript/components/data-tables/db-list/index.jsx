@@ -4,7 +4,11 @@ import MiqDataTable from '../../miq-data-table';
 import NoRecordsFound from '../../no-records-found';
 
 const DbList = ({
-  nodes, activeTree, dashboards, groups, widgets,
+  nodes,
+  activeTree,
+  dashboards = [],
+  groups = [{}],
+  widgets = [],
 }) => {
   const { headers, rows, type } = tableData(nodes, dashboards, groups, widgets);
 
@@ -31,10 +35,4 @@ DbList.propTypes = {
   dashboards: PropTypes.shape({}),
   groups: PropTypes.arrayOf(PropTypes.any),
   widgets: PropTypes.arrayOf(PropTypes.any),
-};
-
-DbList.defaultProps = {
-  dashboards: [],
-  groups: [{}],
-  widgets: [],
 };

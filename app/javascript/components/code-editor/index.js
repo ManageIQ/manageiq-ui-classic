@@ -27,8 +27,8 @@ const CodeEditor = (props) => {
     helperText,
     meta: { error, warning, touched },
     validateOnMount,
-    mode,
-    modes,
+    mode = 'yaml',
+    modes = [],
     ...rest
   } = useFieldApi(prepareProps(props));
 
@@ -84,11 +84,6 @@ const CodeEditor = (props) => {
 CodeEditor.propTypes = {
   mode: PropTypes.oneOf(['json', 'yaml', 'xml', 'shell']),
   modes: PropTypes.arrayOf(PropTypes.string),
-};
-
-CodeEditor.defaultProps = {
-  mode: 'yaml',
-  modes: [],
 };
 
 export default CodeEditor;

@@ -7,7 +7,7 @@ import AutomateEntryPoints from '../automate-entry-points';
 
 const EmbeddedAutomateEntryPoint = (props) => {
   const {
-    label, id, field, selected, type,
+    label, id, field, selected = '', type,
   } = props;
   const { input } = useFieldApi(props);
 
@@ -92,10 +92,6 @@ EmbeddedAutomateEntryPoint.propTypes = {
   field: PropTypes.string.isRequired,
   selected: PropTypes.string,
   type: PropTypes.string.isRequired,
-};
-
-EmbeddedAutomateEntryPoint.defaultProps = {
-  selected: '',
 };
 
 export default EmbeddedAutomateEntryPoint;

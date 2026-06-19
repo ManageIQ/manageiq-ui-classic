@@ -12,7 +12,4 @@ WidgetError.propTypes = {
   widgetId: PropTypes.number.isRequired,
 };
 
-WidgetError.defaultProps = {
-};
-
 export default WidgetError;

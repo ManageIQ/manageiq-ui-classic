@@ -191,7 +191,3 @@ AeInlineMethod.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   })),
 };
-
-AeInlineMethod.defaultProps = {
-  selected: undefined,
-};

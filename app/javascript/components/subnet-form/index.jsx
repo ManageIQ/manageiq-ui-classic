@@ -105,8 +105,5 @@ const SubnetForm = ({ recordId }) => {
 SubnetForm.propTypes = {
   recordId: PropTypes.string,
 };
-SubnetForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default SubnetForm;

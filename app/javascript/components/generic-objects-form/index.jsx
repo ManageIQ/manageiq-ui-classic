@@ -170,8 +170,5 @@ const GenericObjectForm = ({ recordId }) => {
 GenericObjectForm.propTypes = {
   recordId: PropTypes.string,
 };
-GenericObjectForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default GenericObjectForm;

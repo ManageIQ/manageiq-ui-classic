@@ -8,7 +8,15 @@ import TableCard from './table-card';
 import AreaChartCard from './area-chart-card';
 
 const ChartCard = ({
-  chartType, title, textNumber, textUnit, textTitle, chartData, options, isLoading, config,
+  chartType = '',
+  title,
+  textNumber,
+  textUnit,
+  textTitle,
+  chartData = [],
+  options = {},
+  isLoading,
+  config = {},
 }) => {
   if (isLoading) {
     return (
@@ -85,17 +93,6 @@ ChartCard.propTypes = {
   options: PropTypes.objectOf(PropTypes.any),
   isLoading: PropTypes.bool,
   config: PropTypes.objectOf(PropTypes.any),
-};
-
-ChartCard.defaultProps = {
-  chartType: '',
-  textNumber: undefined,
-  textUnit: undefined,
-  textTitle: undefined,
-  chartData: [],
-  options: {},
-  isLoading: false,
-  config: {},
 };
 
 export default ChartCard;

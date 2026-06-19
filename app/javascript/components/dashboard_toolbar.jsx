@@ -59,11 +59,6 @@ MenuIcon.propTypes = {
   text: PropTypes.string,
 };
 
-MenuIcon.defaultProps = {
-  image: undefined,
-  text: undefined,
-};
-
 const addMenu = (items, locked) => {
   const title = locked
     ? __('Cannot add a Widget, this Dashboard has been locked by the Administrator')

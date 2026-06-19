@@ -3,7 +3,7 @@ import { tableData, onSelectRender } from './helper';
 import MiqDataTable from '../../miq-data-table';
 
 const WindowsImagesTable = ({
-  initialData,
+  initialData = [],
 }) => {
   const { headers, rows } = tableData(initialData);
   const onSelect = (selectedRow) => onSelectRender(selectedRow);
@@ -30,8 +30,4 @@ WindowsImagesTable.propTypes = {
     path: PropTypes.string,
     index: PropTypes.number,
   })),
-};
-
-WindowsImagesTable.defaultProps = {
-  initialData: [],
 };

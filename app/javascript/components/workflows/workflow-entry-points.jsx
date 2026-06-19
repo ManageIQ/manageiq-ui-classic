@@ -6,7 +6,11 @@ import { workflowsEntryPoints } from './helper';
 import { http } from '../../http_api';
 
 const WorkflowEntryPoints = ({
-  field, selected, type, setShowModal, setSelectedValue,
+  field,
+  selected = '',
+  type,
+  setShowModal,
+  setSelectedValue,
 }) => {
   const [data, setData] = useState({
     isLoading: true, list: {}, selectedItemId: selected, key: 'workflow-entry-points',
@@ -186,12 +190,6 @@ WorkflowEntryPoints.propTypes = {
   selected: PropTypes.string,
   setShowModal: PropTypes.func,
   setSelectedValue: PropTypes.func,
-};
-
-WorkflowEntryPoints.defaultProps = {
-  selected: '',
-  setShowModal: undefined,
-  setSelectedValue: undefined,
 };
 
 export default WorkflowEntryPoints;

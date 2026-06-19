@@ -71,7 +71,4 @@ VolumeMappingForm.propTypes = {
   storageManagerId: PropTypes.string,
 };
 
-VolumeMappingForm.defaultProps = {
-  storageManagerId: undefined,
-};
 export default VolumeMappingForm;

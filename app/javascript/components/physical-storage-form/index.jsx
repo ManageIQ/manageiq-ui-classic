@@ -121,9 +121,5 @@ PhysicalStorageForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
 };
-PhysicalStorageForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
-};
 
 export default PhysicalStorageForm;

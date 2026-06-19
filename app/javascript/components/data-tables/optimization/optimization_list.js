@@ -15,7 +15,9 @@ const Empty = () => (
 );
 
 export default function OptimizationList({
-  columns, rows, refreshUrl,
+  columns = [],
+  rows = [],
+  refreshUrl = '',
 }) {
   const [state, set] = useState({
     columns,
@@ -58,10 +60,4 @@ OptimizationList.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.any),
   rows: PropTypes.arrayOf(PropTypes.object),
   refreshUrl: PropTypes.string,
-};
-
-OptimizationList.defaultProps = {
-  columns: [],
-  rows: [],
-  refreshUrl: '',
 };

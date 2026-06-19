@@ -3,7 +3,9 @@ import MiqDataTable from '../miq-data-table';
 import { tableData } from './helper';
 import NoRecordsFound from '../no-records-found';
 
-const PxeTemplateFolders = ({ folders }) => {
+const PxeTemplateFolders = ({
+  folders = [],
+}) => {
   const { headers, rows } = tableData(folders);
 
   const handleCellClick = (row) => {
@@ -33,10 +35,6 @@ PxeTemplateFolders.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ),
-};
-
-PxeTemplateFolders.defaultProps = {
-  folders: [],
 };
 
 export default PxeTemplateFolders;

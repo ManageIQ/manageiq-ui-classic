@@ -117,9 +117,5 @@ StorageServiceForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
 };
-StorageServiceForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
-};
 
 export default StorageServiceForm;

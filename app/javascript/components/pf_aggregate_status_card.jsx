@@ -2,7 +2,11 @@ import PropTypes from 'prop-types';
 
 /* need to keep the spaces before { count } */
 const PfAggregateStatusCard = ({
-  showTopBorder, altLayout, layout, data,
+  showTopBorder,
+  altLayout = false,
+  layout = null,
+  data,
+  className: _className = null,
 }) => {
   const shouldShowTopBorder = () => (showTopBorder === true);
   const isAltLayout = () => (altLayout === true || layout === 'tall');
@@ -136,17 +140,9 @@ PfAggregateStatusCard.propTypes = {
       count: PropTypes.number,
       dataAvailable: PropTypes.bool,
     }),
-  }).isRequired,
-  showTopBorder: PropTypes.bool.isRequired,
+  }),
+  showTopBorder: PropTypes.bool,
   altLayout: PropTypes.bool,
-};
-
-PfAggregateStatusCard.defaultProps = {
-  layout: null,
-  className: null,
-  data: {},
-  altLayout: false,
-  showTopBorder: false,
 };
 
 export default PfAggregateStatusCard;

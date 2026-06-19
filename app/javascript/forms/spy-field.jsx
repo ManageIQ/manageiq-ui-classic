@@ -34,8 +34,4 @@ SpyField.propTypes = {
   initialize: PropTypes.func,
 };
 
-SpyField.defaultProps = {
-  initialize: undefined,
-};
-
 export default SpyField;

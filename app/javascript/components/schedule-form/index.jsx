@@ -99,9 +99,4 @@ ScheduleForm.propTypes = {
   filterOptions: PropTypes.arrayOf(PropTypes.any),
 };
 
-ScheduleForm.defaultProps = {
-  actionOptions: undefined,
-  filterOptions: undefined,
-};
-
 export default ScheduleForm;

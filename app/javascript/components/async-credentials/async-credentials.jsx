@@ -16,16 +16,16 @@ const extractNames = (schema) => {
 };
 
 const AsyncCredentials = ({
-  validateLabel,
-  validationProgressLabel,
-  validationSuccessLabel,
-  validateDefaultError,
+  validateLabel = __('Validate'),
+  validationProgressLabel = __('Validating'),
+  validationSuccessLabel = __('Validation successful'),
+  validateDefaultError = __('Validation Required'),
   fields,
   name,
   asyncValidate,
-  validationDependencies,
+  validationDependencies = [],
   isRequired,
-  edit,
+  edit = false,
 }) => {
   const formOptions = useFormApi();
 
@@ -146,16 +146,6 @@ AsyncCredentials.propTypes = {
   isRequired: PropTypes.bool,
   name: PropTypes.string.isRequired,
   validationDependencies: PropTypes.arrayOf(PropTypes.string),
-};
-
-AsyncCredentials.defaultProps = {
-  validateLabel: __('Validate'),
-  validationProgressLabel: __('Validating'),
-  validationSuccessLabel: __('Validation successful'),
-  validateDefaultError: __('Validation Required'),
-  edit: false,
-  validationDependencies: [],
-  isRequired: undefined,
 };
 
 export default AsyncCredentials;

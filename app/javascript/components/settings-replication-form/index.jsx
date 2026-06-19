@@ -288,8 +288,5 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 SettingsReplicationForm.propTypes = {
   pglogicalReplicationFormId: PropTypes.string,
 };
-SettingsReplicationForm.defaultProps = {
-  pglogicalReplicationFormId: undefined,
-};
 
 export default SettingsReplicationForm;

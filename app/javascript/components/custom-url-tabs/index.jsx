@@ -7,7 +7,10 @@ import { checkForFormChanges } from './helper';
 import { locationReplace } from '../../helpers/window-location';
 
 const CustomURLTabs = ({
-  tabs, path, currentTab, checkForChanges,
+  tabs,
+  path,
+  currentTab = '0',
+  checkForChanges = false,
 }) => {
   const [{ selectedTab, showConfirm, url }, setState] = useState({ selectedTab: 0, showConfirm: false });
   const activeTabClassName = 'cds--tabs__nav-item--selected';
@@ -102,11 +105,6 @@ CustomURLTabs.propTypes = {
   path: PropTypes.string.isRequired,
   currentTab: PropTypes.string,
   checkForChanges: PropTypes.bool,
-};
-
-CustomURLTabs.defaultProps = {
-  currentTab: '0',
-  checkForChanges: false,
 };
 
 export default CustomURLTabs;
