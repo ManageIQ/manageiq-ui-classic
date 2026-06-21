@@ -3699,11 +3699,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.9.3
-  resolution: "@types/node@npm:25.9.3"
+  version: 26.0.0
+  resolution: "@types/node@npm:26.0.0"
   dependencies:
-    undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10/40c5f5c91450689b255dbf8cbd6cf0bb05e1013a353830b15eb9b5c9cda6448510be572d1ecadc38c8a4ac472e61381de9ae28df82094abece59f4c1eccffbc5
+    undici-types: "npm:~8.3.0"
+  checksum: 10/ed23034d159b58541de1f59d2ae3988d64124f94a50fb9f1825a217b38f034fc9846e2117770a2bc9372e87de1b0d2b3c6f5ec953b4da4ac943b9a6008b2cc2b
   languageName: node
   linkType: hard
 
@@ -7306,9 +7306,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.328":
-  version: 1.5.375
-  resolution: "electron-to-chromium@npm:1.5.375"
-  checksum: 10/ef33efbe76914e7c763bbc4844ab356045acb83f8183fbe39ec12380364636d2246a0a16cf85e6f11a3ac59ca1c83d7ca467e9812ae54405cdab45c63c18739c
+  version: 1.5.376
+  resolution: "electron-to-chromium@npm:1.5.376"
+  checksum: 10/7a9ee4c1bb189471be1cb6165fe8c305fe0024ac7425c782fd3bd9a0eb0094d1ca2d161e6886f8c7e691901d76b489700f5c5ae229469fe215f02569a2e9a040
   languageName: node
   linkType: hard
 
@@ -11891,11 +11891,11 @@ __metadata:
   linkType: hard
 
 "nanoid@npm:^3.0.0, nanoid@npm:^3.3.12":
-  version: 3.3.13
-  resolution: "nanoid@npm:3.3.13"
+  version: 3.3.14
+  resolution: "nanoid@npm:3.3.14"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 10/e9d4c96f0fd42effa696103395c3d71f1123125f7ad926c7a2222b1d1691df4ddfa35e833549bc46bcc807fcfac776ff9fd737226ee37a0561f61747fa061eb9
+  checksum: 10/0038630e23645c30ac2d3227440af8bd91c0232c24cea4ec800e1a8c6acf352b9f7d3cc37028f08bfca46abc58243b0b4c79fac7d24095f88ce26cd47e2978e5
   languageName: node
   linkType: hard
 
@@ -13980,11 +13980,11 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.7.2, semver@npm:^7.7.3, semver@npm:^7.7.4":
-  version: 7.8.4
-  resolution: "semver@npm:7.8.4"
+  version: 7.8.5
+  resolution: "semver@npm:7.8.5"
   bin:
     semver: bin/semver.js
-  checksum: 10/a9c139031d4143932adfacfd2165d6489848c3b84c26d5fc2beef88c6d54c01191ef553e3f71049ccc47df85f0df30748907f84005f46f326095003171c5b673
+  checksum: 10/9b01d2ff11e6e4a4539b7ca3c5f280c8704cb397a28504469f2ed4f00ad2194748d756647362a9712fff30984d15772ab7f083108c2fb508e2096ae9e708f22c
   languageName: node
   linkType: hard
 
@@ -14861,12 +14861,12 @@ __metadata:
   linkType: hard
 
 "supports-hyperlinks@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "supports-hyperlinks@npm:4.4.0"
+  version: 4.5.0
+  resolution: "supports-hyperlinks@npm:4.5.0"
   dependencies:
     has-flag: "npm:^5.0.1"
     supports-color: "npm:^10.2.2"
-  checksum: 10/f128846b76c2d573cb5a44999513f4ccf407969e6ff6ebe8a7587c2bcd24dc75accb310a9188d1afde416d4cbdf9a5069889ad9debc1789d8a9e4057513c5f35
+  checksum: 10/e37e0dec3439ffe6b05bf90c41fb86e7be8bf08ad3ba6a4dd84020cdd76bba6fafdd9bb9258938f50eaadd970395b696ece9764d095cb5981da5b9da80f4165e
   languageName: node
   linkType: hard
 
@@ -14925,9 +14925,9 @@ __metadata:
   linkType: hard
 
 "tabbable@npm:^6.0.0, tabbable@npm:^6.2.0":
-  version: 6.4.0
-  resolution: "tabbable@npm:6.4.0"
-  checksum: 10/0fe8fada2d97bd02058af2e0176bddca26b1100c069e0a096ac19ad8ef61bd0b4f0cf05e1dd68229b8f1cb6fe6bf4c34d50a5f4a3e26b150a92f89b7dc0a4916
+  version: 6.5.0
+  resolution: "tabbable@npm:6.5.0"
+  checksum: 10/c3b37430dd1a9f1c3a413b46d0598e3af55588959d4c386eeb1910a82632ac45cb6ed237902353e38e2a956326286773621cf5b8dca6d82c76da441918f8c718
   languageName: node
   linkType: hard
 
@@ -15386,10 +15386,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:>=7.24.0 <7.24.7":
-  version: 7.24.6
-  resolution: "undici-types@npm:7.24.6"
-  checksum: 10/defc9538b952e3c15b8526596c591f7c1f0c7605ad27a2b7feddbea7ef2e3003f3eda2cdb051a3cb1a2185e3893100fd9cb925c799db99d48131ea63b5233d10
+"undici-types@npm:~8.3.0":
+  version: 8.3.0
+  resolution: "undici-types@npm:8.3.0"
+  checksum: 10/6681d2837ac75a75ac1cc46090aa2b8ddc7c6b8ecc295a6cdb06838752a730da3d8afeecf05e5ab7903160eafad3a8b6ffa1927e5ded260590f4d4fef18646d5
   languageName: node
   linkType: hard
 
@@ -16288,8 +16288,8 @@ __metadata:
   linkType: hard
 
 "yargs@npm:^17.7.2":
-  version: 17.7.2
-  resolution: "yargs@npm:17.7.2"
+  version: 17.7.3
+  resolution: "yargs@npm:17.7.3"
   dependencies:
     cliui: "npm:^8.0.1"
     escalade: "npm:^3.1.1"
@@ -16298,7 +16298,7 @@ __metadata:
     string-width: "npm:^4.2.3"
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
-  checksum: 10/abb3e37678d6e38ea85485ed86ebe0d1e3464c640d7d9069805ea0da12f69d5a32df8e5625e370f9c96dd1c2dc088ab2d0a4dd32af18222ef3c4224a19471576
+  checksum: 10/a3826798c03b159e139d0580a3b2733953889a9a1bac8e4e1ca7a1a249b55315b213c323a6a1dbdb305f6e59496a9eaa810742c87e34abcf1a0584d8f59212a1
   languageName: node
   linkType: hard
 
