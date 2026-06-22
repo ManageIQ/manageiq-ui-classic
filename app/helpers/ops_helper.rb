@@ -14,6 +14,7 @@ module OpsHelper
   include SettingsUsersHelper
   include SettingsZoneHelper
   include SettingsZoneTabsHelper
+  include SettingsServerTabsHelper
   include SettingsRbacTagHelper
   include GroupRbacDetailsHelper
   include RoleRbacDetailsHelper

@@ -35,6 +35,7 @@ const MiqCustomTab = ({
     },
     { type: 'SETTINGS_TAGS', url: `/ops/change_tab?parent_tab_id=settings_tags&tab_id=settings_${name}` },
     { type: 'SETTINGS_ZONE', url: `/ops/change_tab?tab_id=settings_${name}` },
+    { type: 'SETTINGS_SERVER', url: `/ops/change_tab?tab_id=settings_${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
