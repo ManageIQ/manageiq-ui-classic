@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   DataTable,
@@ -16,10 +16,22 @@ const DriftHistory = ({ timestamps }) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   // Parse timestamps if it's a JSON string
-  const parsedTimestamps = typeof timestamps === 'string' ? JSON.parse(timestamps) : timestamps;
+  const parsedTimestamps = useMemo(() => (typeof timestamps === 'string' ? JSON.parse(timestamps) : timestamps), [timestamps]);
+
+  const rows = useMemo(() => {
+  // Reverse timestamps to show newest first
+    const reversedTimestamps = [...parsedTimestamps].reverse();
+    return reversedTimestamps.map((ts, idx) => {
+      const checkboxIndex = parsedTimestamps.length - 1 - idx;
+      return {
+        id: String(checkboxIndex),
+        timestamp: `${ts.formatted} (${ts.relative})`,
+      };
+    });
+  }, [parsedTimestamps]);
 
   // Show empty state if no timestamps
-  if (!parsedTimestamps || parsedTimestamps.length === 0) {
+  if (!parsedTimestamps?.length) {
     return (
       <InlineNotification
         kind="warning"
@@ -52,17 +64,6 @@ const DriftHistory = ({ timestamps }) => {
   const headers = [
     { key: 'timestamp', header: __('Timestamp') },
   ];
-
-  // Reverse timestamps to show newest first
-  const reversedTimestamps = [...parsedTimestamps].reverse();
-
-  const rows = reversedTimestamps.map((ts, idx) => {
-    const checkboxIndex = parsedTimestamps.length - 1 - idx;
-    return {
-      id: String(checkboxIndex),
-      timestamp: `${ts.formatted} (${ts.relative})`,
-    };
-  });
 
   return (
     <div className="drift-history-table">
