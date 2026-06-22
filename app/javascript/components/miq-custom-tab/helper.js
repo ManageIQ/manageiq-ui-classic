@@ -53,6 +53,15 @@ const settingsZone = {
   advanced: __('Advanced'),
 };
 
+/** Tab labels used for settings server tabs. */
+const settingsServer = {
+  server: __('Server'),
+  authentication: __('Authentication'),
+  workers: __('Workers'),
+  custom_logos: __('Custom Logos'),
+  advanced: __('Advanced'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -63,6 +72,7 @@ export const labelConfig = (type) => {
     SETTINGS: settings,
     SETTINGS_TAGS: settingsTags,
     SETTINGS_ZONE: settingsZone,
+    SETTINGS_SERVER: settingsServer,
   };
 
   return configMap[type];

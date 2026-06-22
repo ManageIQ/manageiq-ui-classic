@@ -291,40 +291,87 @@ describe('Settings Zone Tabs', () => {
     cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones']);
   });
 
-  it('displays zone tabs when zone node is selected', () => {
-    // Click on a zone node (default zone should exist)
+  it('displays zone tabs and switches between them', () => {
     cy.get('li.list-group-item').contains(/^Zone:/).first().click();
 
-    // Verify the MiqCustomTab component is rendered
+    // Verify tabs wrapper and container are visible
     cy.get('#settings-zone-tabs-wrapper').should('be.visible');
     cy.get('.miq_custom_tabs').should('be.visible');
-
-    // Verify all three tabs are present
-    cy.contains('button', 'Zone').should('be.visible');
-    cy.contains('button', 'SmartProxy Affinity').should('be.visible');
-    cy.contains('button', 'Advanced').should('be.visible');
-  });
-
-  it('switches between zone tabs', () => {
-    // Click on a zone node
-    cy.get('li.list-group-item').contains(/^Zone:/).first().click();
-
-    // Verify explorer title shows zone
     cy.expect_explorer_title('Zone');
 
-    // Click on SmartProxy Affinity tab - re-query each time to handle re-renders
     cy.contains('button', 'SmartProxy Affinity').should('be.visible');
     cy.contains('button', 'SmartProxy Affinity').click();
 
-    // Click on Advanced tab - re-query each time to handle re-renders
     cy.contains('button', 'Advanced').should('be.visible');
     cy.contains('button', 'Advanced').click();
 
-    // Click back to Zone tab - re-query each time to handle re-renders
     cy.contains('button', 'Zone').should('be.visible');
     cy.contains('button', 'Zone').click();
 
-    // Verify we're still on the zone page
     cy.expect_explorer_title('Zone');
+  });
+
+  it('resets to default tab when navigating away and back to zone', () => {
+    cy.get('li.list-group-item').contains(/^Zone:/).first().click();
+
+    cy.contains('button', 'SmartProxy Affinity').should('be.visible');
+    cy.contains('button', 'SmartProxy Affinity').click();
+
+    cy.get('li.list-group-item').contains(/^Server:/).first().click();
+
+    cy.get('li.list-group-item').contains(/^Zone:/).first().click();
+
+    cy.get('#settings-zone-tabs-wrapper').should('be.visible');
+    cy.get('.miq_custom_tabs').should('be.visible');
+
+    cy.expect_explorer_title('Zone');
+  });
+});
+
+describe('Settings Server Tabs', () => {
+  beforeEach(() => {
+    cy.login();
+    cy.menu('Settings', 'Application Settings');
+    cy.accordion('Settings');
+    cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones']);
+  });
+
+  it('displays server tabs and switches between them with correct content', () => {
+    cy.get('li.list-group-item').contains(/^Server:/).first().click();
+
+    cy.get('#settings-server-tabs-wrapper').should('be.visible');
+    cy.get('.miq_custom_tabs').should('be.visible');
+
+    cy.get('#settings_server').should('be.visible');
+    cy.contains('Basic Information').should('be.visible');
+    cy.contains('Hostname').should('be.visible');
+
+    cy.contains('button', 'Authentication').should('be.visible');
+    cy.contains('button', 'Authentication').click();
+    cy.get('#settings_authentication').should('be.visible');
+    cy.contains('Authentication').should('be.visible');
+    cy.contains('Session Timeout').should('be.visible');
+
+    cy.contains('button', 'Workers').should('be.visible');
+    cy.contains('button', 'Workers').click();
+    cy.get('#settings_workers').should('be.visible');
+
+    cy.contains('button', 'Advanced').should('be.visible');
+    cy.contains('button', 'Advanced').click();
+    cy.get('#settings_advanced').should('be.visible');
+    cy.contains('Caution').should('be.visible');
+  });
+
+  it('resets to default tab when navigating away and back to server', () => {
+    cy.get('li.list-group-item').contains(/^Server:/).first().click();
+
+    cy.contains('button', 'Authentication').should('be.visible');
+    cy.contains('button', 'Authentication').click();
+    cy.get('#settings_authentication').should('be.visible');
+
+    cy.get('li.list-group-item').contains(/^Zone:/).first().click();
+
+    cy.get('li.list-group-item').contains(/^Server:/).first().click();
+    cy.get('#settings_server').should('be.visible');
   });
 });
