@@ -3,7 +3,7 @@
     %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header("details") do
         = _("Details")
-      - if @record.type == "ServiceTerraformTemplate"   
+      - if ["ServiceTerraformTemplate", "ServiceEmbeddedTerraform"].include?(@record.type)
         - stack = @record.try(:stack, "Provision")
         = miq_tab_header("output") do
           = _("Output")
@@ -34,7 +34,7 @@
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
       
-      - if @record.type == "ServiceTerraformTemplate"
+      - if ["ServiceTerraformTemplate", "ServiceEmbeddedTerraform"].include?(@record.type)
         = miq_tab_content("output", 'default', :class => 'cm-tab') do
           - if stack
             = react('ServiceDetailStdout', { :taskid => stack.raw_stdout_via_worker(User.current_user&.userid, 'html')});
