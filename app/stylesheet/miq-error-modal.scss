@@ -1,0 +1,49 @@
+.miq-error-modal {
+  .cds--modal-container {
+    max-inline-size: 64rem;
+  }
+
+  .cds--modal-content {
+    padding-bottom: 2rem;
+  }
+
+  .miq-error-modal__body {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .miq-error-modal__icon {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #da1e28;
+    padding-top: 0.25rem;
+
+    svg {
+      inline-size: 3rem;
+      block-size: 3rem;
+    }
+  }
+
+  .miq-error-modal__details {
+    min-width: 0;
+  }
+
+  .miq-error-modal__row {
+    margin: 0 0 1rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .miq-error-modal__label {
+    font-weight: 600;
+    margin-right: 0.375rem;
+  }
+
+  .miq-error-modal__data {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}
