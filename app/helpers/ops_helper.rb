@@ -15,6 +15,7 @@ module OpsHelper
   include SettingsZoneHelper
   include SettingsZoneTabsHelper
   include SettingsServerTabsHelper
+  include DiagnosticsTabsHelper
   include SettingsRbacTagHelper
   include GroupRbacDetailsHelper
   include RoleRbacDetailsHelper

@@ -62,6 +62,32 @@ const settingsServer = {
   advanced: __('Advanced'),
 };
 
+/** Tab labels used for diagnostics zone tabs. */
+const diagnosticsZone = {
+  roles_servers: __('Roles by Servers'),
+  servers_roles: __('Servers by Roles'),
+  server_list: __('Servers'),
+  cu_repair: __('C & U Gap Collection'),
+};
+
+/** Tab labels used for diagnostics server tabs. */
+const diagnosticsServer = {
+  summary: __('Summary'),
+  workers: __('Workers'),
+  evm_log: __('ManageIQ Log'),
+  audit_log: __('Audit Log'),
+  production_log: process.env.NODE_ENV === 'production' ? __('Production Log') : __('Development Log'),
+};
+
+/** Tab labels used for diagnostics root tabs. */
+const diagnosticsRoot = {
+  zones: __('Zones'),
+  roles_servers: __('Roles by Servers'),
+  servers_roles: __('Servers by Roles'),
+  server_list: __('Servers'),
+  database: __('Database'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -73,6 +99,9 @@ export const labelConfig = (type) => {
     SETTINGS_TAGS: settingsTags,
     SETTINGS_ZONE: settingsZone,
     SETTINGS_SERVER: settingsServer,
+    DIAGNOSTICS_ZONE: diagnosticsZone,
+    DIAGNOSTICS_SERVER: diagnosticsServer,
+    DIAGNOSTICS_ROOT: diagnosticsRoot,
   };
 
   return configMap[type];
