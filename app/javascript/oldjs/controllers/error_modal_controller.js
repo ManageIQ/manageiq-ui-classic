@@ -9,6 +9,7 @@ function ErrorModalController($timeout) {
 
   listenToRx(function(event) {
     if ('serverError' in event) {
+      console.log(event.serverError.headers.get('content-type'));
       $timeout(function() {
         $ctrl.show(event.serverError, event.source, event.backendName);
       });
@@ -129,9 +130,9 @@ angular.module('miq.error', [])
     ].join('\n'),
   });
 
-$(function() {
-  var element = $('<error-modal>');
-  element.appendTo(window.document.body);
+// $(function() {
+//   var element = $('<error-modal>');
+//   element.appendTo(window.document.body);
 
-  miq_bootstrap(element, 'miq.error');
-});
+//   miq_bootstrap(element, 'miq.error');
+// });
