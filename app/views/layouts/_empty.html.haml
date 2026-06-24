@@ -1,2 +1,3 @@
 = render :partial => "layouts/flash_msg"
-= react('EmptyState', {addMessage: add_message, documentation: documentation, actionUrl: url_for(:action => 'new')})
+- action_url = url_for(:action => 'new')
+= react('EmptyState', {:addMessage => add_message, :documentation => documentation, :actionUrl => action_url})
