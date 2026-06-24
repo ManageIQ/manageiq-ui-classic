@@ -42,27 +42,35 @@ describe('Settings Analysis Profile', () => {
       cy.get('#check_services').check({ force: true });
       cy.get('#check_software').check({ force: true });
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/etc/hosts');
-      cy.get('#file-content').check({ force: true });
+      // Open modal and add first file
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/etc/hosts');
+      cy.get('#fileContent').check({ force: true });
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/etc/hosts').should('be.visible');
       cy.contains('true').should('be.visible');
-      cy.get('#file-name').type('/var/log/messages');
+      // Open modal and add second file
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/var/log/messages');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/var/log/messages').should('be.visible');
       cy.contains('button', 'Registry').click();
-      cy.get('#reg-key').type('Software\\Microsoft\\Windows');
-      cy.get('#reg-value').type('CurrentVersion');
+      // Open modal and add registry entry
       cy.contains('.ap-form-registry button', 'Add').click();
+      cy.get('#regKey').type('Software\\Microsoft\\Windows');
+      cy.get('#regValue').type('CurrentVersion');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('Software\\Microsoft\\Windows').should('be.visible');
       cy.contains('CurrentVersion').should('be.visible');
       cy.contains('button', 'Event Log').click();
-      cy.get('#eventlog-name').type('Application');
-      cy.get('#eventlog-message').type('Error');
-      cy.get('#eventlog-level').type('Error');
-      cy.get('#eventlog-source').type('TestApp');
-      cy.get('#eventlog-numdays').type('7');
+      // Open modal and add event log entry
       cy.contains('.ap-form-eventlog button', 'Add').click();
+      cy.get('#eventLogName').type('Application');
+      cy.get('#eventLogMessage').type('Error');
+      cy.get('#eventLogLevel').type('Error');
+      cy.get('#eventLogSource').type('TestApp');
+      cy.get('#eventLogNumDays').type('7');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('Application').should('be.visible');
       cy.contains('button[type="submit"]', 'Add').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
@@ -88,45 +96,61 @@ describe('Settings Analysis Profile', () => {
     it('validates file entry fields', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'File').click();
+      // Open modal and try to submit without filling fields
       cy.contains('.ap-form-file button', 'Add').click();
-      cy.expect_flash(flashClassMap.error, 'File Entry is required');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Check for validation error message on the input field
+      cy.get('#fileName').should('have.attr', 'data-invalid', 'true');
+      cy.get('.cds--form-requirement').should('contain', 'File Entry is required');
     });
 
     it('validates registry entry fields', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'Registry').click();
+      // Open modal and try to submit without filling fields
       cy.contains('.ap-form-registry button', 'Add').click();
-      cy.expect_flash(flashClassMap.error, 'Registry Entry is required');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Check for validation error messages on the input fields
+      cy.get('#regKey').should('have.attr', 'data-invalid', 'true');
+      cy.get('#regValue').should('have.attr', 'data-invalid', 'true');
+      cy.get('.cds--form-requirement').should('contain', 'Registry Key is required');
     });
 
     it('validates event log entry fields', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'Event Log').click();
+      // Open modal and try to submit without filling fields
       cy.contains('.ap-form-eventlog button', 'Add').click();
-      cy.expect_flash(flashClassMap.error, 'Event log name is required');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Check for validation error message on the input field
+      cy.get('#eventLogName').should('have.attr', 'data-invalid', 'true');
+      cy.get('.cds--form-requirement').should('contain', 'Event log name is required');
     });
 
     it('can edit entries before submitting', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/etc/hosts');
+      // Open modal and add entry
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/etc/hosts');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/etc/hosts').should('be.visible');
+      // Click row to edit
       cy.get('.cds--data-table tbody tr').contains('/etc/hosts').parents('tr').click();
-      cy.get('#file-name').should('have.value', '/etc/hosts');
-      cy.get('#file-name').clear().type('/var/log/syslog');
-      cy.get('#file-content').check({ force: true });
-      cy.contains('.ap-form-file button', 'Update').click();
+      cy.get('#fileName').should('have.value', '/etc/hosts');
+      cy.get('#fileName').clear().type('/var/log/syslog');
+      cy.get('#fileContent').check({ force: true });
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/var/log/syslog').should('be.visible');
       cy.contains('/etc/hosts').should('not.exist');
-      cy.contains('button', 'Cancel').click();
+      cy.get('.ap-form > form > .cds--btn-set').contains('button', 'Cancel').click();
       cy.expect_flash(flashClassMap.warning, 'cancelled');
     });
 
     it('can cancel adding a profile', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.get('input[name="name"]').type('Profile to Cancel');
-      cy.contains('button', 'Cancel').click();
+      cy.get('.ap-form > form > .cds--btn-set').contains('button', 'Cancel').click();
       cy.expect_flash(flashClassMap.warning, 'cancelled');
       cy.get('.ap-form').should('not.exist');
     });
@@ -143,12 +167,16 @@ describe('Settings Analysis Profile', () => {
       cy.contains('button', 'Event Log').should('be.visible');
       cy.contains('button', 'Category').should('not.exist');
       cy.contains('button', 'Registry').should('not.exist');
-      cy.get('#file-name').type('/var/log/messages');
+      // Open modal and add file
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/var/log/messages');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/var/log/messages').should('be.visible');
       cy.contains('button', 'Event Log').click();
-      cy.get('#eventlog-name').type('System');
+      // Open modal and add event log
       cy.contains('.ap-form-eventlog button', 'Add').click();
+      cy.get('#eventLogName').type('System');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('System').should('be.visible');
       cy.contains('button[type="submit"]', 'Add').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
@@ -170,8 +198,10 @@ describe('Settings Analysis Profile', () => {
       cy.get('input[name="name"]').should('not.have.value', '');
       cy.get('input[name="description"]').clear().type('Updated by Cypress test');
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/tmp/cypress-test.log');
+      // Open modal and add file
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/tmp/cypress-test.log');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
       cy.contains('/tmp/cypress-test.log').scrollIntoView().should('be.visible');
       cy.contains('button[type="submit"]', 'Save').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
@@ -181,7 +211,7 @@ describe('Settings Analysis Profile', () => {
       cy.get('li.list-group-item').contains(/^host default$/i).click();
       cy.toolbar('Configuration', 'Edit this Analysis Profile');
       cy.get('input[name="description"]').clear().type('This will be cancelled');
-      cy.contains('button', 'Cancel').scrollIntoView().click();
+      cy.get('.ap-form > form > .cds--btn-set').contains('button', 'Cancel').scrollIntoView().click();
       cy.expect_flash(flashClassMap.warning, 'cancelled');
       cy.get('.ap-form').should('not.exist');
     });
@@ -221,8 +251,10 @@ describe('Settings Analysis Profile', () => {
       cy.get('input[name="name"]').scrollIntoView().type('Tab Switch Test');
       cy.get('#check_system').scrollIntoView().check({ force: true });
       cy.contains('button', 'File').scrollIntoView().click();
-      cy.get('#file-name').scrollIntoView().type('/etc/passwd');
+      // Open modal and add file
       cy.contains('.ap-form-file button', 'Add').scrollIntoView().click();
+      cy.get('#fileName').scrollIntoView().type('/etc/passwd');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').scrollIntoView().click();
       cy.contains('button', 'Category').scrollIntoView().click();
       cy.get('#check_system').scrollIntoView().should('be.checked');
       cy.contains('button', 'File').scrollIntoView().click();
@@ -234,8 +266,9 @@ describe('Settings Analysis Profile', () => {
       cy.contains('button', 'File').click();
       const files = ['/etc/hosts', '/etc/passwd', '/var/log/messages', '/tmp/test.log'];
       files.forEach((file) => {
-        cy.get('#file-name').type(file);
         cy.contains('.ap-form-file button', 'Add').click();
+        cy.get('#fileName').type(file);
+        cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
         cy.contains(file).should('be.visible');
       });
       files.forEach((file) => {
@@ -246,36 +279,45 @@ describe('Settings Analysis Profile', () => {
     it('clears form fields after adding an entry', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/etc/hosts');
-      cy.get('#file-content').check({ force: true });
+      // Open modal, add entry, and verify modal closes
       cy.contains('.ap-form-file button', 'Add').click();
-      cy.get('#file-name').should('have.value', '');
-      cy.get('#file-content').should('not.be.checked');
+      cy.get('#fileName').type('/etc/hosts');
+      cy.get('#fileContent').check({ force: true });
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Open modal again and verify fields are clear
+      cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').should('have.value', '');
+      cy.get('#fileContent').should('not.be.checked');
+      cy.get('.cds--modal.is-visible .cds--modal-footer').contains('button', 'Cancel').click();
     });
 
-    it('shows Update and Cancel buttons when editing an entry', () => {
+    it('shows Update button when editing an entry', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/etc/hosts');
+      // Open modal and add entry
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/etc/hosts');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Click row to edit
       cy.get('.cds--data-table tbody tr').contains('/etc/hosts').parents('tr').click();
-      cy.contains('.ap-form-file button', 'Update').should('be.visible');
-      cy.contains('.ap-form-file button', 'Cancel').should('be.visible');
-      cy.contains('.ap-form-file button', 'Add').should('not.exist');
+      cy.get('.cds--modal.is-visible .cds--modal-footer').contains('button', 'Update').should('be.visible');
+      cy.get('.cds--modal.is-visible .cds--modal-footer').contains('button', 'Cancel').should('be.visible');
     });
 
     it('can cancel editing an entry', () => {
       cy.toolbar('Configuration', 'Add VM Analysis Profile');
       cy.contains('button', 'File').click();
-      cy.get('#file-name').type('/etc/hosts');
+      // Open modal and add entry
       cy.contains('.ap-form-file button', 'Add').click();
+      cy.get('#fileName').type('/etc/hosts');
+      cy.get('.cds--modal.is-visible .cds--modal-footer .cds--btn--primary').click();
+      // Click row to edit
       cy.get('.cds--data-table tbody tr').contains('/etc/hosts').parents('tr').click();
-      cy.get('#file-name').clear().type('/var/log/messages');
-      cy.contains('.ap-form-file button', 'Cancel').click();
+      cy.get('#fileName').clear().type('/var/log/messages');
+      cy.get('.cds--modal.is-visible .cds--modal-footer').contains('button', 'Cancel').click();
       cy.contains('/etc/hosts').should('be.visible');
       cy.contains('/var/log/messages').should('not.exist');
       cy.contains('.ap-form-file button', 'Add').should('be.visible');
-      cy.get('#file-name').should('have.value', '');
     });
   });
 
