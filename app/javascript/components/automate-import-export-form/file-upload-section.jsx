@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FileUploader, Button } from '@carbon/react';
+import { FileUploader, Button, InlineLoading } from '@carbon/react';
 import { miqFetch } from '../../http_api/fetch';
 
 const FileUploadSection = ({ onUploadComplete }) => {
@@ -30,7 +30,6 @@ const FileUploadSection = ({ onUploadComplete }) => {
     }
 
     setIsUploading(true);
-    miqSparkleOn();
 
     try {
       const formData = new FormData();
@@ -60,7 +59,6 @@ const FileUploadSection = ({ onUploadComplete }) => {
       }
     } finally {
       setIsUploading(false);
-      miqSparkleOff();
     }
   };
 
@@ -83,15 +81,18 @@ const FileUploadSection = ({ onUploadComplete }) => {
           onDelete={handleFileDelete}
         />
       </div>
-      <div className="upload-button-wrapper">
+      <div className="upload-button-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <Button
           id="upload-datastore-import"
           type="button"
           disabled={!selectedFile || isUploading}
           onClick={handleUpload}
         >
-          {isUploading ? __('Uploading...') : __('Upload')}
+          {__('Upload')}
         </Button>
+        {isUploading && (
+          <InlineLoading description={__('Uploading...')} />
+        )}
       </div>
     </div>
   );

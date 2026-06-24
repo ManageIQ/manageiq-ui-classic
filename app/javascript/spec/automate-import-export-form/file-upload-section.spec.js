@@ -8,8 +8,6 @@ jest.mock('../../http_api/fetch');
 
 describe('FileUploadSection component', () => {
   beforeEach(() => {
-    window.miqSparkleOn = jest.fn();
-    window.miqSparkleOff = jest.fn();
     window.add_flash = jest.fn();
 
     // Mock CSRF token
@@ -146,14 +144,19 @@ describe('FileUploadSection component', () => {
     const uploadButton = screen.getByRole('button', { name: /Upload/i });
     await user.click(uploadButton);
 
-    // Button should show "Uploading..." and be disabled
+    // Button should be disabled while uploading
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Uploading/i })).toBeDisabled();
+      expect(uploadButton).toBeDisabled();
+    });
+
+    // Wait for upload to complete and check for "Uploading..." text
+    await waitFor(() => {
+      expect(screen.getByText(/Uploading.../i)).toBeInTheDocument();
     });
 
     // Wait for upload to complete
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /^Upload$/i })).toBeInTheDocument();
+      expect(screen.queryByText(/Uploading.../i)).not.toBeInTheDocument();
     });
   });
 });
