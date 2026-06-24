@@ -5,8 +5,9 @@
         = _("Details")
       - if ["ServiceTerraformTemplate", "ServiceEmbeddedTerraform"].include?(@record.type)
         - stack = @record.try(:stack, "Provision")
-        = miq_tab_header("output") do
-          = _("Output")
+        - if stack
+          = miq_tab_header("output") do
+            = _("Output")
       - if @record.type == "ServiceAnsiblePlaybook"
         - provision_job = @record.try(:job, "Provision")
         - retirement_job = @record.try(:job, "Retirement")
