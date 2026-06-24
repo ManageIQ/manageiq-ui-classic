@@ -36,6 +36,9 @@ const MiqCustomTab = ({
     { type: 'SETTINGS_TAGS', url: `/ops/change_tab?parent_tab_id=settings_tags&tab_id=settings_${name}` },
     { type: 'SETTINGS_ZONE', url: `/ops/change_tab?tab_id=settings_${name}` },
     { type: 'SETTINGS_SERVER', url: `/ops/change_tab?tab_id=settings_${name}` },
+    { type: 'DIAGNOSTICS_ZONE', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'DIAGNOSTICS_SERVER', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'DIAGNOSTICS_ROOT', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
@@ -66,10 +69,26 @@ const MiqCustomTab = ({
   /** Function to load the tab contents which are already available within the page. */
   const staticContents = (name, config) => {
     const tabs = containerTabs();
+    // Construct the expected tab ID based on the type
+    let expectedId;
+    if (type === 'DIAGNOSTICS_ZONE') {
+      expectedId = `diagnostics_zone_${name}`;
+    } else if (type === 'DIAGNOSTICS_SERVER') {
+      expectedId = `diagnostics_${name}`;
+    } else if (type === 'DIAGNOSTICS_ROOT') {
+      expectedId = `diagnostics_${name}`;
+    } else if (type === 'SETTINGS_ZONE') {
+      expectedId = `settings_${name}`;
+    } else if (type === 'SETTINGS_SERVER') {
+      expectedId = `settings_${name}`;
+    } else {
+      expectedId = name;
+    }
+
     tabs.forEach((child) => {
       if (child.parentElement.id === containerId) {
         child.classList.remove('active');
-        if (child.id === `${name}`) {
+        if (child.id === expectedId) {
           child.classList.add('active');
           if (config.js) config.js();
         }

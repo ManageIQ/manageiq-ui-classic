@@ -85,82 +85,59 @@
     -# Diagnostics
   - when :diagnostics_tree
     - if x_node.split("-")[0] == "z"
-      %ul.nav.nav-tabs{'role' => 'tablist'}
-        = miq_tab_header("diagnostics_roles_servers", @sb[:active_tab]) do
-          = _("Roles by Servers")
-        = miq_tab_header("diagnostics_servers_roles", @sb[:active_tab]) do
-          = _("Servers by Roles")
-        = miq_tab_header("diagnostics_server_list", @sb[:active_tab]) do
-          = _("Servers")
-        = miq_tab_header("diagnostics_cu_repair", @sb[:active_tab]) do
-          = _("C & U Gap Collection")
-      .tab-content
-        = miq_tab_content("diagnostics_roles_servers", @sb[:active_tab]) do
+      #diagnostics-zone-tabs-wrapper
+        = react('MiqCustomTab', {:containerId => 'diagnostics-zone-tabs',
+                                 :tabLabels   => diagnostics_zone_tab_configuration,
+                                 :type        => 'DIAGNOSTICS_ZONE',
+                                 :activeTab   => diagnostics_zone_tab_index(@sb[:active_tab])})
+      .miq_custom_tabs_container#diagnostics-zone-tabs
+        = diagnostics_zone_tab_content(:roles_servers, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_roles_servers_tab"
-        = miq_tab_content("diagnostics_servers_roles", @sb[:active_tab]) do
+        = diagnostics_zone_tab_content(:servers_roles, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_servers_roles_tab"
-        = miq_tab_content("diagnostics_server_list", @sb[:active_tab]) do
+        = diagnostics_zone_tab_content(:server_list, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_server_list_tab"
-        = miq_tab_content("diagnostics_cu_repair", @sb[:active_tab]) do
+        = diagnostics_zone_tab_content(:cu_repair, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_cu_repair_tab"
     - elsif x_node.split("-")[0] == "svr"
-      %ul.nav.nav-tabs{'role' => 'tablist'}
+      #diagnostics-server-tabs-wrapper
+        = react('MiqCustomTab', {:containerId => 'diagnostics-server-tabs',
+                                 :tabLabels   => diagnostics_server_tab_configuration(@sb[:selected_server_id], my_server.id, @selected_server.started?, MiqEnvironment::Command.is_podified?),
+                                 :type        => 'DIAGNOSTICS_SERVER',
+                                 :activeTab   => diagnostics_server_tab_index(@sb[:active_tab], @sb[:selected_server_id], my_server.id, @selected_server.started?, MiqEnvironment::Command.is_podified?)})
+      .miq_custom_tabs_container#diagnostics-server-tabs
         - if @sb[:selected_server_id] == my_server.id || @selected_server.started?
-          = miq_tab_header("diagnostics_summary", @sb[:active_tab]) do
-            = _("Summary")
-          = miq_tab_header("diagnostics_workers", @sb[:active_tab]) do
-            = _("Workers")
-        - if @sb[:selected_server_id] == my_server.id && !MiqEnvironment::Command.is_podified?
-          = miq_tab_header("diagnostics_evm_log", @sb[:active_tab]) do
-            = _("%{product} Log") % {:product => Vmdb::Appliance.PRODUCT_NAME}
-          = miq_tab_header("diagnostics_audit_log", @sb[:active_tab]) do
-            = _("Audit Log")
-          = miq_tab_header("diagnostics_production_log", @sb[:active_tab]) do
-            = _(@sb[:rails_log])
-            = _("Log")
-      .tab-content
-        - if @sb[:selected_server_id] == my_server.id || @selected_server.started?
-          = miq_tab_content("diagnostics_summary", @sb[:active_tab]) do
+          = diagnostics_server_tab_content(:summary, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_summary_tab"
-          = miq_tab_content("diagnostics_workers", @sb[:active_tab]) do
+          = diagnostics_server_tab_content(:workers, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_workers_tab"
         - if @sb[:selected_server_id] == my_server.id && !MiqEnvironment::Command.is_podified?
-          = miq_tab_content("diagnostics_evm_log", @sb[:active_tab]) do
+          = diagnostics_server_tab_content(:evm_log, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_evm_log_tab"
-          = miq_tab_content("diagnostics_audit_log", @sb[:active_tab]) do
+          = diagnostics_server_tab_content(:audit_log, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_audit_log_tab"
-          = miq_tab_content("diagnostics_production_log", @sb[:active_tab]) do
+          = diagnostics_server_tab_content(:production_log, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_production_log_tab"
     - else
-      %ul.nav.nav-tabs{'role' => 'tablist'}
-        = miq_tab_header("diagnostics_zones", @sb[:active_tab]) do
-          = _("Zones")
-        - if super_admin_user?
-          = miq_tab_header("diagnostics_roles_servers", @sb[:active_tab]) do
-            = _("Roles by Servers")
-          = miq_tab_header("diagnostics_servers_roles", @sb[:active_tab]) do
-            = _("Servers by Roles")
-        = miq_tab_header("diagnostics_server_list", @sb[:active_tab]) do
-          = _("Servers")
-        - if super_admin_user?
-          = miq_tab_header("diagnostics_database", @sb[:active_tab]) do
-            = _("Database")
-      .tab-content
-        = miq_tab_content("diagnostics_zones", @sb[:active_tab]) do
+      #diagnostics-root-tabs-wrapper
+        = react('MiqCustomTab', {:containerId => 'diagnostics-root-tabs',
+                                 :tabLabels   => diagnostics_root_tab_configuration(super_admin_user?),
+                                 :type        => 'DIAGNOSTICS_ROOT',
+                                 :activeTab   => diagnostics_root_tab_index(@sb[:active_tab], super_admin_user?)})
+      .miq_custom_tabs_container#diagnostics-root-tabs
+        = diagnostics_root_tab_content(:zones, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_zones_tab"
         - if super_admin_user?
-          = miq_tab_content("diagnostics_roles_servers", @sb[:active_tab]) do
+          = diagnostics_root_tab_content(:roles_servers, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_roles_servers_tab"
-          = miq_tab_content("diagnostics_servers_roles", @sb[:active_tab]) do
+          = diagnostics_root_tab_content(:servers_roles, :active_tab => @sb[:active_tab]) do
             = render :partial => "diagnostics_servers_roles_tab"
-        = miq_tab_content("diagnostics_server_list", @sb[:active_tab]) do
+        = diagnostics_root_tab_content(:server_list, :active_tab => @sb[:active_tab]) do
           = render :partial => "diagnostics_server_list_tab"
         - if super_admin_user?
-          = miq_tab_content("diagnostics_database", @sb[:active_tab]) do
+          = diagnostics_root_tab_content(:database, :active_tab => @sb[:active_tab]) do
             - if @sb[:active_tab] == "diagnostics_database"
               = render :partial => "diagnostics_database_tab"
   - when :rbac_tree
     #rbac_details
       = render :partial => "rbac_details_tab"
-:javascript
-  miq_tabs_init("#ops_tabs", "/ops/change_tab");
