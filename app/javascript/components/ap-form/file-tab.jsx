@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
-import { TextInput, Checkbox, Button } from '@carbon/react';
+import {
+  Button, Modal, TextInput, Checkbox,
+} from '@carbon/react';
 import { Add } from '@carbon/react/icons';
 import MiqDataTable from '../miq-data-table';
 
@@ -10,56 +12,69 @@ const FileTab = (props) => {
   } = useFieldApi(props);
   const formOptions = useFormApi();
 
-  const [formData, setFormData] = useState({
-    fileName: '',
-    fileContent: false,
-    editingIndex: null,
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalValues, setModalValues] = useState({ fileName: '', fileContent: false });
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [errors, setErrors] = useState({});
 
-  const handleSubmit = () => {
-    if (!formData.fileName.trim()) {
-      add_flash(__('File Entry is required'), 'error');
+  const handleOpenModal = () => {
+    setModalValues({ fileName: '', fileContent: false });
+    setEditingIndex(null);
+    setErrors({});
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setModalValues({ fileName: '', fileContent: false });
+    setEditingIndex(null);
+    setErrors({});
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!modalValues.fileName || modalValues.fileName.trim() === '') {
+      newErrors.fileName = __('File Entry is required');
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleModalSubmit = () => {
+    if (!validateForm()) {
       return;
     }
 
     const fileData = {
-      target: formData.fileName,
-      content: formData.fileContent,
+      target: modalValues.fileName,
+      content: modalValues.fileContent || false,
     };
 
     let newValue;
-    if (formData.editingIndex !== null) {
+    if (editingIndex !== null) {
       newValue = [...value];
-      newValue[formData.editingIndex] = fileData;
+      newValue[editingIndex] = fileData;
     } else {
       newValue = [...value, fileData];
     }
 
     formOptions.change(name, newValue);
-    setFormData({ fileName: '', fileContent: false, editingIndex: null });
+    handleCloseModal();
   };
 
   const handleEditClick = (index) => {
     const file = value[index];
-    setFormData({
+    setModalValues({
       fileName: file.target,
       fileContent: file.content || false,
-      editingIndex: index,
     });
-  };
-
-
-  const handleCancel = () => {
-    setFormData({ fileName: '', fileContent: false, editingIndex: null });
+    setEditingIndex(index);
+    setIsModalOpen(true);
   };
 
   const handleDelete = (index) => {
     const newValue = value.filter((_, i) => i !== index);
     formOptions.change(name, newValue);
-    // Clear form if we were editing the deleted item
-    if (formData.editingIndex === index) {
-      setFormData({ fileName: '', fileContent: false, editingIndex: null });
-    }
   };
 
   const headers = [
@@ -94,43 +109,15 @@ const FileTab = (props) => {
 
   return (
     <div className="ap-form-file">
-      <h3>{__('File Entry')}</h3>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="file-name"
-          labelText={__('File Name')}
-          value={formData.fileName}
-          onChange={(e) => setFormData({ ...formData, fileName: e.target.value })}
-          placeholder={__('Enter file path')}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <Checkbox
-          id="file-content"
-          labelText={__('Collect Contents?')}
-          checked={formData.fileContent}
-          onChange={(e) => setFormData({ ...formData, fileContent: e.target.checked })}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
+      <div style={{ marginBottom: '1rem' }}>
         <Button
           kind="primary"
           size="sm"
           renderIcon={Add}
-          onClick={handleSubmit}
+          onClick={handleOpenModal}
         >
-          {formData.editingIndex !== null ? __('Update') : __('Add')}
+          {__('Add')}
         </Button>
-        {formData.editingIndex !== null && (
-          <Button
-            kind="secondary"
-            size="sm"
-            onClick={handleCancel}
-            style={{ marginLeft: '8px' }}
-          >
-            {__('Cancel')}
-          </Button>
-        )}
       </div>
       {rows.length > 0 && (
         <MiqDataTable
@@ -156,6 +143,40 @@ const FileTab = (props) => {
           mode="ap-form-file"
         />
       )}
+      <Modal
+        open={isModalOpen}
+        modalHeading={editingIndex !== null ? __('Edit File Entry') : __('Add File Entry')}
+        primaryButtonText={editingIndex !== null ? __('Update') : __('Add')}
+        secondaryButtonText={__('Cancel')}
+        onRequestSubmit={handleModalSubmit}
+        onRequestClose={handleCloseModal}
+        size="sm"
+      >
+        <div className="ap-modal-form" style={{ marginBottom: '1rem' }}>
+          <TextInput
+            id="fileName"
+            labelText={__('File Name')}
+            placeholder={__('Enter file path')}
+            value={modalValues.fileName}
+            onChange={(e) => {
+              setModalValues({ ...modalValues, fileName: e.target.value });
+              if (errors.fileName) {
+                setErrors({ ...errors, fileName: '' });
+              }
+            }}
+            invalid={!!errors.fileName}
+            invalidText={errors.fileName}
+            required
+          />
+          <Checkbox
+            id="fileContent"
+            labelText={__('Collect Contents?')}
+            checked={modalValues.fileContent}
+            onChange={(e) => setModalValues({ ...modalValues, fileContent: e.target.checked })}
+            style={{ marginTop: '1rem' }}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
