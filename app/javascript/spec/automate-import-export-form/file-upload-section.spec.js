@@ -2,6 +2,9 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRedux } from '../helpers/mountForm';
 import FileUploadSection from '../../components/automate-import-export-form/file-upload-section';
+import { miqFetch } from '../../http_api/fetch';
+
+jest.mock('../../http_api/fetch');
 
 describe('FileUploadSection component', () => {
   beforeEach(() => {
@@ -14,6 +17,9 @@ describe('FileUploadSection component', () => {
     meta.name = 'csrf-token';
     meta.content = 'test-csrf-token';
     document.head.appendChild(meta);
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
@@ -82,13 +88,17 @@ describe('FileUploadSection component', () => {
     expect(input).not.toHaveAttribute('multiple');
   });
 
-  it('should call miqSparkleOn and submit form when upload button is clicked', async() => {
+  it('should call miqFetch with FormData when upload button is clicked', async() => {
     const user = userEvent.setup({ delay: null });
+    const mockOnUploadComplete = jest.fn();
 
-    renderWithRedux(<FileUploadSection />);
+    miqFetch.mockResolvedValue({
+      import_file_upload_id: 'upload-123',
+      message: 'Upload successful',
+      level: 'success',
+    });
 
-    const form = document.getElementById('upload-form');
-    const submitSpy = jest.spyOn(form, 'submit').mockImplementation(() => {});
+    renderWithRedux(<FileUploadSection onUploadComplete={mockOnUploadComplete} />);
 
     // eslint-disable-next-line no-undef
     const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
@@ -99,69 +109,51 @@ describe('FileUploadSection component', () => {
     const uploadButton = screen.getByRole('button', { name: /Upload/i });
     await user.click(uploadButton);
 
-    expect(window.miqSparkleOn).toHaveBeenCalled();
-    expect(submitSpy).toHaveBeenCalled();
-
-    submitSpy.mockRestore();
-  });
-
-  it('should handle postMessage event with import_file_upload_id', async() => {
-    const mockOnUploadComplete = jest.fn();
-    renderWithRedux(<FileUploadSection onUploadComplete={mockOnUploadComplete} />);
-
-    const messageData = {
-      import_file_upload_id: 'upload-123',
-      message: JSON.stringify({ message: 'Upload successful', level: 'success' }),
-    };
-
-    window.postMessage(messageData, '*');
-
     await waitFor(() => {
-      expect(window.miqSparkleOff).toHaveBeenCalled();
+      expect(miqFetch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: '/miq_ae_tools/upload_import_file',
+          method: 'POST',
+          cookieAndCsrf: true,
+        }),
+        expect.any(FormData)
+      );
       expect(window.add_flash).toHaveBeenCalledWith('Upload successful', 'success');
       expect(mockOnUploadComplete).toHaveBeenCalledWith('upload-123');
     });
   });
 
-  it('should handle postMessage event without message', async() => {
-    const mockOnUploadComplete = jest.fn();
-    renderWithRedux(<FileUploadSection onUploadComplete={mockOnUploadComplete} />);
+  it('should disable upload button while uploading', async() => {
+    const user = userEvent.setup({ delay: null });
 
-    const messageData = {
-      import_file_upload_id: 'upload-456',
-    };
+    // Mock a slow upload
+    miqFetch.mockImplementation(() => new Promise((resolve) => {
+      setTimeout(() => resolve({
+        import_file_upload_id: 'upload-123',
+        message: 'Upload successful',
+        level: 'success',
+      }), 100);
+    }));
 
-    window.postMessage(messageData, '*');
+    renderWithRedux(<FileUploadSection />);
 
+    // eslint-disable-next-line no-undef
+    const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
+    const input = document.querySelector('input[type="file"]');
+
+    await user.upload(input, file);
+
+    const uploadButton = screen.getByRole('button', { name: /Upload/i });
+    await user.click(uploadButton);
+
+    // Button should show "Uploading..." and be disabled
     await waitFor(() => {
-      expect(window.miqSparkleOff).toHaveBeenCalled();
-      expect(mockOnUploadComplete).toHaveBeenCalledWith('upload-456');
+      expect(screen.getByRole('button', { name: /Uploading/i })).toBeDisabled();
     });
-  });
 
-  it('should render hidden iframe for form submission', () => {
-    renderWithRedux(<FileUploadSection />);
-
-    const iframe = document.querySelector('iframe[name="upload_target"]');
-    expect(iframe).toBeInTheDocument();
-    expect(iframe).toHaveClass('import-hidden-iframe');
-  });
-
-  it('should include CSRF token in form', () => {
-    renderWithRedux(<FileUploadSection />);
-
-    const csrfInput = document.querySelector('input[name="authenticity_token"]');
-    expect(csrfInput).toBeInTheDocument();
-    expect(csrfInput.value).toBe('test-csrf-token');
-  });
-
-  it('should have correct form attributes', () => {
-    renderWithRedux(<FileUploadSection />);
-
-    const form = document.getElementById('upload-form');
-    expect(form).toHaveAttribute('action', '/miq_ae_tools/upload_import_file');
-    expect(form).toHaveAttribute('method', 'post');
-    expect(form).toHaveAttribute('encType', 'multipart/form-data');
-    expect(form).toHaveAttribute('target', 'upload_target');
+    // Wait for upload to complete
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /^Upload$/i })).toBeInTheDocument();
+    });
   });
 });

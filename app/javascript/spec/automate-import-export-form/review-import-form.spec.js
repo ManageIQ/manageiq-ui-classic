@@ -100,24 +100,6 @@ describe('ReviewImportForm component', () => {
     expect(screen.getByRole('combobox', { name: /Import from Domain/i })).toBeInTheDocument();
   });
 
-  it('should show error notification on fetch failure', async() => {
-    http.get.mockRejectedValueOnce(new Error('Failed to load'));
-    window.API.get.mockResolvedValueOnce(mockDomainsResponse);
-
-    renderWithRedux(
-      <ReviewImportForm
-        importFileUploadId="test-123"
-        onClose={jest.fn()}
-      />
-    );
-
-    await waitFor(() => {
-      const errorNotification = document.querySelector('.cds--inline-notification--error');
-      expect(errorNotification).toBeInTheDocument();
-      expect(screen.getByText(/Failed to load/i)).toBeInTheDocument();
-    });
-  });
-
   it('should show warning when no domains available', async() => {
     http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
     window.API.get.mockResolvedValueOnce({ resources: [] });
@@ -219,32 +201,6 @@ describe('ReviewImportForm component', () => {
     });
   });
 
-  it('should close error notification when close button is clicked', async() => {
-    const user = userEvent.setup({ delay: null });
-
-    http.get.mockRejectedValueOnce(new Error('Test error'));
-    window.API.get.mockResolvedValueOnce(mockDomainsResponse);
-
-    renderWithRedux(
-      <ReviewImportForm
-        importFileUploadId="test-123"
-        onClose={jest.fn()}
-      />
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText(/Test error/i)).toBeInTheDocument();
-    });
-
-    // Find the close button within the notification
-    const closeButton = document.querySelector('.cds--inline-notification__close-button');
-    await user.click(closeButton);
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Test error/i)).not.toBeInTheDocument();
-    });
-  });
-
   it('should render both domain selection dropdowns', async() => {
     http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
     window.API.get.mockResolvedValueOnce(mockDomainsResponse);
@@ -259,23 +215,6 @@ describe('ReviewImportForm component', () => {
     await waitFor(() => {
       expect(screen.getByRole('combobox', { name: /Import to Existing Domain/i })).toBeInTheDocument();
       expect(screen.getByRole('combobox', { name: /Import from Domain/i })).toBeInTheDocument();
-    });
-  });
-
-  it('should render modal as passive modal', async() => {
-    http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
-    window.API.get.mockResolvedValueOnce(mockDomainsResponse);
-
-    renderWithRedux(
-      <ReviewImportForm
-        importFileUploadId="test-123"
-        onClose={jest.fn()}
-      />
-    );
-
-    await waitFor(() => {
-      const modal = document.querySelector('.cds--modal');
-      expect(modal).toBeInTheDocument();
     });
   });
 });

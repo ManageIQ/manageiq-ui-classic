@@ -15,7 +15,6 @@ describe MiqAeToolsController do
     fetch_log
     import_export
     log
-    review_import
   ).each do |action|
     describe "##{action}" do
       it "routes with GET" do
@@ -31,7 +30,6 @@ describe MiqAeToolsController do
     import_automate_datastore
     reset_datastore
     resolve
-    upload
     upload_import_file
     wait_for_task
   ).each do |action|

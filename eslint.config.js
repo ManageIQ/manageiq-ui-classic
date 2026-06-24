@@ -1044,6 +1044,9 @@ module.exports = [
         setInterval: 'readonly',
         clearTimeout: 'readonly',
         clearInterval: 'readonly',
+        fetch: 'readonly',
+        FormData: 'readonly',
+        Headers: 'readonly',
         // Jest
         describe: 'readonly',
         test: 'readonly',

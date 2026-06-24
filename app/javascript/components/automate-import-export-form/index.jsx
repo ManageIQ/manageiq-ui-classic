@@ -56,36 +56,44 @@ const ImportExportPage = ({
     <div className="import-export-page">
       <Grid>
         <Column sm={4} md={8} lg={16}>
-          <FileUploadSection onUploadComplete={handleUploadComplete} />
+          <div className="import-export-section">
+            <FileUploadSection onUploadComplete={handleUploadComplete} />
+          </div>
         </Column>
 
         <Column sm={4} md={8} lg={16}>
-          <hr />
-          {gitImportData ? (
-            <ReviewGitImport
-              gitRepoId={gitImportData.git_repo_id}
-              gitUrl={gitImportData.git_url}
-              gitBranchOrTag={gitImportData.git_branch_or_tag}
-              refType={gitImportData.ref_type}
-              onClose={handleCloseGitReview}
-              onImportComplete={handleGitImportComplete}
-            />
-          ) : (
-            <ImportDatastoreViaGit
-              onOpenModal={handleOpenGitModal}
-              disableSubmit={!gitImportEnabled}
-            />
-          )}
+          <div className="import-export-section-divider" />
+          <div className="import-export-section">
+            {gitImportData ? (
+              <ReviewGitImport
+                gitRepoId={gitImportData.git_repo_id}
+                gitUrl={gitImportData.git_url}
+                gitBranchOrTag={gitImportData.git_branch_or_tag}
+                refType={gitImportData.ref_type}
+                onClose={handleCloseGitReview}
+                onImportComplete={handleGitImportComplete}
+              />
+            ) : (
+              <ImportDatastoreViaGit
+                onOpenModal={handleOpenGitModal}
+                disableSubmit={!gitImportEnabled}
+              />
+            )}
+          </div>
         </Column>
 
         <Column sm={4} md={8} lg={16}>
-          <hr />
-          <ExportSection />
+          <div className="import-export-section-divider" />
+          <div className="import-export-section">
+            <ExportSection />
+          </div>
         </Column>
 
         <Column sm={4} md={8} lg={16}>
-          <hr />
-          <ResetDatastoreSection />
+          <div className="import-export-section-divider" />
+          <div className="import-export-section">
+            <ResetDatastoreSection />
+          </div>
         </Column>
       </Grid>
 

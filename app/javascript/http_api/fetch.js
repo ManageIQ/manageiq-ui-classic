@@ -58,8 +58,13 @@ function processData(o) {
     return JSON.stringify(o);
   }
 
+  // Support FormData for file uploads
+  if (o instanceof FormData) {
+    return o;
+  }
+
   // fetch supports more types but we aren't using any of those yet..
-  console.warn('Unknown type for request data - please provide a plain object or a string');
+  console.warn('Unknown type for request data - please provide a plain object, a string, or FormData');
   return null;
 }
 

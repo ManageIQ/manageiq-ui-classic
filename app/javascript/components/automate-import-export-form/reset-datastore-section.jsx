@@ -11,7 +11,7 @@ const ResetDatastoreSection = () => {
 
   useEffect(() => {
     // Fetch enabled domains from API
-    API.get('/api/automate_domains?expand=resources&attributes=name,enabled&filter[]=enabled=true')
+    API.get('/api/automate_domains?expand=resources&attributes=name,enabled&filter[]=source=system')
       .then((response) => {
         const domains = response?.resources || [];
         const names = domains.map((domain) => domain.name);

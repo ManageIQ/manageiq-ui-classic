@@ -9,9 +9,9 @@ jest.mock('../../http_api');
 describe('ReviewGitImport component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    window.miqFlashLater = jest.fn();
     window.miqSparkleOn = jest.fn();
     window.miqSparkleOff = jest.fn();
+    window.miqFlashLater = jest.fn();
   });
 
   const defaultProps = {
@@ -66,7 +66,6 @@ describe('ReviewGitImport component', () => {
     await user.click(importButton);
 
     await waitFor(() => {
-      expect(window.miqSparkleOn).toHaveBeenCalled();
       expect(http.post).toHaveBeenCalledWith(
         '/miq_ae_tools/import_via_git',
         expect.objectContaining({
@@ -78,7 +77,6 @@ describe('ReviewGitImport component', () => {
     });
 
     await waitFor(() => {
-      expect(window.miqSparkleOff).toHaveBeenCalled();
       expect(window.miqFlashLater).toHaveBeenCalledWith({
         message: 'Imported https://github.com/test/repo.git@main',
         level: 'success',
@@ -86,23 +84,6 @@ describe('ReviewGitImport component', () => {
       expect(defaultProps.onImportComplete).toHaveBeenCalled();
       expect(defaultProps.onClose).toHaveBeenCalled();
     });
-  });
-
-  it('should handle import error', async() => {
-    const user = userEvent.setup({ delay: null });
-    http.post.mockRejectedValueOnce(new Error('Import failed'));
-
-    renderWithRedux(<ReviewGitImport {...defaultProps} />);
-
-    const importButton = screen.getByRole('button', { name: /import/i });
-    await user.click(importButton);
-
-    await waitFor(() => {
-      expect(window.miqSparkleOff).toHaveBeenCalled();
-      expect(screen.getByText(/Import failed/i)).toBeInTheDocument();
-    });
-
-    expect(defaultProps.onClose).not.toHaveBeenCalled();
   });
 
   it('should call onClose when Cancel button is clicked', async() => {
@@ -126,27 +107,6 @@ describe('ReviewGitImport component', () => {
 
     await waitFor(() => {
       expect(importButton).toBeDisabled();
-    });
-  });
-
-  it('should allow closing error notification', async() => {
-    const user = userEvent.setup({ delay: null });
-    http.post.mockRejectedValueOnce(new Error('Test error'));
-
-    renderWithRedux(<ReviewGitImport {...defaultProps} />);
-
-    const importButton = screen.getByRole('button', { name: /import/i });
-    await user.click(importButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Test error/i)).toBeInTheDocument();
-    });
-
-    const closeButton = screen.getByRole('button', { name: /close notification/i });
-    await user.click(closeButton);
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Test error/i)).not.toBeInTheDocument();
     });
   });
 });

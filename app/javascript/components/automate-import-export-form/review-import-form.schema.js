@@ -23,7 +23,6 @@ const createSchema = (domains, existingDomains, getNamespacesForDomain) => {
         validate: [{ type: validatorTypes.REQUIRED }],
         options: importToDomainOptions,
         includeEmpty: false,
-        isSearchable: true,
       },
       {
         component: componentTypes.SELECT,
@@ -35,7 +34,6 @@ const createSchema = (domains, existingDomains, getNamespacesForDomain) => {
         validate: [{ type: validatorTypes.REQUIRED }],
         options: importFromDomainOptions,
         includeEmpty: false,
-        isSearchable: true,
       },
       {
         component: 'sub-form',
