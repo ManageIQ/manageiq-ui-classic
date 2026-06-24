@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Loading, InlineNotification } from '@carbon/react';
+import {
+  Modal, Loading, InlineNotification, InlineLoading,
+} from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import createSchema from './review-import-form.schema';
@@ -45,7 +47,6 @@ const ReviewImportForm = ({
   const handleSubmit = (values) => {
     setImporting(true);
     setError(null);
-    miqSparkleOn();
 
     // Extract string values from dropdown objects
     const domainFrom = typeof values.selected_domain_to_import_from === 'object'
@@ -64,7 +65,6 @@ const ReviewImportForm = ({
 
     return http.post('/miq_ae_tools/import_automate_datastore', params)
       .then((response) => {
-        miqSparkleOff();
         if (response && response.length > 0) {
           miqFlashLater(response[0]); // eslint-disable-line no-undef
         }
@@ -74,7 +74,6 @@ const ReviewImportForm = ({
         onClose();
       })
       .catch((err) => {
-        miqSparkleOff();
         setError(err.message || 'Import failed');
         setImporting(false);
         throw err;
@@ -146,7 +145,13 @@ const ReviewImportForm = ({
         />
       )}
 
-      {!loading && importData && Array.isArray(importData) && importData.length > 0 && existingDomains.length > 0 && (
+      {importing && (
+        <div style={{ padding: '1rem' }}>
+          <InlineLoading description={__('Importing datastore...')} />
+        </div>
+      )}
+
+      {!loading && !importing && importData && Array.isArray(importData) && importData.length > 0 && existingDomains.length > 0 && (
         <MiqFormRenderer
           initialValues={getInitialValues()}
           schema={schema}

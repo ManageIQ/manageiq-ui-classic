@@ -9,8 +9,6 @@ jest.mock('../../http_api');
 describe('ReviewGitImport component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    window.miqSparkleOn = jest.fn();
-    window.miqSparkleOff = jest.fn();
     window.miqFlashLater = jest.fn();
   });
 

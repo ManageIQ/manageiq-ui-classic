@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { IconButton, Modal, Loading } from '@carbon/react';
+import {
+  IconButton, Modal, Loading, InlineLoading,
+} from '@carbon/react';
 import { Reset } from '@carbon/react/icons';
 import { http } from '../../http_api';
 import { locationReload } from '../../helpers/window-location';
@@ -8,6 +10,7 @@ const ResetDatastoreSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [domainNames, setDomainNames] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [resetting, setResetting] = useState(false);
 
   useEffect(() => {
     // Fetch enabled domains from API
@@ -27,15 +30,14 @@ const ResetDatastoreSection = () => {
 
   const handleReset = () => {
     setShowModal(false);
-    miqSparkleOn();
+    setResetting(true);
 
     http.post('/miq_ae_tools/reset_datastore', { button: 'reset' })
       .then(() => {
-        miqSparkleOff();
         locationReload();
       })
       .catch((error) => {
-        miqSparkleOff();
+        setResetting(false);
         // eslint-disable-next-line no-console
         console.error('Reset failed:', error);
       });
@@ -54,14 +56,20 @@ const ResetDatastoreSection = () => {
   return (
     <div className="reset-datastore-section">
       <h3>{title}</h3>
-      <IconButton
-        kind="secondary"
-        label={__('Reset')}
-        onClick={() => setShowModal(true)}
-        align="right"
-      >
-        <Reset />
-      </IconButton>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <IconButton
+          kind="secondary"
+          label={__('Reset')}
+          onClick={() => setShowModal(true)}
+          align="right"
+          disabled={resetting}
+        >
+          <Reset />
+        </IconButton>
+        {resetting && (
+          <InlineLoading description={__('Resetting datastore...')} />
+        )}
+      </div>
 
       <Modal
         open={showModal}
