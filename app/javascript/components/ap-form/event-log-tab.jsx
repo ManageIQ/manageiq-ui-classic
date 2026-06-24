@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
-import { TextInput, Button } from '@carbon/react';
+import {
+  Button, Modal, TextInput, NumberInput,
+} from '@carbon/react';
 import { Add } from '@carbon/react/icons';
 import MiqDataTable from '../miq-data-table';
 
@@ -10,87 +12,95 @@ const EventLogTab = (props) => {
   } = useFieldApi(props);
   const formOptions = useFormApi();
 
-  const [formData, setFormData] = useState({
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalValues, setModalValues] = useState({
     eventLogName: '',
     eventLogMessage: '',
     eventLogLevel: '',
     eventLogSource: '',
     eventLogNumDays: '',
-    editingIndex: null,
   });
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [errors, setErrors] = useState({});
 
-  const handleSubmit = () => {
-    if (!formData.eventLogName.trim()) {
-      add_flash(__('Event log name is required'), 'error');
+  const handleOpenModal = () => {
+    setModalValues({
+      eventLogName: '',
+      eventLogMessage: '',
+      eventLogLevel: '',
+      eventLogSource: '',
+      eventLogNumDays: '',
+    });
+    setEditingIndex(null);
+    setErrors({});
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setModalValues({
+      eventLogName: '',
+      eventLogMessage: '',
+      eventLogLevel: '',
+      eventLogSource: '',
+      eventLogNumDays: '',
+    });
+    setEditingIndex(null);
+    setErrors({});
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!modalValues.eventLogName || modalValues.eventLogName.trim() === '') {
+      newErrors.eventLogName = __('Event log name is required');
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleModalSubmit = () => {
+    if (!validateForm()) {
       return;
     }
 
     const entryData = {
-      name: formData.eventLogName,
+      name: modalValues.eventLogName,
       filter: {
-        message: formData.eventLogMessage,
-        level: formData.eventLogLevel,
-        source: formData.eventLogSource,
-        num_days: parseInt(formData.eventLogNumDays, 10) || 0,
+        message: modalValues.eventLogMessage || '',
+        level: modalValues.eventLogLevel || '',
+        source: modalValues.eventLogSource || '',
+        num_days: parseInt(modalValues.eventLogNumDays, 10) || 0,
       },
     };
 
     let newValue;
-    if (formData.editingIndex !== null) {
+    if (editingIndex !== null) {
       newValue = [...value];
-      newValue[formData.editingIndex] = entryData;
+      newValue[editingIndex] = entryData;
     } else {
       newValue = [...value, entryData];
     }
 
     formOptions.change(name, newValue);
-    setFormData({
-      eventLogName: '',
-      eventLogMessage: '',
-      eventLogLevel: '',
-      eventLogSource: '',
-      eventLogNumDays: '',
-      editingIndex: null,
-    });
+    handleCloseModal();
   };
 
   const handleEditClick = (index) => {
     const entry = value[index];
-    setFormData({
+    setModalValues({
       eventLogName: entry.name,
       eventLogMessage: entry.filter.message || '',
       eventLogLevel: entry.filter.level || '',
       eventLogSource: entry.filter.source || '',
       eventLogNumDays: entry.filter.num_days?.toString() || '',
-      editingIndex: index,
     });
-  };
-
-  const handleCancel = () => {
-    setFormData({
-      eventLogName: '',
-      eventLogMessage: '',
-      eventLogLevel: '',
-      eventLogSource: '',
-      eventLogNumDays: '',
-      editingIndex: null,
-    });
+    setEditingIndex(index);
+    setIsModalOpen(true);
   };
 
   const handleDelete = (index) => {
     const newValue = value.filter((_, i) => i !== index);
     formOptions.change(name, newValue);
-    // Clear form if we were editing the deleted item
-    if (formData.editingIndex === index) {
-      setFormData({
-        eventLogName: '',
-        eventLogMessage: '',
-        eventLogLevel: '',
-        eventLogSource: '',
-        eventLogNumDays: '',
-        editingIndex: null,
-      });
-    }
   };
 
   const headers = [
@@ -130,72 +140,15 @@ const EventLogTab = (props) => {
 
   return (
     <div className="ap-form-eventlog">
-      <h3>{__('Event Log Entry')}</h3>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="eventlog-name"
-          labelText={__('Name')}
-          value={formData.eventLogName}
-          onChange={(e) => setFormData({ ...formData, eventLogName: e.target.value })}
-          placeholder={__('Enter event log name')}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="eventlog-message"
-          labelText={__('Filter Message')}
-          value={formData.eventLogMessage}
-          onChange={(e) => setFormData({ ...formData, eventLogMessage: e.target.value })}
-          placeholder={__('Enter filter message')}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="eventlog-level"
-          labelText={__('Level')}
-          value={formData.eventLogLevel}
-          onChange={(e) => setFormData({ ...formData, eventLogLevel: e.target.value })}
-          placeholder={__('Enter level')}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="eventlog-source"
-          labelText={__('Source')}
-          value={formData.eventLogSource}
-          onChange={(e) => setFormData({ ...formData, eventLogSource: e.target.value })}
-          placeholder={__('Enter source')}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
-        <TextInput
-          id="eventlog-numdays"
-          labelText={__('# of Days')}
-          value={formData.eventLogNumDays}
-          onChange={(e) => setFormData({ ...formData, eventLogNumDays: e.target.value })}
-          placeholder={__('Enter number of days')}
-          type="number"
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '1rem' }}>
+      <div style={{ marginBottom: '1rem' }}>
         <Button
           kind="primary"
           size="sm"
           renderIcon={Add}
-          onClick={handleSubmit}
+          onClick={handleOpenModal}
         >
-          {formData.editingIndex !== null ? __('Update') : __('Add')}
+          {__('Add')}
         </Button>
-        {formData.editingIndex !== null && (
-          <Button
-            kind="secondary"
-            size="sm"
-            onClick={handleCancel}
-            style={{ marginLeft: '8px' }}
-          >
-            {__('Cancel')}
-          </Button>
-        )}
       </div>
       {rows.length > 0 && (
         <MiqDataTable
@@ -220,6 +173,66 @@ const EventLogTab = (props) => {
           mode="ap-form-eventlog"
         />
       )}
+      <Modal
+        open={isModalOpen}
+        modalHeading={editingIndex !== null ? __('Edit Event Log Entry') : __('Add Event Log Entry')}
+        primaryButtonText={editingIndex !== null ? __('Update') : __('Add')}
+        secondaryButtonText={__('Cancel')}
+        onRequestSubmit={handleModalSubmit}
+        onRequestClose={handleCloseModal}
+        size="sm"
+      >
+        <div className="ap-modal-form" style={{ marginBottom: '1rem' }}>
+          <TextInput
+            id="eventLogName"
+            labelText={__('Name')}
+            placeholder={__('Enter event log name')}
+            value={modalValues.eventLogName}
+            onChange={(e) => {
+              setModalValues({ ...modalValues, eventLogName: e.target.value });
+              if (errors.eventLogName) {
+                setErrors({ ...errors, eventLogName: '' });
+              }
+            }}
+            invalid={!!errors.eventLogName}
+            invalidText={errors.eventLogName}
+            required
+            style={{ marginBottom: '1rem' }}
+          />
+          <TextInput
+            id="eventLogMessage"
+            labelText={__('Filter Message')}
+            placeholder={__('Enter filter message')}
+            value={modalValues.eventLogMessage}
+            onChange={(e) => setModalValues({ ...modalValues, eventLogMessage: e.target.value })}
+            style={{ marginBottom: '1rem' }}
+          />
+          <TextInput
+            id="eventLogLevel"
+            labelText={__('Level')}
+            placeholder={__('Enter level')}
+            value={modalValues.eventLogLevel}
+            onChange={(e) => setModalValues({ ...modalValues, eventLogLevel: e.target.value })}
+            style={{ marginBottom: '1rem' }}
+          />
+          <TextInput
+            id="eventLogSource"
+            labelText={__('Source')}
+            placeholder={__('Enter source')}
+            value={modalValues.eventLogSource}
+            onChange={(e) => setModalValues({ ...modalValues, eventLogSource: e.target.value })}
+            style={{ marginBottom: '1rem' }}
+          />
+          <NumberInput
+            id="eventLogNumDays"
+            label={__('# of Days')}
+            placeholder={__('Enter number of days')}
+            value={modalValues.eventLogNumDays}
+            onChange={(e) => setModalValues({ ...modalValues, eventLogNumDays: e.target.value })}
+            min={0}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
