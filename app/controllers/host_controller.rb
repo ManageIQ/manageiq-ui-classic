@@ -140,7 +140,7 @@ class HostController < ApplicationController
       unless @host.supports?(:update) # if host doesn't support editing
         add_flash(_("This Host does not support editing"), :error)
         flash_to_session
-        redirect_to(:action => @lastaction, :id => params[:id])
+        return redirect_to(:action => @lastaction, :id => params[:id])
       end
 
       @in_a_form = true
@@ -164,7 +164,7 @@ class HostController < ApplicationController
         unless h.supports?(:update) # if host doesn't support editing
           add_flash(_("One of the Hosts does not support editing"), :error)
           flash_to_session
-          redirect_to(:action => @lastaction, :id => params[:id])
+          return redirect_to(:action => @lastaction, :id => params[:id])
         end
 
         @selected_hosts[h.id] = h.name
