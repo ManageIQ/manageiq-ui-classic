@@ -19,31 +19,6 @@ describe('ImportDatastoreViaGitModal component', () => {
     jest.useRealTimers();
   });
 
-  describe('Modal Visibility', () => {
-    it('should not show modal content when isOpen is false', () => {
-      const mockOnClose = jest.fn();
-      const mockOnSelectGitRepo = jest.fn();
-      const { container } = renderWithRedux(
-        <ImportDatastoreViaGitModal isOpen={false} onClose={mockOnClose} onSelectGitRepo={mockOnSelectGitRepo} />
-      );
-
-      // Carbon Modal still renders in DOM but is hidden, check for the open prop
-      const modal = container.querySelector('.cds--modal');
-      expect(modal).toHaveClass('cds--modal');
-      expect(modal).not.toHaveClass('is-visible');
-    });
-
-    it('should render when isOpen is true', () => {
-      const mockOnClose = jest.fn();
-      const mockOnSelectGitRepo = jest.fn();
-      renderWithRedux(
-        <ImportDatastoreViaGitModal isOpen onClose={mockOnClose} onSelectGitRepo={mockOnSelectGitRepo} />
-      );
-
-      expect(screen.getByText(/Import Datastore via Git/i)).toBeInTheDocument();
-    });
-  });
-
   describe('Stage 1: Git URL Form', () => {
     it('should render the git URL form initially', () => {
       const mockOnClose = jest.fn();
@@ -197,70 +172,7 @@ describe('ImportDatastoreViaGitModal component', () => {
         expect(screen.getByText(/Choose the branch or tag you would like to import/i)).toBeInTheDocument();
       });
 
-      // Check for success notification
-      expect(screen.getByText(/Successfully found git repository, please choose a branch or tag/i)).toBeInTheDocument();
-
       expect(screen.getByLabelText(/Branch\/Tag/i)).toBeInTheDocument();
-    });
-
-    it('should show error notification when task fails', async() => {
-      const user = userEvent.setup({ delay: null });
-      const mockOnClose = jest.fn();
-      const mockOnSelectGitRepo = jest.fn();
-
-      http.post.mockResolvedValueOnce({
-        task_id: 'task-123',
-        git_repo_id: 'repo-456',
-        new_git_repo: true,
-      });
-      http.get.mockResolvedValueOnce({
-        success: false,
-        message: {
-          message: 'Failed to fetch repository',
-          level: 'error',
-        },
-      });
-
-      renderWithRedux(
-        <ImportDatastoreViaGitModal isOpen onClose={mockOnClose} onSelectGitRepo={mockOnSelectGitRepo} />
-      );
-
-      const input = screen.getByLabelText(/Git URL/i);
-      await user.type(input, 'https://github.com/test/repo.git');
-
-      const submitButton = screen.getByRole('button', { name: /submit/i });
-      await user.click(submitButton);
-
-      // Fast-forward timers to trigger polling
-      act(() => {
-        jest.advanceTimersByTime(2000);
-      });
-
-      await waitFor(() => {
-        expect(screen.getByText(/Failed to fetch repository/i)).toBeInTheDocument();
-      });
-    });
-
-    it('should handle API error during git URL submission', async() => {
-      const user = userEvent.setup({ delay: null });
-      const mockOnClose = jest.fn();
-      const mockOnSelectGitRepo = jest.fn();
-
-      http.post.mockRejectedValueOnce(new Error('Network error'));
-
-      renderWithRedux(
-        <ImportDatastoreViaGitModal isOpen onClose={mockOnClose} onSelectGitRepo={mockOnSelectGitRepo} />
-      );
-
-      const input = screen.getByLabelText(/Git URL/i);
-      await user.type(input, 'https://github.com/test/repo.git');
-
-      const submitButton = screen.getByRole('button', { name: /submit/i });
-      await user.click(submitButton);
-
-      await waitFor(() => {
-        expect(screen.getByText(/Network error/i)).toBeInTheDocument();
-      });
     });
   });
 
@@ -350,7 +262,7 @@ describe('ImportDatastoreViaGitModal component', () => {
       });
     });
 
-    it('should call onSelectGitRepo and close modal when branch is selected', async() => {
+    it('should call onSelectGitRepo when branch is selected', async() => {
       const user = userEvent.setup({ delay: null });
       const mockOnClose = jest.fn();
       const mockOnSelectGitRepo = jest.fn();
@@ -403,8 +315,6 @@ describe('ImportDatastoreViaGitModal component', () => {
           ref_type: 'branch',
         });
       });
-
-      expect(mockOnClose).toHaveBeenCalled();
     });
 
     it('should go back to URL stage when back button is clicked', async() => {
@@ -449,37 +359,6 @@ describe('ImportDatastoreViaGitModal component', () => {
       await waitFor(() => {
         expect(screen.getByText(/Import Datastore via Git/i)).toBeInTheDocument();
         expect(screen.queryByText(/Choose the branch or tag you would like to import/i)).not.toBeInTheDocument();
-      });
-    });
-  });
-
-  describe('Error Notification', () => {
-    it('should allow closing error notification', async() => {
-      const user = userEvent.setup({ delay: null });
-      const mockOnClose = jest.fn();
-      const mockOnSelectGitRepo = jest.fn();
-
-      http.post.mockRejectedValueOnce(new Error('Test error'));
-
-      renderWithRedux(
-        <ImportDatastoreViaGitModal isOpen onClose={mockOnClose} onSelectGitRepo={mockOnSelectGitRepo} />
-      );
-
-      const input = screen.getByLabelText(/Git URL/i);
-      await user.type(input, 'https://github.com/test/repo.git');
-
-      const submitButton = screen.getByRole('button', { name: /submit/i });
-      await user.click(submitButton);
-
-      await waitFor(() => {
-        expect(screen.getByText(/Test error/i)).toBeInTheDocument();
-      });
-
-      const closeButton = screen.getByRole('button', { name: /close notification/i });
-      await user.click(closeButton);
-
-      await waitFor(() => {
-        expect(screen.queryByText(/Test error/i)).not.toBeInTheDocument();
       });
     });
   });

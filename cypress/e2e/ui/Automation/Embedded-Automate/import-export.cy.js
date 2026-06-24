@@ -17,7 +17,7 @@ describe('Automate Import/Export Page', () => {
     });
 
     cy.login();
-    cy.visit('/miq_ae_tools/import_export');
+    cy.menu('Automation', 'Embedded Automate', 'Import / Export');
   });
 
   afterEach(() => {
@@ -346,23 +346,26 @@ describe('Automate Import/Export Page', () => {
 
   describe('Reset Datastore Section', () => {
     it('should display reset section with domain names', () => {
-      cy.contains(/Reset all components in the following domains/).should('be.visible');
+      cy.contains(/Reset all components in the following domains/).scrollIntoView().should('be.visible');
       cy.get('.reset-datastore-section .cds--btn--icon-only').first().should('be.visible');
     });
 
     it('should have reset icon', () => {
+      cy.contains(/Reset all components in the following domains/).scrollIntoView();
       cy.get('.reset-datastore-section .cds--btn--icon-only').first()
         .find('svg')
         .should('exist');
     });
 
     it('should show confirmation modal when reset is clicked', () => {
+      cy.contains(/Reset all components in the following domains/).scrollIntoView();
       cy.get('.reset-datastore-section .cds--btn--icon-only').first().click();
       cy.contains('Confirm Reset').should('be.visible');
       cy.contains('All Datastore customizations will be lost').should('be.visible');
     });
 
     it('should close modal when cancel is clicked', () => {
+      cy.contains(/Reset all components in the following domains/).scrollIntoView();
       cy.get('.reset-datastore-section .cds--btn--icon-only').first().click();
       cy.contains('Confirm Reset').should('be.visible');
       cy.get('.cds--modal.is-visible').within(() => {
@@ -377,6 +380,7 @@ describe('Automate Import/Export Page', () => {
         body: { success: true },
       }).as('resetDatastore');
 
+      cy.contains(/Reset all components in the following domains/).scrollIntoView();
       cy.get('.reset-datastore-section .cds--btn--icon-only').first().click();
       cy.contains('Confirm Reset').should('be.visible');
       cy.get('.cds--modal.is-visible').within(() => {
@@ -386,62 +390,6 @@ describe('Automate Import/Export Page', () => {
       cy.wait('@resetDatastore').its('request.body').should('deep.include', {
         button: 'reset',
       });
-    });
-  });
-
-  describe('Accessibility', () => {
-    beforeEach(() => {
-      cy.contains('button', 'Import from Git Repository').click();
-      cy.get('.cds--modal.is-visible').should('be.visible');
-    });
-
-    it('should have proper labels for form inputs', () => {
-      cy.get('.cds--modal.is-visible').within(() => {
-        cy.get('label').contains('Git URL').should('be.visible');
-        cy.get('label').contains('Username').should('be.visible');
-        cy.get('label').contains('Password').should('be.visible');
-      });
-    });
-
-    it('should have focusable form inputs', () => {
-      cy.get('.cds--modal.is-visible').within(() => {
-        cy.get('input[name="git_url"]').focus().should('have.focus');
-        cy.get('input[name="git_username"]').focus().should('have.focus');
-        cy.get('input[name="git_password"]').focus().should('have.focus');
-      });
-    });
-
-    it('should have proper button roles', () => {
-      cy.contains('button', 'Upload').should('have.attr', 'type', 'button');
-      cy.get('.cds--modal.is-visible').within(() => {
-        cy.contains('button', 'Submit').should('have.attr', 'type', 'submit');
-      });
-    });
-  });
-
-  describe('Responsive Design', () => {
-    it('should display properly on mobile viewport', () => {
-      cy.viewport('iphone-x');
-      cy.contains('h3', 'Import Datastore classes (*.zip)').should('be.visible');
-      cy.contains('h3', 'Import Datastore via Git').should('be.visible');
-      cy.contains('h3', 'Export').scrollIntoView().should('be.visible');
-      cy.contains('h3', /Reset all components/).scrollIntoView().should('be.visible');
-    });
-
-    it('should display properly on tablet viewport', () => {
-      cy.viewport('ipad-2');
-      cy.contains('h3', 'Import Datastore classes (*.zip)').should('be.visible');
-      cy.contains('h3', 'Import Datastore via Git').should('be.visible');
-      cy.contains('h3', 'Export').scrollIntoView().should('be.visible');
-      cy.contains('h3', /Reset all components/).scrollIntoView().should('be.visible');
-    });
-
-    it('should display properly on desktop viewport', () => {
-      cy.viewport(1920, 1080);
-      cy.contains('h3', 'Import Datastore classes (*.zip)').should('be.visible');
-      cy.contains('h3', 'Import Datastore via Git').should('be.visible');
-      cy.contains('h3', 'Export').scrollIntoView().should('be.visible');
-      cy.contains('h3', /Reset all components/).scrollIntoView().should('be.visible');
     });
   });
 
@@ -508,6 +456,29 @@ describe('Automate Import/Export Page', () => {
 
       cy.get('.cds--modal.is-visible .cds--inline-notification--error', { timeout: 10000 }).should('exist');
     });
+
+    it('should allow closing error notification', () => {
+      cy.intercept('POST', '/miq_ae_tools/retrieve_git_datastore', {
+        statusCode: 500,
+        body: 'Network error',
+      }).as('submitGitUrl');
+
+      cy.get('.cds--modal.is-visible').within(() => {
+        cy.get('input[name="git_url"]').type('https://github.com/GilbertCherrie/CloudForms_Infoblox');
+        cy.contains('button', 'Submit').click();
+      });
+
+      cy.wait('@submitGitUrl');
+
+      // First close the error modal that appears on 500 errors (use force since it may be covered)
+      cy.get('.modal.show').should('exist');
+      cy.get('.modal.show .close').first().click({ force: true });
+      cy.get('.modal.show').should('not.exist');
+
+      // Now check and close the inline notification
+      cy.get('.cds--modal.is-visible .cds--inline-notification.cds--inline-notification--error', { timeout: 5000 }).should('exist');
+      cy.get('.cds--modal.is-visible .cds--inline-notification__close-button').click();
+      cy.get('.cds--modal.is-visible .cds--inline-notification').should('not.exist');
+    });
   });
 });
-

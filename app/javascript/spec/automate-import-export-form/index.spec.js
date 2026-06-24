@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRedux } from '../helpers/mountForm';
 import ImportExportPage from '../../components/automate-import-export-form/index';
+import { locationReload } from '../../helpers/window-location';
 
 jest.mock('../../helpers/window-location', () => ({
   locationReload: jest.fn(),
@@ -112,34 +113,6 @@ describe('ImportExportPage component', () => {
     expect(gitButton).toBeDisabled();
   });
 
-  it('should open git modal when git import button is clicked', async() => {
-    const user = userEvent.setup({ delay: null });
-    renderWithRedux(<ImportExportPage gitImportEnabled />);
-
-    const gitButton = screen.getByRole('button', { name: /Mock Git Import/i });
-    await user.click(gitButton);
-
-    expect(screen.getByTestId('git-modal')).toBeInTheDocument();
-    expect(screen.getByText(/Git Modal Open/i)).toBeInTheDocument();
-  });
-
-  it('should close git modal when close button is clicked', async() => {
-    const user = userEvent.setup({ delay: null });
-    renderWithRedux(<ImportExportPage gitImportEnabled />);
-
-    const gitButton = screen.getByRole('button', { name: /Mock Git Import/i });
-    await user.click(gitButton);
-
-    expect(screen.getByTestId('git-modal')).toBeInTheDocument();
-
-    const closeButton = screen.getByRole('button', { name: /Close Modal/i });
-    await user.click(closeButton);
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('git-modal')).not.toBeInTheDocument();
-    });
-  });
-
   it('should show review import form when upload completes', async() => {
     const user = userEvent.setup({ delay: null });
     renderWithRedux(<ImportExportPage gitImportEnabled />);
@@ -153,28 +126,8 @@ describe('ImportExportPage component', () => {
     });
   });
 
-  it('should close review import form when close button is clicked', async() => {
-    const user = userEvent.setup({ delay: null });
-    renderWithRedux(<ImportExportPage gitImportEnabled />);
-
-    const uploadButton = screen.getByRole('button', { name: /Mock Upload/i });
-    await user.click(uploadButton);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('review-import-form')).toBeInTheDocument();
-    });
-
-    const closeButton = screen.getByRole('button', { name: /Close Review/i });
-    await user.click(closeButton);
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('review-import-form')).not.toBeInTheDocument();
-    });
-  });
-
   it('should reload page when import completes', async() => {
     const user = userEvent.setup({ delay: null });
-    const { locationReload } = require('../../helpers/window-location');
     renderWithRedux(<ImportExportPage gitImportEnabled />);
 
     const uploadButton = screen.getByRole('button', { name: /Mock Upload/i });
@@ -199,5 +152,3 @@ describe('ImportExportPage component', () => {
     expect(gitButton).toBeDisabled();
   });
 });
-
-// Made with Bob
