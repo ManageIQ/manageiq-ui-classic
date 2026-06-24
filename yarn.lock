@@ -1555,7 +1555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.79.0, @carbon/icons-react@npm:^11.82.0":
+"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.79.0":
   version: 11.82.0
   resolution: "@carbon/icons-react@npm:11.82.0"
   dependencies:
@@ -11336,7 +11336,6 @@ __metadata:
     "@babel/preset-react": "npm:~7.28.0"
     "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
-    "@carbon/icons-react": "npm:^11.82.0"
     "@carbon/react": "npm:~1.106.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.1.13"
     "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
