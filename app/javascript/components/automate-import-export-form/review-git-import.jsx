@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { InlineNotification, Button } from '@carbon/react';
+import { InlineNotification, Button, InlineLoading } from '@carbon/react';
 import { http } from '../../http_api';
 
 const ReviewGitImport = ({
@@ -12,7 +12,6 @@ const ReviewGitImport = ({
   const handleImport = () => {
     setImporting(true);
     setError(null);
-    miqSparkleOn();
 
     const data = {
       git_repo_id: gitRepoId,
@@ -22,7 +21,6 @@ const ReviewGitImport = ({
 
     http.post('/miq_ae_tools/import_via_git', data)
       .then((response) => {
-        miqSparkleOff();
         // Response is an array of flash messages
         if (Array.isArray(response) && response.length > 0) {
           miqFlashLater(response[0]); // eslint-disable-line no-undef
@@ -33,7 +31,6 @@ const ReviewGitImport = ({
         onClose();
       })
       .catch((err) => {
-        miqSparkleOff();
         setError(err.message || __('Failed to import from git'));
         setImporting(false);
       });
@@ -76,7 +73,7 @@ const ReviewGitImport = ({
         </dl>
       </div>
 
-      <div className="form-buttons">
+      <div className="form-buttons" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <Button
           kind="primary"
           onClick={handleImport}
@@ -91,6 +88,9 @@ const ReviewGitImport = ({
         >
           {__('Cancel')}
         </Button>
+        {importing && (
+          <InlineLoading description={__('Importing from git...')} />
+        )}
       </div>
     </div>
   );

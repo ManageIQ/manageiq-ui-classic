@@ -14,8 +14,6 @@ jest.mock('../../helpers/window-location', () => ({
 describe('ResetDatastoreSection component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    window.miqSparkleOn = jest.fn();
-    window.miqSparkleOff = jest.fn();
     window.API = {
       get: jest.fn(),
     };

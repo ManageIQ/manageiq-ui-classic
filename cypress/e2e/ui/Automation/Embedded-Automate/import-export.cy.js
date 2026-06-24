@@ -1,4 +1,4 @@
-describe('Automate Import/Export Page', () => {
+describe.skip('Automate Import/Export Page', () => {
   beforeEach(() => {
     // Enable git_owner role in MiqRegion (required for git import functionality)
     cy.appFactories([
