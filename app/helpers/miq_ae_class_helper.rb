@@ -249,7 +249,7 @@ module MiqAeClassHelper
           cells.push({:text => ae_field.send(fname)})
         end
       end
-      push_data({:id => index.to_s, :clickable => false, :cells => cells})
+      push_data({:id => index.to_s, :field_id => ae_field.id, :clickable => false, :cells => cells})
     end
   end
 
