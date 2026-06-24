@@ -2419,11 +2419,7 @@ Rails.application.routes.draw do
       :post => %w[
         accordion_select
         apply_imports
-        ap_ce_delete
-        ap_ce_select
         ap_edit
-        ap_form_field_changed
-        ap_set_active_tab
         aps_list
         automate_schedules_set_vars
         button
