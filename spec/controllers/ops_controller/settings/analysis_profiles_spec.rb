@@ -1,83 +1,97 @@
 describe OpsController do
-  describe '#ap_set_record_vars_set' do
-    let(:scanitemset) { double }
-
-    context 'missing description' do
-      it 'sets scanitemset parameters' do
-        expect(scanitemset).to receive(:name=).with('some_name')
-        expect(scanitemset).to receive(:description=).with('')
-        expect(scanitemset).to receive(:mode=).with(nil)
-
-        subject.instance_variable_set(:@edit, :new => {:name => 'some_name'})
-
-        subject.send(:ap_set_record_vars_set, scanitemset)
-      end
-    end
-  end
-
   describe '#ap_edit' do
-    context 'adding a new Analysis Profile' do
-      let(:name) { 'Name1' }
-      let(:edit) do
-        {:scan_id => nil,
-         :key     => 'ap_edit__new',
-         :new     => {:name        => name,
-                      :description => 'Description1',
-                      "file"       => {:definition => {"stats" => [{}]}}}}
-      end
+    before do
+      allow(controller).to receive(:assert_privileges)
+    end
+
+    describe '#ap_save_profile' do
+      let(:render_response) { double('render_response') }
 
       before do
-        allow(controller).to receive(:assert_privileges)
-        allow(controller).to receive(:ap_set_record_vars_set).and_call_original
-        allow(controller).to receive(:get_node_info)
-        allow(controller).to receive(:replace_right_cell)
-        allow(controller).to receive(:session).and_return(:edit => edit)
-        controller.params = {:button => 'add'}
+        allow(controller).to receive(:render).and_return(render_response)
       end
 
-      it 'sets the flash message for adding a new Analysis Profile properly' do
-        expect(controller).to receive(:add_flash).with("Analysis Profile \"#{name}\" was saved")
-        controller.send(:ap_edit)
+      context 'when saving a new Analysis Profile from React form data' do
+        let(:form_data) do
+          {
+            :name        => 'Name1',
+            :description => 'Description1',
+            :scan_mode   => 'Vm',
+            :file        => [{'target' => '/tmp/test', 'content' => true}]
+          }.to_json
+        end
+
+        it 'renders a success JSON response' do
+          controller.params = {:button => 'add', :id => 'new', :form_data => form_data}
+
+          expect(controller).to receive(:render).with(
+            :json => hash_including(
+              :success => true,
+              :message => 'Analysis Profile "Name1" was saved',
+              :id      => kind_of(Integer)
+            )
+          )
+
+          controller.send(:ap_edit)
+        end
+      end
+
+      context 'when saving without a name' do
+        let(:form_data) do
+          {
+            :description => 'Description1',
+            :scan_mode   => 'Vm',
+            :file        => [{'target' => '/tmp/test', 'content' => true}]
+          }.to_json
+        end
+
+        it 'renders an unprocessable entity response' do
+          controller.params = {:button => 'add', :id => 'new', :form_data => form_data}
+
+          expect(controller).to receive(:render).with(
+            :json   => {:error => 'Name is required'},
+            :status => 422
+          )
+
+          controller.send(:ap_edit)
+        end
+      end
+
+      context 'when saving without any scan items' do
+        let(:form_data) do
+          {
+            :name        => 'Name1',
+            :description => 'Description1',
+            :scan_mode   => 'Vm'
+          }.to_json
+        end
+
+        it 'renders an unprocessable entity response' do
+          controller.params = {:button => 'add', :id => 'new', :form_data => form_data}
+
+          expect(controller).to receive(:render).with(
+            :json   => {:error => 'At least one item must be entered to create Analysis Profile'},
+            :status => 422
+          )
+
+          controller.send(:ap_edit)
+        end
       end
     end
 
-    context 'adding a new Analysis Profile' do
-      let(:scanitemset) { FactoryBot.create(:scan_item_set) }
-
+    context 'when resetting the form' do
       before do
-        new_hash = {
-          :name        => 'Name1',
-          :description => 'Description1',
-          "file"       => {:definition => {"stats" => [{}]}},
-          "category"   => {:type => 'category', :definition => {"content" => [{"target" => "vmevents"}, {"target" => "services"}]}}
-        }
-
-        edit = {
-          :scan_id => nil,
-          :key     => "ap_edit__#{scanitemset.id}",
-          :current => copy_hash(new_hash),
-          :new     => copy_hash(new_hash)
-        }
-
-        controller.instance_variable_set(:@sb, :ap_active_tab => 'category')
-        session[:edit] = edit
-        allow(controller).to receive(:assert_privileges)
+        controller.instance_variable_set(:@sb, {})
+        allow(controller).to receive(:replace_right_cell)
       end
 
-      it 'saves changes in `edit[:new]` when category is unchecked' do
-        controller.params = {:id => scanitemset.id, "check_services" => "null", "item_type" => "category"}
-        allow(controller).to receive(:render)
-        controller.send(:ap_form_field_changed)
-        edit = assigns(:edit)
-        expect(edit[:new]).to_not eq(edit[:current])
-      end
+      it 'rebuilds the edit screen' do
+        controller.params = {:button => 'reset', :typ => 'Vm'}
 
-      it 'saves changes in `edit[:new]` when category is checked' do
-        controller.params = {:id => scanitemset.id, "check_system" => "System", "item_type" => "category"}
-        allow(controller).to receive(:render)
-        controller.send(:ap_form_field_changed)
-        edit = assigns(:edit)
-        expect(edit[:new]['category'][:definition]['content']).to include("target" => "system")
+        controller.send(:ap_edit)
+
+        expect(assigns(:in_a_form)).to be(true)
+        expect(assigns(:scan)).to be_a(ScanItemSet)
       end
     end
   end

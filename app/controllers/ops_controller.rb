@@ -483,10 +483,7 @@ class OpsController < ApplicationController
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_cancel] = true
       elsif %w[settings_evm_servers settings_list].include?(@sb[:active_tab]) && @in_a_form
-        if %w[ap_copy ap_edit ap_host_edit ap_vm_edit].include?(@sb[:action])
-          action_url = "ap_edit"
-          record_id = @edit[:scan_id] ? @edit[:scan_id] : nil
-        elsif %w[schedule_add schedule_edit].include?(@sb[:action])
+        if %w[schedule_add schedule_edit].include?(@sb[:action])
           action_url = "schedule_edit"
           record_id = @edit[:sched_id] ? @edit[:sched_id] : nil
         elsif %w[zone_edit zone_new].include?(@sb[:action])
