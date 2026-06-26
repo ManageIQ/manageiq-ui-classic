@@ -9,6 +9,7 @@ import {
   FieldArray,
   FormSpy,
   FormRenderer,
+  FormError,
 } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
 import { connect } from 'react-redux';
@@ -48,6 +49,7 @@ const MiqFormRenderer = ({
   schema: { fields, ...schema },
   initialize,
   onSubmit,
+  validate,
   ...props
 }) => {
   const { current: MiqFormTemplate } = useRef((props) => (
@@ -69,6 +71,7 @@ const MiqFormRenderer = ({
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
       onSubmit={submitWrapper(onSubmit)}
       onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+      validate={validate}
       {...props}
     />
   );
@@ -90,6 +93,7 @@ MiqFormRenderer.propTypes = {
   showFormControls: PropTypes.bool,
   initialize: PropTypes.func,
   onSubmit: PropTypes.func,
+  validate: PropTypes.func,
 };
 
 MiqFormRenderer.defaultProps = {
@@ -104,9 +108,10 @@ MiqFormRenderer.defaultProps = {
   showFormControls: true,
   initialize: undefined,
   onSubmit: () => undefined,
+  validate: () => undefined,
 };
 
 export {
-  componentTypes, validatorTypes, useFormApi, useFieldApi, FieldArray, FormSpy,
+  componentTypes, validatorTypes, useFormApi, useFieldApi, FieldArray, FormSpy, FormError,
 };
 export default connect()(MiqFormRenderer);

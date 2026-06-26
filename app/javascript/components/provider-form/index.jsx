@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { componentTypes, validatorTypes } from '@@ddf';
+import { componentTypes, validatorTypes, FormError } from '@@ddf';
 import { pick, keyBy } from 'lodash';
 
 import { API } from '../../http_api';
@@ -25,7 +25,10 @@ const ProviderForm = ({
   providerId, kind, title, redirect,
 }) => {
   const edit = !!providerId;
-  const [{ fields, initialValues }, setState] = useState({});
+  // Initialize isAwaitingProviderFieldsInAddForm based on edit mode:
+  // - In add mode (!edit): true (fields need to be loaded after type selection)
+  // - In edit mode (edit): false (fields are loaded immediately in useEffect)
+  const [{ fields, initialValues, isAwaitingProviderFieldsInAddForm = !edit }, setState] = useState({});
 
   const submitLabel = edit ? __('Save') : __('Add');
 
@@ -82,9 +85,20 @@ const ProviderForm = ({
     options: providers,
     onChange: (value) => {
       if (value !== '-1') {
-        loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
-          fields: [firstField, ...fields],
-        })));
+        setState((currentState) => ({
+          ...currentState,
+          isAwaitingProviderFieldsInAddForm: true,
+        }));
+        loadProviderFields(value)
+          .then((fields) =>
+            setState(({ fields: [firstField] }) => ({
+              fields: [firstField, ...fields],
+            })))
+          .finally(() =>
+            setState((currentState) => ({
+              ...currentState,
+              isAwaitingProviderFieldsInAddForm: false,
+            })));
       } else {
         setState(({ fields: [firstField] }) => ({
           fields: [firstField,
@@ -94,6 +108,7 @@ const ProviderForm = ({
               name: 'networkWarning',
               label: __('Please select a type.'),
             }],
+          isAwaitingProviderFieldsInAddForm: true,
         }));
       }
     },
@@ -183,8 +198,9 @@ const ProviderForm = ({
       });
 
       const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
-      request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
+      return request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
     }
+    return null;
   };
 
   const componentMapper = {
@@ -210,6 +226,12 @@ const ProviderForm = ({
             canReset={edit}
             clearOnUnmount
             keepDirtyOnReinitilize
+            validate={() => {
+              if (isAwaitingProviderFieldsInAddForm) {
+                return { [FormError]: 'Awaiting provider fields in add form' };
+              }
+              return {};
+            }}
           />
         </EditingContext.Provider>
       ) }
