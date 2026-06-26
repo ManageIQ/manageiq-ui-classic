@@ -1,5 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "inheritConfig": true,
-  "inheritConfigRepoName": "manageiq/renovate-config"
+  "inheritConfigRepoName": "manageiq/renovate-config",
+  "packageRules": [
+    {
+      "description": "Auto-update Jest snapshots for Carbon packages",
+      "matchPackageNames": ["@carbon/charts-react", "@carbon/react"],
+      "postUpgradeTasks": {
+        "commands": [
+          "yarn test -u"
+        ],
+        "fileFilters": ["**/*.snap"],
+        "executionMode": "branch"
+      }
+    }
+  ]
 }
