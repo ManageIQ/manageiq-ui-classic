@@ -40,6 +40,7 @@ const MiqCustomTab = ({
     { type: 'DIAGNOSTICS_SERVER', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
     { type: 'DIAGNOSTICS_ROOT', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
     { type: 'SERVICE' },
+    { type: 'REPORT', url: `/report/rep_change_tab?tab_id=${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
