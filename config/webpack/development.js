@@ -12,7 +12,7 @@ const {
 
 module.exports = merge(sharedConfig, {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   plugins: [
     new NodeVersionCheckPlugin(),
   ],
