@@ -468,17 +468,28 @@ Cypress.Commands.add(
             buttonText: 'Add',
             buttonType: 'submit',
           })
-          .click(),
-      ...(isAzureStack && {
-        responseInterceptor: (req) => {
+          .click()
+          .then((addButton) => {
+            // Immediately check button state after click to verify it's disabled during API call
+            expect(addButton).to.be.disabled;
+          }),
+      responseInterceptor: (req) => {
+        if (isAzureStack) {
           // Let the request go through to the server(so that the data is created) and then override
           // the response statusCode to 200, server will return internal_server_error(500) since we are
           // using mock values for fields like host, port, etc.
           req.continue((res) => {
+            // Delay is required to validate button state, otherwise response is returned immediately
+            res.setDelay(500);
             res.send(200);
           });
-        },
-      }),
+        } else {
+          req.on('response', (res) => {
+            // Delay is required to validate button state, otherwise response is returned immediately
+            res.setDelay(500);
+          });
+        }
+      },
     });
   }
 );
