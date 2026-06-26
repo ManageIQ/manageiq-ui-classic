@@ -2008,7 +2008,6 @@ Rails.application.routes.draw do
         get_form_targets
         resolve
         resolve_automate_simulation
-        review_import
         get_simulation_form_vars
       ],
       :post => %w[
@@ -2021,7 +2020,6 @@ Rails.application.routes.draw do
         resolve
         resolve_automate_simulation
         retrieve_git_datastore
-        upload
         upload_import_file
         wait_for_task
       ]
