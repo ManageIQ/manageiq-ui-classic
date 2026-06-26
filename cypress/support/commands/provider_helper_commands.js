@@ -131,7 +131,32 @@ function validateCommonFormFields(providerConfig, isEdit) {
             .and('be.enabled');
           // Select the type if it's the type field in add mode
           if (field.id === 'type' && !isEdit) {
-            cy.getFormSelectFieldById({ selectId: field.id }).select(providerConfig.type);
+            cy.interceptApi({
+              alias: 'providerOptionsApi',
+              method: 'OPTIONS',
+              urlPattern: '/api/providers?type=*',
+              triggerFn: () => {
+                cy.getFormSelectFieldById({ selectId: field.id }).select(
+                  providerConfig.type
+                );
+                // Ensure add button stays disabled immediately after type selection
+                cy.getFormButtonByTypeWithText({
+                  buttonText: 'Add',
+                  buttonType: 'submit',
+                }).then((addButton) => {
+                  expect(addButton).to.be.disabled;
+                });
+              },
+              onApiResponse: () => {
+                // Verify add button remains disabled after API completes
+                cy.getFormButtonByTypeWithText({
+                  buttonText: 'Add',
+                  buttonType: 'submit',
+                }).then((addButton) => {
+                  expect(addButton).to.be.disabled;
+                });
+              },
+            });
           }
         }
         break;
