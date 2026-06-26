@@ -198,8 +198,9 @@ const ProviderForm = ({
       });
 
       const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
-      request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
+      return request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
     }
+    return null;
   };
 
   const componentMapper = {
