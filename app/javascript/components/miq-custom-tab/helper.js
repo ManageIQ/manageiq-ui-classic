@@ -110,6 +110,12 @@ const aeClass = {
   schema: __('Schema'),
 };
 
+/** Tab labels used for the Dialog details page. */
+const dialog = {
+  sample_tab: __('Sample'),
+  info_tab: __('Basic Info'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -127,6 +133,7 @@ export const labelConfig = (type) => {
     SERVICE: service,
     REPORT: report,
     AE_CLASS: aeClass,
+    DIALOG: dialog,
   };
 
   return configMap[type];
