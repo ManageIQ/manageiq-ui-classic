@@ -180,14 +180,6 @@ window.miqOnCheckGenealogy = (key, checked, tree) => {
     { beforeSend: true, complete: true });
 };
 
-// Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
-window.miqOnCheckTenantTree = function(key) {
-  sendDataWithRx({
-    controller: 'catalogItemFormController',
-    key: key,
-  });
-}
-
 window.miqCheckAll = function(cb, treeName) {
   // Set the checkboxes according to the master checkbox
   ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});

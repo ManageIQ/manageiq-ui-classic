@@ -734,8 +734,6 @@ MiqAeClassController:
 - ae_tree_select_discard
 - ae_tree_select_toggle
 - copy_objects
-- embedded_methods_add
-- embedded_methods_remove
 - expand_toggle
 - field_method_accept
 - field_method_delete
