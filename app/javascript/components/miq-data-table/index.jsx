@@ -94,9 +94,11 @@ const MiqDataTable = ({
     if (header.header.split('_')[0] === DefaultKey) {
       isSortable = false;
     }
+    const { key, ...headerProps } = getHeaderProps({ header, isSortHeader: { sortable } });
     return (
       <TableHeader
-        {...getHeaderProps({ header, isSortHeader: { sortable } })}
+        key={key}
+        {...headerProps}
         onClick={() => sortable && onSort(header)}
         isSortable={isSortable}
         isSortHeader={sortHeader}
@@ -166,9 +168,11 @@ const MiqDataTable = ({
             <TableBody>
               {sortableRows(rows).map((row, index) => {
                 const item = propRows[index];
+                const { key, ...rowProps } = getRowProps({ row });
                 return (
                   <TableRow
-                    {...getRowProps({ row })}
+                    key={key}
+                    {...rowProps}
                     title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
                     tabIndex={(item && item.clickable === false) ? '' : index.toString()}

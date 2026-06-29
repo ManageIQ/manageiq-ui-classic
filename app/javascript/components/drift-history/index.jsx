@@ -81,20 +81,24 @@ const DriftHistory = ({ timestamps }) => {
               <TableHead>
                 <TableRow>
                   <TableHeader className="drift-history-checkbox-cell" />
-                  {headers.map((header) => (
-                    <TableHeader key={header.key} {...getHeaderProps({ header })}>
-                      {header.header}
-                    </TableHeader>
-                  ))}
+                  {headers.map((header) => {
+                    const { key, ...headerProps } = getHeaderProps({ header });
+                    return (
+                      <TableHeader key={key} {...headerProps}>
+                        {header.header}
+                      </TableHeader>
+                    );
+                  })}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.map((row) => {
                   const checkboxIndex = parseInt(row.id, 10);
                   const isChecked = selectedRows.includes(checkboxIndex);
+                  const { key, ...rowProps } = getRowProps({ row });
 
                   return (
-                    <TableRow key={row.id} {...getRowProps({ row })}>
+                    <TableRow key={key} {...rowProps}>
                       <TableCell className="drift-history-checkbox-cell">
                         <Checkbox
                           id={`check_${checkboxIndex}`}
