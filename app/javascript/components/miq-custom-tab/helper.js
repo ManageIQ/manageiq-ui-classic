@@ -88,6 +88,12 @@ const diagnosticsRoot = {
   database: __('Database'),
 };
 
+/** Tab labels used for the Dialog details page. */
+const dialog = {
+  sample_tab: __('Sample'),
+  info_tab: __('Basic Info'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -102,6 +108,7 @@ export const labelConfig = (type) => {
     DIAGNOSTICS_ZONE: diagnosticsZone,
     DIAGNOSTICS_SERVER: diagnosticsServer,
     DIAGNOSTICS_ROOT: diagnosticsRoot,
+    DIALOG: dialog,
   };
 
   return configMap[type];
