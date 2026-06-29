@@ -14,7 +14,6 @@ const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, ne
            || undefined;
 
   const props = {
-    key: item.id,
     ref,
     ...item,
   };
@@ -22,6 +21,7 @@ const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, ne
   return (
     item.items.length ? (
       <MenuSection
+        key={item.id}
         {...props}
         hover={item.id === activeSection}
         onSelect={onSelect}
@@ -29,7 +29,7 @@ const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, ne
         itemPosition={itemPosition}
       />
     ) : (
-      <MenuItem {...props} />
+      <MenuItem key={item.id} {...props} />
     )
   );
 });
