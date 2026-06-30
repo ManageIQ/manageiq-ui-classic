@@ -1,6 +1,8 @@
 #class_fields_div
   - if x_node.split('-')[0] == "aec" || params[:pressed] || %w(field_select field_accept field_delete).include?(params[:action])
-    - if !@in_a_form_fields
+    - if @sb[:action] == 'miq_ae_field_seq'
+      = render :partial => 'fields_seq_form'
+    - elsif !@in_a_form_fields
       / Show Schema
       %h3= _('Schema')
       - if @ae_class.ae_fields.present?
