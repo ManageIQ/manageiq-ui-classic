@@ -1,0 +1,113 @@
+.chargeback-assignments-form {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: visible !important;
+
+  .form-section {
+    margin-bottom: 1.5rem;
+    overflow: visible !important;
+    
+    .cds--dropdown {
+      max-width: 400px;
+    }
+  }
+
+  .form-buttons {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  // DataTable overflow fixes to prevent dropdown clipping
+  .cds--data-table {
+    margin-bottom: 1.5rem;
+    overflow: visible !important;
+  }
+
+  .cds--data-table td {
+    vertical-align: middle;
+  }
+
+  .cds--data-table-content {
+    overflow: visible !important;
+  }
+
+  .dropdown-cell-wrapper {
+    overflow: visible !important;
+  }
+}
+
+// Tag Selection Component
+.tag-selection {
+  overflow: visible !important;
+
+  h3 {
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375;
+    color: var(--cds-text-primary, #161616);
+  }
+
+  hr {
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  }
+
+  .empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--cds-text-secondary, #525252);
+    font-size: 0.875rem;
+    line-height: 1.28572;
+  }
+}
+
+// Label Selection Component
+.label-selection {
+  overflow: visible !important;
+
+  h3 {
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375;
+    color: var(--cds-text-primary, #161616);
+  }
+
+  hr {
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  }
+
+  .empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--cds-text-secondary, #525252);
+    font-size: 0.875rem;
+    line-height: 1.28572;
+  }
+}
+
+// Empty state styling
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.875rem;
+  line-height: 1.28572;
+}
+
+// Loading state styling
+.chargeback-assignments-loading {
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

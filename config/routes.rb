@@ -354,13 +354,8 @@ Rails.application.routes.draw do
     },
 
     :chargeback_assignment => {
-      :get  => %w[
-        change_tab
+      :get => %w[
         index
-      ],
-      :post => %w[
-        form_field_changed
-        update
       ]
     },
     :chargeback_rate => {
