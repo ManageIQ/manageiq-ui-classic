@@ -48,7 +48,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
     ManageIQ.angular.scope = $scope;
 
-    $http.get('/miq_ae_class/method_form_fields/' + aeMethodFormId + '?location=' + location)
+    $http.get('/miq_ae_class/method_form_fields1/' + aeMethodFormId + '?location=' + location)
       .then(getMethodFormData)
       .catch(miqService.handleFailure);
     vm.saveable = miqService.saveable;
