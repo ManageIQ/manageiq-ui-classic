@@ -428,3 +428,50 @@ describe('Overview > Reports Tests', () => {
     });
   });
 });
+
+describe('Report Info / Saved Reports Tabs', () => {
+  beforeEach(() => {
+    cy.login();
+    cy.menu('Overview', 'Reports');
+    cy.accordion('Reports');
+    cy.selectAccordionItem(['Configuration Management', 'Virtual Machines']);
+    cy.contains('.clickable-row', 'Account Groups - Linux').click();
+  });
+
+  it('displays report tabs and switches between Report Info and Saved Reports', () => {
+    cy.get('#rep-tabs-wrapper').should('be.visible');
+    cy.get('.miq_custom_tabs').should('be.visible');
+
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
+
+    cy.intercept('/report/rep_change_tab*').as('changeTab');
+    cy.contains('button', 'Saved Reports').should('be.visible').click();
+    cy.wait('@changeTab');
+
+    cy.get('#saved_reports').should('have.class', 'active');
+    cy.get('#gtl_div').should('be.visible');
+
+    cy.contains('button', 'Report Info').should('be.visible').click();
+    cy.wait('@changeTab');
+
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
+  });
+
+  it('resets to Report Info tab when navigating away and back to a report', () => {
+    cy.intercept('/report/rep_change_tab*').as('changeTab');
+    cy.contains('button', 'Saved Reports').should('be.visible').click();
+    cy.wait('@changeTab');
+    cy.get('#saved_reports').should('have.class', 'active');
+
+    cy.get('#reports_accord.in li.list-group-item').contains('Configuration Management').click();
+
+    cy.selectAccordionItem(['Configuration Management', 'Virtual Machines']);
+    cy.contains('.clickable-row', 'Account Groups - Linux').click();
+
+    cy.get('#rep-tabs-wrapper').should('be.visible');
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
+  });
+});
