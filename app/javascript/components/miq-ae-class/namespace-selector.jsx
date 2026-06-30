@@ -62,7 +62,6 @@ const NamespaceSelector = (props) => {
               labelText={__(label)}
               value={textValue}
               onChange={handleChange}
-              // disabled
             />
           </div>
           <div style={{ display: 'flex', gap: '4px' }}>

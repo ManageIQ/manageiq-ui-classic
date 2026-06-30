@@ -52,9 +52,7 @@ class MiqAeClassController < ApplicationController
     'miq_ae_field_seq'            => :fields_seq_edit,
     'miq_ae_instance_copy'        => :copy_objects,
     'miq_ae_instance_delete'      => :deleteinstances,
-    # 'miq_ae_instance_edit'        => :edit_instance,
     'miq_ae_instance_edit'        => :edit_instance_react,
-    # 'miq_ae_instance_new'         => :new_instance,
     'miq_ae_instance_new'         => :new_instance_react,
     'miq_ae_item_edit'            => :edit_item,
     'miq_ae_method_copy'          => :copy_objects,
@@ -318,7 +316,6 @@ class MiqAeClassController < ApplicationController
       presenter.update(:main_div, r[:partial => "copy_objects_form_react"])
 
     elsif %w[miq_ae_instance_new miq_ae_instance_edit].include?(@sb[:action])
-      # React form for instance add/edit
       presenter.update(:main_div, r[:partial => "instance_form_react"])
 
     else
@@ -697,39 +694,35 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  # API for creating new instance
   def instance_create
     assert_privileges("miq_ae_instance_new")
-    
+
     class_id = params[:class_id]
     raise "class_id parameter is required" unless class_id
-    
+
     ae_class = MiqAeClass.find(class_id)
-    
-    # Validate required fields
+
     if params[:name].blank?
       render :json => {:error => _("Name is required")}, :status => :bad_request
       return
     end
-    
-    # Create new instance
+
     add_aeinst = MiqAeInstance.new
     add_aeinst.name = params[:name].strip
     add_aeinst.display_name = params[:display_name]
     add_aeinst.description = params[:description]
     add_aeinst.class_id = class_id
-    
-    # Create ae_values from params
+
     ae_values = []
     fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
-    
+
     if params[:ae_values].is_a?(Array)
       fields.each_with_index do |field, index|
         value_params = params[:ae_values][index] || {}
         ae_value = MiqAeValue.new(:field_id => field.id.to_s)
         ae_value.value = value_params[:value] || ''
         ae_value.collect = value_params[:collect] || ''
-        
+
         if ae_class.state_machine? && field.aetype == 'state'
           ae_value.on_entry = value_params[:on_entry] || ''
           ae_value.on_exit = value_params[:on_exit] || ''
@@ -737,53 +730,49 @@ class MiqAeClassController < ApplicationController
           ae_value.max_retries = value_params[:max_retries] || ''
           ae_value.max_time = value_params[:max_time] || ''
         end
-        
+
         ae_values << ae_value
       end
     end
-    
+
     begin
       MiqAeInstance.transaction do
         add_aeinst.ae_values = ae_values
         add_aeinst.ae_values.each { |v| v.value = nil if v.value == "" }
         add_aeinst.save!
       end
-      
+
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name}}
     rescue StandardError => e
       render :json => {:error => _("Error during 'add': %{message}") % {:message => e.message}}, :status => :bad_request
     end
   end
 
-  # API for updating an instance
   def instance_update
     assert_privileges("miq_ae_instance_edit")
-    
+
     ae_inst = MiqAeInstance.find(params[:id])
     ae_class = ae_inst.ae_class
-    
-    # Validate required fields
+
     if params[:name].blank?
       render :json => {:error => _("Name is required")}, :status => :bad_request
       return
     end
-    
-    # Update instance attributes
+
     ae_inst.name = params[:name].strip
     ae_inst.display_name = params[:display_name]
     ae_inst.description = params[:description]
-    
-    # Update ae_values
+
     fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
-    
+
     if params[:ae_values].is_a?(Array)
       fields.each_with_index do |field, index|
         value_params = params[:ae_values][index] || {}
         ae_value = ae_inst.ae_values.find_or_initialize_by(:field_id => field.id.to_s)
-        
+
         ae_value.value = value_params[:value] || ''
         ae_value.collect = value_params[:collect] || ''
-        
+
         if ae_class.state_machine? && field.aetype == 'state'
           ae_value.on_entry = value_params[:on_entry] || ''
           ae_value.on_exit = value_params[:on_exit] || ''
@@ -791,17 +780,17 @@ class MiqAeClassController < ApplicationController
           ae_value.max_retries = value_params[:max_retries] || ''
           ae_value.max_time = value_params[:max_time] || ''
         end
-        
+
         ae_value.save! if ae_value.changed?
       end
     end
-    
+
     begin
       MiqAeInstance.transaction do
         ae_inst.ae_values.each { |v| v.value = nil if v.value == "" }
         ae_inst.save!
       end
-      
+
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was saved") % {:name => ae_inst.name}}
     rescue StandardError => e
       render :json => {:error => _("Error during 'save': %{message}") % {:message => e.message}}, :status => :bad_request
@@ -1436,28 +1425,25 @@ class MiqAeClassController < ApplicationController
     replace_right_cell
   end
 
-  # React version - Add new instance
   def new_instance_react
     assert_privileges("miq_ae_instance_new")
-    
-    # Get class_id from x_node
+
     nodes = x_node.split('-')
     class_id = nodes.last if nodes.first == 'aec'
-    
+
     @record_id = nil
     @class_id = class_id
     @in_a_form = true
-    @angular_form = true  # Use this flag to indicate React form
+    @hide_bottom_bar = true
     @sb[:action] = "miq_ae_instance_new"
     @right_cell_text = _("Adding a new Automate Instance")
-    
+
     replace_right_cell
   end
 
-  # React version - Edit instance
   def edit_instance_react
     assert_privileges("miq_ae_instance_edit")
-    
+
     obj = find_checked_items
     if obj.present?
       @sb[:row_selected] = obj[0]
@@ -1465,65 +1451,58 @@ class MiqAeClassController < ApplicationController
     else
       id = x_node.split('-')
     end
-    
+
     @record_id = id[1]
     @class_id = nil
     @in_a_form = true
-    @angular_form = true  # Use this flag to indicate React form
+    @hide_bottom_bar = true
     @sb[:action] = "miq_ae_instance_edit"
-    
+
     ae_inst = MiqAeInstance.find(@record_id)
     @right_cell_text = _("Editing Automate Instance \"%{name}\"") % {:name => ae_inst.name}
-    
+
     replace_right_cell
   end
 
-  # API endpoint for React form - Get instance form data
   def instance_form_data
     assert_privileges(params[:id] == "new" ? "miq_ae_instance_new" : "miq_ae_instance_edit")
+
     if params[:id] == "new"
-      # New instance
       class_id = params[:class_id]
       raise "class_id parameter is required for new instance" unless class_id
-      
+
       ae_class = MiqAeClass.find(class_id)
       ae_inst = MiqAeInstance.new
-      
-      # Get fields and initialize values
+
       fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
       ae_values = fields.map do |fld|
         MiqAeValue.new(:field_id => fld.id.to_s)
       end
-      
+
       namespace_path = ae_class.fqname
     else
-      # Edit existing instance
       ae_inst = MiqAeInstance.find(params[:id])
       ae_class = ae_inst.ae_class
-      
-      # Get fields and values
+
       fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
       ae_values = fields.map do |fld|
         ae_inst.ae_values.find_or_initialize_by(:field_id => fld.id.to_s)
       end
-      
+
       namespace_path = ae_inst.fqname
     end
-    
-    # Build field data with icons (similar to class_field_data helper)
+
     fields_with_values = fields.each_with_index.map do |field, index|
       ae_value = ae_values[index]
-      
-      # Build icons array like in class_field_data
+
       multiple_icons = [ae_field_fonticon(field.aetype)]
       unless field.datatype.blank? || field.datatype == 'string'
         multiple_icons.push(ae_field_fonticon(field.datatype))
       end
       multiple_icons.push("pficon-ok#{field.substitute ? '' : '-closed'}")
-      
-      # Get field name (display_name or name)
+
       field_name = field.display_name.blank? ? field.name : field.display_name
-      
+
       {
         :id            => field.id,
         :name          => field.name,
@@ -1540,7 +1519,7 @@ class MiqAeClassController < ApplicationController
         :on_error      => field.on_error,
         :max_retries   => field.max_retries,
         :max_time      => field.max_time,
-        :value         => field.datatype == 'password' ? '********' : (ae_value.value || field.default_value || ''),
+        :value             => field.datatype == 'password' ? '********' : (ae_value.value || field.default_value || ''),
         :value_collect     => ae_value.collect || field.collect || '',
         :value_on_entry    => ae_value.on_entry || field.on_entry || '',
         :value_on_exit     => ae_value.on_exit || field.on_exit || '',
@@ -1549,19 +1528,17 @@ class MiqAeClassController < ApplicationController
         :value_max_time    => ae_value.max_time || field.max_time || ''
       }
     end
-    
-    response_data = {
+
+    render :json => {
       :instance => {
         :name         => ae_inst.name || '',
         :display_name => ae_inst.display_name || '',
         :description  => ae_inst.description || ''
       },
-      :fields => fields_with_values,
+      :fields         => fields_with_values,
       :is_state_class => ae_class.state_machine?,
       :namespace_path => namespace_path
     }
-    
-    render :json => response_data
   rescue => e
     render :json => {:error => e.message}, :status => :bad_request
   end
@@ -2078,7 +2055,6 @@ class MiqAeClassController < ApplicationController
     class_update_create
   end
 
-  # API endpoint to handle copy operation with form data
   def copy_objects_save
     assert_privileges(feature_by_action)
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
@@ -2090,7 +2066,7 @@ class MiqAeClassController < ApplicationController
       @record = @edit[:typ].find(@edit[:rec_id])
       domain = MiqAeDomain.find(@edit[:new][:domain])
       @edit[:new][:new_name] = nil if @edit[:new][:new_name] == @edit[:old_name]
-      
+
       options = {
         :ids                => @edit[:selected_items].keys,
         :domain             => domain.name,
@@ -2100,15 +2076,15 @@ class MiqAeClassController < ApplicationController
         :fqname             => @edit[:fqname]
       }
       res = @edit[:typ].copy(options)
-      
+
       model = @edit[:selected_items].count > 1 ? :models : :model
       message = _("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)}
-      
+
       @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
       self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{@record.id}"
       @in_a_form = @changed = session[:changed] = false
       @sb[:action] = @edit = session[:edit] = nil
-      
+
       render :json => {:message => message, :redirect_url => '/miq_ae_class/explorer'}
     rescue StandardError => bang
       render :json => {:error => bang.message}, :status => :bad_request
@@ -2119,12 +2095,12 @@ class MiqAeClassController < ApplicationController
     assert_privileges(feature_by_action)
     @edit = session[:edit]
     build_automate_tree(:automate)
-    
+
     render :json => {
-      tree_name: @automate_tree.name,
-      bs_tree: @automate_tree.locals_for_render[:bs_tree],
-      click_url: url_for_only_path(:action => 'ae_tree_select'),
-      onclick: 'ae_tree_select'
+      :tree_name  => @automate_tree.name,
+      :bs_tree    => @automate_tree.locals_for_render[:bs_tree],
+      :click_url  => url_for_only_path(:action => 'ae_tree_select'),
+      :onclick    => 'ae_tree_select'
     }
   end
 
@@ -2132,19 +2108,19 @@ class MiqAeClassController < ApplicationController
     assert_privileges(feature_by_action)
     node_id = params[:node_id]
     include_domain = params[:include_domain] == 'true'
-    
+
     if node_id&.start_with?('aen-')
       id = node_id.gsub('aen-', '')
       record = MiqAeNamespace.find_by(:id => id)
-      
+
       if record && !record.domain?
         path = include_domain ? record.fqname : record.fqname_sans_domain
-        render :json => { path: path }
+        render :json => {:path => path}
       else
-        render :json => { error: 'Invalid namespace' }, :status => 400
+        render :json => {:error => 'Invalid namespace'}, :status => 400
       end
     else
-      render :json => { error: 'Invalid node type' }, :status => 400
+      render :json => {:error => 'Invalid node type'}, :status => 400
     end
   end
 

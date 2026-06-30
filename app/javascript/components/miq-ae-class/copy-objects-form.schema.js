@@ -64,7 +64,6 @@ const createSchema = (domains, selectedItems, domainName, typeName, isSingleItem
       name: 'selected_items_table',
       selectedItems,
     },
-    // Hidden fields to track state
     {
       component: componentTypes.TEXT_FIELD,
       name: 'is_single_item',

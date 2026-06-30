@@ -77,7 +77,6 @@ const CopyObjectsForm = ({ recordId, editData }) => {
   };
 
   const onReset = () => {
-    // For React form, reset just reloads the page to get fresh data
     window.location.reload();
   };
 
