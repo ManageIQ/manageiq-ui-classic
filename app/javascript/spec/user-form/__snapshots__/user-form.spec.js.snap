@@ -43,7 +43,6 @@ exports[`User Form Component should render add User form correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -87,7 +86,6 @@ exports[`User Form Component should render add User form correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -131,7 +129,6 @@ exports[`User Form Component should render add User form correctly 1`] = `
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -175,7 +172,6 @@ exports[`User Form Component should render add User form correctly 1`] = `
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -213,7 +209,6 @@ exports[`User Form Component should render add User form correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -228,7 +223,7 @@ exports[`User Form Component should render add User form correctly 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-0-label"
+          id="downshift-:r2:-label"
         >
           <span
             aria-hidden="true"
@@ -247,19 +242,19 @@ exports[`User Form Component should render add User form correctly 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-0-menu"
+              aria-controls="downshift-:r2:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-0-label"
+              aria-labelledby="downshift-:r2:-label"
               class="cds--list-box__field"
-              id="downshift-0-toggle-button"
+              id="downshift-:r2:-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-1"
+                id="multiselect-field-label-id-:r0:"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -287,13 +282,12 @@ exports[`User Form Component should render add User form correctly 1`] = `
                 </svg>
               </div>
             </button>
-            
           </div>
           <ul
-            aria-labelledby="downshift-0-label"
+            aria-labelledby="downshift-:r2:-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-0-menu"
+            id="downshift-:r2:-menu"
             role="listbox"
           />
         </div>
@@ -374,7 +368,6 @@ exports[`User Form Component should render copy User form correclty 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -418,7 +411,6 @@ exports[`User Form Component should render copy User form correclty 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -462,7 +454,6 @@ exports[`User Form Component should render copy User form correclty 1`] = `
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -506,7 +497,6 @@ exports[`User Form Component should render copy User form correclty 1`] = `
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -544,7 +534,6 @@ exports[`User Form Component should render copy User form correclty 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -559,7 +548,7 @@ exports[`User Form Component should render copy User form correclty 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-6-label"
+          id="downshift-:rr:-label"
         >
           <span
             aria-hidden="true"
@@ -578,19 +567,19 @@ exports[`User Form Component should render copy User form correclty 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-6-menu"
+              aria-controls="downshift-:rr:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-6-label"
+              aria-labelledby="downshift-:rr:-label"
               class="cds--list-box__field"
-              id="downshift-6-toggle-button"
+              id="downshift-:rr:-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-18"
+                id="multiselect-field-label-id-:rp:"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -618,13 +607,12 @@ exports[`User Form Component should render copy User form correclty 1`] = `
                 </svg>
               </div>
             </button>
-            
           </div>
           <ul
-            aria-labelledby="downshift-6-label"
+            aria-labelledby="downshift-:rr:-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-6-menu"
+            id="downshift-:rr:-menu"
             role="listbox"
           />
         </div>
@@ -706,7 +694,6 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
               type="text"
               value="Administrator"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -751,7 +738,6 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
               type="text"
               value="admin"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -806,7 +792,6 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
                     type="password"
                     value=""
                   />
-                  
                   <span
                     aria-atomic="true"
                     aria-live="assertive"
@@ -827,7 +812,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-12"
+                  aria-labelledby="tooltip-:rg:"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -853,7 +838,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-12"
+                id="tooltip-:rg:"
                 role="tooltip"
               >
                 <span
@@ -897,7 +882,6 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
               type="text"
               value="test@email.com"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -912,7 +896,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
       >
         <label
           class="cds--label cds--label--disabled"
-          id="downshift-4-label"
+          id="downshift-:rl:-label"
         >
           <span
             aria-hidden="true"
@@ -931,21 +915,21 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-4-menu"
+              aria-controls="downshift-:rl:-menu"
               aria-disabled="true"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-4-label"
+              aria-labelledby="downshift-:rl:-label"
               class="cds--list-box__field"
               disabled=""
-              id="downshift-4-toggle-button"
+              id="downshift-:rl:-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-14"
+                id="multiselect-field-label-id-:rj:"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -973,13 +957,12 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
                 </svg>
               </div>
             </button>
-            
           </div>
           <ul
-            aria-labelledby="downshift-4-label"
+            aria-labelledby="downshift-:rl:-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-4-menu"
+            id="downshift-:rl:-menu"
             role="listbox"
           />
         </div>
@@ -1067,7 +1050,6 @@ exports[`User Form Component should render edit User form correclty 1`] = `
               type="text"
               value="test name"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1111,7 +1093,6 @@ exports[`User Form Component should render edit User form correclty 1`] = `
               type="text"
               value="testuser"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1166,7 +1147,6 @@ exports[`User Form Component should render edit User form correclty 1`] = `
                     type="password"
                     value=""
                   />
-                  
                   <span
                     aria-atomic="true"
                     aria-live="assertive"
@@ -1187,7 +1167,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-5"
+                  aria-labelledby="tooltip-:r6:"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -1213,7 +1193,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-5"
+                id="tooltip-:r6:"
                 role="tooltip"
               >
                 <span
@@ -1257,7 +1237,6 @@ exports[`User Form Component should render edit User form correclty 1`] = `
               type="text"
               value="test@email.com"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1272,7 +1251,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-2-label"
+          id="downshift-:rb:-label"
         >
           <span
             aria-hidden="true"
@@ -1291,19 +1270,19 @@ exports[`User Form Component should render edit User form correclty 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-2-menu"
+              aria-controls="downshift-:rb:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-2-label"
+              aria-labelledby="downshift-:rb:-label"
               class="cds--list-box__field"
-              id="downshift-2-toggle-button"
+              id="downshift-:rb:-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-7"
+                id="multiselect-field-label-id-:r9:"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -1331,13 +1310,12 @@ exports[`User Form Component should render edit User form correclty 1`] = `
                 </svg>
               </div>
             </button>
-            
           </div>
           <ul
-            aria-labelledby="downshift-2-label"
+            aria-labelledby="downshift-:rb:-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-2-menu"
+            id="downshift-:rb:-menu"
             role="listbox"
           />
         </div>

@@ -60,7 +60,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -104,7 +103,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -141,7 +139,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -173,7 +170,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
               dir="auto"
             >
               Verify Peer Certificate
-              
             </div>
           </label>
           <div

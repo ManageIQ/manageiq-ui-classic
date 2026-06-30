@@ -34,10 +34,10 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
       role="tablist"
     >
       <button
-        aria-controls="ccs-3-tabpanel-0"
+        aria-controls="ccs-:r2:-tabpanel-0"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-        id="ccs-3-tab-0"
+        id="ccs-:r2:-tab-0"
         role="tab"
         tabindex="0"
         type="button"
@@ -82,10 +82,10 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
         </button>
       </div>
       <button
-        aria-controls="ccs-3-tabpanel-1"
+        aria-controls="ccs-:r2:-tabpanel-1"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-3-tab-1"
+        id="ccs-:r2:-tab-1"
         role="tab"
         tabindex="-1"
         type="button"
@@ -130,10 +130,10 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
         </button>
       </div>
       <button
-        aria-controls="ccs-3-tabpanel-2"
+        aria-controls="ccs-:r2:-tabpanel-2"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-3-tab-2"
+        id="ccs-:r2:-tab-2"
         role="tab"
         tabindex="-1"
         type="button"
@@ -238,10 +238,10 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
       role="tablist"
     >
       <button
-        aria-controls="ccs-1-tabpanel-0"
+        aria-controls="ccs-:r0:-tabpanel-0"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-        id="ccs-1-tab-0"
+        id="ccs-:r0:-tab-0"
         role="tab"
         tabindex="0"
         type="button"
@@ -286,10 +286,10 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
         </button>
       </div>
       <button
-        aria-controls="ccs-1-tabpanel-1"
+        aria-controls="ccs-:r0:-tabpanel-1"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-1-tab-1"
+        id="ccs-:r0:-tab-1"
         role="tab"
         tabindex="-1"
         type="button"
@@ -334,10 +334,10 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
         </button>
       </div>
       <button
-        aria-controls="ccs-1-tabpanel-2"
+        aria-controls="ccs-:r0:-tabpanel-2"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-1-tab-2"
+        id="ccs-:r0:-tab-2"
         role="tab"
         tabindex="-1"
         type="button"
@@ -442,10 +442,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       role="tablist"
     >
       <button
-        aria-controls="ccs-2-tabpanel-0"
+        aria-controls="ccs-:r1:-tabpanel-0"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-        id="ccs-2-tab-0"
+        id="ccs-:r1:-tab-0"
         role="tab"
         tabindex="0"
         type="button"
@@ -490,10 +490,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-1"
+        aria-controls="ccs-:r1:-tabpanel-1"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-1"
+        id="ccs-:r1:-tab-1"
         role="tab"
         tabindex="-1"
         type="button"
@@ -538,10 +538,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-2"
+        aria-controls="ccs-:r1:-tabpanel-2"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-2"
+        id="ccs-:r1:-tab-2"
         role="tab"
         tabindex="-1"
         type="button"
@@ -586,10 +586,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-3"
+        aria-controls="ccs-:r1:-tabpanel-3"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-3"
+        id="ccs-:r1:-tab-3"
         role="tab"
         tabindex="-1"
         type="button"
@@ -634,10 +634,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-4"
+        aria-controls="ccs-:r1:-tabpanel-4"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-4"
+        id="ccs-:r1:-tab-4"
         role="tab"
         tabindex="-1"
         type="button"
@@ -682,10 +682,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-5"
+        aria-controls="ccs-:r1:-tabpanel-5"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-5"
+        id="ccs-:r1:-tab-5"
         role="tab"
         tabindex="-1"
         type="button"
@@ -730,10 +730,10 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         </button>
       </div>
       <button
-        aria-controls="ccs-2-tabpanel-6"
+        aria-controls="ccs-:r1:-tabpanel-6"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-2-tab-6"
+        id="ccs-:r1:-tab-6"
         role="tab"
         tabindex="-1"
         type="button"

@@ -9,7 +9,7 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-10"
+        aria-controls="accordion-item-:r9:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -41,7 +41,7 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-10"
+          id="accordion-item-:r9:"
         >
           <div
             aria-label="Structured list"
@@ -91,7 +91,7 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-4"
+        aria-controls="accordion-item-:r3:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -123,7 +123,7 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-4"
+          id="accordion-item-:r3:"
         >
           <div
             aria-label="Structured list"
@@ -251,7 +251,7 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-3"
+        aria-controls="accordion-item-:r0:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -283,7 +283,7 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-3"
+          id="accordion-item-:r0:"
         >
           <div
             aria-label="Structured list"
@@ -372,7 +372,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-7"
+        aria-controls="accordion-item-:r6:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -404,7 +404,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-7"
+          id="accordion-item-:r6:"
         >
           <div
             aria-label="Structured list"
@@ -450,7 +450,6 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
                       >
                         text area description
                       </textarea>
-                      
                       <span
                         aria-atomic="true"
                         aria-live="assertive"

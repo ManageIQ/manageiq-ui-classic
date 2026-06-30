@@ -9,7 +9,7 @@ exports[`Structured list component should render a miq_policy_set show page with
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-42"
+        aria-controls="accordion-item-:r19:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -41,7 +41,7 @@ exports[`Structured list component should render a miq_policy_set show page with
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-42"
+          id="accordion-item-:r19:"
         >
           <div
             aria-label="Structured list"
@@ -196,7 +196,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-4"
+        aria-controls="accordion-item-:r3:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -228,7 +228,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-4"
+          id="accordion-item-:r3:"
         >
           <div
             aria-label="Structured list"
@@ -1340,7 +1340,7 @@ exports[`Structured list component should render a operation_range table 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-14"
+        aria-controls="accordion-item-:rd:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -1372,7 +1372,7 @@ exports[`Structured list component should render a operation_range table 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-14"
+          id="accordion-item-:rd:"
         >
           <div
             aria-label="Structured list"
@@ -1619,7 +1619,7 @@ exports[`Structured list component should render a report_information page witho
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-47"
+        aria-controls="accordion-item-:r1e:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -1651,7 +1651,7 @@ exports[`Structured list component should render a report_information page witho
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-47"
+          id="accordion-item-:r1e:"
         >
           <div
             aria-label="Structured list"
@@ -1740,7 +1740,7 @@ exports[`Structured list component should render a simple_table 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-21"
+        aria-controls="accordion-item-:rk:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -1772,7 +1772,7 @@ exports[`Structured list component should render a simple_table 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-21"
+          id="accordion-item-:rk:"
         >
           <div
             class="miq-structured-list-notification"
@@ -1804,7 +1804,7 @@ exports[`Structured list component should render a simple_table with generic dat
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-3"
+        aria-controls="accordion-item-:r0:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -1836,7 +1836,7 @@ exports[`Structured list component should render a simple_table with generic dat
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-3"
+          id="accordion-item-:r0:"
         >
           <div
             aria-label="Structured list"
@@ -1925,7 +1925,7 @@ exports[`Structured list component should render a simple_table with sortable an
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-23"
+        aria-controls="accordion-item-:rm:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -1957,7 +1957,7 @@ exports[`Structured list component should render a simple_table with sortable an
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-23"
+          id="accordion-item-:rm:"
         >
           <div
             aria-label="Structured list"
@@ -2200,7 +2200,7 @@ exports[`Structured list component should render a table_list_view table 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-26"
+        aria-controls="accordion-item-:rp:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -2232,7 +2232,7 @@ exports[`Structured list component should render a table_list_view table 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-26"
+          id="accordion-item-:rp:"
         >
           <div
             class="miq-structured-list-notification"
@@ -2264,7 +2264,7 @@ exports[`Structured list component should render a tag_group table 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-17"
+        aria-controls="accordion-item-:rg:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -2296,7 +2296,7 @@ exports[`Structured list component should render a tag_group table 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-17"
+          id="accordion-item-:rg:"
         >
           <div
             aria-label="Structured list"
@@ -2545,7 +2545,7 @@ exports[`Structured list component should render catalog_data with escaped strin
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-33"
+        aria-controls="accordion-item-:r10:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -2577,7 +2577,7 @@ exports[`Structured list component should render catalog_data with escaped strin
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-33"
+          id="accordion-item-:r10:"
         >
           <div
             aria-label="Structured list"
@@ -2696,7 +2696,7 @@ exports[`Structured list component should render code mirror component 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-64"
+        aria-controls="accordion-item-:r1v:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -2728,7 +2728,7 @@ exports[`Structured list component should render code mirror component 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-64"
+          id="accordion-item-:r1v:"
         >
           <div
             aria-label="Structured list"
@@ -3043,7 +3043,7 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-50"
+        aria-controls="accordion-item-:r1h:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -3075,7 +3075,7 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-50"
+          id="accordion-item-:r1h:"
         >
           <div
             aria-label="Structured list"
@@ -3194,7 +3194,7 @@ exports[`Structured list component should render miq_alert_show page without dou
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-27"
+        aria-controls="accordion-item-:rq:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -3226,7 +3226,7 @@ exports[`Structured list component should render miq_alert_show page without dou
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-27"
+          id="accordion-item-:rq:"
         >
           <div
             aria-label="Structured list"
@@ -3287,7 +3287,7 @@ exports[`Structured list component should render miq_reports_data without double
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-37"
+        aria-controls="accordion-item-:r14:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -3319,7 +3319,7 @@ exports[`Structured list component should render miq_reports_data without double
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-37"
+          id="accordion-item-:r14:"
         >
           <div
             aria-label="Structured list"
@@ -3474,7 +3474,7 @@ exports[`Structured list component should render report_schedule page without do
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-58"
+        aria-controls="accordion-item-:r1p:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -3506,7 +3506,7 @@ exports[`Structured list component should render report_schedule page without do
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-58"
+          id="accordion-item-:r1p:"
         >
           <div
             aria-label="Structured list"

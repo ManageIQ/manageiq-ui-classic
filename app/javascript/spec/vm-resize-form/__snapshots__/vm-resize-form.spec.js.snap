@@ -45,7 +45,6 @@ exports[`vm resize form component should render a resize form 1`] = `
                 type="text"
                 value="2"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -124,7 +123,6 @@ exports[`vm resize form component should render form 1`] = `
                 type="text"
                 value="2"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -203,7 +201,6 @@ exports[`vm resize form component should submit resize API call 1`] = `
                 type="text"
                 value="2"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"

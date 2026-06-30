@@ -50,7 +50,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -88,7 +87,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -163,7 +161,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -239,7 +236,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -434,7 +430,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
               type="text"
               value="Copy of foo"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -472,7 +467,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
               type="text"
               value="bar"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -547,7 +541,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -623,7 +616,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -822,7 +814,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
               type="text"
               value="foo"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -860,7 +851,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
               type="text"
               value="bar"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -935,7 +925,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1011,7 +1000,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

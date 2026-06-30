@@ -39,10 +39,10 @@ exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWork
           role="tablist"
         >
           <button
-            aria-controls="ccs-1-tabpanel-0"
+            aria-controls="ccs-:r0:-tabpanel-0"
             aria-selected="true"
             class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-            id="ccs-1-tab-0"
+            id="ccs-:r0:-tab-0"
             role="tab"
             tabindex="0"
             type="button"
@@ -111,9 +111,9 @@ exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWork
         </button>
       </div>
       <div
-        aria-labelledby="ccs-1-tab-0"
+        aria-labelledby="ccs-:r0:-tab-0"
         class="cds--tab-content"
-        id="ccs-1-tabpanel-0"
+        id="ccs-:r0:-tabpanel-0"
         role="tabpanel"
       >
         <div

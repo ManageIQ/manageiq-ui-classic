@@ -67,7 +67,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -123,7 +122,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -179,7 +177,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -235,7 +232,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -291,7 +287,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -399,7 +394,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -497,7 +491,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -518,7 +511,7 @@ exports[`visual settings form matches the snapshot 1`] = `
           class="cds--label"
           dir="auto"
           for="display.startpage"
-          id="downshift-4-label"
+          id="downshift-:ra:-label"
         >
           Start Page
         </label>
@@ -531,10 +524,10 @@ exports[`visual settings form matches the snapshot 1`] = `
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-4-menu"
+              aria-controls="downshift-:ra:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-4-label"
+              aria-labelledby="downshift-:ra:-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="display.startpage"
@@ -546,13 +539,12 @@ exports[`visual settings form matches the snapshot 1`] = `
               type="text"
               value=""
             />
-            
             <button
-              aria-controls="downshift-4-menu"
+              aria-controls="downshift-:ra:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-4-toggle-button"
+              id="downshift-:ra:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -573,11 +565,10 @@ exports[`visual settings form matches the snapshot 1`] = `
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-4-label"
+            aria-labelledby="downshift-:ra:-label"
             class="cds--list-box__menu"
-            id="downshift-4-menu"
+            id="downshift-:ra:-menu"
             role="listbox"
           />
         </div>
@@ -589,7 +580,7 @@ exports[`visual settings form matches the snapshot 1`] = `
           class="cds--label"
           dir="auto"
           for="display.timezone"
-          id="downshift-5-label"
+          id="downshift-:rd:-label"
         >
           Timezone
         </label>
@@ -602,10 +593,10 @@ exports[`visual settings form matches the snapshot 1`] = `
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-5-menu"
+              aria-controls="downshift-:rd:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-5-label"
+              aria-labelledby="downshift-:rd:-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="display.timezone"
@@ -617,13 +608,12 @@ exports[`visual settings form matches the snapshot 1`] = `
               type="text"
               value=""
             />
-            
             <button
-              aria-controls="downshift-5-menu"
+              aria-controls="downshift-:rd:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-5-toggle-button"
+              id="downshift-:rd:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -644,11 +634,10 @@ exports[`visual settings form matches the snapshot 1`] = `
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-5-label"
+            aria-labelledby="downshift-:rd:-label"
             class="cds--list-box__menu"
-            id="downshift-5-menu"
+            id="downshift-:rd:-menu"
             role="listbox"
           />
         </div>
@@ -698,7 +687,6 @@ exports[`visual settings form matches the snapshot 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

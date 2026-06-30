@@ -38,7 +38,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -67,7 +66,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -96,7 +94,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div
@@ -164,7 +161,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -193,7 +189,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -222,7 +217,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div
@@ -291,7 +285,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -320,7 +313,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -349,7 +341,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div

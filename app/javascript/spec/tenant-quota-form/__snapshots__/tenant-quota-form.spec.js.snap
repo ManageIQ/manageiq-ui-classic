@@ -175,7 +175,6 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           type="number"
                           value=""
                         />
-                        
                         <span
                           aria-atomic="true"
                           aria-live="assertive"
@@ -302,7 +301,6 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           type="number"
                           value=""
                         />
-                        
                         <span
                           aria-atomic="true"
                           aria-live="assertive"
@@ -538,7 +536,6 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           type="number"
                           value="3"
                         />
-                        
                         <span
                           aria-atomic="true"
                           aria-live="assertive"
@@ -665,7 +662,6 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           type="number"
                           value=""
                         />
-                        
                         <span
                           aria-atomic="true"
                           aria-live="assertive"
