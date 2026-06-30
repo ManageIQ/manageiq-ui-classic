@@ -219,4 +219,67 @@ describe('Automation > Embedded Automate > Explorer', () => {
       cy.expect_flash(flashClassMap.info, 'empty');
     });
   });
+
+  describe('Class Tabs', () => {
+    beforeEach(() => {
+      // Creates a class to use across tab tests
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace']);
+      cy.toolbar('Configuration', 'Add a New Class');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type('TestClass');
+      cy.getFormInputFieldByIdAndType({ inputId: 'display_name' }).type('Test Class 0');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type('This is a test class description');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
+      cy.expect_flash(flashClassMap.success, 'added');
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace', /Test Class 0/]);
+    });
+
+    it('displays AE class tabs and switches between them with correct content', () => {
+      // Verify the tabs wrapper and tablist are rendered
+      cy.get('#ae-class-tabs-wrapper').should('be.visible');
+      cy.get('.miq_custom_tabs').should('be.visible');
+      cy.expect_explorer_title('Automate Class "Test Class 0"');
+
+      // Default tab is Instances
+      cy.get('#instances').should('be.visible');
+
+      // Switch to Methods tab and verify its content
+      cy.contains('button', 'Methods').should('be.visible').click();
+      cy.get('#methods').should('be.visible');
+      cy.contains('No methods found').should('be.visible');
+
+      // Switch to Properties tab and verify its content
+      cy.contains('button', 'Properties').should('be.visible').click();
+      cy.get('#props').should('be.visible');
+      cy.get('.label_header').contains('Name');
+      cy.get('.content_value').contains('TestClass');
+      cy.get('.label_header').contains('Description');
+      cy.get('.content_value').contains('This is a test class description');
+
+      // Switch to Schema tab and verify its content
+      cy.contains('button', 'Schema').should('be.visible').click();
+      cy.get('#schema').should('be.visible');
+      cy.contains('No schema found').should('be.visible');
+
+      // Switch back to Instances tab
+      cy.contains('button', 'Instances').should('be.visible').click();
+      cy.get('#instances').should('be.visible');
+    });
+
+    it('resets to default tab when navigating away and back to the class', () => {
+      // Switch to a non-default tab
+      cy.contains('button', 'Properties').should('be.visible').click();
+      cy.get('#props').should('be.visible');
+
+      // Navigate away to the namespace node
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace']);
+
+      // Navigate back to the class
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace', /Test Class 0/]);
+
+      // Tabs wrapper should be visible and default (Instances) tab content shown
+      cy.get('#ae-class-tabs-wrapper').should('be.visible');
+      cy.get('.miq_custom_tabs').should('be.visible');
+      cy.get('#instances').should('be.visible');
+    });
+  });
 });

@@ -88,6 +88,13 @@ const diagnosticsRoot = {
   database: __('Database'),
 };
 
+const aeClass = {
+  instances: __('Instances'),
+  methods: __('Methods'),
+  props: __('Properties'),
+  schema: __('Schema'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -102,6 +109,7 @@ export const labelConfig = (type) => {
     DIAGNOSTICS_ZONE: diagnosticsZone,
     DIAGNOSTICS_SERVER: diagnosticsServer,
     DIAGNOSTICS_ROOT: diagnosticsRoot,
+    AE_CLASS: aeClass,
   };
 
   return configMap[type];
