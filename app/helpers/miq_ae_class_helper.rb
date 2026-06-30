@@ -1,8 +1,28 @@
 module MiqAeClassHelper
+  AE_CLASS_TAB_IDS = %w[instances methods props schema].freeze
+
   DATASTORE_TYPES = {
     :list => 'ns_list', :details => 'ns_details', :instances => 'class_instances', :methods => 'class_methods',
     :domain => 'domain_overrides', :schema => 'class_fields', :fields => 'instant_fields'
   }.freeze
+
+  def ae_class_tab_configuration
+    [:instances, :methods, :props, :schema]
+  end
+
+  def ae_class_tab_content(key_name, active_tab: nil, &)
+    if ae_class_tab_configuration.include?(key_name)
+      css_class = 'tab-pane tab_content'
+      css_class += ' active' if active_tab == key_name.to_s
+      tag.div(:id => key_name, :class => css_class, &)
+    end
+  end
+
+  def ae_class_tab_index(active_tab)
+    return 0 unless active_tab
+
+    AE_CLASS_TAB_IDS.index(active_tab) || 0
+  end
 
   def editable_domain?(record)
     record.editable?

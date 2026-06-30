@@ -103,6 +103,13 @@ const report = {
   saved_reports: __('Saved Reports'),
 };
 
+const aeClass = {
+  instances: __('Instances'),
+  methods: __('Methods'),
+  props: __('Properties'),
+  schema: __('Schema'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -119,6 +126,7 @@ export const labelConfig = (type) => {
     DIAGNOSTICS_ROOT: diagnosticsRoot,
     SERVICE: service,
     REPORT: report,
+    AE_CLASS: aeClass,
   };
 
   return configMap[type];
