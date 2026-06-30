@@ -1,0 +1,332 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ChargebackAssignmentsTabs component should match snapshot 1`] = `
+<div>
+  <div>
+    <h1>
+      Chargeback Assignments
+    </h1>
+    <div
+      class="cds--tabs"
+    >
+      <button
+        aria-hidden="true"
+        aria-label="Scroll left"
+        class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+        tabindex="-1"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+          />
+        </svg>
+      </button>
+      <div
+        aria-label="chargeback assignment tabs"
+        class="cds--tab--list"
+        role="tablist"
+      >
+        <button
+          aria-controls="ccs-_r_d_-tabpanel-0"
+          aria-selected="true"
+          class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+          id="ccs-_r_d_-tab-0"
+          role="tab"
+          tabindex="0"
+          type="button"
+        >
+          <div
+            class="cds--tabs__nav-item-label-wrapper"
+          >
+            <span
+              class="cds--tabs__nav-item-label"
+              dir="auto"
+            >
+              Compute
+            </span>
+          </div>
+        </button>
+        <div
+          class="cds--tabs__nav-item--close--hidden"
+        >
+          <button
+            aria-hidden="true"
+            class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+            tabindex="-1"
+            title="Remove Compute tab"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="Press delete to remove Compute tab"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+              />
+            </svg>
+          </button>
+        </div>
+        <button
+          aria-controls="ccs-_r_d_-tabpanel-1"
+          aria-selected="false"
+          class="cds--tabs__nav-item cds--tabs__nav-link"
+          id="ccs-_r_d_-tab-1"
+          role="tab"
+          tabindex="-1"
+          type="button"
+        >
+          <div
+            class="cds--tabs__nav-item-label-wrapper"
+          >
+            <span
+              class="cds--tabs__nav-item-label"
+              dir="auto"
+            >
+              Storage
+            </span>
+          </div>
+        </button>
+        <div
+          class="cds--tabs__nav-item--close--hidden"
+        >
+          <button
+            aria-hidden="true"
+            class="cds--visually-hidden"
+            tabindex="-1"
+            title="Remove Storage tab"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="Press delete to remove Storage tab"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button
+        aria-hidden="true"
+        aria-label="Scroll right"
+        class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+        tabindex="-1"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      aria-labelledby="ccs-_r_d_-tab-0"
+      class="cds--tab-content"
+      id="ccs-_r_d_-tabpanel-0"
+      role="tabpanel"
+    >
+      <div
+        class="chargeback-assignments-form"
+      >
+        <form>
+          <div
+            class="form-section"
+          >
+            <div
+              class="form-field"
+            >
+              <div
+                class="cds--dropdown__wrapper cds--list-box__wrapper"
+              >
+                <label
+                  class="cds--label"
+                  for="downshift-_r_f_-toggle-button"
+                  id="downshift-_r_f_-label"
+                >
+                  Assign To
+                </label>
+                <div
+                  class="cds--dropdown cds--list-box"
+                  id="assignment-type-compute"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-_r_f_-menu"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-_r_f_-label"
+                    class="cds--list-box__field"
+                    id="downshift-_r_f_-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    title="Choose Assignment Type"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                    >
+                      Choose Assignment Type
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon"
+                    >
+                      <svg
+                        aria-label="Open menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Open menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  <ul
+                    aria-labelledby="downshift-_r_f_-label"
+                    class="cds--list-box__menu"
+                    id="downshift-_r_f_-menu"
+                    role="listbox"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      aria-labelledby="ccs-_r_d_-tab-1"
+      class="cds--tab-content"
+      hidden=""
+      id="ccs-_r_d_-tabpanel-1"
+      role="tabpanel"
+    >
+      <div
+        class="chargeback-assignments-form"
+      >
+        <form>
+          <div
+            class="form-section"
+          >
+            <div
+              class="form-field"
+            >
+              <div
+                class="cds--dropdown__wrapper cds--list-box__wrapper"
+              >
+                <label
+                  class="cds--label"
+                  for="downshift-_r_h_-toggle-button"
+                  id="downshift-_r_h_-label"
+                >
+                  Assign To
+                </label>
+                <div
+                  class="cds--dropdown cds--list-box"
+                  id="assignment-type-storage"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-_r_h_-menu"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-_r_h_-label"
+                    class="cds--list-box__field"
+                    id="downshift-_r_h_-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    title="Choose Assignment Type"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                    >
+                      Choose Assignment Type
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon"
+                    >
+                      <svg
+                        aria-label="Open menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Open menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  <ul
+                    aria-labelledby="downshift-_r_h_-label"
+                    class="cds--list-box__menu"
+                    id="downshift-_r_h_-menu"
+                    role="listbox"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;
