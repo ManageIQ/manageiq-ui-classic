@@ -316,8 +316,6 @@ class MiqAeClassController < ApplicationController
 
     elsif MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
       presenter.update(:main_div, r[:partial => "copy_objects_form_react"])
-      #ToDo: To be removed & code cleanup needed in old haml file
-      # presenter.update(:main_div, r[:partial => "copy_objects_form"])
 
     elsif %w[miq_ae_instance_new miq_ae_instance_edit].include?(@sb[:action])
       # React form for instance add/edit
