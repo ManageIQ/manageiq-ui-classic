@@ -175,7 +175,6 @@ exports[`MiqConditionStructuredList should render condition notes structured lis
               >
                 text area description
               </textarea>
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"

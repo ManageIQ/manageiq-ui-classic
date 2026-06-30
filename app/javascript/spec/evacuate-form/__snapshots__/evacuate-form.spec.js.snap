@@ -38,7 +38,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -68,7 +67,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div
@@ -135,7 +133,6 @@ exports[`evacuate form component should render evacuate form with host options 1
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -165,7 +162,6 @@ exports[`evacuate form component should render evacuate form with host options 1
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div
@@ -233,7 +229,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -263,7 +258,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div

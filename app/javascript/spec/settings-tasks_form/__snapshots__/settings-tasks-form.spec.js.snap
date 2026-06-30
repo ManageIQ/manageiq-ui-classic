@@ -51,7 +51,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -121,7 +120,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -212,7 +210,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -286,7 +283,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                     Queued
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -368,7 +364,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                     Running
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -426,7 +421,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                     Ok
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -484,7 +478,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                     Error
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -545,7 +538,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                     Warn
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -599,7 +591,6 @@ exports[`VM common form component should render all tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -679,7 +670,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -770,7 +760,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -844,7 +833,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                     Queued
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -926,7 +914,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                     Running
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -984,7 +971,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                     Ok
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -1042,7 +1028,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                     Error
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -1103,7 +1088,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                     Warn
                   </span>
                 </div>
-                
               </div>
             </label>
             <div
@@ -1157,7 +1141,6 @@ exports[`VM common form component should render my tasks form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

@@ -84,7 +84,6 @@ exports[`Floating Ips Profile Form Component should render correctly 1`] = `
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"

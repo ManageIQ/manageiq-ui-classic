@@ -18,7 +18,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
             class="cds--tooltip-trigger__wrapper"
           >
             <button
-              aria-labelledby="tooltip-2"
+              aria-labelledby="tooltip-:r1:"
               class="collapsed heading-icon cds--btn cds--btn--primary cds--btn--icon-only"
               type="button"
             >
@@ -41,7 +41,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-2"
+            id="tooltip-:r1:"
             role="tooltip"
           >
             <span
@@ -66,7 +66,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
             class="cds--tooltip-trigger__wrapper"
           >
             <button
-              aria-labelledby="tooltip-5"
+              aria-labelledby="tooltip-:r5:"
               class="heading-icon closeIcon cds--btn cds--btn--primary cds--btn--icon-only"
               type="button"
             >
@@ -89,7 +89,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-5"
+            id="tooltip-:r5:"
             role="tooltip"
           >
             <span
@@ -114,7 +114,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
               class="cds--accordion__item"
             >
               <button
-                aria-controls="accordion-item-20"
+                aria-controls="accordion-item-:r8:"
                 aria-expanded="false"
                 class="cds--accordion__heading"
                 type="button"
@@ -155,7 +155,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
               >
                 <div
                   class="cds--accordion__content"
-                  id="accordion-item-20"
+                  id="accordion-item-:r8:"
                 >
                   <div
                     class="notification-accordion-content"
@@ -164,7 +164,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                       class="notification-content-messages"
                     >
                       <div
-                        aria-labelledby="actionable-notification-10"
+                        aria-labelledby="actionable-notification-:r9:"
                         class="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--error cds--actionable-notification--hide-close-button"
                         role="alert"
                       >
@@ -213,14 +213,14 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                 <div
                                   class="cds--actionable-notification__title"
                                   dir="auto"
-                                  id="actionable-notification-10"
+                                  id="actionable-notification-:r9:"
                                 >
                                   Plan has completed with errors
                                 </div>
                                 <div
                                   class="cds--actionable-notification__subtitle"
                                   dir="auto"
-                                  id="actionable-notification-subtitle-11"
+                                  id="actionable-notification-subtitle-:ra:"
                                 >
                                   <div
                                     class="subtitle-div"
@@ -240,7 +240,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                             <button
                                               aria-expanded="false"
                                               aria-haspopup="true"
-                                              aria-labelledby="tooltip-8"
+                                              aria-labelledby="tooltip-:rc:"
                                               class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
                                               floatingmenu="true"
                                               id="10000000003625"
@@ -279,7 +279,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                           <span
                                             aria-hidden="true"
                                             class="cds--popover"
-                                            id="tooltip-8"
+                                            id="tooltip-:rc:"
                                             role="tooltip"
                                           >
                                             <span
@@ -325,7 +325,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                         </span>
                       </div>
                       <div
-                        aria-labelledby="actionable-notification-15"
+                        aria-labelledby="actionable-notification-:rf:"
                         class="notification-item-wrapper unread cds--actionable-notification cds--actionable-notification--low-contrast cds--actionable-notification--success cds--actionable-notification--hide-close-button"
                         role="alert"
                       >
@@ -375,14 +375,14 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                 <div
                                   class="cds--actionable-notification__title"
                                   dir="auto"
-                                  id="actionable-notification-15"
+                                  id="actionable-notification-:rf:"
                                 >
                                   Plan has completed successfully
                                 </div>
                                 <div
                                   class="cds--actionable-notification__subtitle"
                                   dir="auto"
-                                  id="actionable-notification-subtitle-16"
+                                  id="actionable-notification-subtitle-:rg:"
                                 >
                                   <div
                                     class="subtitle-div"
@@ -402,7 +402,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                             <button
                                               aria-expanded="false"
                                               aria-haspopup="true"
-                                              aria-labelledby="tooltip-13"
+                                              aria-labelledby="tooltip-:ri:"
                                               class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
                                               floatingmenu="true"
                                               id="10000000003624"
@@ -441,7 +441,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                           <span
                                             aria-hidden="true"
                                             class="cds--popover"
-                                            id="tooltip-13"
+                                            id="tooltip-:ri:"
                                             role="tooltip"
                                           >
                                             <span

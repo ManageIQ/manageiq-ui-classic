@@ -66,7 +66,6 @@ exports[`Reconfigure VM form component should render form with only fields it ha
             <h3>
               CD/DVD Drives
             </h3>
-            
           </div>
           <div
             class="miq-data-table drive-table-list"
@@ -742,7 +741,6 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
           <h3>
             CD/DVD Drives
           </h3>
-          
         </div>
         <div
           class="miq-data-table drive-table-list"
@@ -952,7 +950,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
               type="text"
               value="CD/DVD drive 1"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1034,7 +1031,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1112,7 +1108,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1188,7 +1183,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1225,7 +1219,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1287,7 +1280,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1356,7 +1348,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1419,7 +1410,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1574,7 +1564,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
               type="text"
               value="disk test 2"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1650,7 +1639,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1687,7 +1675,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
               type="text"
               value="16"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1749,7 +1736,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1819,7 +1805,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1883,7 +1868,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2089,7 +2073,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                 type="text"
                 value="4"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -2152,7 +2135,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
             <div
               class="cds--form__helper-text"
@@ -2275,7 +2257,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2345,7 +2326,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2377,7 +2357,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                 type="number"
                 value="3"
               />
-              
               <div
                 class="cds--number__controls"
               >
@@ -2513,7 +2492,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -2596,7 +2574,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2654,7 +2631,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2689,7 +2665,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -3385,7 +3360,6 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
             <h3>
               CD/DVD Drives
             </h3>
-            
           </div>
           <div
             class="miq-data-table drive-table-list"
@@ -3581,7 +3555,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                 type="text"
                 value="4"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -3644,7 +3617,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
             <div
               class="cds--form__helper-text"
@@ -3767,7 +3739,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3837,7 +3808,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3869,7 +3839,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                 type="number"
                 value="3"
               />
-              
               <div
                 class="cds--number__controls"
               >
@@ -4535,7 +4504,6 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
           <h3>
             CD/DVD Drives
           </h3>
-          
         </div>
         <div
           class="miq-data-table drive-table-list"

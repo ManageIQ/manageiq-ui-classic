@@ -104,7 +104,6 @@ exports[`Network Router form component should render add form 1`] = `
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"
@@ -220,7 +219,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -261,7 +259,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               type="text"
               value="admin-project-router"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -303,7 +300,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               dir="auto"
             >
               Admin State
-              
             </div>
           </label>
           <div
@@ -343,7 +339,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               dir="auto"
             >
               Enable External Gateway
-              
             </div>
           </label>
           <div
@@ -388,7 +383,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -429,7 +423,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -479,7 +472,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>

@@ -40,7 +40,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -78,7 +77,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -122,7 +120,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -153,7 +150,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -206,7 +202,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -238,7 +233,6 @@ exports[`Workflow Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -310,7 +304,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
             type="text"
             value="workflow_repository_test"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -348,7 +341,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
             type="text"
             value="workflows for testing"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -392,7 +384,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
             type="text"
             value="github.com:ManageIQ/workflows-examples"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -423,7 +414,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -476,7 +466,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -514,7 +503,6 @@ exports[`Workflow Repository form component should render edit variant 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -593,7 +581,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -631,7 +618,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -675,7 +661,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -706,7 +691,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -759,7 +743,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -791,7 +774,6 @@ exports[`Workflow Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -863,7 +845,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -901,7 +882,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -945,7 +925,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -976,7 +955,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -1029,7 +1007,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -1061,7 +1038,6 @@ exports[`Workflow Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"

@@ -50,7 +50,6 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -226,7 +225,6 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -419,7 +417,6 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -513,7 +510,6 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -584,7 +580,6 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -661,7 +656,6 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"

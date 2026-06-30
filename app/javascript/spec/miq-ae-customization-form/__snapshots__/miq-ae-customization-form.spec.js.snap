@@ -40,7 +40,6 @@ exports[`MiqAeCustomization Form Component should render add dialog form correct
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -84,7 +83,6 @@ exports[`MiqAeCustomization Form Component should render add dialog form correct
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -161,7 +159,6 @@ exports[`MiqAeCustomization Form Component should render add dialog form correct
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -352,7 +349,6 @@ exports[`MiqAeCustomization Form Component should render copy dialog form correc
               type="text"
               value="test copy"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -396,7 +392,6 @@ exports[`MiqAeCustomization Form Component should render copy dialog form correc
               type="text"
               value="test copy description"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -473,7 +468,6 @@ exports[`MiqAeCustomization Form Component should render copy dialog form correc
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -664,7 +658,6 @@ exports[`MiqAeCustomization Form Component should render edit dialog form correc
               type="text"
               value="test"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -708,7 +701,6 @@ exports[`MiqAeCustomization Form Component should render edit dialog form correc
               type="text"
               value="test description"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -785,7 +777,6 @@ exports[`MiqAeCustomization Form Component should render edit dialog form correc
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

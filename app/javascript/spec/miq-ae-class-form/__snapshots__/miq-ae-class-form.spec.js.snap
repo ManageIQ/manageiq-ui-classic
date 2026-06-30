@@ -34,7 +34,6 @@ exports[`MiqAeClass Form Component should render add class form correctly 1`] = 
               type="text"
               value="SampleFQName"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -78,7 +77,6 @@ exports[`MiqAeClass Form Component should render add class form correctly 1`] = 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -116,7 +114,6 @@ exports[`MiqAeClass Form Component should render add class form correctly 1`] = 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -154,7 +151,6 @@ exports[`MiqAeClass Form Component should render add class form correctly 1`] = 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -220,7 +216,6 @@ exports[`MiqAeClass Form Component should render edit class form correctly 1`] =
               type="text"
               value="SampleFQName"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -264,7 +259,6 @@ exports[`MiqAeClass Form Component should render edit class form correctly 1`] =
               type="text"
               value="test"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -302,7 +296,6 @@ exports[`MiqAeClass Form Component should render edit class form correctly 1`] =
               type="text"
               value="test display name"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -340,7 +333,6 @@ exports[`MiqAeClass Form Component should render edit class form correctly 1`] =
               type="text"
               value="test description"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
