@@ -1,17 +1,34 @@
-/* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import MiqDataTable from '../../miq-data-table';
 
 const RequestsTable = ({
   initialData,
+  userId,
 }) => {
+  const [userLocale, setUserLocale] = useState('en');
   const [tableHeaders, setTableHeaders] = useState([
     { key: 'time', header: __('Time'), sortData: { isFilteredBy: false } },
     { key: 'severity', header: __('Severity'), sortData: { isFilteredBy: false } },
     { key: 'message', header: __('Message'), sortData: { isFilteredBy: false } },
   ]);
   const [tableRows, setTableRows] = useState([]);
+
+  // Fetch user's locale setting from API
+  useEffect(() => {
+    if (userId) {
+      API.get(`/api/users/${userId}?attributes=settings`).then(({ settings }) => {
+        if (settings?.display?.locale && settings.display.locale !== 'default') {
+          // Convert underscore format (e.g., 'zh_CN') to hyphen format (e.g., 'zh-CN') for moment.js
+          setUserLocale(settings.display.locale.replace('_', '-'));
+        }
+      }).catch(() => {
+        // If API call fails, keep default locale
+        setUserLocale('en');
+      });
+    }
+  }, [userId]);
 
   const onSort = ({ key, sortData: { sortDirection } }) => {
     const temp = [...tableRows];
@@ -35,15 +52,23 @@ const RequestsTable = ({
       case 'severity':
         if (direction === 'DESC') {
           temp.sort((x, y) => {
-            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) { return -1; }
-            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) { return 1; }
+            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'ASC';
         } else if (direction === 'ASC') {
           temp.reverse((x, y) => {
-            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) { return -1; }
-            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) { return 1; }
+            if (x.severity.text.toLowerCase() < y.severity.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.severity.text.toLowerCase() > y.severity.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'DESC';
@@ -57,15 +82,23 @@ const RequestsTable = ({
       case 'message':
         if (direction === 'DESC') {
           temp.sort((x, y) => {
-            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) { return -1; }
-            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) { return 1; }
+            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'ASC';
         } else if (direction === 'ASC') {
           temp.reverse((x, y) => {
-            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) { return -1; }
-            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) { return 1; }
+            if (x.message.text.toLowerCase() < y.message.text.toLowerCase()) {
+              return -1;
+            }
+            if (x.message.text.toLowerCase() > y.message.text.toLowerCase()) {
+              return 1;
+            }
             return 0;
           });
           direction = 'DESC';
@@ -85,19 +118,30 @@ const RequestsTable = ({
 
   useEffect(() => {
     const rows = [];
-    // const timeNow = Date.now();
+    const timezone = ManageIQ.timezone || 'UTC';
+    moment.locale(userLocale);
+
     initialData.forEach((object, index) => {
+      const formattedTime = object.created_at
+        ? moment(object.created_at).tz(timezone).format('L HH:mm:ss z')
+        : 'unknown';
+      const relativeTime = object.created_at
+        ? moment(object.created_at).tz(timezone).fromNow()
+        : '';
+
       rows[index] = {
         id: index.toString(),
         clickable: null,
-        // TODO: Discuss Converting Time to x seconds/minutes/hours ago
-        time: { text: object.created_at ? new Date(object.created_at).toLocaleString() : 'unknown' },
+        time: {
+          text: formattedTime,
+          title: relativeTime,
+        },
         severity: { text: object.severity ? object.severity : 'unknown' },
         message: { text: object.message ? object.message : '' },
       };
     });
     setTableRows(() => (rows));
-  }, [initialData]);
+  }, [initialData, userLocale]);
 
   return (
     tableRows.length > 0 && (
@@ -117,11 +161,17 @@ const RequestsTable = ({
 };
 
 RequestsTable.propTypes = {
-  initialData: PropTypes.arrayOf(PropTypes.any),
+  initialData: PropTypes.arrayOf(PropTypes.shape({
+    created_at: PropTypes.string,
+    severity: PropTypes.string,
+    message: PropTypes.string,
+  })),
+  userId: PropTypes.string,
 };
 
 RequestsTable.defaultProps = {
   initialData: [],
+  userId: null,
 };
 
 export default RequestsTable;
