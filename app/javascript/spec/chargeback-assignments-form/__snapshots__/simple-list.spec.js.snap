@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SimpleList component should match snapshot with empty state 1`] = `
+<div>
+  <div
+    class="empty-state"
+  >
+    <p>
+      No resources available for this assignment type.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`SimpleList component should match snapshot with resources 1`] = `
+<div>
+  <div
+    class="cds--data-table-content"
+  >
+    <table
+      aria-label="Chargeback assignments"
+      class="cds--data-table cds--data-table--lg cds--data-table--zebra cds--data-table--visible-overflow-menu"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            <div
+              class="cds--table-header-label"
+            >
+              Name
+              <div
+                class="cds--table-header-label--decorator-inner"
+              />
+            </div>
+          </th>
+          <th
+            scope="col"
+          >
+            <div
+              class="cds--table-header-label"
+            >
+              Rate
+              <div
+                class="cds--table-header-label--decorator-inner"
+              />
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        aria-live="polite"
+      >
+        <tr>
+          <td>
+            Resource 1
+          </td>
+          <td
+            class="dropdown-cell-wrapper"
+          >
+            <div
+              class="cds--layer-two"
+            >
+              <div
+                class="cds--dropdown__wrapper cds--list-box__wrapper cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
+                menuposition="fixed"
+              >
+                <div
+                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+                  id="rate-1"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-_r_11_-menu"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-_r_11_-label"
+                    class="cds--list-box__field"
+                    id="downshift-_r_11_-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    title="Rate 1"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                    >
+                      Rate 1
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon"
+                    >
+                      <svg
+                        aria-label="Open menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Open menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  <ul
+                    aria-labelledby="downshift-_r_11_-label"
+                    class="cds--list-box__menu"
+                    id="downshift-_r_11_-menu"
+                    role="listbox"
+                  />
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Resource 2
+          </td>
+          <td
+            class="dropdown-cell-wrapper"
+          >
+            <div
+              class="cds--layer-two"
+            >
+              <div
+                class="cds--dropdown__wrapper cds--list-box__wrapper cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
+                menuposition="fixed"
+              >
+                <div
+                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+                  id="rate-2"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-_r_13_-menu"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-_r_13_-label"
+                    class="cds--list-box__field"
+                    id="downshift-_r_13_-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    title="<None>"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                    >
+                      &lt;None&gt;
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon"
+                    >
+                      <svg
+                        aria-label="Open menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Open menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  <ul
+                    aria-labelledby="downshift-_r_13_-label"
+                    class="cds--list-box__menu"
+                    id="downshift-_r_13_-menu"
+                    role="listbox"
+                  />
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

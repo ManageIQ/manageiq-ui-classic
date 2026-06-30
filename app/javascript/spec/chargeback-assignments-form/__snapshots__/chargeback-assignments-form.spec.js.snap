@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ChargebackAssignmentsForm component should match snapshot after loading 1`] = `
+<div>
+  <div
+    class="chargeback-assignments-form"
+  >
+    <form>
+      <div
+        class="form-section"
+      >
+        <div
+          class="form-field"
+        >
+          <div
+            class="cds--dropdown__wrapper cds--list-box__wrapper"
+          >
+            <label
+              class="cds--label"
+              for="downshift-_r_35_-toggle-button"
+              id="downshift-_r_35_-label"
+            >
+              Assign To
+            </label>
+            <div
+              class="cds--dropdown cds--list-box"
+              id="assignment-type-compute"
+            >
+              <button
+                aria-activedescendant=""
+                aria-controls="downshift-_r_35_-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-_r_35_-label"
+                class="cds--list-box__field"
+                id="downshift-_r_35_-toggle-button"
+                role="combobox"
+                tabindex="0"
+                title="Choose Assignment Type"
+                type="button"
+              >
+                <span
+                  class="cds--list-box__label"
+                >
+                  Choose Assignment Type
+                </span>
+                <div
+                  class="cds--list-box__menu-icon"
+                >
+                  <svg
+                    aria-label="Open menu"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    name="chevron--down"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                    />
+                    <title>
+                      Open menu
+                    </title>
+                  </svg>
+                </div>
+              </button>
+              <ul
+                aria-labelledby="downshift-_r_35_-label"
+                class="cds--list-box__menu"
+                id="downshift-_r_35_-menu"
+                role="listbox"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
