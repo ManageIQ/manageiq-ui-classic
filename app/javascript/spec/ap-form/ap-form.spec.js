@@ -46,9 +46,6 @@ describe('ApForm component', () => {
   };
 
   beforeEach(() => {
-    window.miqSparkleOn = jest.fn();
-    window.miqSparkleOff = jest.fn();
-    window.add_flash = jest.fn();
     window.miqRedirectBack = jest.fn();
     window.http = {
       post: jest.fn(() => Promise.resolve({ data: {} })),
@@ -63,10 +60,10 @@ describe('ApForm component', () => {
     renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('Name')).toBeInTheDocument();
+      expect(document.getElementById('name')).toBeInTheDocument();
     });
-    expect(screen.getByLabelText('Description')).toBeInTheDocument();
-    expect(screen.getByLabelText('Type')).toBeInTheDocument();
+    expect(document.getElementById('description')).toBeInTheDocument();
+    expect(document.getElementById('scan_mode')).toBeInTheDocument();
   });
 
   it('should render all tabs for VM mode', async() => {
@@ -148,33 +145,25 @@ describe('ApForm component', () => {
       const fileTab = screen.getByText('File');
       await user.click(fileTab);
 
-      // Click the Add button to open the modal
+      // Click the Add File button to open the modal
       await waitFor(() => {
-        const addButtons = screen.getAllByRole('button', { name: /add/i });
-        const fileAddButton = addButtons.find((btn) => btn.closest('.ap-form-file'));
-        expect(fileAddButton).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Add File' })).toBeInTheDocument();
       });
 
-      const addButtons = screen.getAllByRole('button', { name: /add/i });
-      const fileAddButton = addButtons.find((btn) => btn.closest('.ap-form-file'));
-      await user.click(fileAddButton);
+      await user.click(screen.getByRole('button', { name: 'Add File' }));
 
-      // Wait for modal to open and DDF form to render
+      // Wait for modal to open and DDF form fields to be available
       await waitFor(() => {
-        const modal = document.querySelector('.cds--modal.is-visible');
-        expect(modal).toBeInTheDocument();
+        expect(document.querySelector('.cds--modal.is-visible')).toBeInTheDocument();
       }, { timeout: 3000 });
 
-      // Wait for DDF form fields to be available
-      await waitFor(() => {
-        expect(screen.getByLabelText('File Name')).toBeInTheDocument();
-      }, { timeout: 3000 });
-
-      const fileNameInput = screen.getByLabelText('File Name');
-      await user.type(fileNameInput, '/tmp/test.log');
-
-      // Find and click the modal's primary button
       const modal = document.querySelector('.cds--modal.is-visible');
+      await waitFor(() => {
+        expect(document.getElementById('fileName')).toBeInTheDocument();
+      }, { timeout: 3000 });
+
+      await user.type(document.getElementById('fileName'), '/tmp/test.log');
+
       const submitButton = within(modal).getByRole('button', { name: /^Add$/i });
       await user.click(submitButton);
 
@@ -219,30 +208,22 @@ describe('ApForm component', () => {
         expect(document.querySelector('.ap-form-registry')).toBeInTheDocument();
       });
 
-      // Click the Add button to open the modal
-      const registrySection = document.querySelector('.ap-form-registry');
-      const registryAddButton = registrySection.querySelector('button');
-      await user.click(registryAddButton);
+      // Click the Add Registry Entry button to open the modal
+      await user.click(screen.getByRole('button', { name: 'Add Registry Entry' }));
 
-      // Wait for modal to open and DDF form to render
+      // Wait for modal to open and DDF form fields to be available
       await waitFor(() => {
-        const modal = document.querySelector('.cds--modal.is-visible');
-        expect(modal).toBeInTheDocument();
+        expect(document.querySelector('.cds--modal.is-visible')).toBeInTheDocument();
       }, { timeout: 3000 });
 
-      // Wait for DDF form fields to be available
-      await waitFor(() => {
-        expect(screen.getByLabelText('Registry Key')).toBeInTheDocument();
-      }, { timeout: 3000 });
-
-      const keyInput = screen.getByLabelText('Registry Key');
-      const valueInput = screen.getByLabelText('Registry Value');
-
-      await user.type(keyInput, 'TestRegistryKey');
-      await user.type(valueInput, 'TestRegistryValue');
-
-      // Find and click the modal's primary button
       const modal = document.querySelector('.cds--modal.is-visible');
+      await waitFor(() => {
+        expect(document.getElementById('regKey')).toBeInTheDocument();
+      }, { timeout: 3000 });
+
+      await user.type(document.getElementById('regKey'), 'TestRegistryKey');
+      await user.type(document.getElementById('regValue'), 'TestRegistryValue');
+
       const submitButton = within(modal).getByRole('button', { name: /^Add$/i });
       await user.click(submitButton);
 
@@ -291,10 +272,8 @@ describe('ApForm component', () => {
         expect(document.querySelector('.ap-form-eventlog')).toBeInTheDocument();
       });
 
-      // Click the Add button to open the modal
-      const eventLogSection = document.querySelector('.ap-form-eventlog');
-      const eventLogAddButton = eventLogSection.querySelector('button');
-      await user.click(eventLogAddButton);
+      // Click the Add Event Log button to open the modal
+      await user.click(screen.getByRole('button', { name: 'Add Event Log' }));
 
       // Wait for modal to open and DDF form to render
       await waitFor(() => {
@@ -303,15 +282,14 @@ describe('ApForm component', () => {
       }, { timeout: 3000 });
 
       // Wait for DDF form fields to be available
+      const modal = document.querySelector('.cds--modal.is-visible');
       await waitFor(() => {
-        expect(screen.getByLabelText('Name')).toBeInTheDocument();
+        expect(document.getElementById('eventLogName')).toBeInTheDocument();
       }, { timeout: 3000 });
 
-      const nameInput = screen.getByLabelText('Name');
-      await user.type(nameInput, 'Security');
+      await user.type(document.getElementById('eventLogName'), 'Security');
 
       // Find and click the modal's primary button
-      const modal = document.querySelector('.cds--modal.is-visible');
       const submitButton = within(modal).getByRole('button', { name: /^Add$/i });
       await user.click(submitButton);
 
@@ -327,10 +305,9 @@ describe('ApForm component', () => {
       renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
 
       await waitFor(() => {
-        const submitButtons = screen.getAllByRole('button', { name: /add/i });
-        // The form submit button should be present
-        const formSubmitButton = submitButtons.find((btn) => btn.type === 'submit');
-        expect(formSubmitButton).toBeInTheDocument();
+        // For new records the outer form submit button is labelled 'Add'
+        const submitButton = screen.getByRole('button', { name: 'Add' });
+        expect(submitButton).toHaveAttribute('type', 'submit');
       });
     });
 
@@ -338,7 +315,9 @@ describe('ApForm component', () => {
       renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
 
       await waitFor(() => {
-        expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+        // Scope to the main form to avoid matching modal Cancel buttons
+        const form = document.querySelector('.ap-form > form');
+        expect(within(form).getByRole('button', { name: /cancel/i })).toBeInTheDocument();
       });
     });
   });

@@ -32,7 +32,7 @@ const CategoryTab = (props) => {
           <div className="col-md-8">
             <div className="row">
               {Object.entries(CATEGORY_CHOICES).map(([key, label]) => (
-                <div key={key} className="col-md-4" style={{ marginBottom: '1rem' }}>
+                <div key={key} className="col-md-4 ap-form-category__item">
                   <Checkbox
                     id={`check_${key}`}
                     labelText={label}
