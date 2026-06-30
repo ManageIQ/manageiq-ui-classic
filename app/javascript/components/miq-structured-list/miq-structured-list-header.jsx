@@ -6,7 +6,9 @@ import {
 } from '@carbon/react';
 import { isObject } from './helpers';
 
-const MiqStructuredListHeader = ({ headers }) => {
+const MiqStructuredListHeader = ({
+  headers = [],
+}) => {
   /** Function to render the header which contains sorting feature. */
   /** Usage eg: Compute / Container / Container Builds */
   const renderHeaderObjectItem = (header) => (
@@ -41,8 +43,4 @@ export default MiqStructuredListHeader;
 
 MiqStructuredListHeader.propTypes = {
   headers: PropTypes.arrayOf(PropTypes.any),
-};
-
-MiqStructuredListHeader.defaultProps = {
-  headers: [],
 };

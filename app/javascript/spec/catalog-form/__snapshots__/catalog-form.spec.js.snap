@@ -34,7 +34,6 @@ exports[`Catalog form component should render add variant form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -72,7 +71,6 @@ exports[`Catalog form component should render add variant form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -134,13 +132,13 @@ exports[`Catalog form component should render add variant form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-1"
-                  id="search-input-1-search"
+                  for="search-input-:r0:"
+                  id="search-input-:r0:-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-1"
+                  id="search-input-:r0:"
                   placeholder="Filter options"
                   type="search"
                   value=""
@@ -174,7 +172,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-3"
+                    aria-labelledby="tooltip-:r2:"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -197,7 +195,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-3"
+                  id="tooltip-:r2:"
                   role="tooltip"
                 >
                   <span
@@ -370,13 +368,13 @@ exports[`Catalog form component should render add variant form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-11"
-                  id="search-input-11-search"
+                  for="search-input-:rb:"
+                  id="search-input-:rb:-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-11"
+                  id="search-input-:rb:"
                   placeholder="Filter values"
                   type="search"
                   value=""
@@ -410,7 +408,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-13"
+                    aria-labelledby="tooltip-:rd:"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -433,7 +431,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-13"
+                  id="tooltip-:rd:"
                   role="tooltip"
                 >
                   <span
@@ -530,7 +528,6 @@ exports[`Catalog form component should render edit variant form 1`] = `
             type="text"
             value="DROGO"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -568,7 +565,6 @@ exports[`Catalog form component should render edit variant form 1`] = `
             type="text"
             value="This is a DROGO!"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -630,13 +626,13 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-18"
-                  id="search-input-18-search"
+                  for="search-input-:rj:"
+                  id="search-input-:rj:-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-18"
+                  id="search-input-:rj:"
                   placeholder="Filter options"
                   type="search"
                   value=""
@@ -670,7 +666,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-20"
+                    aria-labelledby="tooltip-:rl:"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -693,7 +689,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-20"
+                  id="tooltip-:rl:"
                   role="tooltip"
                 >
                   <span
@@ -865,13 +861,13 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-28"
-                  id="search-input-28-search"
+                  for="search-input-:ru:"
+                  id="search-input-:ru:-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-28"
+                  id="search-input-:ru:"
                   placeholder="Filter values"
                   type="search"
                   value=""
@@ -905,7 +901,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-30"
+                    aria-labelledby="tooltip-:r10:"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -928,7 +924,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-30"
+                  id="tooltip-:r10:"
                   role="tooltip"
                 >
                   <span

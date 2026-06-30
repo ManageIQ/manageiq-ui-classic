@@ -20,7 +20,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
             <button
               aria-expanded="false"
               aria-haspopup="true"
-              aria-labelledby="tooltip-2"
+              aria-labelledby="tooltip-:r1:"
               class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
               floatingmenu="true"
               id="dashboard-add-widget-menu"
@@ -55,7 +55,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-2"
+            id="tooltip-:r1:"
             role="tooltip"
           >
             <span
@@ -76,7 +76,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           class="cds--tooltip-trigger__wrapper"
         >
           <button
-            aria-labelledby="tooltip-5"
+            aria-labelledby="tooltip-:r5:"
             class="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
             id="reset-dashboard-button"
             type="button"
@@ -100,7 +100,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         <span
           aria-hidden="true"
           class="cds--popover"
-          id="tooltip-5"
+          id="tooltip-:r5:"
           role="tooltip"
         >
           <span

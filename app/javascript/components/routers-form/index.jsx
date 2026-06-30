@@ -173,8 +173,5 @@ const RoutersForm = ({ routerId }) => {
 RoutersForm.propTypes = {
   routerId: PropTypes.string,
 };
-RoutersForm.defaultProps = {
-  routerId: undefined,
-};
 
 export default RoutersForm;

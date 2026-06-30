@@ -15,7 +15,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-4"
+            aria-controls="accordion-item-:r0:"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -47,7 +47,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-4"
+              id="accordion-item-:r0:"
             >
               <div
                 aria-label="Structured list"
@@ -159,7 +159,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-9"
+            aria-controls="accordion-item-:r4:"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -191,7 +191,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-9"
+              id="accordion-item-:r4:"
             >
               <div
                 aria-label="Structured list"
@@ -363,7 +363,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-19"
+            aria-controls="accordion-item-:r9:"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -395,7 +395,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-19"
+              id="accordion-item-:r9:"
             >
               <div
                 aria-label="Structured list"
@@ -809,7 +809,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-22"
+            aria-controls="accordion-item-:rj:"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -841,7 +841,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-22"
+              id="accordion-item-:rj:"
             >
               <div
                 aria-label="Structured list"

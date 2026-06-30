@@ -71,7 +71,6 @@ exports[`Network Router Interfaces Form Component should add interface 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -175,7 +174,6 @@ exports[`Network Router Interfaces Form Component should remove interface 1`] = 
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -279,7 +277,6 @@ exports[`Network Router Interfaces Form Component should render add interface fo
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -383,7 +380,6 @@ exports[`Network Router Interfaces Form Component should render remove interface
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>

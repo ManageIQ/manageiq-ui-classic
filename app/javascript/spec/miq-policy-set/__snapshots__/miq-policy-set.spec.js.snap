@@ -90,7 +90,6 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
               >
                 text area description
               </textarea>
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"

@@ -20,7 +20,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
         class="cds--label"
         dir="auto"
         for="timezone"
-        id="downshift-2-label"
+        id="downshift-:r8:-label"
       >
         Timezone
       </label>
@@ -33,10 +33,10 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
           <input
             aria-activedescendant=""
             aria-autocomplete="list"
-            aria-controls="downshift-2-menu"
+            aria-controls="downshift-:r8:-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-2-label"
+            aria-labelledby="downshift-:r8:-label"
             autocomplete="off"
             class="cds--text-input cds--text-input--empty"
             id="timezone"
@@ -48,13 +48,12 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             type="text"
             value=""
           />
-          
           <button
-            aria-controls="downshift-2-menu"
+            aria-controls="downshift-:r8:-menu"
             aria-expanded="false"
             aria-label="Open"
             class="cds--list-box__menu-icon"
-            id="downshift-2-toggle-button"
+            id="downshift-:r8:-toggle-button"
             tabindex="-1"
             title="Open"
             type="button"
@@ -75,11 +74,10 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             </svg>
           </button>
         </div>
-        
         <ul
-          aria-labelledby="downshift-2-label"
+          aria-labelledby="downshift-:r8:-label"
           class="cds--list-box__menu"
-          id="downshift-2-menu"
+          id="downshift-:r8:-menu"
           role="listbox"
         />
       </div>
@@ -118,7 +116,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                   pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
-                
                 <svg
                   aria-hidden="true"
                   class="cds--date-picker__icon"
@@ -175,7 +172,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                   pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
-                
                 <svg
                   aria-hidden="true"
                   class="cds--date-picker__icon"
@@ -235,7 +231,7 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
         class="cds--label"
         dir="auto"
         for="timezone"
-        id="downshift-0-label"
+        id="downshift-:r2:-label"
       >
         Timezone
       </label>
@@ -248,10 +244,10 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
           <input
             aria-activedescendant=""
             aria-autocomplete="list"
-            aria-controls="downshift-0-menu"
+            aria-controls="downshift-:r2:-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-0-label"
+            aria-labelledby="downshift-:r2:-label"
             autocomplete="off"
             class="cds--text-input"
             id="timezone"
@@ -286,11 +282,11 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
             </svg>
           </button>
           <button
-            aria-controls="downshift-0-menu"
+            aria-controls="downshift-:r2:-menu"
             aria-expanded="false"
             aria-label="Open"
             class="cds--list-box__menu-icon"
-            id="downshift-0-toggle-button"
+            id="downshift-:r2:-toggle-button"
             tabindex="-1"
             title="Open"
             type="button"
@@ -311,11 +307,10 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
             </svg>
           </button>
         </div>
-        
         <ul
-          aria-labelledby="downshift-0-label"
+          aria-labelledby="downshift-:r2:-label"
           class="cds--list-box__menu"
-          id="downshift-0-menu"
+          id="downshift-:r2:-menu"
           role="listbox"
         />
       </div>
@@ -354,7 +349,6 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
                   pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
-                
                 <svg
                   aria-hidden="true"
                   class="cds--date-picker__icon"
@@ -411,7 +405,6 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
                   pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
                   type="text"
                 />
-                
                 <svg
                   aria-hidden="true"
                   class="cds--date-picker__icon"

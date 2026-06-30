@@ -71,7 +71,6 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -168,7 +167,6 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -251,7 +249,6 @@ exports[`Cloud Object Store Container form component should render add cloud obj
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>

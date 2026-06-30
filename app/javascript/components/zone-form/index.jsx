@@ -69,8 +69,4 @@ ZoneForm.propTypes = {
   recordId: PropTypes.string,
 };
 
-ZoneForm.defaultProps = {
-  recordId: undefined,
-};
-
 export default ZoneForm;

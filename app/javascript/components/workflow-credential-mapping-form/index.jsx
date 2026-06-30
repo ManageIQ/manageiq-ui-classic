@@ -123,8 +123,5 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
 WorkflowCredentialMappingForm.propTypes = {
   recordId: PropTypes.string,
 };
-WorkflowCredentialMappingForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default WorkflowCredentialMappingForm;

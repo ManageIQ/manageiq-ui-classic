@@ -24,9 +24,9 @@ export const MainMenu = ({
   logoSmall,
   menu: initialMenu,
   miqGroups,
-  showLogo,
-  showMenuCollapse,
-  showUser,
+  showLogo = true,
+  showMenuCollapse = true,
+  showUser = true,
 }) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [menu, setMenu] = useState(initialMenu);
@@ -252,10 +252,4 @@ MainMenu.propTypes = {
   showLogo: PropTypes.bool,
   showMenuCollapse: PropTypes.bool,
   showUser: PropTypes.bool,
-};
-
-MainMenu.defaultProps = {
-  showLogo: true,
-  showMenuCollapse: true,
-  showUser: true,
 };

@@ -40,8 +40,4 @@ WidgetZoom.propTypes = {
   widgetModel: PropTypes.string,
 };
 
-WidgetZoom.defaultProps = {
-  widgetModel: undefined,
-};
-
 export default WidgetZoom;

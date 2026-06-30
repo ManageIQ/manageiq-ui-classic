@@ -52,7 +52,3 @@ FilterNamespace.propTypes = {
   })),
   onSearch: PropTypes.func.isRequired,
 };
-
-FilterNamespace.defaultProps = {
-  domains: undefined,
-};

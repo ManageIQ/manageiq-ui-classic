@@ -1,13 +1,19 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 export default (ReactElement, mapPropsToInteract = () => undefined) => {
+  const roots = new WeakMap();
+
   function render(props, container) {
-    ReactDOM.render(
+    let root = roots.get(container);
+    if (!root) {
+      root = createRoot(container);
+      roots.set(container, root);
+    }
+    root.render(
       <Provider store={ManageIQ.redux.store}>
         <ReactElement {...props} />
-      </Provider>,
-      container
+      </Provider>
     );
   }
 
@@ -22,7 +28,11 @@ export default (ReactElement, mapPropsToInteract = () => undefined) => {
     },
 
     destroy(instance, unmountFrom) {
-      ReactDOM.unmountComponentAtNode(unmountFrom);
+      const root = roots.get(unmountFrom);
+      if (root) {
+        root.unmount();
+        roots.delete(unmountFrom);
+      }
     },
 
     component: ReactElement,

@@ -119,8 +119,4 @@ WorkflowRepositoryForm.propTypes = {
   repositoryId: PropTypes.string,
 };
 
-WorkflowRepositoryForm.defaultProps = {
-  repositoryId: undefined,
-};
-
 export default WorkflowRepositoryForm;

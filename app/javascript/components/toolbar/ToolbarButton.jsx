@@ -8,7 +8,10 @@ import { carbonizeIcon } from '../../menu/icon';
 const classNames = require('classnames');
 
 const ButtonIcon = ({
-  img_url: imgUrl, icon, color, enabled,
+  img_url: imgUrl = null,
+  icon = null,
+  color = null,
+  enabled,
 }) => {
   if (icon) {
     const IconColor = adjustColor(color, enabled);
@@ -30,16 +33,16 @@ ButtonIcon.propTypes = {
   enabled: PropTypes.bool.isRequired,
 };
 
-ButtonIcon.defaultProps = {
-  img_url: null,
-  icon: null,
-  color: null,
-};
-
 export const ToolbarButton = (props) => {
   const count = useContext(CountContext);
   const {
-    onwhen, enabled, id, name, title, text, selected,
+    onwhen = null,
+    enabled,
+    id = null,
+    name = null,
+    title = null,
+    text = null,
+    selected = null,
   } = props;
   const disabled = !(onwhen ? isEnabled(onwhen, count) : enabled);
 
@@ -68,13 +71,4 @@ ToolbarButton.propTypes = {
   enabled: PropTypes.bool.isRequired,
   onwhen: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-};
-
-ToolbarButton.defaultProps = {
-  title: null,
-  id: null,
-  name: null,
-  text: null,
-  onwhen: null,
-  selected: null,
 };

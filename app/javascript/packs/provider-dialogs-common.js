@@ -9,10 +9,7 @@ function reactModal(buttonData) {
 
   const Component = ManageIQ.component.getReact(buttonData.component_name);
   const inner = () => <Component {...props} />;
-  const noop = () => {};
-  const closefunc = (Component.WrappedComponent && Component.WrappedComponent.defaultProps && Component.WrappedComponent.defaultProps.closefunc)
-    ? Component.WrappedComponent.defaultProps.closefunc : noop;
-  renderModal(__(buttonData.modal_title), inner, closefunc);
+  renderModal(__(buttonData.modal_title), inner);
 }
 
 function apiCall(buttonData, dialogData) {

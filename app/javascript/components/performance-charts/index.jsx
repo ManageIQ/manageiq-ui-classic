@@ -6,7 +6,10 @@ import { getConvertedData, getLineConvertedData } from '../carbon-charts/helpers
 import EmptyChart from '../dashboard-widgets/dashboard-charts/emptyChart';
 
 const PerformanceChartWidget = ({
-  data, _id, size, title,
+  data = null,
+  _id = null,
+  size = '400px',
+  title = '',
 }) => {
   let convertedData = getLineConvertedData(data);
   if (data.miq && data.miq.empty) {
@@ -27,13 +30,6 @@ PerformanceChartWidget.propTypes = {
   _id: PropTypes.string,
   size: PropTypes.string,
   title: PropTypes.string,
-};
-
-PerformanceChartWidget.defaultProps = {
-  data: null,
-  _id: null,
-  size: '400px',
-  title: '',
 };
 
 export default PerformanceChartWidget;

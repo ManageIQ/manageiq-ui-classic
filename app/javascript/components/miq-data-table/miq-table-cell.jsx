@@ -13,7 +13,10 @@ import { customOnClickHandler } from '../../helpers/custom-click-handler';
 import { carbonizeIcon } from '../../menu/icon';
 
 const MiqTableCell = ({
-  cell, onCellClick, row, truncate,
+  cell = {},
+  onCellClick,
+  row = {},
+  truncate = true,
 }) => {
   const [confirm, setConfirm] = useState(false);
 
@@ -270,11 +273,4 @@ MiqTableCell.propTypes = {
     clickable: PropTypes.bool,
   }),
   truncate: PropTypes.bool,
-};
-
-MiqTableCell.defaultProps = {
-  onCellClick: undefined,
-  row: {},
-  cell: {},
-  truncate: true,
 };

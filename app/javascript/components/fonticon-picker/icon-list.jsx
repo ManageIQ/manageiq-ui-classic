@@ -51,8 +51,4 @@ IconList.propTypes = {
   setState: PropTypes.func.isRequired,
 };
 
-IconList.defaultProps = {
-  activeIcon: undefined,
-};
-
 export default IconList;

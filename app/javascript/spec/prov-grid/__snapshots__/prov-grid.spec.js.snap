@@ -23,12 +23,12 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-15"
+                  id="table-sort-:re:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-15"
+                  aria-describedby="table-sort-:re:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -86,12 +86,12 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-16"
+                  id="table-sort-:rf:"
                 >
                   Click to sort rows by Free Space header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-16"
+                  aria-describedby="table-sort-:rf:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -149,12 +149,12 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-17"
+                  id="table-sort-:rg:"
                 >
                   Click to sort rows by Total Space header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-17"
+                  aria-describedby="table-sort-:rg:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -212,12 +212,12 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-18"
+                  id="table-sort-:rh:"
                 >
                   Click to sort rows by Storage Clusters header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-18"
+                  aria-describedby="table-sort-:rh:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -844,12 +844,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-9"
+                  id="table-sort-:r8:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-9"
+                  aria-describedby="table-sort-:r8:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -907,12 +907,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-10"
+                  id="table-sort-:r9:"
                 >
                   Click to sort rows by Total VMs header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-10"
+                  aria-describedby="table-sort-:r9:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -970,12 +970,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-11"
+                  id="table-sort-:ra:"
                 >
                   Click to sort rows by Platform header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-11"
+                  aria-describedby="table-sort-:ra:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -1033,12 +1033,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-12"
+                  id="table-sort-:rb:"
                 >
                   Click to sort rows by Version header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-12"
+                  aria-describedby="table-sort-:rb:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -1096,12 +1096,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-13"
+                  id="table-sort-:rc:"
                 >
                   Click to sort rows by State header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-13"
+                  aria-describedby="table-sort-:rc:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -1159,12 +1159,12 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-14"
+                  id="table-sort-:rd:"
                 >
                   Click to sort rows by Maintenance header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-14"
+                  aria-describedby="table-sort-:rd:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -2031,12 +2031,12 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-19"
+                  id="table-sort-:ri:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-19"
+                  aria-describedby="table-sort-:ri:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -2303,12 +2303,12 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-20"
+                  id="table-sort-:rj:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-20"
+                  aria-describedby="table-sort-:rj:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -2366,12 +2366,12 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-21"
+                  id="table-sort-:rk:"
                 >
                   Click to sort rows by Description header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-21"
+                  aria-describedby="table-sort-:rk:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -2758,12 +2758,12 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-22"
+                  id="table-sort-:rl:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-22"
+                  aria-describedby="table-sort-:rl:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -2821,12 +2821,12 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-23"
+                  id="table-sort-:rm:"
                 >
                   Click to sort rows by Description header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-23"
+                  aria-describedby="table-sort-:rm:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -2884,12 +2884,12 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-24"
+                  id="table-sort-:rn:"
                 >
                   Click to sort rows by Last Updated header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-24"
+                  aria-describedby="table-sort-:rn:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3396,12 +3396,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-1"
+                  id="table-sort-:r0:"
                 >
                   Click to unsort rows by Name header
                 </div>
                 <button
-                  aria-describedby="table-sort-1"
+                  aria-describedby="table-sort-:r0:"
                   class="miq-data-table-header cds--table-sort cds--table-sort--active cds--table-sort--descending"
                   type="button"
                 >
@@ -3459,12 +3459,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-2"
+                  id="table-sort-:r1:"
                 >
                   Click to sort rows by Operating System header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-2"
+                  aria-describedby="table-sort-:r1:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3522,12 +3522,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-3"
+                  id="table-sort-:r2:"
                 >
                   Click to sort rows by Platform header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-3"
+                  aria-describedby="table-sort-:r2:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3585,12 +3585,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-4"
+                  id="table-sort-:r3:"
                 >
                   Click to sort rows by CPUs header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-4"
+                  aria-describedby="table-sort-:r3:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3648,12 +3648,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-5"
+                  id="table-sort-:r4:"
                 >
                   Click to sort rows by Memory header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-5"
+                  aria-describedby="table-sort-:r4:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3711,12 +3711,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-6"
+                  id="table-sort-:r5:"
                 >
                   Click to sort rows by Disk Size header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-6"
+                  aria-describedby="table-sort-:r5:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3774,12 +3774,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-7"
+                  id="table-sort-:r6:"
                 >
                   Click to sort rows by Provider header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-7"
+                  aria-describedby="table-sort-:r6:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >
@@ -3837,12 +3837,12 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               >
                 <div
                   class="cds--table-sort__description"
-                  id="table-sort-8"
+                  id="table-sort-:r7:"
                 >
                   Click to sort rows by Snapshots header in ascending order
                 </div>
                 <button
-                  aria-describedby="table-sort-8"
+                  aria-describedby="table-sort-:r7:"
                   class="miq-data-table-header cds--table-sort"
                   type="button"
                 >

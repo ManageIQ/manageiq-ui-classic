@@ -62,8 +62,4 @@ AnsiblePlaybookWorkflow.propTypes = {
   payloadType: PropTypes.string.isRequired,
 };
 
-AnsiblePlaybookWorkflow.defaultProps = {
-  payload: undefined,
-};
-
 export default AnsiblePlaybookWorkflow;

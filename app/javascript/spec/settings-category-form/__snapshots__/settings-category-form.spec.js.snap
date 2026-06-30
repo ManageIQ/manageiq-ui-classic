@@ -50,7 +50,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -94,7 +93,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -138,7 +136,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -350,7 +347,6 @@ exports[`SettingsCategoryForm Component should render edit SettingsCategoryForm 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -394,7 +390,6 @@ exports[`SettingsCategoryForm Component should render edit SettingsCategoryForm 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -438,7 +433,6 @@ exports[`SettingsCategoryForm Component should render edit SettingsCategoryForm 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"

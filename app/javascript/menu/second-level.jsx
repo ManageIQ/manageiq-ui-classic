@@ -17,7 +17,12 @@ const mapItems = (items, hideSecondary, ref) => items.map((item, key) => {
 });
 
 const MenuItem = forwardRef(({
-  active, href, id, title, type, hideSecondary,
+  active = false,
+  href,
+  id,
+  title,
+  type = 'default',
+  hideSecondary,
 }, ref) => (
   <SideNavMenuItem
     id={itemId(id)}
@@ -40,14 +45,12 @@ MenuItem.propTypes = {
   type: PropTypes.string,
 };
 
-MenuItem.defaultProps = {
-  active: false,
-  href: undefined,
-  type: 'default',
-};
-
 const MenuSection = forwardRef(({
-  active, id, items, title, hideSecondary,
+  active = false,
+  id,
+  items,
+  title,
+  hideSecondary,
 }, ref) => (
   <SideNavMenu
     id={itemId(id, true)}
@@ -66,10 +69,6 @@ MenuSection.propTypes = {
   id: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
-};
-
-MenuSection.defaultProps = {
-  active: false,
 };
 
 const SecondLevel = forwardRef(({ menu, hideSecondary }, ref) => (

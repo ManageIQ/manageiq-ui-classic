@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { TextualSummary } from '../components/textual_summary';
 import textualSummaryGenericClick from './textual_summary_click';
 
@@ -12,7 +12,9 @@ export default (props) => {
   const component = <TextualSummary onClick={onClick} {...props} />;
   if (props.options && Object.keys(props.options).length > 0) {
     document.addEventListener('DOMContentLoaded', () => {
-      ReactDOM.render(component, document.body.appendChild(document.createElement('div')));
+      const container = document.body.appendChild(document.createElement('div'));
+      const root = createRoot(container);
+      root.render(component);
     });
   }
   return component;

@@ -4,7 +4,11 @@ import './styles.scss';
 import SnapshotTree from './snapshot-tree';
 
 const VMSnapshotTreeSelect = ({
-  tree, snapshot, size, time, name,
+  tree,
+  snapshot = {},
+  size = '',
+  time = '',
+  name = '',
 }) => {
   const [currentSnapshot, setCurrentSnapshot] = useState({ ...snapshot, size, time });
 
@@ -69,13 +73,6 @@ VMSnapshotTreeSelect.propTypes = {
   size: PropTypes.string,
   time: PropTypes.string,
   name: PropTypes.string,
-};
-
-VMSnapshotTreeSelect.defaultProps = {
-  snapshot: {},
-  size: '',
-  time: '',
-  name: '',
 };
 
 export default VMSnapshotTreeSelect;

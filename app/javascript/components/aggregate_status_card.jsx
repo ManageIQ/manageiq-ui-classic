@@ -5,7 +5,10 @@ import PfAggregateStatusCard from './pf_aggregate_status_card';
 import RefreshNotifications from './refresh-notifications';
 import { http } from '../http_api';
 
-const AggregateStatusCard = ({ providerId, providerType }) => {
+const AggregateStatusCard = ({
+  providerId = null,
+  providerType,
+}) => {
   const [data, setCardData] = useState({ loading: true });
 
   useEffect(() => {
@@ -79,10 +82,6 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
 AggregateStatusCard.propTypes = {
   providerId: PropTypes.string,
   providerType: PropTypes.string.isRequired,
-};
-
-AggregateStatusCard.defaultProps = {
-  providerId: null,
 };
 
 export default AggregateStatusCard;

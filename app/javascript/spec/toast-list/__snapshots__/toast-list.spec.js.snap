@@ -7,7 +7,7 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
     id="toastnotification"
   >
     <div
-      aria-labelledby="actionable-notification-subtitle-2"
+      aria-labelledby="actionable-notification-subtitle-:r1:"
       class="miq-notification-toast-item-with-link cds--actionable-notification cds--actionable-notification--toast cds--actionable-notification--low-contrast cds--actionable-notification--error"
       role="status"
     >
@@ -53,11 +53,10 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
             <div
               class="cds--actionable-notification__content"
             >
-              
               <div
                 class="cds--actionable-notification__subtitle"
                 dir="auto"
-                id="actionable-notification-subtitle-2"
+                id="actionable-notification-subtitle-:r1:"
               >
                 Plan has completed with errors
               </div>
@@ -140,14 +139,12 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
       <div
         class="cds--toast-notification__details"
       >
-        
         <div
           class="cds--toast-notification__subtitle"
           dir="auto"
         >
           Plan has completed successfully
         </div>
-        
       </div>
       <button
         aria-label="close notification"

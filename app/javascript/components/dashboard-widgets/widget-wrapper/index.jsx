@@ -7,7 +7,12 @@ import { getOverflowButtons, getWidget } from './helper';
 import WidgetRemoveModal from '../widget-remove-modal';
 
 const WidgetWrapper = ({
-  widgetId, widgetType, widgetButtons, widgetLastRun, widgetNextRun, widgetTitle,
+  widgetId,
+  widgetType,
+  widgetButtons,
+  widgetLastRun = 'Never',
+  widgetNextRun = 'Never',
+  widgetTitle = '',
 }) => {
   const [{
     widgetModel, href, isLoading, showConfirm, error,
@@ -112,12 +117,6 @@ WidgetWrapper.propTypes = {
   widgetLastRun: PropTypes.string,
   widgetNextRun: PropTypes.string,
   widgetTitle: PropTypes.string,
-};
-
-WidgetWrapper.defaultProps = {
-  widgetLastRun: 'Never',
-  widgetNextRun: 'Never',
-  widgetTitle: '',
 };
 
 export default WidgetWrapper;

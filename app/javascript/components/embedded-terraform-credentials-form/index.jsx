@@ -88,8 +88,5 @@ const EmbeddedTerraformCredentialsForm = ({ recordId }) => {
 EmbeddedTerraformCredentialsForm.propTypes = {
   recordId: PropTypes.string,
 };
-EmbeddedTerraformCredentialsForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default EmbeddedTerraformCredentialsForm;

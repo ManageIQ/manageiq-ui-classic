@@ -168,10 +168,6 @@ MiqAeClass.propTypes = {
   fqname: PropTypes.string.isRequired,
 };
 
-MiqAeClass.defaultProps = {
-  classRecord: undefined,
-};
-
 FormTemplate.propTypes = {
   formFields: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.number }),
@@ -180,11 +176,6 @@ FormTemplate.propTypes = {
     PropTypes.shape({ description: PropTypes.string }),
   ),
   recId: PropTypes.number,
-};
-
-FormTemplate.defaultProps = {
-  formFields: undefined,
-  recId: undefined,
 };
 
 export default MiqAeClass;

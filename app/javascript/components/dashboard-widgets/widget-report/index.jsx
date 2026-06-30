@@ -21,8 +21,4 @@ WidgetReport.propTypes = {
   widgetModel: PropTypes.string,
 };
 
-WidgetReport.defaultProps = {
-  widgetModel: undefined,
-};
-
 export default WidgetReport;

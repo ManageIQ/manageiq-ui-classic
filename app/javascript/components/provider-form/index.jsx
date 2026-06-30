@@ -246,11 +246,4 @@ ProviderForm.propTypes = {
   redirect: PropTypes.string,
 };
 
-ProviderForm.defaultProps = {
-  providerId: undefined,
-  kind: undefined,
-  title: undefined,
-  redirect: undefined,
-};
-
 export default ProviderForm;

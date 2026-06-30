@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import createSchema from './vm-floating-ips-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const VmFloatingIPsForm = ({ recordId, isAssociate }) => {
+const VmFloatingIPsForm = ({
+  recordId,
+  isAssociate = true,
+}) => {
   const onSubmit = (values) => {
     miqSparkleOn();
     const resource = {
@@ -46,11 +49,6 @@ const VmFloatingIPsForm = ({ recordId, isAssociate }) => {
 VmFloatingIPsForm.propTypes = {
   recordId: PropTypes.string,
   isAssociate: PropTypes.bool,
-};
-
-VmFloatingIPsForm.defaultProps = {
-  recordId: undefined,
-  isAssociate: true,
 };
 
 export default VmFloatingIPsForm;

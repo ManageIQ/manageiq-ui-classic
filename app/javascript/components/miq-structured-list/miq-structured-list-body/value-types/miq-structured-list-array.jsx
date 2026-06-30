@@ -67,7 +67,3 @@ MiqStructuredListArray.propTypes = {
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
-
-MiqStructuredListArray.defaultProps = {
-  onClick: undefined,
-};

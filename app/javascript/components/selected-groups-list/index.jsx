@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import PropTypes from 'prop-types';
 
-const SelectedGroupsList = ({ groups }) => {
+const SelectedGroupsList = ({
+  groups = [],
+}) => {
   const selectedGroups = [];
 
   groups.sort();
@@ -33,10 +35,6 @@ const SelectedGroupsList = ({ groups }) => {
 
 SelectedGroupsList.propTypes = {
   groups: PropTypes.arrayOf(PropTypes.string),
-};
-
-SelectedGroupsList.defaultProps = {
-  groups: [],
 };
 
 export default SelectedGroupsList;

@@ -39,7 +39,7 @@ exports[`TagCategory Component should match snapshot 1`] = `
               class="cds--tooltip-trigger__wrapper"
             >
               <button
-                aria-labelledby="tooltip-2"
+                aria-labelledby="tooltip-:r1:"
                 class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                 type="button"
               >
@@ -62,7 +62,7 @@ exports[`TagCategory Component should match snapshot 1`] = `
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-2"
+              id="tooltip-:r1:"
               role="tooltip"
             >
               <span
@@ -102,7 +102,7 @@ exports[`TagCategory Component should match snapshot 1`] = `
               class="cds--tooltip-trigger__wrapper"
             >
               <button
-                aria-labelledby="tooltip-5"
+                aria-labelledby="tooltip-:r5:"
                 class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                 type="button"
               >
@@ -125,7 +125,7 @@ exports[`TagCategory Component should match snapshot 1`] = `
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-5"
+              id="tooltip-:r5:"
               role="tooltip"
             >
               <span

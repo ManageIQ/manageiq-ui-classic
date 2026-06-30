@@ -19,7 +19,7 @@ exports[`Flavor form component matches the snapshot 1`] = `
             class="cds--label"
             dir="auto"
             for="emsId"
-            id="downshift-0-label"
+            id="downshift-:r2:-label"
           >
             Provider
           </label>
@@ -32,10 +32,10 @@ exports[`Flavor form component matches the snapshot 1`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-0-menu"
+                aria-controls="downshift-:r2:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-0-label"
+                aria-labelledby="downshift-:r2:-label"
                 autocomplete="off"
                 class="cds--text-input cds--text-input--empty"
                 id="emsId"
@@ -48,13 +48,12 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="text"
                 value=""
               />
-              
               <button
-                aria-controls="downshift-0-menu"
+                aria-controls="downshift-:r2:-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-0-toggle-button"
+                id="downshift-:r2:-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -75,11 +74,10 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 </svg>
               </button>
             </div>
-            
             <ul
-              aria-labelledby="downshift-0-label"
+              aria-labelledby="downshift-:r2:-label"
               class="cds--list-box__menu"
-              id="downshift-0-menu"
+              id="downshift-:r2:-menu"
               role="listbox"
             />
           </div>
@@ -117,7 +115,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -162,7 +159,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="number"
                 value=""
               />
-              
               <svg
                 aria-hidden="true"
                 class="cds--number__invalid"
@@ -282,7 +278,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="number"
                 value=""
               />
-              
               <svg
                 aria-hidden="true"
                 class="cds--number__invalid"
@@ -402,7 +397,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="number"
                 value=""
               />
-              
               <svg
                 aria-hidden="true"
                 class="cds--number__invalid"
@@ -522,7 +516,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="number"
                 value=""
               />
-              
               <svg
                 aria-hidden="true"
                 class="cds--number__invalid"
@@ -639,7 +632,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 type="number"
                 value="1"
               />
-              
               <div
                 class="cds--number__controls"
               >

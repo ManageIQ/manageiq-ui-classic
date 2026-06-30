@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { LineChart } from '@carbon/charts-react';
 import { timelineUiOptions } from './timeline-helper';
 
-const TimelineChart = ({ data, title, buildTableData }) => {
+const TimelineChart = ({ data = [], title = '', buildTableData = () => {} }) => {
   const chartRef = useRef(null);
   const chartOnClick = ({ detail }) => buildTableData(detail.datum);
 
@@ -45,12 +45,6 @@ TimelineChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
   buildTableData: PropTypes.func,
-};
-
-TimelineChart.defaultProps = {
-  data: [],
-  title: '',
-  buildTableData: () => {},
 };
 
 export default TimelineChart;

@@ -161,9 +161,3 @@ MiqCustomTab.propTypes = {
   subtab: PropTypes.number,
   tabLength: PropTypes.number,
 };
-
-MiqCustomTab.defaultProps = {
-  activeTab: undefined,
-  subtab: undefined,
-  tabLength: undefined,
-};

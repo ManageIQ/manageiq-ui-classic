@@ -74,7 +74,4 @@ ContainerProjects.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-ContainerProjects.defaultProps = {
-};
-
 export default ContainerProjects;

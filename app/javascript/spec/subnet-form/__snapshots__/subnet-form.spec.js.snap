@@ -64,7 +64,6 @@ exports[`Subnet form component renders the adding form variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -155,7 +154,6 @@ exports[`Subnet form component renders the editing form variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -192,7 +190,6 @@ exports[`Subnet form component renders the editing form variant 1`] = `
             type="text"
             value="foo"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -236,7 +233,6 @@ exports[`Subnet form component renders the editing form variant 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"

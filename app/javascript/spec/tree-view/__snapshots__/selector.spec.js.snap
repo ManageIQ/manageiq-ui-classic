@@ -45,7 +45,6 @@ exports[`TreeSelector component should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -66,7 +65,7 @@ exports[`TreeSelector component should render correctly 1`] = `
               class="cds--tooltip-trigger__wrapper"
             >
               <button
-                aria-labelledby="tooltip-2"
+                aria-labelledby="tooltip-:r1:"
                 class="tree-selector-toggle cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                 type="button"
               >
@@ -90,7 +89,7 @@ exports[`TreeSelector component should render correctly 1`] = `
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-2"
+              id="tooltip-:r1:"
               role="tooltip"
             >
               <span
@@ -114,7 +113,7 @@ exports[`TreeSelector component should render correctly 1`] = `
               class="cds--tooltip-trigger__wrapper"
             >
               <button
-                aria-labelledby="tooltip-5"
+                aria-labelledby="tooltip-:r5:"
                 class="tree-selector-clear cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                 type="button"
               >
@@ -137,7 +136,7 @@ exports[`TreeSelector component should render correctly 1`] = `
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-5"
+              id="tooltip-:r5:"
               role="tooltip"
             >
               <span

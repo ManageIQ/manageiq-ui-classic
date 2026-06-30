@@ -19,8 +19,4 @@ XmlHolder.propTypes = {
   xmlData: PropTypes.string,
 };
 
-XmlHolder.defaultProps = {
-  xmlData: undefined,
-};
-
 export default XmlHolder;

@@ -8,7 +8,11 @@ import { useFieldApi } from '@@ddf';
  * Uses HTML5 drag-and-drop API with Carbon 11 styling
  */
 const SortableList = ({
-  input = {}, label, helperText, isRequired, ...rest
+  input = { value: [], onChange: () => {} },
+  label = '',
+  helperText = '',
+  isRequired = false,
+  ...rest
 }) => {
   const { input: fieldInput } = useFieldApi(rest);
   const actualInput = fieldInput || input;
@@ -121,13 +125,6 @@ SortableList.propTypes = {
   label: PropTypes.string,
   helperText: PropTypes.string,
   isRequired: PropTypes.bool,
-};
-
-SortableList.defaultProps = {
-  input: { value: [], onChange: () => {} },
-  label: '',
-  helperText: '',
-  isRequired: false,
 };
 
 export default SortableList;

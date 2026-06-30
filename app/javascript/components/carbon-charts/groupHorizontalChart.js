@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { GroupedBarChart } from '@carbon/charts-react';
 
-const GroupHorizontalBarChart = ({ data, title }) => {
+const GroupHorizontalBarChart = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     axes: {
@@ -29,11 +32,6 @@ const GroupHorizontalBarChart = ({ data, title }) => {
 GroupHorizontalBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-GroupHorizontalBarChart.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default GroupHorizontalBarChart;
