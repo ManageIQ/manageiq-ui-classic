@@ -1,6 +1,8 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = (isHostMode) => {
+const createSchema = (isHostMode, modalCallbacks) => {
+  const { file, registry, eventLog } = modalCallbacks;
+
   const fields = [
     {
       component: componentTypes.TEXT_FIELD,
@@ -17,6 +19,8 @@ const createSchema = (isHostMode) => {
       name: 'description',
       label: __('Description'),
       maxLength: 255,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -53,6 +57,8 @@ const createSchema = (isHostMode) => {
         validate: [],
         parse: (value) => value,
         format: (value) => value,
+        onOpenModal: file.onOpenModal,
+        onEditClick: file.onEditClick,
       },
     ],
   });
@@ -66,6 +72,8 @@ const createSchema = (isHostMode) => {
           component: 'ap-registry-tab',
           name: 'reg_entries',
           validate: [],
+          onOpenModal: registry.onOpenModal,
+          onEditClick: registry.onEditClick,
         },
       ],
     });
@@ -79,6 +87,8 @@ const createSchema = (isHostMode) => {
         component: 'ap-event-log-tab',
         name: 'nteventlog_entries',
         validate: [],
+        onOpenModal: eventLog.onOpenModal,
+        onEditClick: eventLog.onEditClick,
       },
     ],
   });
