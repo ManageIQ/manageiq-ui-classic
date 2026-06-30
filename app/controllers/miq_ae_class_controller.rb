@@ -52,8 +52,8 @@ class MiqAeClassController < ApplicationController
     'miq_ae_field_seq'            => :fields_seq_edit,
     'miq_ae_instance_copy'        => :copy_objects,
     'miq_ae_instance_delete'      => :deleteinstances,
-    'miq_ae_instance_edit'        => :edit_instance_react,
-    'miq_ae_instance_new'         => :new_instance_react,
+    'miq_ae_instance_edit'        => :edit_instance,
+    'miq_ae_instance_new'         => :new_instance,
     'miq_ae_item_edit'            => :edit_item,
     'miq_ae_method_copy'          => :copy_objects,
     'miq_ae_method_delete'        => :deletemethods,
@@ -516,22 +516,6 @@ class MiqAeClassController < ApplicationController
     edit_domain_or_namespace
   end
 
-  def edit_instance
-    assert_privileges("miq_ae_instance_edit")
-    obj = find_checked_items
-    if obj.present?
-      @sb[:row_selected] = obj[0]
-      id = @sb[:row_selected].split('-')
-    else
-      id = x_node.split('-')
-    end
-    initial_setup_for_instances_form_vars(id[1])
-    set_instances_form_vars
-    @in_a_form = true
-    session[:changed] = @changed = false
-    replace_right_cell
-  end
-
   def edit_method
     assert_privileges("miq_ae_method_edit")
     obj = find_checked_items
@@ -555,143 +539,6 @@ class MiqAeClassController < ApplicationController
     end
     session[:changed] = @changed = false
     replace_right_cell
-  end
-
-  # Set form variables for edit
-  def set_instances_form_vars
-    session[:inst_data] = {}
-    @edit = {
-      :ae_inst_id  => @ae_inst.id,
-      :ae_class_id => @ae_class.id,
-      :rec_id      => @ae_inst.id || nil,
-      :key         => "aeinst_edit__#{@ae_inst.id || "new"}",
-      :new         => {}
-    }
-    @edit[:new][:ae_inst] = {}
-    instance_column_names.each do |fld|
-      @edit[:new][:ae_inst][fld] = @ae_inst.send(fld)
-    end
-
-    @edit[:new][:ae_values] = @ae_values.collect do |ae_value|
-      value_column_names.each_with_object({}) do |fld, hash|
-        hash[fld] = ae_value.send(fld)
-      end
-    end
-
-    @edit[:new][:ae_fields] = @ae_class.ae_fields.collect do |ae_field|
-      field_column_names.each_with_object({}) do |fld, hash|
-        hash[fld] = ae_field.send(fld)
-      end
-    end
-
-    @edit[:current] = copy_hash(@edit[:new])
-    @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new Automate Instance")
-                       else
-                         _("Editing Automate Instance \"%{name}\"") % {:name => @ae_inst.name}
-                       end
-    session[:edit] = @edit
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_instance_field_changed
-    assert_privileges(feature_by_action)
-    return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
-
-    get_instances_form_vars
-    javascript_miq_button_visibility(@edit[:current] != @edit[:new])
-  end
-
-  def update_instance
-    assert_privileges("miq_ae_instance_edit")
-    return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
-
-    get_instances_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    case params[:button]
-    when "cancel"
-      @sb[:action] = session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of Automate Instance \"%{name}\" was cancelled by the user") % {:name => @ae_inst.name})
-      @in_a_form = false
-      replace_right_cell
-    when "save"
-      if @edit[:new][:ae_inst]["name"].blank?
-        add_flash(_("Name is required"), :error)
-      end
-      if @flash_array
-        javascript_flash
-        return
-      end
-      set_instances_record_vars(@ae_inst) # Set the instance record variables, but don't save
-      # Update the @ae_inst.ae_values directly because of update bug in RAILS
-      # When saving a parent, the childrens updates are not getting saved
-      set_instances_value_vars(@ae_values, @ae_inst) # Set the instance record variables, but don't save
-      begin
-        MiqAeInstance.transaction do
-          @ae_inst.ae_values.each { |v| v.value = nil if v.value == "" }
-          @ae_inst.save!
-        end
-      rescue StandardError => bang
-        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
-        @in_a_form = true
-        javascript_flash
-      else
-        AuditEvent.success(build_saved_audit(@ae_class, @edit))
-        @sb[:action] = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        add_flash(_("Automate Instance \"%{name}\" was saved") % {:name => @ae_inst.name})
-        replace_right_cell(:replace_trees => [:ae])
-        nil
-      end
-    when "reset"
-      set_instances_form_vars
-      add_flash(_("All changes have been reset"), :warning)
-      @in_a_form = true
-      @button = "reset"
-      replace_right_cell
-    end
-  end
-
-  def create_instance
-    assert_privileges("miq_ae_instance_new")
-    case params[:button]
-    when "cancel"
-      @sb[:action] = session[:edit] = nil # clean out the saved info
-      add_flash(_("Add of new Automate Instance was cancelled by the user"))
-      @in_a_form = false
-      replace_right_cell
-    when "add"
-      return unless load_edit("aeinst_edit__new", "replace_cell__explorer")
-
-      get_instances_form_vars
-      if @edit[:new][:ae_inst]["name"].blank?
-        add_flash(_("Name is required"), :error)
-      end
-      if @flash_array
-        javascript_flash
-        return
-      end
-      add_aeinst = MiqAeInstance.new
-      set_instances_record_vars(add_aeinst)  # Set the instance record variables, but don't save
-      set_instances_value_vars(@ae_values)   # Set the instance value record variables, but don't save
-      begin
-        MiqAeInstance.transaction do
-          add_aeinst.ae_values = @ae_values
-          add_aeinst.ae_values.each { |v| v.value = nil if v.value == "" }
-          add_aeinst.save!
-        end
-      rescue StandardError => bang
-        @in_a_form = true
-        render_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
-      else
-        AuditEvent.success(build_created_audit(add_aeinst, @edit))
-        add_flash(_("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name})
-        @in_a_form = false
-        add_active_node_to_open_nodes
-        replace_right_cell(:replace_trees => [:ae])
-        nil
-      end
-    end
   end
 
   def instance_create
@@ -1419,14 +1266,6 @@ class MiqAeClassController < ApplicationController
 
   def new_instance
     assert_privileges("miq_ae_instance_new")
-    initial_setup_for_instances_form_vars(nil)
-    set_instances_form_vars
-    @in_a_form = true
-    replace_right_cell
-  end
-
-  def new_instance_react
-    assert_privileges("miq_ae_instance_new")
 
     nodes = x_node.split('-')
     class_id = nodes.last if nodes.first == 'aec'
@@ -1441,7 +1280,7 @@ class MiqAeClassController < ApplicationController
     replace_right_cell
   end
 
-  def edit_instance_react
+  def edit_instance
     assert_privileges("miq_ae_instance_edit")
 
     obj = find_checked_items
@@ -2246,27 +2085,6 @@ class MiqAeClassController < ApplicationController
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
-  def initial_setup_for_instances_form_vars(ae_inst_id)
-    @ae_inst = ae_inst_id ? MiqAeInstance.find(ae_inst_id) : MiqAeInstance.new
-    @ae_class = ae_class_for_instance_or_method(@ae_inst)
-
-    @ae_values = @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.collect do |fld|
-      MiqAeValue.find_or_initialize_by(:field_id => fld.id.to_s, :instance_id => @ae_inst.id.to_s)
-    end
-  end
-
-  def instance_column_names
-    %w[name description display_name]
-  end
-
-  def field_column_names
-    %w[aetype collect datatype default_value display_name name on_entry on_error on_exit max_retries max_time substitute]
-  end
-
-  def value_column_names
-    %w[collect display_name on_entry on_error on_exit max_retries max_time value]
-  end
-
   def method_input_column_names
     %w[datatype default_value id name priority]
   end
@@ -2727,37 +2545,6 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_instances_form_vars_for(prefix = nil)
-    instance_column_names.each do |key|
-      @edit[:new][:ae_inst][key] = params["#{prefix}inst_#{key}"].presence if params["#{prefix}inst_#{key}"]
-    end
-
-    @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.each_with_index do |_fld, i|
-      %w[value collect on_entry on_exit on_error max_retries max_time].each do |key|
-        @edit[:new][:ae_values][i][key] = params["#{prefix}inst_#{key}_#{i}".to_sym] if params["#{prefix}inst_#{key}_#{i}".to_sym]
-      end
-      @edit[:new][:ae_values][i]["value"] = params["#{prefix}inst_password_value_#{i}".to_sym] if params["#{prefix}inst_password_value_#{i}".to_sym]
-    end
-  end
-
-  # Get variables from edit form
-  def get_instances_form_vars
-    # resetting inst/class/values from id stored in @edit.
-    @ae_inst   = @edit[:ae_inst_id] ? MiqAeInstance.find(@edit[:ae_inst_id]) : MiqAeInstance.new
-    @ae_class  = MiqAeClass.find(@edit[:ae_class_id])
-    @ae_values = @ae_class.ae_fields.sort_by { |a| a.priority.to_i }.collect do |fld|
-      MiqAeValue.find_or_initialize_by(:field_id => fld.id.to_s, :instance_id => @ae_inst.id.to_s)
-    end
-
-    if x_node.split('-').first == "aei"
-      # for instance_fields view
-      get_instances_form_vars_for
-    else
-      # for class_instances view
-      get_instances_form_vars_for("cls_")
-    end
-  end
-
   # Set record variables to new values
   def set_record_vars(miqaeclass)
     miqaeclass.name = @edit[:new][:name].strip if @edit[:new][:name].present?
@@ -2841,31 +2628,6 @@ class MiqAeClassController < ApplicationController
       end
     end
     fields
-  end
-
-  # Set record variables to new values
-  def set_instances_record_vars(miqaeinst)
-    instance_column_names.each do |attr|
-      miqaeinst.send("#{attr}=", @edit[:new][:ae_inst][attr].try(:strip))
-    end
-    miqaeinst.class_id = @edit[:ae_class_id]
-  end
-
-  # Set record variables to new values
-  def set_instances_value_vars(vals, ae_instance = nil)
-    original_values = ae_instance ? ae_instance.ae_values : []
-
-    vals.each_with_index do |v, i|
-      original = original_values.detect { |ov| ov.id == v.id } unless original_values.empty?
-      if original
-        v = original
-      elsif ae_instance
-        ae_instance.ae_values << v
-      end
-      value_column_names.each do |attr|
-        v.send("#{attr}=", @edit[:new][:ae_values][i][attr]) if @edit[:new][:ae_values][i][attr]
-      end
-    end
   end
 
   def fields_seq_edit_screen(id)

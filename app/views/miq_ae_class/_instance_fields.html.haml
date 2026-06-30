@@ -1,9 +1,5 @@
 = render :partial => "domain_overrides", :locals => {:node_prefix => "aei", :model => "Instance"}
 %h3= _('Fields')
 #instance_fields_div
-  - if !@in_a_form
-    = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:fields],
-                                                        :data => {:fields => @ae_class.ae_fields, :record => @record}}
-  - else
-    #form_div
-      = render :partial => "instance_form", :locals => {:prefix => ""}
+  = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:fields],
+                                                      :data => {:fields => @ae_class.ae_fields, :record => @record}}

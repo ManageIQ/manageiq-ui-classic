@@ -1913,8 +1913,8 @@ Rails.application.routes.draw do
         show
         edit_class_record
         instance_form_data
-        new_instance_react
-        edit_instance_react
+        new_instance
+        edit_instance
       ],
       :post => %w[
         add_update_method
@@ -1927,7 +1927,6 @@ Rails.application.routes.draw do
         get_automate_tree_data
         get_namespace_path
         create
-        create_instance
         create_method
         create_namespace
         domains_priority_edit
@@ -1944,16 +1943,13 @@ Rails.application.routes.draw do
         fields_form_field_changed
         fields_seq_edit
         fields_seq_field_changed
-        form_copy_objects_field_changed
         form_field_changed
-        form_instance_field_changed
         form_method_field_changed
         reload
         tree_select
         tree_autoload
         update
         update_fields
-        update_instance
         update_method
         update_namespace
         validate_method_data

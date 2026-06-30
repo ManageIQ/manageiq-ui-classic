@@ -15,12 +15,12 @@ describe MiqAeClassController do
         controller.instance_variable_set(:@sb, :active_tree => :ae_tree, :trees => {:ae_tree => {:active_node => node}})
         allow(controller).to receive(:replace_right_cell)
         
-        controller.send(:new_instance_react)
+        controller.send(:new_instance)
         
         expect(assigns(:record_id)).to be_nil
         expect(assigns(:class_id)).to eq(@ae_class.id.to_s)
         expect(assigns(:in_a_form)).to be_truthy
-        expect(assigns(:angular_form)).to be_truthy
+        expect(assigns(:hide_bottom_bar)).to be_truthy
         expect(assigns(:sb)[:action]).to eq("miq_ae_instance_new")
         expect(assigns(:right_cell_text)).to eq("Adding a new Automate Instance")
       end
@@ -31,7 +31,7 @@ describe MiqAeClassController do
         node = "aec-#{@ae_class.id}"
         controller.instance_variable_set(:@sb, :active_tree => :ae_tree, :trees => {:ae_tree => {:active_node => node}})
         
-        controller.send(:new_instance_react)
+        controller.send(:new_instance)
       end
     end
 
@@ -45,12 +45,12 @@ describe MiqAeClassController do
         controller.instance_variable_set(:@sb, :active_tree => :ae_tree, :trees => {:ae_tree => {:active_node => node}})
         allow(controller).to receive(:replace_right_cell)
         
-        controller.send(:edit_instance_react)
+        controller.send(:edit_instance)
         
         expect(assigns(:record_id)).to eq(@ae_instance.id.to_s)
         expect(assigns(:class_id)).to be_nil
         expect(assigns(:in_a_form)).to be_truthy
-        expect(assigns(:angular_form)).to be_truthy
+        expect(assigns(:hide_bottom_bar)).to be_truthy
         expect(assigns(:sb)[:action]).to eq("miq_ae_instance_edit")
         expect(assigns(:right_cell_text)).to eq("Editing Automate Instance \"test_instance\"")
       end
@@ -61,7 +61,7 @@ describe MiqAeClassController do
         allow(controller).to receive(:find_checked_items).and_return(["aei-#{@ae_instance.id}"])
         allow(controller).to receive(:replace_right_cell)
         
-        controller.send(:edit_instance_react)
+        controller.send(:edit_instance)
         
         expect(assigns(:record_id)).to eq(@ae_instance.id.to_s)
       end
@@ -72,7 +72,7 @@ describe MiqAeClassController do
         node = "aei-#{@ae_instance.id}"
         controller.instance_variable_set(:@sb, :active_tree => :ae_tree, :trees => {:ae_tree => {:active_node => node}})
         
-        controller.send(:edit_instance_react)
+        controller.send(:edit_instance)
       end
     end
 
