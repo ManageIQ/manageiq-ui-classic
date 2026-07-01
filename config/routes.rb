@@ -1924,8 +1924,8 @@ Rails.application.routes.draw do
         change_tab
         copy_objects
         copy_objects_save
-        get_automate_tree_data
-        get_namespace_path
+        automate_tree_data
+        namespace_path
         create
         create_method
         create_namespace

@@ -19,7 +19,7 @@ const NamespaceSelector = (props) => {
   const handleTreeSelect = () => {
     // Fetch tree data and open modal
     setIsLoadingTree(true);
-    http.post('/miq_ae_class/get_automate_tree_data')
+    http.post('/miq_ae_class/automate_tree_data')
       .then((data) => {
         setTreeData(data);
         setIsModalOpen(true);

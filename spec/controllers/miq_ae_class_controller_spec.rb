@@ -1564,7 +1564,7 @@ describe MiqAeClassController do
       end
     end
 
-    describe "#get_automate_tree_data" do
+    describe "#automate_tree_data" do
       it "returns tree data for namespace selection" do
         edit = {:new => {}}
         controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
@@ -1578,20 +1578,20 @@ describe MiqAeClassController do
         tree_double = double("tree", :name => "automate_tree", :locals_for_render => {:bs_tree => "tree_data"})
         controller.instance_variable_set(:@automate_tree, tree_double)
 
-        controller.send(:get_automate_tree_data)
+        controller.send(:automate_tree_data)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:tree_name, :bs_tree, :click_url, :onclick))
       end
     end
 
-    describe "#get_namespace_path" do
+    describe "#namespace_path" do
       it "returns namespace path for valid namespace node" do
         controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
         controller.params = {:node_id => "aen-#{@namespace1.id}", :include_domain => "false"}
 
         allow(controller).to receive(:render)
 
-        controller.send(:get_namespace_path)
+        controller.send(:namespace_path)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:path))
       end
@@ -1602,7 +1602,7 @@ describe MiqAeClassController do
 
         allow(controller).to receive(:render)
 
-        controller.send(:get_namespace_path)
+        controller.send(:namespace_path)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:path))
       end
@@ -1613,7 +1613,7 @@ describe MiqAeClassController do
 
         allow(controller).to receive(:render)
 
-        controller.send(:get_namespace_path)
+        controller.send(:namespace_path)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:error), :status => 400)
       end
@@ -1624,7 +1624,7 @@ describe MiqAeClassController do
 
         allow(controller).to receive(:render)
 
-        controller.send(:get_namespace_path)
+        controller.send(:namespace_path)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:error), :status => 400)
       end

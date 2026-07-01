@@ -1930,7 +1930,7 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_automate_tree_data
+  def automate_tree_data
     assert_privileges(feature_by_action)
     @edit = session[:edit]
     build_automate_tree(:automate)
@@ -1943,7 +1943,7 @@ class MiqAeClassController < ApplicationController
     }
   end
 
-  def get_namespace_path
+  def namespace_path
     assert_privileges(feature_by_action)
     node_id = params[:node_id]
     include_domain = params[:include_domain] == 'true'

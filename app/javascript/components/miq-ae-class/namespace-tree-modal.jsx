@@ -29,7 +29,7 @@ const NamespaceTreeModal = ({
   // Fetch namespace path when node is selected or domain prefix checkbox changes
   useEffect(() => {
     if (selectedNodeId) {
-      http.post('/miq_ae_class/get_namespace_path', {
+      http.post('/miq_ae_class/namespace_path', {
         node_id: selectedNodeId,
         include_domain: includeDomainPrefix,
       })
