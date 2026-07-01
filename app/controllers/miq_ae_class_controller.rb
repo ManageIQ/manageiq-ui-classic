@@ -313,10 +313,10 @@ class MiqAeClassController < ApplicationController
       presenter.update(:ns_list_div, r[:partial => "domains_priority_form"])
 
     elsif MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
-      presenter.update(:main_div, r[:partial => "copy_objects_form_react"])
+      presenter.update(:main_div, r[:partial => "copy_objects_form_react", :locals => {:edit => @edit}])
 
     elsif %w[miq_ae_instance_new miq_ae_instance_edit].include?(@sb[:action])
-      presenter.update(:main_div, r[:partial => "instance_form_react"])
+      presenter.update(:main_div, r[:partial => "instance_form_react", :locals => {:record_id => @record_id, :class_id => @class_id}])
 
     else
       if @sb[:action] == "miq_ae_class_edit"
@@ -324,7 +324,11 @@ class MiqAeClassController < ApplicationController
       else
         @sb[:active_tab] ||= 'instances'
       end
-      presenter.update(:main_div, r[:partial => 'all_tabs'])
+      presenter.update(:main_div, r[:partial => 'all_tabs', :locals => {:in_a_form => @in_a_form,
+                                                                         :record    => @record,
+                                                                         :ae_class  => @ae_class,
+                                                                         :sb        => @sb,
+                                                                         :edit      => @edit}])
     end
 
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array

@@ -1527,7 +1527,7 @@ describe MiqAeClassController do
 
         controller.send(:copy_objects_save)
 
-        expect(controller).to have_received(:render).with(:json => hash_including(:error), :status => :bad_request)
+        expect(controller).to have_received(:render).with(:json => hash_including(:error), :status => 400)
       end
 
       it "clears session data after successful copy" do
