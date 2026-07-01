@@ -550,7 +550,7 @@ class MiqAeClassController < ApplicationController
     ae_class = MiqAeClass.find(class_id)
 
     if params[:name].blank?
-      render :json => {:error => _("Name is required")}, :status => :bad_request
+      render :json => {:error => _("Name is required")}, :status => 400
       return
     end
 
@@ -591,7 +591,7 @@ class MiqAeClassController < ApplicationController
 
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name}}
     rescue StandardError => e
-      render :json => {:error => _("Error during 'add': %{message}") % {:message => e.message}}, :status => :bad_request
+      render :json => {:error => _("Error during 'add': %{message}") % {:message => e.message}}, :status => 400
     end
   end
 
@@ -602,7 +602,7 @@ class MiqAeClassController < ApplicationController
     ae_class = ae_inst.ae_class
 
     if params[:name].blank?
-      render :json => {:error => _("Name is required")}, :status => :bad_request
+      render :json => {:error => _("Name is required")}, :status => 400
       return
     end
 
@@ -640,7 +640,7 @@ class MiqAeClassController < ApplicationController
 
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was saved") % {:name => ae_inst.name}}
     rescue StandardError => e
-      render :json => {:error => _("Error during 'save': %{message}") % {:message => e.message}}, :status => :bad_request
+      render :json => {:error => _("Error during 'save': %{message}") % {:message => e.message}}, :status => 400
     end
   end
 
@@ -1338,26 +1338,26 @@ class MiqAeClassController < ApplicationController
       unless field.datatype.blank? || field.datatype == 'string'
         multiple_icons.push(ae_field_fonticon(field.datatype))
       end
-      multiple_icons.push("pficon-ok#{field.substitute ? '' : '-closed'}")
+      multiple_icons.push(field.substitute ? "pficon-ok" : "pficon-ok-closed")
 
-      field_name = field.display_name.blank? ? field.name : field.display_name
+      field_name = field.display_name.presence || field.name
 
       {
-        :id            => field.id,
-        :name          => field.name,
-        :display_name  => field_name,
-        :icons         => multiple_icons,
-        :aetype        => field.aetype,
-        :datatype      => field.datatype,
-        :default_value => field.default_value,
-        :substitute    => field.substitute,
-        :collect       => field.collect,
-        :message       => field.message,
-        :on_entry      => field.on_entry,
-        :on_exit       => field.on_exit,
-        :on_error      => field.on_error,
-        :max_retries   => field.max_retries,
-        :max_time      => field.max_time,
+        :id                => field.id,
+        :name              => field.name,
+        :display_name      => field_name,
+        :icons             => multiple_icons,
+        :aetype            => field.aetype,
+        :datatype          => field.datatype,
+        :default_value     => field.default_value,
+        :substitute        => field.substitute,
+        :collect           => field.collect,
+        :message           => field.message,
+        :on_entry          => field.on_entry,
+        :on_exit           => field.on_exit,
+        :on_error          => field.on_error,
+        :max_retries       => field.max_retries,
+        :max_time          => field.max_time,
         :value             => field.datatype == 'password' ? '********' : (ae_value.value || field.default_value || ''),
         :value_collect     => ae_value.collect || field.collect || '',
         :value_on_entry    => ae_value.on_entry || field.on_entry || '',
@@ -1369,7 +1369,7 @@ class MiqAeClassController < ApplicationController
     end
 
     render :json => {
-      :instance => {
+      :instance       => {
         :name         => ae_inst.name || '',
         :display_name => ae_inst.display_name || '',
         :description  => ae_inst.description || ''
@@ -1379,7 +1379,7 @@ class MiqAeClassController < ApplicationController
       :namespace_path => namespace_path
     }
   rescue => e
-    render :json => {:error => e.message}, :status => :bad_request
+    render :json => {:error => e.message}, :status => 400
   end
 
   def new_method
@@ -1926,7 +1926,7 @@ class MiqAeClassController < ApplicationController
 
       render :json => {:message => message, :redirect_url => '/miq_ae_class/explorer'}
     rescue StandardError => bang
-      render :json => {:error => bang.message}, :status => :bad_request
+      render :json => {:error => bang.message}, :status => 400
     end
   end
 
@@ -1936,10 +1936,10 @@ class MiqAeClassController < ApplicationController
     build_automate_tree(:automate)
 
     render :json => {
-      :tree_name  => @automate_tree.name,
-      :bs_tree    => @automate_tree.locals_for_render[:bs_tree],
-      :click_url  => url_for_only_path(:action => 'ae_tree_select'),
-      :onclick    => 'ae_tree_select'
+      :tree_name => @automate_tree.name,
+      :bs_tree   => @automate_tree.locals_for_render[:bs_tree],
+      :click_url => url_for_only_path(:action => 'ae_tree_select'),
+      :onclick   => 'ae_tree_select'
     }
   end
 
