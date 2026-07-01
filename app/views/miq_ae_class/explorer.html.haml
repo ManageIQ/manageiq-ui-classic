@@ -1,2 +1,6 @@
 #main_div
-  = render :partial => "all_tabs"
+  = render :partial => "all_tabs", :locals => {:in_a_form => @in_a_form,
+                                               :record    => @record,
+                                               :ae_class  => @ae_class,
+                                               :sb        => @sb,
+                                               :edit      => @edit}

@@ -219,4 +219,56 @@ describe('Automation > Embedded Automate > Explorer', () => {
       cy.expect_flash(flashClassMap.info, 'empty');
     });
   });
+
+  describe('Copy Class', () => {
+    beforeEach(() => {
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace']);
+      cy.toolbar('Configuration', 'Add a New Class');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type('TestClass');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
+      cy.expect_flash(flashClassMap.success, 'added');
+    });
+
+    it('should copy class to same domain with a new name', () => {
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace', /TestClass/]);
+      cy.toolbar('Configuration', 'Copy this Class');
+
+      cy.get('form').should('contain', 'TestDomain');
+
+      cy.getFormInputFieldByIdAndType({ inputId: 'new_name' }).type('CopiedClass');
+
+      cy.getFormButtonByTypeWithText({ buttonText: 'Copy', buttonType: 'submit' }).click();
+
+      cy.expect_flash(flashClassMap.success, 'saved');
+    });
+
+    it('should copy class to a different namespace when copy to same path is unchecked', () => {
+      cy.appFactories([
+        ['create', 'miq_ae_domain', { name: 'TargetDomain' }],
+      ]);
+
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace', /TestClass/]);
+      cy.toolbar('Configuration', 'Copy this Class');
+
+      cy.getFormSelectFieldById({ selectId: 'domain' }).select('TargetDomain');
+
+      cy.getFormInputFieldByIdAndType({ inputId: 'override_source', inputType: 'checkbox' }).uncheck({ force: true });
+
+      cy.get('input#namespace').should('be.visible');
+      cy.get('input#namespace').clear().type('TargetDomain/TestNameSpace');
+
+      cy.getFormButtonByTypeWithText({ buttonText: 'Copy', buttonType: 'submit' }).click();
+
+      cy.expect_flash(flashClassMap.success, 'saved');
+    });
+
+    it('should handle cancel on copy form', () => {
+      cy.selectAccordionItem(['Datastore', 'TestDomain', 'TestNameSpace', /TestClass/]);
+      cy.toolbar('Configuration', 'Copy this Class');
+
+      cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' }).click();
+
+      cy.expect_flash(flashClassMap.warning, 'cancelled');
+    });
+  });
 });

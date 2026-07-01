@@ -1,0 +1,1191 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`CopyObjectsForm Component Copy Class should render copy class form correctly 1`] = `
+<div>
+  <div
+    class="dialog-provision-form"
+  >
+    <form>
+      <div
+        class="cds--form-item cds--text-input-wrapper cds--text-input-wrapper--readonly"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="from_domain"
+          >
+            From Domain
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="from_domain"
+              name="from_domain"
+              readonly=""
+              type="text"
+              value="Domain 1"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="domain"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            To Domain
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="domain"
+              name="domain"
+              title="Domain 2"
+            >
+              <option
+                class="cds--select-option"
+                label="Domain 1"
+                value="1"
+              >
+                Domain 1
+              </option>
+              <option
+                class="cds--select-option"
+                label="Domain 2"
+                value="2"
+              >
+                Domain 2
+              </option>
+              <option
+                class="cds--select-option"
+                label="Domain 3"
+                value="3"
+              >
+                Domain 3
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            class="cds--checkbox"
+            id="override_source"
+            name="override_source"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="override_source"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Copy to same path
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+      <div
+        class="namespace-selector-wrapper"
+      >
+        <div
+          style="display: flex; gap: 8px; align-items: flex-end;"
+        >
+          <div
+            style="flex: 1 1 0%;"
+          >
+            <div
+              class="cds--form-item cds--text-input-wrapper"
+            >
+              <div
+                class="cds--text-input__label-wrapper"
+              >
+                <label
+                  class="cds--label"
+                  dir="auto"
+                  for="namespace"
+                >
+                  Namespace
+                </label>
+              </div>
+              <div
+                class="cds--text-input__field-outer-wrapper"
+              >
+                <div
+                  class="cds--text-input__field-wrapper"
+                >
+                  <input
+                    class="cds--text-input"
+                    id="namespace"
+                    name="namespace"
+                    type="text"
+                    value="Domain2/Namespace"
+                  />
+                  
+                  <span
+                    aria-atomic="true"
+                    aria-live="assertive"
+                    class="cds--text-input__counter-alert"
+                    role="alert"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="display: flex; gap: 4px;"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-3"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
+                      transform="translate(0 .005)"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-3"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Click to select Provisioning Entry Point
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-6"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-6"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Remove this Namespace
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--layer-one cds--modal cds--modal-tall"
+        role="presentation"
+      >
+        <span
+          class="cds--visually-hidden"
+          role="link"
+          tabindex="0"
+        >
+          Focus sentinel
+        </span>
+        <div
+          aria-label="Select Entry Point %s"
+          aria-modal="true"
+          class="cds--modal-container cds--modal-container--lg"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div
+            class="cds--modal-header"
+          >
+            
+            <h2
+              class="cds--modal-header__heading"
+              dir="auto"
+              id="cds--modal-header__heading--modal-id-13"
+            >
+              Select Entry Point %s
+            </h2>
+            
+            <div
+              class="cds--modal-close-button"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Close"
+                    aria-labelledby="tooltip-9"
+                    class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="cds--modal-close__icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height="20"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-9"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Close
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
+            id="cds--modal-body--modal-id-13"
+          >
+            <div
+              style="min-height: 400px;"
+            >
+              <div>
+                Loading tree...
+              </div>
+            </div>
+          </div>
+          <div
+            aria-busy="false"
+            class="cds--modal-footer cds--btn-set"
+          >
+            <button
+              class="cds--btn cds--btn--secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="cds--btn cds--btn--primary cds--btn--disabled"
+              disabled=""
+              type="button"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+        <span
+          class="cds--visually-hidden"
+          role="link"
+          tabindex="0"
+        >
+          Focus sentinel
+        </span>
+      </div>
+      <div
+        style="margin-bottom: 16px;"
+      >
+        <div
+          class="miq-data-table miq-ae-copy-items"
+        >
+          <div
+            class="cds--data-table-content"
+          >
+            <table
+              class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="miq-data-table-header"
+                    scope="col"
+                  >
+                    <div
+                      class="cds--table-header-label"
+                    >
+                      Selected Items
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                aria-live="polite"
+              >
+                <tr
+                  class=""
+                  tabindex="0"
+                  title=""
+                >
+                  <td>
+                    <div
+                      class="cell"
+                    >
+                      <span
+                        class="cds--front-line"
+                        title="TestClass"
+                      >
+                        TestClass
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="is_single_item"
+                name="is_single_item"
+                type="text"
+                value="true"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="is_same_domain"
+                name="is_same_domain"
+                type="text"
+                value="false"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="show_override_existing"
+                name="show_override_existing"
+                type="text"
+                value="false"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="custom-button-wrapper"
+      >
+        <button
+          class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+        >
+          Copy
+        </button>
+        <button
+          class="btnRight cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Reset
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`CopyObjectsForm Component Copy Instance should render copy instance form correctly 1`] = `
+<div>
+  <div
+    class="dialog-provision-form"
+  >
+    <form>
+      <div
+        class="cds--form-item cds--text-input-wrapper cds--text-input-wrapper--readonly"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="from_domain"
+          >
+            From Domain
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="from_domain"
+              name="from_domain"
+              readonly=""
+              type="text"
+              value="Domain 1"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="domain"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            To Domain
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="domain"
+              name="domain"
+              title="Domain 2"
+            >
+              <option
+                class="cds--select-option"
+                label="Domain 1"
+                value="1"
+              >
+                Domain 1
+              </option>
+              <option
+                class="cds--select-option"
+                label="Domain 2"
+                value="2"
+              >
+                Domain 2
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            class="cds--checkbox"
+            id="override_source"
+            name="override_source"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="override_source"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Copy to same path
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            class="cds--checkbox"
+            id="override_existing"
+            name="override_existing"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="override_existing"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Replace items if they already exist?
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+      <div
+        class="namespace-selector-wrapper"
+      >
+        <div
+          style="display: flex; gap: 8px; align-items: flex-end;"
+        >
+          <div
+            style="flex: 1 1 0%;"
+          >
+            <div
+              class="cds--form-item cds--text-input-wrapper"
+            >
+              <div
+                class="cds--text-input__label-wrapper"
+              >
+                <label
+                  class="cds--label"
+                  dir="auto"
+                  for="namespace"
+                >
+                  Namespace
+                </label>
+              </div>
+              <div
+                class="cds--text-input__field-outer-wrapper"
+              >
+                <div
+                  class="cds--text-input__field-wrapper"
+                >
+                  <input
+                    class="cds--text-input"
+                    id="namespace"
+                    name="namespace"
+                    type="text"
+                    value="Domain2/Namespace/Class"
+                  />
+                  
+                  <span
+                    aria-atomic="true"
+                    aria-live="assertive"
+                    class="cds--text-input__counter-alert"
+                    role="alert"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="display: flex; gap: 4px;"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-112"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
+                      transform="translate(0 .005)"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-112"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Click to select Provisioning Entry Point
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-115"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-115"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Remove this Namespace
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--layer-one cds--modal cds--modal-tall"
+        role="presentation"
+      >
+        <span
+          class="cds--visually-hidden"
+          role="link"
+          tabindex="0"
+        >
+          Focus sentinel
+        </span>
+        <div
+          aria-label="Select Entry Point %s"
+          aria-modal="true"
+          class="cds--modal-container cds--modal-container--lg"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div
+            class="cds--modal-header"
+          >
+            
+            <h2
+              class="cds--modal-header__heading"
+              dir="auto"
+              id="cds--modal-header__heading--modal-id-118"
+            >
+              Select Entry Point %s
+            </h2>
+            
+            <div
+              class="cds--modal-close-button"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Close"
+                    aria-labelledby="tooltip-120"
+                    class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="cds--modal-close__icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height="20"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-120"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Close
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
+            id="cds--modal-body--modal-id-118"
+          >
+            <div
+              style="min-height: 400px;"
+            >
+              <div>
+                Loading tree...
+              </div>
+            </div>
+          </div>
+          <div
+            aria-busy="false"
+            class="cds--modal-footer cds--btn-set"
+          >
+            <button
+              class="cds--btn cds--btn--secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="cds--btn cds--btn--primary cds--btn--disabled"
+              disabled=""
+              type="button"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+        <span
+          class="cds--visually-hidden"
+          role="link"
+          tabindex="0"
+        >
+          Focus sentinel
+        </span>
+      </div>
+      <div
+        style="margin-bottom: 16px;"
+      >
+        <div
+          class="miq-data-table miq-ae-copy-items"
+        >
+          <div
+            class="cds--data-table-content"
+          >
+            <table
+              class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="miq-data-table-header"
+                    scope="col"
+                  >
+                    <div
+                      class="cds--table-header-label"
+                    >
+                      Selected Items
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                aria-live="polite"
+              >
+                <tr
+                  class=""
+                  tabindex="0"
+                  title=""
+                >
+                  <td>
+                    <div
+                      class="cell"
+                    >
+                      <span
+                        class="cds--front-line"
+                        title="TestInstance"
+                      >
+                        TestInstance
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="is_single_item"
+                name="is_single_item"
+                type="text"
+                value="true"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="is_same_domain"
+                name="is_same_domain"
+                type="text"
+                value="false"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          />
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="show_override_existing"
+                name="show_override_existing"
+                type="text"
+                value="true"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="custom-button-wrapper"
+      >
+        <button
+          class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+        >
+          Copy
+        </button>
+        <button
+          class="btnRight cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Reset
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
