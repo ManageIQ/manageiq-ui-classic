@@ -563,7 +563,7 @@ class MiqAeClassController < ApplicationController
     ae_values = []
     fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
 
-    if params[:ae_values].is_a?(Array)
+    if params[:ae_values].kind_of?(Array)
       fields.each_with_index do |field, index|
         value_params = params[:ae_values][index] || {}
         ae_value = MiqAeValue.new(:field_id => field.id.to_s)
@@ -590,7 +590,7 @@ class MiqAeClassController < ApplicationController
       end
 
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name}}
-    rescue StandardError => e
+    rescue => e
       render :json => {:error => _("Error during 'add': %{message}") % {:message => e.message}}, :status => 400
     end
   end
@@ -612,7 +612,7 @@ class MiqAeClassController < ApplicationController
 
     fields = ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }
 
-    if params[:ae_values].is_a?(Array)
+    if params[:ae_values].kind_of?(Array)
       fields.each_with_index do |field, index|
         value_params = params[:ae_values][index] || {}
         ae_value = ae_inst.ae_values.find_or_initialize_by(:field_id => field.id.to_s)
@@ -639,7 +639,7 @@ class MiqAeClassController < ApplicationController
       end
 
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was saved") % {:name => ae_inst.name}}
-    rescue StandardError => e
+    rescue => e
       render :json => {:error => _("Error during 'save': %{message}") % {:message => e.message}}, :status => 400
     end
   end
@@ -1916,7 +1916,7 @@ class MiqAeClassController < ApplicationController
       }
       res = @edit[:typ].copy(options)
 
-      model = @edit[:selected_items].count > 1 ? :models : :model
+      model = @edit[:selected_items].many? ? :models : :model
       message = _("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)}
 
       @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
@@ -1925,7 +1925,7 @@ class MiqAeClassController < ApplicationController
       @sb[:action] = @edit = session[:edit] = nil
 
       render :json => {:message => message, :redirect_url => '/miq_ae_class/explorer'}
-    rescue StandardError => bang
+    rescue => bang
       render :json => {:error => bang.message}, :status => 400
     end
   end
