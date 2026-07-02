@@ -88,6 +88,15 @@ const diagnosticsRoot = {
   database: __('Database'),
 };
 
+/** Tab labels used for service show tabs. */
+const service = {
+  details: __('Details'),
+  output: __('Output'),
+  provisioning: __('Provisioning'),
+  retirement: __('Retirement'),
+  tower_job: __('Job'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -102,6 +111,7 @@ export const labelConfig = (type) => {
     DIAGNOSTICS_ZONE: diagnosticsZone,
     DIAGNOSTICS_SERVER: diagnosticsServer,
     DIAGNOSTICS_ROOT: diagnosticsRoot,
+    SERVICE: service,
   };
 
   return configMap[type];
