@@ -180,6 +180,10 @@ window.miqOnCheckGenealogy = (key, checked, tree) => {
     { beforeSend: true, complete: true });
 };
 
+// Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
+// Tenant selections are read from Redux at submit time; no listener needed.
+window.miqOnCheckTenantTree = function(_key) {};
+
 window.miqCheckAll = function(cb, treeName) {
   // Set the checkboxes according to the master checkbox
   ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});
