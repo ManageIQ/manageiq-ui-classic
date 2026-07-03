@@ -61,11 +61,11 @@ const FormTemplate = ({
   return (
     <form onSubmit={handleSubmit}>
       {formFields}
-      <FormSpy>
+      <FormSpy subscription={{ values: true }}>
         {({ values }) => (
           <div className="custom-button-wrapper">
             <Button
-              disabled={values.taskStatus.length === 0 || !valid || (pristine && !dirtySinceLastSubmit)}
+              disabled={!values?.taskStatus?.length || !valid || (pristine && !dirtySinceLastSubmit)}
               className="btnRight"
               id="submit"
               type="submit"
