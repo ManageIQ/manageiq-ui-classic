@@ -37,6 +37,7 @@ import CloudVolumeBackupForm from '../components/cloud-volume-backup-form';
 import CloudVolumeForm from '../components/cloud-volume-form';
 import ConditionForm from '../components/condition-form';
 import ContainerDashboardCards from '../components/ems_container_dashboard';
+import ContainerGroupTerminal from "../components/container-group-terminal"
 import ContainerProjects from '../components/container-projects';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
@@ -237,6 +238,7 @@ ManageIQ.component.addReact('CloudVolumeBackupForm', CloudVolumeBackupForm);
 ManageIQ.component.addReact('CloudVolumeForm', CloudVolumeForm);
 ManageIQ.component.addReact('ConditionForm', ConditionForm);
 ManageIQ.component.addReact('ContainerDashboardCards', ContainerDashboardCards);
+ManageIQ.component.addReact('ContainerGroupTerminal', ContainerGroupTerminal);
 ManageIQ.component.addReact('ContainerProjects', ContainerProjects);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
