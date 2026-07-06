@@ -199,6 +199,12 @@ module ApplicationController::Filter
   def listnav_search_selected(id = nil)
     id ||= params[:id]
     @edit = session[:edit]
+    if @edit.nil?
+      add_flash(_("Error occurred, search filter not applied."), :error)
+      flash_to_session
+      javascript_redirect(:action => 'show_list')
+      return
+    end
     @edit[:selected] = true # Set a flag, this is checked whether to load initial default or clear was clicked
     if id.to_i.zero?
       clear_selected_search
