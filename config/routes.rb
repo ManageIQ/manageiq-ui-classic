@@ -679,9 +679,12 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         perf_top_chart
+        pod_ls
         show
         show_list
         tagging_edit
+        terminal
+        terminal_ticket
         protect
       ],
       :post => %w[
@@ -692,16 +695,17 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
+        terminal_start
         tl_chooser
         wait_for_task
         tagging_edit
         protect
       ] +
-               adv_search_post +
-               exp_post +
-               perf_post +
-               save_post +
-               dialog_runner_post
+              adv_search_post +
+              exp_post +
+              perf_post +
+              save_post +
+              dialog_runner_post
     },
 
     :container_node           => {
