@@ -39,6 +39,7 @@ const MiqCustomTab = ({
     { type: 'DIAGNOSTICS_ZONE', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
     { type: 'DIAGNOSTICS_SERVER', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
     { type: 'DIAGNOSTICS_ROOT', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'SERVICE' },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);

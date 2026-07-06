@@ -1,5 +1,6 @@
 module ServiceHelper
   include TextualSummary
+  include ServiceTabsHelper
 
   def child_service_summary(child_services)
     rows = []

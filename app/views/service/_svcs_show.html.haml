@@ -1,61 +1,48 @@
+:ruby
+  record_type    = @record.type
+  stack          = %w[ServiceTerraformTemplate ServiceEmbeddedTerraform].include?(record_type) ? @record.try(:stack, "Provision") : nil
+  provision_job  = record_type == "ServiceAnsiblePlaybook" ? @record.try(:job, "Provision")  : nil
+  retirement_job = record_type == "ServiceAnsiblePlaybook" ? @record.try(:job, "Retirement") : nil
+  job            = %w[ServiceAnsibleTower ServiceAwx].include?(record_type) ? @record.try(:job) : nil
+  current_userid = User.current_user&.userid
+  tab_labels     = service_tab_configuration(record_type, stack, retirement_job, job)
+
 #service_details
-  #services_tab
-    %ul.nav.nav-tabs{'role' => 'tablist'}
-      = miq_tab_header("details") do
-        = _("Details")
-      - if ["ServiceTerraformTemplate", "ServiceEmbeddedTerraform"].include?(@record.type)
-        - stack = @record.try(:stack, "Provision")
-        - if stack
-          = miq_tab_header("output") do
-            = _("Output")
-      - if @record.type == "ServiceAnsiblePlaybook"
-        - provision_job = @record.try(:job, "Provision")
-        - retirement_job = @record.try(:job, "Retirement")
-        = miq_tab_header("provisioning") do
-          = _("Provisioning")
-        - if retirement_job
-          = miq_tab_header("retirement") do
-            = _("Retirement")
-      -if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
-        - job = @record.try(:job)
-        = miq_tab_header("tower_job") do
-          = _("Job")
-    .tab-content
-      = miq_tab_content("details", 'default', :class => 'cm-tab') do
-        = render :partial => "layouts/textual_groups_generic"
-        - child_services = @record.direct_service_children.select(&:display)
-        - unless child_services.blank?
-          .row
-            .col-md-12.col-lg-6
-              = child_service_summary(child_services)
+  #services-tabs-wrapper
+    = react('MiqCustomTab', {:containerId => 'services-tabs',
+                             :tabLabels   => tab_labels.map(&:to_s),
+                             :type        => 'SERVICE'})
+  .miq_custom_tabs_container#services-tabs
+    = service_tab_content(:details) do
+      = render :partial => "layouts/textual_groups_generic"
+      - child_services = @record.direct_service_children.select(&:display)
+      - if child_services.present?
         .row
-          .col-md-12
-            %h3
-              = _('VMs')
-            - if @view
-              = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
-      
-      - if ["ServiceTerraformTemplate", "ServiceEmbeddedTerraform"].include?(@record.type)
-        = miq_tab_content("output", 'default', :class => 'cm-tab') do
-          - if stack
-            = react('ServiceDetailStdout', { :taskid => stack.raw_stdout_via_worker(User.current_user&.userid, 'html')});
+          .col-md-12.col-lg-6
+            = child_service_summary(child_services)
+      .row
+        .col-md-12
+          %h3
+            = _('VMs')
+          - if @view
+            = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
 
-      - if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
-        = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
-          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
-          - if job && job.respond_to?(:raw_stdout_via_worker)
-            = react('ServiceDetailStdout', { :taskid => @record.job.raw_stdout_via_worker(User.current_user&.userid, 'html')})
+    - if stack
+      = service_tab_content(:output) do
+        = react('ServiceDetailStdout', {:taskid => stack.raw_stdout_via_worker(current_userid, 'html')})
 
-      - if @record.type == "ServiceAnsiblePlaybook"
-        = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
-          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list, :tab_id => "provisioning"}
-          - if provision_job
-            = react('ServiceDetailStdout', { :taskid => provision_job.raw_stdout_via_worker(User.current_user&.userid, 'html')});
+    - if provision_job
+      = service_tab_content(:provisioning) do
+        = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list, :tab_id => "provisioning"}
+        = react('ServiceDetailStdout', {:taskid => provision_job.raw_stdout_via_worker(current_userid, 'html')})
 
-        - if retirement_job
-          = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
-            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
-            = react('ServiceDetailStdout', { :taskid => retirement_job.raw_stdout_via_worker(User.current_user&.userid, 'html')})
+    - if retirement_job
+      = service_tab_content(:retirement) do
+        = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
+        = react('ServiceDetailStdout', {:taskid => retirement_job.raw_stdout_via_worker(current_userid, 'html')})
 
-:javascript
-  miq_tabs_init('#services_tab');
+    - if job
+      = service_tab_content(:tower_job) do
+        = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
+        - if job.respond_to?(:raw_stdout_via_worker)
+          = react('ServiceDetailStdout', {:taskid => job.raw_stdout_via_worker(current_userid, 'html')})
