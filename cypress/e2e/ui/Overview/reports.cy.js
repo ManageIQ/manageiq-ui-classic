@@ -1,3 +1,5 @@
+import { flashClassMap } from "../../../support/assertions/assertion_constants";
+
 describe('Overview > Reports Tests', () => {
   beforeEach(() => {
     cy.login();
@@ -10,23 +12,14 @@ describe('Overview > Reports Tests', () => {
 
   context('With cleanup of saved reports', () => {
     afterEach(() => {
-      // Delete report and verify that it was deleted
-      cy.get('li.node-treeview-reports_tree').contains('My Company').click();
-      cy.expect_show_list_title('My Company (All Groups) Reports');
-      cy.get('.clickable-row').contains('Custom').click({ force: true });
-      cy.expect_show_list_title('Custom Reports');
-      cy.get('.list-group-item').contains('Cypress Test Report').click();
-
-      cy.intercept(/\/report\/x_button\/[0-9]+\?pressed=miq_report_delete/).as('delete');
-      cy.toolbar('Configuration', 'Delete this Report from the Database');
-      cy.wait('@delete');
-      cy.get('.alert-success');
-      cy.get('.list-group-item').should('not.contain', 'Cypress Test Report Edit');
+      cy.appDbState('restore');
     });
 
     it('Can add, edit and delete a report', () => {
       // Open the reports accordion and wait for it to load
       cy.accordion('Reports');
+      cy.expect_explorer_title('All Reports');
+      cy.get('.miq-data-table.report-list').should('be.visible');
 
       // Click add report
       cy.toolbar('Configuration', 'Add a new Report');
@@ -101,7 +94,7 @@ describe('Overview > Reports Tests', () => {
       });
 
       cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click Add button
-      cy.get('.alert-success');
+      cy.expect_flash(flashClassMap.success);
 
       // Navigate to the report that was just added
       cy.expect_show_list_title('All Reports');
@@ -202,7 +195,7 @@ describe('Overview > Reports Tests', () => {
         });
         cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click save button
       }).then(() => {
-        cy.get('.alert-success');
+        cy.expect_flash(flashClassMap.success);
         // Verify report was edited with correct values on summary page
         tableHeaders = [];
         tableValues = [];
@@ -237,6 +230,21 @@ describe('Overview > Reports Tests', () => {
           expect(basedOn).to.include(tableValues[4]);
           expect(tableValues[5]).to.eq('admin');
         });
+
+        // Delete report
+        cy.interceptApi({
+          alias: 'deleteReport',
+          urlPattern: /\/report\/x_button\/[0-9]+\?pressed=miq_report_delete/,
+          triggerFn: () =>
+            cy.expect_browser_confirm_with_text({
+              confirmTriggerFn: () =>
+                cy.toolbar(
+                  'Configuration',
+                  'Delete this Report from the Database'
+                ),
+            }),
+        });
+        cy.expect_flash(flashClassMap.success);
       });
     });
   });

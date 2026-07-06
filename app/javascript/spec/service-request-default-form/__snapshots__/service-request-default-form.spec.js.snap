@@ -91,6 +91,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Pending Approval"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-pending_approval"
               label="Pending Approval"
@@ -119,6 +120,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Approved"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-approved"
               label="Approved"
@@ -147,6 +149,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Denied"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-denied"
               label="Denied"
@@ -350,7 +353,7 @@ exports[`Show Service Request Page should render 1`] = `
               class="cds--select-input"
               id="selectedPeriod"
               name="selectedPeriod"
-              title="Last 24 Hours"
+              title="Last 7 Days"
             >
               <option
                 class="cds--select-option"

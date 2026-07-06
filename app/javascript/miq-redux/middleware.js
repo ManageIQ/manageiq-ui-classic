@@ -52,7 +52,7 @@ export const taggingMiddleware = (store) => (next) => (action) => {
     if (type === TOGGLE_TAG_VALUE_CHANGE) {
       if (selected.status === tagLabels.added) {
         $.post({ url: meta.url, data: JSON.stringify(params), contentType: 'application/json' });
-      } else {
+      } else if (selected?.item) {
         params = meta.onDelete(meta.type, params, selected.item.id)();
         $.post({ url: meta.url, data: JSON.stringify(params), contentType: 'application/json' });
       }

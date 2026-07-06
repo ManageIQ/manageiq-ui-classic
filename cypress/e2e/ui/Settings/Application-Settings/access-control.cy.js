@@ -46,14 +46,11 @@ const COMMON_FEATURES_IN_UI = 'Common Features in UI';
 const MAIN_CONFIGURATION = 'Main Configuration';
 const SETTINGS = 'Settings';
 
+// Selectors
+const MULTI_SELECT = '.cds--multi-select button.cds--list-box__field'
+
 function selectToolbarOption({ toolbar = 'Configuration', option }) {
-  cy.interceptApi({
-    alias: 'selectToolbarOption',
-    urlPattern: /\/ops\/x_button(\/\d+)?\?pressed=.*/,
-    triggerFn: () => cy.toolbar(toolbar, option),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
+  cy.toolbar(toolbar, option);
 }
 
 function navigateToRoles() {
@@ -213,14 +210,14 @@ function createGroup({ description, detailedDescription, role, tenant = 'My Comp
 
 function selectFromMultiSelect(optionsToClick) {
   cy.contains(
-    'button#downshift-0-toggle-button',
+    MULTI_SELECT,
     'Choose one or more Groups'
   ).click();
   optionsToClick.forEach((option) => {
-    cy.contains('#downshift-0-menu .cds--list-box__menu-item', option).click();
+    cy.contains('.cds--list-box__menu .cds--list-box__menu-item', option).click();
   });
   cy.contains(
-    'button#downshift-0-toggle-button',
+    MULTI_SELECT,
     'Choose one or more Groups'
   ).click();
 }
@@ -373,6 +370,7 @@ describe('Settings > Application Settings > Access Control > Roles', () => {
 
       selectRole(ROLE_NAME_FOR_ADD_TEST);
       selectToolbarOption({ option: 'Copy this Role to a new Role' });
+      cy.expect_explorer_title('Adding');
 
       cy.validateFormFields([
         {

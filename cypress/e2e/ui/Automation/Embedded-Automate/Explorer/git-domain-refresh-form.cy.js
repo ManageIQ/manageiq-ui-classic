@@ -9,6 +9,7 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
     cy.appFactories([
       ['create', 'miq_server'],
     ]).then((serverResults) => {
+      expect(serverResults.length).to.equal(1);
       cy.appEval(`
         server = MiqServer.find(${serverResults[0].id})
         server_role = ServerRole.find_or_create_by(:name => 'git_owner')
@@ -26,6 +27,7 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
         url: 'https://github.com/GilbertCherrie/CloudForms_Infoblox',
       }],
     ]).then((results) => {
+      expect(results.length).to.equal(1);
       const gitRepoId = results[0].id;
 
       // Create git branches and tags matching the actual GitHub repository
@@ -54,7 +56,8 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
           name: 'test3',
           git_repository_id: gitRepoId,
         }],
-      ]).then(() => {
+      ]).then((branchesAndTags) => {
+        expect(branchesAndTags.length).to.equal(6);
         // Create the git domain with a name matching the repository
         cy.appFactories([
           ['create', 'miq_ae_git_domain', {
@@ -64,6 +67,7 @@ describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () =>
             ref_type: 'branch',
           }],
         ]).then((gitResults) => {
+          expect(gitResults.length).to.equal(1);
           gitDomainName = gitResults[0].name;
         });
       });

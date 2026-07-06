@@ -13,6 +13,10 @@ Cypress.Commands.add('accordion', (title) => {
         urlPattern: /\/[^/]+\/accordion_select\?id=.*/,
         triggerFn: () => cy.wrap(el).click(),
         waitOnlyIfRequestIntercepted: true,
+        onApiResponse: () => {
+          cy.get('body').find('.spinner').should('not.exist');
+          cy.get('body').find('#spinner_div').should('not.be.visible');
+        },
       });
     }
   });
