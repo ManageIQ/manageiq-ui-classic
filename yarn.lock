@@ -8320,12 +8320,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"final-form@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "final-form@npm:5.0.1"
+"final-form@npm:5.0.0":
+  version: 5.0.0
+  resolution: "final-form@npm:5.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.10.0"
-  checksum: 10/c5dfe5f508d4b0b121c2f8c5ef40de6f9f137514e4073150154b5877a6664d228c4ed3152475b7fdc78fa2dce0e8c31e8c3a9188b5d15dcda2768e9d366ebb5b
+  checksum: 10/a6217926da7fcb01c596a7b44f80a355317d79b979a6960525f479001beb0089a121ddbbc3b340c5a90dc60b4e1537c0d6156268286942b17d27fbe16800791a
   languageName: node
   linkType: hard
 
@@ -13106,15 +13106,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-final-form@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "react-final-form@npm:7.0.1"
+"react-final-form@npm:~6.5.9":
+  version: 6.5.9
+  resolution: "react-final-form@npm:6.5.9"
   dependencies:
     "@babel/runtime": "npm:^7.15.4"
   peerDependencies:
-    final-form: ^5.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/6d607206005158656665dbe437c7ea7464f8bcf5bdbe6666cfcce1cda8ce2f4ab421aa91ac8d214ae3e5143a655f2fce75815a302ae018c9ba148963456a64f3
+    final-form: ^4.20.4
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/200e48771abad9c23a680de9793c7e62ef4aea1d577e1d63fa0fe55c8db147d0a0e8b2258801f9909863e73a86f77f0ff9d8bb7b2016258750d5bb5c35d3f763
   languageName: node
   linkType: hard
 
