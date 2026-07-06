@@ -54,4 +54,15 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
       ]
     ),
   ])
+
+  button_group('container_group_terminal', [ 
+    button( 
+    :container_group_terminal, 
+    'fa fa-terminal fa-lg', 
+    N_('Open Terminal for this Pod'), 
+    N_('Open Terminal'),
+     :url_parms => "/terminal", 
+     :send_checked => true, 
+     ) 
+  ])
 end
