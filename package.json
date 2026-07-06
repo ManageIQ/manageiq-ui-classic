@@ -46,6 +46,7 @@
     "@reduxjs/toolkit": "^2.12.0",
     "@tanstack/react-query": "^5.101.0",
     "@tshepomgaga/aws-sfn-graph": "0.0.6",
+    "actioncable": "5.2.8-1",
     "angular": "~1.8.3",
     "angular-animate": "~1.8.3",
     "angular-bootstrap-switch": "~0.5.2",
@@ -89,7 +90,10 @@
     "spin.js": "~4.1.0",
     "sprintf-js": "~1.1.1",
     "whatwg-fetch": "~3.6.20",
-    "xml_display": "~0.1.1"
+    "xml_display": "~0.1.1",
+    "xterm": "^5.3.0",
+    "xterm-addon-attach": "^0.9.0",
+    "xterm-addon-fit": "^0.8.0"
   },
   "devDependencies": {
     "@babel/core": "~8.0.1",
@@ -104,6 +108,7 @@
     "@testing-library/jest-dom": "~6.9.1",
     "@testing-library/react": "~16.3.2",
     "@testing-library/user-event": "~14.6.1",
+    "@types/actioncable": "^5",
     "angular-mocks": "~1.8.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "~8.4.0",
