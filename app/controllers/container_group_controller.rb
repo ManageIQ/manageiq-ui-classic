@@ -2,9 +2,9 @@ class ContainerGroupController < ApplicationController
   include Mixins::ContainersCommonMixin
   include Mixins::BreadcrumbsMixin
 
-  # terminal_start/pod_ls are called via plain fetch() from React without a CSRF token;
+  # terminal_start are called via plain fetch() from React without a CSRF token;
   # without this skip, the CSRF failure resets the session and logs the user out.
-  skip_before_action :verify_authenticity_token, only: [:terminal_start, :pod_ls]
+  skip_before_action :verify_authenticity_token, :only => [:terminal_start]
   # before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -13,7 +13,7 @@ class ContainerGroupController < ApplicationController
   def show_list
     process_show_list(:named_scope => :active)
   end
-  
+
   def button
     case params[:pressed]
     when "container_group_terminal"
@@ -32,16 +32,15 @@ class ContainerGroupController < ApplicationController
     @pod_name  = @record.name
     @namespace = @record.container_project.name
     @ems       = @record.ext_management_system
-    
+
     drop_breadcrumb(
       :name => _("Terminal"),
       :url  => "/container_group/terminal/#{@record.id}"
     )
-
   end
 
   def terminal_ticket
-    cg = ContainerGroup.find(params[:id])
+    cg = ContainerGroup.find(params.expect(:id))
 
     render :json => {
       :namespace => cg.container_project.name,
@@ -53,20 +52,20 @@ class ContainerGroupController < ApplicationController
   end
 
   def terminal_start
-    cg = ContainerGroup.find(params[:id])
-    session = cg.start_terminal_session          # no oc/kubectl/PTY knowledge here at all
+    cg = ContainerGroup.find(params.expect(:id))
+    session = cg.start_terminal_session # no oc/kubectl/PTY knowledge here at all
     POD_SESSIONS[cg.id.to_s] = session
 
     Thread.new do
       loop do
         output = session[:pty_out].readpartial(1024)
-        ActionCable.server.broadcast("pod_terminal_#{cg.id}", { :output => output })
+        ActionCable.server.broadcast("pod_terminal_#{cg.id}", {:output => output})
       end
     rescue EOFError, Errno::EIO
-      Rails.logger.info "OC SESSION CLOSED"
+      Rails.logger.info("OC SESSION CLOSED")
     end
 
-    render :json => { :status => "started" }
+    render :json => {:status => "started"}
   end
 
   private
