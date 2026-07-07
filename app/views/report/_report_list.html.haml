@@ -28,7 +28,7 @@
                                    :tabLabels   => report_tab_configuration,
                                    :type        => 'REPORT',
                                    :activeTab   => report_tab_index(@sb[:active_tab])})
-        #rep-tabs
+        .miq_custom_tabs_container#rep-tabs
           = report_tab_content(:report_info, :active_tab => @sb[:active_tab]) do
             = render :partial => "report_info"
           = report_tab_content(:saved_reports, :active_tab => @sb[:active_tab]) do
