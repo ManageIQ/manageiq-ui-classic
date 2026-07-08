@@ -333,6 +333,9 @@ describe('Automation > Embedded Automate > Explorer > Schema Edit', () => {
       selectAeTypeOrDataType('aetype', 'Method');
       clickModalSaveButton();
 
+      // Wait for the modal to fully close before interacting with the form-level Reset button.
+      cy.get('.cds--modal').should('not.have.class', 'is-visible');
+
       cy.get('.miq-data-table table tbody').should('contain', 'test_field');
       cy.get('.miq-data-table table tbody').should('contain', 'field_to_reset');
 
@@ -349,6 +352,8 @@ describe('Automation > Embedded Automate > Explorer > Schema Edit', () => {
       selectAeTypeOrDataType('aetype', 'State');
       clickModalSaveButton();
 
+      // Wait for the modal to fully close before clicking the form-level Cancel button.
+      cy.get('.cds--modal').should('not.have.class', 'is-visible');
       cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' }).click();
 
       cy.expect_flash(flashClassMap.success, 'cancelled');
