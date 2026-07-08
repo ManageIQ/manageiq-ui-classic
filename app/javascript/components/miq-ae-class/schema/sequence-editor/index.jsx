@@ -24,8 +24,7 @@ const SchemaSequenceEditor = ({ classId }) => {
   const [loaded, setLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    fetch(`/miq_ae_class/fields_seq_data?id=${classId}`)
-      .then((r) => r.json())
+    http.get(`/miq_ae_class/fields_seq_data?id=${classId}`)
       .then((data) => {
         setInitialFields(data.fields || []);
         setLoaded(true);
