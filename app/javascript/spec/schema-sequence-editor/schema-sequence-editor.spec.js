@@ -1,7 +1,6 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'fetch-mock';
 
 import SchemaSequenceEditor from '../../components/miq-ae-class/schema/sequence-editor';
 import { renderWithRedux } from '../helpers/mountForm';
@@ -12,7 +11,6 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
 const CLASS_ID = '99';
-const FIELDS_URL = `/miq_ae_class/fields_seq_data?id=${CLASS_ID}`;
 const SAVE_URL = `/miq_ae_class/fields_seq_save?id=${CLASS_ID}`;
 
 const SAMPLE_FIELDS = [
@@ -22,18 +20,18 @@ const SAMPLE_FIELDS = [
 ];
 
 describe('SchemaSequenceEditor', () => {
+  let httpGetSpy;
   let httpPostSpy;
 
   beforeEach(() => {
-    fetchMock.getOnce(FIELDS_URL, { fields: SAMPLE_FIELDS });
+    httpGetSpy = jest.spyOn(window.http, 'get').mockResolvedValue({ fields: SAMPLE_FIELDS });
     httpPostSpy = jest.spyOn(window.http, 'post').mockResolvedValue({
       message: 'Class Schema Sequence was saved',
     });
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    httpGetSpy.mockRestore();
     httpPostSpy.mockRestore();
     jest.clearAllMocks();
   });
