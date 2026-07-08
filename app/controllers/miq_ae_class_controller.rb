@@ -2082,9 +2082,9 @@ class MiqAeClassController < ApplicationController
   end
 
   def field_attributes
-    %w[aetype class_id collect datatype default_value description
-       display_name id max_retries max_time message name on_entry
-       on_error on_exit priority substitute]
+    %w[aetype collect datatype default_value description
+       display_name max_retries max_time message name on_entry
+       on_error on_exit substitute]
   end
 
   def row_selected_in_grid?
@@ -2129,8 +2129,6 @@ class MiqAeClassController < ApplicationController
       field = fld[:id].present? ? (indexed[fld[:id].to_i] || MiqAeField.new) : MiqAeField.new
       field.class_id = ae_class.id if field.new_record?
       field_attributes.each do |attr|
-        next if ["id", "class_id"].include?(attr)
-        next if attr == "priority" # set below by position
 
         value = fld[attr.to_sym]
         next if value.nil?
@@ -2298,9 +2296,6 @@ class MiqAeClassController < ApplicationController
 
       field_attributes.each do |attr|
         value = @edit[:new][:fields][i][attr]
-        # Skip setting priority if it's nil - it will be set based on array position
-        next if attr == "priority" && value.nil?
-
         if attr == "substitute" || @edit[:new][:fields][i].key?(attr)
           new_field.send("#{attr}=", value)
         end
