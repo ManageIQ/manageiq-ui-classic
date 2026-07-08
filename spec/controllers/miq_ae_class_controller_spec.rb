@@ -768,31 +768,48 @@ describe MiqAeClassController do
   end
 
   describe "#fields_seq_save" do
-    it "updates field priorities and returns success json" do
+    before do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_namespace)
-      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
-      field1 = FactoryBot.create(:miq_ae_field, :name => "name01", :class_id => cls.id, :priority => 1)
-      field2 = FactoryBot.create(:miq_ae_field, :name => "name02", :class_id => cls.id, :priority => 2)
-      field3 = FactoryBot.create(:miq_ae_field, :name => "name03", :class_id => cls.id, :priority => 3)
+      @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      @field1 = FactoryBot.create(:miq_ae_field, :name => "name01", :class_id => @cls.id, :priority => 1)
+      @field2 = FactoryBot.create(:miq_ae_field, :name => "name02", :class_id => @cls.id, :priority => 2)
+      @field3 = FactoryBot.create(:miq_ae_field, :name => "name03", :class_id => @cls.id, :priority => 3)
+    end
 
-      post :fields_seq_save, :params => {
-        :id     => cls.id,
+    let(:reorder_params) do
+      {
+        :id     => @cls.id,
         :fields => [
-          {:id => field3.id, :priority => 1},
-          {:id => field1.id, :priority => 2},
-          {:id => field2.id, :priority => 3}
+          {:id => @field3.id, :priority => 1},
+          {:id => @field1.id, :priority => 2},
+          {:id => @field2.id, :priority => 3}
         ]
-      }, :format => :json
+      }
+    end
+
+    it "updates field priorities and returns success json" do
+      post :fields_seq_save, :params => reorder_params, :format => :json
 
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body).to include(
         "success" => true,
         "message" => "Class Schema Sequence was saved"
       )
-      expect(field1.reload.priority).to eq(2)
-      expect(field2.reload.priority).to eq(3)
-      expect(field3.reload.priority).to eq(1)
+      expect(@field1.reload.priority).to eq(2)
+      expect(@field2.reload.priority).to eq(3)
+      expect(@field3.reload.priority).to eq(1)
+    end
+
+    it "creates a success audit event with old and new priorities" do
+      expect(AuditEvent).to receive(:success).with(
+        hash_including(
+          :event   => "miqaeclass_record_update",
+          :userid  => User.current_user.userid
+        )
+      )
+
+      post :fields_seq_save, :params => reorder_params, :format => :json
     end
   end
 

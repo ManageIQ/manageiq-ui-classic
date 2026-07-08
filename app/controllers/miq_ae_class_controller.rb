@@ -1415,8 +1415,8 @@ class MiqAeClassController < ApplicationController
 
   def fields_seq_data
     assert_privileges("miq_ae_field_seq")
-    ae_class = MiqAeClass.find(params[:id])
-    fields = ae_class.ae_fields.sort_by(&:priority).map do |field|
+    ae_class = find_record_with_rbac(MiqAeClass, params[:id])
+    fields = ae_class.ae_fields.sort_by { |f| f.priority.to_i }.map do |field|
       {
         :id           => field.id,
         :name         => field.name,
@@ -1429,8 +1429,10 @@ class MiqAeClassController < ApplicationController
 
   def fields_seq_save
     assert_privileges("miq_ae_field_seq")
-    ae_class = MiqAeClass.find(params[:id])
+    ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     fields_data = params[:fields] || []
+
+    old_priorities = ae_class.ae_fields.each_with_object({}) { |f, h| h[f.id] = f.priority }
 
     indexed_ae_fields = ae_class.ae_fields.index_by(&:id)
     fields_data.each do |field_data|
@@ -1439,6 +1441,9 @@ class MiqAeClassController < ApplicationController
     end
 
     if ae_class.save
+      new_priorities = ae_class.ae_fields.reload.each_with_object({}) { |f, h| h[f.id] = f.priority }
+      AuditEvent.success(build_saved_audit(ae_class, :current => {:priorities => old_priorities},
+                                                     :new     => {:priorities => new_priorities}))
       render :json => {:success => true, :message => _("Class Schema Sequence was saved")}
     else
       render :json => {:success => false, :error => ae_class.errors.full_messages.join(", ")}, :status => 422
@@ -1447,7 +1452,7 @@ class MiqAeClassController < ApplicationController
 
   def fields_seq_edit
     assert_privileges("miq_ae_field_seq")
-    @ae_class = MiqAeClass.find_by(:id => params[:id])
+    @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     @sb[:action] = "miq_ae_field_seq"
     replace_right_cell
   end
