@@ -13,8 +13,8 @@
 
     - else
       = render :partial => 'datastore_list',
-               :locals  => {:type      => MiqAeClassHelper::DATASTORE_TYPES[:schema],
-                            :data      => @ae_class.ae_fields,
+               :locals  => {:type       => MiqAeClassHelper::DATASTORE_TYPES[:schema],
+                            :data       => @ae_class.ae_fields,
                             :edit_props => {:aeTypeOptions => @combo_xml,
                                             :dTypeOptions  => @dtype_combo_xml,
                                             :aeClassId     => @ae_class&.id}}
