@@ -20,18 +20,11 @@ class MiqAeClassController < ApplicationController
 
   def change_tab
     assert_privileges("miq_ae_class")
-    # resetting flash array so messages don't get displayed when tab is changed
-    @flash_array = []
     @explorer = true
+    @flash_array = nil
     @record = @ae_class = MiqAeClass.find(x_node.split('-').last)
     @sb[:active_tab] = params[:tab_id]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page << javascript_reload_toolbars
-      page << "miqSparkle(false);"
-    end
+    replace_right_cell
   end
 
   AE_X_BUTTON_ALLOWED_ACTIONS = {
@@ -306,7 +299,8 @@ class MiqAeClassController < ApplicationController
     reload_trees_by_presenter(presenter, trees)
 
     if @sb[:action] == "miq_ae_field_seq"
-      presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
+      @sb[:active_tab] = 'schema'
+      presenter.update(:main_div, r[:partial => 'all_tabs'])
 
     elsif @sb[:action] == "miq_ae_domain_priority_edit"
       @domain_order = ordered_domains_for_priority_edit_screen
@@ -2874,7 +2868,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_class_node_info(node_id)
-    @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed]
+    @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed] && params[:action] != "change_tab"
     begin
       @record = @ae_class = MiqAeClass.find(node_id)
     rescue ActiveRecord::RecordNotFound

@@ -35,6 +35,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
     >
       <button
         aria-controls="ccs-3-tabpanel-0"
+        aria-disabled="false"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
         id="ccs-3-tab-0"
@@ -57,6 +58,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
           tabindex="-1"
@@ -83,6 +85,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
       </div>
       <button
         aria-controls="ccs-3-tabpanel-1"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-3-tab-1"
@@ -105,6 +108,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -131,6 +135,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
       </div>
       <button
         aria-controls="ccs-3-tabpanel-2"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-3-tab-2"
@@ -153,6 +158,7 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -239,6 +245,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
     >
       <button
         aria-controls="ccs-1-tabpanel-0"
+        aria-disabled="false"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
         id="ccs-1-tab-0"
@@ -261,6 +268,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
           tabindex="-1"
@@ -287,6 +295,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
       </div>
       <button
         aria-controls="ccs-1-tabpanel-1"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-1-tab-1"
@@ -309,6 +318,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -335,6 +345,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
       </div>
       <button
         aria-controls="ccs-1-tabpanel-2"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-1-tab-2"
@@ -357,6 +368,7 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -443,6 +455,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
     >
       <button
         aria-controls="ccs-2-tabpanel-0"
+        aria-disabled="false"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
         id="ccs-2-tab-0"
@@ -465,6 +478,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
           tabindex="-1"
@@ -491,6 +505,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-1"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-1"
@@ -513,6 +528,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -539,6 +555,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-2"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-2"
@@ -561,6 +578,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -587,6 +605,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-3"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-3"
@@ -609,6 +628,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -635,6 +655,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-4"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-4"
@@ -657,6 +678,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -683,6 +705,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-5"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-5"
@@ -705,6 +728,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"
@@ -731,6 +755,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       </div>
       <button
         aria-controls="ccs-2-tabpanel-6"
+        aria-disabled="false"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
         id="ccs-2-tab-6"
@@ -753,6 +778,7 @@ exports[`MiqCustomTab component should render tabs for request info page under c
         class="cds--tabs__nav-item--close--hidden"
       >
         <button
+          aria-disabled="false"
           aria-hidden="true"
           class="cds--visually-hidden"
           tabindex="-1"

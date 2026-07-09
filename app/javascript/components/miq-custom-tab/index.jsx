@@ -6,7 +6,7 @@ import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-acti
 import { labelConfig, tabText } from './helper';
 
 const MiqCustomTab = ({
-  containerId, tabLabels, type, activeTab, subtab, tabLength,
+  containerId, tabLabels, type, activeTab, subtab, tabLength, disableInactive,
 }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
@@ -41,6 +41,7 @@ const MiqCustomTab = ({
     { type: 'DIAGNOSTICS_ROOT', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
     { type: 'SERVICE' },
     { type: 'REPORT', url: `/report/rep_change_tab?tab_id=${name}` },
+    { type: 'AE_CLASS', url: `/miq_ae_class/change_tab?tab_id=${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
@@ -122,8 +123,12 @@ const MiqCustomTab = ({
   };
 
   /** Function to render the tabs from the tabLabels props */
-  const renderTabs = () => tabLabels.map((label) => (
-    <Tab key={`tab${label}`} onClick={() => onTabSelect(label)}>
+  const renderTabs = () => tabLabels.map((label, index) => (
+    <Tab
+      key={`tab${label}`}
+      disabled={disableInactive && index !== activeTab}
+      onClick={() => (disableInactive && index === activeTab ? undefined : onTabSelect(label))}
+    >
       {tabText(selectedLabels, label)}
     </Tab>
   ));
@@ -162,10 +167,12 @@ MiqCustomTab.propTypes = {
   activeTab: PropTypes.number,
   subtab: PropTypes.number,
   tabLength: PropTypes.number,
+  disableInactive: PropTypes.bool,
 };
 
 MiqCustomTab.defaultProps = {
   activeTab: undefined,
   subtab: undefined,
   tabLength: undefined,
+  disableInactive: false,
 };
