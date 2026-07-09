@@ -1747,34 +1747,6 @@ class MiqAeClassController < ApplicationController
     session[:edit] = @edit
   end
 
-  def embedded_methods_add
-    assert_privileges(feature_by_action)
-    submit_embedded_method(CGI.unescape(params[:fqname]))
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_show("flash_msg_div")
-      page << javascript_for_miq_button_visibility(@changed)
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page.replace("embedded_methods_div", :partial => "embedded_methods")
-    end
-  end
-
-  def embedded_methods_remove
-    assert_privileges(feature_by_action)
-    @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(@changed)
-      page.replace("embedded_methods_div", :partial => "embedded_methods")
-      page << "miqSparkle(false);"
-    end
-  end
-
   def ae_tree_select
     assert_privileges(feature_by_action)
     @edit = session[:edit]
