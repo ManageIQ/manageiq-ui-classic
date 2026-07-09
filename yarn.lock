@@ -1836,9 +1836,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~4.1.13":
-  version: 4.1.18
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.1.18"
+"@data-driven-forms/carbon-component-mapper@npm:~4.2.0":
+  version: 4.2.0
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.2.0"
   dependencies:
     "@data-driven-forms/common": "npm:*"
     clsx: "npm:^1.1.1"
@@ -1847,7 +1847,7 @@ __metadata:
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/5c11870e6e2ac14dfe6407dc40e2e72df21e50dd072a06caa91d48cae26c040990aeb04686577da9107d6cb4e0dfaa29161e020c06688290849c416d932edcfd
+  checksum: 10/3d17313e8eff1468eb2c1da9db51243f944f77e9612fb24e8d0fe4643332f24c735ffb5cb4e5ffa0df266743e33e638802b7c0dfe2adaa20b94d6ad15a5c3ce3
   languageName: node
   linkType: hard
 
@@ -1865,20 +1865,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:^4.1.10, @data-driven-forms/react-form-renderer@npm:~4.1.13":
-  version: 4.1.14
-  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.14"
+"@data-driven-forms/react-form-renderer@npm:^4.1.10, @data-driven-forms/react-form-renderer@npm:~4.2.0":
+  version: 4.2.0
+  resolution: "@data-driven-forms/react-form-renderer@npm:4.2.0"
   dependencies:
-    final-form: "npm:^4.20.10"
-    final-form-arrays: "npm:^3.0.2"
-    final-form-focus: "npm:^1.1.2"
+    final-form: "npm:^5.0.1"
+    final-form-arrays: "npm:^4.0.1"
     lodash: "npm:^4.18.1"
-    react-final-form: "npm:^6.5.0"
-    react-final-form-arrays: "npm:^3.1.1"
+    react-final-form: "npm:^7.0.1"
+    react-final-form-arrays: "npm:^5.0.0"
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/d8cea6b68edb6391d60464cadfd5c7b2f32d05a110f2bf0d043572dd49a4bcec1383b2a31ad6c04c56b9c5868a0e0ea45a4a928b16b656808402b0c44b53237e
+  checksum: 10/2a7746de51996a5c9089f0f755c9870f8329037edf6c5b9bd16df8039604fad3bc2b621f0370ac4296d7e99b9b352c69047fd233137915fd667fbf3be210a6d9
   languageName: node
   linkType: hard
 
@@ -8312,30 +8311,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"final-form-arrays@npm:^3.0.2":
-  version: 3.1.0
-  resolution: "final-form-arrays@npm:3.1.0"
+"final-form-arrays@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "final-form-arrays@npm:4.0.1"
   peerDependencies:
-    final-form: ^4.20.8
-  checksum: 10/75be48d80e077166f1dfbb710104b79aacd4f2c15c7872e5ab057a4e8956a5b90833fa86d908ccdc195c0866d2a384b14a0f64d4a136ec70c4117d689c13c723
+    final-form: ^5.0.0
+  checksum: 10/f418d9c0a4e0e9128d1a5e33ec5ca97f3e6b8a4db85b4f1f2aaee6525738ae6ad423cf9e7864697c9f4a48cb53acc36c3dbfe8aec1549039fd46fc3f5ef5645e
   languageName: node
   linkType: hard
 
-"final-form-focus@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "final-form-focus@npm:1.1.2"
-  peerDependencies:
-    final-form: ">=1.3.0"
-  checksum: 10/e86796c5135746b8c854c846bea588e91e8fe3291ab319e6003c6e32223e966d27bc74895fb1867858bb4b34dd4d125bbb48bf3b52ef811833e09f19454a550d
-  languageName: node
-  linkType: hard
-
-"final-form@npm:^4.20.10":
-  version: 4.20.10
-  resolution: "final-form@npm:4.20.10"
+"final-form@npm:5.0.0":
+  version: 5.0.0
+  resolution: "final-form@npm:5.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.10.0"
-  checksum: 10/2df45a96bcd5b6f55256872f3d8f24ab893447974bb6b43a3240acea35280839d653c6e39c356c13e5a09557622af163b76004fc57b21f028718abc20408efa6
+  checksum: 10/a6217926da7fcb01c596a7b44f80a355317d79b979a6960525f479001beb0089a121ddbbc3b340c5a90dc60b4e1537c0d6156268286942b17d27fbe16800791a
   languageName: node
   linkType: hard
 
@@ -11306,8 +11296,8 @@ __metadata:
     "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
     "@carbon/react": "npm:~1.106.0"
-    "@data-driven-forms/carbon-component-mapper": "npm:~4.1.13"
-    "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
+    "@data-driven-forms/carbon-component-mapper": "npm:~4.2.0"
+    "@data-driven-forms/react-form-renderer": "npm:~4.2.0"
     "@eslint/js": "npm:~9.7.0"
     "@hotwired/stimulus": "npm:^3.2.2"
     "@manageiq/font-fabulous": "npm:~1.0.5"
@@ -13102,21 +13092,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-final-form-arrays@npm:^3.1.1":
-  version: 3.1.4
-  resolution: "react-final-form-arrays@npm:3.1.4"
+"react-final-form-arrays@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "react-final-form-arrays@npm:5.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.19.4"
   peerDependencies:
-    final-form: ^4.15.0
-    final-form-arrays: ">=1.0.4"
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-final-form: ^6.2.1
-  checksum: 10/39a9bb1502690588f7b16e2e90e75ad17a747c76cbc9724e96dd4552b28ddfeb47a30aa8219262f2e65713a00a7d3f94df6b0f96355b95527d89ccbc3c48b84e
+    final-form: ^5.0.1
+    final-form-arrays: ^4.0.1
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-final-form: ^7.0.1
+  checksum: 10/adc9e6841b6ec2a44b57e83b4cc81b8555c058c6ea1bc0ea57917f019456b8a65e3f54313c555d3bf847af6dcb0258fb70adea4b7f1dbb3262871b798f02dedb
   languageName: node
   linkType: hard
 
-"react-final-form@npm:^6.5.0":
+"react-final-form@npm:~6.5.9":
   version: 6.5.9
   resolution: "react-final-form@npm:6.5.9"
   dependencies:
