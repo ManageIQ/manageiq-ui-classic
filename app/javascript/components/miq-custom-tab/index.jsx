@@ -27,6 +27,7 @@ const MiqCustomTab = ({
     { type: 'CATALOG_EDIT', js: () => name === 'detail' && dispatch(miqCustomTabActions.incrementClickCount()) },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
     { type: 'UTILIZATION' },
+    { type: 'DIALOG', url: `/miq_ae_customization/change_tab?tab_id=${name}` },
     {
       type: 'SETTINGS',
       url: name === 'tags'
