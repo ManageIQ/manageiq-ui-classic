@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import createSchema from './pxe-image-form.schema';
+import createSchema from './pxe-image-edit-form.schema';
 import { http } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 

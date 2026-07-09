@@ -1,13 +1,14 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
 import { screen } from '@testing-library/react';
-import PxeWindowsImageEditForm from '../../components/pxe-windows-image-form';
+import PxeImageEditForm from '../../components/pxe-image-edit-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
-describe('PxeWindowsImageEditForm', () => {
+describe('PxeImageEditForm', () => {
   const defaultProps = {
     recordId: '123',
     imgType: 1,
+    defaultForWindows: false,
     pxeImageTypes: [
       ['Linux', 1],
       ['Windows', 2],
@@ -21,19 +22,19 @@ describe('PxeWindowsImageEditForm', () => {
   });
 
   it('should render the form when pxeImageTypes is valid', () => {
-    const { container } = renderWithRedux(<PxeWindowsImageEditForm {...defaultProps} />);
-    expect(container.querySelector('.pxe-windows-image-form')).toBeInTheDocument();
+    const { container } = renderWithRedux(<PxeImageEditForm {...defaultProps} />);
+    expect(container.querySelector('.pxe-image-form')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
   });
 
   it('should return null when pxeImageTypes is not an array', () => {
-    const { container } = renderWithRedux(<PxeWindowsImageEditForm {...defaultProps} pxeImageTypes={null} />);
+    const { container } = renderWithRedux(<PxeImageEditForm {...defaultProps} pxeImageTypes={null} />);
     expect(container.firstChild).toBeNull();
   });
 
-  it('should render with imgType prop', () => {
-    const { container } = renderWithRedux(<PxeWindowsImageEditForm {...defaultProps} imgType={2} />);
-    expect(container.querySelector('.pxe-windows-image-form')).toBeInTheDocument();
+  it('should render with defaultForWindows prop', () => {
+    const { container } = renderWithRedux(<PxeImageEditForm {...defaultProps} defaultForWindows />);
+    expect(container.querySelector('.pxe-image-form')).toBeInTheDocument();
   });
 });
