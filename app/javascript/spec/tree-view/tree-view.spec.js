@@ -46,8 +46,8 @@ describe('Tree View component', () => {
           },
           {
             key: 'at-19',
-            text: 'Ansible Tower Automation Manager',
-            tooltip: 'Provider: Ansible Tower Automation Manager',
+            text: 'Ansible Tower Automation Provider',
+            tooltip: 'Provider: Ansible Tower Automation Provider',
             image:
               '/assets/svg/vendor-ansible-53cf0c18065b8e2c8b99cbde9dca3ac9245ec363b700af6e9fd2bc5b743c85a9.svg',
             selectable: true,
