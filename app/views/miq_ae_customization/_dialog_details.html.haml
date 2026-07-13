@@ -1,14 +1,2 @@
--# if dialogs is selected
--# Need to include the tree JS files in case no tree is initially displayed
 - if @record
-  = render :partial => "layouts/flash_msg"
-  .miq_custom_tab_wrapper
-    = react('MiqCustomTab', {:containerId => 'dialog-info-tabs',
-                             :tabLabels   => dialog_tab_configuration,
-                             :type        => 'DIALOG',
-                             :activeTab   => dialog_tab_index(@sb[:active_tab])})
-  .miq_custom_tabs_container#dialog-info-tabs
-    = dialog_tab_content(:sample_tab) do
-      = render :partial => "dialog_sample"
-    = dialog_tab_content(:info_tab) do
-      = render :partial => "dialog_info"
+  = react('ServiceDialogDetails', {:dialogData => dialog_details_data(@record)})
