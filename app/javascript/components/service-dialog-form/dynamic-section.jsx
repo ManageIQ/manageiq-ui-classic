@@ -8,8 +8,13 @@ import DynamicField from './dynamic-field';
 /**
  * Renders a single dialog_group (section) including:
  * - A draggable header with Edit + Delete buttons
- * - A drop zone that accepts fields dragged from the palette
+ * - A drop zone that accepts fields dragged from the palette (anywhere in the body)
  * - Draggable fields that can be reordered within the section
+ *
+ * Drop priority rules:
+ *   palette drag  (text/plain)              → always bubbles to __body, appended at end
+ *   field reorder (application/sd-field)   → handled by the target __field-wrapper
+ *   section reorder (application/sd-section) → handled by the outer section div
  */
 const DynamicSection = ({
   section,
@@ -20,49 +25,96 @@ const DynamicSection = ({
   dialogData,
 }) => {
   const [dragFieldIndex, setDragFieldIndex] = useState(null);
+  // Index of the field-wrapper the cursor is currently hovering over during
+  // a field-reorder drag. Used to render a live insertion indicator.
+  const [reorderOverIndex, setReorderOverIndex] = useState(null);
 
   const fields = sortItems(section.dialog_fields || []);
 
+  const isModalOpen = () => !!document.querySelector('.cds--modal.is-visible');
+
   // ── Section drag-and-drop (reordering sections) ─────────────────────────────
   const handleSectionDragStart = (e) => {
-    // Prevent drag if a modal is open (e.g. field edit modal)
-    if (document.querySelector('.cds--modal.is-visible')) {
-      e.preventDefault();
-      return;
-    }
+    if (isModalOpen()) { e.preventDefault(); return; }
     e.dataTransfer.setData('application/sd-section', String(sectionIndex));
     e.dataTransfer.effectAllowed = 'move';
   };
 
   // ── Field drag-and-drop (reordering fields within this section) ─────────────
   const handleFieldDragStart = (e, fieldIndex) => {
-    if (document.querySelector('.cds--modal.is-visible')) {
-      e.preventDefault();
-      return;
-    }
+    if (isModalOpen()) { e.preventDefault(); return; }
     e.stopPropagation(); // don't trigger section drag
     setDragFieldIndex(fieldIndex);
     e.dataTransfer.setData('application/sd-field', String(fieldIndex));
     e.dataTransfer.effectAllowed = 'move';
   };
 
-  const handleFieldDragOver = (e) => {
+  const handleFieldDragEnd = () => {
+    setDragFieldIndex(null);
+    setReorderOverIndex(null);
+  };
+
+  // Called on each __field-wrapper during dragover.
+  // - Palette drags: do NOT preventDefault/stopPropagation → they bubble to __body.
+  // - Field-reorder drags: accept and track hover index for live indicator.
+  const handleWrapperDragOver = (e, fi) => {
+    const isFieldReorder = e.dataTransfer.types.includes('application/sd-field');
+    if (isFieldReorder) {
+      e.preventDefault();
+      e.stopPropagation(); // keep it away from the section-reorder handler
+      e.dataTransfer.dropEffect = 'move';
+      if (reorderOverIndex !== fi) setReorderOverIndex(fi);
+    }
+    // palette drags fall through — __body handles them
+  };
+
+  const handleWrapperDrop = (e, fi) => {
+    // Field-reorder drop: handle here and stop bubbling.
+    const fromStr = e.dataTransfer.getData('application/sd-field');
+    if (fromStr !== '') {
+      e.preventDefault();
+      e.stopPropagation();
+      const fromIndex = parseInt(fromStr, 10);
+      if (!Number.isNaN(fromIndex) && fromIndex !== fi) {
+        onAction(SD_ACTIONS.field.reorder, { tabIndex, sectionIndex, fromIndex, toIndex: fi });
+      }
+      setDragFieldIndex(null);
+      setReorderOverIndex(null);
+    }
+    // palette drops (text/plain) fall through to __body — do NOT call stopPropagation
+  };
+
+  // ── Section body: single handler for all palette add-drops ──────────────────
+  // This fires whether the cursor lands on bare padding OR on a field card,
+  // because field-wrappers no longer stop palette drop events.
+  const handleBodyDragOver = (e) => {
+    // Accept palette drags and field-reorder drags (field-reorder dragover on
+    // __body means cursor is over the empty padding below all cards).
+    const isPalette = e.dataTransfer.types.includes('text/plain');
+    const isFieldReorder = e.dataTransfer.types.includes('application/sd-field');
+    if (isPalette || isFieldReorder) {
+      e.preventDefault();
+      // palette source sets effectAllowed='copy'; field-reorder sets 'move'
+      e.dataTransfer.dropEffect = isPalette ? 'copy' : 'move';
+    }
+  };
+
+  const handleBodyDrop = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    e.dataTransfer.dropEffect = 'move';
+    const fieldType = e.dataTransfer.getData('text/plain');
+    if (fieldType) {
+      onAction(SD_ACTIONS.field.add, { tabIndex, sectionIndex, fieldType });
+      setDragFieldIndex(null);
+      setReorderOverIndex(null);
+    }
   };
 
   return (
-    // Section itself is NOT draggable — only its header is, to avoid competing
-    // with field-wrapper draggables nested inside.
-    // The section IS a drop target so dragging one section over another reorders them.
+    // The section outer div is a drop target for section-reorder only.
     <div
       className="dynamic-section"
       onDragOver={(e) => {
-        // Only accept section drags, not field drags or palette drags
-        if (e.dataTransfer.types.includes('application/sd-section')) {
-          e.preventDefault();
-        }
+        if (e.dataTransfer.types.includes('application/sd-section')) e.preventDefault();
       }}
       onDrop={(e) => {
         const fromStr = e.dataTransfer.getData('application/sd-section');
@@ -102,19 +154,11 @@ const DynamicSection = ({
         </div>
       </div>
 
-      {/* ── Section body — drop zone for palette drops and field reordering ── */}
+      {/* ── Section body — accepts palette drops from anywhere inside ── */}
       <div
         className="dynamic-section__body"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          // Only handle drops that land directly on the body (not on a field-wrapper,
-          // which stops propagation). This catches palette drops onto empty space.
-          const fieldType = e.dataTransfer.getData('text/plain');
-          if (fieldType) {
-            onAction(SD_ACTIONS.field.add, { tabIndex, sectionIndex, fieldType });
-          }
-        }}
+        onDragOver={handleBodyDragOver}
+        onDrop={handleBodyDrop}
       >
         {fields.length === 0 && (
           <div className="dynamic-section__placeholder">
@@ -125,32 +169,18 @@ const DynamicSection = ({
         {fields.map((field, fi) => (
           <div
             key={`${field.name}-${field._version || 1}`}
-            className={`dynamic-section__field-wrapper${dragFieldIndex === fi ? ' is-dragging' : ''}`}
+            className={[
+              'dynamic-section__field-wrapper',
+              dragFieldIndex === fi ? 'is-dragging' : '',
+              reorderOverIndex === fi && dragFieldIndex !== null && dragFieldIndex !== fi
+                ? 'is-reorder-target' : '',
+            ].filter(Boolean).join(' ')}
             draggable
             onDragStart={(e) => handleFieldDragStart(e, fi)}
-            onDragOver={handleFieldDragOver}
-            onDrop={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-
-              // Palette drop onto an existing field → always append to end
-              const fieldType = e.dataTransfer.getData('text/plain');
-              if (fieldType) {
-                onAction(SD_ACTIONS.field.add, { tabIndex, sectionIndex, fieldType });
-                setDragFieldIndex(null);
-                return;
-              }
-
-              // Field reorder drop
-              const fromStr = e.dataTransfer.getData('application/sd-field');
-              if (fromStr !== '') {
-                const fromIndex = parseInt(fromStr, 10);
-                if (!Number.isNaN(fromIndex) && fromIndex !== fi) {
-                  onAction(SD_ACTIONS.field.reorder, { tabIndex, sectionIndex, fromIndex, toIndex: fi });
-                }
-              }
-              setDragFieldIndex(null);
-            }}
+            onDragEnd={handleFieldDragEnd}
+            onDragOver={(e) => handleWrapperDragOver(e, fi)}
+            onDragLeave={() => { if (reorderOverIndex === fi) setReorderOverIndex(null); }}
+            onDrop={(e) => handleWrapperDrop(e, fi)}
           >
             <DynamicField
               field={field}
