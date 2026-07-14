@@ -8,6 +8,11 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
     <div
       class="service-dialog-form__header"
     >
+      <h4
+        class="service-dialog-form__general-heading"
+      >
+        General
+      </h4>
       <div
         class="service-dialog-form__header-fields"
       >
@@ -708,123 +713,8 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
           role="tabpanel"
         >
           <div
-            class="dynamic-section"
-          >
-            <div
-              class="dynamic-section__header"
-            >
-              <span
-                class="dynamic-section__title"
-              >
-                New Section
-              </span>
-              <div
-                class="dynamic-section__actions"
-              >
-                <span
-                  class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                >
-                  <div
-                    class="cds--tooltip-trigger__wrapper"
-                  >
-                    <button
-                      aria-labelledby="tooltip-12"
-                      class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
-                      type="button"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        fill="currentColor"
-                        focusable="false"
-                        height="16"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                        />
-                        <path
-                          d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="cds--popover"
-                    id="tooltip-12"
-                    role="tooltip"
-                  >
-                    <span
-                      class="cds--popover-content cds--tooltip-content"
-                    >
-                      Edit section
-                    </span>
-                    <span
-                      class="cds--popover-caret"
-                    />
-                  </span>
-                </span>
-                <span
-                  class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                >
-                  <div
-                    class="cds--tooltip-trigger__wrapper"
-                  >
-                    <button
-                      aria-labelledby="tooltip-15"
-                      class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
-                      type="button"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        fill="currentColor"
-                        focusable="false"
-                        height="16"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                        />
-                        <path
-                          d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="cds--popover"
-                    id="tooltip-15"
-                    role="tooltip"
-                  >
-                    <span
-                      class="cds--popover-content cds--tooltip-content"
-                    >
-                      Delete section
-                    </span>
-                    <span
-                      class="cds--popover-caret"
-                    />
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div
-              class="dynamic-section__body"
-            >
-              <div
-                class="dynamic-section__placeholder"
-              >
-                Drag fields here
-              </div>
-            </div>
-          </div>
+            data-testid="dynamic-section"
+          />
           <button
             class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary"
             style="margin-top: 0.5rem;"
