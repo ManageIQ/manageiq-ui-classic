@@ -1,0 +1,204 @@
+.service-dialog-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--cds-border-subtle);
+  }
+
+  &__header-fields {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .cds--text-input-wrapper,
+    .cds--form-item {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__palette {
+    width: 180px;
+    min-width: 160px;
+    border-right: 1px solid var(--cds-border-subtle);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  &__canvas {
+    flex: 1;
+    overflow: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 1px solid var(--cds-border-subtle);
+  }
+
+  &__add-tab-btn {
+    margin-top: 0.5rem;
+  }
+
+  &__tab-label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__tabs {
+    height: 100%;
+
+    .cds--tab-content {
+      padding: 0.5rem;
+      height: calc(100% - 40px);
+      overflow: auto;
+    }
+
+    // Fix tab list wrapping for many tabs
+    .cds--tabs__nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+  }
+}
+
+.dynamic-component-chooser {
+  padding: 0.5rem;
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--cds-text-secondary);
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: grab;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    user-select: none;
+
+    &:hover {
+      background: var(--cds-layer-hover);
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__add-icon {
+    margin-left: auto;
+    opacity: 0;
+  }
+
+  &__item:hover &__add-icon {
+    opacity: 1;
+  }
+}
+
+.dynamic-section {
+  border: 1px solid var(--cds-border-subtle);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background: var(--cds-layer);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--cds-border-subtle);
+    background: var(--cds-layer-02);
+    border-radius: 4px 4px 0 0;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__body {
+    padding: 0.5rem;
+    min-height: 60px;
+
+    &--drop-target {
+      background: var(--cds-layer-hover);
+    }
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    border: 1px dashed var(--cds-border-subtle);
+    border-radius: 4px;
+    color: var(--cds-text-secondary);
+    font-size: 0.875rem;
+  }
+}
+
+.dynamic-field {
+  border: 1px solid var(--cds-border-subtle);
+  border-radius: 4px;
+  padding: 0.5rem;
+  background: var(--cds-background);
+  position: relative;
+
+  &:hover {
+    border-color: var(--cds-border-interactive);
+  }
+
+  &--dragging {
+    opacity: 0.5;
+  }
+}
+
+.dynamic-field-actions {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  display: none;
+  gap: 0.25rem;
+
+  .dynamic-field:hover & {
+    display: flex;
+  }
+}
