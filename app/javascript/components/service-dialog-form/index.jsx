@@ -30,6 +30,7 @@ import {
   deleteSection,
   dropTab,
   dropSection,
+  dropField,
   dropComponent,
   buildDialogPayload,
   handlePropertiesEdit,
@@ -179,6 +180,9 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
         }
         case SD_ACTIONS.section.reorder:
           return dropSection(prev, payload.tabIndex, payload.fromIndex, payload.toIndex);
+
+        case SD_ACTIONS.field.reorder:
+          return dropField(prev, payload.tabIndex, payload.sectionIndex, payload.fromIndex, payload.toIndex);
 
         case SD_ACTIONS.field.add:
           return dropComponent(prev, payload.tabIndex, payload.sectionIndex, payload.fieldType, defaultField);
