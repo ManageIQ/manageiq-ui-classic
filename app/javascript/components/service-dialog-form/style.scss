@@ -3,6 +3,15 @@
   flex-direction: column;
   height: 100%;
 
+  &__general-heading {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--cds-text-secondary);
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem;
+  }
+
   &__header {
     padding: 1rem;
     border-bottom: 1px solid var(--cds-border-subtle);
@@ -10,14 +19,14 @@
 
   &__header-fields {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
 
-    .cds--text-input-wrapper,
-    .cds--form-item {
-      flex: 1;
-      min-width: 200px;
+    // Constrain the description textarea — no vertical expansion in the header
+    .cds--text-area__wrapper textarea,
+    .cds--text-area {
+      max-height: 4rem;
+      resize: none;
     }
   }
 
@@ -175,6 +184,19 @@
   }
 }
 
+.dynamic-section {
+  &__field-wrapper {
+    &.is-dragging {
+      opacity: 0.4;
+    }
+  }
+
+  &__footer {
+    padding: 0.25rem 0.5rem;
+    border-top: 1px solid var(--cds-border-subtle);
+  }
+}
+
 .dynamic-field {
   border: 1px solid var(--cds-border-subtle);
   border-radius: 4px;
@@ -189,6 +211,22 @@
   &--dragging {
     opacity: 0.5;
   }
+
+  // The widget interior must not intercept drag events — all dragover/drop
+  // must reach the field-wrapper div which owns the handlers. Without this,
+  // dragging a palette item over an INPUT/SELECT inside a field card causes
+  // the browser to see no dragover.preventDefault() on the direct target and
+  // silently cancels the drop, making it impossible to add a 3rd+ field.
+  &__widget {
+    pointer-events: none;
+  }
+
+  // Constrain textarea height in the editor canvas — fix for known vertical
+  // expansion bug (Sub-Task 3, item 3).
+  .cds--text-area {
+    max-height: 80px;
+    resize: none;
+  }
 }
 
 .dynamic-field-actions {
@@ -201,4 +239,10 @@
   .dynamic-field:hover & {
     display: flex;
   }
+}
+
+.dynamic-time-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
