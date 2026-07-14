@@ -73,7 +73,17 @@
   &__tab-label {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  // Force the Carbon tab internal wrapper and label to fill the full button width
+  // so that space-between on __tab-label pushes the ⋮ to the far right.
+  .cds--tabs__nav-item-label-wrapper,
+  .cds--tabs__nav-item-label {
+    width: 100%;
+    flex-grow: 1;
   }
 
   &__tabs {
