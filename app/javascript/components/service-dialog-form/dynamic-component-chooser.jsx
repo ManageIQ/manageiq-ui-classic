@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import { Button } from '@carbon/react';
-import { AddAlt } from '@carbon/react/icons';
 import { fieldComponents } from './data';
 
 const DynamicComponentChooser = ({ onDragStart }) => (
@@ -30,7 +28,6 @@ const DynamicComponentChooser = ({ onDragStart }) => (
         >
           {Icon && <Icon size={16} className="dynamic-component-chooser__icon" />}
           <span>{label}</span>
-          <AddAlt size={16} className="dynamic-component-chooser__add-icon" />
         </div>
       ))}
     </div>
