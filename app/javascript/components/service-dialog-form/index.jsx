@@ -145,11 +145,13 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
           return newData;
         }
         case SD_ACTIONS.tab.add: {
+          const existingTabs = prev.dialog_tabs || [];
           const newTab = {
-            ...defaultTab((prev.dialog_tabs || []).length),
+            ...defaultTab(existingTabs.length),
             ...(payload && payload.values ? payload.values : {}),
           };
-          return { ...prev, dialog_tabs: [...(prev.dialog_tabs || []), newTab] };
+          setSelectedTabIndex(existingTabs.length); // focus the new tab
+          return { ...prev, dialog_tabs: [...existingTabs, newTab] };
         }
         case SD_ACTIONS.tab.edit: {
           const tabs = [...(prev.dialog_tabs || [])];
