@@ -129,6 +129,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   // ── Action dispatcher ───────────────────────────────────────────────────────
   const handleAction = useCallback((actionType, payload) => {
+    // section.edit without values = request to open the edit modal
+    if (actionType === SD_ACTIONS.section.edit && !payload.values) {
+      setSectionModal({ open: true, tabIndex: payload.tabIndex, sectionIndex: payload.sectionIndex });
+      return;
+    }
+
     setData((prev) => {
       if (!prev) return prev;
 
