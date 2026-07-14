@@ -193,6 +193,12 @@
     &.is-dragging {
       opacity: 0.4;
     }
+
+    &.is-reorder-target {
+      outline: 2px dashed var(--cds-border-interactive);
+      outline-offset: -2px;
+      border-radius: 4px;
+    }
   }
 
   &__footer {
@@ -207,6 +213,10 @@
   padding: 0.5rem;
   background: var(--cds-layer-02);
   position: relative;
+  // Block pointer events on the card itself so all drag events (dragover, drop)
+  // pass straight through to the __field-wrapper which owns the handlers.
+  // The edit/delete action buttons re-enable pointer-events via their own rule.
+  pointer-events: none;
 
   &:hover {
     border-color: var(--cds-border-interactive);
@@ -216,11 +226,6 @@
     opacity: 0.5;
   }
 
-  // The widget interior must not intercept drag events — all dragover/drop
-  // must reach the field-wrapper div which owns the handlers. Without this,
-  // dragging a palette item over an INPUT/SELECT inside a field card causes
-  // the browser to see no dragover.preventDefault() on the direct target and
-  // silently cancels the drop, making it impossible to add a 3rd+ field.
   &__widget {
     pointer-events: none;
   }
@@ -239,8 +244,12 @@
   right: 0.25rem;
   display: none;
   gap: 0.25rem;
+  // Re-enable pointer events so the edit/delete buttons remain clickable
+  // even though the parent .dynamic-field has pointer-events: none.
+  pointer-events: auto;
 
-  .dynamic-field:hover & {
+  // Trigger on wrapper hover since .dynamic-field itself has pointer-events: none
+  .dynamic-section__field-wrapper:hover & {
     display: flex;
   }
 }
