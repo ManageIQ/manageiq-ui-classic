@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -20,6 +20,7 @@ import DynamicSection from './dynamic-section';
 import TabOptionsMenu from './tab-options-menu';
 import EditTabModal from './edit-tab-modal';
 import EditSectionModal from './edit-section-modal';
+import useDraftRecovery from './use-draft-recovery';
 import {
   SD_ACTIONS,
   emptyDialog,
@@ -46,6 +47,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
   const [isDraggingTab, setIsDraggingTab] = useState(false);
   const [dragTabIndex, setDragTabIndex] = useState(null);
 
+  // Draft recovery
+  const { saveDraft, loadDraft, clearDraft } = useDraftRecovery(dialogId, action);
+  const [showDraftModal, setShowDraftModal] = useState(false);
+  const pendingDraft = useRef(null);  // holds the draft captured at mount; cleared after modal decision
+  const debounceTimer = useRef(null);
+
   // Modal states
   const [tabModal, setTabModal] = useState({ open: false, tabIndex: null });
   const [sectionModal, setSectionModal] = useState({ open: false, tabIndex: null, sectionIndex: null });
@@ -53,6 +60,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
   // ── Load dialog data ────────────────────────────────────────────────────────
   useEffect(() => {
     if (action === 'new') {
+      const draft = loadDraft();
+      if (draft) {
+        pendingDraft.current = draft;
+        setShowDraftModal(true);
+      }
       setData(emptyDialog());
       setIsLoading(false);
       return;
@@ -85,6 +97,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
             })),
           })),
         };
+        const draft = loadDraft();
+        if (draft) {
+          pendingDraft.current = draft;
+          setShowDraftModal(true);
+        }
         setData(loaded);
       })
       .catch(() => {
@@ -94,6 +111,20 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
         setIsLoading(false);
       });
   }, [dialogId, action]);
+
+  // ── Debounced draft save on every data change ──────────────────────────────
+  // Suppressed while showDraftModal is true so the initial load can't overwrite
+  // the captured draft before the user makes a Restore/Discard decision.
+  useEffect(() => {
+    if (!data || showDraftModal) return;
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      saveDraft(data);
+    }, 500);
+    return () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    };
+  }, [data, showDraftModal]);
 
   // ── Action dispatcher ───────────────────────────────────────────────────────
   const handleAction = useCallback((actionType, payload) => {
@@ -190,6 +221,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
     API.post(url, payload)
       .then(() => {
+        clearDraft();
         const msg = isEdit
           ? sprintf(__('Service Dialog "%s" was saved'), data.label)
           : sprintf(__('Service Dialog "%s" was added'), data.label);
@@ -202,6 +234,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   // ── Cancel ──────────────────────────────────────────────────────────────────
   const handleCancel = () => {
+    clearDraft();
     const msg = action === 'edit'
       ? sprintf(__('Edit of Service Dialog "%s" was cancelled by the user'), data ? data.label : '')
       : __('Creation of a new Service Dialog was cancelled by the user');
@@ -272,6 +305,35 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
   };
 
   // ── Render ──────────────────────────────────────────────────────────────────
+
+  // Draft recovery modal — shown before full UI so user can decide before interacting
+  const draftModal = showDraftModal && (
+    <Modal
+      open
+      modalHeading={__('Restore previous changes?')}
+      primaryButtonText={__('Restore')}
+      secondaryButtonText={__('Discard')}
+      onRequestSubmit={() => {
+        if (pendingDraft.current) setData(pendingDraft.current);
+        pendingDraft.current = null;
+        clearDraft();
+        setShowDraftModal(false);
+      }}
+      onSecondarySubmit={() => {
+        pendingDraft.current = null;
+        clearDraft();
+        setShowDraftModal(false);
+      }}
+      onRequestClose={() => {
+        pendingDraft.current = null;
+        clearDraft();
+        setShowDraftModal(false);
+      }}
+    >
+      <p>{__('Unsaved changes from a previous session were found. Would you like to restore them?')}</p>
+    </Modal>
+  );
+
   if (isLoading) {
     return (
       <div className="service-dialog-form__loading">
@@ -287,6 +349,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   return (
     <div className="service-dialog-form">
+      {draftModal}
       {/* ── Header: General section — label + description ── */}
       <div className="service-dialog-form__header">
         <h4 className="service-dialog-form__general-heading">{__('General')}</h4>
