@@ -16,6 +16,7 @@ import { AddAlt } from '@carbon/react/icons';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import DynamicComponentChooser from './dynamic-component-chooser';
+import DynamicSection from './dynamic-section';
 import TabOptionsMenu from './tab-options-menu';
 import EditTabModal from './edit-tab-modal';
 import EditSectionModal from './edit-section-modal';
@@ -34,72 +35,6 @@ import {
 } from './helper';
 import { defaultField } from './data';
 import './style.scss';
-
-// Lazy-load DynamicSection to avoid circular deps at build time
-// (DynamicSection will be created in Sub-Task 3 — placeholder for now)
-let DynamicSection;
-try {
-  DynamicSection = require('./dynamic-section').default;
-} catch (_e) {
-  DynamicSection = null;
-}
-
-// ── Section placeholder used until Sub-Task 3 DynamicSection is available ────
-const SectionPlaceholder = ({ section, tabIndex, sectionIndex, onAction }) => (
-  <div className="dynamic-section">
-    <div className="dynamic-section__header">
-      <span className="dynamic-section__title">{section.label}</span>
-      <div className="dynamic-section__actions">
-        <Button
-          size="sm"
-          kind="ghost"
-          hasIconOnly
-          renderIcon={AddAlt}
-          iconDescription={__('Edit section')}
-          onClick={() => onAction(SD_ACTIONS.section.edit, { tabIndex, sectionIndex })}
-        />
-        <Button
-          size="sm"
-          kind="ghost"
-          hasIconOnly
-          renderIcon={AddAlt}
-          iconDescription={__('Delete section')}
-          onClick={() => onAction(SD_ACTIONS.section.delete, { tabIndex, sectionIndex })}
-        />
-      </div>
-    </div>
-    <div
-      className="dynamic-section__body"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        e.preventDefault();
-        const fieldType = e.dataTransfer.getData('text/plain');
-        if (fieldType) onAction(SD_ACTIONS.field.add, { tabIndex, sectionIndex, fieldType });
-      }}
-    >
-      {(!section.dialog_fields || section.dialog_fields.length === 0) && (
-        <div className="dynamic-section__placeholder">
-          {__('Drag fields here')}
-        </div>
-      )}
-      {(section.dialog_fields || []).map((field, fieldIndex) => (
-        <div key={field.name || fieldIndex} className="dynamic-field">
-          <span>{field.label || field.name}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-SectionPlaceholder.propTypes = {
-  section: PropTypes.shape({
-    label: PropTypes.string,
-    dialog_fields: PropTypes.array,
-  }).isRequired,
-  tabIndex: PropTypes.number.isRequired,
-  sectionIndex: PropTypes.number.isRequired,
-  onAction: PropTypes.func.isRequired,
-};
 
 // ── Main component ────────────────────────────────────────────────────────────
 const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) => {
@@ -151,10 +86,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
           })),
         };
         setData(loaded);
-        setIsLoading(false);
       })
       .catch(() => {
         setData(emptyDialog());
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   }, [dialogId, action]);
@@ -170,14 +106,13 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
           setSelectedTabIndex(Math.max(0, selectedTabIndex - (payload.tabIndex <= selectedTabIndex ? 1 : 0)));
           return newData;
         }
-        case SD_ACTIONS.tab.add:
-          return {
-            ...prev,
-            dialog_tabs: [
-              ...(prev.dialog_tabs || []),
-              defaultTab((prev.dialog_tabs || []).length),
-            ],
+        case SD_ACTIONS.tab.add: {
+          const newTab = {
+            ...defaultTab((prev.dialog_tabs || []).length),
+            ...(payload && payload.values ? payload.values : {}),
           };
+          return { ...prev, dialog_tabs: [...(prev.dialog_tabs || []), newTab] };
+        }
         case SD_ACTIONS.tab.edit: {
           const tabs = [...(prev.dialog_tabs || [])];
           tabs[payload.tabIndex] = { ...tabs[payload.tabIndex], ...payload.values };
@@ -190,7 +125,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
           const tabs = [...(prev.dialog_tabs || [])];
           const tab = { ...tabs[payload.tabIndex] };
           const groups = [...(tab.dialog_groups || [])];
-          groups.push(defaultSection(groups.length));
+          const newSection = {
+            ...defaultSection(groups.length),
+            ...(payload.values || {}),
+          };
+          groups.push(newSection);
           tab.dialog_groups = groups;
           tabs[payload.tabIndex] = tab;
           return { ...prev, dialog_tabs: tabs };
@@ -277,11 +216,18 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
     }
     setDragTabIndex(tabIndex);
     setIsDraggingTab(true);
+    e.dataTransfer.setData('application/sd-tab', String(tabIndex));
     e.dataTransfer.effectAllowed = 'move';
   };
 
   const handleTabDrop = (e, toIndex) => {
     e.preventDefault();
+    // Ignore palette drags that land on a tab header
+    if (e.dataTransfer.getData('text/plain')) {
+      setDragTabIndex(null);
+      setIsDraggingTab(false);
+      return;
+    }
     if (dragTabIndex !== null && dragTabIndex !== toIndex) {
       handleAction(SD_ACTIONS.tab.reorder, { fromIndex: dragTabIndex, toIndex });
     }
@@ -298,7 +244,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   const saveTab = (values) => {
     if (tabModal.tabIndex === null) {
-      handleAction(SD_ACTIONS.tab.add);
+      handleAction(SD_ACTIONS.tab.add, { values });
     } else {
       handleAction(SD_ACTIONS.tab.edit, { tabIndex: tabModal.tabIndex, values });
     }
@@ -314,7 +260,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   const saveSection = (values) => {
     if (sectionModal.sectionIndex === null) {
-      handleAction(SD_ACTIONS.section.add, { tabIndex: sectionModal.tabIndex });
+      handleAction(SD_ACTIONS.section.add, { tabIndex: sectionModal.tabIndex, values });
     } else {
       handleAction(SD_ACTIONS.section.edit, {
         tabIndex: sectionModal.tabIndex,
@@ -335,15 +281,15 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
   }
 
   const tabs = (data && data.dialog_tabs) || [];
-  const SectionComp = DynamicSection || SectionPlaceholder;
 
   const selectedTab = tabs[selectedTabIndex] || tabs[0];
   const currentTabIndex = Math.min(selectedTabIndex, Math.max(0, tabs.length - 1));
 
   return (
     <div className="service-dialog-form">
-      {/* ── Header: label + description ── */}
+      {/* ── Header: General section — label + description ── */}
       <div className="service-dialog-form__header">
+        <h4 className="service-dialog-form__general-heading">{__('General')}</h4>
         <div className="service-dialog-form__header-fields">
           <TextInput
             id="dialog-label"
@@ -411,15 +357,30 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
             <TabPanels>
               {tabs.map((tab, ti) => (
-                <TabPanel key={tab.id || tab.label || ti}>
+                <TabPanel
+                  key={tab.id || tab.label || ti}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const fromStr = e.dataTransfer.getData('application/sd-section');
+                    if (fromStr !== '') {
+                      const fromIndex = parseInt(fromStr, 10);
+                      const toIndex = (tab.dialog_groups || []).length - 1;
+                      if (!Number.isNaN(fromIndex) && fromIndex !== toIndex) {
+                        handleAction(SD_ACTIONS.section.reorder, { tabIndex: ti, fromIndex, toIndex });
+                      }
+                    }
+                  }}
+                >
                   {(tab.dialog_groups || []).map((section, si) => (
-                    <SectionComp
+                    <DynamicSection
                       key={section.id || section.label || si}
                       section={section}
                       tabIndex={ti}
                       sectionIndex={si}
                       onAction={handleAction}
                       emsWorkflowsEnabled={emsWorkflowsEnabled}
+                      dialogData={data}
                     />
                   ))}
                   <Button
