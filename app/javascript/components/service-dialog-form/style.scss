@@ -19,12 +19,10 @@
 
   &__header-fields {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 0.75rem;
-    align-items: flex-start;
 
-    // Label and description sit side-by-side, each capped at a standard width
+    // Cap both fields to a readable width
     .cds--form-item {
       flex: 0 0 auto;
       width: 18rem;
