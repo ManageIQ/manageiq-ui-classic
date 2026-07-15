@@ -142,24 +142,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Text Box
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Text Area into dialog"
@@ -195,24 +177,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Text Area
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Check Box into dialog"
@@ -239,24 +203,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Check Box
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Dropdown into dialog"
@@ -283,24 +229,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Dropdown
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Radio Button into dialog"
@@ -327,24 +255,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Radio Button
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Datepicker into dialog"
@@ -371,24 +281,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Datepicker
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Timepicker into dialog"
@@ -418,24 +310,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Timepicker
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
             <div
               aria-label="Drag Tag Control into dialog"
@@ -465,24 +339,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span>
                 Tag Control
               </span>
-              <svg
-                aria-hidden="true"
-                class="dynamic-component-chooser__add-icon"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
-                />
-                <path
-                  d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
-                />
-              </svg>
             </div>
           </div>
         </div>
