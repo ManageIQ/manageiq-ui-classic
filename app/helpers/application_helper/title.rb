@@ -24,7 +24,7 @@ module ApplicationHelper
 
       case layout
       when "automation_manager"
-        _("Automation Managers")
+        _("Automation Providers")
       when "catalogs"
         _("Catalogs")
       when "configuration"

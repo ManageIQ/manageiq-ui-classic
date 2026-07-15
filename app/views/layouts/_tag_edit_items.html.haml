@@ -6,7 +6,7 @@
       - when "ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack"
         = n_("%{amount} Automation Job Being Tagged", "%{amount} Automation Jobs Being Tagged", @tagitems.length) % t
       - when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-        = n_("%{amount} Automation Manager (Ansible Tower) Being Tagged", "%{amount} Automation Managers (Ansible Tower) Being Tagged", @tagitems.length) % t
+        = n_("%{amount} Automation Provider (Ansible Tower) Being Tagged", "%{amount} Automation Providers (Ansible Tower) Being Tagged", @tagitems.length) % t
       - when "AvailabilityZone"
         = n_("%{amount} Availability Zone Being Tagged", "%{amount} Availability Zones Being Tagged", @tagitems.length) % t
       - when "CloudNetwork"

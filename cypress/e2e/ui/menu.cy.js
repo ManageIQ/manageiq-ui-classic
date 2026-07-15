@@ -113,7 +113,7 @@ describe('Menu', () => {
     });
 
     it('Automation >', () => {
-      cy.menu('Automation', 'Automation', 'Providers').expect_show_list_title('Automation Managers');
+      cy.menu('Automation', 'Automation', 'Providers').expect_show_list_title('Automation Providers');
       cy.menu('Automation', 'Automation', 'Configured Systems').expect_show_list_title('Configured Systems');
       cy.menu('Automation', 'Automation', 'Templates').expect_show_list_title('Templates');
       cy.menu('Automation', 'Automation', 'Jobs').expect_show_list_title('Automation Jobs');
