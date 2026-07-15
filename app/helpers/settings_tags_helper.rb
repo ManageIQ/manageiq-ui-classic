@@ -12,9 +12,11 @@ module SettingsTagsHelper
     [:my_company_categories, :my_company_tags, :import_tags, :import_variables, :map_tags]
   end
 
-  def settings_tags_content(key_name, &block)
+  def settings_tags_content(key_name, active_tab: nil, &)
     if settings_tags_types[key_name]
-      tag.div(:id => key_name, :class => 'tab_content', &block)
+      css_class = 'tab-pane tab_content'
+      css_class += ' active' if active_tab == "settings_#{key_name}"
+      tag.div(:id => key_name, :class => css_class, &)
     end
   end
 

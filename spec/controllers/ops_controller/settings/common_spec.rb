@@ -196,14 +196,6 @@ describe OpsController do
 
       let(:edit) { controller.instance_variable_get(:@edit) }
 
-      context 'help menu' do
-        it 'current and new in the edit hash equals' do
-          controller.instance_variable_set(:@sb, :active_tab => 'settings_help_menu')
-          controller.send(:settings_get_info, 'root-0')
-          expect(edit[:new]).to eq(edit[:current])
-        end
-      end
-
       context 'get advanced config settings' do
         it 'for selected server' do
           miq_server = FactoryBot.create(:miq_server)

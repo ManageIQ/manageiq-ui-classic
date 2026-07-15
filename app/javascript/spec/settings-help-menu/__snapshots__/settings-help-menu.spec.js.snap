@@ -1,0 +1,528 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
+<div>
+  <div
+    class="settings-help-menu-tab"
+  >
+    <h4
+      class="settings-help-menu-tab__header"
+    >
+      Customize Help Menu
+    </h4>
+    <div
+      class="cds--inline-notification cds--inline-notification--low-contrast cds--inline-notification--info cds--inline-notification--hide-close-button"
+      role="status"
+    >
+      <div
+        class="cds--inline-notification__details"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--inline-notification__icon"
+          fill="currentColor"
+          focusable="false"
+          height="20"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 32 32"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16,8a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,13.875H17.125v-8H13v2.25h1.875v5.75H12v2.25h8Z"
+            data-icon-path="inner-path"
+            fill="none"
+          />
+          <path
+            d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,6a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,16.125H12v-2.25h2.875v-5.75H13v-2.25h4.125v8H20Z"
+          />
+          <title>
+            info icon
+          </title>
+        </svg>
+        <div
+          class="cds--inline-notification__text-wrapper"
+        >
+          <div
+            class="cds--inline-notification__title"
+            dir="auto"
+          >
+            Any change to the help menu will take effect upon a full page reload.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="settings-help-menu-tab__form"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="col1"
+          id="col1"
+          name="col1"
+        >
+          <p
+            class="menu-item-label"
+            id="menu_item_label"
+            name="menu_item_label"
+          >
+            Menu item label
+          </p>
+          <p
+            class="left-divider"
+            id="divider_2"
+            name="divider_2"
+          />
+          <div
+            class="cds--form-item item-label cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="documentation_title"
+                  maxlength="128"
+                  name="documentation_title"
+                  placeholder="Documentation"
+                  title="Documentation"
+                  type="text"
+                  value="Documentation"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <p
+            class="left-divider"
+            id="divider_3"
+            name="divider_3"
+          />
+          <div
+            class="cds--form-item item-label cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="product_title"
+                  maxlength="128"
+                  name="product_title"
+                  placeholder="ManageIQ.org"
+                  title="ManageIQ.org"
+                  type="text"
+                  value="ManageIQ.org"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <p
+            class="left-divider"
+            id="divider_4"
+            name="divider_4"
+          />
+          <div
+            class="cds--form-item item-label cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="about_title"
+                  maxlength="128"
+                  name="about_title"
+                  placeholder="About"
+                  title="About"
+                  type="text"
+                  value="About"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col2"
+          id="col2"
+          name="col2"
+        >
+          <p
+            class="url-label"
+            id="url_label"
+            name="url_label"
+          >
+            URL
+          </p>
+          <p
+            class="middle-divider"
+            id="divider_5"
+            name="divider_5"
+          />
+          <div
+            class="cds--form-item url cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="documentation_url"
+                  maxlength="128"
+                  name="documentation_url"
+                  placeholder="https://www.manageiq.org/docs/"
+                  title="https://www.manageiq.org/docs/"
+                  type="text"
+                  value="https://www.manageiq.org/docs/"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <p
+            class="middle-divider"
+            id="divider_6"
+            name="divider_6"
+          />
+          <div
+            class="cds--form-item url cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="product_url"
+                  maxlength="128"
+                  name="product_url"
+                  placeholder="https://www.manageiq.org"
+                  title="https://www.manageiq.org"
+                  type="text"
+                  value="https://www.manageiq.org"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <p
+            class="middle-divider"
+            id="divider_7"
+            name="divider_7"
+          />
+          <div
+            class="cds--form-item url cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            />
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  disabled=""
+                  id="about_url"
+                  maxlength="128"
+                  name="about_url"
+                  type="text"
+                  value="/about"
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col3"
+          id="col3"
+          name="col3"
+        >
+          <p
+            class="open-label"
+            id="open_label"
+            name="open_label"
+          >
+            Open in
+          </p>
+          <p
+            class="right-divider"
+            id="divider_8"
+            name="divider_8"
+          />
+          <div
+            class="cds--form-item dropdown"
+          >
+            <div
+              class="cds--select"
+            >
+              <label
+                class="cds--label cds--visually-hidden"
+                dir="auto"
+                for="documentation_type"
+              >
+                Select
+              </label>
+              <div
+                class="cds--select-input__wrapper"
+              >
+                <select
+                  class="cds--select-input"
+                  id="documentation_type"
+                  name="documentation_type"
+                  title="Current Window"
+                >
+                  <option
+                    class="cds--select-option"
+                    label="Current Window"
+                    value="default"
+                  >
+                    Current Window
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="New Window"
+                    value="new_window"
+                  >
+                    New Window
+                  </option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+                
+              </div>
+            </div>
+          </div>
+          <p
+            class="right-divider"
+            id="divider_9"
+            name="divider_9"
+          />
+          <div
+            class="cds--form-item dropdown"
+          >
+            <div
+              class="cds--select"
+            >
+              <label
+                class="cds--label cds--visually-hidden"
+                dir="auto"
+                for="product_type"
+              >
+                Select
+              </label>
+              <div
+                class="cds--select-input__wrapper"
+              >
+                <select
+                  class="cds--select-input"
+                  id="product_type"
+                  name="product_type"
+                  title="New Window"
+                >
+                  <option
+                    class="cds--select-option"
+                    label="Current Window"
+                    value="default"
+                  >
+                    Current Window
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="New Window"
+                    value="new_window"
+                  >
+                    New Window
+                  </option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+                
+              </div>
+            </div>
+          </div>
+          <p
+            class="right-divider"
+            id="divider_10"
+            name="divider_10"
+          />
+          <div
+            class="cds--form-item dropdown"
+          >
+            <div
+              class="cds--select"
+            >
+              <label
+                class="cds--label cds--visually-hidden"
+                dir="auto"
+                for="about_type"
+              >
+                Select
+              </label>
+              <div
+                class="cds--select-input__wrapper"
+              >
+                <select
+                  class="cds--select-input"
+                  id="about_type"
+                  name="about_type"
+                  title="About Modal"
+                >
+                  <option
+                    class="cds--select-option"
+                    label="Current Window"
+                    value="default"
+                  >
+                    Current Window
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="New Window"
+                    value="new_window"
+                  >
+                    New Window
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="About Modal"
+                    value="modal"
+                  >
+                    About Modal
+                  </option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

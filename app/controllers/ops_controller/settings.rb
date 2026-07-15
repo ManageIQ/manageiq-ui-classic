@@ -10,8 +10,6 @@ module OpsController::Settings
   include LabelTagMapping
   include Upload
   include Zones
-  include HelpMenu
-
   # Apply the good records from an uploaded import file
   def apply_imports
     assert_privileges("ops_settings")
