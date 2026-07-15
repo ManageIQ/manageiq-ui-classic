@@ -1214,10 +1214,10 @@ describe CatalogController do
           expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
         end
 
-        context "with other automation managers" do
+        context "with other automation providers" do
           let!(:embedded_ansible) { FactoryBot.create(:provider_embedded_ansible).automation_manager }
 
-          it "doesn't include other automation managers" do
+          it "doesn't include other automation providers" do
             controller.send(:set_form_vars)
             expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
           end
