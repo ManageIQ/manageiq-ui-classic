@@ -477,7 +477,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
       {/* ── Footer: save + cancel ── */}
       <div className="service-dialog-form__footer">
         <Button kind="primary" onClick={handleSubmit}>
-          {action === 'edit' ? __('Save') : __('Add')}
+          {__('Save')}
         </Button>
         <Button kind="secondary" onClick={handleCancel}>
           {__('Cancel')}

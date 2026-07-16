@@ -56,8 +56,8 @@ describe('ServiceDialogForm', () => {
 
     it('renders Add and Cancel buttons', () => {
       renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
-      // The primary footer "Add" button has exact text "Add"
-      expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument();
+      // The primary footer button always shows "Save"
+      expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
     });
 
