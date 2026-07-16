@@ -1,5 +1,6 @@
-= react('SettingsCUCollectionTab',
-        :clusterTree   => @cluster_tree,
-        :datastoreTree => @datastore_tree,
-        :allClusters   => Metric::Targets.perf_capture_always[:host_and_cluster],
-        :allDatastores => Metric::Targets.perf_capture_always[:storage])
+- if @sb[:active_tab] == "settings_cu_collection"
+  = react('SettingsCUCollectionTab',
+          :clusterTree   => @cluster_tree,
+          :datastoreTree => @datastore_tree,
+          :allClusters   => Metric::Targets.perf_capture_always[:host_and_cluster],
+          :allDatastores => Metric::Targets.perf_capture_always[:storage])
