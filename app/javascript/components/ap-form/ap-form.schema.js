@@ -54,6 +54,7 @@ const createSchema = (isHostMode, modalCallbacks) => {
       {
         component: 'ap-file-tab',
         name: 'file_names',
+        initialValue: [],
         validate: [],
         parse: (value) => value,
         format: (value) => value,
@@ -71,6 +72,7 @@ const createSchema = (isHostMode, modalCallbacks) => {
         {
           component: 'ap-registry-tab',
           name: 'reg_entries',
+          initialValue: [],
           validate: [],
           onOpenModal: registry.onOpenModal,
           onEditClick: registry.onEditClick,
@@ -86,6 +88,7 @@ const createSchema = (isHostMode, modalCallbacks) => {
       {
         component: 'ap-event-log-tab',
         name: 'nteventlog_entries',
+        initialValue: [],
         validate: [],
         onOpenModal: eventLog.onOpenModal,
         onEditClick: eventLog.onEditClick,
