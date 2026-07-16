@@ -781,17 +781,6 @@ module OpsController::Settings::Common
         when "settings_map_tags"
           label_tag_mapping_get_all
         end
-      when "settings_help_menu"
-        @in_a_form = true
-        @edit = {:new => {}, :key => 'customize_help_menu'}
-        @edit[:new] = Settings.help_menu.to_h
-        Menu::DefaultMenu.help_menu_items.each do |item|
-          id = item.id.to_sym
-          @edit[:new][id] = Settings.help_menu.try(id).try(:to_h) || {}
-        end
-        @edit[:current] = copy_hash(@edit[:new])
-        session[:edit] = @edit
-        session[:changed] = false
       when "settings_advanced"
         fetch_advanced_settings(MiqRegion.my_region)
       end

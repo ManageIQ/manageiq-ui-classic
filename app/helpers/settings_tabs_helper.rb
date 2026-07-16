@@ -12,9 +12,11 @@ module SettingsTabsHelper
     [:details, :cu_collection, :tags, :replication, :help_menu, :advanced]
   end
 
-  def settings_tab_content(key_name, &block)
+  def settings_tab_content(key_name, active_tab: nil, &)
     if settings_tabs_types[key_name]
-      tag.div(:id => "settings_#{key_name}", :class => 'tab_content', &block)
+      css_class = 'tab-pane tab_content'
+      css_class += ' active' if active_tab == "settings_#{key_name}"
+      tag.div(:id => "settings_#{key_name}", :class => css_class, &)
     end
   end
 

@@ -2441,7 +2441,6 @@ Rails.application.routes.draw do
         diagnostics_tree_select
         explorer
         fetch_target_ids
-        help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
         label_tag_mapping_update
@@ -2470,7 +2469,6 @@ Rails.application.routes.draw do
         schedules_list
         settings_form_field_changed
         settings_update
-        settings_update_help_menu
         show
         smartproxy_affinity_field_changed
         tl_chooser

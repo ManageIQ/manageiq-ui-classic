@@ -85,6 +85,8 @@ const MiqCustomTab = ({
       expectedId = `settings_${name}`;
     } else if (type === 'SETTINGS_SERVER') {
       expectedId = `settings_${name}`;
+    } else if (type === 'SETTINGS') {
+      expectedId = `settings_${name}`;
     } else {
       expectedId = name;
     }
