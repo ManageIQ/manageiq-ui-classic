@@ -57,12 +57,6 @@ describe PxeController do
     end
   end
 
-  describe "#pxe_wimg_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/pxe_wimg_form_field_changed")).to route_to("pxe#pxe_wimg_form_field_changed")
-    end
-  end
-
   describe "#reload" do
     it "routes with POST" do
       expect(post("/pxe/reload")).to route_to("pxe#reload")

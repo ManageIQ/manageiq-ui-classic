@@ -2661,7 +2661,6 @@ Rails.application.routes.draw do
         pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit
-        pxe_wimg_form_field_changed
         reload
         tagging_edit
         template_list
