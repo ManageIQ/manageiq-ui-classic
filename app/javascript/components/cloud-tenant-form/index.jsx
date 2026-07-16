@@ -10,7 +10,7 @@ const CloudTenantForm = ({ recordId }) => {
 
   useEffect(() => {
     if (recordId) {
-      API.get(`/api/cloud_tenants/${recordId}`).then((initialValues) => {
+      API.get(`/api/cloud_tenants1/${recordId}`).then((initialValues) => {
         setState((state) => ({ ...state, initialValues, isLoading: false }));
       });
     }
