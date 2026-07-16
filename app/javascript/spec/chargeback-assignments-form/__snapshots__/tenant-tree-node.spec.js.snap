@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TenantTreeNode component should match snapshot 1`] = `
+<div>
+  <div
+    class="tenant-tree-node"
+  >
+    <div
+      class="node-content"
+    >
+      <div
+        class="node-name"
+        style="padding-left: 0rem;"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-labelledby="tooltip-:r1l:"
+              class="expand-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-:r1l:"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Expand
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+        <span
+          class="tenant-name"
+        >
+          Parent Tenant
+        </span>
+      </div>
+      <div
+        class="node-dropdown"
+      >
+        <div
+          class="cds--dropdown__wrapper cds--list-box__wrapper"
+        >
+          <div
+            class="cds--dropdown cds--dropdown--sm cds--list-box cds--list-box--sm"
+            id="rate-1"
+          >
+            <button
+              aria-activedescendant=""
+              aria-controls="downshift-:r1p:-menu"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="downshift-:r1p:-label"
+              class="cds--list-box__field"
+              id="downshift-:r1p:-toggle-button"
+              role="combobox"
+              tabindex="0"
+              title="Rate 1"
+              type="button"
+            >
+              <span
+                class="cds--list-box__label"
+              >
+                Rate 1
+              </span>
+              <div
+                class="cds--list-box__menu-icon"
+              >
+                <svg
+                  aria-label="Open menu"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  name="chevron--down"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                  <title>
+                    Open menu
+                  </title>
+                </svg>
+              </div>
+            </button>
+            <ul
+              aria-labelledby="downshift-:r1p:-label"
+              class="cds--list-box__menu"
+              id="downshift-:r1p:-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
