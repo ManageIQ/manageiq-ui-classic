@@ -11,8 +11,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
   'patternfly',
-  'patternfly.charts',
-  'patternfly.views',
   'ui.bootstrap',
 ]);
 miqHttpInject(ManageIQ.angular.app);
