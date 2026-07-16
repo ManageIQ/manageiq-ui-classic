@@ -115,8 +115,4 @@ DataTable.propTypes = {
   onPageChange: PropTypes.func.isRequired,
 };
 
-DataTable.defaultProps = {
-  isLoading: undefined,
-};
-
 export default DataTable;

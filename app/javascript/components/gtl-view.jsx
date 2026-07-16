@@ -277,18 +277,18 @@ const computePagination = (settings) => ({
 });
 
 const GtlView = ({
-  flashMessages,
-  additionalOptions,
-  modelName,
-  activeTree,
-  parentId,
-  isAscending,
-  sortColIdx,
-  isExplorer,
-  records,
-  hideSelect,
-  showUrl,
-  pages,
+  flashMessages = null,
+  additionalOptions = {},
+  modelName = null,
+  activeTree = null,
+  parentId = null,
+  isAscending = null,
+  sortColIdx = null,
+  isExplorer = false,
+  records = null,
+  hideSelect = false,
+  showUrl = null,
+  pages = null,
   noFlashDiv,
 }) => {
   // const { settings, data } = props;
@@ -535,21 +535,6 @@ GtlView.propTypes = {
     list: PropTypes.number, reports: PropTypes.number, grid: PropTypes.number, tile: PropTypes.number,
   }),
   isAscending: PropTypes.bool,
-};
-
-GtlView.defaultProps = {
-  flashMessages: null,
-  additionalOptions: {},
-  modelName: null,
-  activeTree: null,
-  parentId: null,
-  sortColIdx: null,
-  isExplorer: false,
-  records: null,
-  hideSelect: false,
-  showUrl: null,
-  pages: null,
-  isAscending: null,
 };
 
 export default GtlView;

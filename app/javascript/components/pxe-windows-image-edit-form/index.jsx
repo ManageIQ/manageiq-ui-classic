@@ -6,7 +6,7 @@ import { http } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const PxeWindowsImageEditForm = ({
-  recordId, imgType, pxeImageTypes,
+  recordId, imgType = null, pxeImageTypes,
 }) => {
   const [initialValues] = useState({
     img_type: imgType,
@@ -58,10 +58,6 @@ PxeWindowsImageEditForm.propTypes = {
   pxeImageTypes: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
   ).isRequired,
-};
-
-PxeWindowsImageEditForm.defaultProps = {
-  imgType: null,
 };
 
 export default PxeWindowsImageEditForm;

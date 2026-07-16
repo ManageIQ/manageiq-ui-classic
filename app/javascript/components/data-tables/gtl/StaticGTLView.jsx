@@ -6,21 +6,21 @@ import { DataTable } from './DataTable';
 const translateHeaderText = (heads) => heads.map((h) => ({ ...h, header_text: typeof h.text !== 'undefined' ? __(h.text) : '' }));
 
 export const StaticGTLView = ({
-  pagination,
+  pagination = { page: 1, perPage: 10, perPageOptions: [5, 10, 20, 50, 100, 200] },
   rows,
   head,
-  inEditMode,
+  inEditMode = (foo) => console.log('inEditMode', foo),
   noCheckboxes,
   settings,
-  total,
-  onPageSet,
-  onPerPageSelect,
-  onItemSelect,
-  onItemClick,
+  total = 128,
+  onPageSet = (foo) => console.log('onPageSet', foo),
+  onPerPageSelect = (foo) => console.log('onPerPageSelect', foo),
+  onItemSelect = (foo) => console.log('onItemSelect', foo),
+  onItemClick = (foo) => console.log('onItemClick', foo),
   onSelectAll,
-  onSort,
+  onSort = (headerId, isAscending) => console.log('onSort', headerId, isAscending),
   showPagination,
-  onPageChange,
+  onPageChange = (foo, bar) => console.log('onPageChange', foo, bar),
 }) => {
   const miqDataTable = () => (
     <DataTable
@@ -42,19 +42,6 @@ export const StaticGTLView = ({
     />
   );
   return miqDataTable();
-};
-
-StaticGTLView.defaultProps = {
-  pagination: { page: 1, perPage: 10, perPageOptions: [5, 10, 20, 50, 100, 200] },
-  inEditMode: (foo) => console.log('inEditMode', foo),
-  onSort: (headerId, isAscending) => console.log('onSort', headerId, isAscending),
-  onPerPageSelect: (foo) => console.log('onPerPageSelect', foo),
-  onPageChange: (foo, bar) => console.log('onPageChange', foo, bar),
-  onPageSet: (foo) => console.log('onPageSet', foo),
-  onItemButtonClick: (foo) => console.log('onItemButtonClick', foo),
-  onItemClick: (foo) => console.log('onItemClick', foo),
-  onItemSelect: (foo) => console.log('onItemSelect', foo),
-  total: 128,
 };
 
 StaticGTLView.propTypes = {

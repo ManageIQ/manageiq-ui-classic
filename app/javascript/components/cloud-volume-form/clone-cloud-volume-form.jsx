@@ -66,8 +66,5 @@ const CloneCloudVolumeForm = ({ recordId }) => {
 CloneCloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
 };
-CloneCloudVolumeForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default CloneCloudVolumeForm;

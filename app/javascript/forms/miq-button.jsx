@@ -2,33 +2,41 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import { Button } from '@carbon/react';
 
-function MiqButton(props) {
-  let { title } = props;
-  if (props.enabled && props.enabledTitle) {
-    title = props.enabledTitle;
+function MiqButton({
+  name,
+  enabled,
+  title: titleProp = '',
+  enabledTitle = '',
+  disabledTitle = '',
+  primary = false,
+  xs = false,
+  onClick,
+  btnType = '',
+}) {
+  let title = titleProp;
+  if (enabled && enabledTitle) {
+    title = enabledTitle;
   }
-  if (!props.enabled && props.disabledTitle) {
-    title = props.disabledTitle;
+  if (!enabled && disabledTitle) {
+    title = disabledTitle;
   }
 
   const klass = ClassNames({
     btn: true,
-    'btn-xs': props.xs,
-    'btn-primary': props.primary,
-    'btn-default': !props.primary,
-    disabled: !props.enabled,
+    'btn-xs': xs,
+    'btn-primary': primary,
+    'btn-default': !primary,
+    disabled: !enabled,
   });
 
   const buttonClicked = (event) => {
-    if (props.enabled) {
-      props.onClick();
+    if (enabled) {
+      onClick();
     }
 
     event.preventDefault();
     event.target.blur();
   };
-
-  const { btnType } = props;
   if (btnType === 'deleteModal') {
     return (
       <Button
@@ -36,9 +44,9 @@ function MiqButton(props) {
         onClick={buttonClicked}
         onKeyDown={buttonClicked}
         title={title}
-        disabled={!props.enabled}
+        disabled={!enabled}
       >
-        {__(props.name)}
+        {__(name)}
       </Button>
     );
   }
@@ -48,9 +56,9 @@ function MiqButton(props) {
       onClick={buttonClicked}
       onKeyDown={buttonClicked}
       title={title}
-      disabled={!props.enabled}
+      disabled={!enabled}
     >
-      {__(props.name)}
+      {__(name)}
     </Button>
   );
 }
@@ -65,15 +73,6 @@ MiqButton.propTypes = {
   xs: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   btnType: PropTypes.string,
-};
-
-MiqButton.defaultProps = {
-  title: '',
-  enabledTitle: '',
-  disabledTitle: '',
-  primary: false,
-  xs: false,
-  btnType: '',
 };
 
 export default MiqButton;

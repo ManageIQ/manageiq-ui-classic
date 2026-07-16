@@ -92,7 +92,6 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -129,7 +128,6 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -262,7 +260,6 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -299,7 +296,6 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -432,7 +428,6 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -558,7 +553,6 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -643,7 +637,6 @@ exports[`Attach / Detach form component should render form 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -769,7 +762,6 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -806,7 +798,6 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -939,7 +930,6 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

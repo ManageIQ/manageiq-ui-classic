@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { SideNavHeader } from '@carbon/react';
 
 const MiqLogo = ({
-  alt,
-  customBrand,
+  alt = 'ManageIQ',
+  customBrand = false,
   expanded,
-  href,
-  logoCustom,
+  href = '/dashboard/start_url',
+  logoCustom = '/upload/custom_brand.png',
   logoLarge,
   logoSmall,
-  title,
+  title = __('Go to my start page'),
 }) => {
   const url = customBrand ? logoCustom : (expanded ? logoLarge : logoSmall);
 
@@ -31,14 +31,6 @@ MiqLogo.propTypes = {
   logoLarge: PropTypes.string.isRequired,
   logoSmall: PropTypes.string.isRequired,
   title: PropTypes.string,
-};
-
-MiqLogo.defaultProps = {
-  alt: 'ManageIQ',
-  customBrand: false,
-  href: '/dashboard/start_url',
-  logoCustom: '/upload/custom_brand.png',
-  title: __('Go to my start page'),
 };
 
 export default MiqLogo;

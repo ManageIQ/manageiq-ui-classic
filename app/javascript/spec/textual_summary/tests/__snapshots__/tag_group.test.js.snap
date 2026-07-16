@@ -9,7 +9,7 @@ exports[`TagGroup renders just fine 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-4"
+        aria-controls="accordion-item-:r0:"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -41,7 +41,7 @@ exports[`TagGroup renders just fine 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-4"
+          id="accordion-item-:r0:"
         >
           <div
             aria-label="Structured list"

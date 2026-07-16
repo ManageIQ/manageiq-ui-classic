@@ -55,7 +55,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -101,7 +100,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -156,7 +154,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                     type="text"
                     value=""
                   />
-                  
                   <span
                     aria-atomic="true"
                     aria-live="assertive"
@@ -200,7 +197,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                     type="password"
                     value=""
                   />
-                  
                   <span
                     aria-atomic="true"
                     aria-live="assertive"
@@ -255,7 +251,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -292,7 +287,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -329,7 +323,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -366,7 +359,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -414,7 +406,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"

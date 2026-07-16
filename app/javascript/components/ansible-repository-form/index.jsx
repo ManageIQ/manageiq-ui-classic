@@ -119,8 +119,4 @@ AnsibleRepositoryForm.propTypes = {
   repositoryId: PropTypes.string,
 };
 
-AnsibleRepositoryForm.defaultProps = {
-  repositoryId: undefined,
-};
-
 export default AnsibleRepositoryForm;

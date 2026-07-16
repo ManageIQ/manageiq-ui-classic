@@ -98,7 +98,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="Documentation"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -135,7 +134,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="ManageIQ.org"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -172,7 +170,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="About"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -222,7 +219,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="https://www.manageiq.org/docs/"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -259,7 +255,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="https://www.manageiq.org"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -295,7 +290,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                   type="text"
                   value="/about"
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -375,7 +369,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                     d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                   />
                 </svg>
-                
               </div>
             </div>
           </div>
@@ -436,7 +429,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                     d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                   />
                 </svg>
-                
               </div>
             </div>
           </div>
@@ -504,7 +496,6 @@ exports[`SettingsHelpMenuTab renders the form after loading settings 1`] = `
                     d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                   />
                 </svg>
-                
               </div>
             </div>
           </div>

@@ -17,7 +17,3 @@ MiqStructuredListConditionalTag.propTypes = {
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
-
-MiqStructuredListConditionalTag.defaultProps = {
-  onClick: undefined,
-};

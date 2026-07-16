@@ -6,9 +6,9 @@ import TaggingPropTypes from '../TaggingPropTypes';
 const CategoryModifier = ({
   tagCategories,
   onTagCategoryChange,
-  selectedTagCategory,
-  categoryLabel,
-  isDisabled,
+  selectedTagCategory = {},
+  categoryLabel = __('Category'),
+  isDisabled = false,
 }) => (
   <FormGroup legendText={categoryLabel}>
     <Column className="tag-modifier-form-row category-modifier">
@@ -28,12 +28,6 @@ CategoryModifier.propTypes = {
   onTagCategoryChange: PropTypes.func.isRequired,
   categoryLabel: PropTypes.string,
   isDisabled: PropTypes.bool,
-};
-
-CategoryModifier.defaultProps = {
-  categoryLabel: __('Category'),
-  selectedTagCategory: {},
-  isDisabled: false,
 };
 
 export default CategoryModifier;

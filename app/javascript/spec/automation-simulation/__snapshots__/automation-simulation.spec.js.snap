@@ -33,10 +33,10 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
       role="tablist"
     >
       <button
-        aria-controls="ccs-8-tabpanel-0"
+        aria-controls="ccs-:r7:-tabpanel-0"
         aria-selected="true"
         class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-        id="ccs-8-tab-0"
+        id="ccs-:r7:-tab-0"
         role="tab"
         tabindex="0"
         type="button"
@@ -81,10 +81,10 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         </button>
       </div>
       <button
-        aria-controls="ccs-8-tabpanel-1"
+        aria-controls="ccs-:r7:-tabpanel-1"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-8-tab-1"
+        id="ccs-:r7:-tab-1"
         role="tab"
         tabindex="-1"
         type="button"
@@ -129,10 +129,10 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         </button>
       </div>
       <button
-        aria-controls="ccs-8-tabpanel-2"
+        aria-controls="ccs-:r7:-tabpanel-2"
         aria-selected="false"
         class="cds--tabs__nav-item cds--tabs__nav-link"
-        id="ccs-8-tab-2"
+        id="ccs-:r7:-tab-2"
         role="tab"
         tabindex="-1"
         type="button"
@@ -201,9 +201,9 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
     </button>
   </div>
   <div
-    aria-labelledby="ccs-8-tab-0"
+    aria-labelledby="ccs-:r7:-tab-0"
     class="cds--tab-content"
-    id="ccs-8-tabpanel-0"
+    id="ccs-:r7:-tabpanel-0"
     role="tabpanel"
   >
     <ul
@@ -213,7 +213,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         class="cds--accordion__item cds--accordion__item--active"
       >
         <button
-          aria-controls="accordion-item-9"
+          aria-controls="accordion-item-:r8:"
           aria-expanded="true"
           class="cds--accordion__heading"
           type="button"
@@ -245,7 +245,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         >
           <div
             class="cds--accordion__content"
-            id="accordion-item-9"
+            id="accordion-item-:r8:"
           >
             <div
               aria-label="Structured list"
@@ -262,7 +262,6 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
                   tabindex="0"
                   title=""
                 >
-                  
                   <div
                     class="cds--structured-list-td content_value object_item"
                     dir="auto"
@@ -294,10 +293,10 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
     </ul>
   </div>
   <div
-    aria-labelledby="ccs-8-tab-1"
+    aria-labelledby="ccs-:r7:-tab-1"
     class="cds--tab-content"
     hidden=""
-    id="ccs-8-tabpanel-1"
+    id="ccs-:r7:-tabpanel-1"
     role="tabpanel"
   >
     <ul
@@ -307,7 +306,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         class="cds--accordion__item cds--accordion__item--active"
       >
         <button
-          aria-controls="accordion-item-11"
+          aria-controls="accordion-item-:ra:"
           aria-expanded="true"
           class="cds--accordion__heading"
           type="button"
@@ -339,7 +338,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         >
           <div
             class="cds--accordion__content"
-            id="accordion-item-11"
+            id="accordion-item-:ra:"
           >
             <div
               aria-label="Structured list"
@@ -388,10 +387,10 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
     </ul>
   </div>
   <div
-    aria-labelledby="ccs-8-tab-2"
+    aria-labelledby="ccs-:r7:-tab-2"
     class="cds--tab-content"
     hidden=""
-    id="ccs-8-tabpanel-2"
+    id="ccs-:r7:-tabpanel-2"
     role="tabpanel"
   >
     <ul
@@ -401,7 +400,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         class="cds--accordion__item cds--accordion__item--active"
       >
         <button
-          aria-controls="accordion-item-13"
+          aria-controls="accordion-item-:rc:"
           aria-expanded="true"
           class="cds--accordion__heading"
           type="button"
@@ -433,7 +432,7 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
         >
           <div
             class="cds--accordion__content"
-            id="accordion-item-13"
+            id="accordion-item-:rc:"
           >
             <div
               aria-label="Structured list"
@@ -450,7 +449,6 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
                   tabindex="0"
                   title=""
                 >
-                  
                   <div
                     class="cds--structured-list-td content_value object_item"
                     dir="auto"

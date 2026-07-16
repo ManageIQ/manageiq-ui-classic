@@ -92,7 +92,6 @@ exports[`Associate / Disassociate form component should render associate form va
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -210,7 +209,6 @@ exports[`Associate / Disassociate form component should render disassociate form
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -293,7 +291,6 @@ exports[`Associate / Disassociate form component should render form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -411,7 +408,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -529,7 +525,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>

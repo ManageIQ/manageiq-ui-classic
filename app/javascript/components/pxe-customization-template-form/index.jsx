@@ -69,9 +69,5 @@ PxeCustomizationTemplateForm.propTypes = {
   recordId: PropTypes.string,
   copy: PropTypes.string,
 };
-PxeCustomizationTemplateForm.defaultProps = {
-  recordId: undefined,
-  copy: undefined,
-};
 
 export default PxeCustomizationTemplateForm;

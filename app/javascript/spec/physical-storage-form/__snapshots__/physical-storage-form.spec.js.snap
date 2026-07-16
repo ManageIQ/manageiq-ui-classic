@@ -72,7 +72,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -107,7 +106,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -148,7 +146,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -192,7 +189,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -235,7 +231,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -278,7 +273,6 @@ exports[`Physical storage form component should render adding form variant 1`] =
               type="password"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -401,7 +395,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -433,7 +426,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
               type="text"
               value="svc-178"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -471,7 +463,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               <input
                 checked=""
                 class="cds--radio-button"
-                id="radio-button-9"
+                id="radio-button-:r8:"
                 label="Default"
                 name="capabilities"
                 type="radio"
@@ -479,7 +471,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               />
               <label
                 class="cds--radio-button__label"
-                for="radio-button-9"
+                for="radio-button-:r8:"
               >
                 <span
                   class="cds--radio-button__appearance"
@@ -489,7 +481,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
                   dir="auto"
                 >
                   Default
-                  
                 </span>
               </label>
             </div>
@@ -498,7 +489,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
             >
               <input
                 class="cds--radio-button"
-                id="radio-button-10"
+                id="radio-button-:r9:"
                 label="Custom"
                 name="capabilities"
                 type="radio"
@@ -506,7 +497,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               />
               <label
                 class="cds--radio-button__label"
-                for="radio-button-10"
+                for="radio-button-:r9:"
               >
                 <span
                   class="cds--radio-button__appearance"
@@ -516,7 +507,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
                   dir="auto"
                 >
                   Custom
-                  
                 </span>
               </label>
             </div>
@@ -556,7 +546,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
                 type="text"
                 value="yes"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -588,7 +577,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
               dir="auto"
             >
               Edit Authentication
-              
             </div>
           </label>
           <div

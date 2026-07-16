@@ -91,8 +91,4 @@ MarkdownPreview.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-MarkdownPreview.defaultProps = {
-  content: undefined,
-};
-
 export default MarkdownPreview;

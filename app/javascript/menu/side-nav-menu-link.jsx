@@ -11,9 +11,9 @@ const SideNavMenuLink = forwardRef(
   (
     {
       expanded,
-      forceHover,
+      forceHover = false,
       id,
-      isActive,
+      isActive = false,
       onClick,
       renderIcon: IconElement,
       title,
@@ -74,11 +74,6 @@ SideNavMenuLink.propTypes = {
   renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   title: PropTypes.string.isRequired,
   itemPosition: PropTypes.number.isRequired,
-};
-
-SideNavMenuLink.defaultProps = {
-  forceHover: false,
-  isActive: false,
 };
 
 export default SideNavMenuLink;

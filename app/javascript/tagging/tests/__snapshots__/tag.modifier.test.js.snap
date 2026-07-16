@@ -31,19 +31,18 @@ exports[`Tagging modifier should match snapshot 1`] = `
         <div
           class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
         >
-          
           <div
             class="cds--dropdown cds--list-box"
             id="dropdown-tag-select"
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-0-menu"
+              aria-controls="downshift-:r1:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-0-label"
+              aria-labelledby="downshift-:r1:-label"
               class="cds--list-box__field"
-              id="downshift-0-toggle-button"
+              id="downshift-:r1:-toggle-button"
               role="combobox"
               tabindex="0"
               title="Name"
@@ -78,11 +77,10 @@ exports[`Tagging modifier should match snapshot 1`] = `
                 </svg>
               </div>
             </button>
-            
             <ul
-              aria-labelledby="downshift-0-label"
+              aria-labelledby="downshift-:r1:-label"
               class="cds--list-box__menu"
-              id="downshift-0-menu"
+              id="downshift-:r1:-menu"
               role="listbox"
             />
           </div>
@@ -103,19 +101,18 @@ exports[`Tagging modifier should match snapshot 1`] = `
         <div
           class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
         >
-          
           <div
             class="cds--dropdown cds--list-box"
             id="dropdown-tag-select"
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-1-menu"
+              aria-controls="downshift-:r3:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-1-label"
+              aria-labelledby="downshift-:r3:-label"
               class="cds--list-box__field"
-              id="downshift-1-toggle-button"
+              id="downshift-:r3:-toggle-button"
               role="combobox"
               tabindex="0"
               title="duck"
@@ -150,11 +147,10 @@ exports[`Tagging modifier should match snapshot 1`] = `
                 </svg>
               </div>
             </button>
-            
             <ul
-              aria-labelledby="downshift-1-label"
+              aria-labelledby="downshift-:r3:-label"
               class="cds--list-box__menu"
-              id="downshift-1-menu"
+              id="downshift-:r3:-menu"
               role="listbox"
             />
           </div>

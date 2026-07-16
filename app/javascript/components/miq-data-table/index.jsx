@@ -17,19 +17,21 @@ import {
 import MiqTableCell from './miq-table-cell';
 
 const MiqDataTable = ({
-  headers,
-  rows,
+  headers = [],
+  rows = [],
   onCellClick,
-  mode,
-  sortable,
-  rowCheckBox,
-  showPagination,
-  pageOptions,
-  gridChecks,
+  mode = '',
+  sortable = false,
+  rowCheckBox = false,
+  showPagination = false,
+  pageOptions = {
+    totalItems: 10, page: 1, pageSizes: [5, 10, 20, 50, 100, 200], pageSize: 20,
+  },
+  gridChecks = [],
   onSort,
-  size,
-  stickyHeader,
-  truncateText,
+  size = 'lg',
+  stickyHeader = false,
+  truncateText = true,
 }) => {
   const isRowSelected = (itemId) => gridChecks.includes(itemId);
   const propRows = rows;
@@ -92,9 +94,11 @@ const MiqDataTable = ({
     if (header.header.split('_')[0] === DefaultKey) {
       isSortable = false;
     }
+    const { key, ...headerProps } = getHeaderProps({ header, isSortHeader: { sortable } });
     return (
       <TableHeader
-        {...getHeaderProps({ header, isSortHeader: { sortable } })}
+        key={key}
+        {...headerProps}
         onClick={() => sortable && onSort(header)}
         isSortable={isSortable}
         isSortHeader={sortHeader}
@@ -164,9 +168,11 @@ const MiqDataTable = ({
             <TableBody>
               {sortableRows(rows).map((row, index) => {
                 const item = propRows[index];
+                const { key, ...rowProps } = getRowProps({ row });
                 return (
                   <TableRow
-                    {...getRowProps({ row })}
+                    key={key}
+                    {...rowProps}
                     title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
                     tabIndex={(item && item.clickable === false) ? '' : index.toString()}
@@ -208,24 +214,6 @@ MiqDataTable.propTypes = {
   size: PropTypes.string,
   stickyHeader: PropTypes.bool,
   truncateText: PropTypes.bool,
-};
-
-MiqDataTable.defaultProps = {
-  headers: [],
-  rows: [],
-  mode: '',
-  onCellClick: undefined,
-  sortable: false,
-  rowCheckBox: false,
-  showPagination: false,
-  pageOptions: {
-    totalItems: 10, page: 1, pageSizes: [5, 10, 20, 50, 100, 200], pageSize: 20,
-  },
-  gridChecks: [],
-  onSort: undefined,
-  size: 'lg',
-  stickyHeader: false,
-  truncateText: true,
 };
 
 export default MiqDataTable;

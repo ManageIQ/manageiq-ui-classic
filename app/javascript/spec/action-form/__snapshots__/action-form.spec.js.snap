@@ -50,7 +50,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -111,7 +110,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -188,7 +186,6 @@ exports[`Action Form Component should render correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -249,7 +246,6 @@ exports[`Action Form Component should render correctly 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import NoRecordsFound from '../no-records-found';
 import { buildUrl, buildChartDataObject, buildDataTableObject } from './timeline-helper';
 
 // TODO use timezone to convert the date time to user's set timezone
-const TimelinePage = ({ pageFilters, timezone }) => {
+const TimelinePage = ({ pageFilters = {} }) => {
   const [{
     timelineChartData, timelineTableData, submitWasPressed,
   }, setState] = useState({
@@ -59,10 +59,6 @@ const TimelinePage = ({ pageFilters, timezone }) => {
 
 TimelinePage.propTypes = {
   pageFilters: PropTypes.objectOf(PropTypes.any),
-};
-
-TimelinePage.defaultProps = {
-  pageFilters: {},
 };
 
 export default TimelinePage;

@@ -88,8 +88,5 @@ const WorkflowCredentialsForm = ({ recordId }) => {
 WorkflowCredentialsForm.propTypes = {
   recordId: PropTypes.string,
 };
-WorkflowCredentialsForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default WorkflowCredentialsForm;

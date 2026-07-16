@@ -9,7 +9,13 @@ import { hasClickEvents } from './helpers';
 
 /** Component to render the items in summary pages */
 const MiqStructuredList = ({
-  title, headers, rows, mode, onClick, message, className = '',
+  title = '',
+  headers = [],
+  rows = [],
+  mode,
+  onClick,
+  message = '',
+  className = '',
 }) => {
   const clickEvents = hasClickEvents(mode);
 
@@ -53,12 +59,4 @@ MiqStructuredList.propTypes = {
   onClick: PropTypes.func,
   mode: PropTypes.string.isRequired,
   message: PropTypes.string,
-};
-
-MiqStructuredList.defaultProps = {
-  title: '',
-  headers: [],
-  onClick: undefined,
-  message: '' || undefined,
-  rows: [],
 };

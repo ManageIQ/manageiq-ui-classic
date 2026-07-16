@@ -104,7 +104,6 @@ exports[`Network Security Groups Form Component should add security group 1`] = 
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"
@@ -220,7 +219,6 @@ exports[`Network Security Groups Form Component should edit security group 1`] =
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -335,7 +333,6 @@ exports[`Network Security Groups Form Component should edit security group firew
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -472,7 +469,6 @@ exports[`Network Security Groups Form Component should render add security group
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"
@@ -588,7 +584,6 @@ exports[`Network Security Groups Form Component should render edit security grou
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

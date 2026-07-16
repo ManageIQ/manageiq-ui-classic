@@ -103,8 +103,4 @@ OpsTenantForm.propTypes = {
   ancestry: PropTypes.objectOf(PropTypes.any),
 };
 
-OpsTenantForm.defaultProps = {
-  ancestry: undefined,
-};
-
 export default OpsTenantForm;

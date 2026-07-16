@@ -251,7 +251,6 @@ module.exports = [
       'react/prefer-read-only-props': 'off',
       'react/prefer-stateless-function': ['error', { ignorePureComponents: true }],
       'react/react-in-jsx-scope': 'off',
-      'react/require-default-props': ['error', { forbidDefaultForRequired: true }],
       'react/require-optimization': ['off', { allowDecorators: [] }],
       'react/require-render-return': 'error',
       'react/self-closing-comp': 'error',

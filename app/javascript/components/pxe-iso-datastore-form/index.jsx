@@ -38,8 +38,5 @@ const PxeIsoDatastoreForm = ({ emses }) => {
 PxeIsoDatastoreForm.propTypes = {
   emses: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })),
 };
-PxeIsoDatastoreForm.defaultProps = {
-  emses: undefined,
-};
 
 export default PxeIsoDatastoreForm;

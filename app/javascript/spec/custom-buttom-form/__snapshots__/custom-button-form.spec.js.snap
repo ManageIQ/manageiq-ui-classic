@@ -58,7 +58,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -101,7 +100,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -133,7 +131,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -176,7 +173,6 @@ exports[`Custom Button form component should add a new generic object custom but
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -250,7 +246,6 @@ exports[`Custom Button form component should add a new generic object custom but
               type="color"
               value="#000000"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -267,7 +262,7 @@ exports[`Custom Button form component should add a new generic object custom but
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-12-label"
+          id="downshift-:r1j:-label"
         >
           Dialog
         </label>
@@ -280,10 +275,10 @@ exports[`Custom Button form component should add a new generic object custom but
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-12-menu"
+              aria-controls="downshift-:r1j:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-12-label"
+              aria-labelledby="downshift-:r1j:-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -295,13 +290,12 @@ exports[`Custom Button form component should add a new generic object custom but
               type="text"
               value=""
             />
-            
             <button
-              aria-controls="downshift-12-menu"
+              aria-controls="downshift-:r1j:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-12-toggle-button"
+              id="downshift-:r1j:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -322,11 +316,10 @@ exports[`Custom Button form component should add a new generic object custom but
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-12-label"
+            aria-labelledby="downshift-:r1j:-label"
             class="cds--list-box__menu"
-            id="downshift-12-menu"
+            id="downshift-:r1j:-menu"
             role="listbox"
           />
         </div>
@@ -390,7 +383,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -446,7 +438,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -544,7 +535,6 @@ exports[`Custom Button form component should add a new generic object custom but
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -576,7 +566,6 @@ exports[`Custom Button form component should add a new generic object custom but
               type="text"
               value="create"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -620,7 +609,6 @@ exports[`Custom Button form component should add a new generic object custom but
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -688,7 +676,6 @@ exports[`Custom Button form component should add a new generic object custom but
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -773,7 +760,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -896,7 +882,6 @@ exports[`Custom Button form component should edit a generic object custom button
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -921,7 +906,7 @@ exports[`Custom Button form component should edit a generic object custom button
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-52"
+                  id="radio-button-:r1n:"
                   label="Localhost"
                   name="inventory_type"
                   type="radio"
@@ -929,7 +914,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-52"
+                  for="radio-button-:r1n:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -939,7 +924,6 @@ exports[`Custom Button form component should edit a generic object custom button
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -948,7 +932,7 @@ exports[`Custom Button form component should edit a generic object custom button
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-53"
+                  id="radio-button-:r1o:"
                   label="Target Machine"
                   name="inventory_type"
                   type="radio"
@@ -956,7 +940,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-53"
+                  for="radio-button-:r1o:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -966,7 +950,6 @@ exports[`Custom Button form component should edit a generic object custom button
                     dir="auto"
                   >
                     Target Machine
-                    
                   </span>
                 </label>
               </div>
@@ -976,7 +959,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-54"
+                  id="radio-button-:r1p:"
                   label="Specific Hosts"
                   name="inventory_type"
                   type="radio"
@@ -984,7 +967,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-54"
+                  for="radio-button-:r1p:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -994,7 +977,6 @@ exports[`Custom Button form component should edit a generic object custom button
                     dir="auto"
                   >
                     Specific Hosts
-                    
                   </span>
                 </label>
               </div>
@@ -1038,7 +1020,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 type="text"
                 value="192.168.0.1"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1088,7 +1069,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1120,7 +1100,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -1163,7 +1142,6 @@ exports[`Custom Button form component should edit a generic object custom button
               type="text"
               value="This is a solo button."
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1237,7 +1215,6 @@ exports[`Custom Button form component should edit a generic object custom button
               type="color"
               value="#1bc918"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1254,7 +1231,7 @@ exports[`Custom Button form component should edit a generic object custom button
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-14-label"
+          id="downshift-:r1u:-label"
         >
           Dialog
         </label>
@@ -1267,10 +1244,10 @@ exports[`Custom Button form component should edit a generic object custom button
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-14-menu"
+              aria-controls="downshift-:r1u:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-14-label"
+              aria-labelledby="downshift-:r1u:-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -1305,11 +1282,11 @@ exports[`Custom Button form component should edit a generic object custom button
               </svg>
             </button>
             <button
-              aria-controls="downshift-14-menu"
+              aria-controls="downshift-:r1u:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-14-toggle-button"
+              id="downshift-:r1u:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1330,11 +1307,10 @@ exports[`Custom Button form component should edit a generic object custom button
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-14-label"
+            aria-labelledby="downshift-:r1u:-label"
             class="cds--list-box__menu"
-            id="downshift-14-menu"
+            id="downshift-:r1u:-menu"
             role="listbox"
           />
         </div>
@@ -1398,7 +1374,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1454,7 +1429,6 @@ exports[`Custom Button form component should edit a generic object custom button
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1516,7 +1490,6 @@ exports[`Custom Button form component should edit a generic object custom button
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -1608,7 +1581,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1651,7 +1623,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1683,7 +1654,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -1726,7 +1696,6 @@ exports[`Custom Button form component should render the adding form for generic 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1800,7 +1769,6 @@ exports[`Custom Button form component should render the adding form for generic 
               type="color"
               value="#000000"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1817,7 +1785,7 @@ exports[`Custom Button form component should render the adding form for generic 
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-4-label"
+          id="downshift-:ri:-label"
         >
           Dialog
         </label>
@@ -1830,10 +1798,10 @@ exports[`Custom Button form component should render the adding form for generic 
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-4-menu"
+              aria-controls="downshift-:ri:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-4-label"
+              aria-labelledby="downshift-:ri:-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -1845,13 +1813,12 @@ exports[`Custom Button form component should render the adding form for generic 
               type="text"
               value=""
             />
-            
             <button
-              aria-controls="downshift-4-menu"
+              aria-controls="downshift-:ri:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-4-toggle-button"
+              id="downshift-:ri:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1872,11 +1839,10 @@ exports[`Custom Button form component should render the adding form for generic 
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-4-label"
+            aria-labelledby="downshift-:ri:-label"
             class="cds--list-box__menu"
-            id="downshift-4-menu"
+            id="downshift-:ri:-menu"
             role="listbox"
           />
         </div>
@@ -1940,7 +1906,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1996,7 +1961,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2094,7 +2058,6 @@ exports[`Custom Button form component should render the adding form for generic 
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2126,7 +2089,6 @@ exports[`Custom Button form component should render the adding form for generic 
               type="text"
               value="create"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -2170,7 +2132,6 @@ exports[`Custom Button form component should render the adding form for generic 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -2238,7 +2199,6 @@ exports[`Custom Button form component should render the adding form for generic 
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2323,7 +2283,6 @@ exports[`Custom Button form component should render the editing form for generic
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2446,7 +2405,6 @@ exports[`Custom Button form component should render the editing form for generic
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2471,7 +2429,7 @@ exports[`Custom Button form component should render the editing form for generic
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-22"
+                  id="radio-button-:rm:"
                   label="Localhost"
                   name="inventory_type"
                   type="radio"
@@ -2479,7 +2437,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-22"
+                  for="radio-button-:rm:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2489,7 +2447,6 @@ exports[`Custom Button form component should render the editing form for generic
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -2498,7 +2455,7 @@ exports[`Custom Button form component should render the editing form for generic
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-23"
+                  id="radio-button-:rn:"
                   label="Target Machine"
                   name="inventory_type"
                   type="radio"
@@ -2506,7 +2463,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-23"
+                  for="radio-button-:rn:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2516,7 +2473,6 @@ exports[`Custom Button form component should render the editing form for generic
                     dir="auto"
                   >
                     Target Machine
-                    
                   </span>
                 </label>
               </div>
@@ -2526,7 +2482,7 @@ exports[`Custom Button form component should render the editing form for generic
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-24"
+                  id="radio-button-:ro:"
                   label="Specific Hosts"
                   name="inventory_type"
                   type="radio"
@@ -2534,7 +2490,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-24"
+                  for="radio-button-:ro:"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2544,7 +2500,6 @@ exports[`Custom Button form component should render the editing form for generic
                     dir="auto"
                   >
                     Specific Hosts
-                    
                   </span>
                 </label>
               </div>
@@ -2588,7 +2543,6 @@ exports[`Custom Button form component should render the editing form for generic
                 type="text"
                 value="192.168.0.1"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -2638,7 +2592,6 @@ exports[`Custom Button form component should render the editing form for generic
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -2670,7 +2623,6 @@ exports[`Custom Button form component should render the editing form for generic
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -2713,7 +2665,6 @@ exports[`Custom Button form component should render the editing form for generic
               type="text"
               value="This is a solo button."
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -2787,7 +2738,6 @@ exports[`Custom Button form component should render the editing form for generic
               type="color"
               value="#1bc918"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -2804,7 +2754,7 @@ exports[`Custom Button form component should render the editing form for generic
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-6-label"
+          id="downshift-:rt:-label"
         >
           Dialog
         </label>
@@ -2817,10 +2767,10 @@ exports[`Custom Button form component should render the editing form for generic
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-6-menu"
+              aria-controls="downshift-:rt:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-6-label"
+              aria-labelledby="downshift-:rt:-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -2855,11 +2805,11 @@ exports[`Custom Button form component should render the editing form for generic
               </svg>
             </button>
             <button
-              aria-controls="downshift-6-menu"
+              aria-controls="downshift-:rt:-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-6-toggle-button"
+              id="downshift-:rt:-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -2880,11 +2830,10 @@ exports[`Custom Button form component should render the editing form for generic
               </svg>
             </button>
           </div>
-          
           <ul
-            aria-labelledby="downshift-6-label"
+            aria-labelledby="downshift-:rt:-label"
             class="cds--list-box__menu"
-            id="downshift-6-menu"
+            id="downshift-:rt:-menu"
             role="listbox"
           />
         </div>
@@ -2948,7 +2897,6 @@ exports[`Custom Button form component should render the editing form for generic
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -3004,7 +2952,6 @@ exports[`Custom Button form component should render the editing form for generic
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -3066,7 +3013,6 @@ exports[`Custom Button form component should render the editing form for generic
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>

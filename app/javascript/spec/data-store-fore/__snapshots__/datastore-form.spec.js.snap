@@ -50,7 +50,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -88,7 +87,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -120,7 +118,6 @@ exports[`Datastore form component Datastore domain form component should render 
               dir="auto"
             >
               Enabled
-              
             </div>
           </label>
           <div
@@ -201,7 +198,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -239,7 +235,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -271,7 +266,6 @@ exports[`Datastore form component Datastore domain form component should render 
               dir="auto"
             >
               Enabled
-              
             </div>
           </label>
           <div
@@ -353,7 +347,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="/test/infrastructure"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -397,7 +390,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -435,7 +427,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -512,7 +503,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="/test/infrastructure"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -556,7 +546,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="name"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -594,7 +583,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="description"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"

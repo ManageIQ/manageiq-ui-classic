@@ -18,7 +18,3 @@ MiqStructuredListMessage.propTypes = {
   message: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
-
-MiqStructuredListMessage.defaultProps = {
-  message: undefined,
-};

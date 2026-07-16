@@ -4,7 +4,7 @@ import { Collaborate } from '@carbon/react/icons';
 
 const { miqChangeGroup } = window;
 
-const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
+const GroupSwitcher = ({ miqGroups = [], currentGroup = {}, expanded: isExpanded = false }) => {
   const options = miqGroups.map(({ id, description }) => ({
     label: description,
     value: id,
@@ -74,12 +74,6 @@ GroupSwitcher.propTypes = {
     description: PropTypes.string.isRequired,
   }),
   expanded: PropTypes.bool,
-};
-
-GroupSwitcher.defaultProps = {
-  miqGroups: [],
-  currentGroup: {},
-  expanded: false,
 };
 
 export default GroupSwitcher;

@@ -61,8 +61,16 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '', otherOptions
             `"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`
           );
         }
-        // returning the cypress chainable to the top of the command scope
-        return cy.wrap(targetToolbarOption).click();
+
+        return cy.interceptApi({
+          alias: 'toolbarOptionClick',
+          urlPattern: /\/x_button(\/\d+)?\?pressed=.*/,
+          waitOnlyIfRequestIntercepted: true,
+          triggerFn: () => cy.wrap(targetToolbarOption).click(),
+          onApiResponse: (interception) => {
+            expect(interception?.response?.statusCode).to.equal(200);
+          },
+        });
       });
     });
   }

@@ -40,16 +40,16 @@ const submitWrapper = (fn) => (values, formOptions, ...args) => {
 };
 
 const MiqFormRenderer = ({
-  className,
-  componentMapper,
-  buttonsLabels,
-  disableSubmit,
-  canReset,
-  showFormControls,
-  schema: { fields, ...schema },
+  className = 'form-react',
+  componentMapper = defaultComponentMapper,
+  buttonsLabels = {},
+  disableSubmit = ['pristine', 'invalid'],
+  canReset = false,
+  showFormControls = true,
+  schema: { fields = [], ...schema } = { fields: [] },
   initialize,
-  onSubmit,
-  validate,
+  onSubmit = () => {},
+  validate = () => {},
   ...props
 }) => {
   const { current: MiqFormTemplate } = useRef((props) => (
@@ -94,21 +94,6 @@ MiqFormRenderer.propTypes = {
   initialize: PropTypes.func,
   onSubmit: PropTypes.func,
   validate: PropTypes.func,
-};
-
-MiqFormRenderer.defaultProps = {
-  className: 'form-react',
-  buttonsLabels: {},
-  componentMapper: defaultComponentMapper,
-  schema: {
-    fields: [],
-  },
-  disableSubmit: ['pristine', 'invalid'],
-  canReset: false,
-  showFormControls: true,
-  initialize: undefined,
-  onSubmit: () => undefined,
-  validate: () => undefined,
 };
 
 export {

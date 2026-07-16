@@ -30,7 +30,7 @@ export const flatten = (menuItems = []) => {
 };
 
 const MenuSearch = ({
-  expanded, menu, onSearch, toggle,
+  expanded, menu, onSearch = () => null, toggle = () => null,
 }) => {
   if (!expanded) {
     return (
@@ -115,11 +115,6 @@ MenuSearch.propTypes = {
   })).isRequired,
   onSearch: PropTypes.func,
   toggle: PropTypes.func,
-};
-
-MenuSearch.defaultProps = {
-  onSearch: () => null,
-  toggle: () => null,
 };
 
 export default MenuSearch;

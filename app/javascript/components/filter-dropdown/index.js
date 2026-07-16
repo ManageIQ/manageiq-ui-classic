@@ -65,8 +65,4 @@ FilterDropdown.propTypes = {
   selectedFilter: PropTypes.objectOf(PropTypes.any),
 };
 
-FilterDropdown.defaultProps = {
-  selectedFilter: undefined,
-};
-
 export default FilterDropdown;

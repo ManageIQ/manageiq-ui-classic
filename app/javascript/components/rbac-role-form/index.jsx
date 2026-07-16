@@ -96,7 +96,7 @@ const RbacRoleForm = (props) => {
   const [formData, setFormData] = useState({
     isLoading: false,
     params: {},
-    initialValues: {},
+    initialValues: null,
     nodes: [],
     checked: [],
   });
@@ -128,10 +128,11 @@ const RbacRoleForm = (props) => {
     return errors;
   };
 
-  const isEdit = !!(role && role.id);
+  const isEdit = !!role?.id;
 
   useEffect(() => {
     if (isEdit) {
+      setFormData((prevState) => ({ ...prevState, isLoading: true }));
       miqSparkleOn();
       API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
         const roleValues = {
@@ -181,7 +182,7 @@ const RbacRoleForm = (props) => {
         });
       }
     }
-  }, [role.id]);
+  }, [role?.id]);
 
   const onSubmit = (values) => {
     miqSparkleOn();
@@ -252,6 +253,7 @@ const RbacRoleForm = (props) => {
   const onReset = () => {
     features = new Set();
     idCounter = 0;
+    setFormData((prevState) => ({ ...prevState, isLoading: true }));
     API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
       const roleValues = {
         name: response.name,
@@ -280,15 +282,19 @@ const RbacRoleForm = (props) => {
         </div>
       ) : (
         <div className="rbac-role-form">
-          <MiqFormRenderer
-            schema={createSchema(selectOptions, customProps, formData)}
-            initialValues={formData.initialValues}
-            onSubmit={onSubmit}
-            onCancel={onCancel}
-            onReset={onReset}
-            validate={(values) => customValidation(values)}
-            FormTemplate={(props) => <FormTemplate {...props} roleId={role.id} />}
-          />
+          {formData.initialValues && (
+            <MiqFormRenderer
+              schema={createSchema(selectOptions, customProps, formData)}
+              initialValues={formData.initialValues}
+              onSubmit={onSubmit}
+              onCancel={onCancel}
+              onReset={onReset}
+              validate={(values) => customValidation(values)}
+              FormTemplate={(props) => (
+                <FormTemplate {...props} roleId={role.id} />
+              )}
+            />
+          )}
         </div>
       )}
     </div>
@@ -371,11 +377,6 @@ RbacRoleForm.propTypes = {
   existingProductFeatures: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-RbacRoleForm.defaultProps = {
-  role: undefined,
-  existingProductFeatures: undefined,
-};
-
 FormTemplate.propTypes = {
   formFields: PropTypes.arrayOf(
     PropTypes.shape({ selectOptions: PropTypes.arrayOf(PropTypes.string) }),
@@ -384,11 +385,6 @@ FormTemplate.propTypes = {
     PropTypes.shape({ role: PropTypes.shape({}) }),
   ),
   roleId: PropTypes.number,
-};
-
-FormTemplate.defaultProps = {
-  formFields: undefined,
-  roleId: undefined,
 };
 
 export default RbacRoleForm;

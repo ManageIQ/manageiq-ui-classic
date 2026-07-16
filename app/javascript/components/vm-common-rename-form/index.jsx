@@ -60,8 +60,4 @@ VmCommonRenameForm.propTypes = {
   vmId: PropTypes.string,
 };
 
-VmCommonRenameForm.defaultProps = {
-  vmId: undefined,
-};
-
 export default VmCommonRenameForm;

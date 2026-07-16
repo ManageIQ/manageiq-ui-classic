@@ -22,10 +22,4 @@ HelperTextBlock.propTypes = {
   warnText: PropTypes.node,
 };
 
-HelperTextBlock.defaultProps = {
-  helperText: undefined,
-  errorText: undefined,
-  warnText: undefined,
-};
-
 export default HelperTextBlock;

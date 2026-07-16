@@ -51,8 +51,8 @@ describe('Settings > Application Settings > Access Control > Add Group', () => {
     const tagNames = {};
 
     // Select tag category from dropdown
-    cy.get('#downshift-0-toggle-button').click();
-    cy.get('ul#downshift-0-menu').then((categoryOptions) => {
+    cy.get('#dropdown-tag-select button.cds--list-box__field').click();
+    cy.get('ul.cds--list-box__menu').then((categoryOptions) => {
       tagCategoryNames.push(categoryOptions[0].children[0].innerText);
       cy.get(categoryOptions[0].children[0]).click();
 

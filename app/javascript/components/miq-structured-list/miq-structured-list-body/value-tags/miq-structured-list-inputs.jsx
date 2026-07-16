@@ -105,7 +105,3 @@ MiqStructuredListInputs.propTypes = {
   value: PropTypes.shape(stringProps || checkboxProps || dynamicProps || dropDownProps).isRequired,
   action: PropTypes.func,
 };
-
-MiqStructuredListInputs.defaultProps = {
-  action: undefined,
-};

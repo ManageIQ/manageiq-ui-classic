@@ -22,8 +22,4 @@ WidgetChart.propTypes = {
   widgetModel: PropTypes.string,
 };
 
-WidgetChart.defaultProps = {
-  widgetModel: undefined,
-};
-
 export default WidgetChart;

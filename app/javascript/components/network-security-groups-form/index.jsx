@@ -119,8 +119,5 @@ const NetworkSecurityGroupsForm = ({ securityGroupId }) => {
 NetworkSecurityGroupsForm.propTypes = {
   securityGroupId: PropTypes.string,
 };
-NetworkSecurityGroupsForm.defaultProps = {
-  securityGroupId: undefined,
-};
 
 export default NetworkSecurityGroupsForm;

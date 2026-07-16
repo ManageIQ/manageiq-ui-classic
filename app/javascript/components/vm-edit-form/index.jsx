@@ -90,9 +90,4 @@ VmEditForm.propTypes = {
   isTemplate: PropTypes.bool.isRequired,
 };
 
-VmEditForm.defaultProps = {
-  recordId: undefined,
-  emsId: undefined,
-};
-
 export default VmEditForm;

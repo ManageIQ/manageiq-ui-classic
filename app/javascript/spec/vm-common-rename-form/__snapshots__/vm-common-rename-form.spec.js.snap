@@ -40,7 +40,6 @@ exports[`VM common form component should render editing form variant 1 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -112,7 +111,6 @@ exports[`VM common form component should render editing form variant 2 1`] = `
             type="text"
             value="CF 4.7  5.10.33 Template"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"

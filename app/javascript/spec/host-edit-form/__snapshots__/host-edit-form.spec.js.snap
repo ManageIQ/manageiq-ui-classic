@@ -34,7 +34,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             type="text"
             value="10.197.65.254"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -72,7 +71,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -110,7 +108,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -161,12 +158,12 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
           role="tablist"
         >
           <button
-            aria-controls="ccs-4-tabpanel-0"
+            aria-controls="ccs-:r3:-tabpanel-0"
             aria-selected="true"
             class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
             component="tab-item"
             fields="[object Object]"
-            id="ccs-4-tab-0"
+            id="ccs-:r3:-tab-0"
             role="tab"
             tabindex="0"
             type="button"
@@ -211,12 +208,12 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             </button>
           </div>
           <button
-            aria-controls="ccs-4-tabpanel-1"
+            aria-controls="ccs-:r3:-tabpanel-1"
             aria-selected="false"
             class="cds--tabs__nav-item cds--tabs__nav-link"
             component="tab-item"
             fields="[object Object]"
-            id="ccs-4-tab-1"
+            id="ccs-:r3:-tab-1"
             role="tab"
             tabindex="-1"
             type="button"
@@ -261,12 +258,12 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             </button>
           </div>
           <button
-            aria-controls="ccs-4-tabpanel-2"
+            aria-controls="ccs-:r3:-tabpanel-2"
             aria-selected="false"
             class="cds--tabs__nav-item cds--tabs__nav-link"
             component="tab-item"
             fields="[object Object]"
-            id="ccs-4-tab-2"
+            id="ccs-:r3:-tab-2"
             role="tab"
             tabindex="-1"
             type="button"
@@ -335,9 +332,9 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
         </button>
       </div>
       <div
-        aria-labelledby="ccs-4-tab-0"
+        aria-labelledby="ccs-:r3:-tab-0"
         class="cds--tab-content"
-        id="ccs-4-tabpanel-0"
+        id="ccs-:r3:-tabpanel-0"
         role="tabpanel"
       >
         <div
@@ -376,7 +373,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -427,7 +423,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                         title="●●●●●●●●"
                         type="password"
                       />
-                      
                       <span
                         aria-atomic="true"
                         aria-live="assertive"
@@ -448,7 +443,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-6"
+                      aria-labelledby="tooltip-:r5:"
                       class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                       type="button"
                     >
@@ -474,7 +469,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-6"
+                    id="tooltip-:r5:"
                     role="tooltip"
                   >
                     <span
@@ -505,10 +500,10 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
         </div>
       </div>
       <div
-        aria-labelledby="ccs-4-tab-1"
+        aria-labelledby="ccs-:r3:-tab-1"
         class="cds--tab-content"
         hidden=""
-        id="ccs-4-tabpanel-1"
+        id="ccs-:r3:-tabpanel-1"
         role="tabpanel"
       >
         <div
@@ -547,7 +542,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -598,7 +592,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                         title="●●●●●●●●"
                         type="password"
                       />
-                      
                       <span
                         aria-atomic="true"
                         aria-live="assertive"
@@ -619,7 +612,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-10"
+                      aria-labelledby="tooltip-:ra:"
                       class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                       type="button"
                     >
@@ -645,7 +638,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-10"
+                    id="tooltip-:ra:"
                     role="tooltip"
                   >
                     <span
@@ -676,10 +669,10 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
         </div>
       </div>
       <div
-        aria-labelledby="ccs-4-tab-2"
+        aria-labelledby="ccs-:r3:-tab-2"
         class="cds--tab-content"
         hidden=""
-        id="ccs-4-tabpanel-2"
+        id="ccs-:r3:-tabpanel-2"
         role="tabpanel"
       >
         <div
@@ -718,7 +711,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   type="text"
                   value=""
                 />
-                
                 <span
                   aria-atomic="true"
                   aria-live="assertive"
@@ -769,7 +761,6 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                         title="●●●●●●●●"
                         type="password"
                       />
-                      
                       <span
                         aria-atomic="true"
                         aria-live="assertive"
@@ -790,7 +781,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-14"
+                      aria-labelledby="tooltip-:rf:"
                       class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                       type="button"
                     >
@@ -816,7 +807,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-14"
+                    id="tooltip-:rf:"
                     role="tooltip"
                   >
                     <span
@@ -946,7 +937,6 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>

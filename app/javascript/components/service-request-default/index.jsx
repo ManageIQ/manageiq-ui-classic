@@ -115,14 +115,16 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
 
   return (
     <div className="service-request-form">
-      <MiqFormRenderer
-        initialValues={initialValues}
-        FormTemplate={(props) => <FormTemplate {...props} />}
-        schema={createSchema(miqRequestInitialOptions)}
-        canReset
-        onSubmit={onSubmit}
-        onReset={onReset}
-      />
+      {initialValues && (
+        <MiqFormRenderer
+          initialValues={initialValues}
+          FormTemplate={(props) => <FormTemplate {...props} />}
+          schema={createSchema(miqRequestInitialOptions)}
+          canReset
+          onSubmit={onSubmit}
+          onReset={onReset}
+        />
+      )}
     </div>
   );
 };

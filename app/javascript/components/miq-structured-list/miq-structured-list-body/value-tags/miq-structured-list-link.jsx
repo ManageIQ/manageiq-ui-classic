@@ -45,7 +45,3 @@ MiqStructuredListLink.propTypes = {
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
-
-MiqStructuredListLink.defaultProps = {
-  onClick: undefined,
-};

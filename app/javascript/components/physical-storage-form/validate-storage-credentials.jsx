@@ -5,7 +5,15 @@ import { pick } from 'lodash';
 import AsyncCredentials from '../async-credentials/async-credentials';
 import EditingContext from './editing-context';
 
-const ValidateStorageCredentials = ({ ...props }) => {
+const ValidateStorageCredentials = ({
+  validateLabel = __('Validate'),
+  validationProgressLabel = __('Validating'),
+  validationSuccessLabel = __('Validation successful'),
+  validateDefaultError = __('Validation Required'),
+  validationDependencies = [],
+  isRequired,
+  ...props
+}) => {
   const { storageId } = useContext(EditingContext);
 
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
@@ -37,17 +45,25 @@ const ValidateStorageCredentials = ({ ...props }) => {
   });
 
   // The order of props is important here, because they have to be overridden
-  return <AsyncCredentials {...props} asyncValidate={asyncValidate} edit={!!storageId} />;
+  return (
+    <AsyncCredentials
+      {...props}
+      validateLabel={validateLabel}
+      validationProgressLabel={validationProgressLabel}
+      validationSuccessLabel={validationSuccessLabel}
+      validateDefaultError={validateDefaultError}
+      validationDependencies={validationDependencies}
+      isRequired={isRequired}
+      asyncValidate={asyncValidate}
+      edit={!!storageId}
+    />
+  );
 };
 
 ValidateStorageCredentials.propTypes = {
   ...AsyncCredentials.propTypes,
   asyncValidate: PropTypes.func,
   validation: PropTypes.bool,
-};
-ValidateStorageCredentials.defaultProps = {
-  validation: true,
-  ...AsyncCredentials.defaultProps,
 };
 
 export default ValidateStorageCredentials;

@@ -19,7 +19,10 @@ const carbonIcons = {
 
 const CheckboxTreeComponent = (props) => {
   const {
-    label, nodes, checked, isRequired,
+    label,
+    nodes = {},
+    checked = [],
+    isRequired = false,
   } = props;
   const { input } = useFieldApi(props);
 
@@ -56,12 +59,6 @@ CheckboxTreeComponent.propTypes = {
   nodes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   checked: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   isRequired: PropTypes.bool,
-};
-
-CheckboxTreeComponent.defaultProps = {
-  nodes: {},
-  checked: [],
-  isRequired: false,
 };
 
 export default CheckboxTreeComponent;

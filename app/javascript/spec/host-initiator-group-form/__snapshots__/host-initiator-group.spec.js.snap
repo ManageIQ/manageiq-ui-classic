@@ -65,7 +65,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -102,7 +101,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
               type="text"
               value="my_group"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -177,7 +175,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

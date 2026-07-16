@@ -94,8 +94,5 @@ const TenantQuotaForm = ({ recordId }) => {
 TenantQuotaForm.propTypes = {
   recordId: PropTypes.string,
 };
-TenantQuotaForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default TenantQuotaForm;

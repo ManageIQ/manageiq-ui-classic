@@ -145,14 +145,14 @@ exports[`CodeEditor component should render mode switches 1`] = `
           <input
             checked=""
             class="cds--radio-button"
-            id="radio-button-1"
+            id="radio-button-:r1:"
             name="--code-editor--mode"
             type="radio"
             value="yaml"
           />
           <label
             class="cds--radio-button__label"
-            for="radio-button-1"
+            for="radio-button-:r1:"
           >
             <span
               class="cds--radio-button__appearance"
@@ -162,7 +162,6 @@ exports[`CodeEditor component should render mode switches 1`] = `
               dir="auto"
             >
               yaml
-              
             </span>
           </label>
         </div>
@@ -171,14 +170,14 @@ exports[`CodeEditor component should render mode switches 1`] = `
         >
           <input
             class="cds--radio-button"
-            id="radio-button-2"
+            id="radio-button-:r2:"
             name="--code-editor--mode"
             type="radio"
             value="json"
           />
           <label
             class="cds--radio-button__label"
-            for="radio-button-2"
+            for="radio-button-:r2:"
           >
             <span
               class="cds--radio-button__appearance"
@@ -188,7 +187,6 @@ exports[`CodeEditor component should render mode switches 1`] = `
               dir="auto"
             >
               json
-              
             </span>
           </label>
         </div>

@@ -9,12 +9,12 @@ import { componentTypes, useFormApi } from '@@ddf';
 import { checkValidState } from './helper';
 
 const PasswordField = ({
-  cancelEditLabel,
-  changeEditLabel,
+  cancelEditLabel = __('Cancel'),
+  changeEditLabel = __('Change'),
   helperText,
-  edit,
+  edit = false,
   parent,
-  componentClass,
+  componentClass = componentTypes.TEXT_FIELD,
   ...rest
 }) => {
   const formOptions = useFormApi();
@@ -90,15 +90,6 @@ PasswordField.propTypes = {
   edit: PropTypes.bool,
   parent: PropTypes.string,
   componentClass: PropTypes.string,
-};
-
-PasswordField.defaultProps = {
-  cancelEditLabel: __('Cancel'),
-  changeEditLabel: __('Change'),
-  helperText: undefined,
-  edit: false,
-  parent: undefined,
-  componentClass: componentTypes.TEXT_FIELD,
 };
 
 export default PasswordField;

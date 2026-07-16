@@ -64,7 +64,6 @@ exports[`Show Service Request Page should render 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -92,6 +91,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Pending Approval"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-pending_approval"
               label="Pending Approval"
@@ -109,7 +109,6 @@ exports[`Show Service Request Page should render 1`] = `
                 dir="auto"
               >
                 Pending Approval
-                
               </div>
             </label>
             <div
@@ -121,6 +120,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Approved"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-approved"
               label="Approved"
@@ -138,7 +138,6 @@ exports[`Show Service Request Page should render 1`] = `
                 dir="auto"
               >
                 Approved
-                
               </div>
             </label>
             <div
@@ -150,6 +149,7 @@ exports[`Show Service Request Page should render 1`] = `
           >
             <input
               aria-label="Denied"
+              checked=""
               class="cds--checkbox"
               id="approvalStates-denied"
               label="Denied"
@@ -167,7 +167,6 @@ exports[`Show Service Request Page should render 1`] = `
                 dir="auto"
               >
                 Denied
-                
               </div>
             </label>
             <div
@@ -325,7 +324,6 @@ exports[`Show Service Request Page should render 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -355,7 +353,7 @@ exports[`Show Service Request Page should render 1`] = `
               class="cds--select-input"
               id="selectedPeriod"
               name="selectedPeriod"
-              title="Last 24 Hours"
+              title="Last 7 Days"
             >
               <option
                 class="cds--select-option"
@@ -394,7 +392,6 @@ exports[`Show Service Request Page should render 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -426,7 +423,6 @@ exports[`Show Service Request Page should render 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"

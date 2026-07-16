@@ -153,10 +153,6 @@ MiqAeCustomization.propTypes = {
   ).isRequired,
 };
 
-MiqAeCustomization.defaultProps = {
-  dialogRecord: undefined,
-};
-
 FormTemplate.propTypes = {
   formFields: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.number }),
@@ -166,11 +162,6 @@ FormTemplate.propTypes = {
     PropTypes.shape({ dialog_type: PropTypes.string }),
   ),
   recId: PropTypes.number,
-};
-
-FormTemplate.defaultProps = {
-  formFields: undefined,
-  recId: undefined,
 };
 
 export default MiqAeCustomization;

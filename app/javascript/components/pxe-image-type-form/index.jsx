@@ -64,8 +64,5 @@ const PxeImageForm = ({ recordId }) => {
 PxeImageForm.propTypes = {
   recordId: PropTypes.string,
 };
-PxeImageForm.defaultProps = {
-  recordId: undefined,
-};
 
 export default PxeImageForm;

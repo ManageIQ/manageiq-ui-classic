@@ -220,10 +220,4 @@ ReconfigureVmForm.propTypes = {
   memory: PropTypes.objectOf(PropTypes.any),
 };
 
-ReconfigureVmForm.defaultProps = {
-  roles: undefined,
-  options: undefined,
-  memory: undefined,
-};
-
 export default ReconfigureVmForm;

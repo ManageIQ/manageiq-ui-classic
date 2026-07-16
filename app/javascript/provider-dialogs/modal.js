@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   ComposedModal, ModalHeader, ModalFooter, ModalBody,
 } from '@carbon/react';
@@ -19,7 +19,7 @@ function closeModal(id) {
   divs[divs.length - 1].remove(); // the div closest to body
 }
 
-export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>, closefunc) {
+export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>, closefunc = () => {}) {
   const div = document.createElement('div');
   document.body.appendChild(div);
   const removeId = 'provider-dialogs';
@@ -32,7 +32,8 @@ export default function renderModal(title = __('Modal'), Inner = () => <div>Empt
 
   const output = modal(title, Inner, close, removeId);
 
-  ReactDOM.render(output, div);
+  const root = createRoot(div);
+  root.render(output);
 }
 
 function modal(title, Inner, closed, removeId) {

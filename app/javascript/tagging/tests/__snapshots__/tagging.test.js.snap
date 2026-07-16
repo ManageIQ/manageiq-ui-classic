@@ -37,19 +37,18 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             <div
               class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
             >
-              
               <div
                 class="cds--dropdown cds--list-box"
                 id="dropdown-tag-select"
               >
                 <button
                   aria-activedescendant=""
-                  aria-controls="downshift-0-menu"
+                  aria-controls="downshift-:r1:-menu"
                   aria-expanded="false"
                   aria-haspopup="listbox"
-                  aria-labelledby="downshift-0-label"
+                  aria-labelledby="downshift-:r1:-label"
                   class="cds--list-box__field"
-                  id="downshift-0-toggle-button"
+                  id="downshift-:r1:-toggle-button"
                   role="combobox"
                   tabindex="0"
                   title="Name"
@@ -84,11 +83,10 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                     </svg>
                   </div>
                 </button>
-                
                 <ul
-                  aria-labelledby="downshift-0-label"
+                  aria-labelledby="downshift-:r1:-label"
                   class="cds--list-box__menu"
-                  id="downshift-0-menu"
+                  id="downshift-:r1:-menu"
                   role="listbox"
                 />
               </div>
@@ -111,8 +109,8 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             >
               <label
                 class="cds--label"
-                for="downshift-1-toggle-button"
-                id="downshift-1-label"
+                for="downshift-:r4:-toggle-button"
+                id="downshift-:r4:-label"
               >
                 <span
                   class="cds--visually-hidden"
@@ -166,19 +164,19 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                   </div>
                   <button
                     aria-activedescendant=""
-                    aria-controls="downshift-1-menu"
+                    aria-controls="downshift-:r4:-menu"
                     aria-expanded="true"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-1-label"
+                    aria-labelledby="downshift-:r4:-label"
                     class="cds--list-box__field"
-                    id="downshift-1-toggle-button"
+                    id="downshift-:r4:-toggle-button"
                     role="combobox"
                     tabindex="0"
                     type="button"
                   >
                     <span
                       class="cds--list-box__label"
-                      id="multiselect-field-label-id-3"
+                      id="multiselect-field-label-id-:r2:"
                     >
                       Pepa
                     </span>
@@ -206,12 +204,11 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                       </svg>
                     </div>
                   </button>
-                  
                 </div>
                 <ul
-                  aria-labelledby="downshift-1-label"
+                  aria-labelledby="downshift-:r4:-label"
                   class="cds--list-box__menu"
-                  id="downshift-1-menu"
+                  id="downshift-:r4:-menu"
                   role="listbox"
                 >
                   <li
@@ -219,7 +216,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                     aria-label="Franta"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
-                    id="downshift-1-item-0"
+                    id="downshift-:r4:-item-0"
                     role="option"
                   >
                     <div
@@ -233,12 +230,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                         >
                           <input
                             class="cds--checkbox"
-                            id="downshift-1-item-0__checkbox"
+                            id="downshift-:r4:-item-0__checkbox"
                             type="checkbox"
                           />
                           <label
                             class="cds--checkbox-label"
-                            for="downshift-1-item-0__checkbox"
+                            for="downshift-:r4:-item-0__checkbox"
                             title=""
                           >
                             <div
@@ -246,7 +243,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                               dir="auto"
                             >
                               Franta
-                              
                             </div>
                           </label>
                           <div
@@ -261,7 +257,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                     aria-label="Pepa"
                     aria-selected="true"
                     class="cds--list-box__menu-item cds--list-box__menu-item--active"
-                    id="downshift-1-item-1"
+                    id="downshift-:r4:-item-1"
                     role="option"
                   >
                     <div
@@ -276,12 +272,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <input
                             checked=""
                             class="cds--checkbox"
-                            id="downshift-1-item-1__checkbox"
+                            id="downshift-:r4:-item-1__checkbox"
                             type="checkbox"
                           />
                           <label
                             class="cds--checkbox-label"
-                            for="downshift-1-item-1__checkbox"
+                            for="downshift-:r4:-item-1__checkbox"
                             title=""
                           >
                             <div
@@ -289,7 +285,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                               dir="auto"
                             >
                               Pepa
-                              
                             </div>
                           </label>
                           <div
@@ -370,7 +365,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                             class="cds--tooltip-trigger__wrapper"
                           >
                             <button
-                              aria-labelledby="tooltip-5"
+                              aria-labelledby="tooltip-:r8:"
                               class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                               type="button"
                             >
@@ -393,7 +388,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <span
                             aria-hidden="true"
                             class="cds--popover"
-                            id="tooltip-5"
+                            id="tooltip-:r8:"
                             role="tooltip"
                           >
                             <span
@@ -457,19 +452,18 @@ exports[`Tagging component without redux mapping should call methods - singleVal
             <div
               class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
             >
-              
               <div
                 class="cds--dropdown cds--list-box"
                 id="dropdown-tag-select"
               >
                 <button
                   aria-activedescendant=""
-                  aria-controls="downshift-7-menu"
+                  aria-controls="downshift-:rn:-menu"
                   aria-expanded="false"
                   aria-haspopup="listbox"
-                  aria-labelledby="downshift-7-label"
+                  aria-labelledby="downshift-:rn:-label"
                   class="cds--list-box__field"
-                  id="downshift-7-toggle-button"
+                  id="downshift-:rn:-toggle-button"
                   role="combobox"
                   tabindex="0"
                   title="Food"
@@ -504,11 +498,10 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     </svg>
                   </div>
                 </button>
-                
                 <ul
-                  aria-labelledby="downshift-7-label"
+                  aria-labelledby="downshift-:rn:-label"
                   class="cds--list-box__menu"
-                  id="downshift-7-menu"
+                  id="downshift-:rn:-menu"
                   role="listbox"
                 />
               </div>
@@ -531,8 +524,8 @@ exports[`Tagging component without redux mapping should call methods - singleVal
             >
               <label
                 class="cds--label"
-                for="downshift-8-toggle-button"
-                id="downshift-8-label"
+                for="downshift-:rq:-toggle-button"
+                id="downshift-:rq:-label"
               />
               <div
                 class="cds--multi-select cds--list-box cds--list-box--expanded"
@@ -543,19 +536,19 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                 >
                   <button
                     aria-activedescendant=""
-                    aria-controls="downshift-8-menu"
+                    aria-controls="downshift-:rq:-menu"
                     aria-expanded="true"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-8-label"
+                    aria-labelledby="downshift-:rq:-label"
                     class="cds--list-box__field"
-                    id="downshift-8-toggle-button"
+                    id="downshift-:rq:-toggle-button"
                     role="combobox"
                     tabindex="0"
                     type="button"
                   >
                     <span
                       class="cds--list-box__label"
-                      id="multiselect-field-label-id-13"
+                      id="multiselect-field-label-id-:ro:"
                     >
                       Select tag value
                     </span>
@@ -583,12 +576,11 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                       </svg>
                     </div>
                   </button>
-                  
                 </div>
                 <ul
-                  aria-labelledby="downshift-8-label"
+                  aria-labelledby="downshift-:rq:-label"
                   class="cds--list-box__menu"
-                  id="downshift-8-menu"
+                  id="downshift-:rq:-menu"
                   role="listbox"
                 >
                   <li
@@ -596,7 +588,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     aria-label="Duck"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
-                    id="downshift-8-item-0"
+                    id="downshift-:rq:-item-0"
                     role="option"
                   >
                     <div
@@ -610,12 +602,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                         >
                           <input
                             class="cds--checkbox"
-                            id="downshift-8-item-0__checkbox"
+                            id="downshift-:rq:-item-0__checkbox"
                             type="checkbox"
                           />
                           <label
                             class="cds--checkbox-label"
-                            for="downshift-8-item-0__checkbox"
+                            for="downshift-:rq:-item-0__checkbox"
                             title=""
                           >
                             <div
@@ -623,7 +615,6 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                               dir="auto"
                             >
                               Duck
-                              
                             </div>
                           </label>
                           <div
@@ -638,7 +629,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     aria-label="Salad"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
-                    id="downshift-8-item-1"
+                    id="downshift-:rq:-item-1"
                     role="option"
                   >
                     <div
@@ -652,12 +643,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                         >
                           <input
                             class="cds--checkbox"
-                            id="downshift-8-item-1__checkbox"
+                            id="downshift-:rq:-item-1__checkbox"
                             type="checkbox"
                           />
                           <label
                             class="cds--checkbox-label"
-                            for="downshift-8-item-1__checkbox"
+                            for="downshift-:rq:-item-1__checkbox"
                             title=""
                           >
                             <div
@@ -665,7 +656,6 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                               dir="auto"
                             >
                               Salad
-                              
                             </div>
                           </label>
                           <div
@@ -680,7 +670,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     aria-label="Steak"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
-                    id="downshift-8-item-2"
+                    id="downshift-:rq:-item-2"
                     role="option"
                   >
                     <div
@@ -694,12 +684,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                         >
                           <input
                             class="cds--checkbox"
-                            id="downshift-8-item-2__checkbox"
+                            id="downshift-:rq:-item-2__checkbox"
                             type="checkbox"
                           />
                           <label
                             class="cds--checkbox-label"
-                            for="downshift-8-item-2__checkbox"
+                            for="downshift-:rq:-item-2__checkbox"
                             title=""
                           >
                             <div
@@ -707,7 +697,6 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                               dir="auto"
                             >
                               Steak
-                              
                             </div>
                           </label>
                           <div
@@ -788,7 +777,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                             class="cds--tooltip-trigger__wrapper"
                           >
                             <button
-                              aria-labelledby="tooltip-18"
+                              aria-labelledby="tooltip-:rv:"
                               class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                               type="button"
                             >
@@ -811,7 +800,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                           <span
                             aria-hidden="true"
                             class="cds--popover"
-                            id="tooltip-18"
+                            id="tooltip-:rv:"
                             role="tooltip"
                           >
                             <span
@@ -875,19 +864,18 @@ exports[`Tagging component without redux mapping should call methods - singleVal
             <div
               class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
             >
-              
               <div
                 class="cds--dropdown cds--list-box"
                 id="dropdown-tag-select"
               >
                 <button
                   aria-activedescendant=""
-                  aria-controls="downshift-10-menu"
+                  aria-controls="downshift-:r13:-menu"
                   aria-expanded="false"
                   aria-haspopup="listbox"
-                  aria-labelledby="downshift-10-label"
+                  aria-labelledby="downshift-:r13:-label"
                   class="cds--list-box__field"
-                  id="downshift-10-toggle-button"
+                  id="downshift-:r13:-toggle-button"
                   role="combobox"
                   tabindex="0"
                   title="Something"
@@ -922,11 +910,10 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     </svg>
                   </div>
                 </button>
-                
                 <ul
-                  aria-labelledby="downshift-10-label"
+                  aria-labelledby="downshift-:r13:-label"
                   class="cds--list-box__menu"
-                  id="downshift-10-menu"
+                  id="downshift-:r13:-menu"
                   role="listbox"
                 />
               </div>
@@ -947,19 +934,18 @@ exports[`Tagging component without redux mapping should call methods - singleVal
             <div
               class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
             >
-              
               <div
                 class="cds--dropdown cds--list-box"
                 id="dropdown-tag-select"
               >
                 <button
                   aria-activedescendant=""
-                  aria-controls="downshift-11-menu"
+                  aria-controls="downshift-:r15:-menu"
                   aria-expanded="false"
                   aria-haspopup="listbox"
-                  aria-labelledby="downshift-11-label"
+                  aria-labelledby="downshift-:r15:-label"
                   class="cds--list-box__field"
-                  id="downshift-11-toggle-button"
+                  id="downshift-:r15:-toggle-button"
                   role="combobox"
                   tabindex="0"
                   title="Select tag value"
@@ -994,11 +980,10 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                     </svg>
                   </div>
                 </button>
-                
                 <ul
-                  aria-labelledby="downshift-11-label"
+                  aria-labelledby="downshift-:r15:-label"
                   class="cds--list-box__menu"
-                  id="downshift-11-menu"
+                  id="downshift-:r15:-menu"
                   role="listbox"
                 />
               </div>
@@ -1071,7 +1056,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                             class="cds--tooltip-trigger__wrapper"
                           >
                             <button
-                              aria-labelledby="tooltip-21"
+                              aria-labelledby="tooltip-:r17:"
                               class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                               type="button"
                             >
@@ -1094,7 +1079,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                           <span
                             aria-hidden="true"
                             class="cds--popover"
-                            id="tooltip-21"
+                            id="tooltip-:r17:"
                             role="tooltip"
                           >
                             <span
