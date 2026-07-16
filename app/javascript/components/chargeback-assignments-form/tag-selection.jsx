@@ -14,7 +14,7 @@ import {
 } from '@carbon/react';
 
 const TagSelection = ({
-  rates, assignments, savedAssignments, onRateChange, assignmentType, dropdownId,
+  rates, assignments, savedAssignments, onRateChange, assignmentType, dropdownId = 'tag-category',
 }) => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -299,10 +299,6 @@ TagSelection.propTypes = {
   onRateChange: PropTypes.func.isRequired,
   assignmentType: PropTypes.string.isRequired,
   dropdownId: PropTypes.string,
-};
-
-TagSelection.defaultProps = {
-  dropdownId: 'tag-category',
 };
 
 export default TagSelection;

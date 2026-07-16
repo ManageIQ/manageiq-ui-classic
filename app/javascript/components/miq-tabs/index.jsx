@@ -15,7 +15,7 @@ import {
  *
  * Use `initialTab` (0-based index) to set the default selected tab.
  */
-const MiqTabs = ({ tabs, initialTab }) => (
+const MiqTabs = ({ tabs, initialTab = 0 }) => (
   <Tabs defaultSelectedIndex={initialTab}>
     <TabList aria-label="tabs">
       {tabs.map((tab) => (
@@ -39,10 +39,6 @@ MiqTabs.propTypes = {
     content: PropTypes.node.isRequired,
   })).isRequired,
   initialTab: PropTypes.number,
-};
-
-MiqTabs.defaultProps = {
-  initialTab: 0,
 };
 
 export default MiqTabs;

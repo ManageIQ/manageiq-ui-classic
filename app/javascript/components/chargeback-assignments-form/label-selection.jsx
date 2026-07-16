@@ -14,7 +14,7 @@ import {
 } from '@carbon/react';
 
 const LabelSelection = ({
-  rates, assignments, savedAssignments, onRateChange, dropdownId,
+  rates, assignments, savedAssignments, onRateChange, dropdownId = 'label-key',
 }) => {
   const [savedLabelRows, setSavedLabelRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -393,10 +393,6 @@ LabelSelection.propTypes = {
   })).isRequired,
   onRateChange: PropTypes.func.isRequired,
   dropdownId: PropTypes.string,
-};
-
-LabelSelection.defaultProps = {
-  dropdownId: 'label-key',
 };
 
 export default LabelSelection;

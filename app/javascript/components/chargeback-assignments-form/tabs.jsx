@@ -7,16 +7,12 @@ const tabs = [
   { id: 'Storage', label: 'Storage', content: <ChargebackAssignmentsForm rateType="Storage" /> },
 ];
 
-const ChargebackAssignmentsTabs = ({ initialTab }) => (
+const ChargebackAssignmentsTabs = ({ initialTab = 0 }) => (
   <MiqTabs tabs={tabs} initialTab={initialTab} />
 );
 
 ChargebackAssignmentsTabs.propTypes = {
   initialTab: PropTypes.number,
-};
-
-ChargebackAssignmentsTabs.defaultProps = {
-  initialTab: 0,
 };
 
 export default ChargebackAssignmentsTabs;

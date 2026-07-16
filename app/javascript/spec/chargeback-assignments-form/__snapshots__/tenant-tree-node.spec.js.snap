@@ -19,7 +19,7 @@ exports[`TenantTreeNode component should match snapshot 1`] = `
             class="cds--tooltip-trigger__wrapper"
           >
             <button
-              aria-labelledby="tooltip-17"
+              aria-labelledby="tooltip-:r1l:"
               class="expand-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
               type="button"
             >
@@ -42,7 +42,7 @@ exports[`TenantTreeNode component should match snapshot 1`] = `
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-17"
+            id="tooltip-:r1l:"
             role="tooltip"
           >
             <span
@@ -67,19 +67,18 @@ exports[`TenantTreeNode component should match snapshot 1`] = `
         <div
           class="cds--dropdown__wrapper cds--list-box__wrapper"
         >
-          
           <div
             class="cds--dropdown cds--dropdown--sm cds--list-box cds--list-box--sm"
             id="rate-1"
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-22-menu"
+              aria-controls="downshift-:r1p:-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-22-label"
+              aria-labelledby="downshift-:r1p:-label"
               class="cds--list-box__field"
-              id="downshift-22-toggle-button"
+              id="downshift-:r1p:-toggle-button"
               role="combobox"
               tabindex="0"
               title="Rate 1"
@@ -114,11 +113,10 @@ exports[`TenantTreeNode component should match snapshot 1`] = `
                 </svg>
               </div>
             </button>
-            
             <ul
-              aria-labelledby="downshift-22-label"
+              aria-labelledby="downshift-:r1p:-label"
               class="cds--list-box__menu"
-              id="downshift-22-menu"
+              id="downshift-:r1p:-menu"
               role="listbox"
             />
           </div>
