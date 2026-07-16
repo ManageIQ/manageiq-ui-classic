@@ -356,6 +356,22 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
   const tabs = (data && data.dialog_tabs) || [];
 
+  // Angular dialog-level Save guard (A7):
+  //   1. dialog label must not be empty
+  //   2. ≥1 tab, each tab must have a label and ≥1 group
+  //   3. each group must have a label and ≥1 field
+  const isSaveDisabled = !data
+    || !data.label?.trim()
+    || tabs.length === 0
+    || tabs.some((tab) =>
+        !tab.label?.trim()
+        || (tab.dialog_groups || []).length === 0
+        || (tab.dialog_groups || []).some((group) =>
+            !group.label?.trim()
+            || (group.dialog_fields || []).length === 0
+          )
+      );
+
   const selectedTab = tabs[selectedTabIndex] || tabs[0];
   const currentTabIndex = Math.min(selectedTabIndex, Math.max(0, tabs.length - 1));
 
@@ -476,7 +492,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
 
       {/* ── Footer: save + cancel ── */}
       <div className="service-dialog-form__footer">
-        <Button kind="primary" onClick={handleSubmit}>
+        <Button kind="primary" onClick={handleSubmit} disabled={isSaveDisabled}>
           {__('Save')}
         </Button>
         <Button kind="secondary" onClick={handleCancel}>
