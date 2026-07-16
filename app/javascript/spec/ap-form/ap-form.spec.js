@@ -7,7 +7,6 @@ describe('ApForm component', () => {
   const defaultProps = {
     scanId: 'new',
     scanMode: 'Vm',
-    initialData: null,
   };
 
   const vmModeData = {
@@ -48,7 +47,8 @@ describe('ApForm component', () => {
   beforeEach(() => {
     window.miqRedirectBack = jest.fn();
     window.http = {
-      post: jest.fn(() => Promise.resolve({ data: {} })),
+      get: jest.fn(() => Promise.resolve(vmModeData)),
+      post: jest.fn(() => Promise.resolve({ success: true, message: 'Saved' })),
     };
   });
 
@@ -57,7 +57,7 @@ describe('ApForm component', () => {
   });
 
   it('should render form fields', async() => {
-    renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+    renderWithRedux(<ApForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('name')).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('ApForm component', () => {
   });
 
   it('should render all tabs for VM mode', async() => {
-    renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+    renderWithRedux(<ApForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByText('Category')).toBeInTheDocument();
@@ -78,7 +78,8 @@ describe('ApForm component', () => {
   });
 
   it('should render only File and Event Log tabs for Host mode', async() => {
-    renderWithRedux(<ApForm {...defaultProps} scanMode="Host" initialData={hostModeData} />);
+    window.http.get.mockResolvedValue(hostModeData);
+    renderWithRedux(<ApForm {...defaultProps} scanMode="Host" />);
 
     await waitFor(() => {
       expect(screen.getByText('File')).toBeInTheDocument();
@@ -90,7 +91,7 @@ describe('ApForm component', () => {
 
   describe('Category Tab', () => {
     it('should render category checkboxes', async() => {
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByLabelText('System')).toBeInTheDocument();
@@ -104,7 +105,7 @@ describe('ApForm component', () => {
 
     it('should handle category checkbox changes', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByLabelText('Software')).toBeInTheDocument();
@@ -119,7 +120,7 @@ describe('ApForm component', () => {
 
   describe('File Tab', () => {
     it('should render file entries', async() => {
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('File')).toBeInTheDocument();
@@ -136,7 +137,7 @@ describe('ApForm component', () => {
 
     it('should allow adding new file entries', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('File')).toBeInTheDocument();
@@ -177,7 +178,7 @@ describe('ApForm component', () => {
   describe('Registry Tab', () => {
     it('should render registry entries', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Registry')).toBeInTheDocument();
@@ -194,7 +195,7 @@ describe('ApForm component', () => {
 
     it('should allow adding new registry entries', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Registry')).toBeInTheDocument();
@@ -238,7 +239,7 @@ describe('ApForm component', () => {
   describe('Event Log Tab', () => {
     it('should render event log entries', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Event Log')).toBeInTheDocument();
@@ -258,7 +259,7 @@ describe('ApForm component', () => {
 
     it('should allow adding new event log entries', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Event Log')).toBeInTheDocument();
@@ -302,7 +303,7 @@ describe('ApForm component', () => {
 
   describe('Form submission', () => {
     it('should have submit button', async() => {
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         // For new records the outer form submit button is labelled 'Add'
@@ -312,7 +313,7 @@ describe('ApForm component', () => {
     });
 
     it('should have cancel button', async() => {
-      renderWithRedux(<ApForm {...defaultProps} initialData={vmModeData} />);
+      renderWithRedux(<ApForm {...defaultProps} />);
 
       await waitFor(() => {
         // Scope to the main form to avoid matching modal Cancel buttons

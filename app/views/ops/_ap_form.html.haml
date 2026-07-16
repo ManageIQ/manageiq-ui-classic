@@ -2,13 +2,7 @@
   #ap_form_div
     = render :partial => "layouts/flash_msg"
     = react('ApForm',
-            {'scanId'      => @scan.id || 'new',
-             'scanMode'    => @edit[:new][:scan_mode],
-             'copy'        => session[:set_copy] == 'copy',
-             'initialData' => {'name'               => @edit[:new][:name],
-                               'description'        => @edit[:new][:description],
-                               'scan_mode'          => @edit[:new][:scan_mode],
-                               'category'           => @edit[:new]['category']&.dig(:definition, 'content').to_h { |item| [item['target'], true] } || {},
-                               'file_names'         => session[:file_names] || [],
-                               'reg_entries'        => session[:reg_entries] || [],
-                               'nteventlog_entries' => session[:nteventlog_entries] || []}})
+            {'scanId'       => @scan.id || 'new',
+             'scanMode'     => @scan.mode || 'Vm',
+             'copy'         => @copy_source_id.present?,
+             'copySourceId' => @copy_source_id})

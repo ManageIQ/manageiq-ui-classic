@@ -2404,6 +2404,7 @@ Rails.application.routes.draw do
     :ops                      => {
       :get  => %w[
         all_categories
+        ap_form_data
         category_entries
         category_information
         cu_collection_fetch
@@ -2420,6 +2421,7 @@ Rails.application.routes.draw do
         accordion_select
         apply_imports
         ap_edit
+        ap_form_data
         aps_list
         automate_schedules_set_vars
         button
