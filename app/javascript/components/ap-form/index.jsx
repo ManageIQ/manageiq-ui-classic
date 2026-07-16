@@ -13,7 +13,7 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 const MODAL_NONE = null;
 
 const ApForm = ({
-  scanId, scanMode, initialData, copy,
+  scanId = 'new', scanMode = 'Vm', copy = false, copySourceId = null,
 }) => {
   const [{ isLoading, formInitialValues }, setState] = useState({
     isLoading: true,
@@ -33,39 +33,37 @@ const ApForm = ({
   const isCopy = Boolean(copy);
 
   useEffect(() => {
-    const determinedMode = isNewRecord ? (scanMode || 'Vm') : (initialData?.scan_mode || scanMode || 'Vm');
+    // For a copy, load the source record's data; for edit, load the record itself;
+    // for new, fetch defaults (scan_mode is passed as a query param).
+    let fetchId;
+    if (isCopy) {
+      fetchId = copySourceId;
+    } else if (!isNewRecord) {
+      fetchId = scanId;
+    }
+    const url = fetchId
+      ? `/ops/ap_form_data/${fetchId}`
+      : `/ops/ap_form_data/new?scan_mode=${scanMode || 'Vm'}`;
 
-    const categoryData = initialData?.category || {};
-    const categoryValues = {};
-    if (categoryData.system) {
-      categoryValues.system = true;
-    }
-    if (categoryData.services) {
-      categoryValues.services = true;
-    }
-    if (categoryData.software) {
-      categoryValues.software = true;
-    }
-    if (categoryData.accounts) {
-      categoryValues.accounts = true;
-    }
-    if (categoryData.vmconfig) {
-      categoryValues.vmconfig = true;
-    }
-
-    setState({
-      isLoading: false,
-      formInitialValues: {
-        name: initialData?.name || '',
-        description: initialData?.description || '',
-        scan_mode: determinedMode,
-        category: categoryValues,
-        file_names: initialData?.file_names || [],
-        reg_entries: initialData?.reg_entries || [],
-        nteventlog_entries: initialData?.nteventlog_entries || [],
-      },
-    });
-  }, [initialData, scanMode, isNewRecord, isCopy]);
+    http.get(url)
+      .then((data) => {
+        setState({
+          isLoading: false,
+          formInitialValues: {
+            name: isCopy ? `Copy of ${data.name}` : (data.name || ''),
+            description: data.description || '',
+            scan_mode: data.scan_mode || scanMode || 'Vm',
+            category: data.category || {},
+            file_names: data.file_names || [],
+            reg_entries: data.reg_entries || [],
+            nteventlog_entries: data.nteventlog_entries || [],
+          },
+        });
+      })
+      .catch(() => {
+        setState({ isLoading: false, formInitialValues: {} });
+      });
+  }, [scanId, scanMode, isCopy, copySourceId, isNewRecord]);
 
   const closeModal = () => setModal(MODAL_NONE);
 
@@ -146,7 +144,9 @@ const ApForm = ({
   };
 
   const onSubmit = (values) => {
-    if (isSubmitting) return;
+    if (isSubmitting) {
+      return;
+    }
     setFlashError(null);
 
     const isHostMode = values.scan_mode === 'Host';
@@ -174,20 +174,20 @@ const ApForm = ({
     };
 
     setIsSubmitting(true);
-    const url = `/ops/ap_edit?id=${scanId || 'new'}&button=${isNewRecord ? 'add' : 'save'}`;
+    const url = `/ops/ap_form_data/${scanId || 'new'}`;
     http.post(url, { form_data: JSON.stringify(formData) })
       .then((response) => {
-        if (response.data && response.data.error) {
+        if (response.error) {
           setIsSubmitting(false);
-          setFlashError(response.data.error);
+          setFlashError(response.error);
         } else {
-          const message = response.data?.message || __('Analysis Profile was saved');
+          const message = response.message || __('Analysis Profile was saved');
           miqRedirectBack(message, 'success', '/ops/explorer');
         }
       })
       .catch((error) => {
         setIsSubmitting(false);
-        setFlashError(error.response?.data?.error || error.message || __('An error occurred while saving'));
+        setFlashError(error.data?.error || error.message || __('An error occurred while saving'));
       });
   };
 
@@ -293,36 +293,7 @@ ApForm.propTypes = {
   scanId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   scanMode: PropTypes.string,
   copy: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  initialData: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    scan_mode: PropTypes.string,
-    category: PropTypes.objectOf(PropTypes.bool),
-    file_names: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.string,
-      content: PropTypes.bool,
-    })),
-    reg_entries: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string,
-      value: PropTypes.string,
-    })),
-    nteventlog_entries: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      filter: PropTypes.shape({
-        message: PropTypes.string,
-        level: PropTypes.string,
-        source: PropTypes.string,
-        num_days: PropTypes.number,
-      }),
-    })),
-  }),
-};
-
-ApForm.defaultProps = {
-  scanId: 'new',
-  scanMode: 'Vm',
-  copy: false,
-  initialData: null,
+  copySourceId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ApForm;
