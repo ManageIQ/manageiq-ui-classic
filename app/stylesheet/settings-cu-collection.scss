@@ -1,0 +1,52 @@
+.cu-collection-notification {
+  margin-bottom: 1rem;
+}
+
+.parent-div {
+    display: flex;
+    flex-direction: row;
+  }
+  .clusters-section, .datastores-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10%;
+  }
+  .available-clusters, .available-datastores {
+    font-size: 16px;
+  }
+  .clusters, .datastores {
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    width: 100%;
+  }
+  .collect-note {
+    font-size: 12px;
+  }
+  .clusters-box, .datastores-box {
+    width: 45%;
+    border: 1px solid; 
+    padding: 2%;
+  }
+  .available-clusters, .available-datastores, .collect-note {
+    font-weight: bold;
+  }
+  .clusters-box, .datastores-box {
+    margin-bottom: 5%;
+  }
+  .clusters-box {
+    margin-right: 10%;
+  }
+  .clusters-labels, .datastores-labels {
+    margin-right: 30%;
+  }
+  .dropdown-label {
+    font-size: x-small;
+  }
+  .checkbox-tree-title {
+    font-weight: bold;
+  }

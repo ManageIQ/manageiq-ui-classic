@@ -750,7 +750,6 @@ module OpsController::Settings::Common
         settings_set_view_vars
       when "settings_cu_collection" # C&U collection settings
         cu_build_edit_screen
-        @in_a_form = true
       when "settings_tags"
         case @sb[:active_subtab]
         when "settings_my_company_categories"
