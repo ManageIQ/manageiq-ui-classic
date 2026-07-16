@@ -162,7 +162,7 @@ const DynamicSection = ({
       >
         {fields.length === 0 && (
           <div className="dynamic-section__placeholder">
-            {__('Drag fields here')}
+            {__('Drag items here to add to the dialog. At least one item is required before saving')}
           </div>
         )}
 

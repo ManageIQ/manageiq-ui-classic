@@ -606,7 +606,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
         class="cds--btn cds--btn--primary"
         type="button"
       >
-        Add
+        Save
       </button>
       <button
         class="cds--btn cds--btn--secondary"
