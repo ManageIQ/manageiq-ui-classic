@@ -1,6 +1,6 @@
 import { TaggingConnected } from '../containers/tagging';
 import { render } from '@testing-library/react';
-import configureStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 describe('Test connected Tagging component', () => {
@@ -74,11 +74,13 @@ describe('Test connected Tagging component', () => {
       },
     },
   };
-  const mockStore = configureStore();
   let store;
 
   beforeEach(() => {
-    store = mockStore(initialState);
+    store = configureStore({
+      reducer: (state = {}) => state,
+      preloadedState: initialState,
+    });
   });
 
   it('should render the connected component', () => {

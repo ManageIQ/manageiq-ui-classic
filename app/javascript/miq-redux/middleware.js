@@ -1,5 +1,3 @@
-import thunk from 'redux-thunk';
-import { routerMiddleware } from 'connected-react-router';
 import promiseMiddleware from 'redux-promise-middleware';
 import { TOGGLE_TAG_VALUE_CHANGE, DELETE_ASSIGNED_TAG } from '../tagging/actions/actions';
 
@@ -64,9 +62,7 @@ export const taggingMiddleware = (store) => (next) => (action) => {
   return next(action);
 };
 
-export default (history) => [
-  routerMiddleware(history),
+export default () => [
   taggingMiddleware,
-  thunk,
   promiseMiddleware(),
 ];

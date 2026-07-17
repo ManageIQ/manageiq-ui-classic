@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import configureStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 import fetchMock from 'fetch-mock';
 import RemoveGenericItemModal, {
   removeItems,
@@ -24,7 +24,7 @@ describe('RemoveGenericItemModal', () => {
     name: 'name456',
     supports_safe_delete: false,
   };
-  const store = configureStore()({});
+  const store = configureStore({ reducer: (state = {}) => state });
   const dispatchMock = jest.spyOn(store, 'dispatch');
   const modalData = {
     api_url: 'authentications',

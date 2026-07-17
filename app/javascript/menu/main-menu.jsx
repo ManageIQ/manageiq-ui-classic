@@ -67,7 +67,7 @@ export const MainMenu = ({
   useEffect(() => {
     // react router support - allow history changes to update the menu .. and try on load
     updateActiveItem.setMenu = setMenu;
-    updateActiveItem(ManageIQ.redux.store.getState().router.location);
+    updateActiveItem(null);
   }, []);
 
   const showMenu = (event) => {

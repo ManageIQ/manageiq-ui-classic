@@ -1,6 +1,5 @@
 import fetchMock from 'fetch-mock';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { makeStore } from '../../helpers/makeStore';
 
 import '../../helpers/miqFormatNotification';
 import {
@@ -38,7 +37,6 @@ describe('Notifications actions tests', () => {
       maxNotifications,
     },
   };
-  const mockStore = configureStore([thunk]);
   const miqFormatNotificationSpy = jest.spyOn(window, 'miqFormatNotification');
 
   afterEach(() => {
@@ -47,7 +45,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch initNotifications correctly', () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
     const expectedPayload = expect.objectContaining({
       type: INIT_NOTIFICATIONS,
@@ -58,7 +56,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch addNotification correctly', () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const expectedPayload = expect.objectContaining({
       type: ADD_NOTIFICATION,
     });
@@ -69,7 +67,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch toggleDrawerVisibility correctly', () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const expectedPayload = {
       type: TOGGLE_DRAWER_VISIBILITY,
     };
@@ -78,7 +76,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch markNotificationRead correctly', async () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
       action: 'mark_as_seen',
@@ -93,7 +91,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch removeToastNotification correctly', () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const expectedPayload = {
       type: REMOVE_TOAST_NOTIFICATION,
       payload: '123',
@@ -103,7 +101,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch markAllRead correctly', async () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.postOnce('/api/notifications/', { action: 'mark_as_seen', resources });
     const expectedPayload = {
@@ -114,7 +112,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch clearNotification correctly', async () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
       action: 'delete',
@@ -130,7 +128,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch clearAll correctly', async () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
     fetchMock.postOnce('/api/notifications/', { action: 'delete', resources });
@@ -142,7 +140,7 @@ describe('Notifications actions tests', () => {
   });
 
   it('should dispatch toggleMaxNotifications correctly', async () => {
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
     const expectedPayload = [
       expect.objectContaining({

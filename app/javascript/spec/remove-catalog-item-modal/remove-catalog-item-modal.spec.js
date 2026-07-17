@@ -1,6 +1,6 @@
 import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 import fetchMock from 'fetch-mock';
 import RemoveCatalogItemModal, {
   removeCatalogItems,
@@ -25,7 +25,7 @@ describe('RemoveCatalogItemModal', () => {
     service_type: 'atomic',
     services: [],
   };
-  const store = configureStore()({});
+  const store = configureStore({ reducer: (state = {}) => state });
   const dispatchMock = jest.spyOn(store, 'dispatch');
 
   afterEach(() => {
