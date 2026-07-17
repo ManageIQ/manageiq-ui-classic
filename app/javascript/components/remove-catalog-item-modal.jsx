@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
-import React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Loading, ModalBody } from '@carbon/react';
 import { API } from '../http_api';
 import { setLocationHref } from '../helpers/window-location';
@@ -54,132 +54,121 @@ export const removeCatalogItems = (catalogItems) => {
 
 const isCatalogBundle = (item) => (item.service_type && item.service_type === 'composite');
 
-class RemoveCatalogItemModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      loaded: false,
-    };
-  }
+function RemoveCatalogItemModal({
+  recordId = undefined,
+  gridChecks = undefined,
+}) {
+  const dispatch = useDispatch();
+  const [data, setData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
-  componentDidMount() {
-    const apiPromises = [];
-    const { recordId, gridChecks, dispatch } = this.props;
+  useEffect(() => {
     const catalogItemsIds = recordId ? [recordId] : _.uniq(gridChecks);
+    const apiPromises = [];
 
     // Load modal data from API
     catalogItemsIds.forEach((item) => apiPromises.push(API.get(`/api/service_templates/${item}?attributes=services`)));
     Promise.all(apiPromises)
-      .then((apiData) => apiData.map((catalogItem) => (
-        {
-          id: catalogItem.id,
-          name: catalogItem.name,
-          service_type: catalogItem.service_type, // 'atomic' or 'composite'
-          services: catalogItem.services,
-        })))
-      .then((data) => this.setState({ data, loaded: true }))
-      .then(() => dispatch({
-        type: 'FormButtons.saveable',
-        payload: true,
-      }));
+      .then((apiData) => apiData.map((catalogItem) => ({
+        id: catalogItem.id,
+        name: catalogItem.name,
+        service_type: catalogItem.service_type,
+        services: catalogItem.services,
+      })))
+      .then((loadedData) => {
+        setData(loadedData);
+        setLoaded(true);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    // Buttons setup
+  // Re-register the delete button handler whenever data changes so addClicked
+  // always closes over the up-to-date loaded array, not the initial [].
+  useEffect(() => {
     dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        // used this.state.data to get updated value from promise (whenever state updates)
-        // eslint-disable-next-line react/destructuring-assignment
-        addClicked: () => removeCatalogItems(this.state.data),
+        customLabel: 'Delete', // NOTE: This will be translated in <MiqButton />
+        addClicked: () => removeCatalogItems(data),
       },
     });
-    dispatch({
-      type: 'FormButtons.customLabel',
-      payload: 'Delete', // NOTE: This will be translated in <MiqButton />
-    });
-  }
+    if (data.length > 0) {
+      dispatch({ type: 'FormButtons.saveable', payload: true });
+    }
+  }, [data]);
 
-  render() {
-    const usedServicesMessage = (data) => {
-      let warningItems = [];
-      if (data.length === 1) { // We're deleting just one catalog item
-        const services = {};
-        data[0].services.forEach((service) => { services[service.name] = service.id; });
-        warningItems = Object.keys(services).map((item) => ({ id: services[item], name: item }));
-      } else { // We're deleting multiple catalog items
-        warningItems = data.filter((item) => item.services && item.services.length > 0);
+  const usedServicesMessage = (items) => {
+    let warningItems = [];
+    if (items.length === 1) {
+      const services = {};
+      items[0].services.forEach((service) => { services[service.name] = service.id; });
+      warningItems = Object.keys(services).map((item) => ({ id: services[item], name: item }));
+    } else {
+      warningItems = items.filter((item) => item.services && item.services.length > 0);
+    }
+    if (warningItems.length > 0) {
+      let warningMessage = '';
+      if (items.length === 1 && isCatalogBundle(items[0])) {
+        warningMessage = __('The catalog bundle is linked to the following services:');
+      } else {
+        // eslint-disable-next-line no-undef
+        warningMessage = n__('The catalog item is linked to the following services:',
+          'The following catalog items are linked to services:', items.length);
       }
-      if (warningItems.length > 0) {
-        let warningMessage = '';
-        if (data.length === 1 && isCatalogBundle(data[0])) {
-          warningMessage = __('The catalog bundle is linked to the following services:');
-        } else {
-          // eslint-disable-next-line no-undef
-          warningMessage = n__('The catalog item is linked to the following services:',
-            'The following catalog items are linked to services:', data.length);
-        }
-        return (
+      return (
+        <div>
+          <h4>{warningMessage}</h4>
+          {warningItems.map((item) => (
+            <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
+          ))}
+        </div>
+      );
+    }
+  };
+
+  const confirmationMessage = (items) => {
+    if (items.length === 1 && isCatalogBundle(items[0])) {
+      return __('Are you sure you want to permanently delete the following catalog bundle?');
+    }
+    // eslint-disable-next-line no-undef
+    return n__('Are you sure you want to permanently delete the following catalog item?',
+      'Are you sure you want to permanently delete the following catalog items?', items.length);
+  };
+
+  const renderSpinner = (spinnerOn) => {
+    if (spinnerOn) {
+      return (
+        <div className="loadingSpinner">
+          <Loading active small withOverlay={false} className="loading" />
+        </div>
+      );
+    }
+  };
+
+  return (
+    <ModalBody className="warning-modal-body">
+      {renderSpinner(!loaded)}
+      {usedServicesMessage(data)}
+      {loaded
+        && (
           <div>
-            <h4>{warningMessage}</h4>
-            {warningItems.map((item) => (
-              <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
-            ))}
+            <h4>{confirmationMessage(data)}</h4>
+            <ul>
+              {data.map((item) => (
+                <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
+              ))}
+            </ul>
           </div>
-        );
-      }
-    };
-
-    const confirmationMessage = (data) => {
-      if (data.length === 1 && isCatalogBundle(data[0])) {
-        return __('Are you sure you want to permanently delete the following catalog bundle?');
-      }
-      // eslint-disable-next-line no-undef
-      return n__('Are you sure you want to permanently delete the following catalog item?',
-        'Are you sure you want to permanently delete the following catalog items?', data.length);
-    };
-
-    const renderSpinner = (spinnerOn) => {
-      if (spinnerOn) {
-        return (
-          <div className="loadingSpinner">
-            <Loading active small withOverlay={false} className="loading" />
-          </div>
-        );
-      }
-    };
-
-    const { loaded, data } = this.state;
-    return (
-      <ModalBody className="warning-modal-body">
-        {renderSpinner(!loaded)}
-        {usedServicesMessage(data)}
-        {loaded
-          && (
-            <div>
-              <h4>{confirmationMessage(data)}</h4>
-              <ul>
-                {data.map((item) => (
-                  <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
-                ))}
-              </ul>
-            </div>
-          )}
-      </ModalBody>
-    );
-  }
+        )}
+    </ModalBody>
+  );
 }
 
 RemoveCatalogItemModal.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   recordId: PropTypes.string,
   gridChecks: PropTypes.arrayOf(PropTypes.any),
 };
 
-RemoveCatalogItemModal.defaultProps = {
-  recordId: undefined,
-  gridChecks: undefined,
-};
-
-export default connect()(RemoveCatalogItemModal);
+export default RemoveCatalogItemModal;

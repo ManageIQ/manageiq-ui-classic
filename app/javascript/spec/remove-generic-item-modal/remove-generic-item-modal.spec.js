@@ -1,13 +1,15 @@
-import { screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import fetchMock from 'fetch-mock';
 import RemoveGenericItemModal, {
   removeItems,
 } from '../../components/remove-generic-item-modal';
-import { renderWithRedux } from '../helpers/mountForm';
 
 import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
+
+const renderWithStore = (ui, store) => render(<Provider store={store}>{ui}</Provider>);
 
 describe('RemoveGenericItemModal', () => {
   const item1 = 123;
@@ -24,8 +26,8 @@ describe('RemoveGenericItemModal', () => {
     name: 'name456',
     supports_safe_delete: false,
   };
-  const store = configureStore({ reducer: (state = {}) => state });
-  const dispatchMock = jest.spyOn(store, 'dispatch');
+  let store;
+  let dispatchMock;
   const modalData = {
     api_url: 'authentications',
     async_delete: true,
@@ -33,18 +35,23 @@ describe('RemoveGenericItemModal', () => {
     modal_text: 'TEXT',
   };
 
+  beforeEach(() => {
+    store = configureStore({ reducer: (state = {}) => state });
+    dispatchMock = jest.spyOn(store, 'dispatch');
+  });
+
   afterEach(() => {
     fetchMock.reset();
   });
 
   it('should correctly render modal for single item', async() => {
     fetchMock.getOnce(url1, apiResponse1);
-    const { container } = renderWithRedux(
+    const { container } = renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         recordId={item1}
         modalData={modalData}
-      />
+      />,
+      store
     );
 
     expect(fetchMock.called(url1)).toBe(true);
@@ -59,12 +66,12 @@ describe('RemoveGenericItemModal', () => {
 
   it('should correctly render modal for multiple items', async() => {
     fetchMock.getOnce(url1, apiResponse1).getOnce(url2, apiResponse2);
-    const { container } = renderWithRedux(
+    const { container } = renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         gridChecks={[item1, item2]}
         modalData={modalData}
-      />
+      />,
+      store
     );
 
     expect(fetchMock.called(url1)).toBe(true);
@@ -81,12 +88,12 @@ describe('RemoveGenericItemModal', () => {
 
   it('correctly initializes buttons', async() => {
     fetchMock.getOnce(url1, apiResponse1);
-    renderWithRedux(
+    renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         recordId={item1}
         modalData={modalData}
-      />
+      />,
+      store
     );
 
     await waitFor(() => {
@@ -94,13 +101,10 @@ describe('RemoveGenericItemModal', () => {
         type: 'FormButtons.init',
         payload: {
           addClicked: expect.anything(),
+          customLabel: 'Delete',
           newRecord: true,
           pristine: true,
         },
-      });
-      expect(dispatchMock).toHaveBeenCalledWith({
-        type: 'FormButtons.customLabel',
-        payload: 'Delete',
       });
       expect(dispatchMock).toHaveBeenCalledWith({
         type: 'FormButtons.saveable',
@@ -111,12 +115,12 @@ describe('RemoveGenericItemModal', () => {
 
   it('should render loading spinner initially', async() => {
     fetchMock.getOnce(url1, apiResponse1);
-    const { container } = renderWithRedux(
+    const { container } = renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         recordId={item1}
         modalData={modalData}
-      />
+      />,
+      store
     );
     expect(container.querySelector('.loadingSpinner')).toBeInTheDocument();
 
@@ -130,12 +134,12 @@ describe('RemoveGenericItemModal', () => {
     const modalDataWithSafeDelete = { ...modalData, try_safe_delete: true };
     const urlWithAttributes = `${url1}/?attributes=supports_safe_delete`;
     fetchMock.getOnce(urlWithAttributes, apiResponse1);
-    renderWithRedux(
+    renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         recordId={item1}
         modalData={modalDataWithSafeDelete}
-      />
+      />,
+      store
     );
 
     await waitFor(() => {
@@ -150,12 +154,12 @@ describe('RemoveGenericItemModal', () => {
     const postUrl = `/api/authentications/${item1}`;
     fetchMock.getOnce(url1, apiResponse1);
     fetchMock.postOnce(postUrl, { success: true });
-    renderWithRedux(
+    renderWithStore(
       <RemoveGenericItemModal
-        store={store}
         recordId={item1}
         modalData={modalData}
-      />
+      />,
+      store
     );
 
     await waitFor(() => {

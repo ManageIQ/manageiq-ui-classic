@@ -126,13 +126,10 @@ describe('RemoveCatalogItemModal', () => {
         type: 'FormButtons.init',
         payload: {
           addClicked: expect.anything(),
+          customLabel: 'Delete',
           newRecord: true,
           pristine: true,
         },
-      });
-      expect(dispatchMock).toHaveBeenCalledWith({
-        type: 'FormButtons.customLabel',
-        payload: 'Delete',
       });
       expect(dispatchMock).toHaveBeenCalledWith({
         type: 'FormButtons.saveable',

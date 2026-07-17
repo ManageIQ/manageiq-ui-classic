@@ -12,8 +12,6 @@ import {
   FormError,
 } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
-import { connect } from 'react-redux';
-
 import defaultComponentMapper from './mappers/componentMapper';
 import SpyField from './spy-field';
 
@@ -99,4 +97,4 @@ MiqFormRenderer.propTypes = {
 export {
   componentTypes, validatorTypes, useFormApi, useFieldApi, FieldArray, FormSpy, FormError,
 };
-export default connect()(MiqFormRenderer);
+export default MiqFormRenderer;
