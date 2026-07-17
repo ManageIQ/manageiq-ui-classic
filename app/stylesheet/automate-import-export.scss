@@ -1,0 +1,57 @@
+.import-export-page {
+  padding-bottom: 4rem;
+
+  .file-upload-section,
+  .export-section,
+  .reset-datastore-section,
+  .import-datastore-via-git,
+  .review-git-import {
+    margin-bottom: 1rem;
+  }
+
+  .upload-button-wrapper {
+    margin-top: 1rem;
+  }
+
+  .import-export-section-divider {
+    border: 0;
+    border-top: 1px solid #8d8d8d;
+    margin: 1.5rem 0;
+  }
+
+  .import-export-section {
+    padding: 0.5rem 0;
+  }
+}
+
+.review-git-import {
+  .git-import-details {
+    margin: 1rem 0;
+
+    dl {
+      dt {
+        font-weight: bold;
+        margin-top: 0.5rem;
+      }
+
+      dd {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+.import-datastore-via-git-modal {
+  .git-modal-loading {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+}

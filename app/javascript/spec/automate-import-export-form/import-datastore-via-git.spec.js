@@ -1,57 +1,48 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'fetch-mock';
-
-import ImportDatastoreViaGit from '../../components/automate-import-export-form/import-datastore-via-git';
 import { renderWithRedux } from '../helpers/mountForm';
+import ImportDatastoreViaGit from '../../components/automate-import-export-form/import-datastore-via-git';
 
-describe('Import datastore via git component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+describe('ImportDatastoreViaGit component', () => {
+  it('should render the button and heading', () => {
+    const mockOnOpenModal = jest.fn();
+    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} />);
+
+    expect(screen.getByText(/Import Datastore via Git/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Import from Git Repository/i })).toBeInTheDocument();
   });
 
-  it('should render correctly', () => {
-    const { container } = renderWithRedux(<ImportDatastoreViaGit />);
-    expect(container).toMatchSnapshot();
+  it('should call onOpenModal when button is clicked', async() => {
+    const user = userEvent.setup({ delay: null });
+    const mockOnOpenModal = jest.fn();
+    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} />);
+
+    const button = screen.getByRole('button', { name: /Import from Git Repository/i });
+    await user.click(button);
+
+    expect(mockOnOpenModal).toHaveBeenCalledTimes(1);
   });
 
-  it('should have submit button disabled when url is not valid', () => {
-    renderWithRedux(<ImportDatastoreViaGit />);
-    const button = screen.getByRole('button', { name: /save/i });
+  it('should show helper text when disableSubmit is true', () => {
+    const mockOnOpenModal = jest.fn();
+    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} disableSubmit />);
+
+    expect(screen.getByText(/Please enable the git owner role/i)).toBeInTheDocument();
+  });
+
+  it('should disable button when disableSubmit is true', () => {
+    const mockOnOpenModal = jest.fn();
+    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} disableSubmit />);
+
+    const button = screen.getByRole('button', { name: /Import from Git Repository/i });
     expect(button).toBeDisabled();
   });
 
-  it('should have submit button always disabled', async() => {
-    const user = userEvent.setup();
-    renderWithRedux(<ImportDatastoreViaGit disableSubmit />);
+  it('should enable button when disableSubmit is false', () => {
+    const mockOnOpenModal = jest.fn();
+    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} disableSubmit={false} />);
 
-    const input = screen.getByRole('textbox', { name: /git url/i });
-    await user.type(input, 'http://');
-
-    const button = screen.getByRole('button', { name: /save/i });
-    expect(button).toBeDisabled();
-  });
-
-  it('should call api correct endpoint after submit', async() => {
-    const flashSpy = jest.spyOn(window, 'add_flash');
-    fetchMock.postOnce('/miq_ae_tools/retrieve_git_datastore', [{ message: 'Foo', level: 'Bar' }]);
-
-    const user = userEvent.setup();
-    renderWithRedux(<ImportDatastoreViaGit />);
-
-    const input = screen.getByRole('textbox', { name: /git url/i });
-    await user.type(input, 'http://');
-
-    await user.click(screen.getByRole('button', { name: /save/i }));
-
-    await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/retrieve_git_datastore')).toBe(true);
-    });
-
-    const lastCall = fetchMock.lastCall();
-    expect(lastCall[0]).toBe('/miq_ae_tools/retrieve_git_datastore');
-    expect(lastCall[1].body).toBe('{"git_url":"http://","git_verify_ssl":true}');
-    expect(flashSpy).toHaveBeenCalledWith('Foo', 'Bar');
+    const button = screen.getByRole('button', { name: /Import from Git Repository/i });
+    expect(button).not.toBeDisabled();
   });
 });
