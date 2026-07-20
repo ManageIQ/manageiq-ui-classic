@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import { Button } from '@carbon/react';
 import MiqDataTable from '../../../miq-data-table';
@@ -9,9 +9,11 @@ export const SchemaTableComponent = (props) => {
     input, rows, onCellClick, onButtonClick,
   } = useFieldApi(props);
   const formOptions = useFormApi();
+  const onChangeRef = useRef(input.onChange);
+  onChangeRef.current = input.onChange;
 
   useEffect(() => {
-    input.onChange(rows);
+    onChangeRef.current(rows);
   }, [rows]);
 
   return (

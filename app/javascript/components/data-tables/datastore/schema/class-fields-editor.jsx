@@ -14,7 +14,7 @@ import miqFlash from '../../../../helpers/miq-flash';
 
 export const ClassFieldsEditor = (props) => {
   const {
-    aeClassId, initialData, aeTypeOptions, dTypeOptions,
+    aeClassId, initialData, aeTypeOptions = [], dTypeOptions = [],
   } = props;
 
   const componentMapper = {
@@ -275,11 +275,6 @@ export const ClassFieldsEditor = (props) => {
 ClassFieldsEditor.propTypes = {
   aeClassId: PropTypes.number.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  aeTypeOptions: PropTypes.arrayOf(PropTypes.shape({})),
-  dTypeOptions: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-ClassFieldsEditor.defaultProps = {
-  aeTypeOptions: [],
-  dTypeOptions: [],
+  aeTypeOptions: PropTypes.array,
+  dTypeOptions: PropTypes.array,
 };
