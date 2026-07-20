@@ -27,7 +27,6 @@ exports[`DomainsPriorityForm component should render correctly 1`] = `
         >
           Drag and drop to reorder domains. Higher priority domains are listed first.
         </div>
-        
         <div
           class="sortable-list"
         >
