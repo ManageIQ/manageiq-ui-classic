@@ -25,7 +25,7 @@ module.exports = [
       options: babelOptions,
     }],
     // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
-    exclude: /node_modules\/(?!(@carbon|es-toolkit))/,
+    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit))/,
   },
   {
     // matches both the actual path and the aliased one
