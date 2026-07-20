@@ -64,8 +64,10 @@ module OpsController::Settings::CapAndU
     end
 
     render :json => {
-      :hosts      => hosts,
-      :datastores => @edit[:current][:storages].values
+      :hosts          => hosts,
+      :datastores     => @edit[:current][:storages].values,
+      :all_clusters   => @edit[:current][:all_clusters],
+      :all_datastores => @edit[:current][:all_storages]
     }
   end
 

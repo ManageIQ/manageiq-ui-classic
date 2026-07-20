@@ -24,6 +24,8 @@ const SettingsCUCollectionTab = ({
     datastoresNodes: [],
     hostsCheckedWithId: [],
     datastoresCheckedWithId: [],
+    allClusters,
+    allDatastores,
     callNumber: 0,
   });
 
@@ -96,7 +98,9 @@ const SettingsCUCollectionTab = ({
     }
 
     http.get(CU_COLLECTION_FETCH_URL).then((result) => {
-      const { hosts, datastores } = result;
+      const {
+        hosts, datastores, all_clusters: fetchedAllClusters, all_datastores: fetchedAllDatastores,
+      } = result;
 
       const hostsChecked = hosts
         .filter((host) => host.capture === true)
@@ -128,14 +132,16 @@ const SettingsCUCollectionTab = ({
         return datastoresChecked.includes(node.value.split('#')[0]) ? [node.value] : [];
       });
 
-      setData({
-        ...data,
+      setData((prev) => ({
+        ...prev,
         clustersNodes,
         datastoresNodes,
         hostsCheckedWithId,
         datastoresCheckedWithId,
-        callNumber: data.callNumber + 1,
-      });
+        allClusters: fetchedAllClusters ?? prev.allClusters,
+        allDatastores: fetchedAllDatastores ?? prev.allDatastores,
+        callNumber: prev.callNumber + 1,
+      }));
     });
   };
 
@@ -158,12 +164,12 @@ const SettingsCUCollectionTab = ({
     let datastoresSplitValues = [];
 
     if (!values.all_clusters) {
-      const clustersTreeDropdown = values.clusters_tree;
+      const clustersTreeDropdown = values.clusters_tree || [];
       clustersSplitValues = clustersTreeDropdown.map((string) => string.split('#')[0]);
     }
 
     if (!values.all_datastores) {
-      const datastoresTreeDropdown = values.datastores_tree;
+      const datastoresTreeDropdown = values.datastores_tree || [];
       datastoresSplitValues = datastoresTreeDropdown.map((string) => string.split('#')[0]);
     }
 
@@ -227,6 +233,7 @@ const SettingsCUCollectionTab = ({
     <>
       {notification && (
         <InlineNotification
+          lowContrast
           className="cu-collection-notification"
           kind={notification.kind}
           title={notification.title}
@@ -240,8 +247,8 @@ const SettingsCUCollectionTab = ({
           data.datastoresCheckedWithId,
         )}
         initialValues={{
-          all_clusters: allClusters,
-          all_datastores: allDatastores,
+          all_clusters: data.allClusters,
+          all_datastores: data.allDatastores,
           clusters_tree: data.hostsCheckedWithId,
           datastores_tree: data.datastoresCheckedWithId,
         }}
