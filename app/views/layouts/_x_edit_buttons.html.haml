@@ -4,6 +4,7 @@
 -# Set default action url, if none passed in
 - action_url ||= nil
 - return if action_url == "tagging_edit"
+- return if @sb[:action] == 'right_size'
 -# Set default record id to nil, if none passed in
 - record_id ||= nil
 - align ||= "right"
@@ -157,7 +158,7 @@
   - elsif record_id || export_button
     -# show button to go back
     #buttons
-      - if params[:action] == "policies" || %w(chargeback right_size).include?(@sb[:action])
+      - if params[:action] == "policies" || %w(chargeback).include?(@sb[:action])
         - action = (params[:action] == "policies" ? "policy_sim" : "x_history")
         -# Button to go back to policy simulation screen from 1 VMs policies
         = button_tag(t = _('Back'),
