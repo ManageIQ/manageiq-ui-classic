@@ -1432,7 +1432,7 @@ class MiqAeClassController < ApplicationController
     ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     fields_data = params[:fields] || []
 
-    old_priorities = ae_class.ae_fields.each_with_object({}) { |f, h| h[f.id] = f.priority }
+    old_priorities = ae_class.ae_fields.to_h { |f| [f.id, f.priority] }
 
     indexed_ae_fields = ae_class.ae_fields.index_by(&:id)
     fields_data.each do |field_data|
@@ -1441,7 +1441,7 @@ class MiqAeClassController < ApplicationController
     end
 
     if ae_class.save
-      new_priorities = ae_class.ae_fields.reload.each_with_object({}) { |f, h| h[f.id] = f.priority }
+      new_priorities = ae_class.ae_fields.reload.to_h { |f| [f.id, f.priority] }
       AuditEvent.success(build_saved_audit(ae_class, :current => {:priorities => old_priorities},
                                                      :new     => {:priorities => new_priorities}))
       render :json => {:success => true, :message => _("Class Schema Sequence was saved")}

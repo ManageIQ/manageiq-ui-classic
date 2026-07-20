@@ -804,8 +804,8 @@ describe MiqAeClassController do
     it "creates a success audit event with old and new priorities" do
       expect(AuditEvent).to receive(:success).with(
         hash_including(
-          :event   => "miqaeclass_record_update",
-          :userid  => User.current_user.userid
+          :event  => "miqaeclass_record_update",
+          :userid => User.current_user.userid
         )
       )
 

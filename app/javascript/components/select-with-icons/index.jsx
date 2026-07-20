@@ -47,12 +47,12 @@ import { useFieldApi, useFormApi } from '@@ddf';
  *
  */
 const SelectWithIcons = ({
-  label,
-  options,
-  placeholder,
-  includeEmpty,
-  isRequired,
-  clearFields,
+  label = undefined,
+  options = [],
+  placeholder = `<${__('Choose')}>`,
+  includeEmpty = false,
+  isRequired = false,
+  clearFields = undefined,
   ...props
 }) => {
   const { input, meta } = useFieldApi(props);
@@ -125,17 +125,6 @@ SelectWithIcons.propTypes = {
   clearFields: PropTypes.arrayOf(PropTypes.string),
   id: PropTypes.string,
   name: PropTypes.string,
-};
-
-SelectWithIcons.defaultProps = {
-  label: undefined,
-  options: [],
-  placeholder: `<${__('Choose')}>`,
-  includeEmpty: false,
-  isRequired: false,
-  clearFields: undefined,
-  id: undefined,
-  name: undefined,
 };
 
 export default SelectWithIcons;
