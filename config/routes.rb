@@ -2884,7 +2884,6 @@ Rails.application.routes.draw do
         remove_security_group
         retire
         right_size
-        right_size_data
         show
         show_list
       ],
@@ -2927,7 +2926,6 @@ Rails.application.routes.draw do
         perf_chart_chooser
         protect
         retire
-        right_size_data
         right_size_print
         show
         tagging_edit
@@ -3021,7 +3019,6 @@ Rails.application.routes.draw do
         explorer
         filesystem_download
         reconfigure_form_fields
-        right_size_data
         right_size_print
         launch_html5_console
         launch_vmrc_console

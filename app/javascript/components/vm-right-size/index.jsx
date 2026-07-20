@@ -1,22 +1,9 @@
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Loading } from '@carbon/react';
+import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
-import { http } from '../../http_api';
 import { normTableData, sizingTableData } from './helpers';
 
-const VmRightSize = ({ dataUrl, backUrl = undefined }) => {
-  const [{ isLoading, data }, setState] = useState({ isLoading: true, data: null });
-
-  useEffect(() => {
-    http.get(dataUrl)
-      .then((response) => setState({ isLoading: false, data: response.data }))
-      .catch(() => setState({ isLoading: false, data: null }));
-  }, [dataUrl]);
-
-  if (isLoading) {
-    return <Loading className="export-spinner" withOverlay={false} small />;
-  }
+const VmRightSize = ({ data, backUrl = undefined }) => {
   if (!data) {
     return null;
   }
@@ -59,8 +46,43 @@ const VmRightSize = ({ dataUrl, backUrl = undefined }) => {
   );
 };
 
+const sizingShape = PropTypes.shape({
+  recommended_vcpus: PropTypes.string,
+  vcpus_change_pct: PropTypes.string,
+  vcpus_change: PropTypes.string,
+  recommended_mem: PropTypes.string,
+  mem_change_pct: PropTypes.string,
+  mem_change: PropTypes.string,
+}).isRequired;
+
 VmRightSize.propTypes = {
-  dataUrl: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    norm: PropTypes.shape({
+      cpu_mhz_max: PropTypes.string,
+      cpu_mhz_high: PropTypes.string,
+      cpu_mhz_avg: PropTypes.string,
+      cpu_mhz_low: PropTypes.string,
+      cpu_pct_max: PropTypes.string,
+      cpu_pct_high: PropTypes.string,
+      cpu_pct_avg: PropTypes.string,
+      cpu_pct_low: PropTypes.string,
+      mem_max: PropTypes.string,
+      mem_high: PropTypes.string,
+      mem_avg: PropTypes.string,
+      mem_low: PropTypes.string,
+      mem_pct_max: PropTypes.string,
+      mem_pct_high: PropTypes.string,
+      mem_pct_avg: PropTypes.string,
+      mem_pct_low: PropTypes.string,
+    }).isRequired,
+    conservative: sizingShape,
+    moderate: sizingShape,
+    aggressive: sizingShape,
+    cpu_minimum: PropTypes.string.isRequired,
+    mem_minimum: PropTypes.string.isRequired,
+    cpu_total_cores: PropTypes.string,
+    mem_cpu: PropTypes.string,
+  }),
   backUrl: PropTypes.string,
 };
 

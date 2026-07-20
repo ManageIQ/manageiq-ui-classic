@@ -1,6 +1,2 @@
-- if local_assigns[:print_data]
-  -# Render the print page
-  = react 'VmRightSizePrint', :data => print_data
-- else
-  - back_url = url_for_only_path(:controller => controller_for_vm(model_for_vm(@record)), :action => "x_history", :continue => true)
-  = react 'VmRightSize', :dataUrl => "/#{controller_name}/right_size_data?id=#{@record.id}", :backUrl => back_url
+- back_url = local_assigns[:print_data] ? nil : url_for_only_path(:controller => controller_for_vm(model_for_vm(@record)), :action => "x_history", :continue => true)
+= react 'VmRightSize', :data => local_assigns[:print_data] || @right_size_data, :backUrl => back_url
