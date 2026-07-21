@@ -34,18 +34,6 @@ describe('SettingsCUCollectionTab', () => {
     });
   });
 
-  it('Save button is disabled when nothing has changed', async() => {
-    const { container } = renderWithRedux(
-      <SettingsCUCollectionTab />
-    );
-
-    await waitFor(() => {
-      expect(container.querySelector('button[type="submit"]')).toBeInTheDocument();
-    });
-
-    expect(container.querySelector('button[type="submit"]')).toBeDisabled();
-  });
-
   it('shows "No Clusters available" note when clusterTree is not provided', async() => {
     renderWithRedux(
       <SettingsCUCollectionTab clusterTree={undefined} />

@@ -36,7 +36,8 @@ module OpsController::Settings::CapAndU
       end
     end
 
-    unless @edit[:new][:storages] == @edit[:current][:storages]
+    all_storages_turned_off = @edit[:current][:all_storages] && !@edit[:new][:all_storages]
+    if all_storages_turned_off || @edit[:new][:storages] != @edit[:current][:storages]
       @edit[:new][:storages].each_value do |s|
         storage = Storage.find(s[:id])
         storage.perf_capture_enabled = s[:capture]

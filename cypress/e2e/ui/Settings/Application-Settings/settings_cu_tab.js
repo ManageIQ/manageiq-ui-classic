@@ -99,7 +99,7 @@ describe('Settings > Application Settings > Settings', () => {
         .should('be.disabled');
     });
 
-    it('Collect all clusters/datastores — toggle, save, toggle back, save', () => {
+    it('Collect all clusters/datastores — toggle saves and shows/hides checkbox trees', () => {
       toggleAndSave(
         'button#all-clusters.cds--toggle__button',
         'saveCuCollectionClustersToggled',
@@ -110,9 +110,6 @@ describe('Settings > Application Settings > Settings', () => {
         'saveCuCollectionDatastoresToggled',
         'saveCuCollectionDatastoresRestored',
       );
-    });
-
-    it('Toggling all_clusters/all_datastores shows/hides the checkbox trees', () => {
       toggleHidesTree(
         'button#all-clusters.cds--toggle__button',
         '.clusters-box .checkbox-tree-wrapper',
