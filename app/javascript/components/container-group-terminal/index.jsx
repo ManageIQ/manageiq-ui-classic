@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
-import ActionCable from 'actioncable';
 import 'xterm/css/xterm.css';
 
-const ContainerGroupTerminal = ({ podId, podName }) => {
+const ContainerGroupTerminal = ({ podId }) => {
     const terminalRef = useRef(null);
     const termRef = useRef(null);
-    const subscriptionRef = useRef(null);
+    const wsRef = useRef(null);
 
     useEffect(() => {
         const term = new Terminal();
@@ -15,52 +14,78 @@ const ContainerGroupTerminal = ({ podId, podName }) => {
         term.loadAddon(fitAddon);
         term.open(terminalRef.current);
         fitAddon.fit();
-
-        term.writeln('Pod Terminal');
-        term.writeln('Terminal initialized');
+        term.focus();
+        term.writeln('Connecting...');
         termRef.current = term;
-        
+
         term.onData((data) => {
-            if (subscriptionRef.current) {
-                subscriptionRef.current.perform('input', { data });
+            if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+                wsRef.current.send(data);
             }
         });
 
-        return () => term.dispose();
+        return () => {
+            term.dispose();
+            wsRef.current?.close();
+        };
     }, []);
 
-    useEffect(() => {
-        const cable = ActionCable.createConsumer('/ws/notifications');
-        const subscription = cable.subscriptions.create(
-            { channel: "PodTerminalChannel", pod_id: podId },
-            {
-                connected() {
-                    console.log("CONNECTED TO POD CHANNEL");
-                    fetch(`/container_group/terminal_start/${podId}`, { method: "POST" });
-                },
-                disconnected() { console.log("DISCONNECTED"); },
-                rejected() { console.log("REJECTED"); },
-                received(data) {
-                    if (termRef.current) termRef.current.write(data.output);
-                },
+    const connect = (connectionParams) => {
+        const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${proto}://${window.location.host}/${connectionParams.url}`);
+        ws.binaryType = 'arraybuffer';
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+            termRef.current.writeln('Connected.');
+            termRef.current.focus();
+        };
+
+        ws.onmessage = (evt) => {
+            if (evt.data instanceof ArrayBuffer) {
+                termRef.current.write(new Uint8Array(evt.data));
+            } else if (evt.data instanceof Blob) {
+                evt.data.arrayBuffer().then((buf) => termRef.current.write(new Uint8Array(buf)));
+            } else if (typeof evt.data === 'string') {
+                termRef.current.write(evt.data);
             }
-        );
-        subscriptionRef.current = subscription;
-        return () => subscription.unsubscribe();
-    }, []);
+        };
 
-    useEffect(() => {
-        fetch(window.location.pathname.replace('/terminal/', '/terminal_ticket/'))
+        ws.onerror = () => termRef.current.writeln('\r\n[connection error]');
+        ws.onclose = () => termRef.current.writeln('\r\n[closed]');
+    };
+
+    const pollTask = (taskId) => {
+        fetch(`/container_group/kube_exec_console/${podId}?task_id=${taskId}`, {
+            headers: { Accept: 'application/json' },
+        })
             .then((r) => r.json())
             .then((data) => {
-                if (termRef.current) {
-                    termRef.current.writeln(`Pod: ${data.pod}`);
-                    termRef.current.writeln(`Namespace: ${data.namespace}`);
-                    termRef.current.writeln(`Host: ${data.host}`);
+                if (data.url) {
+                    connect(data);
+                } else if (data.error) {
+                    termRef.current.writeln(`\r\n[error] ${data.error}`);
+                } else {
+                    setTimeout(() => pollTask(taskId), 1000);
                 }
             });
+    };
+
+    useEffect(() => {
+        fetch(`/container_group/kube_exec_console/${podId}`, {
+            headers: { Accept: 'application/json' },
+        })
+            .then((r) => r.json())
+            .then((data) => pollTask(data.task_id));
     }, []);
-    return <div ref={ terminalRef } style={ { height: '500px' } } />;
+
+    return (
+        <div
+            ref={ terminalRef }
+            style={ { height: '500px' } }
+            onClick={ () => termRef.current?.focus() }
+        />
+    );
 };
 
 export default ContainerGroupTerminal;

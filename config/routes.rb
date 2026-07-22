@@ -683,9 +683,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        terminal
-        terminal_ticket
         protect
+        terminal
+        kube_exec_console
       ],
       :post => %w[
         button
@@ -695,7 +695,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        terminal_start
         tl_chooser
         wait_for_task
         tagging_edit
