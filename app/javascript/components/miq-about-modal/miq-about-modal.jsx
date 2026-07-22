@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from '@reduxjs/toolkit';
 import { Modal, ModalBody, Button } from '@carbon/react';
 import ModalItem from './modal-item';
 import { detectBrowser } from './helper';

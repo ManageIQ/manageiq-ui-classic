@@ -1,0 +1,617 @@
+// Layout rules for the Carbon-based QueryBuilder wrapper.
+
+// Collapse Carbon form-item wrappers so all controls in a rule row are the same height.
+.exp-query-builder,
+.exp-field-selector {
+  .cds--form-item,
+  .cds--list-box__wrapper {
+    flex: 0 0 auto;
+    margin-block-end: 0;
+    margin-block-start: 0;
+  }
+
+  .cds--select-input,
+  .cds--select-input__wrapper,
+  .cds--text-input {
+    block-size: var(--cds-size-sm, 2rem);
+  }
+}
+
+.exp-query-builder select,
+.exp-field-selector select {
+  block-size: var(--cds-size-sm, 2rem);
+}
+
+.exp-rule-extras {
+  flex: 0 0 auto;
+}
+
+.exp-alias-row {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  width: 120px;
+
+  // Expand when the text input is visible.
+  &:has(.cds--text-input-wrapper) {
+    width: calc(120px + var(--cds-spacing-03, 0.5rem) + 120px);
+  }
+
+  .cds--text-input-wrapper,
+  .cds--text-input {
+    width: 120px;
+  }
+}
+
+.exp-alias-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  max-width: 120px;
+  flex: 0 0 120px;
+}
+
+// Strip Carbon checkbox block margins so the alias row doesn't inflate rule height.
+.exp-query-builder .rule .exp-alias-row {
+  .cds--form-item,
+  .cds--form-item.cds--checkbox-wrapper {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
+  }
+}
+
+// Shown in place of the operator <Select> when only one operator is available.
+.exp-operator-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--cds-label-01-font-size, 0.75rem);
+  font-weight: 400;
+  color: var(--cds-text-secondary);
+  white-space: nowrap;
+  padding: 0 var(--cds-spacing-03, 0.5rem);
+}
+
+// Carbon Toggle stacks its label above the pill; we render the label separately
+// so both sit inline within the header flex row.
+.exp-not-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cds-spacing-02, 0.25rem);
+
+  .exp-not-toggle__label {
+    font-size: var(--cds-label-01-font-size, 0.75rem);
+    font-weight: 400;
+    color: var(--cds-text-secondary);
+    white-space: nowrap;
+    line-height: 1;
+    align-self: center;
+  }
+
+  .cds--toggle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .cds--toggle__label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+  }
+}
+
+// Outer scroll container so overflow-x:auto doesn't clip branch pseudo-elements.
+.exp-query-builder-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.exp-query-builder {
+  // Map RQB theming variables to Carbon tokens.
+  --rqb-spacing:          var(--cds-spacing-03, 0.5rem);
+  --rqb-border-width:     1px;
+  --rqb-border-color:     var(--cds-border-interactive, #78a9ff);
+  --rqb-border-style:     solid;
+  --rqb-border-radius:    0;
+  --rqb-background-color: var(--cds-highlight, #edf5ff);
+  --rqb-base-color:       var(--cds-interactive, #0f62fe);
+  --rqb-branch-color:     var(--cds-border-interactive, #78a9ff);
+  --rqb-branch-style:     solid;
+  --rqb-branch-radius:    0;
+  --rqb-branch-indent:    var(--cds-spacing-05, 1rem);
+  --rqb-branch-width:     2px;
+
+  // overflow-x on this element would clip branch pseudo-elements; the outer
+  // .exp-query-builder-scroll wrapper owns horizontal scroll instead.
+  width: 100%;
+
+  .ruleGroup {
+    background-color: var(--cds-highlight);
+    border: 1px solid var(--cds-border-interactive);
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: var(--cds-spacing-03, 0.5rem);
+  }
+
+  // Nested group: lighter background; margin-bottom:0 keeps the branch rail continuous.
+  .ruleGroup .ruleGroup {
+    background-color: var(--cds-layer-02, #e8e8e8);
+    border-color: var(--cds-border-subtle-01, #e0e0e0);
+    margin-bottom: 0;
+  }
+
+  .ruleGroup-header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--cds-spacing-03, 0.5rem);
+    padding: var(--cds-spacing-03, 0.5rem) var(--cds-spacing-04, 0.75rem);
+    background-color: var(--cds-layer-selected-01, #d0e2ff);
+    border-bottom: 1px solid var(--cds-border-interactive);
+
+    .rule-combinators {
+      flex: 0 0 auto;
+
+      .cds--select,
+      .cds--select-input__wrapper,
+      .cds--select-input {
+        width: 96px;
+      }
+    }
+
+    .rule-notToggle {
+      flex: 0 0 auto;
+    }
+
+    // Pushes the action button group to the far right.
+    .ruleGroup-addRule {
+      margin-left: auto;
+    }
+
+    .ruleGroup-remove {
+      margin-left: 0;
+    }
+  }
+
+  .ruleGroup-body {
+    position: relative;
+    margin-inline-start: calc(2 * var(--rqb-branch-indent));
+    padding-block: var(--cds-spacing-03, 0.5rem);
+    padding-inline-end: var(--cds-spacing-04, 0.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--cds-spacing-02, 0.25rem);
+  }
+
+  // Branch connectors: each child draws an L-shape (vertical to midpoint + horizontal arm).
+  // ::before covers top→midpoint; ::after covers midpoint→bottom for non-last children.
+  .rule {
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      top: 0;
+      height: 50%;
+      width: var(--rqb-branch-indent);
+      border-left: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+      border-bottom: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+      border-bottom-left-radius: var(--rqb-branch-radius);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      top: 50%;
+      bottom: 0;
+      width: 0;
+      border-left: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+    }
+
+    &:last-child::after { content: none; }
+  }
+
+  .ruleGroup .ruleGroup {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      top: 0;
+      height: 1.5rem;
+      width: calc(var(--rqb-branch-indent) - var(--rqb-border-width));
+      border-left: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+      border-bottom: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+      border-bottom-left-radius: var(--rqb-branch-radius);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      top: 1.5rem;
+      bottom: 0;
+      width: 0;
+      border-left: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
+    }
+
+    &:last-child::after { content: none; }
+  }
+
+  // Rule grid: fields | alias | operators | value(1fr) | clone | remove
+  .rule {
+    display: grid;
+    grid-template-columns: auto auto auto 1fr auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: var(--cds-spacing-03, 0.5rem);
+    width: 100%;
+    min-width: 0;
+    position: relative;
+    background-color: var(--cds-layer-01, #f4f4f4);
+    border-left: 3px solid var(--cds-border-interactive);
+    border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+    padding: 0.375rem var(--cds-spacing-03, 0.5rem);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    & > * {
+      min-width: 0;
+    }
+
+    .rule-fields {
+      grid-column: 1;
+      max-width: 376px;
+      overflow: visible;
+      align-self: center;
+    }
+
+    .exp-alias-row {
+      grid-column: 2;
+    }
+
+    .rule-operators {
+      grid-column: 3;
+      margin-block-start: 0;
+      margin-block-end: 0;
+
+      .cds--select,
+      .cds--select-input__wrapper,
+      .cds--select-input,
+      .exp-operator-label {
+        width: 120px;
+      }
+    }
+
+    .rule-value {
+      grid-column: 4;
+      min-width: 80px;
+      overflow: visible;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--cds-spacing-03, 0.5rem);
+    }
+
+    .rule-cloneRule { grid-column: 5; }
+    .rule-remove    { grid-column: 6; }
+
+    &.queryBuilder-disabled {
+      border-left-color: var(--cds-border-disabled, #c6c6c6);
+    }
+
+    // FIND rule: two-row grid; .rule-value and .exp-find-editor use display:contents
+    // so the two .exp-find-row children become direct grid items.
+    &:has(.exp-find-editor) {
+      grid-template-columns: auto auto 1fr auto auto;
+      grid-template-rows: auto auto;
+
+      .rule-operators {
+        display: none;
+      }
+
+      .rule-fields {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .exp-alias-row {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .rule-value {
+        display: contents;
+      }
+
+      .exp-find-editor {
+        display: contents;
+      }
+
+      .exp-find-row:first-child {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .exp-find-row:last-child {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
+      .rule-cloneRule { grid-column: 4; grid-row: 1; }
+      .rule-remove    { grid-column: 5; grid-row: 1; }
+    }
+
+    // Registry key: operator is rendered inside .exp-regkey-editor, so hide
+    // the RQB-generated column and shift .rule-value left to fill the gap.
+    &:has(.exp-regkey-editor) {
+      .rule-operators {
+        display: none;
+      }
+
+      .rule-value {
+        grid-column: 2;
+      }
+    }
+  }
+}
+
+// Two-step field selector: step 1 is a Select (120px), step 2 is a ComboBox (248px).
+.exp-field-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  flex-wrap: nowrap;
+
+  > .cds--form-item:first-child {
+    flex: 0 0 120px;
+    width: 120px;
+    max-width: 120px;
+    overflow: hidden;
+
+    .cds--select,
+    .cds--select-input__wrapper,
+    .cds--select-input {
+      width: 120px;
+    }
+  }
+
+  // overflow:visible so the absolutely-positioned dropdown menu is not clipped.
+  > .cds--list-box__wrapper {
+    flex: 0 0 248px;
+    width: 248px;
+    max-width: 248px;
+    overflow: visible;
+
+    .cds--combo-box,
+    .cds--list-box__field,
+    .cds--text-input {
+      width: 248px;
+      block-size: var(--cds-size-sm, 2rem);
+    }
+  }
+}
+
+// Compact field menu so long option labels fit without wrapping.
+.exp-field-combobox {
+  .cds--list-box__menu-item {
+    block-size: 1.5rem;
+  }
+
+  .cds--list-box__menu-item__option {
+    font-size: 0.75rem;
+    letter-spacing: 0.32px;
+    padding-block: 0;
+    block-size: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  // autoAlign sets an inline width matching the trigger (248px); override so
+  // the menu is wide enough to show full option text without truncation.
+  .cds--list-box__menu {
+    width: 500px !important;
+    min-width: 500px !important;
+  }
+}
+
+.exp-date-editor {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+
+  .exp-date-toggle-btn.cds--btn--ghost {
+    flex: 0 0 auto;
+    padding: 0 0.375rem;
+    min-height: var(--cds-size-sm, 2rem);
+    block-size: var(--cds-size-sm, 2rem);
+  }
+
+  .exp-date-through {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: var(--cds-label-01-font-size, 0.75rem);
+    color: var(--cds-text-secondary);
+    padding: 0 var(--cds-spacing-02, 0.25rem);
+  }
+}
+
+.exp-date-specific {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+
+  .cds--date-picker-input__wrapper,
+  .cds--date-picker--single .cds--date-picker-container {
+    width: auto;
+    min-width: 9rem;
+  }
+
+  .cds--date-picker-input__wrapper input.cds--date-picker__input {
+    block-size: var(--cds-size-sm, 2rem);
+  }
+
+  .exp-date-time-select {
+    flex: 0 0 auto;
+
+    .cds--select-input__wrapper,
+    .cds--select-input {
+      width: 120px;
+    }
+  }
+}
+
+.exp-date-relative-select {
+  min-width: 10rem;
+  max-width: 16rem;
+
+  .cds--select-input__wrapper {
+    width: 100%;
+  }
+  .cds--select-input {
+    width: 100%;
+  }
+}
+
+.exp-value-with-units {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+  flex: 0 0 auto;
+
+  > .cds--form-item:first-child {
+    flex: 0 0 auto;
+    min-width: 0;
+
+    .cds--text-input-wrapper,
+    .cds--text-input {
+      width: 120px;
+    }
+  }
+
+  &.exp-value-with-units--has-units {
+    > .cds--form-item:last-child {
+      flex: 0 0 auto;
+    }
+  }
+
+  .exp-units-select,
+  .exp-units-select .cds--select-input__wrapper,
+  .exp-units-select .cds--select-input {
+    width: 5.5rem;
+  }
+
+  .exp-units-label {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: var(--cds-label-01-font-size, 0.75rem);
+    color: var(--cds-text-secondary);
+  }
+}
+
+.exp-find-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+}
+
+.exp-find-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+
+  > .cds--form-item {
+    flex: 0 0 auto;
+
+    .cds--select-input__wrapper,
+    .cds--select-input {
+      width: 120px;
+    }
+
+    .cds--text-input {
+      width: 120px;
+    }
+  }
+
+}
+
+// Registry Key editor: Key / Value text inputs + inline operator dropdown + Data input.
+.exp-regkey-editor {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--cds-spacing-03, 0.5rem);
+  min-width: 0;
+
+  > .cds--form-item {
+    flex: 0 0 auto;
+
+    .cds--text-input-wrapper,
+    .cds--text-input {
+      width: 120px;
+    }
+  }
+
+  .exp-regkey-operator,
+  .exp-regkey-operator.cds--form-item {
+    flex: 0 0 auto;
+
+    .cds--select,
+    .cds--select-input__wrapper,
+    .cds--select-input {
+      width: 120px;
+    }
+  }
+}
+
+.exp-preview {
+  margin-top: var(--cds-spacing-04, 0.75rem);
+  padding: var(--cds-spacing-04, 0.75rem) var(--cds-spacing-05, 1rem);
+  background-color: var(--cds-layer-01);
+  // border-strong-01 for decoration — border-interactive is reserved for focus rings.
+  border-left: 4px solid var(--cds-border-strong-01, #8d8d8d);
+  color: var(--cds-text-primary);
+  font-size: var(--cds-body-short-01-font-size, 0.875rem);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: pre-wrap;
+
+  .exp-preview__label {
+    margin-bottom: var(--cds-spacing-02, 0.25rem);
+    font-size: var(--cds-label-01-font-size, 0.75rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--cds-text-secondary);
+  }
+}
+
+// .cds--form-requirement is normally display:none; render it unconditionally here.
+.miq-expression-editor-field--invalid {
+  .cds--form-requirement {
+    display: block;
+    overflow: visible;
+    max-block-size: none;
+    margin-top: var(--cds-spacing-02, 0.25rem);
+    color: var(--cds-text-error, #da1e28);
+    font-size: var(--cds-helper-text-01-font-size, 0.75rem);
+  }
+}
+
+.miq-expression-editor__required {
+  color: var(--cds-text-error, #da1e28);
+  margin-right: var(--cds-spacing-02, 0.25rem);
+}
