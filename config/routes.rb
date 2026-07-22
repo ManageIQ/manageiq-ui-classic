@@ -2406,6 +2406,7 @@ Rails.application.routes.draw do
         all_categories
         category_entries
         category_information
+        cu_collection_fetch
         dialog_load
         explorer
         fetch_audit_log
@@ -2433,7 +2434,6 @@ Rails.application.routes.draw do
         ce_new_cat
         ce_select
         change_tab
-        cu_collection_field_changed
         cu_collection_update
         cu_repair
         cu_repair_field_changed
