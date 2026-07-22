@@ -2187,9 +2187,8 @@ Rails.application.routes.draw do
         show_list
       ],
       :post => %w[
-        condition_edit
-        condition_field_changed
-        edit
+        expression_preview
+
         show
         show_list
       ] +
@@ -3329,6 +3328,15 @@ Rails.application.routes.draw do
 
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
+
+  # Expression editor metadata endpoints (used by the React ExpressionEditor component)
+  scope '/expression_editor' do
+    get  'metadata',          :to => 'expression_editor#metadata'
+    get  'operators',         :to => 'expression_editor#operators'
+    get  'tag_values',        :to => 'expression_editor#tag_values'
+    get  'find_check_fields', :to => 'expression_editor#find_check_fields'
+    post 'expression_update', :to => 'expression_editor#expression_update'
+  end
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false

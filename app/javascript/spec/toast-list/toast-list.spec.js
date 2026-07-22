@@ -2,9 +2,9 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 import { Provider } from 'react-redux';
-import { makeStore } from '../helpers/mountForm';
 import ToastList from '../../components/toast-list/toast-list';
 import { MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-actions';
+import { makeStore } from '../helpers/mountForm';
 import notifications from '../fixtures/notifications.json';
 
 describe('Toast list tests', () => {
