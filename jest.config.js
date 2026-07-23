@@ -12,6 +12,7 @@ module.exports = {
     getJSONFixture: true,
   },
   roots: ['app/javascript'],
+  setupFiles: ['./config/jest.polyfills.js'],
   setupFilesAfterEnv: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
   moduleFileExtensions: [

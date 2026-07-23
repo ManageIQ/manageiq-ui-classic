@@ -24,8 +24,10 @@ module.exports = [
       loader: 'babel-loader',
       options: babelOptions,
     }],
-    // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
-    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit))/,
+    // Explicitly include @carbon, @tanstack, es-toolkit, react-router, and cookie (react-router v7
+    // and its cookie dependency ship ESM with modern syntax that webpack 4 cannot parse without
+    // babel transpilation).
+    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit|react-router|cookie))/,
   },
   {
     // matches both the actual path and the aliased one
