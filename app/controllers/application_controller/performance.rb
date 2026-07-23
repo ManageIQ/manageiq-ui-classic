@@ -686,7 +686,7 @@ module ApplicationController::Performance
     end
     rpts = [rpt]
     if perf_parent? # Build the parent report, if asked for
-      p_rpt = Marshal.load(Marshal.dump(rpt)) # Deep clone the main report
+      p_rpt = copy_object(rpt)
       p_rpt.where_clause[1] = @perf_options[:parent]
       p_rpt.where_clause[2] = @perf_record.send(ApplicationHelper::VALID_PERF_PARENTS[@perf_options[:parent]]).id
       rpts.push(p_rpt)
@@ -1351,7 +1351,7 @@ module ApplicationController::Performance
   def perf_remove_report_cols(report, charts = nil)
     charts ||= @charts.first
     new_rpt = MiqReport.new(report.attributes) # Make a copy of the report
-    new_rpt.table = Marshal.load(Marshal.dump(report.table))
+    new_rpt.table = copy_object(report.table)
     keepcols = []
     keepcols += %w[timestamp statistic_time] unless @top_chart
     keepcols += ["resource_name"] if charts[:type].include?("Pie")
