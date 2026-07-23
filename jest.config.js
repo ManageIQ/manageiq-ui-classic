@@ -25,5 +25,6 @@ module.exports = {
     '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
     '@@ddf': '<rootDir>/app/javascript/forms/data-driven-form',
     '^fetch-mock$': '<rootDir>/node_modules/fetch-mock/dist/cjs/index.js',
+    '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
   },
 };
