@@ -1,7 +1,16 @@
 import thunk from 'redux-thunk';
-import { routerMiddleware } from 'connected-react-router';
 import promiseMiddleware from 'redux-promise-middleware';
 import { TOGGLE_TAG_VALUE_CHANGE, DELETE_ASSIGNED_TAG } from '../tagging/actions/actions';
+
+/** Redux middleware that forwards ROUTER_NAVIGATE actions to the history object. */
+const createRouterMiddleware = (history) => (_store) => (next) => (action) => {
+  if (action.type === '@@router/NAVIGATE') {
+    const { method, args } = action.payload;
+    history[method](...args);
+    return;
+  }
+  return next(action);
+};
 
 /** Labels used to identify if the status selected item from state. */
 export const tagLabels = {
@@ -65,7 +74,7 @@ export const taggingMiddleware = (store) => (next) => (action) => {
 };
 
 export default (history) => [
-  routerMiddleware(history),
+  createRouterMiddleware(history),
   taggingMiddleware,
   thunk,
   promiseMiddleware(),
