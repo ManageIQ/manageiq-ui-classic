@@ -1,4 +1,5 @@
 import { flatten } from './search';
+import { onRouteChange } from '../miq-component/react-history';
 
 const unsetActive = menu => menu.map(item => ({
   ...item,
@@ -6,7 +7,7 @@ const unsetActive = menu => menu.map(item => ({
   items: item.items && unsetActive(item.items),
 }));
 
-export const updateActiveItem = (_location) => {
+export const updateActiveItem = (_update) => {
   const { menu } = window.ManageIQ;
   const { setMenu } = updateActiveItem;
 
@@ -34,4 +35,4 @@ export const updateActiveItem = (_location) => {
 };
 
 // listen for history changes
-ManageIQ.redux.history.listen(updateActiveItem);
+onRouteChange(updateActiveItem);

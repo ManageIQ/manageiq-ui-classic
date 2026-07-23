@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 /**
  * Root reducer, used when creating the Redux store.
  *
@@ -12,12 +11,24 @@ function rootReducer(state) {
   const newState = state || {};
   return newState;
 }
+
+/**
+ * Reducer that tracks the current router location in Redux state.
+ * Listens for ROUTER_LOCATION_CHANGE actions dispatched by the router middleware.
+ */
+function routerReducer(state = { location: null }, action) {
+  if (action.type === '@@router/LOCATION_CHANGE') {
+    return { ...state, location: action.payload.location };
+  }
+  return state;
+}
+
 /**
  * Initial reducer
  * @param {Object} asyncReducers - object of reducers
  */
-export default ({ asyncReducers = {}, history }) => (combineReducers({
+export default ({ asyncReducers = {} }) => (combineReducers({
   rootReducer,
-  router: connectRouter(history),
+  router: routerReducer,
   ...asyncReducers,
 }));
