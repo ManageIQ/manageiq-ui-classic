@@ -43,7 +43,7 @@
     "@novnc/novnc": "~1.2.0",
     "@pf3/select": "~1.12.6",
     "@rails/actioncable": "^8.0.0",
-    "@tanstack/react-query": "^4.0.5",
+    "@tanstack/react-query": "^5.101.0",
     "@tshepomgaga/aws-sfn-graph": "0.0.6",
     "angular": "~1.8.3",
     "angular-animate": "~1.8.3",
