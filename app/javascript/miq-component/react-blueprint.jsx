@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
 import { Provider } from 'react-redux';
 
 export default (ReactElement, mapPropsToInteract = () => undefined) => {
@@ -10,11 +11,17 @@ export default (ReactElement, mapPropsToInteract = () => undefined) => {
       root = createRoot(container);
       roots.set(container, root);
     }
-    root.render(
-      <Provider store={ManageIQ.redux.store}>
-        <ReactElement {...props} />
-      </Provider>
-    );
+    // Currently, the async render vs layout calculation race condition has only been
+    // observed in HAML forms that embed React components (e.g. Edit Catalog Item).
+    // This flushSync wrapper ensures synchronous rendering as a compatibility workaround
+    // and can likely be removed once these types of forms are fully converted to React
+    flushSync(() => {
+      root.render(
+        <Provider store={ManageIQ.redux.store}>
+          <ReactElement {...props} />
+        </Provider>
+      );
+    });
   }
 
   return {
