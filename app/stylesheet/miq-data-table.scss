@@ -240,6 +240,17 @@
   }
 }
 
+.prov-configured-system-grid-data-table {
+  table {
+    tr {
+      td, th {
+        font-size: 0.70rem; // 12px
+        padding: 0.50rem;
+      }
+    }
+  }
+}
+
 .requests-table {
   .miq-data-table {
     .cds--data-table--sticky-header thead, .cds--data-table--sticky-header tbody, .cds--data-table--sticky-header tr, .cds--data-table--sticky-header th, .cds--data-table--sticky-header td {
