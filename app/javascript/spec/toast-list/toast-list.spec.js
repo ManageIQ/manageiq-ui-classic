@@ -1,11 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import ToastList from '../../components/toast-list/toast-list';
 import { MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-actions';
+import { makeStore } from '../helpers/makeStore';
 import notifications from '../fixtures/notifications.json';
 
 describe('Toast list tests', () => {
@@ -19,7 +18,6 @@ describe('Toast list tests', () => {
       maxNotifications: 100,
     },
   };
-  const mockStore = configureStore([thunk]);
 
   afterEach(() => {
     fetchMock.reset();
@@ -27,7 +25,7 @@ describe('Toast list tests', () => {
   });
 
   it('should render correctly with notifications', () => {
-    const store = mockStore({ ...initialState });
+    const store = makeStore((state = {}) => state, initialState);
     const { container } = render(
       <Provider store={store}>
         <ToastList />
@@ -37,7 +35,7 @@ describe('Toast list tests', () => {
   });
 
   it('should not render without notifications', () => {
-    const store = mockStore({
+    const store = makeStore((state = {}) => state, {
       ...initialState,
       notificationReducer: {
         ...initialState.notificationReducer,
@@ -61,7 +59,7 @@ describe('Toast list tests', () => {
       action: 'mark_all_seen',
       resources: [{ id: '10000000003624' }],
     });
-    const store = mockStore(initialState);
+    const store = makeStore((state = {}) => state, initialState);
     const { container } = render(
       <Provider store={store}>
         <ToastList />

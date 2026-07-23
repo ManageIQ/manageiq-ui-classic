@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Loading, ModalBody } from '@carbon/react';
 import { API } from '../http_api';
 import miqRedirectBack from '../helpers/miq-redirect-back';
@@ -101,20 +101,19 @@ export const removeItems = (items, force, {
     });
 };
 
-class RemoveGenericItemModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      loaded: false,
-      force: false,
-    };
-  }
+function RemoveGenericItemModal({
+  recordId = null,
+  gridChecks = null,
+  modalData,
+}) {
+  const dispatch = useDispatch();
+  const [data, setData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [force, setForce] = useState(false);
 
-  componentDidMount() {
-    const {
-      recordId, gridChecks, modalData, dispatch,
-    } = this.props;
+  const isSafeDeleteSupported = (items) => items.filter((i) => !i.supports_safe_delete).length === 0;
+
+  useEffect(() => {
     const itemsIds = gridChecks && Array.isArray(gridChecks) && gridChecks.length > 0 ? _.uniq(gridChecks) : [recordId];
     const {
       ajax_reload,
@@ -126,11 +125,10 @@ class RemoveGenericItemModal extends React.Component {
     } = modalData;
 
     let transformFn = apiTransformFunctions.default;
-
     if (modalData.transform_fn) {
       transformFn = apiTransformFunctions[modalData.transform_fn];
     }
-    // Load modal data from API
+
     let extra_attributes = '';
     if (modalData.try_safe_delete) {
       extra_attributes += '/?attributes=supports_safe_delete';
@@ -138,24 +136,32 @@ class RemoveGenericItemModal extends React.Component {
 
     Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}${extra_attributes}`)))
       .then((apiData) => apiData.map((item) => transformFn(item, { display_field })))
-      .then((data) => this.setState({
-        data,
-        force: !this.isSafeDeleteSupported(data),
-        loaded: true,
-      }))
-      .then(() => dispatch({
-        type: 'FormButtons.saveable',
-        payload: true,
-      }));
+      .then((loadedData) => {
+        setData(loadedData);
+        setForce(!isSafeDeleteSupported(loadedData));
+        setLoaded(true);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    // Buttons setup
+  // Re-register the delete button handler whenever data or force changes so
+  // addClicked always closes over the up-to-date loaded values, not the initial state.
+  useEffect(() => {
+    const {
+      ajax_reload,
+      api_url,
+      async_delete,
+      redirect_url,
+      tree_select,
+    } = modalData;
+
     dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        // eslint-disable-next-line react/destructuring-assignment
-        addClicked: () => removeItems(this.state.data, this.state.force, {
+        customLabel: __('Delete'),
+        addClicked: () => removeItems(data, force, {
           ajaxReload: ajax_reload,
           apiUrl: api_url,
           asyncDelete: async_delete,
@@ -164,82 +170,64 @@ class RemoveGenericItemModal extends React.Component {
         }),
       },
     });
-    dispatch({
-      type: 'FormButtons.customLabel',
-      payload: __('Delete'),
-    });
-  }
+    if (data.length > 0) {
+      dispatch({ type: 'FormButtons.saveable', payload: true });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, force]);
 
-  // eslint-disable-next-line class-methods-use-this
-  isSafeDeleteSupported(data) {
-    return data.filter((i) => !i.supports_safe_delete).length === 0;
-  }
+  // eslint-disable-next-line consistent-return
+  const renderSpinner = (spinnerOn) => {
+    if (spinnerOn) {
+      return (
+        <div className="loadingSpinner">
+          <Loading active small withOverlay={false} className="loading" />
+        </div>
+      );
+    }
+  };
 
-  render() {
-    // eslint-disable-next-line consistent-return
-    const renderSpinner = (spinnerOn) => {
-      if (spinnerOn) {
-        return (
-          <div className="loadingSpinner">
-            <Loading active small withOverlay={false} className="loading" />
-          </div>
-        );
-      }
-    };
-    const { modalData } = this.props;
-    const { loaded, data, force } = this.state;
-    return (
-      <ModalBody className="warning-modal-body">
-        {renderSpinner(!loaded)}
-        {loaded
-          && (
-            <div>
-              <h4>{__(modalData.modal_text)}</h4>
-              <ul>
-                {data.map((item) => (
-                  <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
-                ))}
-              </ul>
-            </div>
-          )}
-        {modalData.try_safe_delete
+  return (
+    <ModalBody className="warning-modal-body">
+      {renderSpinner(!loaded)}
+      {loaded
         && (
-          <label htmlFor="forceCheckbox">
-            <input
-              name="force"
-              type="checkbox"
-              id="forceCheckbox"
-              checked={force}
-              onChange={() => {
-                this.setState({
-                  force: !force,
-                });
-              }}
-              disabled={!this.isSafeDeleteSupported(data)}
-              data-toggle="tooltip"
-              title={this.isSafeDeleteSupported(data)
-                ? ''
-                : `Some of the items only support force-delete: ${
-                  data.filter((i) => !i.supports_safe_delete).map((i) => i.name)}`}
-            />
-          &nbsp; Force Delete?
-          </label>
+          <div>
+            <h4>{__(modalData.modal_text)}</h4>
+            <ul>
+              {data.map((item) => (
+                <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
+              ))}
+            </ul>
+          </div>
         )}
-      </ModalBody>
-    );
-  }
+      {modalData.try_safe_delete
+      && (
+        <label htmlFor="forceCheckbox">
+          <input
+            name="force"
+            type="checkbox"
+            id="forceCheckbox"
+            checked={force}
+            onChange={() => setForce((prev) => !prev)}
+            disabled={!isSafeDeleteSupported(data)}
+            data-toggle="tooltip"
+            title={isSafeDeleteSupported(data)
+              ? ''
+              : `Some of the items only support force-delete: ${
+                data.filter((i) => !i.supports_safe_delete).map((i) => i.name)}`}
+          />
+        &nbsp; Force Delete?
+        </label>
+      )}
+    </ModalBody>
+  );
 }
 
 RemoveGenericItemModal.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   recordId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   gridChecks: PropTypes.arrayOf(PropTypes.any),
   modalData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-RemoveGenericItemModal.defaultProps = {
-  recordId: null,
-  gridChecks: null,
-};
-
-export default connect()(RemoveGenericItemModal);
+export default RemoveGenericItemModal;

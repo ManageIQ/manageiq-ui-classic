@@ -1,10 +1,23 @@
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import FormButtons from './form-buttons';
 
 function FormButtonsRedux({ callbackOverrides = {}, ...props }) {
-  return <FormButtons callbackOverrides={callbackOverrides} {...props} />;
+  const formButtonsState = useSelector((state) => state.FormButtons);
+
+  const stateProps = { ...formButtonsState };
+
+  if (formButtonsState && callbackOverrides) {
+    Object.keys(callbackOverrides).forEach((name) => {
+      stateProps[name] = () => {
+        const origHandler = formButtonsState[name];
+        callbackOverrides[name](origHandler);
+      };
+    });
+  }
+
+  return <FormButtons callbackOverrides={callbackOverrides} {...stateProps} {...props} />;
 }
 
 FormButtonsRedux.propTypes = {
@@ -16,21 +29,4 @@ FormButtonsRedux.propTypes = {
   }),
 };
 
-function mapStateToProps(state, ownProps) {
-  const props = { ...state.FormButtons };
-
-  if (state.FormButtons && ownProps.callbackOverrides) {
-    // allow overriding click handlers
-    // the original handler is passed as the only argument to the new one
-    Object.keys(ownProps.callbackOverrides).forEach((name) => {
-      props[name] = () => {
-        const origHandler = state.FormButtons[name];
-        ownProps.callbackOverrides[name](origHandler);
-      };
-    });
-  }
-
-  return props;
-}
-
-export default connect(mapStateToProps)(FormButtonsRedux);
+export default FormButtonsRedux;

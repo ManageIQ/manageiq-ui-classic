@@ -1,4 +1,4 @@
-import configureStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 
@@ -16,10 +16,13 @@ describe('Breadcrumbs component', () => {
     controllerName: 'provider',
   };
 
-  const store = configureStore()({
-    notificationReducer: {
-      unreadCount: 0,
-      isDrawerVisible: false,
+  const store = configureStore({
+    reducer: (state = {}) => state,
+    preloadedState: {
+      notificationReducer: {
+        unreadCount: 0,
+        isDrawerVisible: false,
+      },
     },
   });
 

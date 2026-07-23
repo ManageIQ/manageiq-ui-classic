@@ -1,14 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 import MiqCustomTab from '../../components/miq-custom-tab';
 
 let store;
 
 describe('MiqCustomTab component', () => {
   beforeEach(() => {
-    store = configureStore()({
-      miqCustomTabReducer: 0,
+    store = configureStore({
+      reducer: (state = {}) => state,
+      preloadedState: { miqCustomTabReducer: 0 },
     });
   });
 

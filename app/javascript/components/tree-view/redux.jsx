@@ -1,6 +1,6 @@
 /* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check", "silent_activate", "select_node"]}] */
 import { useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tree, Node } from 'react-wooden-tree';
 
@@ -14,6 +14,7 @@ import {
 import { nodeCheckedWithDirty } from './reducers/helpers';
 
 const TreeView = (props) => {
+  const dispatch = useDispatch();
   const {
     tree_name,
     bs_tree,
@@ -30,8 +31,8 @@ const TreeView = (props) => {
   } = props;
 
   const namespace = tree_name;
-  const ConnectedNode = connect((store, ownProps) => ({ ...store[namespace][ownProps.nodeId] }))(Node);
-  const ReduxTree = connect((store) => ({ data: { ...store[namespace] } }))(Tree);
+  const namespaceData = useSelector((store) => store[namespace]);
+  const nodeData = useSelector((store) => store[namespace] || {});
 
   const getData = useCallback(() => {
     // FIXME: This check if the reducer exists is not ideal, but it is needed
@@ -66,8 +67,8 @@ const TreeView = (props) => {
     const tree = activateNode(convert(JSON.parse(bs_tree), (node) => node.state.checked,
       (node) => node.state.selected), silent_activate, select_node);
 
-    callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
-    callBack(null, ACTIONS.ADD_NODES, tree, namespace);
+    dispatch(callBack(null, ACTIONS.EMPTY_TREE, null, namespace));
+    dispatch(callBack(null, ACTIONS.ADD_NODES, tree, namespace));
   }, [bs_tree]);
 
   const onDataChange = (commands) => {
@@ -95,7 +96,7 @@ const TreeView = (props) => {
         }
       }
 
-      callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace);
+      dispatch(callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace));
     });
   };
 
@@ -128,8 +129,15 @@ const TreeView = (props) => {
     }).catch((error) => reject(error));
   });
 
+  // ConnectedNode and ReduxTree are built as render functions using the selected
+  // slice of store state, avoiding the anti-pattern of calling connect() inside render.
+  const ConnectedNode = ({ nodeId, ...rest }) => {
+    const nodeProps = useSelector((store) => ({ ...(store[namespace] && store[namespace][nodeId]) }));
+    return <Node nodeId={nodeId} {...nodeProps} {...rest} />;
+  };
+
   return (
-    <ReduxTree
+    <Tree
       nodeIcon=""
       expandIcon="fa fa-fw fa-angle-right"
       collapseIcon="fa fa-fw fa-angle-down"
@@ -144,6 +152,7 @@ const TreeView = (props) => {
       allowReselect={allow_reselect}
       callbacks={{ onDataChange, lazyLoad }}
       hierarchicalCheck={hierarchical_check}
+      data={{ ...nodeData }}
       {...props}
     />
   );
@@ -164,6 +173,9 @@ TreeView.propTypes = {
   select_node: PropTypes.string,
 };
 
-const TreeViewRedux = connect(null, { callBack })(TreeView);
+const TreeViewRedux = (props) => {
+  const dispatch = useDispatch();
+  return <TreeView {...props} callBack={(...args) => dispatch(callBack(...args))} />;
+};
 
 export default TreeViewRedux;
