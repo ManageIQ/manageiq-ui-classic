@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import { modifyAssignedTags as assignedTags, toggle as selected, tags, initialize, affectedItems } from './reducers';
 
 const combinedReducers = combineReducers({
