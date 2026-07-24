@@ -2,17 +2,19 @@ module PodRemote
   extend ActiveSupport::Concern
 
   def kube_exec_console
-    params[:task_id] ? console_after_task('kube_exec') : console_before_task('kube_exec')
+    params[:task_id] ? console_after_task('kube_exec') : console_before_task('kube_exec', params[:container])
   end
 
   private
 
   # Mirrors VmRemote#console_before_task — provider/protocol name comes from the caller, not hardcoded here
-  def console_before_task(console_type)
+  def console_before_task(console_type, container_name = nil)
     ticket_type = console_type.to_sym
     record = identify_record(params[:id], ContainerGroup)
 
-    task_id = record.remote_console_acquire_ticket_queue(ticket_type, session[:userid])
+    container_id = container_name.present? ? record.containers.find_by(:name => container_name)&.id : nil
+
+    task_id = record.remote_console_acquire_ticket_queue(ticket_type, session[:userid], container_id)
 
     if task_id.kind_of?(Integer)
       render :json => {:task_id => task_id}

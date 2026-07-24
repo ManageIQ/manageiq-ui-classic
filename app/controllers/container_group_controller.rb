@@ -21,9 +21,9 @@ class ContainerGroupController < ApplicationController
 
   def button
     case params[:pressed]
-    when "container_group_terminal"
+    when "container_group_console"
       javascript_redirect(
-        :action => "terminal",
+        :action => "console",
         :id     => params[:id]
       )
     else
@@ -31,11 +31,11 @@ class ContainerGroupController < ApplicationController
     end
   end
 
-  def terminal
+  def console
     @record = identify_record(params[:id], ContainerGroup)
     drop_breadcrumb(
-      :name => _("Terminal"),
-      :url  => "/container_group/terminal/#{@record.id}"
+      :name => _("Container Group Console"),
+      :url  => "/container_group/console/#{@record.id}"
     )
   end
 
