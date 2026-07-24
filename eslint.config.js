@@ -25,7 +25,7 @@ module.exports = [
   },
   {
     // Config files (Node.js environment)
-    files: ['.babelrc.js', 'jest.config.js', 'cypress.config.js', 'eslint.config.js', 'config/webpack/**/*.js'],
+    files: ['.babelrc.js', 'jest.config.js', 'cypress.config.js', 'eslint.config.js', 'config/webpack/**/*.js', 'config/jest.polyfills.js', 'config/jest.setup.js'],
     plugins: {
       import: importPlugin,
     },
@@ -730,6 +730,8 @@ module.exports = [
       'cypress.config.js',
       'eslint.config.js',
       'config/webpack/**/*.js',
+      'config/jest.polyfills.js',
+      'config/jest.setup.js',
       'cypress/**/*.js',
       '.yarn/**',
     ],

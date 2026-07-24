@@ -1,7 +1,7 @@
-import configureStore from 'redux-mock-store';
+import { configureStore } from 'redux-mock-store';
 import createReduxRoutingActions from '../../miq-redux/redux-router-actions';
 import createMiddlewares from '../../miq-redux/middleware';
-import { history } from '../../miq-component/react-history.js';
+import { history } from '../../miq-component/react-history';
 
 describe('Redux routing actions', () => {
   const mockStore = configureStore(createMiddlewares(history));

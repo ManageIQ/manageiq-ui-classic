@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createReducer from './reducer';
 import createMiddlewares from './middleware';
-import { history, onRouteChange } from '../miq-component/react-history.js';
+import { history, onRouteChange } from '../miq-component/react-history';
 
 import { notificationReducer } from './notification-reducer';
 import formButtonsReducer from '../forms/form-buttons-reducer';
