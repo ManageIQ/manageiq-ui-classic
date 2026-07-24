@@ -72,6 +72,9 @@ class MiqAeClassController < ApplicationController
     drop_breadcrumb(:name => bc_name, :url => "/miq_ae_class/explorer")
     @lastaction = "replace_right_cell"
 
+    # Reset to root when accessing from sidebar with id=root
+    self.x_node = "root" if params[:id] == "root"
+
     build_accordions_and_trees
 
     @right_cell_text ||= _("Datastore")
