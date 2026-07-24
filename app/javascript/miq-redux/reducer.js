@@ -16,9 +16,9 @@ function rootReducer(state) {
  * Reducer that tracks the current router location in Redux state.
  * Listens for ROUTER_LOCATION_CHANGE actions dispatched by the router middleware.
  */
-function routerReducer(state = { location: null }, action) {
+function routerReducer(state = { action: null, location: null }, action) {
   if (action.type === '@@router/LOCATION_CHANGE') {
-    return { ...state, location: action.payload.location };
+    return { ...state, action: action.payload.action, location: action.payload.location };
   }
   return state;
 }
