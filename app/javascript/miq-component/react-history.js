@@ -1,4 +1,4 @@
-import { UNSAFE_createHashHistory } from 'react-router';
+import { UNSAFE_createHashHistory as createHashHistory } from 'react-router';
 
 /**
  * Creates a history object for client-side hash-based browsing.
@@ -7,7 +7,7 @@ import { UNSAFE_createHashHistory } from 'react-router';
  *
  * router documentation: https://reactrouter.com
  */
-export const history = UNSAFE_createHashHistory({ v5Compat: true });
+export const history = createHashHistory({ v5Compat: true });
 
 /**
  * react-router v7's history only accepts a single active listener.

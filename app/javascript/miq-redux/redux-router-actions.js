@@ -1,5 +1,3 @@
-import { history } from '../miq-component/react-history.js';
-
 const createReduxRoutingActions = ({ dispatch }) => ({
   push: (where) => dispatch({ type: '@@router/NAVIGATE', payload: { method: 'push', args: [where] } }),
   replace: (where) => dispatch({ type: '@@router/NAVIGATE', payload: { method: 'replace', args: [where] } }),

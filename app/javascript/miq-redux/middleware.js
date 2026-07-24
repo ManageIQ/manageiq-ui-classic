@@ -7,7 +7,6 @@ const createRouterMiddleware = (history) => (_store) => (next) => (action) => {
   if (action.type === '@@router/NAVIGATE') {
     const { method, args } = action.payload;
     history[method](...args);
-    return;
   }
   return next(action);
 };

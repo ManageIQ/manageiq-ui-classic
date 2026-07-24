@@ -1,7 +1,7 @@
 import { flatten } from './search';
 import { onRouteChange } from '../miq-component/react-history';
 
-const unsetActive = menu => menu.map(item => ({
+const unsetActive = (menu) => menu.map((item) => ({
   ...item,
   active: false,
   items: item.items && unsetActive(item.items),
@@ -29,7 +29,9 @@ export const updateActiveItem = (_update) => {
   }
 
   current.item.active = true;
-  current.parents.forEach(p => { p.active = true });
+  current.parents.forEach((p) => {
+    p.active = true;
+  });
 
   setMenu(deactivated);
 };
