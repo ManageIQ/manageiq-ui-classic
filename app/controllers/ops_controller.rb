@@ -504,7 +504,6 @@ class OpsController < ApplicationController
         action_url = "settings_update"
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_cancel] = true
-        locals[:serialize] = true if @sb[:active_tab] == "settings_advanced"
       end
     elsif x_active_tree == :rbac_tree
       if %w[rbac_user_add rbac_user_copy rbac_user_edit].include?(@sb[:action])
