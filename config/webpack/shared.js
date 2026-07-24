@@ -30,7 +30,6 @@ const sharedPackages = [
   'react',
   'react-dom',
   'react-redux',
-  'react-router',
   'redux',
 ];
 
@@ -131,17 +130,6 @@ module.exports = {
 
   plugins,
 
-  // Suppress "Critical dependency: the request of a dependency is an expression" warnings
-  // from react-router's SSR/framework code paths (clientLoader, clientAction, etc.).
-  // Those dynamic require() calls are already marked /* webpackIgnore: true */ for Webpack 5+
-  // but Webpack 4 doesn't support that hint and still emits the warning. They are dead code
-  // in this project.
-  stats: {
-    warningsFilter: [
-      /Critical dependency.*request of a dependency is an expression/,
-    ],
-  },
-
   optimization: {
     runtimeChunk: 'single',
     splitChunks: {
@@ -170,9 +158,6 @@ module.exports = {
   resolve: {
     alias: {
       ...sharedPackages.reduce((acc, pkg) => ({ ...acc, [pkg]: resolveModule(pkg) }), {}),
-      // Point directly at the pre-transpiled CJS build so Webpack 4 never resolves the
-      // .mjs entry (which contains modern ESM syntax webpack 4 cannot parse).
-      'react-router': resolveModule('react-router', 'dist', 'development', 'index.js'),
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
       '@patternfly/patternfly': resolveModule('NONEXISTENT'),
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
