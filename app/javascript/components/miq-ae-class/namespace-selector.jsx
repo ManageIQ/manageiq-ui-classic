@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button, TextInput } from '@carbon/react';
 import { Close, TreeViewAlt } from '@carbon/react/icons';
 import { useFieldApi } from '@@ddf';
-import { http } from '../../http_api';
 import NamespaceTreeModal from './namespace-tree-modal';
 import './miq-ae-class.scss';
 
@@ -14,32 +13,18 @@ const NamespaceSelector = (props) => {
   const { input } = useFieldApi(props);
   const [textValue, setTextValue] = useState(input.value || '');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [treeData, setTreeData] = useState(null);
-  const [isLoadingTree, setIsLoadingTree] = useState(false);
 
   const handleTreeSelect = () => {
-    // Fetch tree data and open modal
-    setIsLoadingTree(true);
-    http.post('/miq_ae_class/automate_tree_data')
-      .then((data) => {
-        setTreeData(data);
-        setIsModalOpen(true);
-        setIsLoadingTree(false);
-      })
-      .catch((error) => {
-        const errorMessage = error.response?.data?.error || error.message || __('Error loading tree data');
-        add_flash(errorMessage, 'error');
-        setIsLoadingTree(false);
-      });
+    setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleModalApply = (namespacePath) => {
-    setTextValue(namespacePath);
-    input.onChange(namespacePath);
+  const handleModalApply = ({ displayPath, fqname }) => {
+    setTextValue(displayPath);
+    input.onChange(fqname);
   };
 
   const handleRemove = () => {
@@ -74,7 +59,6 @@ const NamespaceSelector = (props) => {
               hasIconOnly
               onClick={handleTreeSelect}
               kind="secondary"
-              disabled={isLoadingTree}
             />
             <Button
               renderIcon={Close}
@@ -92,7 +76,6 @@ const NamespaceSelector = (props) => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         onApply={handleModalApply}
-        treeData={treeData}
         entryPoint="Namespace"
       />
     </>
