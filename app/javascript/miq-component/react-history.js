@@ -1,13 +1,12 @@
-import { UNSAFE_createHashHistory as createHashHistory } from 'react-router';
+import { createHashHistory } from 'history';
 
 /**
  * Creates a history object for client-side hash-based browsing.
- * v5Compat:true ensures the listen() callback fires on push/replace as well as pop,
- * and passes the { action, location } update object that components expect.
  *
- * router documentation: https://reactrouter.com
+ * Uses the `history` package directly (stable public API) rather than
+ * react-router's internal UNSAFE_createHashHistory.
  */
-export const history = createHashHistory({ v5Compat: true });
+export const history = createHashHistory();
 
 /**
  * react-router v7's history only accepts a single active listener.
