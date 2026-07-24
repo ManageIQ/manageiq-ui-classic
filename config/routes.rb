@@ -679,12 +679,11 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         perf_top_chart
-        pod_ls
         show
         show_list
         tagging_edit
         protect
-        terminal
+        console
         kube_exec_console
       ],
       :post => %w[
