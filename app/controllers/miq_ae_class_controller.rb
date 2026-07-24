@@ -299,8 +299,9 @@ class MiqAeClassController < ApplicationController
     reload_trees_by_presenter(presenter, trees)
 
     if @sb[:action] == "miq_ae_field_seq"
-      @sb[:active_tab] = 'schema'
-      presenter.update(:main_div, r[:partial => 'all_tabs'])
+      @right_cell_text = _("Edit of Class Schema Sequence '%{name}'") % {:name => @ae_class.name}
+      presenter[:right_cell_text] = @right_cell_text
+      presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
 
     elsif @sb[:action] == "miq_ae_domain_priority_edit"
       @domain_order = ordered_domains_for_priority_edit_screen
@@ -492,10 +493,13 @@ class MiqAeClassController < ApplicationController
     else
       @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     end
-    fields_set_form_vars
+    @combo_xml = build_type_options
+    @dtype_combo_xml = build_dtype_options
+    @right_cell_text = _("Editing Class Schema \"%{name}\"") % {:name => @ae_class.name}
     @in_a_form = true
     @in_a_form_fields = true
-    session[:changed] = @changed = false
+    @react_form = true
+    @hide_bottom_bar = true
     replace_right_cell
   end
 
@@ -718,41 +722,6 @@ class MiqAeClassController < ApplicationController
   end
 
   # Set form variables for edit
-  def fields_set_form_vars
-    @in_a_form_fields = true
-    session[:field_data] = {}
-    @edit = {
-      :ae_class_id      => @ae_class.id,
-      :rec_id           => @ae_class.id,
-      :new_field        => {},
-      :key              => "aefields_edit__#{@ae_class.id || "new"}",
-      :fields_to_delete => []
-    }
-
-    @edit[:new] = {
-      :datatypes => build_dtype_options,    # setting dtype combo for adding a new field
-      :aetypes   => build_type_options      # setting aetype combo for adding a new field
-    }
-
-    @edit[:new][:fields] = @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.collect do |fld|
-      field_attributes.each_with_object({}) do |column, hash|
-        hash[column] = fld.send(column)
-      end
-    end
-
-    # combo to show existing fields
-    @combo_xml = build_type_options
-    # passing in fields because that's how many combo boxes we need
-    @dtype_combo_xml = build_dtype_options
-    @edit[:current] = copy_hash(@edit[:new])
-    @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new Class Schema")
-                       else
-                         _("Editing Class Schema \"%{name}\"") % {:name => @ae_class.name}
-                       end
-    session[:edit] = @edit
-  end
-
   # Set form variables for edit
   def set_method_form_vars
     session[:field_data] = {}
@@ -866,51 +835,6 @@ class MiqAeClassController < ApplicationController
 
     get_form_vars
     javascript_miq_button_visibility(@edit[:new] != @edit[:current])
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def fields_form_field_changed
-    assert_privileges('miq_ae_field_edit')
-    return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
-
-    fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      unless %w[up down].include?(params[:button])
-        if params[:field_datatype] == "password"
-          page << javascript_hide("field_default_value")
-          page << javascript_show("field_password_value")
-          page << "$('#field_password_value').val('');"
-          session[:field_data][:default_value] =
-            @edit[:new_field][:default_value] = ''
-        elsif params[:field_datatype]
-          page << javascript_hide("field_password_value")
-          page << javascript_show("field_default_value")
-          page << "$('#field_default_value').val('');"
-          session[:field_data][:default_value] =
-            @edit[:new_field][:default_value] = ''
-        end
-        params.each do |field, _value|
-          next unless field.to_s.starts_with?("fields_datatype")
-
-          f = field.split('fields_datatype')
-          def_field = "fields_default_value_" << f[1].to_s
-          pwd_field = "fields_password_value_" << f[1].to_s
-          if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-            page << javascript_hide(def_field)
-            page << javascript_show(pwd_field)
-            page << "$('##{pwd_field}').val('');"
-          else
-            page << javascript_hide(pwd_field)
-            page << javascript_show(def_field)
-            page << "$('##{def_field}').val('');"
-          end
-          @edit[:new][:fields][f[1].to_i]['default_value'] = nil
-        end
-      end
-      page << javascript_for_miq_button_visibility_changed(@changed)
-    end
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -1128,47 +1052,34 @@ class MiqAeClassController < ApplicationController
 
   def update_fields
     assert_privileges('miq_ae_field_edit')
-    return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
-
-    fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
+    ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     case params[:button]
     when "cancel"
-      @sb[:action] = session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
-      @in_a_form = false
-      replace_right_cell
+      message = _("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => ae_class.name}
+      render :json => {:status => 200, :message => message}
     when "save"
-      ae_class = find_record_with_rbac(MiqAeClass, params[:id])
+      fields_data = params[:fields] || []
+      fields_to_delete = params[:fields_to_delete] || []
+      old_fields = ae_class.ae_fields.sort_by(&:priority).map { |f| field_to_hash(f) }
       begin
         MiqAeClass.transaction do
-          set_field_vars(ae_class)
-          ae_class.ae_fields.destroy(MiqAeField.where(:id => @edit[:fields_to_delete]))
-          ae_class.ae_fields.each { |fld| fld.default_value = nil if fld.default_value == "" }
+          save_fields_from_params(ae_class, fields_data, fields_to_delete)
           ae_class.save!
         end
       rescue StandardError => bang
-        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
-        session[:changed] = @changed = true
-        javascript_flash
+        error_message = _("Error during 'save': %{error_message}") % {:error_message => bang.message}
+        render :json => {:status => 500, :error => error_message}
       else
-        add_flash(_("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name})
-        AuditEvent.success(build_saved_audit(ae_class, @edit))
-        @sb[:action] = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell(:replace_trees => [:ae])
-        nil
+        new_fields = ae_class.ae_fields.reload.sort_by(&:priority).map { |f| field_to_hash(f) }
+        AuditEvent.success(build_saved_audit(ae_class, :current => {:fields => old_fields}, :new => {:fields => new_fields}))
+        success_message = _("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name}
+        render :json => {:status => 200, :message => success_message}
       end
     when "reset"
-      fields_set_form_vars
-      session[:changed] = @changed = false
-      add_flash(_("All changes have been reset"), :warning)
-      @button = "reset"
-      @in_a_form = true
-      replace_right_cell
+      fields = ae_class.ae_fields.sort_by(&:priority).map { |f| field_to_hash(f) }
+      render :json => {:status => 200, :fields => fields, :message => _("All changes have been reset")}
     else
-      @changed = session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell(:replace_trees => [:ae])
+      render :json => {:status => 200}
     end
   end
 
@@ -1428,59 +1339,6 @@ class MiqAeClassController < ApplicationController
   end
 
   # AJAX driven routine to select a classification entry
-  def field_select
-    assert_privileges('miq_ae_field_edit')
-    fields_get_form_vars
-    @combo_xml = build_type_options
-    @dtype_combo_xml = build_dtype_options
-    session[:field_data] = {}
-    @edit[:new_field][:substitute] = session[:field_data][:substitute] = true
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
-  end
-
-  # AJAX driven routine to select a classification entry
-  def field_accept
-    assert_privileges('miq_ae_field_edit')
-    fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    @combo_xml = build_type_options
-    @dtype_combo_xml = build_dtype_options
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
-  end
-
-  # AJAX driven routine to delete a classification entry
-  def field_delete
-    assert_privileges('miq_ae_field_edit')
-    fields_get_form_vars
-    @combo_xml       = build_type_options
-    @dtype_combo_xml = build_dtype_options
-
-    if params.key?(:id) && @edit[:fields_to_delete].exclude?(params[:id])
-      @edit[:fields_to_delete].push(params[:id])
-    end
-
-    @edit[:new][:fields].delete_at(params[:arr_id].to_i)
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
-  end
-
-  # AJAX driven routine to select a classification entry
   def field_method_select
     assert_privileges(feature_by_action)
     get_method_form_vars
@@ -1555,76 +1413,48 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def handle_up_down_buttons(hash_key, field_name)
-    case params[:button]
-    when 'up'
-      move_selected_fields_up(@edit[:new][hash_key], params[:seq_fields], field_name)
-    when 'down'
-      move_selected_fields_down(@edit[:new][hash_key], params[:seq_fields], field_name)
+  def fields_seq_data
+    assert_privileges("miq_ae_field_seq")
+    ae_class = find_record_with_rbac(MiqAeClass, params[:id])
+    fields = ae_class.ae_fields.sort_by { |f| f.priority.to_i }.map do |field|
+      {
+        :id           => field.id,
+        :name         => field.name,
+        :display_name => field.display_name,
+        :priority     => field.priority
+      }
     end
+    render :json => {:fields => fields}
   end
 
-  # Get variables from user edit form
-  def fields_seq_field_changed
-    assert_privileges('miq_ae_field_seq')
-    return unless load_edit("fields_edit__seq", "replace_cell__explorer")
+  def fields_seq_save
+    assert_privileges("miq_ae_field_seq")
+    ae_class = find_record_with_rbac(MiqAeClass, params[:id])
+    fields_data = params[:fields] || []
 
-    unless handle_up_down_buttons(:fields_list, _('Fields'))
-      render_flash
-      return
+    old_priorities = ae_class.ae_fields.to_h { |f| [f.id, f.priority] }
+
+    indexed_ae_fields = ae_class.ae_fields.index_by(&:id)
+    fields_data.each do |field_data|
+      field = indexed_ae_fields[field_data[:id].to_i]
+      field.priority = field_data[:priority] if field
     end
 
-    render :update do |page|
-      page << javascript_prologue
-      page.replace('column_lists', :partial => 'fields_seq_form')
-      @changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(@changed) if @changed
-      page << "miqSparkle(false);"
+    if ae_class.save
+      new_priorities = ae_class.ae_fields.reload.to_h { |f| [f.id, f.priority] }
+      AuditEvent.success(build_saved_audit(ae_class, :current => {:priorities => old_priorities},
+                                                     :new     => {:priorities => new_priorities}))
+      render :json => {:success => true, :message => _("Class Schema Sequence was saved")}
+    else
+      render :json => {:success => false, :error => ae_class.errors.full_messages.join(", ")}, :status => 422
     end
   end
 
   def fields_seq_edit
     assert_privileges("miq_ae_field_seq")
-    case params[:button]
-    when "cancel"
-      @sb[:action] = session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of Class Schema Sequence was cancelled by the user"))
-      @in_a_form = false
-      replace_right_cell
-
-    when "save"
-      return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-
-      ae_class = MiqAeClass.find(@edit[:ae_class_id])
-      indexed_ae_fields = ae_class.ae_fields.index_by(&:name)
-      @edit[:new][:fields_list].each_with_index do |f, i|
-        fname = f.split('(').last.split(')').first # leave display name and parenthesis out
-        indexed_ae_fields[fname].try(:priority=, i + 1)
-      end
-
-      unless ae_class.save
-        flash_validation_errors(ae_class)
-        @in_a_form = true
-        @changed = true
-        javascript_flash
-        return
-      end
-
-      AuditEvent.success(build_saved_audit(ae_class, @edit))
-      add_flash(_("Class Schema Sequence was saved"))
-      @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
-      @in_a_form = false
-      replace_right_cell
-
-    when "reset", nil # Reset or first time in
-      id = params[:id] || @edit[:ae_class_id]
-      @in_a_form = true
-      fields_seq_edit_screen(id)
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell
-    end
+    @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
+    @sb[:action] = "miq_ae_field_seq"
+    replace_right_cell
   end
 
   def domains_priority_edit
@@ -2257,9 +2087,9 @@ class MiqAeClassController < ApplicationController
   end
 
   def field_attributes
-    %w[aetype class_id collect datatype default_value description
-       display_name id max_retries max_time message name on_entry
-       on_error on_exit priority substitute]
+    %w[aetype collect datatype default_value description
+       display_name max_retries max_time message name on_entry
+       on_error on_exit substitute]
   end
 
   def row_selected_in_grid?
@@ -2273,63 +2103,46 @@ class MiqAeClassController < ApplicationController
   end
   helper_method :playbook_style_location?
 
-  # Get variables from edit form
-  def fields_get_form_vars
-    @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
-    @in_a_form = true
-    @in_a_form_fields = true
-    if params[:item].blank? && !%w[accept save].include?(params[:button]) && params["action"] != "field_delete"
-      field_data = session[:field_data]
-      new_field = @edit[:new_field]
+  def field_to_hash(field)
+    {
+      :id            => field.id,
+      :name          => field.name,
+      :aetype        => field.aetype,
+      :datatype      => field.datatype,
+      :default_value => field.default_value,
+      :display_name  => field.display_name,
+      :description   => field.description,
+      :substitute    => field.substitute,
+      :collect       => field.collect,
+      :message       => field.message,
+      :on_entry      => field.on_entry,
+      :on_exit       => field.on_exit,
+      :on_error      => field.on_error,
+      :max_retries   => field.max_retries,
+      :max_time      => field.max_time,
+      :priority      => field.priority,
+    }
+  end
 
-      field_attributes.each do |field|
-        field_name = "field_#{field}".to_sym
-        field_sym = field.to_sym
-        if field == "substitute"
-          field_data[field_sym] = new_field[field_sym] = params[field_name] == "1" if params[field_name]
-        elsif params[field_name]
-          field_data[field_sym] = new_field[field_sym] = params[field_name]
-        end
-      end
+  # fields_data — array of field hashes from params[:fields]
+  # fields_to_delete — array of DB ids to destroy, from params[:fields_to_delete]
+  def save_fields_from_params(ae_class, fields_data, fields_to_delete)
+    ae_class.ae_fields.destroy(MiqAeField.where(:id => fields_to_delete))
 
-      field_data[:default_value] = new_field[:default_value] = params[:field_password_value] if params[:field_password_value]
-      new_field[:priority] = 1
-      @edit[:new][:fields].each_with_index do |flds, i|
-        if i == @edit[:new][:fields].length - 1
-          new_field[:priority] = flds['priority'].nil? ? 1 : flds['priority'].to_i + 1
-        end
-      end
-      new_field[:class_id] = @ae_class.id
+    indexed = ae_class.ae_fields.reload.index_by(&:id)
+    fields_data.each_with_index do |fld, i|
+      field = fld[:id].present? ? (indexed[fld[:id].to_i] || MiqAeField.new) : MiqAeField.new
+      field.class_id = ae_class.id if field.new_record?
+      field_attributes.each do |attr|
 
-      @edit[:new][:fields].each_with_index do |fld, i|
-        field_attributes.each do |field|
-          field_name = "fields_#{field}_#{i}"
-          if field == "substitute"
-            fld[field] = params[field_name] == "1" if params[field_name]
-          elsif %w[aetype datatype].include?(field)
-            var_name = "fields_#{field}#{i}"
-            fld[field] = params[var_name.to_sym] if params[var_name.to_sym]
-          elsif field == "default_value"
-            fld[field] = params[field_name] if params[field_name]
-            fld[field] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
-          elsif params[field_name]
-            fld[field] = params[field_name]
-          end
-        end
+        value = fld[attr.to_sym]
+        next if value.nil?
+
+        value = nil if value == "" && attr != "substitute"
+        field.send("#{attr}=", value)
       end
-    elsif params[:button] == "accept"
-      if session[:field_data][:name].blank? || session[:field_data][:aetype].blank?
-        field = session[:field_data][:name].blank? ? "Name" : "Type"
-        field += " and Type" if field == "Name" && session[:field_data][:aetype].blank?
-        add_flash(_("%{field} is required") % {:field => field}, :error)
-        return
-      end
-      new_fields = {}
-      field_attributes.each do |field_attribute|
-        new_fields[field_attribute] = @edit[:new_field][field_attribute.to_sym]
-      end
-      @edit[:new][:fields].push(new_fields)
-      @edit[:new_field] = session[:field_data] = {}
+      field.priority = i + 1
+      field.save!
     end
   end
 
@@ -2487,8 +2300,9 @@ class MiqAeClassController < ApplicationController
       end
 
       field_attributes.each do |attr|
-        if attr == "substitute" || @edit[:new][:fields][i][attr]
-          new_field.send("#{attr}=", @edit[:new][:fields][i][attr])
+        value = @edit[:new][:fields][i][attr]
+        if attr == "substitute" || @edit[:new][:fields][i].key?(attr)
+          new_field.send("#{attr}=", value)
         end
       end
       if new_field.new_record? || parent.nil?
@@ -2539,91 +2353,6 @@ class MiqAeClassController < ApplicationController
       value_column_names.each do |attr|
         v.send("#{attr}=", @edit[:new][:ae_values][i][attr]) if @edit[:new][:ae_values][i][attr]
       end
-    end
-  end
-
-  def fields_seq_edit_screen(id)
-    @edit = {}
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @ae_class = MiqAeClass.find_by(:id => id)
-    @edit[:rec_id] = @ae_class.try(:id)
-    @edit[:ae_class_id] = @ae_class.id
-    @edit[:new][:fields] = @ae_class.ae_fields.to_a.deep_clone
-    @edit[:new][:fields_list] = @edit[:new][:fields]
-                                .sort_by { |f| f.priority.to_i }
-                                .collect { |f| f.display_name ? "#{f.display_name} (#{f.name})" : "(#{f.name})" }
-    @edit[:key] = "fields_edit__seq"
-    @edit[:current] = copy_hash(@edit[:new])
-    @right_cell_text = _("Edit of Class Schema Sequence '%{name}'") % {:name => @ae_class.name}
-    session[:edit] = @edit
-  end
-
-  def move_selected_fields_up(available_fields, selected_fields, display_name)
-    if no_items_selected?(selected_fields)
-      add_flash(_("No %{name} were selected to move up") % {:name => display_name}, :error)
-      return false
-    end
-
-    consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
-    @selected = selected_fields
-
-    if consecutive
-      if first_idx.positive?
-        available_fields[first_idx..last_idx].reverse_each do |field|
-          pulled = available_fields.delete(field)
-          available_fields.insert(first_idx - 1, pulled)
-        end
-      end
-      return true
-    end
-
-    add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
-    false
-  end
-
-  def move_selected_fields_down(available_fields, selected_fields, display_name)
-    if no_items_selected?(selected_fields)
-      add_flash(_("No %{name} were selected to move down") % {:name => display_name}, :error)
-      return false
-    end
-
-    consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
-    @selected = selected_fields
-
-    if consecutive
-      if last_idx < available_fields.length - 1
-        insert_idx = last_idx + 1 # Insert before the element after the last one
-        insert_idx = -1 if last_idx == available_fields.length - 2 # Insert at end if 1 away from end
-        available_fields[first_idx..last_idx].each do |field|
-          pulled = available_fields.delete(field)
-          available_fields.insert(insert_idx, pulled)
-        end
-      end
-      return true
-    end
-
-    add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
-    false
-  end
-
-  def no_items_selected?(field_name)
-    field_name.blank? || field_name[0] == ""
-  end
-
-  def selected_consecutive?(available_fields, selected_fields)
-    first_idx = last_idx = 0
-    available_fields.each_with_index do |nf, idx|
-      first_idx = idx if nf == selected_fields.first
-      if nf == selected_fields.last
-        last_idx = idx
-        break
-      end
-    end
-    if last_idx - first_idx + 1 > selected_fields.length
-      [false, first_idx, last_idx]
-    else
-      [true, first_idx, last_idx]
     end
   end
 
