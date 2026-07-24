@@ -115,7 +115,7 @@
 - if role_allows?(:feature => 'miq_request_show_logs') && @miq_request.request_logs.any?
   %h3
     = _("Request Logs")
-    = react('RequestsTable', {:initialData => @miq_request.request_logs})
+    = react('RequestsTable', {:initialData => @miq_request.request_logs, :userId => current_user.id.to_s})
   %br
 - if @miq_request.workflow_class
   = render :partial => "prov_wf", :locals => {:wf => @miq_request.workflow_class.new({:src_vm_id => @miq_request.source_id}, current_user), :show => true}
