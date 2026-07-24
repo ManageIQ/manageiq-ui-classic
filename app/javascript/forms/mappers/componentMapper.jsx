@@ -15,6 +15,8 @@ import EmbeddedAutomateEntryPoint from '../../components/embedded-automate-entry
 import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry-point';
 import SelectedGroupsList from '../../components/selected-groups-list';
 import SortableList from '../../components/sortable-list';
+import NamespaceSelector from '../../components/miq-ae-class/namespace-selector';
+import SelectedItemsTable from '../../components/miq-ae-class/selected-items-table';
 
 const mapper = {
   ...componentMapper,
@@ -28,6 +30,8 @@ const mapper = {
   'validate-credentials': AsyncCredentials,
   'selected-groups-list': SelectedGroupsList,
   'sortable-list': SortableList,
+  'namespace-selector': NamespaceSelector,
+  'selected-items-table': SelectedItemsTable,
   'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,
   'font-icon-picker': FontIconPicker,
