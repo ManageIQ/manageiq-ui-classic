@@ -12,16 +12,4 @@ module ChartingHelper
     end
   end
 
-  def chart_no_url(options)
-    case ManageIQ::Reporting::Charting.backend
-    when :c3 then content_tag(:div, '', :id => options[:id])
-    end
-  end
-
-  # if it can then fix app/views/dashboard/_widget_chart.html.erb
-  def chart_local(data, options)
-    case ManageIQ::Reporting::Charting.backend
-    when :c3 then c3chart_local(data, options.slice(:id))
-    end
-  end
 end
