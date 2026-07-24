@@ -44,14 +44,14 @@ describe('Redux routing actions', () => {
 
   it('Should dispatch goBack action', () => {
     const { goBack } = createReduxRoutingActions(store);
-    expectedPayload.payload = { method: 'back', args: [] };
+    expectedPayload.payload = { method: 'go', args: [-1] };
     goBack();
     expect(dispatchSpy).toHaveBeenCalledWith(expectedPayload);
   });
 
   it('Should dispatch goForward action', () => {
     const { goForward } = createReduxRoutingActions(store);
-    expectedPayload.payload = { method: 'forward', args: [] };
+    expectedPayload.payload = { method: 'go', args: [1] };
     goForward();
     expect(dispatchSpy).toHaveBeenCalledWith(expectedPayload);
   });
