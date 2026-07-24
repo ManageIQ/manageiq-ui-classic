@@ -7,7 +7,9 @@ import { notificationReducer } from './notification-reducer';
 import formButtonsReducer from '../forms/form-buttons-reducer';
 import miqCustomTabReducer from './miq-custom-tab-reducer';
 
-const initialState = {};
+const initialState = {
+  router: { action: 'POP', location: history.location },
+};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
