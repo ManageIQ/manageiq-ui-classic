@@ -27,7 +27,7 @@ describe('Login / Logout', () => {
     });
 
     cy.url().then((url) => {
-      expect(url).to.equal('http://localhost:3000/#/');
+      expect(url).to.equal('http://localhost:3000/');
     });
   });
 });
