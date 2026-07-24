@@ -1,6 +1,6 @@
-import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
+import { makeStore } from '../helpers/mountForm';
 
 import { BreadcrumbsBar as Breadcrumbs } from '../../components/breadcrumbs';
 
@@ -16,7 +16,7 @@ describe('Breadcrumbs component', () => {
     controllerName: 'provider',
   };
 
-  const store = configureStore()({
+  const store = makeStore({
     notificationReducer: {
       unreadCount: 0,
       isDrawerVisible: false,

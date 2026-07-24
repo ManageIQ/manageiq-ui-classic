@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { makeStore } from '../helpers/mountForm';
 import AutomationSimulation from '../../components/AutomationSimulation';
 import {
   objectData, treeData, xmlData, notice,
@@ -12,8 +12,7 @@ ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
 $.fn.xmlDisplay = jest.fn();
 
 describe('AutomationSimulation Component', () => {
-  const mockStore = configureStore();
-  const store = mockStore({});
+  const store = makeStore({});
 
   const sampleData = {
     tab1: { text: __('Tree View'), rows: treeData },
