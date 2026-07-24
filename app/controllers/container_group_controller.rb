@@ -49,6 +49,10 @@ class ContainerGroupController < ApplicationController
   end
   helper_method :textual_group_list
 
+  def kube_exec_console
+    super
+  end
+
   def display_name
     _("Pods")
   end
