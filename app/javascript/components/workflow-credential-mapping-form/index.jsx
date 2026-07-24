@@ -6,6 +6,7 @@ import { CredentialMapperComponent } from './helper';
 import componentMapper from '../../forms/mappers/componentMapper';
 import createSchema from './workflow-credential-mapping-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { parseWorkflowCredentials } from './credential-utils';
 
 const WorkflowCredentialMappingForm = ({ recordId }) => {
   const [{
@@ -31,27 +32,17 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
     ).then(({ resources }) => {
       API.get(`/api/configuration_script_payloads/${recordId}`).then(({ name, payload, credentials }) => {
         const initialCredentials = credentials != null ? credentials : {};
-        /*
-          Creates the list of credential references from the workflow payload by parsing each state and saving them to payloadCredentials.
-          Duplicate references get overridden.
-        */
-        const jsonPayload = JSON.parse(payload).States;
-        let payloadCredentials = {};
 
-        Object.keys(jsonPayload).forEach((key1) => {
-          if (jsonPayload[key1].Credentials != null) {
-            Object.keys(jsonPayload[key1].Credentials).forEach((key2) => {
-              payloadCredentials = {
-                [key2]: jsonPayload[key1].Credentials[key2],
-                ...payloadCredentials,
-              };
-            });
-          }
-        });
-
-        // Returns the user to the show_list page if the workflow has no credential references in it's payload
-        if (Object.keys(payloadCredentials).length === 0) {
-          throw __('Workflow does not have any credentials to map.');
+        // Parse the workflow payload and extract credential references
+        // This now correctly extracts the actual credential names from JSONPath values
+        // (e.g., "my_ssh_credential" from "$.Credentials.my_ssh_credential")
+        let payloadCredentials;
+        try {
+          payloadCredentials = parseWorkflowCredentials(payload);
+        } catch (error) {
+          // If parsing fails, redirect back with error message
+          miqRedirectBack(error.message, 'error', '/workflow/show_list');
+          return;
         }
 
         /*
