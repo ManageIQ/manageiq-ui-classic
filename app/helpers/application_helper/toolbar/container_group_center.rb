@@ -59,22 +59,22 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
                  ),
                ])
 
-    button_group('container_group_access', [
-      select(
-        :container_group_access_choice,
-        nil,
-        N_('Container Group Access'),
-        N_('Access'),
-        :items => [
-          button(
-            :container_group_console,
-            'fa fa-terminal fa-lg',
-            N_('Open a Console for this Container Group'),
-            N_('Container Group Console'),
-            :url_parms    => "/console",
-            :send_checked => true
-          )
-        ]
-      ),
-    ])
+  button_group('container_group_access', [
+                 select(
+                   :container_group_access_choice,
+                   nil,
+                   N_('Container Group Access'),
+                   N_('Access'),
+                   :items => [
+                     button(
+                       :container_group_console,
+                       'fa fa-terminal fa-lg',
+                       N_('Open a Console for this Container Group'),
+                       N_('Container Group Console'),
+                       :url_parms    => "/console",
+                       :send_checked => true
+                     )
+                   ]
+                 ),
+               ])
 end
