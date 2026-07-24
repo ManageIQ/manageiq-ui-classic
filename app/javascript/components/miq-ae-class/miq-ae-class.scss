@@ -46,9 +46,69 @@
 
 // namespace-tree-modal.jsx layout helpers
 .ae-namespace-tree-scroll {
-  margin-bottom: 16px;
-  max-height: 300px;
+  height: 280px;
   overflow-y: auto;
+  margin-bottom: 16px;
+  user-select: none;
+
+  .tree,
+  .tree-node,
+  .tree-node-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tree-branch-wrapper,
+  .tree-node__leaf {
+    outline: none;
+  }
+}
+
+.ae-ns-node {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+
+  &--selected {
+    background-color: #d0e2ff;
+  }
+
+  &--domain {
+    cursor: default;
+    font-weight: 600;
+    opacity: 0.75;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.ae-ns-icon {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.ae-ns-spinner {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.ae-ns-name {
+  font-size: 14px;
+}
+
+.ae-ns-loading {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
 }
 
 .ae-namespace-selected-path {
