@@ -1,24 +1,28 @@
 import { createHashHistory } from 'history';
 
+/**
+ * Creates a history object for client-side hash-based browsing.
+ *
+ * Uses the `history` package directly (stable public API) rather than
+ * react-router's internal UNSAFE_createHashHistory.
+ */
 export const history = createHashHistory();
 
 /**
- * creates a history for client-side browsing
- * currently is used with redux to create redux controlled hash router
- * router documentations:
- * - connected-router: https://github.com/supasate/connected-react-router
- * - react-router: https://github.com/ReactTraining/react-router
- *
- * to use some react component with redux routing:
- * ... *
- * import { ConnectedRouter } from 'connected-react-router';
- * import history from 'manageiq-ui-classic/app/javascript/miq-component/react-history';
- * ...
- *
- * Somewhere in render method:
- * ...
- * <ConnectedRouter history={history}>
- * {Normal react router children}
- * </ConnectedRouter />
- * ...
+ * react-router v7's history only accepts a single active listener.
+ * This fan-out wrapper allows multiple subscribers while using only one history.listen().
  */
+const routeChangeListeners = new Set();
+history.listen((update) => {
+  routeChangeListeners.forEach((fn) => fn(update));
+});
+
+/**
+ * Subscribe to route changes. Returns an unsubscribe function.
+ * @param {function} fn - callback receiving { action, location }
+ * @returns {function} unlisten
+ */
+export const onRouteChange = (fn) => {
+  routeChangeListeners.add(fn);
+  return () => routeChangeListeners.delete(fn);
+};

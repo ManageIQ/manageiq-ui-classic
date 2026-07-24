@@ -4,12 +4,12 @@
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
 
-import { history } from '../miq-component/react-history';
+import { onRouteChange } from '../miq-component/react-history';
 
 const { miqSparkleOn, miqSparkleOff } = window;
 
 const onNextRouteChange = (callback) => {
-  const unlisten = history.listen(() => {
+  const unlisten = onRouteChange((_update) => {
     unlisten();
     callback();
   });

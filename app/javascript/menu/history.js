@@ -1,12 +1,13 @@
 import { flatten } from './search';
+import { onRouteChange } from '../miq-component/react-history';
 
-const unsetActive = menu => menu.map(item => ({
+const unsetActive = (menu) => menu.map((item) => ({
   ...item,
   active: false,
   items: item.items && unsetActive(item.items),
 }));
 
-export const updateActiveItem = (_location) => {
+export const updateActiveItem = (_update) => {
   const { menu } = window.ManageIQ;
   const { setMenu } = updateActiveItem;
 
@@ -28,10 +29,12 @@ export const updateActiveItem = (_location) => {
   }
 
   current.item.active = true;
-  current.parents.forEach(p => { p.active = true });
+  current.parents.forEach((p) => {
+    p.active = true;
+  });
 
   setMenu(deactivated);
 };
 
 // listen for history changes
-ManageIQ.redux.history.listen(updateActiveItem);
+onRouteChange(updateActiveItem);
