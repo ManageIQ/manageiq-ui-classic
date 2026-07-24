@@ -96,7 +96,9 @@
     "spin.js": "~4.1.0",
     "sprintf-js": "~1.1.1",
     "whatwg-fetch": "~3.6.20",
-    "xml_display": "~0.1.1"
+    "xml_display": "~0.1.1",
+    "xterm": "^5.3.0",
+    "xterm-addon-fit": "^0.8.0"
   },
   "devDependencies": {
     "@babel/core": "~7.29.0",

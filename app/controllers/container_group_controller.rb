@@ -1,6 +1,14 @@
 class ContainerGroupController < ApplicationController
   include Mixins::ContainersCommonMixin
   include Mixins::BreadcrumbsMixin
+  include PodRemote
+
+  # kube_exec_console is polled via plain fetch() from React; depending on the
+  # Accept header sent, Rails' format negotiation can resolve to :js, which
+  # trips ActionController::RequestForgeryProtection#verify_same_origin_request.
+  # This check is registered as an append_after_action (not before_action), so
+  # it must be skipped with skip_after_action, not skip_before_action.
+  skip_after_action :verify_same_origin_request, :only => [:kube_exec_console]
 
   before_action :check_privileges
   before_action :get_session_data
@@ -9,6 +17,30 @@ class ContainerGroupController < ApplicationController
 
   def show_list
     process_show_list(:named_scope => :active)
+  end
+
+  def button
+    case params[:pressed]
+    when "container_group_console"
+      javascript_redirect(
+        :action => "console",
+        :id     => params[:id]
+      )
+    else
+      super
+    end
+  end
+
+  def console
+    @record = identify_record(params[:id], ContainerGroup)
+    drop_breadcrumb(
+      :name => _("Container Group Console"),
+      :url  => "/container_group/console/#{@record.id}"
+    )
+  end
+
+  def kube_exec_console
+    super
   end
 
   private
