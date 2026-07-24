@@ -2,15 +2,11 @@ import { createHashHistory } from 'history';
 
 /**
  * Creates a history object for client-side hash-based browsing.
- *
- * Uses the `history` package directly (stable public API) rather than
- * react-router's internal UNSAFE_createHashHistory.
  */
 export const history = createHashHistory();
 
 /**
- * react-router v7's history only accepts a single active listener.
- * This fan-out wrapper allows multiple subscribers while using only one history.listen().
+ * Fan-out wrapper allowing multiple subscribers on a single history.listen().
  */
 const routeChangeListeners = new Set();
 history.listen((update) => {
