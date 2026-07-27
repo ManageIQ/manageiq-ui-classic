@@ -195,9 +195,9 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
                 >
                   <span
                     class="cds--front-line"
-                    title="20%"
+                    title="20.0"
                   >
-                    20%
+                    20.0
                   </span>
                 </div>
               </td>
@@ -285,9 +285,9 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
                 >
                   <span
                     class="cds--front-line"
-                    title="40%"
+                    title="40.0"
                   >
-                    40%
+                    40.0
                   </span>
                 </div>
               </td>
