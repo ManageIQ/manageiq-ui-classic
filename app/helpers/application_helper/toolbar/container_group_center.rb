@@ -29,6 +29,7 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
     ),
   ])
   button_group('container_group_policy', [
+<<<<<<< HEAD
     select(
       :container_group_policy_choice,
       nil,
@@ -53,5 +54,30 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
           :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")),
       ]
     ),
-  ])
+  ])  
+  button_group('container_group_access', [
+                 select(
+                   :container_group_access_choice,
+                   nil,
+                   N_('Container Group Access'),
+                   N_('Access'),
+                   :items => [
+                     button(
+                       :container_group_console,
+                       'fa fa-terminal fa-lg',
+                       N_('Open a Console for this Container Group'),
+                       N_('Container Group Console'),
+                       :url_parms    => "/console",
+                       :send_checked => true
+                     ),button(
+                        :container_group_logs,
+                        'fa fa-file-text-o fa-lg',
+                        N_('View Logs for this Container Group'),
+                        N_('Container Group Logs'),
+                        :url_parms    => "/logs_page",
+                        :send_checked => true
+                    )
+                   ]
+                 ),
+               ])
 end
