@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`EmptyState component should render with default props 1`] = `
+<div>
+  <div
+    class="empty-state-carbon"
+  >
+    <div
+      class="empty-state-carbon__icon"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="64"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 32 32"
+        width="64"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
+        />
+        <path
+          d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
+        />
+      </svg>
+    </div>
+    <h1
+      class="empty-state-carbon__title"
+    >
+      Add a Provider
+    </h1>
+    <p
+      class="empty-state-carbon__description"
+    >
+      You don't have any providers to display. Please add a Provider.
+    </p>
+    <div
+      class="empty-state-carbon__action"
+    >
+      <button
+        class="cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary"
+        type="button"
+      >
+        Add a Provider
+        <svg
+          aria-hidden="true"
+          class="cds--btn__icon"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 32 32"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
+          />
+          <path
+            d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EmptyState component should render with documentation link 1`] = `
+<div>
+  <div
+    class="empty-state-carbon"
+  >
+    <div
+      class="empty-state-carbon__icon"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="64"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 32 32"
+        width="64"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
+        />
+        <path
+          d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
+        />
+      </svg>
+    </div>
+    <h1
+      class="empty-state-carbon__title"
+    >
+      Add a Provider
+    </h1>
+    <p
+      class="empty-state-carbon__description"
+    >
+      You don't have any providers to display. Please add a Provider.
+    </p>
+    <p
+      class="empty-state-carbon__documentation"
+    >
+      Learn more about this
+       
+      <a
+        class="empty-state-carbon__link"
+        href="https://example.com/docs"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        in the documentation.
+      </a>
+    </p>
+    <div
+      class="empty-state-carbon__action"
+    >
+      <button
+        class="cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary"
+        type="button"
+      >
+        Add a Provider
+        <svg
+          aria-hidden="true"
+          class="cds--btn__icon"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 32 32"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
+          />
+          <path
+            d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
