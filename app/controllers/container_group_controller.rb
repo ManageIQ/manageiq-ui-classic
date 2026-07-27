@@ -11,6 +11,27 @@ class ContainerGroupController < ApplicationController
     process_show_list(:named_scope => :active)
   end
 
+  def button
+    case params[:pressed]
+    when "container_group_logs"
+      javascript_redirect(
+        :action => "logs",
+        :id     => params[:id]
+      )
+    else
+      super
+    end
+  end
+
+  def logs
+    assert_privileges("container_group_logs")
+    @record = identify_record(params[:id], ContainerGroup)
+    drop_breadcrumb(
+      :name => _("Logs"),
+      :url  => "/container_group/logs/#{@record.id}"
+    )
+  end
+
   private
 
   def textual_group_list
