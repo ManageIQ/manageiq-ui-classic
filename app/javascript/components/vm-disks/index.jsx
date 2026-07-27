@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import { tableData } from './helper';
 
-const VmDisks = ({
-  disks = [],
-}) => {
+const VmDisks = ({ recordId }) => {
+  const [{ disks, isLoading }, setState] = useState({ disks: [], isLoading: true });
+
+  useEffect(() => {
+    API.get(`/api/vms/${recordId}/disks?expand=resources`)
+      .then(({ resources }) => {
+        setState({ disks: resources, isLoading: false });
+      });
+  }, [recordId]);
+
+  if (isLoading) {
+    return null;
+  }
+
   const { headers, rows } = tableData(disks);
 
   return (
@@ -20,17 +32,7 @@ const VmDisks = ({
 };
 
 VmDisks.propTypes = {
-  disks: PropTypes.arrayOf(
-    PropTypes.shape({
-      deviceName: PropTypes.string,
-      diskType: PropTypes.string,
-      mode: PropTypes.string,
-      partitionsAligned: PropTypes.string,
-      size: PropTypes.string,
-      sizeOnDisk: PropTypes.string,
-      usedPercent: PropTypes.string,
-    })
-  ),
+  recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default VmDisks;

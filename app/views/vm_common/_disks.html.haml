@@ -1,10 +1,2 @@
 = render :partial => "layouts/flash_msg"
-- disks_data = @record.hardware&.disks.to_a.map do |disk|
-  - { :deviceName        => calculate_disk_name(disk),
-      :diskType          => disk.disk_type,
-      :mode              => disk.mode,
-      :partitionsAligned => disk.partitions_aligned,
-      :size              => calculate_disk_size(disk.size),
-      :sizeOnDisk        => calculate_disk_size(disk.size_on_disk),
-      :usedPercent       => disk.used_percent_of_provisioned }
-= react('VmDisks', {:disks => disks_data})
+= react('VmDisks', {:recordId => @record.id})
