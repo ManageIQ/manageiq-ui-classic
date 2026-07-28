@@ -291,14 +291,17 @@ module OpsController::Settings::AnalysisProfiles
     @current_page = @pages[:current] unless @pages.nil?
   end
 
+  # Delete all selected or single displayed scanitemset(s)
   def ap_deletescanitems(scanitems)
     ap_process_scanitems(scanitems, "destroy")
   end
 
+  # Common scanitemset Set button handler routines follow
   def ap_process_scanitems(scanitems, task)
     process_elements(scanitems, ScanItem, task)
   end
 
+  # Common scanitemset button handler routines follow
   def ap_process_scanitemsets(scanitemsets, task)
     process_elements(scanitemsets, ScanItemSet, task)
   end
