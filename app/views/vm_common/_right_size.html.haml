@@ -1,2 +1,2 @@
 - back_url = local_assigns[:print_data] ? nil : url_for_only_path(:controller => controller_for_vm(model_for_vm(@record)), :action => "x_history", :continue => true)
-= react 'VmRightSize', :data => local_assigns[:print_data] || @right_size_data, :backUrl => back_url
+= react('VmRightSize', :data => local_assigns[:print_data] || @right_size_data, :backUrl => back_url)
