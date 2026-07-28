@@ -21,8 +21,8 @@ describe "miq_ae_class/_method_inputs.html.haml" do
 
     it "Check inputs", :js => true do
       render :template => "miq_ae_class/_method_inputs"
-      expect(response).to have_text('ae_result')
-      expect(response).to have_text('ae_next_state')
+      expect(rendered).to have_text('ae_result')
+      expect(rendered).to have_text('ae_next_state')
     end
   end
 end

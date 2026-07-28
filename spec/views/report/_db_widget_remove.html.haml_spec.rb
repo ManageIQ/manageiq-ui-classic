@@ -8,7 +8,7 @@ describe "report/_db_widget_remove.html.haml" do
     widget = FactoryBot.create(:miq_widget)
     render :partial => "report/db_widget_remove",
            :locals  => {:widget => widget}
-    expect(response).to have_selector('a.pull-right')
-    expect(response).to have_selector('i.fa.fa-remove')
+    expect(rendered).to have_selector('a.pull-right')
+    expect(rendered).to have_selector('i.fa.fa-remove')
   end
 end
