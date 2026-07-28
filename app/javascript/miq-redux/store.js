@@ -1,21 +1,17 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createReducer from './reducer';
 import createMiddlewares from './middleware';
-import { history } from '../miq-component/react-history.js';
 
 import { notificationReducer } from './notification-reducer';
 import formButtonsReducer from '../forms/form-buttons-reducer';
 import miqCustomTabReducer from './miq-custom-tab-reducer';
 
-const initialState = {};
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initializeStore = () => {
   const store = createStore(
-    createReducer({ history }),
-    initialState,
-    composeEnhancers(applyMiddleware(...createMiddlewares(history))),
+    createReducer({}),
+    composeEnhancers(applyMiddleware(...createMiddlewares())),
   );
 
   /**
@@ -39,7 +35,7 @@ const initializeStore = () => {
      * replace current reducer with new function containing all new reducers
      * must be connected to router again
      */
-    store.replaceReducer(createReducer({ asyncReducers: store.asyncReducers, history }));
+    store.replaceReducer(createReducer({ asyncReducers: store.asyncReducers }));
     return store;
   };
   return store;

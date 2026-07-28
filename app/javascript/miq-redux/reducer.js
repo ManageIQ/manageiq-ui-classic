@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 /**
  * Root reducer, used when creating the Redux store.
  *
@@ -12,12 +11,12 @@ function rootReducer(state) {
   const newState = state || {};
   return newState;
 }
+
 /**
  * Initial reducer
  * @param {Object} asyncReducers - object of reducers
  */
-export default ({ asyncReducers = {}, history }) => (combineReducers({
+export default ({ asyncReducers = {} }) => (combineReducers({
   rootReducer,
-  router: connectRouter(history),
   ...asyncReducers,
 }));

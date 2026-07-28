@@ -1,12 +1,12 @@
 import { flatten } from './search';
 
-const unsetActive = menu => menu.map(item => ({
+const unsetActive = (menu) => menu.map((item) => ({
   ...item,
   active: false,
   items: item.items && unsetActive(item.items),
 }));
 
-export const updateActiveItem = (_location) => {
+export const updateActiveItem = () => {
   const { menu } = window.ManageIQ;
   const { setMenu } = updateActiveItem;
 
@@ -18,7 +18,6 @@ export const updateActiveItem = (_location) => {
     parents,
   }));
 
-  // FIXME: we should be using _location.pathname but that requires BrowserRouter, not HashRouter
   const currentUrl = `${document.location.pathname}${document.location.hash}`;
 
   const current = _.find(flat, { href: currentUrl });
@@ -28,10 +27,10 @@ export const updateActiveItem = (_location) => {
   }
 
   current.item.active = true;
-  current.parents.forEach(p => { p.active = true });
+  current.parents.forEach((p) => {
+    p.active = true;
+  });
 
   setMenu(deactivated);
 };
 
-// listen for history changes
-ManageIQ.redux.history.listen(updateActiveItem);

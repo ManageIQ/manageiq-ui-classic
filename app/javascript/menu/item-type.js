@@ -4,16 +4,7 @@
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
 
-import { history } from '../miq-component/react-history';
-
 const { miqSparkleOn, miqSparkleOff } = window;
-
-const onNextRouteChange = (callback) => {
-  const unlisten = history.listen(() => {
-    unlisten();
-    callback();
-  });
-};
 
 export const linkProps = ({
   type, href, id, hideSecondary = () => null,
@@ -53,9 +44,6 @@ export const linkProps = ({
     if (type === 'new_window') {
       miqSparkleOff();
     }
-
-    // react router support
-    onNextRouteChange(() => miqSparkleOff());
   },
 });
 
