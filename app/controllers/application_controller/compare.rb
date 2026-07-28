@@ -99,7 +99,7 @@ module ApplicationController::Compare
   end
 
   def compare_all_diff_same
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     @compare.remove_id(params[:id].to_i) if @lastaction == "compare_remove"
@@ -121,7 +121,7 @@ module ApplicationController::Compare
 
   # User selected a new base VM
   def compare_choose_base
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     @compare.set_base_record(params[:id].to_i) if @lastaction == "compare_miq" # Remove the VM from the vm compare
@@ -131,7 +131,7 @@ module ApplicationController::Compare
 
   # Toggle compressed/expanded view
   def compare_compress
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @exists_mode = session[:miq_exists_mode]
     session[:miq_compressed] = !session[:miq_compressed]
     @compressed = session[:miq_compressed]
@@ -149,7 +149,7 @@ module ApplicationController::Compare
   # Toggle exists/details view
   def compare_mode
     @keep_compare = true
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     session[:miq_exists_mode] = !session[:miq_exists_mode]
     @exists_mode = session[:miq_exists_mode]
     compare_to_json(@compare)
@@ -180,7 +180,7 @@ module ApplicationController::Compare
 
   # Remove one of the VMs from the @compare object
   def compare_remove
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     @compare.remove_record(params[:id].to_i) if @lastaction == "compare_miq" # Remove the VM from the vm compare
@@ -190,7 +190,7 @@ module ApplicationController::Compare
 
   # Send the current compare data in text format
   def compare_to_txt
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     rpt = create_compare_report
     filename = "compare_report_" + format_timezone(Time.now, Time.zone, "fname")
     disable_client_cache
@@ -199,7 +199,7 @@ module ApplicationController::Compare
 
   # Send the current compare data in CSV format
   def compare_to_csv
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     rpt = create_compare_report(true)
     filename = "compare_report_" + format_timezone(Time.now, Time.zone, "fname")
     disable_client_cache
@@ -208,7 +208,7 @@ module ApplicationController::Compare
 
   # Send the current compare data in PDF format
   def compare_to_pdf
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     render_pdf_internal(create_compare_report)
   end
 
@@ -367,7 +367,7 @@ module ApplicationController::Compare
   end
 
   def drift_all_same_dff
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     identify_obj
@@ -424,7 +424,7 @@ module ApplicationController::Compare
 
   # Toggle exists/details view
   def drift_mode
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     identify_obj
     session[:miq_exists_mode] = !session[:miq_exists_mode]
     @exists_mode = session[:miq_exists_mode]
@@ -441,7 +441,7 @@ module ApplicationController::Compare
 
   # Toggle drift compressed/expanded view
   def drift_compress
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     session[:miq_compressed] = !session[:miq_compressed]
     @compressed = session[:miq_compressed]
     drift_to_json(@compare)
@@ -457,7 +457,7 @@ module ApplicationController::Compare
 
   # Send the current drift data in text format
   def drift_to_txt
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     rpt = create_drift_report
     filename = "drift_report_" + format_timezone(Time.now, Time.zone, "fname")
     disable_client_cache
@@ -466,7 +466,7 @@ module ApplicationController::Compare
 
   # Send the current drift data in CSV format
   def drift_to_csv
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     rpt = create_drift_report(true)
     filename = "drift_report_" + format_timezone(Time.now, Time.zone, "fname")
     disable_client_cache
@@ -475,7 +475,7 @@ module ApplicationController::Compare
 
   # Send the current drift data in PDF format
   def drift_to_pdf
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     render_pdf_internal(create_drift_report)
   end
 
@@ -498,6 +498,10 @@ module ApplicationController::Compare
   end
 
   private
+
+  def load_compare_from_session
+    Marshal.load(session[:miq_compare])
+  end
 
   def render_compare_and_button_changes(button_changes)
     render :update do |page|
@@ -767,7 +771,7 @@ module ApplicationController::Compare
   alias common_drift drift_analysis
 
   def section_checked(mode)
-    @compare = Marshal.load(session[:miq_compare])
+    @compare = load_compare_from_session
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     if session[:selected_sections]
@@ -1779,7 +1783,7 @@ module ApplicationController::Compare
         end
       end
     end
-    
+
     @lastaction = "drift"
     @explorer = true if request.xml_http_request? && explorer_controller?
   end
