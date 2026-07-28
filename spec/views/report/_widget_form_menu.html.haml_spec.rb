@@ -7,6 +7,6 @@ describe "report/_widget_form_menu.html.haml" do
 
   it "correctly renders patternfly classes" do
     render :template => "report/_widget_form_menu"
-    expect(response).to have_selector('a.fa.fa-close.pull-right')
+    expect(rendered).to have_selector('a.fa.fa-close.pull-right')
   end
 end

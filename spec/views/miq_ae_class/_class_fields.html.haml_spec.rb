@@ -18,8 +18,8 @@ describe "miq_ae_class/_class_fields.html.haml" do
 
     it "Check instance", :js => true do
       render :template => "miq_ae_class/_class_fields"
-      expect(response).to have_text('ae_var1')
-      expect(response).to have_text('Wilma')
+      expect(rendered).to have_text('ae_var1')
+      expect(rendered).to have_text('Wilma')
     end
   end
 
