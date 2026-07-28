@@ -4,6 +4,7 @@ describe "routing for OpsController" do
   let(:controller_name) { "ops" }
 
   %w(
+    ap_form_data
     cu_collection_fetch
     explorer
     fetch_audit_log
@@ -22,6 +23,7 @@ describe "routing for OpsController" do
     accordion_select
     apply_imports
     ap_edit
+    ap_form_data
     aps_list
     category_delete
     category_edit

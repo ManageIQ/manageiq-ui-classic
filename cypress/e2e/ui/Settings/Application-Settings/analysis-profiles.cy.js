@@ -74,7 +74,24 @@ describe('Settings Analysis Profile', () => {
       cy.contains('Application').should('be.visible');
       cy.contains('button[type="submit"]', 'Add').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
-      cy.contains('Cypress Test VM Profile').should('be.visible');
+      // Click the newly created profile in the list and validate the saved data
+      cy.get('li.list-group-item').contains('Cypress Test VM Profile').click();
+      cy.get('.ap-form').should('not.exist');
+      // Basic Information section
+      cy.get('.miq-structured-list-accordion.settings_analysis_basic_info')
+        .should('contain', 'Cypress Test VM Profile')
+        .and('contain', 'Created by Cypress E2E test');
+      // File Items section
+      cy.get('.miq-structured-list-accordion').contains('File Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('/etc/hosts').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('/var/log/messages').scrollIntoView().should('be.visible');
+      // Registry Items section
+      cy.get('.miq-structured-list-accordion').contains('Registry Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('HKLM\\Software\\Microsoft\\Windows').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('CurrentVersion').scrollIntoView().should('be.visible');
+      // Event Log Items section
+      cy.get('.miq-structured-list-accordion').contains('Event Log Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('Application').scrollIntoView().should('be.visible');
     });
 
     it('validates required name field', () => {
@@ -186,7 +203,19 @@ describe('Settings Analysis Profile', () => {
       cy.contains('System').should('be.visible');
       cy.contains('button[type="submit"]', 'Add').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
-      cy.contains('Cypress Test Host Profile').should('be.visible');
+      // Click the newly created host profile in the list and validate the saved data
+      cy.get('li.list-group-item').contains('Cypress Test Host Profile').click();
+      cy.get('.ap-form').should('not.exist');
+      // Basic Information section
+      cy.get('.miq-structured-list-accordion.settings_analysis_basic_info')
+        .should('contain', 'Cypress Test Host Profile')
+        .and('contain', 'Host profile created by Cypress');
+      // File Items section
+      cy.get('.miq-structured-list-accordion').contains('File Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('/var/log/messages').scrollIntoView().should('be.visible');
+      // Event Log Items section
+      cy.get('.miq-structured-list-accordion').contains('Event Log Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('System').scrollIntoView().should('be.visible');
     });
 
     it('shows File tab as default for Host mode', () => {
@@ -211,6 +240,13 @@ describe('Settings Analysis Profile', () => {
       cy.contains('/tmp/cypress-test.log').scrollIntoView().should('be.visible');
       cy.contains('button[type="submit"]', 'Save').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
+      // Click the profile in the list and validate the saved description and new file
+      cy.get('li.list-group-item').contains(/^host default$/i).click();
+      cy.get('.ap-form').should('not.exist');
+      cy.get('.miq-structured-list-accordion.settings_analysis_basic_info')
+        .should('contain', 'Updated by Cypress test');
+      cy.get('.miq-structured-list-accordion').contains('File Items').scrollIntoView().should('be.visible');
+      cy.get('.miq-structured-list-accordion').contains('/tmp/cypress-test.log').scrollIntoView().should('be.visible');
     });
 
     it('can cancel editing a profile', () => {
@@ -232,7 +268,11 @@ describe('Settings Analysis Profile', () => {
       cy.get('input[name="name"]').clear().type('Cypress Copied Profile');
       cy.contains('button[type="submit"]', 'Add').click();
       cy.expect_flash(flashClassMap.success, 'Analysis Profile');
-      cy.contains('Cypress Copied Profile').should('be.visible');
+      // Click the copied profile in the list and validate the saved name
+      cy.get('li.list-group-item').contains('Cypress Copied Profile').click();
+      cy.get('.ap-form').should('not.exist');
+      cy.get('.miq-structured-list-accordion.settings_analysis_basic_info')
+        .should('contain', 'Cypress Copied Profile');
     });
   });
 
