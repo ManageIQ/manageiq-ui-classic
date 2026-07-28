@@ -12,6 +12,13 @@ const init = () => {
     return;
   }
 
+  // Disconnect any existing consumer before creating a new one so repeated
+  // calls (e.g. pageshow after bfcache restore) don't leak WebSockets.
+  if (cable) {
+    cable.disconnect();
+    cable = undefined;
+  }
+
   // Connect to the actioncable server
   cable = ActionCable.createConsumer('/ws/notifications');
 
@@ -19,6 +26,7 @@ const init = () => {
     disconnected: () => {
       API.ws_init().then(null, () => {
         // Do not try to reconnect if the server disconnects
+        console.warn('Unable to retrieve a valid ws_token!');
         cable.connection.close({ allowReconnect: false });
       });
     },
