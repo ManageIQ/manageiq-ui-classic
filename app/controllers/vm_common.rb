@@ -512,7 +512,7 @@ module VmCommon
     }
 
     render :template => 'vm_common/_right_size', :layout => 'layouts/print',
-           :locals => { :print_data => right_size_data_for(@record) }
+           :locals => {:print_data => right_size_data_for(@record)}
   end
 
   def right_size_data_for(record)
@@ -539,7 +539,7 @@ module VmCommon
         :mem_pct_avg  => number_to_percentage(record.max_mem_usage_absolute_average_avg_over_time_period, :precision => 2),
         :mem_pct_low  => number_to_percentage(record.max_mem_usage_absolute_average_low_over_time_period, :precision => 2),
       },
-      :conservative => {
+      :conservative    => {
         :recommended_vcpus => record.conservative_recommended_vcpus&.to_s,
         :vcpus_change_pct  => number_to_percentage(record.conservative_vcpus_recommended_change_pct, :precision => 2),
         :vcpus_change      => record.conservative_vcpus_recommended_change&.to_s,
@@ -547,7 +547,7 @@ module VmCommon
         :mem_change_pct    => number_to_percentage(record.conservative_mem_recommended_change_pct, :precision => 2),
         :mem_change        => record.conservative_mem_recommended_change&.then { |v| "#{v} MB" },
       },
-      :moderate => {
+      :moderate        => {
         :recommended_vcpus => record.moderate_recommended_vcpus&.to_s,
         :vcpus_change_pct  => number_to_percentage(record.moderate_vcpus_recommended_change_pct, :precision => 2),
         :vcpus_change      => record.moderate_vcpus_recommended_change&.to_s,
@@ -555,7 +555,7 @@ module VmCommon
         :mem_change_pct    => number_to_percentage(record.moderate_mem_recommended_change_pct, :precision => 2),
         :mem_change        => record.moderate_mem_recommended_change&.then { |v| "#{v} MB" },
       },
-      :aggressive => {
+      :aggressive      => {
         :recommended_vcpus => record.aggressive_recommended_vcpus&.to_s,
         :vcpus_change_pct  => number_to_percentage(record.aggressive_vcpus_recommended_change_pct, :precision => 2),
         :vcpus_change      => record.aggressive_vcpus_recommended_change&.to_s,

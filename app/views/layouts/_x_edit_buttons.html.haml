@@ -5,6 +5,7 @@
 - action_url ||= nil
 - return if action_url == "tagging_edit"
 - return if @sb[:action] == 'right_size'
+
 -# Set default record id to nil, if none passed in
 - record_id ||= nil
 - align ||= "right"
@@ -158,7 +159,7 @@
   - elsif record_id || export_button
     -# show button to go back
     #buttons
-      - if params[:action] == "policies" || %w(chargeback).include?(@sb[:action])
+      - if params[:action] == "policies" || %w[chargeback].include?(@sb[:action])
         - action = (params[:action] == "policies" ? "policy_sim" : "x_history")
         -# Button to go back to policy simulation screen from 1 VMs policies
         = button_tag(t = _('Back'),
@@ -166,7 +167,7 @@
           :alt     => t,
           :title   => t,
           :onclick => "miqAjaxButton('#{url_for_only_path(:controller => controller_for_vm(model_for_vm(@record)), :action => action, :continue => true)}');")
-      - elsif %w(drift policy_sim).include?(@sb[:action])
+      - elsif %w[drift policy_sim].include?(@sb[:action])
         -# Button to cancel policy simulation/drift and return to latest tree node
         = button_tag(t = _('Cancel'),
           :class   => "btn btn-default",
