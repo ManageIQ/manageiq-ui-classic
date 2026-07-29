@@ -1,5 +1,6 @@
+import { toBytes, toHumanSize } from '../../helpers/size';
 import {
-  toBytes, toHumanSize, toRubyMethod, emptyChildren, buildPatch, generateBasicOptions, generateRefreshOptions, injectOption, generateRange,
+  toRubyMethod, emptyChildren, buildPatch, generateBasicOptions, generateRefreshOptions, injectOption, generateRange,
 } from '../../components/workers-form/helpers';
 
 describe('Workers form helpers', () => {
