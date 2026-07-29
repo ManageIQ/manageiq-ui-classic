@@ -25,6 +25,7 @@ class ContainerGroupController < ApplicationController
   end
 
   def console
+    assert_privileges("container_group_console")
     @record = identify_record(params[:id], ContainerGroup)
     drop_breadcrumb(
       :name => _("Container Group Console"),
