@@ -1,6 +1,7 @@
 module Mixins
   module PodRemoteMixin
     def kube_exec_console
+      assert_privileges("container_group_kube_exec_console")
       respond_to do |format|
         format.json do
           if params[:task_id]
