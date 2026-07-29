@@ -7,7 +7,7 @@ const VmDisks = ({ recordId }) => {
   const [{ disks, isLoading }, setState] = useState({ disks: [], isLoading: true });
 
   useEffect(() => {
-    API.get(`/api/vms/${recordId}/disks?expand=resources`)
+    API.get(`/api/vms/${recordId}/disks?expand=resources&attributes=partitions_aligned`)
       .then(({ resources }) => {
         setState({ disks: resources, isLoading: false });
       });
