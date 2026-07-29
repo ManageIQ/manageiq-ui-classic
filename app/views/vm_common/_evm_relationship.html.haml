@@ -3,4 +3,4 @@
   %h3
     = _('Servers')
   .col-md-12
-    = react('VmServerRelationshipForm', :recordId => @edit[:vm_id].to_s, :redirect => url_for(:action => :show, :id => @record.id))
+    = react('VmServerRelationshipForm', :recordId => @record.id.to_s, :redirect => url_for(:action => :show, :id => @record.id))
