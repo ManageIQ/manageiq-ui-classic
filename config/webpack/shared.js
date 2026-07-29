@@ -21,7 +21,6 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 const gettextDir = i18n;
 
 const sharedPackages = [
-  '@reduxjs/toolkit',
   '@carbon/react',
   'angular',
   'jquery',
