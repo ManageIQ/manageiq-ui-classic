@@ -40,7 +40,7 @@ describe('VmDisks Component', () => {
   it('should fetch disks from the correct API URL', async() => {
     render(<VmDisks recordId={3170} />);
     await waitFor(() => screen.getByText('Hard Disk (SCSI 0:0)'));
-    expect(API.get).toHaveBeenCalledWith('/api/vms/3170/disks?expand=resources');
+    expect(API.get).toHaveBeenCalledWith('/api/vms/3170/disks?expand=resources&attributes=partitions_aligned');
   });
 
   it('should render correct number of rows', async() => {
