@@ -100,9 +100,9 @@ ManageIQ.redux.addReducer({
 });
 
 const MiqErrorModal = ({
-  error,
+  error = undefined,
   hideModal,
-  show,
+  show = false,
   showModal,
 }) => {
   useEffect(() => {
@@ -185,11 +185,6 @@ MiqErrorModal.propTypes = {
   show: PropTypes.bool,
   hideModal: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired,
-};
-
-MiqErrorModal.defaultProps = {
-  error: undefined,
-  show: false,
 };
 
 const mapStateToProps = (state) =>
