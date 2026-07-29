@@ -13,10 +13,10 @@ describe "utilization/_utilization_options.html.haml" do
            :locals  => {:cap_type => nil}
   end
   it "check if correct fields are being displayed if cap_type is set" do
-    expect(response).not_to have_selector('label', :text => 'Selected Day')
+    expect(rendered).not_to have_selector('label', :text => 'Selected Day')
     # render with cap_type variable set
     render :partial => "utilization/utilization_options",
            :locals  => {:cap_type => "summ"}
-    expect(response).to have_selector('label', :text => 'Selected Day')
+    expect(rendered).to have_selector('label', :text => 'Selected Day')
   end
 end

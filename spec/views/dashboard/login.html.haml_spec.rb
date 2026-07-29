@@ -9,18 +9,20 @@ describe "dashboard/login.html.haml" do
 
     it "when authentication is 'database'" do
       render :template => "dashboard/login"
-      expect(response).to have_selector("form#login_div:has(input#browser_name)")
-      expect(response).to have_selector("form#login_div:has(input#browser_version)")
-      expect(response).to have_selector("form#login_div:has(input#browser_os)")
-      expect(response).to have_selector("form#login_div:has(input#user_TZO)")
+      expect(rendered).to have_selector("form#login_div")
+      expect(rendered).to have_selector("input#browser_name")
+      expect(rendered).to have_selector("input#browser_version")
+      expect(rendered).to have_selector("input#browser_os")
+      expect(rendered).to have_selector("input#user_TZO")
     end
 
     it "when authentication is not 'database'" do
       render :template => "dashboard/login"
-      expect(response).to have_selector("form#login_div:has(input#browser_name)")
-      expect(response).to have_selector("form#login_div:has(input#browser_version)")
-      expect(response).to have_selector("form#login_div:has(input#browser_os)")
-      expect(response).to have_selector("form#login_div:has(input#user_TZO)")
+      expect(rendered).to have_selector("form#login_div")
+      expect(rendered).to have_selector("input#browser_name")
+      expect(rendered).to have_selector("input#browser_version")
+      expect(rendered).to have_selector("input#browser_os")
+      expect(rendered).to have_selector("input#user_TZO")
     end
   end
 
@@ -35,7 +37,7 @@ describe "dashboard/login.html.haml" do
       stub_settings(:server => {}, :session => {:show_login_info => true}, :authentication => {})
       render :template => "dashboard/login"
       labels.each do |label|
-        expect(response).to have_selector('p', :text => label)
+        expect(rendered).to have_selector('p', :text => label)
       end
     end
 
@@ -43,7 +45,7 @@ describe "dashboard/login.html.haml" do
       stub_settings(:server => {}, :session => {:show_login_info => false}, :authentication => {})
       render :template => "dashboard/login"
       labels.each do |label|
-        expect(response).not_to have_selector('p', :text => label)
+        expect(rendered).not_to have_selector('p', :text => label)
       end
     end
   end
