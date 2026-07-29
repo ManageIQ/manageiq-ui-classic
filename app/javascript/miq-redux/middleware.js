@@ -1,5 +1,3 @@
-import thunk from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
 import { TOGGLE_TAG_VALUE_CHANGE, DELETE_ASSIGNED_TAG } from '../tagging/actions/actions';
 
 /** Labels used to identify if the status selected item from state. */
@@ -62,9 +60,3 @@ export const taggingMiddleware = (store) => (next) => (action) => {
   }
   return next(action);
 };
-
-export default () => [
-  taggingMiddleware,
-  thunk,
-  promiseMiddleware(),
-];

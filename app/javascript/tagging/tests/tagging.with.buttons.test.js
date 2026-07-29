@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { makeStore } from '../../spec/helpers/mountForm';
 import { TaggingWithButtonsConnected } from '../containers/tagging';
 import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons';
 
@@ -78,12 +78,11 @@ const initialProps = {
   resetButton: {},
   saveButton: {},
 };
-const mockStore = configureStore();
 let store;
 
 describe('Test connected Tagging component', () => {
   beforeEach(() => {
-    store = mockStore(initialState);
+    store = makeStore(initialState);
   });
 
   it('+++ render the connected(SMART) component', () => {

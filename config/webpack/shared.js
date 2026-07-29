@@ -30,7 +30,6 @@ const sharedPackages = [
   'react',
   'react-dom',
   'react-redux',
-  'redux',
 ];
 
 let packPaths = {};
