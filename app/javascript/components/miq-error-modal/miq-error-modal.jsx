@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from '@reduxjs/toolkit';
 import { Modal, ModalBody } from '@carbon/react';
 import { MisuseOutline } from '@carbon/react/icons';
 import DOMPurify from 'dompurify';
+import { useMiqDispatch, useMiqSelector } from '../../redux/miq-hooks';
 
 const SHOW_ERROR_MODAL = '@@errorModal/show';
 const HIDE_ERROR_MODAL = '@@errorModal/hide';
@@ -14,8 +12,6 @@ const showModal = (data) => (dispatch) => {
   dispatch({ type: LOAD_ERROR_MODAL, data });
   dispatch({ type: SHOW_ERROR_MODAL });
 };
-
-const hideModal = () => ({ type: HIDE_ERROR_MODAL });
 
 const findError = (data) => {
   if (!data) {
@@ -99,25 +95,24 @@ ManageIQ.redux.addReducer({
   },
 });
 
-const MiqErrorModal = ({
-  error = undefined,
-  hideModal,
-  show = false,
-  showModal,
-}) => {
+const MiqErrorModal = () => {
+  const dispatch = useMiqDispatch();
+  const show = useMiqSelector((state) => state.ErrorModal?.show ?? false);
+  const error = useMiqSelector((state) => state.ErrorModal?.error);
+
   useEffect(() => {
     const subscription = window.listenToRx((event) => {
       if ('serverError' in event) {
-        showModal(buildErrorDetails({
+        dispatch(showModal(buildErrorDetails({
           error: event.serverError,
           source: event.source,
           backendName: event.backendName,
-        }));
+        })));
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [showModal]);
+  }, [dispatch]);
 
   if (!show || !error) {
     return null;
@@ -133,7 +128,7 @@ const MiqErrorModal = ({
       modalHeading={sprintf(__('Server Error %s'), backendName ? `(${backendName})` : '')}
       passiveModal
       className="miq-error-modal"
-      onRequestClose={hideModal}
+      onRequestClose={() => dispatch({ type: HIDE_ERROR_MODAL })}
     >
       <ModalBody className="miq-error-modal__body">
         <div className="miq-error-modal__icon">
@@ -174,20 +169,4 @@ const MiqErrorModal = ({
   );
 };
 
-MiqErrorModal.propTypes = {
-  error: PropTypes.shape({
-    backendName: PropTypes.string,
-    contentType: PropTypes.string,
-    data: PropTypes.string,
-    status: PropTypes.string,
-    url: PropTypes.string,
-  }),
-  show: PropTypes.bool,
-  hideModal: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) =>
-  (state.ErrorModal ? { show: state.ErrorModal.show, error: state.ErrorModal.error } : {});
-const mapDispatchToProps = (dispatch) => bindActionCreators({ showModal, hideModal }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(MiqErrorModal);
+export default MiqErrorModal;
