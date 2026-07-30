@@ -1,8 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
 import { QueryBuilder } from 'react-querybuilder';
 import { InlineNotification, Loading } from '@carbon/react';
-import './expression-editor.scss';
-import { miqToRqb, rqbToMiq } from './expression-adapter';
+import { miqToRqb } from './expression-adapter';
 import { validateExpression } from './expression-validator';
 import { buildFieldConfig } from './field-config';
 import TwoStepFieldSelector from './field-selector';
@@ -13,8 +18,6 @@ import {
   OperatorSelector,
   NotToggle,
 } from './carbon-controls';
-
-const SAVE_URL = '/expression_editor/expression_update';
 
 const CARBON_CONTROLS = {
   fieldSelector: TwoStepFieldSelector,
@@ -31,13 +34,13 @@ const CARBON_CONTROLS = {
 };
 
 const ExpressionEditor = ({
-  model, value, onlyTags, saveUrl, editKey, fieldPath, onQueryChange,
-  showAlias, showUserInput,
+  model, value, onlyTags, onQueryChange, showAlias, showUserInput, onContextReady,
 }) => {
   const [fields, setFields]   = useState(null);
   const [query, setQuery]     = useState(() => miqToRqb(value || null));
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
+  const tagValuesCache = useRef(new Map());
 
   // Fetch field metadata once per model.
   useEffect(() => {
@@ -77,6 +80,26 @@ const ExpressionEditor = ({
       });
   }, [model, onlyTags]);
 
+  // Build a flat name→label map once when fields are loaded.
+  const labelMap = useMemo(() => {
+    const all = (fields || []).flatMap((g) => (g.options ? g.options : [g]));
+    return new Map(all.map((f) => [f.name, f.label]));
+  }, [fields]);
+
+  // Notify parent of the label map and tag-values cache as soon as fields load.
+  const onContextReadyRef = useRef(onContextReady);
+  onContextReadyRef.current = onContextReady;
+  useEffect(() => {
+    if (fields && onContextReadyRef.current) {
+      onContextReadyRef.current(labelMap, tagValuesCache);
+    }
+  }, [fields, labelMap]);
+
+  // Callback for TagValueSelect to populate the cache after each tag-values fetch.
+  const onTagValuesLoaded = useCallback((tagPath, items) => {
+    tagValuesCache.current.set(tagPath, items);
+  }, []);
+
   const handleQueryChange = useCallback((newQuery) => {
     setQuery(newQuery);
 
@@ -85,13 +108,7 @@ const ExpressionEditor = ({
     if (onQueryChange) {
       onQueryChange(newQuery, errors);
     }
-
-    if (errors.length > 0 || !editKey || !fieldPath) {
-      return;
-    }
-
-    http.post(saveUrl || SAVE_URL, { edit_key: editKey, field_path: fieldPath, expression: rqbToMiq(newQuery) });
-  }, [saveUrl, editKey, fieldPath, fields, onQueryChange]);
+  }, [fields, onQueryChange]);
 
   // Update rule.dateFormat without touching its value (used by DateValueEditor's toggle).
   const updateRuleDateFormat = useCallback((ruleId, newDateFormat) => {
@@ -113,7 +130,7 @@ const ExpressionEditor = ({
     });
   }, [onQueryChange]);
 
-  // Update rule.alias in-place and persist.
+  // Update rule.alias in-place.
   const updateRuleAlias = useCallback((ruleId, alias) => {
     const patchRules = (rules) => rules.map((r) => {
       if (r.rules !== undefined) {
@@ -133,14 +150,11 @@ const ExpressionEditor = ({
       if (onQueryChange) {
         onQueryChange(patched);
       }
-      if (editKey && fieldPath) {
-        http.post(saveUrl || SAVE_URL, { edit_key: editKey, field_path: fieldPath, expression: rqbToMiq(patched) });
-      }
       return patched;
     });
-  }, [onQueryChange, saveUrl, editKey, fieldPath]);
+  }, [onQueryChange]);
 
-  // Flip a rule's value to/from the user-input sentinel and persist.
+  // Flip a rule's value to/from the user-input sentinel.
   const updateRuleUserInput = useCallback((ruleId, enabled) => {
     const USER_INPUT = '__user_input__';
 
@@ -172,12 +186,9 @@ const ExpressionEditor = ({
       if (onQueryChange) {
         onQueryChange(patched);
       }
-      if (editKey && fieldPath) {
-        http.post(saveUrl || SAVE_URL, { edit_key: editKey, field_path: fieldPath, expression: rqbToMiq(patched) });
-      }
       return patched;
     });
-  }, [fields, onQueryChange, saveUrl, editKey, fieldPath]);
+  }, [fields, onQueryChange]);
 
   if (loading) {
     return <Loading small withOverlay={false} description={__('Loading expression fields…')} />;
@@ -223,6 +234,9 @@ const ExpressionEditor = ({
             model,
             showAlias,
             showUserInput,
+            labelMap,
+            tagValuesCache,
+            onTagValuesLoaded,
           }}
         />
       </div>

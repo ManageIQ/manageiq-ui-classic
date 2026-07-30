@@ -1,6 +1,6 @@
 import { miqToRqb, rqbToMiq } from '../../components/expression-editor/expression-adapter';
 
-// ── miqToRqb ─────────────────────────────────────────────────────────────────
+// miqToRqb
 
 describe('miqToRqb', () => {
   it('converts a single field atom to a root AND group with one rule', () => {
@@ -127,7 +127,7 @@ describe('miqToRqb', () => {
   });
 });
 
-// ── rqbToMiq ─────────────────────────────────────────────────────────────────
+// rqbToMiq
 
 describe('rqbToMiq', () => {
   it('converts a single-rule AND group to a bare atom', () => {
@@ -275,10 +275,10 @@ describe('rqbToMiq', () => {
     expect(result).toBeNull();
   });
 
-  it('keeps a single-rule nested subgroup as a { combinator: [...] } wrapper, not a bare atom', () => {
-    // Root group with two rules — one is itself a sub-group with only one rule.
-    // Without the fix this sub-group would be flattened to a bare atom and then
-    // round-tripped back into the root group instead of staying nested.
+  it('flattens a single-rule nested subgroup to a bare atom', () => {
+    // A sub-group with only one rule has no semantic meaning in MiqExpression
+    // — {and:[X]} and {or:[X]} are both equivalent to X.  It should be
+    // flattened so the output doesn't produce extra combinator wrappers.
     const rqb = {
       id: '1',
       combinator: 'and',
@@ -301,21 +301,49 @@ describe('rqbToMiq', () => {
     // Top level must be { and: [...] }
     expect(Array.isArray(result.and)).toBe(true);
     expect(result.and).toHaveLength(2);
-    // Second child must be a { or: [...] } group, NOT a bare atom
-    expect(Array.isArray(result.and[1].or)).toBe(true);
-    expect(result.and[1].or).toHaveLength(1);
+    // Second child must be flattened to a bare atom, not wrapped in { or: [...] }
+    expect(result.and[1]['!=']).toBeDefined();
+    expect(result.and[1]['!='].field).toBe('Vm-name');
+  });
+
+  it('preserves NOT wrapper on a single-rule subgroup', () => {
+    // not:true on a group must never be flattened — the NOT is semantically significant.
+    const rqb = {
+      id: '1',
+      combinator: 'and',
+      not: false,
+      rules: [
+        {
+          id: '2', field: 'Vm-name', operator: '=', value: 'a',
+        },
+        {
+          id: '3',
+          combinator: 'or',
+          not: true,
+          rules: [{
+            id: '4', field: 'Vm-name', operator: '!=', value: 'b',
+          }],
+        },
+      ],
+    };
+    const result = rqbToMiq(rqb);
+    expect(Array.isArray(result.and)).toBe(true);
+    // Second child must be { not: { or: [atom] } }, not flattened
+    expect(result.and[1].not).toBeDefined();
+    expect(Array.isArray(result.and[1].not.or)).toBe(true);
   });
 });
-
-// ── Round-trip ────────────────────────────────────────────────────────────────
 
 describe('round-trip miqToRqb → rqbToMiq', () => {
   const cases = [
     ['single field atom', { '=': { field: 'Vm-name', value: 'test' } }],
-    ['nested group with a single rule inside an AND', {
+    // Note: {and:[..., {or:[atom]}]} is NOT in this list — the single-child
+    // {or:[atom]} wrapper is normalised away during rqbToMiq, producing
+    // {and:[atom_a, atom_b]}.  That is semantically correct.
+    ['nested group with two rules inside an AND', {
       and: [
         { '=': { field: 'Vm-name', value: 'a' } },
-        { or: [{ '!=': { field: 'Vm-name', value: 'b' } }] },
+        { or: [{ '!=': { field: 'Vm-name', value: 'b' } }, { '=': { field: 'Vm-name', value: 'c' } }] },
       ],
     }],
     ['AND of two atoms', {
@@ -352,8 +380,6 @@ describe('round-trip miqToRqb → rqbToMiq', () => {
     expect(JSON.stringify(rqbToMiq(miqToRqb(miq)))).not.toContain('dateFormat');
   });
 });
-
-// ── Date format detection (Phase 2) ──────────────────────────────────────────
 
 describe('miqToRqb — date format detection', () => {
   it('sets dateFormat:"s" for a specific date value containing "/"', () => {
@@ -398,8 +424,6 @@ describe('miqToRqb — date format detection', () => {
     expect(rule.value[0]).toBe('Today');
   });
 });
-
-// ── User-input sentinel (Phase 4-C) ──────────────────────────────────────────
 
 describe('miqToRqb — user-input sentinel', () => {
   it('decodes :user_input value to __user_input__ in the RQB rule', () => {

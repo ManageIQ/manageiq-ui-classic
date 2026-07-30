@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Select, SelectItem, TextInput } from '@carbon/react';
 import DateValueEditor from './date-value-editor';
 
-const toOp = (name) => ({ name, label: name });
+const toOp = (name) => ({ name, label: __(name) });
 
 // Fallback operator lists when the server call fails.
 const FIND_FALLBACK_OPS = {
@@ -133,9 +133,9 @@ const FindValueEditor = ({
   const ckey = compound.ckey || '=';
   const cvalue = compound.cvalue ?? '';
 
-  const update = (patch) => handleOnChange({
-    skey, svalue, check, cfield, ckey, cvalue, ...compound, ...patch,
-  });
+  const update = useCallback((patch) => handleOnChange({
+    skey, svalue, check, cfield, ckey, cvalue, ...patch,
+  }), [handleOnChange, skey, svalue, check, cfield, ckey, cvalue]);
 
   const idBase = `find-${(path || []).join('-')}`;
 
@@ -157,7 +157,7 @@ const FindValueEditor = ({
     if (!names.includes(skey)) {
       update({ skey: names[0] || '=' });
     }
-  }, [searchOps]);
+  }, [searchOps, update]);
 
   useEffect(() => {
     if (!checkOps) {
@@ -167,7 +167,7 @@ const FindValueEditor = ({
     if (!names.includes(ckey)) {
       update({ ckey: names[0] || '=' });
     }
-  }, [checkOps]);
+  }, [checkOps, update]);
 
   const isCountMode = check === 'checkcount';
   const showCheckValue = !NO_VALUE_OPS.has(ckey);

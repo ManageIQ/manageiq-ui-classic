@@ -1,6 +1,5 @@
 import { validateExpression } from '../../components/expression-editor/expression-validator';
 
-// Helpers to build minimal RQB rule/group objects.
 const rule = (overrides) => ({
   id: 'r1',
   field: 'Vm-name',
@@ -21,8 +20,6 @@ const DATETIME_FIELD = { name: 'Vm-last_scan_on', colType: 'datetime' };
 const STRING_FIELD = { name: 'Vm-name', colType: 'string' };
 
 describe('validateExpression', () => {
-  // ── Empty / null inputs ──────────────────────────────────────────────────────
-
   it('returns [] for null', () => {
     expect(validateExpression(null)).toEqual([]);
   });
@@ -30,8 +27,6 @@ describe('validateExpression', () => {
   it('returns [] for an empty group', () => {
     expect(validateExpression(group([]))).toEqual([]);
   });
-
-  // ── Standard field rules ─────────────────────────────────────────────────────
 
   it('returns [] for a complete field rule', () => {
     expect(validateExpression(group([rule()]))).toEqual([]);
@@ -65,8 +60,6 @@ describe('validateExpression', () => {
     expect(validateExpression(group([rule({ value: '__user_input__' })]))).toEqual([]);
   });
 
-  // ── Tag rules ────────────────────────────────────────────────────────────────
-
   it('returns [] for a complete tag rule', () => {
     const r = rule({ field: '__tag__:managed/location', operator: 'CONTAINS', value: 'London' });
     expect(validateExpression(group([r]))).toEqual([]);
@@ -83,8 +76,6 @@ describe('validateExpression', () => {
     const r = rule({ field: '__tag__:managed/location', operator: 'CONTAINS', value: null });
     expect(validateExpression(group([r]))).toHaveLength(1);
   });
-
-  // ── Find rules ───────────────────────────────────────────────────────────────
 
   it('returns [] for a complete checkall find rule', () => {
     const r = rule({
@@ -134,8 +125,6 @@ describe('validateExpression', () => {
     expect(validateExpression(group([r]))).toEqual([]);
   });
 
-  // ── Registry key rules ───────────────────────────────────────────────────────
-
   it('returns [] for a complete regkey rule', () => {
     const r = rule({ field: '__regkey__', operator: '=', value: { regkey: 'HKLM\\Software', regval: 'Version', data: '1.0' } });
     expect(validateExpression(group([r]))).toEqual([]);
@@ -160,8 +149,6 @@ describe('validateExpression', () => {
     expect(validateExpression(group([r]))).toEqual([]);
   });
 
-  // ── Nested groups ────────────────────────────────────────────────────────────
-
   it('validates rules inside nested groups', () => {
     const inner = group([rule({ value: '' })], 'or');
     const outer = group([rule(), inner]);
@@ -177,8 +164,6 @@ describe('validateExpression', () => {
     ]));
     expect(errors).toHaveLength(2);
   });
-
-  // ── Date / datetime field rules ──────────────────────────────────────────────
 
   describe('date fields (with field config)', () => {
     const fields = [DATE_FIELD, DATETIME_FIELD, STRING_FIELD];
@@ -208,8 +193,6 @@ describe('validateExpression', () => {
     });
 
     it('returns an error when only a time is present (no date part)', () => {
-      // Bug that prompted this: time Select auto-defaults but date picker is untouched,
-      // leaving value=" 14:30" or "14:30" with no ISO date.
       const r = rule({ field: 'Vm-last_scan_on', operator: '=', value: ' 14:30' });
       const errors = validateExpression(group([r]), fields);
       expect(errors).toHaveLength(1);
@@ -273,9 +256,6 @@ describe('validateExpression', () => {
     });
 
     it('returns [] without field config (no colType available — graceful degradation)', () => {
-      // Without field config, date rules are treated as generic text — only blank is checked.
-      // A time-only string is non-blank so it passes. This is the pre-fix behaviour for
-      // callers that do not supply fields.
       const r = rule({ field: 'Vm-last_scan_on', operator: '=', value: ' 14:30' });
       expect(validateExpression(group([r]))).toEqual([]);
     });
