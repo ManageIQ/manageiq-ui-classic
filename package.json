@@ -135,7 +135,6 @@
     "path-complete-extname": "~1.0.0",
     "postcss-loader": "~4.3.0",
     "postcss-scss": "^4.0.0",
-    "react-test-renderer": "~16.14.0",
     "regenerator-runtime": "~0.14.1",
     "sass": "~1.99.0",
     "sass-loader": "~10.5.2",
