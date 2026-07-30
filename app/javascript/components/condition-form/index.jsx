@@ -2,15 +2,9 @@ import { useState, useEffect } from 'react';
 import { Loading } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
 import { API } from '../../http_api';
-import defaultComponentMapper from '../../forms/mappers/componentMapper';
+import componentMapper from '../../forms/mappers/componentMapper';
 import createSchema from './condition-form.schema';
-import ExpressionEditorField from './expression-editor-field';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-
-const componentMapper = {
-  ...defaultComponentMapper,
-  'expression-editor': ExpressionEditorField,
-};
 
 const EXPRESSION_INVALID = '__expression_invalid__';
 

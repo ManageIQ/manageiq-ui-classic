@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Select, SelectItem, ComboBox } from '@carbon/react';
+import { AliasRow } from './carbon-controls';
 
 const groupForValue = (groups, value) => {
   if (!value) {
@@ -16,6 +17,9 @@ const TwoStepFieldSelector = ({
   title,
   path,
   className,
+  rule,
+  context,
+  fieldData,
 }) => {
   const groups = Array.isArray(options) ? options.filter((g) => g.options && g.options.length > 0) : [];
   const pathKey = (path || []).join('-');
@@ -103,6 +107,7 @@ const TwoStepFieldSelector = ({
           onChange={handleFieldChange}
         />
       )}
+      <AliasRow rule={rule} context={context} disabled={disabled} fieldData={fieldData} />
     </div>
   );
 };

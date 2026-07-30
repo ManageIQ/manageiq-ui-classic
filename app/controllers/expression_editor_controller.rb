@@ -2,29 +2,7 @@ class ExpressionEditorController < ApplicationController
   before_action :check_privileges
 
   feature_for_actions %w[condition_edit condition_new miq_policy_edit miq_alert_edit],
-                      :metadata, :operators, :tag_values, :find_check_fields, :expression_update
-
-  # POST /expression_editor/expression_update
-  def expression_update
-    payload    = JSON.parse(request.body.read)
-    edit_key   = payload['edit_key'].to_s
-    field_path = Array(payload['field_path']).map(&:to_sym)
-    expression = payload['expression']
-
-    return render_bad_request('edit_key is required')   if edit_key.blank?
-    return render_bad_request('field_path is required') if field_path.empty?
-    return render :json => {:success => false, :error => 'Session expired'}, :status => 422 unless load_edit(edit_key)
-
-    @edit.store_path(field_path, expression)
-    session[:changed] = (@edit[:new] != @edit[:current])
-    session[:edit]    = @edit
-
-    render :json => {:success => true}
-  rescue JSON::ParserError => e
-    render_bad_request(e.message)
-  rescue => e
-    render :json => {:success => false, :error => e.message}, :status => 500
-  end
+                      :metadata, :operators, :tag_values, :find_check_fields
 
   # GET /expression_editor/metadata?model=Vm
   def metadata

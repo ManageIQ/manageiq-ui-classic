@@ -98,7 +98,7 @@ export const CombinatorSelector = ({
   </Select>
 );
 
-// Alias checkbox + text input rendered between field selector and operator.
+// Alias checkbox + text input rendered in the value row, after the value editor.
 const AliasRow = ({
   rule, context, disabled, fieldData,
 }) => {
@@ -107,7 +107,7 @@ const AliasRow = ({
   }
   const { updateRuleAlias } = context;
   const colType = fieldData && fieldData.colType;
-  if (colType === 'regkey') {
+  if (colType === 'regkey' || colType === 'find') {
     return null;
   }
 
@@ -157,43 +157,43 @@ export const OperatorSelector = ({
   className,
   title,
   path,
-  rule,
-  context,
-  fieldData,
 }) => {
   const flat = flatOptions(options);
 
+  // No operators (e.g. find fields manage their own operator internally).
+  if (flat.length === 0) {
+    return null;
+  }
+
   // Single-operator fields (e.g. tags always use CONTAINS) — show a static label.
-  const operatorControl = flat.length === 1
-    ? (
+  if (flat.length === 1) {
+    return (
       <span className={`exp-operator-label${className ? ` ${className}` : ''}`}>
         {flat[0].label}
       </span>
-    )
-    : (
-      <Select
-        id={`operator-${(path || []).join('-')}-${value}`}
-        hideLabel
-        labelText={title || __('Operator')}
-        size="sm"
-        value={value}
-        disabled={disabled}
-        className={className}
-        onChange={(e) => handleOnChange(e.target.value)}
-      >
-        {flat.map((o) => (
-          <SelectItem key={o.name ?? o.value} value={o.name ?? o.value} text={o.label} />
-        ))}
-      </Select>
     );
+  }
 
   return (
-    <>
-      <AliasRow rule={rule} context={context} disabled={disabled} fieldData={fieldData} />
-      {operatorControl}
-    </>
+    <Select
+      id={`operator-${(path || []).join('-')}`}
+      hideLabel
+      labelText={title || __('Operator')}
+      size="sm"
+      value={value}
+      disabled={disabled}
+      className={className}
+      onChange={(e) => handleOnChange(e.target.value)}
+    >
+      {flat.map((o) => (
+        <SelectItem key={o.name ?? o.value} value={o.name ?? o.value} text={o.label} />
+      ))}
+    </Select>
   );
 };
+
+// Re-export AliasRow so CarbonValueEditor can render it in the value row.
+export { AliasRow };
 
 // Carbon Toggle with inline label span so "Not" sits beside the pill in the flex header row.
 // (Setting labelText on Toggle directly stacks it above the pill as a block element.)

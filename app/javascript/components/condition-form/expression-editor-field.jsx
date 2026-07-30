@@ -1,12 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { useFieldApi, FormSpy } from '@@ddf';
 import { InlineNotification, FormGroup } from '@carbon/react';
-import NotificationMessage from '../notification-message';
 import { rqbToMiq } from '../expression-editor/expression-adapter';
+import { miqExpressionToHuman } from '../expression-editor/expression-human';
 import ExpressionEditor from '../expression-editor';
-import { http } from '../../http_api';
-
-const PREVIEW_URL = '/condition/expression_preview';
 
 // Inner component receives towhat and formPristine as explicit props so React
 // re-renders it whenever FormSpy detects a change in those values.
@@ -21,19 +18,32 @@ const ExpressionEditorInner = ({
   const [expressionText, setExpressionText] = useState('');
   const [validationErrors, setValidationErrors] = useState([]);
 
+  // Refs populated by ExpressionEditor via onContextReady once fields load.
+  const labelMapRef = useRef(new Map());
+  const tagValuesCacheRef = useRef(null);
+
   const emptyMessage = isScope
     ? __('No scope defined, the scope of this condition includes all elements.')
     : __('A condition must contain a valid expression.');
 
-  const loadPreviewText = (expression) => {
-    if (!expression) {
-      setExpressionText('');
-      return;
-    }
+  const updatePreviewText = (expression) => {
+    const tagMap = tagValuesCacheRef.current ? tagValuesCacheRef.current.current : new Map();
+    const text = expression
+      ? miqExpressionToHuman(expression, labelMapRef.current, tagMap)
+      : '';
+    setExpressionText(text);
+  };
 
-    http.post(PREVIEW_URL, { expression }, { headers: { Accept: 'application/json' } })
-      .then((data) => setExpressionText(data.text || ''))
-      .catch(() => setExpressionText(''));
+  const handleContextReady = (labelMap, tagValuesCache) => {
+    labelMapRef.current = labelMap;
+    // tagValuesCache is the useRef object from ExpressionEditor; store it so
+    // updatePreviewText can reach the live Map via .current.
+    tagValuesCacheRef.current = tagValuesCache;
+    // Re-render preview if an expression is already present.
+    const currentValue = seedRef.current;
+    if (currentValue && currentValue !== '__expression_invalid__') {
+      updatePreviewText(currentValue);
+    }
   };
 
   // When towhat changes after mount, clear the expression and reset the editor.
@@ -64,31 +74,36 @@ const ExpressionEditorInner = ({
     }
     const resetValue = (input.value && input.value !== '__expression_invalid__') ? input.value : null;
     seedRef.current = resetValue;
-    loadPreviewText(resetValue);
+    updatePreviewText(resetValue);
     setMountKey((k) => k + 1);
   }, [formPristine]);
 
-  // On initial render, load preview text if an expression is already present.
-  useEffect(() => {
-    if (input.value && input.value !== '__expression_invalid__' && !expressionText) {
-      loadPreviewText(input.value);
-    }
-  }, []);
-
   const handleQueryChange = (q, errors = []) => {
-    // Mark touched on first interaction so error messages become visible.
-    if (!meta.touched) {
-      input.onBlur();
-    }
     setValidationErrors(errors);
     if (errors.length > 0) {
-      input.onChange('__expression_invalid__');
-      loadPreviewText(null);
+      // Only mark touched and update the form value if something actually changed.
+      if (input.value !== '__expression_invalid__') {
+        if (!meta.touched) {
+          input.onBlur();
+        }
+        input.onChange('__expression_invalid__');
+      }
+      updatePreviewText(null);
       return;
     }
     const expression = rqbToMiq(q);
+    updatePreviewText(expression);
+    // Only call input.onChange when the serialised expression actually changed,
+    const serialised = JSON.stringify(expression);
+    const current = JSON.stringify(input.value ?? null);
+    if (serialised === current) {
+      return;
+    }
+    // Mark touched on first real interaction so error messages become visible.
+    if (!meta.touched) {
+      input.onBlur();
+    }
     input.onChange(expression);
-    loadPreviewText(expression);
   };
 
   // Show required error for Expression (not Scope), only when there are no
@@ -115,6 +130,7 @@ const ExpressionEditorInner = ({
         value={seedRef.current}
         onlyTags={onlyTags || false}
         onQueryChange={handleQueryChange}
+        onContextReady={handleContextReady}
       />
       {validationErrors.length > 0 && (
         <InlineNotification
@@ -133,7 +149,14 @@ const ExpressionEditorInner = ({
               <div>{expressionText}</div>
             </div>
           )
-          : <NotificationMessage type="info" message={emptyMessage} />
+          : (
+            <InlineNotification
+              kind="info"
+              title={emptyMessage}
+              hideCloseButton
+              lowContrast
+            />
+          )
       )}
       {showRequiredError && (
         <p className="cds--form-requirement">{meta.error}</p>

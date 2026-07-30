@@ -1,11 +1,8 @@
-// ── Operator helpers ──────────────────────────────────────────────────────────
-
-const op = (name) => ({ name, label: name });
+const op = (name) => ({ name, label: __(name) });
 
 const FALLBACK_OPERATORS = {
   count: ['=', '!=', '<', '<=', '>=', '>'].map(op),
   tag: [op('CONTAINS')],
-  find: [op('FIND')],
   regkey: [
     '=', 'STARTS WITH', 'ENDS WITH', 'INCLUDES', 'REGULAR EXPRESSION MATCHES',
     'REGULAR EXPRESSION DOES NOT MATCH', 'IS NULL', 'IS NOT NULL', 'IS EMPTY',
@@ -34,8 +31,6 @@ const inputTypeForColType = (colType) => {
   }
   return 'text';
 };
-
-// ── Units configuration ───────────────────────────────────────────────────────
 
 // :bytes stores the unit in the value as "42.megabytes".
 // All other sub_types show a display-only label; the value is a plain number string.
@@ -75,8 +70,6 @@ const PLACEHOLDER_BY_COL_TYPE = {
   string_set: () => __('Enter a list of text strings separated by commas'),
   numeric_set: () => __('Enter a list of numbers separated by commas'),
 };
-
-// ── Main export ───────────────────────────────────────────────────────────────
 
 export const buildFieldConfig = (metadata, opts = {}) => {
   const config = [];
@@ -142,7 +135,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
       label,
       group: __('Find'),
       valueEditorType: 'text', // custom renderer overrides based on __find__: prefix
-      operators: FALLBACK_OPERATORS.find,
+      operators: [],  // empty → RQB renders no operator slot; FindValueEditor owns its own operators
       colType: 'find',
     });
   });
