@@ -15,7 +15,7 @@ const generateId = () => {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 };
 
-// ── MiqExpression → RQB ───────────────────────────────────────────────────────
+// MiqExpression → RQB
 
 const miqAtomToRule = (miqAtom) => {
   const keys = Object.keys(miqAtom).filter((k) => k !== '_token' && k !== '_parentIsNot');
@@ -151,7 +151,7 @@ export const miqToRqb = (miqExp) => {
   return { id: generateId(), combinator: 'and', rules: [] };
 };
 
-// ── RQB → MiqExpression ───────────────────────────────────────────────────────
+// RQB → MiqExpression
 
 const ruleToMiqAtom = (rule) => {
   const { field, operator, value } = rule;
@@ -208,19 +208,28 @@ const ruleToMiqAtom = (rule) => {
 const rqbGroupToMiq = (rqbGroup, isRoot = false) => {
   const { combinator, not, rules } = rqbGroup;
 
-  const children = (rules || []).map((r) => {
+  const children = (rules || []).reduce((acc, r) => {
     if (r.rules !== undefined) {
-      return rqbGroupToMiq(r, false);
+      const nested = rqbGroupToMiq(r, false);
+      // Drop empty sub-groups (they produce null and have no MiqExpression equivalent).
+      if (nested !== null) {
+        acc.push(nested);
+      }
+    } else {
+      acc.push(ruleToMiqAtom(r));
     }
-    return ruleToMiqAtom(r);
-  });
+    return acc;
+  }, []);
 
-  // Only flatten a single-child group at the root level; nested groups always
-  // emit a full { combinator: [...] } wrapper to survive the round-trip.
+  // A group with a single child is always equivalent to that child in
+  // MiqExpression — {and:[X]} and {or:[X]} both mean X.  Flatten at every
+  // level so that deeply-nested UI groups (group > group > group > rule)
+  // don't produce redundant combinator wrappers in the serialised output or
+  // in the human-readable preview.
   let exp;
   if (children.length === 0) {
     exp = null;
-  } else if (children.length === 1 && isRoot) {
+  } else if (children.length === 1 && (isRoot || !not)) {
     [exp] = children;
   } else {
     exp = { [combinator]: children };

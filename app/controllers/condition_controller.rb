@@ -37,7 +37,7 @@ class ConditionController < ApplicationController
 
   def edit
     assert_privileges("condition_edit")
-    @record = Condition.find(params.expect(:id))
+    @record = Condition.find(checked_item_id)
     if @record.read_only
       flash_to_session(_("Read only condition cannot be edited"), :error)
       redirect_to(:action => 'show_list') and return
@@ -47,30 +47,12 @@ class ConditionController < ApplicationController
 
   def copy
     assert_privileges("condition_copy")
-    @record = Condition.find(params.expect(:id))
+    @record = Condition.find(checked_item_id)
     if @record.read_only
       flash_to_session(_("Read only condition cannot be edited"), :error)
       redirect_to(:action => 'show_list') and return
     end
     @in_a_form = true
-  end
-
-  # POST /condition/expression_preview
-  def expression_preview
-    payload = JSON.parse(request.body.read)
-    expression = payload['expression']
-    text = ''
-
-    if expression.present?
-      exp_remove_tokens(expression)
-      text = exp_build_table(expression).map { |token| [token].flatten.first.to_s }.join(' ')
-    end
-
-    render :json => {:text => text}
-  rescue JSON::ParserError => e
-    render :json => {:success => false, :message => e.message}, :status => 400
-  rescue => e
-    render :json => {:text => '', :error => e.message}
   end
 
   private
@@ -98,8 +80,6 @@ class ConditionController < ApplicationController
       :record_title => :description,
     }
   end
-
-  feature_for_actions %w[condition_edit condition_new], :expression_preview
 
   toolbar :condition, :conditions
   menu_section :con

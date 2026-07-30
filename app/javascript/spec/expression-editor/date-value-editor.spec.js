@@ -1,5 +1,5 @@
 import {
-  render, screen, fireEvent, waitFor,
+  render, screen, fireEvent, waitFor, act,
 } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import DateValueEditor from '../../components/expression-editor/date-value-editor';
@@ -192,5 +192,116 @@ describe('DateValueEditor — FROM operator (two controls)', () => {
     // selects[0] = from, selects[1] = through
     fireEvent.change(selects[1], { target: { value: 'Last Week' } });
     expect(onChange).toHaveBeenCalledWith(['Today', 'Last Week']);
+  });
+});
+
+describe('DateValueEditor — operator-change time sync', () => {
+  it('appends default time when operator changes from IS to BEFORE on a datetime field with a date', async() => {
+    const onChange = jest.fn();
+    const { rerender } = await renderEditor({
+      operator: 'IS',
+      dateFormat: 's',
+      isDatetime: true,
+      value: '2024-01-15',
+      handleOnChange: onChange,
+    });
+    onChange.mockClear();
+    await act(async() => {
+      rerender(
+        <DateValueEditor
+          operator="BEFORE"
+          dateFormat="s"
+          isDatetime
+          value="2024-01-15"
+          disabled={false}
+          id="test-date"
+          handleOnChange={onChange}
+          onToggleFormat={jest.fn()}
+        />,
+      );
+    });
+    expect(onChange).toHaveBeenCalledWith(expect.stringMatching(/^2024-01-15 /));
+  });
+
+  it('strips time when operator changes from BEFORE to IS on a datetime field', async() => {
+    const onChange = jest.fn();
+    const { rerender } = await renderEditor({
+      operator: 'BEFORE',
+      dateFormat: 's',
+      isDatetime: true,
+      value: '2024-01-15 08:00',
+      handleOnChange: onChange,
+    });
+    onChange.mockClear();
+    await act(async() => {
+      rerender(
+        <DateValueEditor
+          operator="IS"
+          dateFormat="s"
+          isDatetime
+          value="2024-01-15 08:00"
+          disabled={false}
+          id="test-date"
+          handleOnChange={onChange}
+          onToggleFormat={jest.fn()}
+        />,
+      );
+    });
+    expect(onChange).toHaveBeenCalledWith('2024-01-15');
+  });
+
+  it('does not call handleOnChange when operator changes but value already matches', async() => {
+    const onChange = jest.fn();
+    const { rerender } = await renderEditor({
+      operator: 'BEFORE',
+      dateFormat: 's',
+      isDatetime: true,
+      value: '2024-01-15 08:00',
+      handleOnChange: onChange,
+    });
+    onChange.mockClear();
+    await act(async() => {
+      rerender(
+        <DateValueEditor
+          operator="AFTER"
+          dateFormat="s"
+          isDatetime
+          value="2024-01-15 08:00"
+          disabled={false}
+          id="test-date"
+          handleOnChange={onChange}
+          onToggleFormat={jest.fn()}
+        />,
+      );
+    });
+    // Both operators show time — no sync needed
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('does not call handleOnChange when value is empty', async() => {
+    const onChange = jest.fn();
+    const { rerender } = await renderEditor({
+      operator: 'IS',
+      dateFormat: 's',
+      isDatetime: true,
+      value: '',
+      handleOnChange: onChange,
+    });
+    onChange.mockClear();
+    await act(async() => {
+      rerender(
+        <DateValueEditor
+          operator="BEFORE"
+          dateFormat="s"
+          isDatetime
+          value=""
+          disabled={false}
+          id="test-date"
+          handleOnChange={onChange}
+          onToggleFormat={jest.fn()}
+        />,
+      );
+    });
+    expect(onChange).not.toHaveBeenCalled();
   });
 });

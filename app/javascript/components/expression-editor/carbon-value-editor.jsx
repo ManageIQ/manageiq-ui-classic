@@ -26,6 +26,7 @@ const TagValueSelect = ({
   disabled,
   id,
   handleOnChange,
+  context,
 }) => {
   const [tagValues, setTagValues] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,7 @@ const TagValueSelect = ({
           ? { label: entry[0], name: String(entry[1]) }
           : { label: entry.label, name: String(entry.value ?? entry.name) }));
         setTagValues(items);
+        context?.onTagValuesLoaded?.(tagPath, items);
       })
       .catch(() => setTagValues([]))
       .finally(() => setLoading(false));
@@ -314,7 +316,7 @@ const CarbonValueEditor = ({
     return <div className={className}>{extras}</div>;
   }
 
-  // FIND atom
+  // FIND atom — rule-value is display:contents in CSS; alias is suppressed for find colType.
   if (String(field).startsWith('__find__:')) {
     return (
       <div className={className}>
@@ -381,6 +383,7 @@ const CarbonValueEditor = ({
           disabled={disabled}
           id={id}
           handleOnChange={handleOnChange}
+          context={context}
         />
         {extras}
       </div>

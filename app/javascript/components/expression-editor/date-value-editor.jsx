@@ -95,12 +95,6 @@ const SingleDateControl = ({
   const showTime = isDatetime && operator !== 'IS';
   const defaultTime = TIME_OPTIONS[0].name;
 
-  useEffect(() => {
-    if (showTime && date && time === null) {
-      onChange(joinDateTime(date, defaultTime));
-    }
-  }, [showTime]); // intentionally omits date/time/onChange — runs only when showTime toggles
-
   if (dateFormat === 'r') {
     const firstOption = relativeOptions[0]?.name ?? '';
     const safeVal = value || firstOption;
@@ -134,7 +128,7 @@ const SingleDateControl = ({
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
     const formatted = `${yyyy}-${mm}-${dd}`;
-    onChange(joinDateTime(formatted, time ?? defaultTime));
+    onChange(showTime ? joinDateTime(formatted, time ?? defaultTime) : formatted);
   };
 
   const handleTimeChange = (e) => {
@@ -210,6 +204,39 @@ const DateValueEditor = ({
   const fromVal = isFrom ? (Array.isArray(value) ? value[0] : value) ?? '' : null;
   const throughVal = isFrom ? (Array.isArray(value) ? value[1] : null) ?? '' : null;
   const scalarVal = isFrom ? null : (Array.isArray(value) ? value[0] : value) ?? '';
+
+  useEffect(() => {
+    if (dateFormat !== 's' || !isDatetime) {
+      return;
+    }
+    const defaultTime = TIME_OPTIONS[0].name;
+    const showTime = operator !== 'IS';
+    const syncOne = (val) => {
+      const { date, time } = splitDateTime(val);
+      if (!date) {
+        return val;
+      }
+      if (showTime && time === null) {
+        return joinDateTime(date, defaultTime);
+      }
+      if (!showTime && time !== null) {
+        return date;
+      }
+      return val;
+    };
+    if (isFrom) {
+      const nextFrom = syncOne(fromVal ?? '');
+      const nextThrough = syncOne(throughVal ?? '');
+      if (nextFrom !== fromVal || nextThrough !== throughVal) {
+        handleOnChange([nextFrom, nextThrough]);
+      }
+    } else {
+      const next = syncOne(scalarVal ?? '');
+      if (next !== scalarVal) {
+        handleOnChange(next);
+      }
+    }
+  }, [operator]);
 
   const handleToggle = () => {
     const next = dateFormat === 's' ? 'r' : 's';
