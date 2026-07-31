@@ -317,6 +317,8 @@ class MiqRequestController < ApplicationController
   private
 
   def parse_val(key, val)
+    return val if val.nil?
+
     if val.kind_of?(Integer) # Handle integer values
       if key.include?("Array::") # Handle multi select with integers
         val = [val]
