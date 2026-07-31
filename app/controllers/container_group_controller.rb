@@ -11,36 +11,6 @@ class ContainerGroupController < ApplicationController
     process_show_list(:named_scope => :active)
   end
 
-  def button
-    case params[:pressed]
-    when "container_group_logs"
-      javascript_redirect(
-        :action => "logs_page",
-        :id     => params[:id]
-      )
-    else
-      super
-    end
-  end
-
-  def logs_page
-    @record = identify_record(params[:id], ContainerGroup)
-    drop_breadcrumb(
-      :name => _("Logs"),
-      :url  => "/container_group/logs_page/#{@record.id}"
-    )
-  end
-
-
-  def logs
-    container_group = ContainerGroup.find(params[:id])
-    container_name  = params[:container]
-
-    render :json => { :logs => container_group.logs(container_name) }
-  rescue StandardError => e
-    render :json => { :error => e.message }, :status => :bad_gateway
-  end
-
   private
 
   def textual_group_list

@@ -683,8 +683,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
-        logs
-        logs_page
       ],
       :post => %w[
         button
