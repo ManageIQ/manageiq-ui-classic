@@ -119,7 +119,6 @@ exports[`Custom Button form component should add a new generic object custom but
               id="display"
               name="options.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -262,7 +261,7 @@ exports[`Custom Button form component should add a new generic object custom but
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-:r1j:-label"
+          id="downshift-_r_1j_-label"
         >
           Dialog
         </label>
@@ -275,10 +274,10 @@ exports[`Custom Button form component should add a new generic object custom but
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:r1j:-menu"
+              aria-controls="downshift-_r_1j_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r1j:-label"
+              aria-labelledby="downshift-_r_1j_-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -291,11 +290,11 @@ exports[`Custom Button form component should add a new generic object custom but
               value=""
             />
             <button
-              aria-controls="downshift-:r1j:-menu"
+              aria-controls="downshift-_r_1j_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:r1j:-toggle-button"
+              id="downshift-_r_1j_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -317,9 +316,9 @@ exports[`Custom Button form component should add a new generic object custom but
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r1j:-label"
+            aria-labelledby="downshift-_r_1j_-label"
             class="cds--list-box__menu"
-            id="downshift-:r1j:-menu"
+            id="downshift-_r_1j_-menu"
             role="listbox"
           />
         </div>
@@ -906,7 +905,7 @@ exports[`Custom Button form component should edit a generic object custom button
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-:r1n:"
+                  id="radio-button-_r_1n_"
                   label="Localhost"
                   name="inventory_type"
                   type="radio"
@@ -914,7 +913,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:r1n:"
+                  for="radio-button-_r_1n_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -932,7 +931,7 @@ exports[`Custom Button form component should edit a generic object custom button
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-:r1o:"
+                  id="radio-button-_r_1o_"
                   label="Target Machine"
                   name="inventory_type"
                   type="radio"
@@ -940,7 +939,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:r1o:"
+                  for="radio-button-_r_1o_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -959,7 +958,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-:r1p:"
+                  id="radio-button-_r_1p_"
                   label="Specific Hosts"
                   name="inventory_type"
                   type="radio"
@@ -967,7 +966,7 @@ exports[`Custom Button form component should edit a generic object custom button
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:r1p:"
+                  for="radio-button-_r_1p_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -1088,7 +1087,6 @@ exports[`Custom Button form component should edit a generic object custom button
               id="display"
               name="options.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1231,7 +1229,7 @@ exports[`Custom Button form component should edit a generic object custom button
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-:r1u:-label"
+          id="downshift-_r_1u_-label"
         >
           Dialog
         </label>
@@ -1244,10 +1242,10 @@ exports[`Custom Button form component should edit a generic object custom button
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:r1u:-menu"
+              aria-controls="downshift-_r_1u_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r1u:-label"
+              aria-labelledby="downshift-_r_1u_-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -1282,11 +1280,11 @@ exports[`Custom Button form component should edit a generic object custom button
               </svg>
             </button>
             <button
-              aria-controls="downshift-:r1u:-menu"
+              aria-controls="downshift-_r_1u_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:r1u:-toggle-button"
+              id="downshift-_r_1u_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1308,9 +1306,9 @@ exports[`Custom Button form component should edit a generic object custom button
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r1u:-label"
+            aria-labelledby="downshift-_r_1u_-label"
             class="cds--list-box__menu"
-            id="downshift-:r1u:-menu"
+            id="downshift-_r_1u_-menu"
             role="listbox"
           />
         </div>
@@ -1642,7 +1640,6 @@ exports[`Custom Button form component should render the adding form for generic 
               id="display"
               name="options.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1785,7 +1782,7 @@ exports[`Custom Button form component should render the adding form for generic 
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-:ri:-label"
+          id="downshift-_r_i_-label"
         >
           Dialog
         </label>
@@ -1798,10 +1795,10 @@ exports[`Custom Button form component should render the adding form for generic 
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:ri:-menu"
+              aria-controls="downshift-_r_i_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:ri:-label"
+              aria-labelledby="downshift-_r_i_-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="resource_action.dialog_id"
@@ -1814,11 +1811,11 @@ exports[`Custom Button form component should render the adding form for generic 
               value=""
             />
             <button
-              aria-controls="downshift-:ri:-menu"
+              aria-controls="downshift-_r_i_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:ri:-toggle-button"
+              id="downshift-_r_i_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1840,9 +1837,9 @@ exports[`Custom Button form component should render the adding form for generic 
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:ri:-label"
+            aria-labelledby="downshift-_r_i_-label"
             class="cds--list-box__menu"
-            id="downshift-:ri:-menu"
+            id="downshift-_r_i_-menu"
             role="listbox"
           />
         </div>
@@ -2429,7 +2426,7 @@ exports[`Custom Button form component should render the editing form for generic
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-:rm:"
+                  id="radio-button-_r_m_"
                   label="Localhost"
                   name="inventory_type"
                   type="radio"
@@ -2437,7 +2434,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:rm:"
+                  for="radio-button-_r_m_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2455,7 +2452,7 @@ exports[`Custom Button form component should render the editing form for generic
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-:rn:"
+                  id="radio-button-_r_n_"
                   label="Target Machine"
                   name="inventory_type"
                   type="radio"
@@ -2463,7 +2460,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:rn:"
+                  for="radio-button-_r_n_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2482,7 +2479,7 @@ exports[`Custom Button form component should render the editing form for generic
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-:ro:"
+                  id="radio-button-_r_o_"
                   label="Specific Hosts"
                   name="inventory_type"
                   type="radio"
@@ -2490,7 +2487,7 @@ exports[`Custom Button form component should render the editing form for generic
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-:ro:"
+                  for="radio-button-_r_o_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -2611,7 +2608,6 @@ exports[`Custom Button form component should render the editing form for generic
               id="display"
               name="options.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -2754,7 +2750,7 @@ exports[`Custom Button form component should render the editing form for generic
           class="cds--label"
           dir="auto"
           for="resource_action.dialog_id"
-          id="downshift-:rt:-label"
+          id="downshift-_r_t_-label"
         >
           Dialog
         </label>
@@ -2767,10 +2763,10 @@ exports[`Custom Button form component should render the editing form for generic
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:rt:-menu"
+              aria-controls="downshift-_r_t_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:rt:-label"
+              aria-labelledby="downshift-_r_t_-label"
               autocomplete="off"
               class="cds--text-input"
               id="resource_action.dialog_id"
@@ -2805,11 +2801,11 @@ exports[`Custom Button form component should render the editing form for generic
               </svg>
             </button>
             <button
-              aria-controls="downshift-:rt:-menu"
+              aria-controls="downshift-_r_t_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:rt:-toggle-button"
+              id="downshift-_r_t_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -2831,9 +2827,9 @@ exports[`Custom Button form component should render the editing form for generic
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:rt:-label"
+            aria-labelledby="downshift-_r_t_-label"
             class="cds--list-box__menu"
-            id="downshift-:rt:-menu"
+            id="downshift-_r_t_-menu"
             role="listbox"
           />
         </div>

@@ -110,7 +110,6 @@ exports[`Schedule form component should render edit form when filter_type is not
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -615,7 +614,7 @@ exports[`Schedule form component should render edit form when filter_type is not
             class="cds--label"
             dir="auto"
             for="target_class"
-            id="downshift-:rg:-label"
+            id="downshift-_r_g_-label"
           >
             Type
           </label>
@@ -628,10 +627,10 @@ exports[`Schedule form component should render edit form when filter_type is not
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-:rg:-menu"
+                aria-controls="downshift-_r_g_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:rg:-label"
+                aria-labelledby="downshift-_r_g_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_class"
@@ -666,11 +665,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                 </svg>
               </button>
               <button
-                aria-controls="downshift-:rg:-menu"
+                aria-controls="downshift-_r_g_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-:rg:-toggle-button"
+                id="downshift-_r_g_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -692,9 +691,9 @@ exports[`Schedule form component should render edit form when filter_type is not
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-:rg:-label"
+              aria-labelledby="downshift-_r_g_-label"
               class="cds--list-box__menu"
-              id="downshift-:rg:-menu"
+              id="downshift-_r_g_-menu"
               role="listbox"
             />
           </div>
@@ -710,7 +709,7 @@ exports[`Schedule form component should render edit form when filter_type is not
             class="cds--label"
             dir="auto"
             for="target_id"
-            id="downshift-:rj:-label"
+            id="downshift-_r_j_-label"
           >
             Object
           </label>
@@ -723,10 +722,10 @@ exports[`Schedule form component should render edit form when filter_type is not
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-:rj:-menu"
+                aria-controls="downshift-_r_j_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:rj:-label"
+                aria-labelledby="downshift-_r_j_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_id"
@@ -761,11 +760,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                 </svg>
               </button>
               <button
-                aria-controls="downshift-:rj:-menu"
+                aria-controls="downshift-_r_j_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-:rj:-toggle-button"
+                id="downshift-_r_j_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -787,9 +786,9 @@ exports[`Schedule form component should render edit form when filter_type is not
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-:rj:-label"
+              aria-labelledby="downshift-_r_j_-label"
               class="cds--list-box__menu"
-              id="downshift-:rj:-menu"
+              id="downshift-_r_j_-menu"
               role="listbox"
             />
           </div>
@@ -973,7 +972,7 @@ exports[`Schedule form component should render edit form when filter_type is not
           class="cds--label"
           dir="auto"
           for="time_zone"
-          id="downshift-:rm:-label"
+          id="downshift-_r_m_-label"
         >
           Time Zone
         </label>
@@ -986,10 +985,10 @@ exports[`Schedule form component should render edit form when filter_type is not
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:rm:-menu"
+              aria-controls="downshift-_r_m_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:rm:-label"
+              aria-labelledby="downshift-_r_m_-label"
               autocomplete="off"
               class="cds--text-input"
               id="time_zone"
@@ -1024,11 +1023,11 @@ exports[`Schedule form component should render edit form when filter_type is not
               </svg>
             </button>
             <button
-              aria-controls="downshift-:rm:-menu"
+              aria-controls="downshift-_r_m_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:rm:-toggle-button"
+              id="downshift-_r_m_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1050,9 +1049,9 @@ exports[`Schedule form component should render edit form when filter_type is not
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:rm:-label"
+            aria-labelledby="downshift-_r_m_-label"
             class="cds--list-box__menu"
-            id="downshift-:rm:-menu"
+            id="downshift-_r_m_-menu"
             role="listbox"
           />
         </div>
@@ -1288,7 +1287,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -1790,7 +1788,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
           class="cds--label"
           dir="auto"
           for="target_class"
-          id="downshift-:ru:-label"
+          id="downshift-_r_u_-label"
         >
           Type
         </label>
@@ -1803,10 +1801,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:ru:-menu"
+              aria-controls="downshift-_r_u_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:ru:-label"
+              aria-labelledby="downshift-_r_u_-label"
               autocomplete="off"
               class="cds--text-input"
               id="target_class"
@@ -1841,11 +1839,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
               </svg>
             </button>
             <button
-              aria-controls="downshift-:ru:-menu"
+              aria-controls="downshift-_r_u_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:ru:-toggle-button"
+              id="downshift-_r_u_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1867,9 +1865,9 @@ exports[`Schedule form component should render edit form when filter_type is nul
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:ru:-label"
+            aria-labelledby="downshift-_r_u_-label"
             class="cds--list-box__menu"
-            id="downshift-:ru:-menu"
+            id="downshift-_r_u_-menu"
             role="listbox"
           />
         </div>
@@ -1881,7 +1879,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
           class="cds--label"
           dir="auto"
           for="target_id"
-          id="downshift-:r11:-label"
+          id="downshift-_r_11_-label"
         >
           Object
         </label>
@@ -1894,10 +1892,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:r11:-menu"
+              aria-controls="downshift-_r_11_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r11:-label"
+              aria-labelledby="downshift-_r_11_-label"
               autocomplete="off"
               class="cds--text-input"
               id="target_id"
@@ -1932,11 +1930,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
               </svg>
             </button>
             <button
-              aria-controls="downshift-:r11:-menu"
+              aria-controls="downshift-_r_11_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:r11:-toggle-button"
+              id="downshift-_r_11_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -1958,9 +1956,9 @@ exports[`Schedule form component should render edit form when filter_type is nul
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r11:-label"
+            aria-labelledby="downshift-_r_11_-label"
             class="cds--list-box__menu"
-            id="downshift-:r11:-menu"
+            id="downshift-_r_11_-menu"
             role="listbox"
           />
         </div>
@@ -2619,7 +2617,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
           class="cds--label"
           dir="auto"
           for="time_zone"
-          id="downshift-:r14:-label"
+          id="downshift-_r_14_-label"
         >
           Time Zone
         </label>
@@ -2632,10 +2630,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:r14:-menu"
+              aria-controls="downshift-_r_14_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r14:-label"
+              aria-labelledby="downshift-_r_14_-label"
               autocomplete="off"
               class="cds--text-input"
               id="time_zone"
@@ -2670,11 +2668,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
               </svg>
             </button>
             <button
-              aria-controls="downshift-:r14:-menu"
+              aria-controls="downshift-_r_14_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:r14:-toggle-button"
+              id="downshift-_r_14_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -2696,9 +2694,9 @@ exports[`Schedule form component should render edit form when filter_type is nul
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r14:-label"
+            aria-labelledby="downshift-_r_14_-label"
             class="cds--list-box__menu"
-            id="downshift-:r14:-menu"
+            id="downshift-_r_14_-menu"
             role="listbox"
           />
         </div>
@@ -2933,7 +2931,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -3396,7 +3393,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
             class="cds--label"
             dir="auto"
             for="target_class"
-            id="downshift-:r3:-label"
+            id="downshift-_r_3_-label"
           >
             Type
           </label>
@@ -3409,10 +3406,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-:r3:-menu"
+                aria-controls="downshift-_r_3_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:r3:-label"
+                aria-labelledby="downshift-_r_3_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_class"
@@ -3447,11 +3444,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                 </svg>
               </button>
               <button
-                aria-controls="downshift-:r3:-menu"
+                aria-controls="downshift-_r_3_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-:r3:-toggle-button"
+                id="downshift-_r_3_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -3473,9 +3470,9 @@ exports[`Schedule form component should render schedule add form 1`] = `
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-:r3:-label"
+              aria-labelledby="downshift-_r_3_-label"
               class="cds--list-box__menu"
-              id="downshift-:r3:-menu"
+              id="downshift-_r_3_-menu"
               role="listbox"
             />
           </div>
@@ -3491,7 +3488,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
             class="cds--label"
             dir="auto"
             for="target_id"
-            id="downshift-:r6:-label"
+            id="downshift-_r_6_-label"
           >
             Object
           </label>
@@ -3504,10 +3501,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-:r6:-menu"
+                aria-controls="downshift-_r_6_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:r6:-label"
+                aria-labelledby="downshift-_r_6_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_id"
@@ -3542,11 +3539,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                 </svg>
               </button>
               <button
-                aria-controls="downshift-:r6:-menu"
+                aria-controls="downshift-_r_6_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-:r6:-toggle-button"
+                id="downshift-_r_6_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -3568,9 +3565,9 @@ exports[`Schedule form component should render schedule add form 1`] = `
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-:r6:-label"
+              aria-labelledby="downshift-_r_6_-label"
               class="cds--list-box__menu"
-              id="downshift-:r6:-menu"
+              id="downshift-_r_6_-menu"
               role="listbox"
             />
           </div>
@@ -3715,7 +3712,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
           class="cds--label"
           dir="auto"
           for="time_zone"
-          id="downshift-:r9:-label"
+          id="downshift-_r_9_-label"
         >
           Time Zone
         </label>
@@ -3728,10 +3725,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-:r9:-menu"
+              aria-controls="downshift-_r_9_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r9:-label"
+              aria-labelledby="downshift-_r_9_-label"
               autocomplete="off"
               class="cds--text-input"
               id="time_zone"
@@ -3766,11 +3763,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
               </svg>
             </button>
             <button
-              aria-controls="downshift-:r9:-menu"
+              aria-controls="downshift-_r_9_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-:r9:-toggle-button"
+              id="downshift-_r_9_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -3792,9 +3789,9 @@ exports[`Schedule form component should render schedule add form 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r9:-label"
+            aria-labelledby="downshift-_r_9_-label"
             class="cds--list-box__menu"
-            id="downshift-:r9:-menu"
+            id="downshift-_r_9_-menu"
             role="listbox"
           />
         </div>

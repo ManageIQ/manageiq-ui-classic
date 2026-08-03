@@ -106,7 +106,19 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -134,7 +146,14 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          A
+          c
+          t
+          i
+          v
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -162,7 +181,16 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          S
+          e
+          v
+          e
+          r
+          i
+          t
+          y
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -188,7 +216,16 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          B
+          a
+          s
+          e
+          d
+           
+          O
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -216,7 +253,18 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          E
+          x
+          p
+          r
+          e
+          s
+          s
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -244,7 +292,24 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          W
+          h
+          a
+          t
+           
+          t
+          o
+           
+          E
+          v
+          a
+          l
+          u
+          a
+          t
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -272,7 +337,21 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          r
+          i
+          v
+          i
+          n
+          g
+           
+          E
+          v
+          e
+          n
+          t
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -300,7 +379,30 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          N
+          o
+          t
+          i
+          f
+          i
+          c
+          a
+          t
+          i
+          o
+          n
+           
+          F
+          r
+          e
+          q
+          u
+          e
+          n
+          c
+          y
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -344,7 +446,18 @@ exports[`MiqAlertStructuredList should render alert management event structured 
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          E
+          v
+          e
+          n
+          t
+           
+          N
+          a
+          m
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -388,7 +501,26 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+           
+          t
+          y
+          p
+          e
+           
+          1
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -416,7 +548,26 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+           
+          t
+          y
+          p
+          e
+           
+          2
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -471,7 +622,26 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+           
+          t
+          y
+          p
+          e
+           
+          3
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -673,7 +843,12 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          H
+          o
+          s
+          t
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -728,7 +903,15 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          V
+          e
+          r
+          s
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -783,7 +966,19 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          T
+          r
+          a
+          p
+           
+          N
+          u
+          m
+          b
+          e
+          r
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -827,7 +1022,24 @@ exports[`MiqAlertStructuredList should render alert timeline event structured li
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          S
+          h
+          o
+          w
+           
+          o
+          n
+           
+          T
+          i
+          m
+          e
+          l
+          i
+          n
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"

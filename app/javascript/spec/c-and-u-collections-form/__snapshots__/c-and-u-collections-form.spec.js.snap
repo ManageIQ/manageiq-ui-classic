@@ -20,7 +20,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
         class="cds--label"
         dir="auto"
         for="timezone"
-        id="downshift-:r8:-label"
+        id="downshift-_r_8_-label"
       >
         Timezone
       </label>
@@ -33,10 +33,10 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
           <input
             aria-activedescendant=""
             aria-autocomplete="list"
-            aria-controls="downshift-:r8:-menu"
+            aria-controls="downshift-_r_8_-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-:r8:-label"
+            aria-labelledby="downshift-_r_8_-label"
             autocomplete="off"
             class="cds--text-input cds--text-input--empty"
             id="timezone"
@@ -49,11 +49,11 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             value=""
           />
           <button
-            aria-controls="downshift-:r8:-menu"
+            aria-controls="downshift-_r_8_-menu"
             aria-expanded="false"
             aria-label="Open"
             class="cds--list-box__menu-icon"
-            id="downshift-:r8:-toggle-button"
+            id="downshift-_r_8_-toggle-button"
             tabindex="-1"
             title="Open"
             type="button"
@@ -75,9 +75,9 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
           </button>
         </div>
         <ul
-          aria-labelledby="downshift-:r8:-label"
+          aria-labelledby="downshift-_r_8_-label"
           class="cds--list-box__menu"
-          id="downshift-:r8:-menu"
+          id="downshift-_r_8_-menu"
           role="listbox"
         />
       </div>
@@ -231,7 +231,7 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
         class="cds--label"
         dir="auto"
         for="timezone"
-        id="downshift-:r2:-label"
+        id="downshift-_r_2_-label"
       >
         Timezone
       </label>
@@ -244,10 +244,10 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
           <input
             aria-activedescendant=""
             aria-autocomplete="list"
-            aria-controls="downshift-:r2:-menu"
+            aria-controls="downshift-_r_2_-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-:r2:-label"
+            aria-labelledby="downshift-_r_2_-label"
             autocomplete="off"
             class="cds--text-input"
             id="timezone"
@@ -282,11 +282,11 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
             </svg>
           </button>
           <button
-            aria-controls="downshift-:r2:-menu"
+            aria-controls="downshift-_r_2_-menu"
             aria-expanded="false"
             aria-label="Open"
             class="cds--list-box__menu-icon"
-            id="downshift-:r2:-toggle-button"
+            id="downshift-_r_2_-toggle-button"
             tabindex="-1"
             title="Open"
             type="button"
@@ -308,9 +308,9 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
           </button>
         </div>
         <ul
-          aria-labelledby="downshift-:r2:-label"
+          aria-labelledby="downshift-_r_2_-label"
           class="cds--list-box__menu"
-          id="downshift-:r2:-menu"
+          id="downshift-_r_2_-menu"
           role="listbox"
         />
       </div>
