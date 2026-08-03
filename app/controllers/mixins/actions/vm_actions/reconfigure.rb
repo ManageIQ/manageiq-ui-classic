@@ -277,7 +277,7 @@ module Mixins
           end
 
           vm = @reconfigureitems.first
-          # IBM Power HMC only: read processor values from DB 
+          # IBM Power HMC only: read processor values from DB
           # processor_share_type is 'dedicated' and 'shared' (uncapped or capped).
           proc_units = nil
           vprocs     = nil
