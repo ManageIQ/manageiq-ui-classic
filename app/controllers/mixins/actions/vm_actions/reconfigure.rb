@@ -279,15 +279,17 @@ module Mixins
           vm = @reconfigureitems.first
           # IBM Power HMC only: read processor values from DB
           # processor_share_type is 'dedicated' and 'shared' (uncapped or capped).
-          proc_units = nil
-          vprocs     = nil
+          proc_units   = nil
+          vprocs       = nil
+          vprocs_limit = nil
           if vm.kind_of?(ManageIQ::Providers::IbmPowerHmc::InfraManager::Vm)
             proc_units = if vm.try(:processor_share_type) == 'dedicated'
                            vm.try(:hardware).try(:cpu_total_cores).to_i
                          else
                            vm.try(:entitled_processors).to_f
                          end
-            vprocs = vm.try(:processor_share_type) != 'dedicated' ? vm.try(:hardware).try(:cpu_total_cores).to_i : nil
+            vprocs       = vm.try(:current_vcpu_count)
+            vprocs_limit = vm.try(:reconfigure_vcpu_limits)
           end
 
           {:objectIds              => reconfigure_ids,
@@ -297,6 +299,7 @@ module Mixins
            :cores_per_socket_count => cores_per_socket.to_s,
            :proc_units             => proc_units,
            :vprocs                 => vprocs,
+           :vprocs_limit           => vprocs_limit,
            :disks                  => vmdisks,
            :network_adapters       => network_adapters,
            :cdroms                 => vmcdroms,

@@ -147,7 +147,8 @@ const vprocsToggleField = () => ({
 });
 
 // IBM Power HMC — Virtual Processors sub-form: integer count
-const ibmVprocsFormFields = () => ({
+// vprocsLimit: { min, max } from vm.reconfigure_vcpu_limits (server-supplied)
+const ibmVprocsFormFields = (vprocsLimit) => ({
   component: componentTypes.SUB_FORM,
   id: 'ibm-vprocs-sub-form',
   name: 'ibm-vprocs-sub-form',
@@ -164,7 +165,8 @@ const ibmVprocsFormFields = () => ({
       label: __('Virtual Processors'),
       type: 'number',
       step: 1,
-      min: 1,
+      min: vprocsLimit ? vprocsLimit.min : 1,
+      max: vprocsLimit ? vprocsLimit.max : undefined,
       isRequired: true,
       validate: [{ type: 'required' }],
     },
@@ -228,7 +230,7 @@ export const reconfigureFormFields = (recordId, roles, memory, data, setData, op
       if (roles.isSharedProcessor) {
         // IBM shared only: separate "Virtual Processors" toggle → vprocs count field
         formFields.push(vprocsToggleField());
-        formFields.push(ibmVprocsFormFields());
+        formFields.push(ibmVprocsFormFields(data.vprocs_limit));
       }
     } else {
       // All other VMs (VMware, RHV, etc.): Sockets / Cores
