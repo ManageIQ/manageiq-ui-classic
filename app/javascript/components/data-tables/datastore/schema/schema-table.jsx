@@ -1,5 +1,4 @@
-// import React from 'react';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import { Button } from '@carbon/react';
 import MiqDataTable from '../../../miq-data-table';

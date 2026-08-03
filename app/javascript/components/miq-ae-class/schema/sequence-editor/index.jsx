@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { http } from '../../../../http_api';
@@ -20,10 +20,10 @@ const createSchema = (fields) => ({
 
 // Allows reordering of schema fields via drag-and-drop
 const SchemaSequenceEditor = ({ classId }) => {
-  const [initialFields, setInitialFields] = React.useState([]);
-  const [loaded, setLoaded] = React.useState(false);
+  const [initialFields, setInitialFields] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     http.get(`/miq_ae_class/fields_seq_data?id=${classId}`)
       .then((data) => {
         setInitialFields(data.fields || []);
