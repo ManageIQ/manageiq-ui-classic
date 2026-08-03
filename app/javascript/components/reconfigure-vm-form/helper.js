@@ -171,6 +171,7 @@ export const setInitialData = (value, requestId, data, setData) => {
       },
       socket: response.socket_count,
       cores: response.cores_per_socket_count,
+      vprocs_limit: response.vprocs_limit,
       orchestration_stack_id: response.orchestration_stack_id,
       isLoading: false,
       dataTable: {
