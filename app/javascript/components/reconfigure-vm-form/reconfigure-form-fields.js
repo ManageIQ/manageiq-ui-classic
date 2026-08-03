@@ -111,6 +111,66 @@ const processorFormFields = (data, setData, options) => ({
   ],
 });
 
+// IBM Power HMC — "Processor" toggle sub-form: Processing Units (float)
+const ibmProcessorFormFields = () => ({
+  component: componentTypes.SUB_FORM,
+  id: 'ibm-processor-sub-form',
+  name: 'ibm-processor-sub-form',
+  className: 'reconfigure-sub-form',
+  condition: {
+    when: 'processor',
+    is: true,
+  },
+  fields: [
+    {
+      component: componentTypes.TEXT_FIELD,
+      id: 'processing_units',
+      name: 'processing_units',
+      label: __('Processing Units'),
+      type: 'number',
+      step: 0.01,
+      min: 0.01,
+      isRequired: true,
+      helperText: __('Decimal value, e.g. 0.1, 0.2, 6.01'),
+      validate: [{ type: 'required' }],
+    },
+  ],
+});
+
+// IBM Power HMC — "Virtual Processors" toggle (shared only, separate from Processor toggle)
+const vprocsToggleField = () => ({
+  component: 'switch',
+  name: 'cb_vprocs',
+  label: __('Virtual Processors'),
+  onText: __('Yes'),
+  offText: __('No'),
+});
+
+// IBM Power HMC — Virtual Processors sub-form: integer count
+const ibmVprocsFormFields = () => ({
+  component: componentTypes.SUB_FORM,
+  id: 'ibm-vprocs-sub-form',
+  name: 'ibm-vprocs-sub-form',
+  className: 'reconfigure-sub-form',
+  condition: {
+    when: 'cb_vprocs',
+    is: true,
+  },
+  fields: [
+    {
+      component: componentTypes.TEXT_FIELD,
+      id: 'vprocs_count',
+      name: 'vprocs_count',
+      label: __('Virtual Processors'),
+      type: 'number',
+      step: 1,
+      min: 1,
+      isRequired: true,
+      validate: [{ type: 'required' }],
+    },
+  ],
+});
+
 const diskTable = (data, roles, setData, onCellClick, buttonClick) => ({
   component: 'reconfigure-table',
   name: 'disk',
@@ -161,8 +221,20 @@ export const reconfigureFormFields = (recordId, roles, memory, data, setData, op
     formFields.push(memoryFormFields(roles));
   }
   if (roles.allowCpuChange) {
-    formFields.push(processorField());
-    formFields.push(processorFormFields(data, setData, options, memory.max_cpu));
+    if (roles.isIbmPowerHmc) {
+      // IBM: "Processor" toggle → Processing Units field
+      formFields.push(processorField());
+      formFields.push(ibmProcessorFormFields());
+      if (roles.isSharedProcessor) {
+        // IBM shared only: separate "Virtual Processors" toggle → vprocs count field
+        formFields.push(vprocsToggleField());
+        formFields.push(ibmVprocsFormFields());
+      }
+    } else {
+      // All other VMs (VMware, RHV, etc.): Sockets / Cores
+      formFields.push(processorField());
+      formFields.push(processorFormFields(data, setData, options, memory.max_cpu));
+    }
   }
   if (recordId.length === 1) {
     formFields.push(renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick));

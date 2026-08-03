@@ -276,11 +276,27 @@ module Mixins
             end
           end
 
+          vm = @reconfigureitems.first
+          # IBM Power HMC only: read processor values from DB 
+          # processor_share_type is 'dedicated' and 'shared' (uncapped or capped).
+          proc_units = nil
+          vprocs     = nil
+          if vm.kind_of?(ManageIQ::Providers::IbmPowerHmc::InfraManager::Vm)
+            proc_units = if vm.try(:processor_share_type) == 'dedicated'
+                           vm.try(:hardware).try(:cpu_total_cores).to_i
+                         else
+                           vm.try(:entitled_processors).to_f
+                         end
+            vprocs = vm.try(:processor_share_type) != 'dedicated' ? vm.try(:hardware).try(:cpu_total_cores).to_i : nil
+          end
+
           {:objectIds              => reconfigure_ids,
            :memory                 => memory,
            :memory_type            => memory_type,
            :socket_count           => socket_count.to_s,
            :cores_per_socket_count => cores_per_socket.to_s,
+           :proc_units             => proc_units,
+           :vprocs                 => vprocs,
            :disks                  => vmdisks,
            :network_adapters       => network_adapters,
            :cdroms                 => vmcdroms,
@@ -397,11 +413,21 @@ module Mixins
           end
 
           if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
-            options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
-            options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
-            vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
-            vsockets = params[:socket_count].to_i.zero? ? 1 : params[:socket_count].to_i
-            options[:number_of_cpus] = vccores * vsockets
+            vm = Vm.find(Array.wrap(params[:objectIds]).first)
+            if vm.kind_of?(ManageIQ::Providers::IbmPowerHmc::InfraManager::Vm) && params[:processing_units].present?
+              # IBM Power HMC: processing units is a float (dedicated partitions send an integer cast to float)
+              options[:number_of_cpus] = params[:processing_units].to_f
+            else
+              options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
+              options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
+              vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
+              vsockets = params[:socket_count].to_i.zero? ? 1 : params[:socket_count].to_i
+              options[:number_of_cpus] = vccores * vsockets
+            end
+          end
+
+          if params[:cb_vprocs] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
+            options[:number_of_vcpus] = params[:vprocs_count].to_i
           end
 
           reconfigure_param_list.each do |params_key, options_key|
