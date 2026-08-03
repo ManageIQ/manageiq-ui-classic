@@ -61,7 +61,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-:r9:"
+              id="tooltip-_r_9_"
               role="tooltip"
             >
               <span
@@ -187,7 +187,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-:r5:"
+              id="tooltip-_r_5_"
               role="tooltip"
             >
               <span
@@ -313,7 +313,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-:r1:"
+              id="tooltip-_r_1_"
               role="tooltip"
             >
               <span

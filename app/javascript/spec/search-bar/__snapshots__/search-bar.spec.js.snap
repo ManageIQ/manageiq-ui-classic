@@ -60,7 +60,7 @@ exports[`Search Bar component should render the search bar component 1`] = `
           class="cds--tooltip-trigger__wrapper"
         >
           <button
-            aria-labelledby="tooltip-:r1:"
+            aria-labelledby="tooltip-_r_1_"
             class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
             type="button"
           >
@@ -83,7 +83,7 @@ exports[`Search Bar component should render the search bar component 1`] = `
         <span
           aria-hidden="true"
           class="cds--popover"
-          id="tooltip-:r1:"
+          id="tooltip-_r_1_"
           role="tooltip"
         >
           <span
@@ -104,7 +104,7 @@ exports[`Search Bar component should render the search bar component 1`] = `
         class="cds--tooltip-trigger__wrapper"
       >
         <button
-          aria-labelledby="tooltip-:r5:"
+          aria-labelledby="tooltip-_r_5_"
           class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
           data-target="#advsearchModal"
           data-toggle="modal"
@@ -131,7 +131,7 @@ exports[`Search Bar component should render the search bar component 1`] = `
       <span
         aria-hidden="true"
         class="cds--popover"
-        id="tooltip-:r5:"
+        id="tooltip-_r_5_"
         role="tooltip"
       >
         <span
@@ -208,7 +208,7 @@ exports[`Search Bar component should render the search bar component with advanc
           class="cds--tooltip-trigger__wrapper"
         >
           <button
-            aria-labelledby="tooltip-:r9:"
+            aria-labelledby="tooltip-_r_9_"
             class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
             type="button"
           >
@@ -231,7 +231,7 @@ exports[`Search Bar component should render the search bar component with advanc
         <span
           aria-hidden="true"
           class="cds--popover"
-          id="tooltip-:r9:"
+          id="tooltip-_r_9_"
           role="tooltip"
         >
           <span
@@ -252,7 +252,7 @@ exports[`Search Bar component should render the search bar component with advanc
         class="cds--tooltip-trigger__wrapper"
       >
         <button
-          aria-labelledby="tooltip-:rd:"
+          aria-labelledby="tooltip-_r_d_"
           class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
           data-target="#advsearchModal"
           data-toggle="modal"
@@ -279,7 +279,7 @@ exports[`Search Bar component should render the search bar component with advanc
       <span
         aria-hidden="true"
         class="cds--popover"
-        id="tooltip-:rd:"
+        id="tooltip-_r_d_"
         role="tooltip"
       >
         <span
@@ -356,7 +356,7 @@ exports[`Search Bar component should render the search bar component with search
           class="cds--tooltip-trigger__wrapper"
         >
           <button
-            aria-labelledby="tooltip-:rh:"
+            aria-labelledby="tooltip-_r_h_"
             class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
             type="reset"
           >
@@ -379,7 +379,7 @@ exports[`Search Bar component should render the search bar component with search
         <span
           aria-hidden="true"
           class="cds--popover"
-          id="tooltip-:rh:"
+          id="tooltip-_r_h_"
           role="tooltip"
         >
           <span
@@ -399,7 +399,7 @@ exports[`Search Bar component should render the search bar component with search
           class="cds--tooltip-trigger__wrapper"
         >
           <button
-            aria-labelledby="tooltip-:rl:"
+            aria-labelledby="tooltip-_r_l_"
             class="search_button cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
             type="button"
           >
@@ -422,7 +422,7 @@ exports[`Search Bar component should render the search bar component with search
         <span
           aria-hidden="true"
           class="cds--popover"
-          id="tooltip-:rl:"
+          id="tooltip-_r_l_"
           role="tooltip"
         >
           <span
@@ -443,7 +443,7 @@ exports[`Search Bar component should render the search bar component with search
         class="cds--tooltip-trigger__wrapper"
       >
         <button
-          aria-labelledby="tooltip-:rp:"
+          aria-labelledby="tooltip-_r_p_"
           class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
           data-target="#advsearchModal"
           data-toggle="modal"
@@ -470,7 +470,7 @@ exports[`Search Bar component should render the search bar component with search
       <span
         aria-hidden="true"
         class="cds--popover"
-        id="tooltip-:rp:"
+        id="tooltip-_r_p_"
         role="tooltip"
       >
         <span
