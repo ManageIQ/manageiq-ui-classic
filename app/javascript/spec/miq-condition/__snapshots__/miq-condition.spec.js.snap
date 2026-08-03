@@ -106,7 +106,19 @@ exports[`MiqConditionStructuredList should render condition info structured list
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"

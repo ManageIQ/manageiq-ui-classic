@@ -101,16 +101,15 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
               </div>
               <label
                 class="cds--label"
-                for="search-input-:r0:"
-                id="search-input-:r0:-search"
+                for="search-input-_r_0_"
+                id="search-input-_r_0_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:r0:"
+                id="search-input-_r_0_"
                 placeholder="Filter options"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -141,7 +140,7 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r2:"
+                  aria-labelledby="tooltip-_r_2_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -164,7 +163,7 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r2:"
+                id="tooltip-_r_2_"
                 role="tooltip"
               >
                 <span
@@ -304,16 +303,15 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
               </div>
               <label
                 class="cds--label"
-                for="search-input-:ra:"
-                id="search-input-:ra:-search"
+                for="search-input-_r_a_"
+                id="search-input-_r_a_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:ra:"
+                id="search-input-_r_a_"
                 placeholder="Filter values"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -344,7 +342,7 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:rc:"
+                  aria-labelledby="tooltip-_r_c_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -367,7 +365,7 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:rc:"
+                id="tooltip-_r_c_"
                 role="tooltip"
               >
                 <span
@@ -565,16 +563,15 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
               </div>
               <label
                 class="cds--label"
-                for="search-input-:r16:"
-                id="search-input-:r16:-search"
+                for="search-input-_r_16_"
+                id="search-input-_r_16_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:r16:"
+                id="search-input-_r_16_"
                 placeholder="Filter options"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -605,7 +602,7 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r18:"
+                  aria-labelledby="tooltip-_r_18_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -628,7 +625,7 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r18:"
+                id="tooltip-_r_18_"
                 role="tooltip"
               >
                 <span
@@ -768,16 +765,15 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
               </div>
               <label
                 class="cds--label"
-                for="search-input-:r1g:"
-                id="search-input-:r1g:-search"
+                for="search-input-_r_1g_"
+                id="search-input-_r_1g_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:r1g:"
+                id="search-input-_r_1g_"
                 placeholder="Filter values"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -808,7 +804,7 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r1i:"
+                  aria-labelledby="tooltip-_r_1i_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -831,7 +827,7 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r1i:"
+                id="tooltip-_r_1i_"
                 role="tooltip"
               >
                 <span
@@ -1036,16 +1032,15 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
               </div>
               <label
                 class="cds--label"
-                for="search-input-:rj:"
-                id="search-input-:rj:-search"
+                for="search-input-_r_j_"
+                id="search-input-_r_j_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:rj:"
+                id="search-input-_r_j_"
                 placeholder="Filter options"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -1076,7 +1071,7 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:rl:"
+                  aria-labelledby="tooltip-_r_l_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -1099,7 +1094,7 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:rl:"
+                id="tooltip-_r_l_"
                 role="tooltip"
               >
                 <span
@@ -1239,16 +1234,15 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
               </div>
               <label
                 class="cds--label"
-                for="search-input-:rt:"
-                id="search-input-:rt:-search"
+                for="search-input-_r_t_"
+                id="search-input-_r_t_-search"
               />
               <input
                 autocomplete="off"
                 class="cds--search-input"
-                id="search-input-:rt:"
+                id="search-input-_r_t_"
                 placeholder="Filter values"
                 type="search"
-                value=""
               />
               <button
                 aria-label="Clear search input"
@@ -1279,7 +1273,7 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:rv:"
+                  aria-labelledby="tooltip-_r_v_"
                   class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -1302,7 +1296,7 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:rv:"
+                id="tooltip-_r_v_"
                 role="tooltip"
               >
                 <span

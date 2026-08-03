@@ -288,7 +288,6 @@ exports[`Network Router form component should render edit variant 1`] = `
             id="admin_state_up"
             name="admin_state_up"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -327,7 +326,6 @@ exports[`Network Router form component should render edit variant 1`] = `
             id="enable"
             name="enable"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"

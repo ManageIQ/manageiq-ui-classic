@@ -66,12 +66,12 @@ exports[`Data table component should render a simple data tabe with pagination a
             >
               <div
                 class="cds--table-sort__description"
-                id="table-sort-:r2:"
+                id="table-sort-_r_2_"
               >
                 Click to sort rows by Name header in ascending order
               </div>
               <button
-                aria-describedby="table-sort-:r2:"
+                aria-describedby="table-sort-_r_2_"
                 class="miq-data-table-header cds--table-sort"
                 type="button"
               >
@@ -129,12 +129,12 @@ exports[`Data table component should render a simple data tabe with pagination a
             >
               <div
                 class="cds--table-sort__description"
-                id="table-sort-:r3:"
+                id="table-sort-_r_3_"
               >
                 Click to sort rows by Status header in ascending order
               </div>
               <button
-                aria-describedby="table-sort-:r3:"
+                aria-describedby="table-sort-_r_3_"
                 class="miq-data-table-header cds--table-sort"
                 type="button"
               >
@@ -377,8 +377,8 @@ exports[`Data table component should render a simple data tabe with pagination a
           >
             <label
               class="cds--pagination__text"
-              for="cds-pagination-select-id-:r7:"
-              id="cds-pagination-select-id-:r7:-count-label"
+              for="cds-pagination-select-id-_r_7_"
+              id="cds-pagination-select-id-_r_7_-count-label"
             >
               Items per page:
             </label>
@@ -396,7 +396,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r7:"
+                      id="cds-pagination-select-id-_r_7_"
                       title="10"
                     >
                       <option
@@ -467,7 +467,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                 <label
                   class="cds--label cds--visually-hidden"
                   dir="auto"
-                  for="cds-pagination-select-id-:r7:-right"
+                  for="cds-pagination-select-id-_r_7_-right"
                 >
                   Page of 1 page
                 </label>
@@ -479,7 +479,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r7:-right"
+                      id="cds-pagination-select-id-_r_7_-right"
                       title="1"
                     >
                       <option
@@ -524,7 +524,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                 >
                   <button
                     aria-label="Previous page"
-                    aria-labelledby="tooltip-:r9:"
+                    aria-labelledby="tooltip-_r_9_"
                     class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -548,7 +548,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r9:"
+                  id="tooltip-_r_9_"
                   role="tooltip"
                 >
                   <span
@@ -569,7 +569,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                 >
                   <button
                     aria-label="Next page"
-                    aria-labelledby="tooltip-:rd:"
+                    aria-labelledby="tooltip-_r_d_"
                     class="cds--pagination__button cds--pagination__button--forward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -593,7 +593,7 @@ exports[`Data table component should render a simple data tabe with pagination a
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:rd:"
+                  id="tooltip-_r_d_"
                   role="tooltip"
                 >
                   <span
@@ -1041,8 +1041,8 @@ exports[`Data table component should render a static-gtl-view data table with ch
           >
             <label
               class="cds--pagination__text"
-              for="cds-pagination-select-id-:rn:"
-              id="cds-pagination-select-id-:rn:-count-label"
+              for="cds-pagination-select-id-_r_n_"
+              id="cds-pagination-select-id-_r_n_-count-label"
             >
               Items per page:
             </label>
@@ -1060,7 +1060,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:rn:"
+                      id="cds-pagination-select-id-_r_n_"
                       title="10"
                     >
                       <option
@@ -1131,7 +1131,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <label
                   class="cds--label cds--visually-hidden"
                   dir="auto"
-                  for="cds-pagination-select-id-:rn:-right"
+                  for="cds-pagination-select-id-_r_n_-right"
                 >
                   Page of 1 page
                 </label>
@@ -1143,7 +1143,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:rn:-right"
+                      id="cds-pagination-select-id-_r_n_-right"
                       title="1"
                     >
                       <option
@@ -1188,7 +1188,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 >
                   <button
                     aria-label="Previous page"
-                    aria-labelledby="tooltip-:rp:"
+                    aria-labelledby="tooltip-_r_p_"
                     class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -1212,7 +1212,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:rp:"
+                  id="tooltip-_r_p_"
                   role="tooltip"
                 >
                   <span
@@ -1233,7 +1233,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 >
                   <button
                     aria-label="Next page"
-                    aria-labelledby="tooltip-:rt:"
+                    aria-labelledby="tooltip-_r_t_"
                     class="cds--pagination__button cds--pagination__button--forward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -1257,7 +1257,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:rt:"
+                  id="tooltip-_r_t_"
                   role="tooltip"
                 >
                   <span
@@ -1811,8 +1811,8 @@ exports[`Data table component should render a static-gtl-view data table with ch
           >
             <label
               class="cds--pagination__text"
-              for="cds-pagination-select-id-:r1g:"
-              id="cds-pagination-select-id-:r1g:-count-label"
+              for="cds-pagination-select-id-_r_1g_"
+              id="cds-pagination-select-id-_r_1g_-count-label"
             >
               Items per page:
             </label>
@@ -1830,7 +1830,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r1g:"
+                      id="cds-pagination-select-id-_r_1g_"
                       title="10"
                     >
                       <option
@@ -1901,7 +1901,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <label
                   class="cds--label cds--visually-hidden"
                   dir="auto"
-                  for="cds-pagination-select-id-:r1g:-right"
+                  for="cds-pagination-select-id-_r_1g_-right"
                 >
                   Page of 10 pages
                 </label>
@@ -1913,7 +1913,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r1g:-right"
+                      id="cds-pagination-select-id-_r_1g_-right"
                       title="1"
                     >
                       <option
@@ -2012,7 +2012,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 >
                   <button
                     aria-label="Previous page"
-                    aria-labelledby="tooltip-:r1i:"
+                    aria-labelledby="tooltip-_r_1i_"
                     class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -2036,7 +2036,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r1i:"
+                  id="tooltip-_r_1i_"
                   role="tooltip"
                 >
                   <span
@@ -2057,7 +2057,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 >
                   <button
                     aria-label="Next page"
-                    aria-labelledby="tooltip-:r1m:"
+                    aria-labelledby="tooltip-_r_1m_"
                     class="cds--pagination__button cds--pagination__button--forward cds--btn cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2080,7 +2080,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r1m:"
+                  id="tooltip-_r_1m_"
                   role="tooltip"
                 >
                   <span
@@ -2448,8 +2448,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
           >
             <label
               class="cds--pagination__text"
-              for="cds-pagination-select-id-:r23:"
-              id="cds-pagination-select-id-:r23:-count-label"
+              for="cds-pagination-select-id-_r_23_"
+              id="cds-pagination-select-id-_r_23_-count-label"
             >
               Items per page:
             </label>
@@ -2467,7 +2467,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r23:"
+                      id="cds-pagination-select-id-_r_23_"
                       title="10"
                     >
                       <option
@@ -2538,7 +2538,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                 <label
                   class="cds--label cds--visually-hidden"
                   dir="auto"
-                  for="cds-pagination-select-id-:r23:-right"
+                  for="cds-pagination-select-id-_r_23_-right"
                 >
                   Page of 10 pages
                 </label>
@@ -2550,7 +2550,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                   >
                     <select
                       class="cds--select-input"
-                      id="cds-pagination-select-id-:r23:-right"
+                      id="cds-pagination-select-id-_r_23_-right"
                       title="1"
                     >
                       <option
@@ -2649,7 +2649,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                 >
                   <button
                     aria-label="Previous page"
-                    aria-labelledby="tooltip-:r25:"
+                    aria-labelledby="tooltip-_r_25_"
                     class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                     disabled=""
                     type="button"
@@ -2673,7 +2673,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r25:"
+                  id="tooltip-_r_25_"
                   role="tooltip"
                 >
                   <span
@@ -2694,7 +2694,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                 >
                   <button
                     aria-label="Next page"
-                    aria-labelledby="tooltip-:r29:"
+                    aria-labelledby="tooltip-_r_29_"
                     class="cds--pagination__button cds--pagination__button--forward cds--btn cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2717,7 +2717,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r29:"
+                  id="tooltip-_r_29_"
                   role="tooltip"
                 >
                   <span

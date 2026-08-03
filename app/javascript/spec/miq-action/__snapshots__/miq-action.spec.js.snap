@@ -21,7 +21,19 @@ exports[`MiqActionStructuredList should render action info structured list 1`] =
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -49,7 +61,19 @@ exports[`MiqActionStructuredList should render action info structured list 1`] =
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          A
+          c
+          t
+          i
+          o
+          n
+           
+          T
+          y
+          p
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -130,7 +154,12 @@ exports[`MiqActionStructuredList should render action type 1 structured list 1`]
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          N
+          a
+          m
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -174,7 +203,22 @@ exports[`MiqActionStructuredList should render action type 2 structured list 1`]
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          O
+          b
+          j
+          e
+          c
+          t
+           
+          D
+          e
+          t
+          a
+          i
+          l
+          s
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -200,7 +244,24 @@ exports[`MiqActionStructuredList should render action type 2 structured list 1`]
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          S
+          t
+          a
+          r
+          t
+          i
+          n
+          g
+           
+          M
+          e
+          s
+          s
+          a
+          g
+          e
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -228,7 +289,15 @@ exports[`MiqActionStructuredList should render action type 2 structured list 1`]
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          R
+          e
+          q
+          u
+          e
+          s
+          t
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -256,7 +325,29 @@ exports[`MiqActionStructuredList should render action type 2 structured list 1`]
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          A
+          t
+          t
+          r
+          i
+          b
+          u
+          t
+          e
+          /
+          V
+          a
+          l
+          u
+          e
+           
+          P
+          a
+          i
+          r
+          s
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"

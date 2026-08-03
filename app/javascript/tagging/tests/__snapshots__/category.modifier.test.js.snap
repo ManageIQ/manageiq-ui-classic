@@ -22,12 +22,12 @@ exports[`Category modifier Component should match snapshot 1`] = `
         >
           <button
             aria-activedescendant=""
-            aria-controls="downshift-:r1:-menu"
+            aria-controls="downshift-_r_1_-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-:r1:-label"
+            aria-labelledby="downshift-_r_1_-label"
             class="cds--list-box__field"
-            id="downshift-:r1:-toggle-button"
+            id="downshift-_r_1_-toggle-button"
             role="combobox"
             tabindex="0"
             title="Name"
@@ -63,9 +63,9 @@ exports[`Category modifier Component should match snapshot 1`] = `
             </div>
           </button>
           <ul
-            aria-labelledby="downshift-:r1:-label"
+            aria-labelledby="downshift-_r_1_-label"
             class="cds--list-box__menu"
-            id="downshift-:r1:-menu"
+            id="downshift-_r_1_-menu"
             role="listbox"
           />
         </div>
