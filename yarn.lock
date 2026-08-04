@@ -705,6 +705,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/plugin-syntax-typescript@npm:^8.0.1":
+  version: 8.0.3
+  resolution: "@babel/plugin-syntax-typescript@npm:8.0.3"
+  dependencies:
+    "@babel/helper-plugin-utils": "npm:^8.0.1"
+  peerDependencies:
+    "@babel/core": ^8.0.0
+  checksum: 10/557fe5227c6a283732ea45f37b498f597c64de0ac85625b61211d38c000ffd8c75894f25c198e41439e553d0153606d155dfb7f1a11918baf3ca33d4ae5af22d
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-transform-arrow-functions@npm:^8.0.1":
   version: 8.0.1
   resolution: "@babel/plugin-transform-arrow-functions@npm:8.0.1"
@@ -1303,6 +1314,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/plugin-transform-typescript@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@babel/plugin-transform-typescript@npm:8.0.1"
+  dependencies:
+    "@babel/helper-annotate-as-pure": "npm:^8.0.0"
+    "@babel/helper-create-class-features-plugin": "npm:^8.0.1"
+    "@babel/helper-plugin-utils": "npm:^8.0.1"
+    "@babel/helper-skip-transparent-expression-wrappers": "npm:^8.0.0"
+    "@babel/plugin-syntax-typescript": "npm:^8.0.1"
+  peerDependencies:
+    "@babel/core": ^8.0.0
+  checksum: 10/146e56d1285b7673e4491ee46366fca87962ba348cee3851bf68b52e2d7f470f12c9b75e8be8112bba0a8067e785e3de4ea7d4cd010fe17bf24a4039813a5b7d
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-transform-unicode-escapes@npm:^8.0.1":
   version: 8.0.1
   resolution: "@babel/plugin-transform-unicode-escapes@npm:8.0.1"
@@ -1453,6 +1479,20 @@ __metadata:
   peerDependencies:
     "@babel/core": ^8.0.0
   checksum: 10/e9ffdc0e29dec5587d6fa45a38400a067eb3348e1c1f21f73e270530d8f2e73b40e15076c8e2e9e8b342431ac834d5a8f7fa86eeb6511205df0b943157ce39f9
+  languageName: node
+  linkType: hard
+
+"@babel/preset-typescript@npm:~8.0.1":
+  version: 8.0.1
+  resolution: "@babel/preset-typescript@npm:8.0.1"
+  dependencies:
+    "@babel/helper-plugin-utils": "npm:^8.0.1"
+    "@babel/helper-validator-option": "npm:^8.0.0"
+    "@babel/plugin-transform-modules-commonjs": "npm:^8.0.1"
+    "@babel/plugin-transform-typescript": "npm:^8.0.1"
+  peerDependencies:
+    "@babel/core": ^8.0.0
+  checksum: 10/1844864626dda003d6fca960f1fe584cd62deee43d115225d51848460dc8e39a9c9d7e59c0d15bf458612790de1b88f4bc1840be94e080ab108e16b43a6a2933
   languageName: node
   linkType: hard
 
@@ -11327,6 +11367,7 @@ __metadata:
     "@babel/plugin-transform-optional-chaining": "npm:~8.0.1"
     "@babel/preset-env": "npm:~8.0.2"
     "@babel/preset-react": "npm:~8.0.1"
+    "@babel/preset-typescript": "npm:~8.0.1"
     "@carbon/charts-react": "npm:~1.27.3"
     "@carbon/react": "npm:~1.106.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.2.0"
