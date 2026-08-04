@@ -417,8 +417,8 @@ module Mixins
 
           if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
             vm = Vm.find(Array.wrap(params[:objectIds]).first)
-            if vm.kind_of?(ManageIQ::Providers::IbmPowerHmc::InfraManager::Vm) && params[:processing_units].present?
-              # IBM Power HMC: processing units is a float (dedicated partitions send an integer cast to float)
+            if vm.supports?(:reconfigure_proc_units) && params[:processing_units].present?
+              # Processing units is a float (dedicated partitions send an integer cast to float)
               options[:number_of_cpus] = params[:processing_units].to_f
             else
               options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
