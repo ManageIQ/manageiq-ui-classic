@@ -8123,6 +8123,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-equals@npm:^6.0.0":
+  version: 6.0.2
+  resolution: "fast-equals@npm:6.0.2"
+  checksum: 10/9c64927d4a2a3497728aa739a3f429ad0573944b7bea5d792a02475ca3e500306e417d8883ff1d35449c125561d7ea7aac2600a6c1ed18d2605c763da2d1a37f
+  languageName: node
+  linkType: hard
+
 "fast-glob@npm:^3.3.3":
   version: 3.3.3
   resolution: "fast-glob@npm:3.3.3"
@@ -11045,6 +11052,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.memoize@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.memoize@npm:4.1.2"
+  checksum: 10/192b2168f310c86f303580b53acf81ab029761b9bd9caa9506a019ffea5f3363ea98d7e39e7e11e6b9917066c9d36a09a11f6fe16f812326390d8f3a54a1a6da
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -11270,7 +11284,7 @@ __metadata:
     proxy-polyfill: "npm:^0.3.0"
     react: "npm:~18.3.1"
     react-accessible-treeview: "npm:^2.10.0"
-    react-checkbox-tree: "npm:^1.8.0"
+    react-checkbox-tree: "npm:^2.0.2"
     react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~18.3.0"
     react-markdown: "npm:~8.0.7"
@@ -11973,15 +11987,6 @@ __metadata:
   dependencies:
     node-gyp: "npm:latest"
   checksum: 10/bdce0630e417740501394c412bd9f0ed1c287825e3b8f9b7efb95cc3acd3ef69de60479b5f00a2d039b79321e5ce29b672b0b263cfe0e4d8f47c8f810a24a5ee
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.0.0":
-  version: 3.3.15
-  resolution: "nanoid@npm:3.3.15"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 10/13c74a5208d455286f7af46f42ac9f3d7b821b8a719aff8dbd5ad3fb80399c0c63cdd1e92d046ea576e403bec05262fbb7e116beb4cfcd5b5483550372bd94b1
   languageName: node
   linkType: hard
 
@@ -13137,17 +13142,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-checkbox-tree@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "react-checkbox-tree@npm:1.8.0"
+"react-checkbox-tree@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-checkbox-tree@npm:2.0.2"
   dependencies:
     classnames: "npm:^2.2.5"
-    lodash: "npm:^4.17.10"
-    nanoid: "npm:^3.0.0"
+    fast-equals: "npm:^6.0.0"
+    lodash.memoize: "npm:^4.1.2"
     prop-types: "npm:^15.5.8"
   peerDependencies:
-    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/700e87c0d6b1c7a15e104d0ef01ac1c15b8eb74905cd2a3b1e087a1c6fa596e4a58894ef553d5f8651782d7012c07eab87f9646f44def3569163a89c1cbb0f71
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/cdeec7ed0dfc4fc3cbd0cf73f2ae8c79c3e9db026b3289c7ca2a83dbf53398fa24856c76399f380c9726d6c506a608dcefdf78dcd0bba88fc6f1b88a8daee69e
   languageName: node
   linkType: hard
 
