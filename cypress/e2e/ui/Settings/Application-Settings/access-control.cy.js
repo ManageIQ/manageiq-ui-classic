@@ -101,7 +101,7 @@ function assertRoleSummary({
 }
 
 function checkFeature(featureLabel) {
-  cy.contains('span.rct-title', featureLabel)
+  cy.contains('span.rct-label', featureLabel)
     .parents('span.rct-text')
     .find('input[type="checkbox"]')
     .check({ force: true });
