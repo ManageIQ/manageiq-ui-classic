@@ -210,7 +210,6 @@ module.exports = [
       // React rules (comprehensive Airbnb set)
       'react/boolean-prop-naming': ['off', { propTypeNames: ['bool', 'mutuallyExclusiveTrueProps'], rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+' }],
       'react/button-has-type': ['error', { button: true, submit: true, reset: false }],
-      'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
       'react/destructuring-assignment': ['error', 'always'],
       'react/jsx-filename-extension': 'off',
       'react/jsx-first-prop-new-line': ['error', 'multiline'],
@@ -255,8 +254,8 @@ module.exports = [
       'react/require-render-return': 'error',
       'react/self-closing-comp': 'error',
       'react/sort-comp': ['error', {
-        order: ['static-variables', 'static-methods', 'instance-variables', 'lifecycle', '/^handle.+$/', '/^on.+$/', 'getters', 'setters', '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/', 'instance-methods', 'everything-else', 'rendering'],
-        groups: { lifecycle: ['displayName', 'propTypes', 'contextTypes', 'childContextTypes', 'mixins', 'statics', 'defaultProps', 'constructor', 'getDefaultProps', 'getInitialState', 'state', 'getChildContext', 'getDerivedStateFromProps', 'componentWillMount', 'UNSAFE_componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'UNSAFE_componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'UNSAFE_componentWillUpdate', 'getSnapshotBeforeUpdate', 'componentDidUpdate', 'componentDidCatch', 'componentWillUnmount'], rendering: ['/^render.+$/', 'render'] }
+        order: ['static-variables', 'static-methods', 'instance-variables', 'lifecycle', '/^handle.+$/', '/^on.+$/', 'getters', 'setters', '/^(get|set)(?!(InitialState$|ChildContext$)).+$/', 'instance-methods', 'everything-else', 'rendering'],
+        groups: { lifecycle: ['displayName', 'propTypes', 'contextTypes', 'childContextTypes', 'mixins', 'statics', 'constructor', 'getInitialState', 'state', 'getChildContext', 'getDerivedStateFromProps', 'componentWillMount', 'UNSAFE_componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'UNSAFE_componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'UNSAFE_componentWillUpdate', 'getSnapshotBeforeUpdate', 'componentDidUpdate', 'componentDidCatch', 'componentWillUnmount'], rendering: ['/^render.+$/', 'render'] }
       }],
       'react/sort-prop-types': ['off', { ignoreCase: true, callbacksLast: false, requiredFirst: false, sortShapeProp: true }],
       'react/state-in-constructor': ['error', 'always'],
@@ -287,7 +286,6 @@ module.exports = [
       'react/jsx-fragments': ['error', 'syntax'],
       'react/jsx-pascal-case': ['error', { allowAllCaps: true, ignore: [] }],
       'react/jsx-props-no-multi-spaces': 'error',
-      'react/jsx-sort-default-props': ['off', { ignoreCase: true }],
       'react/jsx-sort-props': ['off', { ignoreCase: true, callbacksLast: false, shorthandFirst: false, shorthandLast: false, noSortAlphabetically: false, reservedFirst: true }],
       'react/jsx-tag-spacing': ['error', { closingSlash: 'never', beforeSelfClosing: 'always', afterOpening: 'never', beforeClosing: 'never' }],
       'react/jsx-uses-react': ['error'],
