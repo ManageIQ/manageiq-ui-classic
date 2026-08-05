@@ -5,7 +5,7 @@
 - select_options =  [["-1", "<#{_('None')}>"]] + role_restrictions
 - if edit
   - custom_props = rbac_role_product_features(rbac_menu_tree)
-  = react('RbacRoleForm',
+  = react('RoleForm',
           :selectOptions           => select_options,
           :customProps             => custom_props,
           :role                    => role,

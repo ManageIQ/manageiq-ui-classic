@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
-import RbacRoleForm from '../../components/rbac-role-form';
+import RoleForm from '../../components/role-form';
 
 describe('Rbac Role Form Component', () => {
   const RbacRoleEditData = {
@@ -60,7 +60,7 @@ describe('Rbac Role Form Component', () => {
 
   it('render add rbac role form', async() => {
     const { container } = renderWithRedux(
-      <RbacRoleForm
+      <RoleForm
         selectOptions={selectOptions}
         customProps={customProps}
         role={{ id: null, name: null }}
@@ -68,15 +68,16 @@ describe('Rbac Role Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(container.querySelector('.rbac-role-form')).toBeInTheDocument();
+      expect(container.querySelector('.role-form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
   it('render edit rbac role form', async() => {
     fetchMock.get(`/api/roles/${RbacRoleEditData.id}?expand=resources&attributes=miq_product_features`, RbacRoleEditData);
 
     const { container } = renderWithRedux(
-      <RbacRoleForm
+      <RoleForm
         selectOptions={selectOptions}
         customProps={customProps}
         role={RbacRoleEditData}
@@ -84,13 +85,14 @@ describe('Rbac Role Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(container.querySelector('.rbac-role-form')).toBeInTheDocument();
+      expect(container.querySelector('.role-form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
   it('render copy rbac role form', async() => {
     const { container } = renderWithRedux(
-      <RbacRoleForm
+      <RoleForm
         selectOptions={selectOptions}
         customProps={customProps}
         role={RbacRoleCopyData}
@@ -99,7 +101,8 @@ describe('Rbac Role Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(container.querySelector('.rbac-role-form')).toBeInTheDocument();
+      expect(container.querySelector('.role-form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 });

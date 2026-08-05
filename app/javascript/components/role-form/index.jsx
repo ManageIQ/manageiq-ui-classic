@@ -6,14 +6,14 @@ import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
 import { Loading, Button } from '@carbon/react';
-import createSchema from './rbac-role-form.schema';
+import createSchema from './role-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 let idCounter = 0;
 
 let modified = false;
 let features = new Set();
-const RbacRoleForm = (props) => {
+const RoleForm = (props) => {
   const {
     selectOptions, customProps, role, existingProductFeatures,
   } = props;
@@ -281,7 +281,7 @@ const RbacRoleForm = (props) => {
           <Loading active small withOverlay={false} className="loading" />
         </div>
       ) : (
-        <div className="rbac-role-form">
+        <div className="role-form">
           {formData.initialValues && (
             <MiqFormRenderer
               schema={createSchema(selectOptions, customProps, formData)}
@@ -361,7 +361,7 @@ const FormTemplate = ({
   );
 };
 
-RbacRoleForm.propTypes = {
+RoleForm.propTypes = {
   selectOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
   customProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]).isRequired,
   role: PropTypes.shape({
@@ -387,4 +387,4 @@ FormTemplate.propTypes = {
   roleId: PropTypes.number,
 };
 
-export default RbacRoleForm;
+export default RoleForm;

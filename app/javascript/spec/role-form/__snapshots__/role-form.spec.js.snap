@@ -1,0 +1,1202 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Rbac Role Form Component render add rbac role form 1`] = `
+<div>
+  <div>
+    <div
+      class="role-form"
+    >
+      <form>
+        <p
+          class="role-information"
+          id="role-information"
+          name="role-information"
+        >
+          Role Information
+        </p>
+        <div
+          class="cds--form-item name-label cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+              >
+                *
+              </span>
+              Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                maxlength="128"
+                name="name"
+                type="text"
+                value=""
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-orchestration"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="vm_restriction"
+            >
+              Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="vm_restriction"
+                maxlength="128"
+                name="vm_restriction"
+                title="<#{_('None')}>"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-catalog"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="service_template_restriction"
+            >
+              Access Restriction for Catalog Items
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="service_template_restriction"
+                maxlength="128"
+                name="service_template_restriction"
+                title="<#{_('None')}>"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="checkbox-tree-wrapper"
+        >
+          <span
+            class="checkbox-tree-required-tag"
+          >
+            *
+          </span>
+          <p
+            class="checkbox-tree-title"
+          >
+            Product Features (Editing)
+          </p>
+          <div
+            class="react-checkbox-tree rct-icons-fa5"
+          >
+            <ol>
+              <li
+                class="rct-node rct-node-parent rct-node-expanded"
+              >
+                <span
+                  class="rct-text"
+                >
+                  <button
+                    aria-label="Collapse node"
+                    class="rct-collapse rct-collapse-btn"
+                    title="Collapse node"
+                    type="button"
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <label>
+                    <input
+                      type="checkbox"
+                    />
+                    <span
+                      aria-hidden="true"
+                      class="rct-checkbox"
+                      role="presentation"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-node-icon"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M28,8H20.8284L17.4143,4.5859A2,2,0,0,0,16,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10A2,2,0,0,0,28,8ZM8,26V14h8v6.17l-2.59-2.58L12,19l5,5,5-5-1.41-1.41L18,20.17V14a2.0025,2.0025,0,0,0-2-2H8a2.0025,2.0025,0,0,0-2,2V26H4V6H16l4,4h8v2H22v2h6V26Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-label"
+                    >
+                      Everything
+                    </span>
+                  </label>
+                </span>
+                <ol>
+                  <li
+                    class="rct-node rct-node-leaf"
+                  >
+                    <span
+                      class="rct-text"
+                    >
+                      <span
+                        class="rct-collapse"
+                      >
+                        <span
+                          class="rct-icon"
+                        />
+                      </span>
+                      <label>
+                        <input
+                          type="checkbox"
+                        />
+                        <span
+                          aria-hidden="true"
+                          class="rct-checkbox"
+                          role="presentation"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              color="black"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M9 16H23V18H9z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                              />
+                              <path
+                                d="M9 10H23V12H9z"
+                                fill="none"
+                              />
+                              <path
+                                d="M26,2H6A2.0023,2.0023,0,0,0,4,4V17a10.9814,10.9814,0,0,0,5.8242,9.707L16,30l6.1758-3.293A10.9814,10.9814,0,0,0,28,17V4A2.0023,2.0023,0,0,0,26,2ZM23,18H9V16H23Zm0-6H9V10H23Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          Add Global Filter
+                        </span>
+                      </label>
+                    </span>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div
+          class="custom-button-wrapper"
+        >
+          <button
+            class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="contained"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+            variant="contained"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Rbac Role Form Component render copy rbac role form 1`] = `
+<div>
+  <div>
+    <div
+      class="role-form"
+    >
+      <form>
+        <p
+          class="role-information"
+          id="role-information"
+          name="role-information"
+        >
+          Role Information
+        </p>
+        <div
+          class="cds--form-item name-label cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+              >
+                *
+              </span>
+              Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                maxlength="128"
+                name="name"
+                type="text"
+                value="Copy of copy of test"
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-orchestration"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="vm_restriction"
+            >
+              Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="vm_restriction"
+                maxlength="128"
+                name="vm_restriction"
+                title="Only User Owned"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-catalog"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="service_template_restriction"
+            >
+              Access Restriction for Catalog Items
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="service_template_restriction"
+                maxlength="128"
+                name="service_template_restriction"
+                title="Only User Owned"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="checkbox-tree-wrapper"
+        >
+          <span
+            class="checkbox-tree-required-tag"
+          >
+            *
+          </span>
+          <p
+            class="checkbox-tree-title"
+          >
+            Product Features (Editing)
+          </p>
+          <div
+            class="react-checkbox-tree rct-icons-fa5"
+          >
+            <ol>
+              <li
+                class="rct-node rct-node-parent rct-node-expanded"
+              >
+                <span
+                  class="rct-text"
+                >
+                  <button
+                    aria-label="Collapse node"
+                    class="rct-collapse rct-collapse-btn"
+                    title="Collapse node"
+                    type="button"
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <label>
+                    <input
+                      checked=""
+                      type="checkbox"
+                    />
+                    <span
+                      aria-hidden="true"
+                      class="rct-checkbox"
+                      role="presentation"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                          />
+                          <path
+                            d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                            data-icon-path="inner-path"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-node-icon"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M28,8H20.8284L17.4143,4.5859A2,2,0,0,0,16,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10A2,2,0,0,0,28,8ZM8,26V14h8v6.17l-2.59-2.58L12,19l5,5,5-5-1.41-1.41L18,20.17V14a2.0025,2.0025,0,0,0-2-2H8a2.0025,2.0025,0,0,0-2,2V26H4V6H16l4,4h8v2H22v2h6V26Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-label"
+                    >
+                      Everything
+                    </span>
+                  </label>
+                </span>
+                <ol>
+                  <li
+                    class="rct-node rct-node-leaf"
+                  >
+                    <span
+                      class="rct-text"
+                    >
+                      <span
+                        class="rct-collapse"
+                      >
+                        <span
+                          class="rct-icon"
+                        />
+                      </span>
+                      <label>
+                        <input
+                          checked=""
+                          type="checkbox"
+                        />
+                        <span
+                          aria-hidden="true"
+                          class="rct-checkbox"
+                          role="presentation"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                              />
+                              <path
+                                d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              color="black"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M9 16H23V18H9z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                              />
+                              <path
+                                d="M9 10H23V12H9z"
+                                fill="none"
+                              />
+                              <path
+                                d="M26,2H6A2.0023,2.0023,0,0,0,4,4V17a10.9814,10.9814,0,0,0,5.8242,9.707L16,30l6.1758-3.293A10.9814,10.9814,0,0,0,28,17V4A2.0023,2.0023,0,0,0,26,2ZM23,18H9V16H23Zm0-6H9V10H23Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          Add Global Filter
+                        </span>
+                      </label>
+                    </span>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div
+          class="custom-button-wrapper"
+        >
+          <button
+            class="btnRight cds--btn cds--btn--primary"
+            type="submit"
+            variant="contained"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+            variant="contained"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Rbac Role Form Component render edit rbac role form 1`] = `
+<div>
+  <div>
+    <div
+      class="role-form"
+    >
+      <form>
+        <p
+          class="role-information"
+          id="role-information"
+          name="role-information"
+        >
+          Role Information
+        </p>
+        <div
+          class="cds--form-item name-label cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+              >
+                *
+              </span>
+              Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                maxlength="128"
+                name="name"
+                type="text"
+                value="test"
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-orchestration"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="vm_restriction"
+            >
+              Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="vm_restriction"
+                maxlength="128"
+                name="vm_restriction"
+                title="Only User Owned"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item access-restriction-catalog"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="service_template_restriction"
+            >
+              Access Restriction for Catalog Items
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="service_template_restriction"
+                maxlength="128"
+                name="service_template_restriction"
+                title="Only User Owned"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<#{_('None')}>"
+                  value="-1"
+                >
+                  &lt;#{_('None')}&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned"
+                  value="user"
+                >
+                  Only User Owned
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Only User Owned or Group Owned"
+                  value="user_or_group"
+                >
+                  Only User Owned or Group Owned
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="checkbox-tree-wrapper"
+        >
+          <span
+            class="checkbox-tree-required-tag"
+          >
+            *
+          </span>
+          <p
+            class="checkbox-tree-title"
+          >
+            Product Features (Editing)
+          </p>
+          <div
+            class="react-checkbox-tree rct-icons-fa5"
+          >
+            <ol>
+              <li
+                class="rct-node rct-node-parent rct-node-expanded"
+              >
+                <span
+                  class="rct-text"
+                >
+                  <button
+                    aria-label="Collapse node"
+                    class="rct-collapse rct-collapse-btn"
+                    title="Collapse node"
+                    type="button"
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <label>
+                    <input
+                      checked=""
+                      type="checkbox"
+                    />
+                    <span
+                      aria-hidden="true"
+                      class="rct-checkbox"
+                      role="presentation"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                          />
+                          <path
+                            d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                            data-icon-path="inner-path"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-node-icon"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M28,8H20.8284L17.4143,4.5859A2,2,0,0,0,16,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10A2,2,0,0,0,28,8ZM8,26V14h8v6.17l-2.59-2.58L12,19l5,5,5-5-1.41-1.41L18,20.17V14a2.0025,2.0025,0,0,0-2-2H8a2.0025,2.0025,0,0,0-2,2V26H4V6H16l4,4h8v2H22v2h6V26Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="rct-label"
+                    >
+                      Everything
+                    </span>
+                  </label>
+                </span>
+                <ol>
+                  <li
+                    class="rct-node rct-node-leaf"
+                  >
+                    <span
+                      class="rct-text"
+                    >
+                      <span
+                        class="rct-collapse"
+                      >
+                        <span
+                          class="rct-icon"
+                        />
+                      </span>
+                      <label>
+                        <input
+                          checked=""
+                          type="checkbox"
+                        />
+                        <span
+                          aria-hidden="true"
+                          class="rct-checkbox"
+                          role="presentation"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                              />
+                              <path
+                                d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              color="black"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M9 16H23V18H9z"
+                                data-icon-path="inner-path"
+                                fill="none"
+                              />
+                              <path
+                                d="M9 10H23V12H9z"
+                                fill="none"
+                              />
+                              <path
+                                d="M26,2H6A2.0023,2.0023,0,0,0,4,4V17a10.9814,10.9814,0,0,0,5.8242,9.707L16,30l6.1758-3.293A10.9814,10.9814,0,0,0,28,17V4A2.0023,2.0023,0,0,0,26,2ZM23,18H9V16H23Zm0-6H9V10H23Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          Add Global Filter
+                        </span>
+                      </label>
+                    </span>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div
+          class="custom-button-wrapper"
+        >
+          <button
+            class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="contained"
+          >
+            Save
+          </button>
+          <button
+            class="btnRight cds--btn cds--btn--secondary cds--btn--disabled"
+            disabled=""
+            type="button"
+            variant="contained"
+          >
+            Reset
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+            variant="contained"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
