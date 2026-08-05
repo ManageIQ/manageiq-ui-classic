@@ -38,18 +38,14 @@ export const toHumanSize = (value) => {
     return undefined;
   }
 
-  if (value >= 1073741824) {
-    return `${value / (1024 ** 3)} GB`;
-  } if (value >= 1048576) {
-    return `${value / (1024 ** 2)} MB`;
-  } if (value >= 1024) {
-    return `${value / 1024} KB`;
-  } if (value >= 0) {
-    return `${value} B`;
+  const bytes = toBytes(value);
+
+  if (bytes >= 1073741824) {
+    return `${parseFloat((bytes / (1024 ** 3)).toFixed(2))} GB`;
+  } if (bytes >= 1048576) {
+    return `${parseFloat((bytes / (1024 ** 2)).toFixed(2))} MB`;
+  } if (bytes >= 1024) {
+    return `${parseFloat((bytes / 1024).toFixed(2))} KB`;
   }
-  return value
-    .replace('.gigabytes', ' GB')
-    .replace('.megabytes', ' MB')
-    .replace('.kilobytes', ' KB')
-    .replace('.bytes', ' B');
+  return `${bytes} B`;
 };
