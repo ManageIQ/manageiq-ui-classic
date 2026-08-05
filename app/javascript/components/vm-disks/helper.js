@@ -3,19 +3,19 @@ import { toHumanSize } from '../../helpers/size';
 
 const diskDisplayName = ({ device_type: deviceType, controller_type: controllerType, location }) => {
   switch (deviceType) {
-    case 'cdrom-raw':     return sprintf(__('CD-ROM (IDE %s)'), location);
-    case 'atapi-cdrom':   return sprintf(__('ATAPI CD-ROM (IDE %s)'), location);
-    case 'cdrom-image':   return sprintf(__('CD-ROM Image (IDE %s)'), location);
-    case 'ide':           return sprintf(__('Hard Disk (IDE %s)'), location);
+    case 'cdrom-raw': return sprintf(__('CD-ROM (IDE %s)'), location);
+    case 'atapi-cdrom': return sprintf(__('ATAPI CD-ROM (IDE %s)'), location);
+    case 'cdrom-image': return sprintf(__('CD-ROM Image (IDE %s)'), location);
+    case 'ide': return sprintf(__('Hard Disk (IDE %s)'), location);
     case 'scsi':
     case 'scsi-hardDisk': return sprintf(__('Hard Disk (SCSI %s)'), location);
     case 'scsi-passthru': return sprintf(__('Generic SCSI (%s)'), location);
-    case 'floppy':        return sprintf(__('Floppy Drive (SIO %s)'), location);
+    case 'floppy': return sprintf(__('Floppy Drive (SIO %s)'), location);
     case 'disk':
-      if (controllerType && controllerType.startsWith('ide')) {
+      if (controllerType?.startsWith('ide')) {
         return sprintf(__('Hard Disk (IDE %s)'), location);
       }
-      if (controllerType && controllerType.startsWith('scsi')) {
+      if (controllerType?.startsWith('scsi')) {
         return sprintf(__('Hard Disk (SCSI %s)'), location);
       }
       return `${controllerType} ${location}`;
@@ -34,7 +34,7 @@ export const tableData = (disks) => {
       { text: disk.partitions_aligned || __('Unknown') },
       { text: disk.size ? toHumanSize(disk.size) : '' },
       { text: disk.size_on_disk ? toHumanSize(disk.size_on_disk) : '' },
-      { text: (disk.size && disk.size_on_disk) ? ((disk.size_on_disk / disk.size) * 100).toFixed(1) : '' },
+      { text: (disk.size && disk.size_on_disk) ? ((disk.size_on_disk / disk.size) * 100).toFixed(1) : '0.0' },
     ],
   }));
 

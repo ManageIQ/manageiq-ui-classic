@@ -617,6 +617,7 @@ module.exports = [
       'no-floating-decimal': 2,
       'no-implied-eval': 2,
       'no-loop-func': 2,
+      'no-multi-spaces': 2,
       'no-redeclare': 2,
       'no-undef-init': 2,
       'no-undefined': 0,
