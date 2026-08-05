@@ -47,7 +47,7 @@ const MAIN_CONFIGURATION = 'Main Configuration';
 const SETTINGS = 'Settings';
 
 // Selectors
-const MULTI_SELECT = '.cds--multi-select button.cds--list-box__field'
+const MULTI_SELECT = '.cds--multi-select button.cds--list-box__field';
 
 function selectToolbarOption({ toolbar = 'Configuration', option }) {
   cy.toolbar(toolbar, option);
