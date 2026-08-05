@@ -19,13 +19,14 @@ if (env.WEBPACK_VERBOSE) {
 
 module.exports = [
   {
-    test: /\.(js|jsx|mjs)$/,
+    test: /\.(js|jsx|mjs|cjs)$/,
     use: [{
       loader: 'babel-loader',
       options: babelOptions,
     }],
     // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
-    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit))/,
+    // Also include react-checkbox-tree v2+ for transpilation because it ships untranspiled class fields
+    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit|react-checkbox-tree))/,
   },
   {
     // matches both the actual path and the aliased one
