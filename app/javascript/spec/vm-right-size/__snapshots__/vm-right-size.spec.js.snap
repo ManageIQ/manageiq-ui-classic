@@ -2,9 +2,7 @@
 
 exports[`VmRightSize matches snapshot 1`] = `
 <div>
-  <div
-    id="tab_div"
-  >
+  <div>
     <h3>
       Normal Operating Ranges (up to 30 days' data)
     </h3>

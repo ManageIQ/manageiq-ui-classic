@@ -1,4 +1,4 @@
-const val = (v) => v ?? __('Not Available');
+const displayValue = (v) => v ?? __('Not Available');
 
 export const normTableData = (norm) => ({
   headers: [
@@ -12,34 +12,34 @@ export const normTableData = (norm) => ({
     {
       id: 'cpu',
       defaultKey_metric: __('CPU'),
-      max: val(norm.cpu_mhz_max),
-      high: val(norm.cpu_mhz_high),
-      average: val(norm.cpu_mhz_avg),
-      low: val(norm.cpu_mhz_low),
+      max: displayValue(norm.cpu_mhz_max),
+      high: displayValue(norm.cpu_mhz_high),
+      average: displayValue(norm.cpu_mhz_avg),
+      low: displayValue(norm.cpu_mhz_low),
     },
     {
       id: 'cpu_usage',
       defaultKey_metric: __('CPU Usage'),
-      max: val(norm.cpu_pct_max),
-      high: val(norm.cpu_pct_high),
-      average: val(norm.cpu_pct_avg),
-      low: val(norm.cpu_pct_low),
+      max: displayValue(norm.cpu_pct_max),
+      high: displayValue(norm.cpu_pct_high),
+      average: displayValue(norm.cpu_pct_avg),
+      low: displayValue(norm.cpu_pct_low),
     },
     {
       id: 'memory',
       defaultKey_metric: __('Memory'),
-      max: val(norm.mem_max),
-      high: val(norm.mem_high),
-      average: val(norm.mem_avg),
-      low: val(norm.mem_low),
+      max: displayValue(norm.mem_max),
+      high: displayValue(norm.mem_high),
+      average: displayValue(norm.mem_avg),
+      low: displayValue(norm.mem_low),
     },
     {
       id: 'memory_pct',
       defaultKey_metric: __('Memory Usage'),
-      max: val(norm.mem_pct_max),
-      high: val(norm.mem_pct_high),
-      average: val(norm.mem_pct_avg),
-      low: val(norm.mem_pct_low),
+      max: displayValue(norm.mem_pct_max),
+      high: displayValue(norm.mem_pct_high),
+      average: displayValue(norm.mem_pct_avg),
+      low: displayValue(norm.mem_pct_low),
     },
   ],
 });
@@ -56,18 +56,18 @@ export const sizingTableData = (sizing, currentCores, currentMem) => ({
     {
       id: 'processors',
       defaultKey_category: __('Processors'),
-      current: val(currentCores),
-      recommended: val(sizing.recommended_vcpus),
-      savingsPct: val(sizing.vcpus_change_pct),
-      savings: val(sizing.vcpus_change),
+      current: displayValue(currentCores),
+      recommended: displayValue(sizing.recommended_vcpus),
+      savingsPct: displayValue(sizing.vcpus_change_pct),
+      savings: displayValue(sizing.vcpus_change),
     },
     {
       id: 'memory',
       defaultKey_category: __('Memory'),
-      current: val(currentMem),
-      recommended: val(sizing.recommended_mem),
-      savingsPct: val(sizing.mem_change_pct),
-      savings: val(sizing.mem_change),
+      current: displayValue(currentMem),
+      recommended: displayValue(sizing.recommended_mem),
+      savingsPct: displayValue(sizing.mem_change_pct),
+      savings: displayValue(sizing.mem_change),
     },
   ],
 });
