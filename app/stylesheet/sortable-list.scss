@@ -55,6 +55,29 @@
     background-color: #e0e0e0;
   }
 
+  &.selected {
+    background-color: #d0e2ff;
+    border-left: 3px solid #0f62fe;
+  }
+
+  &__checkbox {
+    flex: 0 0 auto;
+    margin-right: 0.5rem;
+
+    .cds--form-item.cds--checkbox-wrapper {
+      width: auto;
+      margin-block-end: 0;
+    }
+
+    .cds--checkbox-label {
+      padding-inline-start: 1.5rem;
+    }
+
+    .cds--checkbox-label-text {
+      display: none;
+    }
+  }
+
   &__icon {
     flex-shrink: 0;
     margin-right: 0.75rem;

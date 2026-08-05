@@ -35,23 +35,16 @@ describe "miq_ae_class/_class_fields.html.haml" do
                       :ae_fields    => ae_fields)
 
       assign(:in_a_form_fields, true)
-      @ae_class = MiqAeClass.where(:name => 'FRED').first
-      assign(:edit,
-             :key              => "aefields_edit__#{@ae_class.id}",
-             :ae_class_id      => @ae_class.id,
-             :fields_to_delete => [],
-             :new              => {
-               :datatypes => [],
-               :aetypes   => [],
-               :fields    => [@ae_class.ae_fields.first]
-             })
-      @combo_xml = [["Assertion", "assertion", {"data-icon"=>"fa fa-comment-o"}]]
-      @dtype_combo_xml = [["String", "string", {"data-icon"=>"ff ff-string"}]]
+      assign(:ae_class, MiqAeClass.where(:name => 'FRED').first)
+      assign(:combo_xml, [["Assertion", "assertion", {"data-icon" => "fa fa-comment-o"}]])
+      assign(:dtype_combo_xml, [["String", "string", {"data-icon" => "ff ff-string"}]])
     end
 
-    it "Check instance", :js => true do
+    it "renders the React Datastore component in edit mode" do
       render :template => "miq_ae_class/_class_fields"
-      expect(rendered).to have_selector('input#fields_default_value_0[value=\'Wilma\']')
+      expect(rendered).to include("componentFactory('Datastore'")
+      expect(rendered).to include('"isEdit":true')
+      expect(rendered).to include('"type":"class_fields"')
     end
   end
 end
