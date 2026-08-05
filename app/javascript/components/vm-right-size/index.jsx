@@ -3,7 +3,7 @@ import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
 import { normTableData, sizingTableData } from './helpers';
 
-const VmRightSize = ({ data, backUrl = undefined }) => {
+const VmRightSize = ({ data, backUrl }) => {
   if (!data) {
     return null;
   }
@@ -13,7 +13,7 @@ const VmRightSize = ({ data, backUrl = undefined }) => {
   } = data;
 
   return (
-    <div id="tab_div">
+    <div>
       <h3>{__("Normal Operating Ranges (up to 30 days' data)")}</h3>
       <MiqDataTable {...normTableData(norm)} />
 
