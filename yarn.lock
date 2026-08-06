@@ -1387,15 +1387,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:~7.29.0":
-  version: 7.29.7
-  resolution: "@babel/runtime-corejs3@npm:7.29.7"
-  dependencies:
-    core-js-pure: "npm:^3.48.0"
-  checksum: 10/982cc2b085c9d2885bc1682a0e581c21b72e93a2c7e87793da00596851ac65cf2cce16906edcee62e155f581ae7ef4aa9e1f8e3ffde35c8cb2c390abb99164c6
-  languageName: node
-  linkType: hard
-
 "@babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.24.5, @babel/runtime@npm:^7.27.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.8.3":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
@@ -6128,13 +6119,6 @@ __metadata:
   dependencies:
     browserslist: "npm:^4.28.1"
   checksum: 10/eb35ad9b31a613092d32e5eb0c9fecb695e680bb29509fe04ae297ef790cea47d06864ef8939c8f5f189cce0bd2807fef8b2d6450f7eeb917ffaaf38a775dece
-  languageName: node
-  linkType: hard
-
-"core-js-pure@npm:^3.48.0":
-  version: 3.49.0
-  resolution: "core-js-pure@npm:3.49.0"
-  checksum: 10/ae769f3df1b8b1dd6a1620090a12d3cafb6ba2f9a835aaf23cb837666dbee1495d308ac28344879898e2229b635e93f15ec0dc9879fa1f0cf4891d2be75d73ea
   languageName: node
   linkType: hard
 
@@ -11163,7 +11147,6 @@ __metadata:
     "@babel/plugin-transform-optional-chaining": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.29.0"
     "@babel/preset-react": "npm:~7.28.0"
-    "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
     "@carbon/react": "npm:~1.106.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.2.0"
