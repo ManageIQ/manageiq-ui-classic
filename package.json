@@ -93,7 +93,6 @@
   },
   "devDependencies": {
     "@babel/core": "~7.29.0",
-    "@babel/eslint-parser": "~7.28.6",
     "@babel/plugin-transform-class-properties": "~7.28.0",
     "@babel/plugin-transform-nullish-coalescing-operator": "~7.28.6",
     "@babel/plugin-transform-numeric-separator": "~7.28.6",
