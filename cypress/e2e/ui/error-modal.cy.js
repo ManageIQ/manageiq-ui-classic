@@ -80,6 +80,6 @@ describe('MiqErrorModal', () => {
     cy.contains('.miq-error-modal-row', 'Status').should('contain.text', '404 Not Found');
     cy.contains('.miq-error-modal-row', 'Content-Type').should('contain.text', 'text/html; charset=utf-8');
     cy.contains('.miq-error-modal-row', 'Data').should('contain.text', 'The page you were looking for does not exist.');
-    cy.get('.miq-error-modal__data').should('not.contain.text', '<body>');
+    cy.get('.miq-error-modal-data').should('not.contain.text', '<body>');
   });
 });
