@@ -1,17 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, ModalBody } from '@carbon/react';
 import { MisuseOutline } from '@carbon/react/icons';
 import DOMPurify from 'dompurify';
-import { useMiqDispatch, useMiqSelector } from '../../redux/miq-hooks';
-
-const SHOW_ERROR_MODAL = '@@errorModal/show';
-const HIDE_ERROR_MODAL = '@@errorModal/hide';
-const LOAD_ERROR_MODAL = '@@errorModal/load';
-
-const showModal = (data) => (dispatch) => {
-  dispatch({ type: LOAD_ERROR_MODAL, data });
-  dispatch({ type: SHOW_ERROR_MODAL });
-};
 
 const findError = (data) => {
   if (!data) {
@@ -80,39 +70,25 @@ const buildErrorDetails = ({ backendName, error, source }) => {
   };
 };
 
-ManageIQ.redux.addReducer({
-  ErrorModal: function ErrorModalReducer(state = { show: false }, action) {
-    switch (action.type) {
-      case SHOW_ERROR_MODAL:
-        return { ...state, show: true };
-      case HIDE_ERROR_MODAL:
-        return { ...state, show: false };
-      case LOAD_ERROR_MODAL:
-        return { ...state, error: action.data };
-      default:
-        return state;
-    }
-  },
-});
-
 const MiqErrorModal = () => {
-  const dispatch = useMiqDispatch();
-  const show = useMiqSelector((state) => state.ErrorModal?.show ?? false);
-  const error = useMiqSelector((state) => state.ErrorModal?.error);
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     const subscription = window.listenToRx((event) => {
       if ('serverError' in event) {
-        dispatch(showModal(buildErrorDetails({
+        const details = buildErrorDetails({
           error: event.serverError,
           source: event.source,
           backendName: event.backendName,
-        })));
+        });
+        setError(details);
+        setShow(true);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [dispatch]);
+  }, []);
 
   if (!show || !error) {
     return null;
@@ -128,7 +104,7 @@ const MiqErrorModal = () => {
       modalHeading={sprintf(__('Server Error %s'), backendName ? `(${backendName})` : '')}
       passiveModal
       className="miq-error-modal"
-      onRequestClose={() => dispatch({ type: HIDE_ERROR_MODAL })}
+      onRequestClose={() => setShow(false)}
     >
       <ModalBody className="miq-error-modal-body">
         <div className="miq-error-modal-icon">
