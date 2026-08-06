@@ -23,10 +23,10 @@ describe('MiqErrorModal', () => {
     });
 
     cy.contains('.cds--modal-header__heading', 'Server Error');
-    cy.contains('.miq-error-modal__row', 'URL').should('contain.text', '/foo/bar');
-    cy.contains('.miq-error-modal__row', 'Data').should('contain.text', 'Test server error [foo/bar]');
-    cy.contains('.miq-error-modal__row', 'Status').should('not.exist');
-    cy.contains('.miq-error-modal__row', 'Content-Type').should('not.exist');
+    cy.contains('.miq-error-modal-row', 'URL').should('contain.text', '/foo/bar');
+    cy.contains('.miq-error-modal-row', 'Data').should('contain.text', 'Test server error [foo/bar]');
+    cy.contains('.miq-error-modal-row', 'Status').should('not.exist');
+    cy.contains('.miq-error-modal-row', 'Content-Type').should('not.exist');
   });
 
   it('shows $http error details from sendDataWithRx', () => {
@@ -52,10 +52,10 @@ describe('MiqErrorModal', () => {
     });
 
     cy.contains('.cds--modal-header__heading', 'Server Error ($http)');
-    cy.contains('.miq-error-modal__row', 'URL').should('contain.text', '/api/cloud_tenants/2');
-    cy.contains('.miq-error-modal__row', 'Status').should('contain.text', '400 Bad Request');
-    cy.contains('.miq-error-modal__row', 'Content-Type').should('contain.text', 'text/plain; charset=utf-8');
-    cy.contains('.miq-error-modal__row', 'Data').should('contain.text', 'Validation failed: name is required');
+    cy.contains('.miq-error-modal-row', 'URL').should('contain.text', '/api/cloud_tenants/2');
+    cy.contains('.miq-error-modal-row', 'Status').should('contain.text', '400 Bad Request');
+    cy.contains('.miq-error-modal-row', 'Content-Type').should('contain.text', 'text/plain; charset=utf-8');
+    cy.contains('.miq-error-modal-row', 'Data').should('contain.text', 'Validation failed: name is required');
   });
 
   it('shows fetch html error details from sendDataWithRx', () => {
@@ -76,10 +76,10 @@ describe('MiqErrorModal', () => {
     });
 
     cy.contains('.cds--modal-header__heading', 'Server Error (API)');
-    cy.contains('.miq-error-modal__row', 'URL').should('contain.text', '/api/cloud_tenants1/2');
-    cy.contains('.miq-error-modal__row', 'Status').should('contain.text', '404 Not Found');
-    cy.contains('.miq-error-modal__row', 'Content-Type').should('contain.text', 'text/html; charset=utf-8');
-    cy.contains('.miq-error-modal__row', 'Data').should('contain.text', 'The page you were looking for does not exist.');
+    cy.contains('.miq-error-modal-row', 'URL').should('contain.text', '/api/cloud_tenants1/2');
+    cy.contains('.miq-error-modal-row', 'Status').should('contain.text', '404 Not Found');
+    cy.contains('.miq-error-modal-row', 'Content-Type').should('contain.text', 'text/html; charset=utf-8');
+    cy.contains('.miq-error-modal-row', 'Data').should('contain.text', 'The page you were looking for does not exist.');
     cy.get('.miq-error-modal__data').should('not.contain.text', '<body>');
   });
 });

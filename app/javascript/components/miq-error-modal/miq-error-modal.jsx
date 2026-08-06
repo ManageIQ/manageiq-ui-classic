@@ -130,34 +130,34 @@ const MiqErrorModal = () => {
       className="miq-error-modal"
       onRequestClose={() => dispatch({ type: HIDE_ERROR_MODAL })}
     >
-      <ModalBody className="miq-error-modal__body">
-        <div className="miq-error-modal__icon">
+      <ModalBody className="miq-error-modal-body">
+        <div className="miq-error-modal-icon">
           <MisuseOutline />
         </div>
-        <div className="miq-error-modal__details">
+        <div className="miq-error-modal-details">
           {url && (
-            <p className="miq-error-modal__row">
-              <strong className="miq-error-modal__label">{__('URL')}</strong>
+            <p className="miq-error-modal-row">
+              <strong className="miq-error-modal-label">{__('URL')}</strong>
               {url}
             </p>
           )}
           {status && (
-            <p className="miq-error-modal__row">
-              <strong className="miq-error-modal__label">{__('Status')}</strong>
+            <p className="miq-error-modal-row">
+              <strong className="miq-error-modal-label">{__('Status')}</strong>
               {status}
             </p>
           )}
           {contentType && (
-            <p className="miq-error-modal__row">
-              <strong className="miq-error-modal__label">{__('Content-Type')}</strong>
+            <p className="miq-error-modal-row">
+              <strong className="miq-error-modal-label">{__('Content-Type')}</strong>
               {contentType}
             </p>
           )}
           {data && (
-            <p className="miq-error-modal__row">
-              <strong className="miq-error-modal__label">{__('Data')}</strong>
+            <p className="miq-error-modal-row">
+              <strong className="miq-error-modal-label">{__('Data')}</strong>
               <span
-                className="miq-error-modal__data"
+                className="miq-error-modal-data"
                 /* eslint-disable-next-line react/no-danger */
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(data)) }}
               />
