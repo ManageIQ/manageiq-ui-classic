@@ -131,6 +131,8 @@ const RoleForm = (props) => {
   const isEdit = !!role?.id;
 
   useEffect(() => {
+    features = new Set();
+    idCounter = 0;
     if (isEdit) {
       setFormData((prevState) => ({ ...prevState, isLoading: true }));
       miqSparkleOn();
@@ -166,7 +168,6 @@ const RoleForm = (props) => {
       const bsTree = JSON.parse(customProps.bs_tree);
       const nodes = bsTree.map(transformTree);
       if (role && role.name && existingProductFeatures) {
-        idCounter = 0;
         existingProductFeatures.forEach((productFeature) => {
           findCheck(productFeature.identifier, nodes[0]);
         });
