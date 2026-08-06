@@ -138,7 +138,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -409,7 +408,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -693,7 +691,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -964,7 +961,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"

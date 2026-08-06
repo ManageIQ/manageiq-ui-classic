@@ -106,7 +106,6 @@ exports[`Datastore form component Datastore domain form component should render 
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -254,7 +253,6 @@ exports[`Datastore form component Datastore domain form component should render 
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"

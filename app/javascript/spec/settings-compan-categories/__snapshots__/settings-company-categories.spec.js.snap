@@ -42,6 +42,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                N
+                a
+                m
+                e
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -54,6 +58,17 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                D
+                e
+                s
+                c
+                r
+                i
+                p
+                t
+                i
+                o
+                n
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -66,6 +81,21 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                S
+                h
+                o
+                w
+                 
+                i
+                n
+                 
+                C
+                o
+                n
+                s
+                o
+                l
+                e
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -78,6 +108,18 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                S
+                i
+                n
+                g
+                l
+                e
+                 
+                V
+                a
+                l
+                u
+                e
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -90,6 +132,24 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                C
+                a
+                p
+                t
+                u
+                r
+                e
+                 
+                C
+                 
+                &
+                 
+                U
+                 
+                D
+                a
+                t
+                a
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -102,6 +162,13 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                D
+                e
+                f
+                a
+                u
+                l
+                t
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -114,6 +181,13 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               <div
                 class="cds--table-header-label"
               >
+                A
+                c
+                t
+                i
+                o
+                n
+                s
                 <div
                   class="cds--table-header-label--decorator-inner"
                 />
@@ -206,7 +280,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-:r8:"
+                  aria-describedby="danger-description-_r_8_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Category cannot be deleted"
@@ -214,7 +288,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-:r8:"
+                    id="danger-description-_r_8_"
                   >
                     danger
                   </span>
@@ -310,7 +384,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-:r9:"
+                  aria-describedby="danger-description-_r_9_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
@@ -319,7 +393,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-:r9:"
+                    id="danger-description-_r_9_"
                   >
                     danger
                   </span>
@@ -415,7 +489,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-:ra:"
+                  aria-describedby="danger-description-_r_a_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
@@ -424,7 +498,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-:ra:"
+                    id="danger-description-_r_a_"
                   >
                     danger
                   </span>
@@ -520,7 +594,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-:rb:"
+                  aria-describedby="danger-description-_r_b_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
@@ -529,7 +603,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-:rb:"
+                    id="danger-description-_r_b_"
                   >
                     danger
                   </span>

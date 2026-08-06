@@ -14,6 +14,7 @@ module.exports = {
         useBuiltIns: 'entry',
       },
     ],
+    require('@babel/preset-typescript').default,
     [
       require('@babel/preset-react').default,
       {

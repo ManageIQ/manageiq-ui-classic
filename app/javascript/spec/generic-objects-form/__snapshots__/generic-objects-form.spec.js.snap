@@ -505,14 +505,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:r5:"
+              aria-describedby="danger-description-_r_5_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-attributes[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:r5:"
+                id="danger-description-_r_5_"
               >
                 danger
               </span>
@@ -624,7 +624,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 class="cds--label"
                 dir="auto"
                 for="associations[0].class"
-                id="downshift-:r9:-label"
+                id="downshift-_r_9_-label"
               >
                 Class
               </label>
@@ -637,10 +637,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   <input
                     aria-activedescendant=""
                     aria-autocomplete="list"
-                    aria-controls="downshift-:r9:-menu"
+                    aria-controls="downshift-_r_9_-menu"
                     aria-expanded="false"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-:r9:-label"
+                    aria-labelledby="downshift-_r_9_-label"
                     autocomplete="off"
                     class="cds--text-input"
                     id="associations[0].class"
@@ -675,11 +675,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                     </svg>
                   </button>
                   <button
-                    aria-controls="downshift-:r9:-menu"
+                    aria-controls="downshift-_r_9_-menu"
                     aria-expanded="false"
                     aria-label="Open"
                     class="cds--list-box__menu-icon"
-                    id="downshift-:r9:-toggle-button"
+                    id="downshift-_r_9_-toggle-button"
                     tabindex="-1"
                     title="Open"
                     type="button"
@@ -701,22 +701,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   </button>
                 </div>
                 <ul
-                  aria-labelledby="downshift-:r9:-label"
+                  aria-labelledby="downshift-_r_9_-label"
                   class="cds--list-box__menu"
-                  id="downshift-:r9:-menu"
+                  id="downshift-_r_9_-menu"
                   role="listbox"
                 />
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:ra:"
+              aria-describedby="danger-description-_r_a_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:ra:"
+                id="danger-description-_r_a_"
               >
                 danger
               </span>
@@ -782,7 +782,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 class="cds--label"
                 dir="auto"
                 for="associations[1].class"
-                id="downshift-:rd:-label"
+                id="downshift-_r_d_-label"
               >
                 Class
               </label>
@@ -795,10 +795,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   <input
                     aria-activedescendant=""
                     aria-autocomplete="list"
-                    aria-controls="downshift-:rd:-menu"
+                    aria-controls="downshift-_r_d_-menu"
                     aria-expanded="false"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-:rd:-label"
+                    aria-labelledby="downshift-_r_d_-label"
                     autocomplete="off"
                     class="cds--text-input"
                     id="associations[1].class"
@@ -833,11 +833,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                     </svg>
                   </button>
                   <button
-                    aria-controls="downshift-:rd:-menu"
+                    aria-controls="downshift-_r_d_-menu"
                     aria-expanded="false"
                     aria-label="Open"
                     class="cds--list-box__menu-icon"
-                    id="downshift-:rd:-toggle-button"
+                    id="downshift-_r_d_-toggle-button"
                     tabindex="-1"
                     title="Open"
                     type="button"
@@ -859,22 +859,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   </button>
                 </div>
                 <ul
-                  aria-labelledby="downshift-:rd:-label"
+                  aria-labelledby="downshift-_r_d_-label"
                   class="cds--list-box__menu"
-                  id="downshift-:rd:-menu"
+                  id="downshift-_r_d_-menu"
                   role="listbox"
                 />
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:re:"
+              aria-describedby="danger-description-_r_e_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[1]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:re:"
+                id="danger-description-_r_e_"
               >
                 danger
               </span>
@@ -980,14 +980,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:rg:"
+              aria-describedby="danger-description-_r_g_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-methods[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:rg:"
+                id="danger-description-_r_g_"
               >
                 danger
               </span>
@@ -1070,7 +1070,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
               class="cds--tooltip-trigger__wrapper"
             >
               <button
-                aria-labelledby="tooltip-:rj:"
+                aria-labelledby="tooltip-_r_j_"
                 class="edit-button cds--btn cds--btn--primary cds--btn--icon-only"
                 name="file_edit"
                 type="button"
@@ -1104,7 +1104,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
             <span
               aria-hidden="true"
               class="cds--popover"
-              id="tooltip-:rj:"
+              id="tooltip-_r_j_"
               role="tooltip"
             >
               <span
@@ -1392,14 +1392,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:rp:"
+              aria-describedby="danger-description-_r_p_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-attributes[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:rp:"
+                id="danger-description-_r_p_"
               >
                 danger
               </span>
@@ -1511,7 +1511,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 class="cds--label"
                 dir="auto"
                 for="associations[0].class"
-                id="downshift-:rt:-label"
+                id="downshift-_r_t_-label"
               >
                 Class
               </label>
@@ -1524,10 +1524,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   <input
                     aria-activedescendant=""
                     aria-autocomplete="list"
-                    aria-controls="downshift-:rt:-menu"
+                    aria-controls="downshift-_r_t_-menu"
                     aria-expanded="false"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-:rt:-label"
+                    aria-labelledby="downshift-_r_t_-label"
                     autocomplete="off"
                     class="cds--text-input"
                     id="associations[0].class"
@@ -1562,11 +1562,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                     </svg>
                   </button>
                   <button
-                    aria-controls="downshift-:rt:-menu"
+                    aria-controls="downshift-_r_t_-menu"
                     aria-expanded="false"
                     aria-label="Open"
                     class="cds--list-box__menu-icon"
-                    id="downshift-:rt:-toggle-button"
+                    id="downshift-_r_t_-toggle-button"
                     tabindex="-1"
                     title="Open"
                     type="button"
@@ -1588,22 +1588,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   </button>
                 </div>
                 <ul
-                  aria-labelledby="downshift-:rt:-label"
+                  aria-labelledby="downshift-_r_t_-label"
                   class="cds--list-box__menu"
-                  id="downshift-:rt:-menu"
+                  id="downshift-_r_t_-menu"
                   role="listbox"
                 />
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:ru:"
+              aria-describedby="danger-description-_r_u_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:ru:"
+                id="danger-description-_r_u_"
               >
                 danger
               </span>
@@ -1669,7 +1669,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 class="cds--label"
                 dir="auto"
                 for="associations[1].class"
-                id="downshift-:r11:-label"
+                id="downshift-_r_11_-label"
               >
                 Class
               </label>
@@ -1682,10 +1682,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   <input
                     aria-activedescendant=""
                     aria-autocomplete="list"
-                    aria-controls="downshift-:r11:-menu"
+                    aria-controls="downshift-_r_11_-menu"
                     aria-expanded="false"
                     aria-haspopup="listbox"
-                    aria-labelledby="downshift-:r11:-label"
+                    aria-labelledby="downshift-_r_11_-label"
                     autocomplete="off"
                     class="cds--text-input"
                     id="associations[1].class"
@@ -1720,11 +1720,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                     </svg>
                   </button>
                   <button
-                    aria-controls="downshift-:r11:-menu"
+                    aria-controls="downshift-_r_11_-menu"
                     aria-expanded="false"
                     aria-label="Open"
                     class="cds--list-box__menu-icon"
-                    id="downshift-:r11:-toggle-button"
+                    id="downshift-_r_11_-toggle-button"
                     tabindex="-1"
                     title="Open"
                     type="button"
@@ -1746,22 +1746,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                   </button>
                 </div>
                 <ul
-                  aria-labelledby="downshift-:r11:-label"
+                  aria-labelledby="downshift-_r_11_-label"
                   class="cds--list-box__menu"
-                  id="downshift-:r11:-menu"
+                  id="downshift-_r_11_-menu"
                   role="listbox"
                 />
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:r12:"
+              aria-describedby="danger-description-_r_12_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[1]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:r12:"
+                id="danger-description-_r_12_"
               >
                 danger
               </span>
@@ -1867,14 +1867,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-:r14:"
+              aria-describedby="danger-description-_r_14_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-methods[0]"
               type="button"
             >
               <span
                 class="cds--visually-hidden"
-                id="danger-description-:r14:"
+                id="danger-description-_r_14_"
               >
                 danger
               </span>
