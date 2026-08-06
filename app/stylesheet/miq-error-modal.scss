@@ -4,17 +4,17 @@
   }
 
   .cds--modal-content {
-    padding-bottom: 2rem;
+    padding-bottom: 0;
   }
 
-  .miq-error-modal__body {
+  .miq-error-modal-body {
     display: grid;
     grid-template-columns: 5rem 1fr;
     gap: 1.5rem;
     align-items: start;
   }
 
-  .miq-error-modal__icon {
+  .miq-error-modal-icon {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -27,23 +27,22 @@
     }
   }
 
-  .miq-error-modal__details {
+  .miq-error-modal-details {
     min-width: 0;
   }
 
-  .miq-error-modal__row {
+  .miq-error-modal-row {
     margin: 0 0 1rem;
     line-height: 1.5;
     overflow-wrap: anywhere;
   }
 
-  .miq-error-modal__label {
+  .miq-error-modal-label {
     font-weight: 600;
     margin-right: 0.375rem;
   }
 
-  .miq-error-modal__data {
-    white-space: pre-wrap;
-    word-break: break-word;
+  .miq-error-modal-data {
+    overflow-wrap: anywhere;
   }
 }
