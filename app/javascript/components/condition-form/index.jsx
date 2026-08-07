@@ -46,12 +46,12 @@ const ConditionForm = ({
           description: data.description,
           towhat: data.towhat,
           notes: data.notes,
-          expression: data.expression?.exp     ?? null,
+          expression: data.expression?.exp ?? null,
           applies_to_exp: data.applies_to_exp?.exp ?? null,
         });
       })
       .catch((err) => {
-        const msg = (err && err.data && err.data.message) ? err.data.message : String(err);
+        const msg = err?.data?.message || String(err);
         add_flash(msg, 'error');
       })
       .finally(() => setIsLoading(false));

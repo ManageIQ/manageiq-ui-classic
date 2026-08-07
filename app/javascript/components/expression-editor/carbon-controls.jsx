@@ -64,8 +64,7 @@ export const ActionButton = ({
       hasIconOnly={!!icon}
       onClick={handleOnClick}
       disabled={disabled}
-      className={icon ? undefined : className}
-      wrapperClasses={icon ? className : undefined}
+      className={className}
       tooltipAlignment="end"
     >
       {!icon && label}
@@ -92,9 +91,10 @@ export const CombinatorSelector = ({
     className={className}
     onChange={(e) => handleOnChange(e.target.value)}
   >
-    {flatOptions(options).map((o) => (
-      <SelectItem key={o.name ?? o.value} value={o.name ?? o.value} text={o.label} />
-    ))}
+    {flatOptions(options).map((o) => {
+      const val = String(o.name ?? o.value ?? '');
+      return <SelectItem key={val} value={val} text={o.label} />;
+    })}
   </Select>
 );
 
@@ -157,7 +157,12 @@ export const OperatorSelector = ({
   className,
   title,
   path,
+  field,
 }) => {
+  if (!field) {
+    return null;
+  }
+
   const flat = flatOptions(options);
 
   // No operators (e.g. find fields manage their own operator internally).
@@ -185,9 +190,10 @@ export const OperatorSelector = ({
       className={className}
       onChange={(e) => handleOnChange(e.target.value)}
     >
-      {flat.map((o) => (
-        <SelectItem key={o.name ?? o.value} value={o.name ?? o.value} text={o.label} />
-      ))}
+      {flat.map((o) => {
+        const val = String(o.name ?? o.value ?? '');
+        return <SelectItem key={val} value={val} text={o.label} />;
+      })}
     </Select>
   );
 };
