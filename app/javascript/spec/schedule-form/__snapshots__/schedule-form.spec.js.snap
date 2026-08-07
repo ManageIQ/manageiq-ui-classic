@@ -991,38 +991,16 @@ exports[`Schedule form component should render edit form when filter_type is not
               aria-haspopup="listbox"
               aria-labelledby="downshift-:rm:-label"
               autocomplete="off"
-              class="cds--text-input"
+              class="cds--text-input cds--text-input--empty"
               id="time_zone"
               name="time_zone"
               placeholder="<Choose>"
               role="combobox"
               tabindex="0"
-              title="<Choose>"
+              title=""
               type="text"
-              value="<Choose>"
+              value=""
             />
-            <button
-              aria-label="Clear selected item"
-              class="cds--list-box__selection"
-              tabindex="-1"
-              title="Clear selected item"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                />
-              </svg>
-            </button>
             <button
               aria-controls="downshift-:rm:-menu"
               aria-expanded="false"
@@ -1899,38 +1877,16 @@ exports[`Schedule form component should render edit form when filter_type is nul
               aria-haspopup="listbox"
               aria-labelledby="downshift-:r11:-label"
               autocomplete="off"
-              class="cds--text-input"
+              class="cds--text-input cds--text-input--empty"
               id="target_id"
               name="target_id"
               placeholder="<Choose>"
               role="combobox"
               tabindex="0"
-              title="<Choose>"
+              title=""
               type="text"
-              value="<Choose>"
+              value=""
             />
-            <button
-              aria-label="Clear selected item"
-              class="cds--list-box__selection"
-              tabindex="-1"
-              title="Clear selected item"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                />
-              </svg>
-            </button>
             <button
               aria-controls="downshift-:r11:-menu"
               aria-expanded="false"
@@ -2637,38 +2593,16 @@ exports[`Schedule form component should render edit form when filter_type is nul
               aria-haspopup="listbox"
               aria-labelledby="downshift-:r14:-label"
               autocomplete="off"
-              class="cds--text-input"
+              class="cds--text-input cds--text-input--empty"
               id="time_zone"
               name="time_zone"
               placeholder="<Choose>"
               role="combobox"
               tabindex="0"
-              title="<Choose>"
+              title=""
               type="text"
-              value="<Choose>"
+              value=""
             />
-            <button
-              aria-label="Clear selected item"
-              class="cds--list-box__selection"
-              tabindex="-1"
-              title="Clear selected item"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                fill="currentColor"
-                focusable="false"
-                height="16"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                />
-              </svg>
-            </button>
             <button
               aria-controls="downshift-:r14:-menu"
               aria-expanded="false"

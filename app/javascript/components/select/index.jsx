@@ -27,7 +27,7 @@ const SelectWithOnChange = ({
     const options = includeEmpty !== true ? _options : [
       {
         label: placeholder,
-        value: undefined,
+        value: '',
       },
       ..._options,
     ];
@@ -39,7 +39,7 @@ const SelectWithOnChange = ({
   const loadOptions = includeEmpty !== true ? _loadOptions : ((...args) => _loadOptions(...args).then((items) => [
     {
       label: placeholder,
-      value: undefined,
+      value: '',
     },
     ...items,
   ]));

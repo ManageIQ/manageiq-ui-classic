@@ -19,6 +19,7 @@ import ApCategoryTab from '../../components/ap-form/category-tab';
 import ApFileTab from '../../components/ap-form/file-tab';
 import ApRegistryTab from '../../components/ap-form/registry-tab';
 import ApEventLogTab from '../../components/ap-form/event-log-tab';
+import ExpressionEditorField from '../../components/condition-form/expression-editor-field';
 
 const mapper = {
   ...componentMapper,
@@ -41,6 +42,7 @@ const mapper = {
   'ap-file-tab': ApFileTab,
   'ap-registry-tab': ApRegistryTab,
   'ap-event-log-tab': ApEventLogTab,
+  'expression-editor': ExpressionEditorField,
 };
 
 export default mapper;
