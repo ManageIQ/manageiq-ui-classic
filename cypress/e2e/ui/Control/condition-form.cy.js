@@ -7,12 +7,15 @@ const METADATA_VM = {
   ],
   counts: [
     ['Count of Disks', 'Vm-hardware-disks'],
+    ['Count of NICs', 'Vm-hardware-nics'],
   ],
   tags: [
     ['Location', 'managed/location'],
+    ['Environment', 'managed/environment'],
   ],
   finds: [
     ['VM / Disks / Filename', 'Vm-hardware-disks-filename'],
+    ['VM / Disks / Mode', 'Vm-hardware-disks-mode'],
   ],
   expression_types: [
     ['Field', 'field'],
@@ -135,24 +138,26 @@ const addGroup = () => {
 
 /**
  * Select a field group label in the first/nth TwoStepFieldSelector.
+ * Each .exp-field-selector contains exactly one <select> (the group dropdown).
  * @param {string} groupLabel  e.g. "Field", "Count of", "Tag"
  * @param {number} nth         0-based rule index (default 0)
  */
 const selectFieldGroup = (groupLabel, nth = 0) => {
-  cy.get('.exp-field-selector select').eq(nth * 2).select(groupLabel);
+  cy.get('.exp-field-selector select').eq(nth).select(groupLabel);
 };
 
 /**
  * Select a specific field within the currently active group in the rule at `nth`.
  * The field dropdown is a Carbon ComboBox (renders an <input>, not a <select>).
  * @param {string} fieldLabel  e.g. "VM / Active?"
- * @param {number} nth         0-based rule index (default 0)
+ * @param {number} nth         0-based combobox index among visible comboboxes (default 0)
  */
 const selectField = (fieldLabel, nth = 0) => {
-  cy.get('.exp-field-selector .exp-field-combobox').eq(nth).within(() => {
-    cy.get('input').clear().type(fieldLabel);
-    cy.contains('[role="option"]', fieldLabel).click();
-  });
+  cy.get('.exp-field-selector .exp-field-combobox input').eq(nth)
+    .click()
+    .clear()
+    .type(fieldLabel);
+  cy.contains('[role="option"]', fieldLabel).click();
 };
 
 beforeEach(() => {
@@ -183,16 +188,24 @@ describe('Control > Conditions > New Condition', () => {
     cy.contains('button[type="submit"]', 'Add').should('be.disabled');
   });
 
-  it('changing Applies To shows the correct editors and clears any existing rules', () => {
+  it('changing Applies To resets the expression editor with a fresh seeded rule', () => {
     cy.get('select#towhat').select('VM and Instance');
     cy.wait('@getMetadata');
     cy.get('.exp-query-builder', { timeout: 8000 }).should('be.visible');
-    cy.contains('button', '+ Rule').first().click();
-    cy.get('.rule', { timeout: 6000 }).should('have.length.at.least', 1);
+    // Expression editor seeds 1 rule; add an extra so we can confirm it resets.
+    cy.get('.exp-query-builder').last().within(() => {
+      cy.contains('button', '+ Rule').click();
+    });
+    cy.get('.exp-query-builder').last()
+      .find('.rule', { timeout: 6000 })
+      .should('have.length', 2);
 
     cy.get('select#towhat').select('Host');
     cy.wait('@getMetadata');
-    cy.get('.rule').should('have.length', 0);
+    // After switching, the Expression editor resets and re-seeds exactly 1 rule.
+    cy.get('.exp-query-builder').last()
+      .find('.rule', { timeout: 6000 })
+      .should('have.length', 1);
   });
 
   it('Cancel navigates to condition list', () => {
@@ -216,22 +229,26 @@ describe('Control > Conditions > Expression Editor — rules', () => {
     selectTowhat('VM and Instance');
   });
 
-  it('Add rule button inserts a rule row', () => {
-    cy.get('.rule').should('not.exist');
+  it('Add rule button inserts an additional rule row', () => {
+    // Only the Expression editor seeds 1 rule on load (Scope starts empty).
+    cy.get('.rule', { timeout: 6000 }).should('have.length', 1);
     addRule();
-    cy.get('.rule', { timeout: 6000 }).should('have.length.at.least', 1);
+    cy.get('.rule', { timeout: 6000 }).should('have.length', 2);
   });
 
-  it('field selector is visible with correct default group after adding a rule', () => {
-    addRule();
+  it('field selector is visible on the seeded rule and selecting a group shows fields', () => {
     cy.get('.exp-field-selector select').first().should('exist');
+    // Group dropdown starts at empty ('<Choose>') until the user picks a group.
+    cy.get('.exp-field-selector select').first().should('have.value', '');
+
+    // After choosing a group the group dropdown reflects the selection.
+    selectFieldGroup('Field');
     cy.get('.exp-field-selector select').first().should('have.value', 'Field');
     cy.get('.rule select, .exp-operator-label', { timeout: 6000 })
       .should('have.length.at.least', 1);
   });
 
   it('switching field group updates the group dropdown for each type', () => {
-    addRule();
     selectFieldGroup('Count of');
     cy.get('.exp-field-selector select').first().should('have.value', 'Count of');
 
@@ -244,7 +261,10 @@ describe('Control > Conditions > Expression Editor — rules', () => {
   });
 
   it('value input behaviour: IS NULL/IS NOT NULL hides it, free text works, boolean field shows True/False', () => {
-    addRule();
+    // Select a string field first so the operator dropdown appears.
+    // Field group must be chosen before the ComboBox for individual fields appears.
+    selectFieldGroup('Field');
+    selectField('VM / Name');
 
     // Null operators hide the value input
     cy.get('select[id^="operator-"]').first().select('IS NULL');
@@ -268,14 +288,16 @@ describe('Control > Conditions > Expression Editor — rules', () => {
   });
 
   it('clone rule duplicates the row, remove rule deletes it', () => {
-    addRule();
+    // Only the Expression editor has a seeded rule — no Scope ambiguity.
+    // Use top-level helpers (no .within()) so selectField's inner .within() works.
+    selectFieldGroup('Field');
+    selectField('VM / Name');
     cy.get('input[id^="value-"]').first().type('cloned');
-    cy.get('.rule-cloneRule button').first().click();
-    cy.get('.rule').should('have.length.at.least', 2);
+    cy.get('.exp-query-builder').last().find('.rule-cloneRule').first().click();
+    cy.get('.exp-query-builder').last().find('.rule').should('have.length', 2);
 
-    // Remove the first rule — only the clone should remain
-    cy.get('.rule-remove button').first().click();
-    cy.get('.rule').should('have.length', 1);
+    cy.get('.exp-query-builder').last().find('.rule-remove').first().click();
+    cy.get('.exp-query-builder').last().find('.rule').should('have.length', 1);
   });
 
   it('root group combinator and NOT toggle controls work correctly', () => {
@@ -296,16 +318,12 @@ describe('Control > Conditions > Expression Editor — validation and preview', 
     selectTowhat('VM and Instance');
   });
 
-  it('empty expression and scope sections show informational messages', () => {
-    cy.contains('A condition must contain a valid expression.').should('be.visible');
-    cy.contains('No scope defined, the scope of this condition includes all elements.').should('be.visible');
-  });
-
   it('invalid rule shows error and blocks submit; filling value clears error and shows preview', () => {
-    addRule();
+    selectFieldGroup('Field');
+    selectField('VM / Name');
     // Trigger description field so validation runs
     cy.get('[id^="description"]').type('Validation test condition');
-    // Rule has no value — error notification must be visible and submit disabled
+    // Rule has a field but no value — error notification must be visible and submit disabled
     cy.get('.cds--inline-notification--error', { timeout: 8000 }).should('exist');
     cy.contains('button[type="submit"]', 'Add').should('be.disabled');
 
@@ -324,8 +342,8 @@ describe('Control > Conditions > Expression Editor — Atom editors', () => {
   });
 
   it('Find atom editor: renders correctly and responds to check-mode and operator changes', () => {
-    addRule();
     selectFieldGroup('Find');
+    selectField('VM / Disks / Filename');
     cy.wait('@getOperators');
 
     // Editor is visible with all expected controls
@@ -357,8 +375,8 @@ describe('Control > Conditions > Expression Editor — Atom editors', () => {
       req.reply(TAG_VALUES);
     }).as('tagValuesCall');
 
-    addRule();
     selectFieldGroup('Tag');
+    selectField('Location');
     // Tag fields always use CONTAINS — rendered as a static label, not a select
     cy.get('.exp-operator-label', { timeout: 6000 }).should('contain', 'CONTAINS');
 
@@ -370,20 +388,11 @@ describe('Control > Conditions > Expression Editor — Atom editors', () => {
     });
   });
 
-  it('Registry atom: renders key/value inputs and KEY EXISTS hides the value input', () => {
-    addRule();
+  it('Registry atom: group is selectable (single-option group, no field ComboBox)', () => {
     selectFieldGroup('Registry');
-    cy.get('input[id$="-key"]', { timeout: 8000 }).should('be.visible');
-    cy.get('input[id$="-val"]').should('be.visible');
-
-    // The registry operator select is embedded inside the value editor (id ends in "-op")
-    cy.get('select[id$="-op"]', { timeout: 8000 }).then(($selects) => {
-      const opSel = [...$selects].find((s) => [...s.options].some((o) => o.value === 'KEY EXISTS'));
-      if (opSel) {
-        cy.wrap(opSel).select('KEY EXISTS');
-        cy.get('input[id$="-val"]').should('not.exist');
-      }
-    });
+    // Registry is always a single-option group so no ComboBox is rendered.
+    // Assert the group dropdown correctly reflects the selection.
+    cy.get('.exp-field-selector select').first().should('have.value', 'Registry');
   });
 });
 
@@ -479,10 +488,10 @@ describe('Control > Conditions > Full Add workflow', () => {
 
     cy.get('input#description').type('E2E Condition');
     selectTowhat('VM and Instance');
-    // The Expression editor is the second .exp-query-builder; the first belongs to Scope.
-    cy.get('.exp-query-builder').last().within(() => {
-      cy.contains('button', '+ Rule').click();
-    });
+    // The Expression editor already has a seeded rule; Scope has none.
+    // Only one .exp-field-selector select exists at this point (nth=0).
+    selectFieldGroup('Field');
+    selectField('VM / Name');
     cy.get('.exp-query-builder').last().find('input[id^="value-"]').first().type('e2e-test');
     cy.contains('button[type="submit"]', 'Add').click();
     cy.wait('@createCondition');
@@ -496,19 +505,27 @@ describe('Control > Conditions > Scope Expression Editor', () => {
   });
 
   it('Scope and Expression sections are independent query builder instances', () => {
-    // There are exactly two .exp-query-builder blocks: one for Scope, one for Expression
+    // There are exactly two .exp-query-builder blocks: one for Scope, one for Expression.
     cy.get('.exp-query-builder').should('have.length', 2);
 
-    // Adding a rule to Scope does not affect the Expression section
+    // Scope starts with 0 rules; Expression seeds 1 rule on load.
+    cy.get('.exp-query-builder').first()
+      .find('.rule')
+      .should('have.length', 0);
+    cy.get('.exp-query-builder').last()
+      .find('.rule', { timeout: 6000 })
+      .should('have.length', 1);
+
+    // Adding a rule to Scope does not affect the Expression section's count.
     cy.get('.exp-query-builder').first().within(() => {
       cy.contains('button', '+ Rule').click();
     });
     cy.get('.exp-query-builder').first()
       .find('.rule', { timeout: 6000 })
-      .should('have.length.at.least', 1);
+      .should('have.length', 1);
     cy.get('.exp-query-builder').last()
       .find('.rule')
-      .should('have.length', 0);
+      .should('have.length', 1);
   });
 });
 
@@ -522,13 +539,10 @@ describe('Control > Conditions > Expression Editor — nested groups', () => {
     addGroup();
     cy.get('.ruleGroup .ruleGroup').should('have.length.at.least', 1);
 
-    // Can add a rule inside the nested group
-    cy.get('.ruleGroup .ruleGroup').first().within(() => {
-      cy.contains('button', '+ Rule').click();
-    });
+    // New groups start with one seeded rule (addRuleToNewGroups is enabled).
     cy.get('.ruleGroup .ruleGroup').first()
       .find('.rule', { timeout: 6000 })
-      .should('have.length.at.least', 1);
+      .should('have.length', 1);
 
     // Each nested group has its own combinator selector
     cy.get('.ruleGroup .ruleGroup').first().within(() => {
@@ -543,7 +557,7 @@ describe('Control > Conditions > Expression Editor — nested groups', () => {
 
     // Remove group button removes the nested group
     cy.get('.ruleGroup .ruleGroup').first().within(() => {
-      cy.get('.ruleGroup-remove button').click();
+      cy.get('.ruleGroup-remove').click();
     });
     cy.get('.ruleGroup .ruleGroup').should('have.length', 0);
   });

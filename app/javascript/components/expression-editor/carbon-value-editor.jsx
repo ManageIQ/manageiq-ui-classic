@@ -19,6 +19,8 @@ const flatOptions = (options) => {
   return options.flatMap((o) => (o.options ? o.options : [o]));
 };
 
+const filterPlaceholderOptions = (options) => options.filter((o) => o.label !== '------');
+
 // Fetches tag values from GET /expression_editor/tag_values and renders a Select.
 const TagValueSelect = ({
   tagPath,
@@ -36,7 +38,7 @@ const TagValueSelect = ({
       return;
     }
     setLoading(true);
-    http.get(`/expression_editor/tag_values?tag=${encodeURIComponent(tagPath)}`)
+    http.get(`/expression_editor/tag_values?tag=${encodeURIComponent(tagPath)}`, { skipErrors: true })
       .then((data) => {
         // Server returns { tag_values: [[label, value], ...] }
         let raw = [];
@@ -65,8 +67,8 @@ const TagValueSelect = ({
       disabled={disabled || loading}
       onChange={(e) => handleOnChange(e.target.value)}
     >
-      <SelectItem value="" text={loading ? __('Loading…') : __('Select a value')} />
-      {tagValues.map((tv) => (
+      <SelectItem value="" text={loading ? __('Loading…') : __('<Choose>')} />
+      {filterPlaceholderOptions(tagValues).map((tv) => (
         <SelectItem key={tv.name} value={tv.name} text={tv.label} />
       ))}
     </Select>
@@ -285,6 +287,10 @@ const CarbonValueEditor = ({
   rule,        // full RQB rule — used to read rule.id and rule.dateFormat
   context,     // RQB context — carries updateRuleDateFormat from ExpressionEditor
 }) => {
+  if (!field) {
+    return null;
+  }
+
   // No-value operators render nothing except extras. __regkey__ manages its own visibility.
   const noValueOps = [
     'IS NULL', 'IS NOT NULL', 'IS EMPTY', 'IS NOT EMPTY',
@@ -436,7 +442,8 @@ const CarbonValueEditor = ({
   }
 
   if (type === 'select') {
-    const opts = flatOptions(values);
+    const opts = filterPlaceholderOptions(flatOptions(values));
+    const hasValue = value !== null && value !== undefined && value !== '';
     return (
       <div className={className}>
         <Select
@@ -448,6 +455,7 @@ const CarbonValueEditor = ({
           disabled={disabled}
           onChange={(e) => handleOnChange(e.target.value)}
         >
+          {!hasValue && <SelectItem value="" text={__('<Choose>')} />}
           {opts.map((o) => (
             <SelectItem
               key={o.name ?? o.value}

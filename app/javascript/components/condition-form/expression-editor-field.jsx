@@ -131,6 +131,7 @@ const ExpressionEditorInner = ({
         onlyTags={onlyTags || false}
         onQueryChange={handleQueryChange}
         onContextReady={handleContextReady}
+        seedEmpty={!isScope}
       />
       {validationErrors.length > 0 && (
         <InlineNotification

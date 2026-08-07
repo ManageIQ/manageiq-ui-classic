@@ -5,7 +5,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { QueryBuilder } from 'react-querybuilder';
+import { QueryBuilder, generateID } from 'react-querybuilder';
 import { InlineNotification, Loading } from '@carbon/react';
 import { miqToRqb } from './expression-adapter';
 import { validateExpression } from './expression-validator';
@@ -34,7 +34,7 @@ const CARBON_CONTROLS = {
 };
 
 const ExpressionEditor = ({
-  model, value, onlyTags, onQueryChange, showAlias, showUserInput, onContextReady,
+  model, value, onlyTags, onQueryChange, showAlias, showUserInput, onContextReady, seedEmpty,
 }) => {
   const [fields, setFields]   = useState(null);
   const [query, setQuery]     = useState(() => miqToRqb(value || null));
@@ -51,7 +51,7 @@ const ExpressionEditor = ({
     setLoading(true);
     setError(null);
 
-    http.get(`/expression_editor/metadata?model=${encodeURIComponent(model)}`)
+    http.get(`/expression_editor/metadata?model=${encodeURIComponent(model)}`, { skipErrors: true })
       .then((metadata) => {
         const includeRegkey = !onlyTags && model === 'Vm';
         const cfg = buildFieldConfig(metadata, { includeRegkey });
@@ -85,6 +85,24 @@ const ExpressionEditor = ({
     const all = (fields || []).flatMap((g) => (g.options ? g.options : [g]));
     return new Map(all.map((f) => [f.name, f.label]));
   }, [fields]);
+
+  // Seed one empty rule when there is no existing expression and fields just loaded.
+  // Only seeded when the seedEmpty prop is explicitly true (i.e. the main expression
+  // editor, not the scope editor).
+  useEffect(() => {
+    if (!fields || !seedEmpty) {
+      return;
+    }
+    setQuery((q) => {
+      if (q.rules.length > 0) {
+        return q;
+      }
+      const emptyRule = {
+        id: generateID(), field: '', operator: '=', value: null,
+      };
+      return { ...q, rules: [emptyRule] };
+    });
+  }, [fields, seedEmpty]);
 
   // Notify parent of the label map and tag-values cache as soon as fields load.
   const onContextReadyRef = useRef(onContextReady);
@@ -223,9 +241,15 @@ const ExpressionEditor = ({
           fields={fields}
           query={query}
           onQueryChange={handleQueryChange}
+          onAddRule={(rule) => ({
+            ...rule, field: '', operator: '=', value: null,
+          })}
           enableMountQueryChange={false}
+          autoSelectField={false}
+          autoSelectValue={false}
           showNotToggle
           showCloneButtons
+          addRuleToNewGroups
           controlElements={CARBON_CONTROLS}
           context={{
             updateRuleDateFormat,

@@ -36,7 +36,7 @@ const useOperators = (fieldPath) => {
       setResult({ ops: FIND_FALLBACK_DEFAULT, colType: 'string' });
       return;
     }
-    http.get(`/expression_editor/operators?field=${encodeURIComponent(fieldPath)}`)
+    http.get(`/expression_editor/operators?field=${encodeURIComponent(fieldPath)}`, { skipErrors: true })
       .then((data) => {
         const raw = Array.isArray(data.operators) ? data.operators : [];
         const colType = data.col_type || 'string';
@@ -62,6 +62,7 @@ const useCheckFields = (model, searchField) => {
     }
     http.get(
       `/expression_editor/find_check_fields?model=${encodeURIComponent(model)}&field=${encodeURIComponent(searchField)}`,
+      { skipErrors: true },
     )
       .then((data) => {
         const raw = Array.isArray(data.fields) ? data.fields : [];
@@ -229,7 +230,7 @@ const FindValueEditor = ({
             disabled={disabled || !checkFields}
             onChange={(e) => update({ cfield: e.target.value })}
           >
-            <SelectItem value="" text={checkFields === null ? __('Loading…') : __('Select a field')} />
+            <SelectItem value="" text={checkFields === null ? __('Loading…') : __('<Choose>')} />
             {(checkFields || []).map((f) => (
               <SelectItem key={f.name} value={f.name} text={f.label} />
             ))}
