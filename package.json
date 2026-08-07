@@ -108,7 +108,7 @@
     "autoprefixer": "^10.0.0",
     "babel-loader": "~8.4.0",
     "babel-plugin-polyfill-corejs3": "~1.0.0",
-    "compression-webpack-plugin": "^6.1.1",
+    "compression-webpack-plugin": "^12.0.0",
     "core-js": "~3.49.0",
     "css-loader": "^5.0.0",
     "cypress": "~15.18.0",
