@@ -129,6 +129,9 @@ class MiqAeCustomizationController < ApplicationController
     end
     @explorer = true
 
+    # Reset to root when accessing from sidebar with id=root
+    self.x_node = "root" if params[:id] == "root"
+
     build_resolve_screen
     build_accordions_and_trees
 

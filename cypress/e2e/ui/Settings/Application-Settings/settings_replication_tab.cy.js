@@ -172,6 +172,7 @@ describe('Settings > Application Settings > Replication form', () => {
       mockReplicationFormFieldsApi('global', [], 'getGlobalReplication');
 
       cy.reload();
+      navigateToReplicationTab();
       cy.wait('@getGlobalReplication');
 
       cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME })
@@ -182,6 +183,7 @@ describe('Settings > Application Settings > Replication form', () => {
       mockReplicationFormFieldsApi('remote', [], 'getRemoteReplication');
 
       cy.reload();
+      navigateToReplicationTab();
       cy.wait('@getRemoteReplication');
 
       cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME })
@@ -193,6 +195,7 @@ describe('Settings > Application Settings > Replication form', () => {
       mockReplicationFormFieldsApi('none', [], 'getInitialState');
 
       cy.reload();
+      navigateToReplicationTab();
       cy.wait('@getInitialState');
 
       cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_NO_REPLICATION_ROLE);
@@ -209,6 +212,7 @@ describe('Settings > Application Settings > Replication form', () => {
       mockReplicationFormFieldsApi('remote', [], 'getInitialRemoteState');
 
       cy.reload();
+      navigateToReplicationTab();
       cy.wait('@getInitialRemoteState');
 
       cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_NONE);
@@ -225,6 +229,7 @@ describe('Settings > Application Settings > Replication form', () => {
       mockReplicationFormFieldsApi('none', [], 'getInitialNoneState');
 
       cy.reload();
+      navigateToReplicationTab();
       cy.wait('@getInitialNoneState');
 
       // Make a change by selecting remote

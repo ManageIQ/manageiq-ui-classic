@@ -104,6 +104,9 @@ class InfraNetworkingController < ApplicationController
     @explorer = true
     @lastaction = "explorer"
 
+    # Reset to root when accessing from sidebar with id=root
+    self.x_node = "root" if params[:id] == "root"
+
     build_accordions_and_trees
     @in_a_form = false
 

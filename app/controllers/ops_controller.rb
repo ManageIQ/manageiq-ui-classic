@@ -168,9 +168,21 @@ class OpsController < ApplicationController
     @timeline = @timeline_filter = true # Load timeline JS modules
     return if params[:edit_key] && !load_edit(params[:edit_key], "explorer")
     @breadcrumbs = []
+
+    # Reset to root when accessing from sidebar with id=root
+    if params[:id] == "root"
+      self.x_node = "root"
+    end
+
     build_accordions_and_trees
 
     tree_selected_model
+
+    # Load node info and set active tab when resetting to root
+    if params[:id] == "root"
+      set_active_tab(x_node)
+      get_node_info(x_node)
+    end
 
     @sb[:rails_log] = Rails.env.production? ? N_("Production") : N_("Development")
 

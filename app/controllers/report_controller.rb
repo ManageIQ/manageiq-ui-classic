@@ -142,8 +142,13 @@ class ReportController < ApplicationController
     populate_reports_menu
     build_accordions_and_trees
 
-    self.x_active_tree = x_last_active_tree if x_last_active_tree
-    self.x_active_accord = x_last_active_accord.to_s if x_last_active_accord
+    # Reset to root node when accessing from sidebar
+    if params[:reset] == "true"
+      self.x_node = "root"
+    else
+      self.x_active_tree = x_last_active_tree if x_last_active_tree
+      self.x_active_accord = x_last_active_accord.to_s if x_last_active_accord
+    end
 
     @widget_nodes ||= []
     @sb[:node_clicked] = false

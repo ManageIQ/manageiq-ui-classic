@@ -73,6 +73,9 @@ class PxeController < ApplicationController
     @breadcrumbs = []
     @explorer = true
 
+    # Reset to root when accessing from sidebar with id=root
+    self.x_node = "root" if params[:id] == "root"
+
     build_accordions_and_trees
     return if request.xml_http_request?
 
