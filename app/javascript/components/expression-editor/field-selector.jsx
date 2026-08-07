@@ -4,9 +4,9 @@ import { AliasRow } from './carbon-controls';
 
 const groupForValue = (groups, value) => {
   if (!value) {
-    return groups[0] || null;
+    return null;
   }
-  return groups.find((grp) => grp.options.some((o) => (o.value ?? o.name) === value)) || groups[0] || null;
+  return groups.find((grp) => grp.options.some((o) => (o.value ?? o.name) === value)) || null;
 };
 
 const TwoStepFieldSelector = ({
@@ -27,24 +27,24 @@ const TwoStepFieldSelector = ({
   const currentGroup = groupForValue(groups, value);
   const [selectedGroupLabel, setSelectedGroupLabel] = useState(currentGroup ? currentGroup.label : '');
 
-  // Keep group in sync when rule.field is changed externally.
+  // Keep group in sync when rule.field is changed externally, but preserve
+  // the user's chosen group while the field is intentionally unselected.
   useEffect(() => {
-    const grp = groupForValue(groups, value);
-    if (grp) {
-      setSelectedGroupLabel(grp.label);
+    if (!value) {
+      return;
     }
+
+    const grp = groupForValue(groups, value);
+    setSelectedGroupLabel(grp?.label || '');
   }, [groups, value]);
 
-  const activeGroup = groups.find((g) => g.label === selectedGroupLabel) || groups[0];
+  const activeGroup = groups.find((g) => g.label === selectedGroupLabel) || null;
   const fieldOptions = activeGroup ? activeGroup.options : [];
 
   const handleGroupChange = (e) => {
     const newGroupLabel = e.target.value;
     setSelectedGroupLabel(newGroupLabel);
-    const newGroup = groups.find((g) => g.label === newGroupLabel);
-    if (newGroup && newGroup.options.length > 0) {
-      handleOnChange(newGroup.options[0].value ?? newGroup.options[0].name);
-    }
+    handleOnChange(undefined);
   };
 
   const handleFieldChange = ({ selectedItem }) => {
@@ -57,11 +57,9 @@ const TwoStepFieldSelector = ({
   // downshift instance (setInputValue, closeMenu, etc.).
   const downshiftActions = useRef(null);
 
-  // When the dropdown opens, clear the typed text so the full list is shown
-  // and the user filters from a blank input rather than the selected label.
   const downshiftProps = {
     onIsOpenChange: ({ isOpen }) => {
-      if (isOpen) {
+      if (isOpen && value) {
         downshiftActions.current?.setInputValue('');
       }
     },
@@ -80,9 +78,12 @@ const TwoStepFieldSelector = ({
         value={selectedGroupLabel}
         onChange={handleGroupChange}
       >
-        {groups.map((g) => (
-          <SelectItem key={g.label} value={g.label} text={g.label} />
-        ))}
+        <SelectItem value="" text={__('<Choose>')} />
+        {groups
+          .filter((g) => g.label !== '------')
+          .map((g) => (
+            <SelectItem key={g.label} value={g.label} text={g.label} />
+          ))}
       </Select>
 
       {/* Step 2 — field within the chosen group*/}
@@ -94,6 +95,7 @@ const TwoStepFieldSelector = ({
           size="sm"
           autoAlign
           disabled={disabled}
+          placeholder={__('<Choose>')}
           items={fieldOptions.map((o) => ({ id: o.value ?? o.name, value: o.value ?? o.name, label: o.label }))}
           itemToString={(item) => (item ? item.label : '')}
           shouldFilterItem={({ item, inputValue }) => (

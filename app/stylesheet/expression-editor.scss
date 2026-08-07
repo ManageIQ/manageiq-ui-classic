@@ -148,13 +148,12 @@
     background-color: var(--cds-layer-selected-01, #d0e2ff);
     border-bottom: 1px solid var(--cds-border-interactive);
 
-    .rule-combinators {
+    .ruleGroup-combinators {
       flex: 0 0 auto;
 
-      .cds--select,
-      .cds--select-input__wrapper,
-      .cds--select-input {
-        min-width: 5rem;
+      .cds--select-input,
+      .cds--select {
+        min-width: 7rem;
         width: auto;
       }
     }
@@ -302,7 +301,12 @@
 
       .cds--select,
       .cds--select-input__wrapper,
-      .cds--select-input,
+      .cds--select-input {
+        min-width: 22rem;
+        width: auto;
+        text-overflow: clip;
+      }
+
       .exp-operator-label {
         min-width: 7rem;
         width: auto;
@@ -418,7 +422,7 @@
     .cds--select,
     .cds--select-input__wrapper,
     .cds--select-input {
-      min-width: 6rem;
+      min-width: 8rem;
       width: auto;
     }
   }
@@ -438,23 +442,12 @@
   }
 }
 
-// Compact field menu so long option labels fit without wrapping.
+// Keep the dropdown menu wide enough for long field names.
 .exp-field-combobox {
-  .cds--list-box__menu-item {
-    block-size: 1.5rem;
-  }
-
-  .cds--list-box__menu-item__option {
-    font-size: 0.75rem;
-    letter-spacing: 0.32px;
-    padding-block: 0;
-    block-size: 1.5rem;
-    display: flex;
-    align-items: center;
-  }
-
   .cds--list-box__menu {
-    min-width: 500px !important;
+    list-style: none;
+    padding-inline-start: 0;
+    min-width: 500px;
   }
 }
 
@@ -576,14 +569,15 @@
   > .cds--form-item {
     flex: 0 0 auto;
 
-    .cds--select-input__wrapper,
+    .cds--select-input__wrapper
     .cds--select-input {
-      min-width: 7rem;
+      min-width: 10rem;
       width: auto;
+      text-overflow: visible;
     }
 
     .cds--text-input {
-      min-width: 8rem;
+      min-width: 9rem;
       width: auto;
     }
   }
@@ -614,7 +608,7 @@
     .cds--select,
     .cds--select-input__wrapper,
     .cds--select-input {
-      min-width: 9rem;
+      min-width: 22rem;
       width: auto;
     }
   }

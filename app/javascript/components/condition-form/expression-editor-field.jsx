@@ -13,7 +13,6 @@ const ExpressionEditorInner = ({
   const isScope = sectionTitle === __('Scope');
 
   const seedRef = useRef(input.value || null);
-  // mountKey is state so incrementing it forces ExpressionEditor to remount.
   const [mountKey, setMountKey] = useState(0);
   const [expressionText, setExpressionText] = useState('');
   const [validationErrors, setValidationErrors] = useState([]);
@@ -131,6 +130,7 @@ const ExpressionEditorInner = ({
         onlyTags={onlyTags || false}
         onQueryChange={handleQueryChange}
         onContextReady={handleContextReady}
+        seedEmpty={!isScope}
       />
       {validationErrors.length > 0 && (
         <InlineNotification

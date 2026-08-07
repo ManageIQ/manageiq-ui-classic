@@ -51,8 +51,14 @@ describe('validateExpression', () => {
 
   test.each([
     ['IS NULL', null],
+    ['IS NULL', 'some value'],
     ['IS NOT NULL', ''],
-  ])('returns [] for no-value operator %s', (operator, value) => {
+    ['IS NOT NULL', null],
+    ['IS EMPTY', null],
+    ['IS EMPTY', ''],
+    ['IS NOT EMPTY', null],
+    ['IS NOT EMPTY', 'anything'],
+  ])('returns [] for no-value operator %s (value: %s)', (operator, value) => {
     expect(validateExpression(group([rule({ operator, value })]))).toEqual([]);
   });
 
@@ -94,6 +100,30 @@ describe('validateExpression', () => {
       operator: 'FIND',
       value: {
         skey: '=', svalue: 'foo', check: 'checkall', cfield: '', ckey: '>', cvalue: '100',
+      },
+    });
+    const errors = validateExpression(group([r]));
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toMatch(/check field must be chosen/i);
+  });
+
+  it('returns [] for a complete checkany find rule', () => {
+    const r = rule({
+      field: '__find__:Vm-hardware-disks-filename',
+      operator: 'FIND',
+      value: {
+        skey: '=', svalue: 'foo', check: 'checkany', cfield: 'Vm-hardware-disks-size', ckey: '>', cvalue: '100',
+      },
+    });
+    expect(validateExpression(group([r]))).toEqual([]);
+  });
+
+  it('returns an error when checkany find rule has no cfield', () => {
+    const r = rule({
+      field: '__find__:Vm-hardware-disks-filename',
+      operator: 'FIND',
+      value: {
+        skey: '=', svalue: 'foo', check: 'checkany', cfield: '', ckey: '>', cvalue: '100',
       },
     });
     const errors = validateExpression(group([r]));
