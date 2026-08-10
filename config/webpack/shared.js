@@ -7,12 +7,29 @@ const { sync } = require('glob');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
 const fs = require('fs');
 
 const { env, settings, i18n, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
 const RailsEnginesPlugin = require('./RailsEnginesPlugin');
+const { generateTsConfigWebpack, needsRegeneration } = require('./generate-tsconfig.ts');
+
+// Generate tsconfig.webpack.json before webpack runs
+// This ensures TypeScript checking includes all plugin directories
+const rootDir = resolve(__dirname, '../..');
+const tsconfigWebpackPath = resolve(rootDir, 'tsconfig.webpack.json');
+const pathsJsonPath = resolve(__dirname, './paths.json');
+
+if (needsRegeneration(tsconfigWebpackPath, pathsJsonPath)) {
+  console.log('Generating tsconfig.webpack.json...');
+  try {
+    generateTsConfigWebpack(rootDir, engines);
+  } catch (error) {
+    console.error('Failed to generate tsconfig.webpack.json:', error.message);
+  }
+}
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
@@ -57,6 +74,32 @@ let plugins = [
   new WebpackManifestPlugin({
     publicPath: output.publicPath,
     writeToFileEmit: true,
+  }),
+
+  // TypeScript type checking in parallel with webpack build
+  // Uses tsconfig.webpack.json which includes all plugin directories
+  new ForkTsCheckerWebpackPlugin({
+    async: process.env.NODE_ENV === 'development',
+    typescript: {
+      configFile: resolve(__dirname, '../../tsconfig.webpack.json'),
+      diagnosticOptions: {
+        semantic: true,
+        syntactic: true,
+      },
+      extensions: {
+        vue: false,
+      },
+      build: false,
+    },
+    issue: {
+      exclude: [
+        { file: '**/node_modules/**' },
+      ],
+    },
+    logger: {
+      infrastructure: 'console',
+      issues: 'console',
+    },
   }),
 
   // plugin to output timestamp after compilation (useful for --watch)

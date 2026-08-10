@@ -15,6 +15,7 @@ tmp/
 .vscode/
 .ruby-version
 config/webpack/paths.json
+tsconfig.webpack.json
 *.sw[po]
 cypress/screenshots
 cypress/videos
