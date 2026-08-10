@@ -205,6 +205,8 @@ module.exports = {
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
       '@@ddf': resolve(dirname(__filename), '../../app/javascript/forms/data-driven-form'),
       '@@miq-menu': resolve(dirname(__filename), '../../app/javascript/menu'),
+      '@@miq-redux': resolve(dirname(__filename), '../../app/javascript/redux'),
+      '@@miq-types': resolve(dirname(__filename), '../../app/javascript/types'),
       'gettext_i18n_rails_js': gettextDir,
     },
     extensions: settings.extensions,
