@@ -32,8 +32,8 @@ export const tableData = (disks) => {
       { text: disk.disk_type || '' },
       { text: disk.mode || '' },
       { text: disk.partitions_aligned || __('Unknown') },
-      { text: disk.size ? toHumanSize(disk.size) : '' },
-      { text: disk.size_on_disk ? toHumanSize(disk.size_on_disk) : '' },
+      { text: disk.size ? toHumanSize(disk.size) : __('0 Bytes') },
+      { text: disk.size_on_disk ? toHumanSize(disk.size_on_disk) : __('0 Bytes') },
       { text: (disk.size && disk.size_on_disk) ? ((disk.size_on_disk / disk.size) * 100).toFixed(1) : '0.0' },
     ],
   }));
