@@ -1,18 +1,31 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import { SideNavItems, SideNavItem, Button } from '@carbon/react';
 import { UserAvatar } from '@carbon/react/icons';
+import type { CurrentUserType } from './menu-common-types';
 
-const Username = ({ applianceName, currentUser, expanded = false }) => {
+type UsernameProps = {
+  applianceName: string;
+  currentUser: CurrentUserType;
+  expanded?: boolean;
+};
+
+const Username: React.FC<UsernameProps> = ({
+  applianceName,
+  currentUser,
+  expanded = false,
+}) => {
   const title = `${currentUser.name} | ${currentUser.userid} | ${applianceName}`;
 
   return (
-    <div className={`menu-user${!expanded ? ' miq-menu-user-collapsed' : ''}`} data-userid={currentUser.userid} title={title}>
+    <div
+      className={`menu-user${!expanded ? ' miq-menu-user-collapsed' : ''}`}
+      data-userid={currentUser.userid}
+      title={title}
+    >
       {expanded && (
         <SideNavItems>
           <SideNavItem className="padded collapse_icon">
-            <span>
-              {currentUser.name}
-            </span>
+            <span>{currentUser.name}</span>
           </SideNavItem>
         </SideNavItems>
       )}
@@ -23,10 +36,7 @@ const Username = ({ applianceName, currentUser, expanded = false }) => {
               kind="ghost"
               size="sm"
               hasIconOnly
-              iconDescription={sprintf(
-                __('User: %s'),
-                currentUser.name
-              )}
+              iconDescription={sprintf(__('User: %s'), currentUser.name)}
               renderIcon={(props) => <UserAvatar size={20} {...props} />}
               tooltipAlignment="center"
               tooltipPosition="right"
@@ -36,15 +46,6 @@ const Username = ({ applianceName, currentUser, expanded = false }) => {
       )}
     </div>
   );
-};
-
-Username.propTypes = {
-  applianceName: PropTypes.string.isRequired,
-  currentUser: PropTypes.shape({
-    name: PropTypes.string,
-    userid: PropTypes.string,
-  }).isRequired,
-  expanded: PropTypes.bool,
 };
 
 export default Username;

@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import { ChevronLeft, ChevronRight } from '@carbon/react/icons';
 import { SideNavItems, SideNavItem } from '@carbon/react';
 
-const MenuCollapse = ({
+type MenuCollapseProps = {
+  expanded?: boolean;
+  toggle: () => void;
+  onFocus: React.FocusEventHandler;
+  open?: boolean;
+};
+
+const MenuCollapse: React.FC<MenuCollapseProps> = ({
   expanded = false,
   toggle,
   onFocus,
@@ -13,7 +20,7 @@ const MenuCollapse = ({
       <SideNavItem>
         <div
           role="button"
-          tabIndex="0"
+          tabIndex={0}
           className="menu-collapse-button"
           onClick={toggle}
           onKeyDown={toggle}
@@ -21,20 +28,17 @@ const MenuCollapse = ({
           aria-expanded={expanded}
           aria-controls="main-menu-primary"
           aria-haspopup="true"
-          title={(expanded && !open) ? __('Collapse') : __('Expand')}
+          title={expanded && !open ? __('Collapse') : __('Expand')}
         >
-          {(expanded && !open) ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+          {expanded && !open ? (
+            <ChevronLeft size={20} />
+          ) : (
+            <ChevronRight size={20} />
+          )}
         </div>
       </SideNavItem>
     </SideNavItems>
   </div>
 );
-
-MenuCollapse.propTypes = {
-  expanded: PropTypes.bool,
-  toggle: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
-  open: PropTypes.bool,
-};
 
 export default MenuCollapse;

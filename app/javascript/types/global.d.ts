@@ -3,6 +3,7 @@
 import type { ComponentType } from 'react';
 import type { Store } from '@reduxjs/toolkit';
 import type { GenericDataType, DataType } from './common';
+import type { MenuItemType } from '../menu/menu-common-types';
 
 /**
  * ManageIQ global object type
@@ -19,8 +20,7 @@ type ManageIQType = {
     ) => void;
     getReact: (name: string) => ComponentType;
   };
-  // TODO: use the specific type from the Menu component here
-  menu: Array<Record<string, unknown>>;
+  menu: MenuItemType[];
   logoutInProgress: boolean;
   record: {
     recordId: string | number;

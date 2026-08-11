@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from 'react';
 import { SideNav } from '@carbon/react';
 
 import FirstLevel from './first-level';
@@ -11,12 +10,22 @@ import SearchResults from './search-results';
 import SecondLevel from './second-level';
 import Username from './username';
 import { updateActiveItem } from './history';
+import type {
+  MenuItemType,
+  SearchResultType,
+  MainMenuProps,
+  NavbarProps,
+} from './menu-common-types';
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
-export const MainMenu = ({
+type ActiveSectionType = {
+  id?: string;
+  items?: MenuItemType[];
+};
+
+export const MainMenu: React.FC<MainMenuProps> = ({
   applianceName,
-  brandUrl,
   currentGroup,
   currentUser,
   customBrand,
@@ -30,38 +39,46 @@ export const MainMenu = ({
 }) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [menu, setMenu] = useState(initialMenu);
-  const [searchResults, setSearch] = useState(null);
-  const [activeSection, setSection] = useState(null);
+  const [searchResults, setSearch] = useState<SearchResultType[] | null>(null);
+  const [activeSection, setSection] = useState<ActiveSectionType | null>(null);
   const [openMenu, setOpen] = useState(false);
   // code to override navbar in plugins
-  const Navbar = ManageIQ.component.getReact('menu.Navbar');
+  const Navbar = ManageIQ.component.getReact(
+    'menu.Navbar'
+  ) as React.ComponentType<NavbarProps>;
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
   const hideSecondary = () => setSection(null);
-  const hideSecondaryEscape = (e) => e.keyCode === 27 && hideSecondary();
+  const hideSecondaryEscape = (e: React.KeyboardEvent) =>
+    e.key === 'Escape' && hideSecondary();
 
-  const secondLevelFirst = useRef(undefined);
-  const firstLevelNext = useRef(undefined);
-  const firstLevelPrev = useRef(undefined);
+  const secondLevelFirst = useRef<HTMLAnchorElement>(null);
+  const firstLevelNext = useRef<HTMLAnchorElement>(null);
+  const firstLevelPrev = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     // persist expanded state
-    window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
+    window.localStorage.setItem(
+      'patternfly-navigation-primary',
+      expanded ? 'expanded' : 'collapsed'
+    );
   }, [expanded]);
 
   useEffect(() => {
     // set body class - for content offset
-    const classNames = {
-      true: 'miq-main-menu-expanded',
-      false: 'miq-main-menu-collapsed',
-    };
-    document.body.classList.remove(classNames[!appearExpanded]);
-    document.body.classList.add(classNames[appearExpanded]);
+    const expandedClass = 'miq-main-menu-expanded';
+    const collapsedClass = 'miq-main-menu-collapsed';
+    document.body.classList.remove(
+      appearExpanded ? collapsedClass : expandedClass
+    );
+    document.body.classList.add(
+      appearExpanded ? expandedClass : collapsedClass
+    );
   }, [appearExpanded]);
 
   useEffect(() => {
     // cypress, debugging
-    window.ManageIQ.menu = menu;
+    ManageIQ.menu = menu;
   }, [menu]);
 
   useEffect(() => {
@@ -70,22 +87,26 @@ export const MainMenu = ({
     updateActiveItem();
   }, []);
 
-  const showMenu = (event) => {
+  const showMenu = (event: React.KeyboardEvent) => {
     // when focus/tab is in leftnav, if menu is not expanded, open menu
     if (!expanded) {
       setExpanded(true);
       // To understand if we are opening it manually on tab
       setOpen(true);
     }
-    if (event.keyCode === 27) hideSecondary();
+    if (event.key === 'Escape') {
+      hideSecondary();
+    }
   };
-  const hideMenu = (event) => {
-    // if we open it manually, collpase menu on blur
+
+  const hideMenu = (event: React.FocusEvent) => {
+    // if we open it manually, collapse menu on blur
     if (!event.currentTarget.contains(event.relatedTarget) && openMenu) {
       setExpanded(false);
       setOpen(false);
     }
   };
+
   const toggleMenu = () => {
     // if it is already open on tabbing, keep it open
     if (expanded && openMenu) {
@@ -95,7 +116,7 @@ export const MainMenu = ({
     }
   };
 
-  const onSelect = (item) => {
+  const onSelect = (item: ActiveSectionType) => {
     if (activeSection && item.id === activeSection.id) {
       hideSecondary();
     } else {
@@ -111,7 +132,7 @@ export const MainMenu = ({
     }
   };
 
-  const unFocusSecondary = (forward) => () => {
+  const unFocusSecondary = (forward: boolean) => () => {
     hideSecondary();
 
     const { current } = forward ? firstLevelNext : firstLevelPrev;
@@ -129,14 +150,14 @@ export const MainMenu = ({
     <>
       <Navbar
         isSideNavExpanded={expanded}
-        open={openMenu}
         onClickSideNavExpand={() => {
-          if (expanded) setSection(null);
+          if (expanded) {
+            setSection(null);
+          }
           setExpanded(!expanded);
         }}
         applianceName={applianceName}
         currentUser={currentUser}
-        brandUrl={brandUrl}
       />
       <div
         onClick={hideSecondary}
@@ -189,18 +210,15 @@ export const MainMenu = ({
             <FirstLevel
               menu={menu}
               onSelect={onSelect}
-              activeSection={activeSection && activeSection.id}
+              activeSection={activeSection?.id}
               expanded={appearExpanded}
-              ref={{
-                prevRef: firstLevelPrev,
-                nextRef: firstLevelNext,
-              }}
+              refObject={{ prevRef: firstLevelPrev, nextRef: firstLevelNext }}
             />
           )}
 
           {showMenuCollapse && (
             <MenuCollapse
-              expanded={expanded/* not appearExpanded */}
+              expanded={expanded /* not appearExpanded */}
               toggle={toggleMenu}
               onFocus={hideSecondary}
               open={openMenu}
@@ -208,13 +226,32 @@ export const MainMenu = ({
           )}
         </SideNav>
       </div>
-      { activeSection && (
+      {activeSection && (
         <>
-          <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
+          <SideNav
+            aria-label={__('Secondary Menu')}
+            className="secondary"
+            isChildOfHeader={false}
+            expanded
+          >
             <div onKeyDown={hideSecondaryEscape} role="presentation">
-              <span onFocus={unFocusSecondary(false)} role="presentation" tabIndex="0" />
-              <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} ref={secondLevelFirst} />
-              <span onFocus={unFocusSecondary(true)} role="presentation" tabIndex="0" />
+              <span
+                onFocus={unFocusSecondary(false)}
+                role="presentation"
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                tabIndex={0}
+              />
+              <SecondLevel
+                menu={activeSection.items || []}
+                hideSecondary={hideSecondary}
+                ref={secondLevelFirst}
+              />
+              <span
+                onFocus={unFocusSecondary(true)}
+                role="presentation"
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                tabIndex={0}
+              />
             </div>
           </SideNav>
           <div
@@ -228,28 +265,4 @@ export const MainMenu = ({
       )}
     </>
   );
-};
-
-const propGroup = PropTypes.shape({
-  description: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-});
-
-const propUser = PropTypes.shape({
-  name: PropTypes.string.isRequired,
-  userid: PropTypes.string.isRequired,
-});
-
-MainMenu.propTypes = {
-  applianceName: PropTypes.string.isRequired,
-  currentGroup: propGroup.isRequired,
-  currentUser: propUser.isRequired,
-  customBrand: PropTypes.bool,
-  logoLarge: PropTypes.string,
-  logoSmall: PropTypes.string,
-  menu: PropTypes.arrayOf(PropTypes.any).isRequired,
-  miqGroups: PropTypes.arrayOf(propGroup).isRequired,
-  showLogo: PropTypes.bool,
-  showMenuCollapse: PropTypes.bool,
-  showUser: PropTypes.bool,
 };
