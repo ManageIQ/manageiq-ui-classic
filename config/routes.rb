@@ -699,11 +699,11 @@ Rails.application.routes.draw do
         tagging_edit
         protect
       ] +
-              adv_search_post +
-              exp_post +
-              perf_post +
-              save_post +
-              dialog_runner_post
+               adv_search_post +
+               exp_post +
+               perf_post +
+               save_post +
+               dialog_runner_post
     },
 
     :container_node           => {
