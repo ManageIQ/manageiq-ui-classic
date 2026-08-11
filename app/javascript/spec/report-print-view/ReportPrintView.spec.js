@@ -17,12 +17,10 @@ describe('ReportPrintView', () => {
   it('renders table with headers and data', () => {
     render(<ReportPrintView report={mockReport} data={mockData} />);
 
-    // Check headers
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getByText('Date')).toBeInTheDocument();
 
-    // Check data
     expect(screen.getByText('Item 1')).toBeInTheDocument();
     expect(screen.getByText('Active')).toBeInTheDocument();
   });
@@ -32,5 +30,42 @@ describe('ReportPrintView', () => {
 
     expect(screen.getByRole('table')).toBeInTheDocument();
     expect(screen.getByText('Name')).toBeInTheDocument();
+  });
+
+  describe('grouped report', () => {
+    const groupedReport = {
+      headers: ['Name', 'Status'],
+      col_order: ['name', 'status'],
+      title: 'Grouped Report',
+      group: 'c',
+      sortby: ['status'],
+    };
+
+    const groupedData = [
+      ['Item 1', 'Active'],
+      ['Item 2', 'Active'],
+      ['Item 3', 'Inactive'],
+    ];
+
+    it('renders one table per group', () => {
+      render(<ReportPrintView report={groupedReport} data={groupedData} />);
+
+      expect(screen.getAllByRole('table')).toHaveLength(2);
+    });
+
+    it('renders label and count in each table footer', () => {
+      render(<ReportPrintView report={groupedReport} data={groupedData} />);
+
+      expect(screen.getByText('Active | Count: 2')).toBeInTheDocument();
+      expect(screen.getByText('Inactive | Count: 1')).toBeInTheDocument();
+    });
+
+    it('renders all row data within correct groups', () => {
+      render(<ReportPrintView report={groupedReport} data={groupedData} />);
+
+      expect(screen.getByText('Item 1')).toBeInTheDocument();
+      expect(screen.getByText('Item 2')).toBeInTheDocument();
+      expect(screen.getByText('Item 3')).toBeInTheDocument();
+    });
   });
 });

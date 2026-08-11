@@ -126,7 +126,9 @@ module ApplicationController::ReportDownloads
     @report_data = {
       :headers   => result.report.headers,
       :col_order => result.report.col_order,
-      :title     => result.report.title
+      :title     => result.report.title,
+      :sortby    => result.report.sortby,
+      :group     => result.report.group
     }
 
     render(

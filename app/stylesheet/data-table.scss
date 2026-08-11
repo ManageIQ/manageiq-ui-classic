@@ -46,3 +46,10 @@
     margin-bottom: 2px;
   }
 }
+
+.report-print-group-count {
+  background-color: var(--cds-layer-accent);
+  color: var(--cds-text-secondary, #525252);
+  padding: var(--cds-spacing-04) var(--cds-spacing-05);
+  font-weight: bold;
+}
