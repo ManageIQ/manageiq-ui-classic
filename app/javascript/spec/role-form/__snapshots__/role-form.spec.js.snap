@@ -197,8 +197,7 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
             Product Features (Editing)
           </p>
           <div
-            class="react-checkbox-tree rct-icons-fa4"
-            id="rct-BBnXIAh0jVEN0JHEC8b9S"
+            class="react-checkbox-tree rct-icons-fa5"
           >
             <ol>
               <li
@@ -208,9 +207,9 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
                   class="rct-text"
                 >
                   <button
-                    aria-label="Toggle"
+                    aria-label="Collapse node"
                     class="rct-collapse rct-collapse-btn"
-                    title="Toggle"
+                    title="Collapse node"
                     type="button"
                   >
                     <span>
@@ -230,19 +229,14 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
                       </svg>
                     </span>
                   </button>
-                  <label
-                    for="rct-BBnXIAh0jVEN0JHEC8b9S-everything__everything#1"
-                  >
+                  <label>
                     <input
-                      id="rct-BBnXIAh0jVEN0JHEC8b9S-everything__everything#1"
                       type="checkbox"
                     />
                     <span
-                      aria-checked="false"
-                      aria-disabled="false"
+                      aria-hidden="true"
                       class="rct-checkbox"
-                      role="checkbox"
-                      tabindex="0"
+                      role="presentation"
                     >
                       <span>
                         <svg
@@ -282,7 +276,7 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
                       </span>
                     </span>
                     <span
-                      class="rct-title"
+                      class="rct-label"
                     >
                       Everything
                     </span>
@@ -302,19 +296,14 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
                           class="rct-icon"
                         />
                       </span>
-                      <label
-                        for="rct-BBnXIAh0jVEN0JHEC8b9S-109__add_global_filter#2"
-                      >
+                      <label>
                         <input
-                          id="rct-BBnXIAh0jVEN0JHEC8b9S-109__add_global_filter#2"
                           type="checkbox"
                         />
                         <span
-                          aria-checked="false"
-                          aria-disabled="false"
+                          aria-hidden="true"
                           class="rct-checkbox"
-                          role="checkbox"
-                          tabindex="0"
+                          role="presentation"
                         >
                           <span>
                             <svg
@@ -364,7 +353,7 @@ exports[`Rbac Role Form Component render add rbac role form 1`] = `
                           </span>
                         </span>
                         <span
-                          class="rct-title"
+                          class="rct-label"
                         >
                           Add Global Filter
                         </span>
@@ -598,8 +587,7 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
             Product Features (Editing)
           </p>
           <div
-            class="react-checkbox-tree rct-icons-fa4"
-            id="rct-RsH_I3OXYu0foL-MIwpkn"
+            class="react-checkbox-tree rct-icons-fa5"
           >
             <ol>
               <li
@@ -609,9 +597,9 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
                   class="rct-text"
                 >
                   <button
-                    aria-label="Toggle"
+                    aria-label="Collapse node"
                     class="rct-collapse rct-collapse-btn"
-                    title="Toggle"
+                    title="Collapse node"
                     type="button"
                   >
                     <span>
@@ -631,20 +619,15 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
                       </svg>
                     </span>
                   </button>
-                  <label
-                    for="rct-RsH_I3OXYu0foL-MIwpkn-everything__everything#5"
-                  >
+                  <label>
                     <input
                       checked=""
-                      id="rct-RsH_I3OXYu0foL-MIwpkn-everything__everything#5"
                       type="checkbox"
                     />
                     <span
-                      aria-checked="true"
-                      aria-disabled="false"
+                      aria-hidden="true"
                       class="rct-checkbox"
-                      role="checkbox"
-                      tabindex="0"
+                      role="presentation"
                     >
                       <span>
                         <svg
@@ -689,7 +672,7 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
                       </span>
                     </span>
                     <span
-                      class="rct-title"
+                      class="rct-label"
                     >
                       Everything
                     </span>
@@ -709,20 +692,15 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
                           class="rct-icon"
                         />
                       </span>
-                      <label
-                        for="rct-RsH_I3OXYu0foL-MIwpkn-109__add_global_filter#6"
-                      >
+                      <label>
                         <input
                           checked=""
-                          id="rct-RsH_I3OXYu0foL-MIwpkn-109__add_global_filter#6"
                           type="checkbox"
                         />
                         <span
-                          aria-checked="true"
-                          aria-disabled="false"
+                          aria-hidden="true"
                           class="rct-checkbox"
-                          role="checkbox"
-                          tabindex="0"
+                          role="presentation"
                         >
                           <span>
                             <svg
@@ -777,7 +755,7 @@ exports[`Rbac Role Form Component render copy rbac role form 1`] = `
                           </span>
                         </span>
                         <span
-                          class="rct-title"
+                          class="rct-label"
                         >
                           Add Global Filter
                         </span>
@@ -1010,8 +988,7 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
             Product Features (Editing)
           </p>
           <div
-            class="react-checkbox-tree rct-icons-fa4"
-            id="rct-x_5rvquwsBc7wSf3KELmt"
+            class="react-checkbox-tree rct-icons-fa5"
           >
             <ol>
               <li
@@ -1021,9 +998,9 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
                   class="rct-text"
                 >
                   <button
-                    aria-label="Toggle"
+                    aria-label="Collapse node"
                     class="rct-collapse rct-collapse-btn"
-                    title="Toggle"
+                    title="Collapse node"
                     type="button"
                   >
                     <span>
@@ -1043,20 +1020,15 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
                       </svg>
                     </span>
                   </button>
-                  <label
-                    for="rct-x_5rvquwsBc7wSf3KELmt-everything__everything#3"
-                  >
+                  <label>
                     <input
                       checked=""
-                      id="rct-x_5rvquwsBc7wSf3KELmt-everything__everything#3"
                       type="checkbox"
                     />
                     <span
-                      aria-checked="true"
-                      aria-disabled="false"
+                      aria-hidden="true"
                       class="rct-checkbox"
-                      role="checkbox"
-                      tabindex="0"
+                      role="presentation"
                     >
                       <span>
                         <svg
@@ -1101,7 +1073,7 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
                       </span>
                     </span>
                     <span
-                      class="rct-title"
+                      class="rct-label"
                     >
                       Everything
                     </span>
@@ -1121,20 +1093,15 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
                           class="rct-icon"
                         />
                       </span>
-                      <label
-                        for="rct-x_5rvquwsBc7wSf3KELmt-109__add_global_filter#4"
-                      >
+                      <label>
                         <input
                           checked=""
-                          id="rct-x_5rvquwsBc7wSf3KELmt-109__add_global_filter#4"
                           type="checkbox"
                         />
                         <span
-                          aria-checked="true"
-                          aria-disabled="false"
+                          aria-hidden="true"
                           class="rct-checkbox"
-                          role="checkbox"
-                          tabindex="0"
+                          role="presentation"
                         >
                           <span>
                             <svg
@@ -1189,7 +1156,7 @@ exports[`Rbac Role Form Component render edit rbac role form 1`] = `
                           </span>
                         </span>
                         <span
-                          class="rct-title"
+                          class="rct-label"
                         >
                           Add Global Filter
                         </span>
