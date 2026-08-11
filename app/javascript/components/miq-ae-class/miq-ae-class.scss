@@ -1,0 +1,125 @@
+@use '@carbon/react/scss/spacing' as *;
+
+.namespace-selector-wrapper {
+  .namespace-selector-row {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-03;
+
+    .namespace-selector-input {
+      flex: 1;
+
+      // The parent dialog-provision-form applies margin-bottom to all .cds--form-item.
+      // Inside a flex row this collapses alignment — suppress it here.
+      .cds--form-item {
+        margin-bottom: 0;
+      }
+    }
+
+    .namespace-selector-buttons {
+      display: flex;
+      flex-shrink: 0;
+      gap: $spacing-02;
+      padding-bottom: 1px;
+    }
+  }
+}
+
+// instance-form.jsx layout helpers
+.ae-main-info-section {
+  margin-bottom: 20px;
+}
+
+.ae-form-button-wrapper {
+  margin-top: 20px;
+}
+
+// instance-fields-table.jsx layout helper
+.ae-instance-fields-table {
+  margin-top: 16px;
+}
+
+// selected-items-table.jsx layout helper
+.ae-selected-items-table {
+  margin-bottom: 16px;
+}
+
+// namespace-tree-modal.jsx layout helpers
+.ae-namespace-tree-scroll {
+  height: 280px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  user-select: none;
+
+  .tree,
+  .tree-node,
+  .tree-node-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tree-branch-wrapper,
+  .tree-node__leaf {
+    outline: none;
+  }
+}
+
+.ae-ns-node {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+
+  &--selected {
+    background-color: #d0e2ff;
+  }
+
+  &--domain {
+    cursor: default;
+    font-weight: 600;
+    opacity: 0.75;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.ae-ns-icon {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.ae-ns-spinner {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.ae-ns-name {
+  font-size: 14px;
+}
+
+.ae-ns-loading {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.ae-namespace-selected-path {
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+}
+
+.ae-namespace-domain-checkbox {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
