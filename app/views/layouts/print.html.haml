@@ -14,14 +14,14 @@
     = yield
     .center=@options[:run_date]
 
-    -# -# Opening the browser's printing dialog
-    -# :javascript
-    -#   document.addEventListener('DOMContentLoaded', function() {
-    -#     window.setTimeout(function() {
-    -#       window.print();
-    -#     });
-    -#   });
+    -# Opening the browser's printing dialog
+    :javascript
+      document.addEventListener('DOMContentLoaded', function() {
+        window.setTimeout(function() {
+          window.print();
+        });
+      });
 
-    -#   window.onafterprint = function() {
-    -#     window.close();
-    -#   };
+      window.onafterprint = function() {
+        window.close();
+      };

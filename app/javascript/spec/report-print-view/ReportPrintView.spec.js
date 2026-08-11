@@ -60,6 +60,12 @@ describe('ReportPrintView', () => {
       expect(screen.getByText('Inactive | Count: 1')).toBeInTheDocument();
     });
 
+    it('renders total count after all groups', () => {
+      render(<ReportPrintView report={groupedReport} data={groupedData} />);
+
+      expect(screen.getByText('All Rows | Count: 3')).toBeInTheDocument();
+    });
+
     it('renders all row data within correct groups', () => {
       render(<ReportPrintView report={groupedReport} data={groupedData} />);
 

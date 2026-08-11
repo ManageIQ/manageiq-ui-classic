@@ -52,9 +52,9 @@ const ReportTable = ({
           })}
         </TableBody>
         {count !== undefined && (
-          <tfoot>
+          <tfoot className="report-print-group-count">
             <tr>
-              <td colSpan={tableHeaders.length} className="report-print-group-count">
+              <td colSpan={tableHeaders.length}>
                 <strong>{`${label} | Count: ${count}`}</strong>
               </td>
             </tr>
@@ -118,6 +118,9 @@ const ReportPrintView = ({ report, data }) => {
           </div>
         );
       })}
+      <div id="report-print-all-rows-count">
+        <strong>{`All Rows | Count: ${data.length}`}</strong>
+      </div>
     </div>
   );
 };
