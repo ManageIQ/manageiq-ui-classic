@@ -25,6 +25,7 @@ const CheckboxTreeComponent = (props) => {
 
   // Extract custom props from fieldApi since useFieldApi consumes them
   const {
+    id,
     label = '',
     checked = [],
     isRequired = false,
@@ -114,6 +115,7 @@ const CheckboxTreeComponent = (props) => {
         </div>
       )}
       <CheckboxTree
+        id={id || 'checkbox-tree'}
         icons={carbonIcons}
         nodes={transformedNodes}
         checked={treeState.checked}
