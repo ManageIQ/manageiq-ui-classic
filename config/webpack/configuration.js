@@ -2,11 +2,11 @@
 
 const { resolve } = require('path');
 const { env } = require('process');
-const { safeLoad } = require('js-yaml');
+const { load } = require('js-yaml');
 const { readFileSync } = require('fs');
 
 const configPath = resolve('config', 'webpacker.yml');
-const settings = safeLoad(readFileSync(configPath), 'utf8')[env.NODE_ENV];
+const settings = load(readFileSync(configPath), 'utf8')[env.NODE_ENV];
 
 const { output: outputRoot, i18n, engines } = require('./paths.json');
 
