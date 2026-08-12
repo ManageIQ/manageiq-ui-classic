@@ -1,4 +1,4 @@
-/* eslint-env browser */
+import { useEffect, useRef, useState } from 'react';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
@@ -16,8 +16,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
 
-  // Tears down any active session (websocket + pending poll) without
-  // touching which container is selected in the dropdown.
+  // Tear down any active websocket + polling timer.
   const closeConsole = () => {
     if (pollTimerRef.current) {
       clearTimeout(pollTimerRef.current);
@@ -25,8 +24,6 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     }
 
     if (wsRef.current) {
-      // Prevent the old socket's onclose handler from writing a stray
-      // "[closed]" line after we've already started a new session.
       wsRef.current.onclose = null;
       wsRef.current.onerror = null;
       wsRef.current.onmessage = null;
@@ -47,10 +44,11 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     fitAddon.fit();
     term.focus();
     term.writeln('Select a container and click Connect.');
+
     termRef.current = term;
 
     term.onData((data) => {
-      if (wsRef.current?.readyState === WebSocket.OPEN) {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(data);
       }
     });
@@ -59,6 +57,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
       closeConsole();
       term.dispose();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const connect = (connectionParams, containerName) => {
@@ -82,9 +81,9 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
       if (evt.data instanceof ArrayBuffer) {
         termRef.current.write(new Uint8Array(evt.data));
       } else if (evt.data instanceof Blob) {
-        evt.data
-          .arrayBuffer()
-          .then((buf) => termRef.current.write(new Uint8Array(buf)));
+        evt.data.arrayBuffer().then((buf) => {
+          termRef.current.write(new Uint8Array(buf));
+        });
       } else {
         termRef.current.write(evt.data);
       }
@@ -104,12 +103,9 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
   };
 
   const pollTask = (taskId, containerName) => {
-    fetch(
-      `/container_group/kube_exec_console/${podId}?task_id=${taskId}`,
-      {
-        headers: { Accept: 'application/json' },
-      }
-    )
+    fetch(`/container_group/kube_exec_console/${podId}?task_id=${taskId}`, {
+      headers: { Accept: 'application/json' },
+    })
       .then((r) => r.json())
       .then((data) => {
         if (data.url) {
@@ -118,10 +114,9 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
           termRef.current.writeln(`\r\n[error] ${data.error}`);
           setConnecting(false);
         } else {
-          pollTimerRef.current = setTimeout(
-            () => pollTask(taskId, containerName),
-            1000
-          );
+          pollTimerRef.current = setTimeout(() => {
+            pollTask(taskId, containerName);
+          }, 1000);
         }
       });
   };
@@ -131,7 +126,6 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
       return;
     }
 
-    // Switching containers (or reconnecting) — tear down whatever's active first.
     closeConsole();
 
     setConnecting(true);
@@ -161,6 +155,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     if (containers.length === 1 && selectedContainer) {
       startConsole();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -207,7 +202,20 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
 
       <div
         ref={terminalRef}
+        role="textbox"
+        tabIndex={0}
+        aria-label="Container console"
         style={{ height: '500px', border: '1px solid #ccc' }}
+        onClick={() => {
+          if (termRef.current) {
+            termRef.current.focus();
+          }
+        }}
+        onKeyDown={() => {
+          if (termRef.current) {
+            termRef.current.focus();
+          }
+        }}
       />
     </>
   );
