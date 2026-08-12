@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   OverflowMenu,
@@ -49,7 +48,7 @@ KebabListItem.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export const DropDownMenu = forwardRef((props, _ref) => {
+export const DropDownMenu = (props) => {
   const { items = null } = props;
   
   return (
@@ -57,19 +56,19 @@ export const DropDownMenu = forwardRef((props, _ref) => {
       {items.map((item) => KebabListItem(item, props))}
     </SideNavItems>
   );
-});
+};
 
 DropDownMenu.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
 };
 
-export const ToolbarKebab = forwardRef((props, ref) => (
+export const ToolbarKebab = (props) => (
   <div className="btn-group kebab">
-    <OverflowMenu ref={ref}>
-      <DropDownMenu {...props} ref={ref} />
+    <OverflowMenu>
+      <DropDownMenu {...props} />
     </OverflowMenu>
   </div>
-));
+);
 
 ToolbarKebab.propTypes = {
   id: PropTypes.string.isRequired,
