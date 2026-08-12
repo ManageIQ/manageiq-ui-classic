@@ -18,6 +18,8 @@ module.exports = {
     'js',
     'jsx',
     'json',
+    'ts',
+    'tsx'
   ],
   moduleNameMapper: {
     "\\.(css|scss)$": 'identity-obj-proxy',
