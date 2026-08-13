@@ -152,6 +152,7 @@
     "stylelint": "^17.0.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-scss": "^7.0.0",
+    "ts-jest": "~29.4.12",
     "typescript": "~6.0.3",
     "webpack": "~4.47.0",
     "webpack-cli": "~4.10.0",
