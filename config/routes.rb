@@ -2410,6 +2410,7 @@ Rails.application.routes.draw do
         fetch_audit_log
         fetch_log
         fetch_production_log
+        group_form_data
         pglogical_subscriptions_form_fields
         schedule_form_fields
       ],
@@ -2444,10 +2445,8 @@ Rails.application.routes.draw do
         pglogical_save_subscriptions
         pglogical_validate_subscription
         rbac_group_edit
-        rbac_group_field_changed
-        rbac_group_load_tab
         rbac_group_seq_edit
-        rbac_group_user_lookup
+        rbac_group_user_lookup_json
         rbac_groups_list
         rbac_role_edit
         rbac_roles_list
