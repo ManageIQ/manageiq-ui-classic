@@ -14,6 +14,15 @@ module.exports = {
   roots: ['app/javascript'],
   setupFilesAfterEnv: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
+  // TODO: Try removing this and use babel-jest itself once Jest moves to Babel v8
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', {
+      tsconfig: {
+        rootDir: '.',
+      },
+    }],
+    '^.+\\.jsx?$': 'babel-jest',
+  },
   moduleFileExtensions: [
     'js',
     'jsx',
