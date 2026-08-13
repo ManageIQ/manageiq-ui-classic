@@ -683,6 +683,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
+        console
+        kube_exec_console
       ],
       :post => %w[
         button
