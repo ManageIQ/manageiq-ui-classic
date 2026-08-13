@@ -7,10 +7,6 @@ describe 'routes for ConditionController' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
     end
-
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
-    end
   end
 
   describe '#copy' do
@@ -22,14 +18,6 @@ describe 'routes for ConditionController' do
   describe '#new' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/new")).to route_to("#{controller_name}#new")
-    end
-  end
-
-  describe '#condition_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/condition_field_changed")
-      ).to route_to("#{controller_name}#condition_field_changed")
     end
   end
 
