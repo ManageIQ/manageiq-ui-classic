@@ -213,7 +213,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :confirm      => N_("Shutdown Guest OS the selected items?"),
           :enabled      => false,
           :onwhen       => "1+"
-          ),
+        ),
         button(
           :instance_start,
           nil,
