@@ -77,7 +77,7 @@
   gap: var(--cds-spacing-02, 0.25rem);
 
   .exp-not-toggle__label {
-    font-size: var(--cds-label-01-font-size, 0.75rem);
+    font-size: var(--cds-body-01-font-size, 0.875rem);
     font-weight: 400;
     color: var(--cds-text-secondary);
     white-space: nowrap;
@@ -108,12 +108,12 @@
   // Map RQB theming variables to Carbon tokens.
   --rqb-spacing:          var(--cds-spacing-03, 0.5rem);
   --rqb-border-width:     1px;
-  --rqb-border-color:     var(--cds-border-interactive, #78a9ff);
+  --rqb-border-color:     var(--cds-border-strong-01, #8d8d8d);
   --rqb-border-style:     solid;
   --rqb-border-radius:    0;
-  --rqb-background-color: var(--cds-highlight, #edf5ff);
-  --rqb-base-color:       var(--cds-interactive, #0f62fe);
-  --rqb-branch-color:     var(--cds-border-interactive, #78a9ff);
+  --rqb-background-color: var(--cds-layer-02, #e8e8e8);
+  --rqb-base-color:       var(--cds-text-primary, #161616);
+  --rqb-branch-color:     var(--cds-border-strong-01, #8d8d8d);
   --rqb-branch-style:     solid;
   --rqb-branch-radius:    0;
   --rqb-branch-indent:    var(--cds-spacing-05, 1rem);
@@ -125,18 +125,59 @@
   padding-block-end: var(--cds-spacing-05, 1rem);
 
   .ruleGroup {
-    background-color: var(--cds-highlight);
-    border: 1px solid var(--cds-border-interactive);
+    background-color: var(--cds-layer-02, #e8e8e8);
+    border: 1px solid var(--cds-border-strong-01, #8d8d8d);
     border-radius: 0;
     padding: 0;
     margin-bottom: var(--cds-spacing-03, 0.5rem);
   }
 
-  // Nested group: lighter background; margin-bottom:0 keeps the branch rail continuous.
+  // Nested group: slightly lighter so nesting is still visible.
   .ruleGroup .ruleGroup {
     background-color: var(--cds-layer-02, #e8e8e8);
     border-color: var(--cds-border-subtle-01, #e0e0e0);
     margin-bottom: 0;
+    // Reset all NOT-group styling so it never bleeds into a normal sub-group.
+    --exp-rule-bg:     var(--cds-layer-01, #f4f4f4);
+    --exp-rule-accent: var(--cds-border-strong-01, #8d8d8d);
+    --exp-not-body:    var(--cds-layer-03, #f4f4f4);
+  }
+
+  // NOT active — entire group turns red so it's immediately clear it is excluded.
+  // The direct-child > combinator ensures only the group whose *own* toggle is on
+  // gets themed (not an ancestor group containing a nested NOT group).
+  .ruleGroup:has(> .ruleGroup-header .ruleGroup-notToggle [aria-checked="true"]) {
+    border-color: #ff8389;
+    background-color: #fff1f1;
+
+    > .ruleGroup-header {
+      background-color: #ff8389;
+      border-bottom-color: #ff8389;
+      color: #161616;
+
+      .exp-not-toggle__label,
+      .cds--label {
+        color: #161616;
+      }
+    }
+
+    > .ruleGroup-body {
+      background-color: #fff1f1;
+
+      // Direct rule rows get red background and red left accent.
+      > .rule {
+        --exp-rule-bg:     #ffe6e6;
+        --exp-rule-accent: #ff8389;
+      }
+
+      // Branch lines on direct children only — not inside nested sub-groups.
+      > .rule::before,
+      > .rule::after,
+      > .ruleGroup::before,
+      > .ruleGroup::after {
+        border-color: #ff8389;
+      }
+    }
   }
 
   .ruleGroup-header {
@@ -145,8 +186,9 @@
     align-items: center;
     gap: var(--cds-spacing-03, 0.5rem);
     padding: var(--cds-spacing-03, 0.5rem) var(--cds-spacing-04, 0.75rem);
-    background-color: var(--cds-layer-selected-01, #d0e2ff);
-    border-bottom: 1px solid var(--cds-border-interactive);
+    background-color: var(--cds-layer-accent-01, #c6c6c6);
+    color: var(--cds-text-primary, #161616);
+    border-bottom: 1px solid var(--cds-border-strong-01, #8d8d8d);
 
     .ruleGroup-combinators {
       flex: 0 0 auto;
@@ -188,10 +230,12 @@
     &::before {
       content: '';
       position: absolute;
-      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      // The rule has a 3px border-left; the nested group has 1px — offset by the
+      // 2px difference so both elbows anchor from the same left edge.
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2 - 2px);
       top: 0;
       height: 50%;
-      width: var(--rqb-branch-indent);
+      width: calc(var(--rqb-branch-indent) + 2px);
       border-left: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
       border-bottom: var(--rqb-branch-width) var(--rqb-branch-style) var(--rqb-branch-color);
       border-bottom-left-radius: var(--rqb-branch-radius);
@@ -200,7 +244,7 @@
     &::after {
       content: '';
       position: absolute;
-      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2);
+      left: calc(-1 * var(--rqb-branch-indent) - var(--rqb-branch-width) / 2 - 2px);
       top: 50%;
       bottom: 0;
       width: 0;
@@ -257,8 +301,8 @@
     width: 100%;
     min-width: 0;
     position: relative;
-    background-color: var(--cds-layer-01, #f4f4f4);
-    border-left: 3px solid var(--cds-border-interactive);
+    background-color: var(--exp-rule-bg, var(--cds-layer-01, #f4f4f4));
+    border-left: 3px solid var(--exp-rule-accent, var(--cds-border-strong-01, #8d8d8d));
     border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
     padding: var(--cds-spacing-03, 0.5rem);
 
