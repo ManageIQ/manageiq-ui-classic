@@ -8,10 +8,11 @@ import {
   Toggle,
 } from '@carbon/react';
 import {
-  TrashCan,
   Copy,
   ChevronUp,
   ChevronDown,
+  Add,
+  SubtractAlt
 } from '@carbon/react/icons';
 
 // Flatten RQB option lists: handles both flat arrays and optgroup arrays.
@@ -29,7 +30,7 @@ const iconComponentForLabel = (label) => {
   }
   const s = String(label).toLowerCase();
   if (s.includes('remove') || s.includes('delete')) {
-    return (props) => <TrashCan size={16} {...props} />;
+    return (props) => <SubtractAlt size={16} {...props} />;
   }
   if (s.includes('clone') || s.includes('copy')) {
     return (props) => <Copy size={16} {...props} />;
@@ -43,6 +44,14 @@ const iconComponentForLabel = (label) => {
   return undefined;
 };
 
+// Labels RQB passes for the add-rule / add-group action slots.
+const ADD_BUTTON_MAP = {
+  '+ rule': { display: __('Add Rule'), kind: 'primary' },
+  '+ group': { display: __('Add Sub-Group'), kind: 'secondary' },
+};
+
+const AddIcon = (props) => <Add size={16} {...props} />;
+
 export const ActionButton = ({
   label,
   title,
@@ -55,19 +64,21 @@ export const ActionButton = ({
   const matchStr = `${labelStr} ${String(title ?? '')}`.toLowerCase();
   const icon = iconComponentForLabel(matchStr);
 
+  const addBtn = !icon && ADD_BUTTON_MAP[labelStr.toLowerCase()];
+
   return (
     <Button
-      kind="ghost"
+      kind={addBtn ? addBtn.kind : 'ghost'}
       size="sm"
       iconDescription={title || labelStr}
-      renderIcon={icon}
+      renderIcon={addBtn ? AddIcon : icon}
       hasIconOnly={!!icon}
       onClick={handleOnClick}
       disabled={disabled}
       className={className}
       tooltipAlignment="end"
     >
-      {!icon && label}
+      {!icon && (addBtn ? addBtn.display : label)}
     </Button>
   );
 };
