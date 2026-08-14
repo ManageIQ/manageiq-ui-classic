@@ -12,7 +12,7 @@ import {
   ChevronUp,
   ChevronDown,
   Add,
-  SubtractAlt
+  SubtractAlt,
 } from '@carbon/react/icons';
 
 // Flatten RQB option lists: handles both flat arrays and optgroup arrays.
@@ -222,7 +222,7 @@ export const NotToggle = ({
   className,
   path,
 }) => {
-  const labelStr = label ?? __('NOT');
+  const labelStr = label !== undefined && label !== null ? String(label) : __('NOT').toUpperCase();
   return (
     <span className={`exp-not-toggle${className ? ` ${className}` : ''}`}>
       <span className="exp-not-toggle__label" aria-hidden="true">{labelStr}</span>
