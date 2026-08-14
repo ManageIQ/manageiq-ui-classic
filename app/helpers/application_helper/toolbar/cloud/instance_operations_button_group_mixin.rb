@@ -27,7 +27,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :options => {
               :feature => :shutdown_guest
             }
-            ),
+          ),
           included_class.button(
             :instance_start,
             nil,
