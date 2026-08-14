@@ -126,14 +126,14 @@ const selectTowhat = (label = 'VM and Instance') => {
  * Waits for the new rule row to appear.
  */
 const addRule = () => {
-  cy.contains('button', '+ Rule').first().click();
+  cy.contains('button', 'Add Rule').first().click();
 };
 
 /**
  * Click the "Add group" button inside the root query builder group.
  */
 const addGroup = () => {
-  cy.contains('button', '+ Group').first().click();
+  cy.contains('button', 'Add Sub-Group').first().click();
 };
 
 /**
@@ -194,7 +194,7 @@ describe('Control > Conditions > New Condition', () => {
     cy.get('.exp-query-builder', { timeout: 8000 }).should('be.visible');
     // Expression editor seeds 1 rule; add an extra so we can confirm it resets.
     cy.get('.exp-query-builder').last().within(() => {
-      cy.contains('button', '+ Rule').click();
+      cy.contains('button', 'Add Rule').click();
     });
     cy.get('.exp-query-builder').last()
       .find('.rule', { timeout: 6000 })
@@ -518,7 +518,7 @@ describe('Control > Conditions > Scope Expression Editor', () => {
 
     // Adding a rule to Scope does not affect the Expression section's count.
     cy.get('.exp-query-builder').first().within(() => {
-      cy.contains('button', '+ Rule').click();
+      cy.contains('button', 'Add Rule').click();
     });
     cy.get('.exp-query-builder').first()
       .find('.rule', { timeout: 6000 })
