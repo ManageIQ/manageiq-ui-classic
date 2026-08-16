@@ -108,6 +108,7 @@ import PodsTrendChart from '../components/provider-dashboard-charts/pod-trend-ch
 import PolicyProfileForm from '../components/policy-profile-form';
 import ProvGrid from '../components/prov-grid';
 import ProviderForm from '../components/provider-form';
+import ProvConfiguredSystemGrid from '../components/prov-configured-system-grid';
 import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeImageEditForm from '../components/pxe-image-edit-form';
 import PxeImageForm from '../components/pxe-image-type-form';
@@ -313,6 +314,7 @@ ManageIQ.component.addReact('PodsTrendChart', PodsTrendChart);
 ManageIQ.component.addReact('PolicyProfileForm', PolicyProfileForm);
 ManageIQ.component.addReact('ProvGrid', ProvGrid);
 ManageIQ.component.addReact('ProviderForm', ProviderForm);
+ManageIQ.component.addReact('ProvConfiguredSystemGrid', ProvConfiguredSystemGrid);
 ManageIQ.component.addReact('PxeCustomizationTemplateForm', PxeCustomizationTemplateForm);
 ManageIQ.component.addReact('PxeImageEditForm', PxeImageEditForm);
 ManageIQ.component.addReact('PxeImageForm', PxeImageForm);
