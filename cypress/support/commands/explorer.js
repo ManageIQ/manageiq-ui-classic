@@ -101,6 +101,10 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
               urlPattern: /\/[^/]+\/tree_select\?id=.*&text=.*/,
               triggerFn: () => cy.wrap(currentLiElement).click(),
               waitOnlyIfRequestIntercepted: true,
+              onApiResponse: () => {
+                cy.get('body').find('.spinner').should('not.exist');
+                cy.get('body').find('#spinner_div').should('not.be.visible');
+              },
             });
             return;
           }
