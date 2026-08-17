@@ -1586,6 +1586,23 @@ module.exports = [
         },
       ],
 
+      // Extend no-restricted-syntax to add TypeScript-specific restrictions
+      'no-restricted-syntax': [
+        ...sharedAirbnbBaseRules['no-restricted-syntax'],
+        {
+          // Catches explicit type assertions like "data as unknown" or "<unknown>data"
+          selector: "TSAsExpression[typeAnnotation.type='TSUnknownKeyword']",
+          message:
+            "Avoid casting values directly to 'unknown'. Use a type guard or an explicit schema validation instead.",
+        },
+        {
+          // Catches explicit variable/property type annotations like "data: unknown"
+          selector: "TSTypeAnnotation[typeAnnotation.type='TSUnknownKeyword']",
+          message:
+            "Explicitly declaring variables as 'unknown' is restricted. Narrow down the type or define a domain-specific layout.",
+        },
+      ],
+
       // Disable base ESLint rules that conflict with TypeScript
       'no-unused-vars': 'off',
       '@typescript-eslint/no-use-before-define': [
