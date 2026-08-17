@@ -22,7 +22,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             N_('Shutdown Guest OS this Instance'),
             N_('Shutdown Guest'),
             :icon    => "fa fa-stop fa-lg",
-            :confirm => N_("Shutdown Guest OS this Instance?"),
+            :confirm => N_("Shutdown Guest OS on this Instance?"),
             :klass   => ApplicationHelper::Button::GenericFeatureButton,
             :options => {
               :feature => :shutdown_guest
