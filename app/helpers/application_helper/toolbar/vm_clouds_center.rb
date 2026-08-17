@@ -210,7 +210,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :icon         => "fa fa-stop fa-lg",
           :url_parms    => "main_div",
           :send_checked => true,
-          :confirm      => N_("Shutdown Guest OS the selected items?"),
+          :confirm      => N_("Shutdown Guest OS on the selected items?"),
           :enabled      => false,
           :onwhen       => "1+"
         ),
