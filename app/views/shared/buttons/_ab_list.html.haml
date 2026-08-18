@@ -27,13 +27,10 @@
                           :treeBox => x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree',
                           :nodeType => @nodetype[0]
 - elsif %w(ab_group_edit ab_group_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "group_update")
-  = render :partial => 'shared/buttons/group_form'                      
-- elsif %w(ab_button_edit ab_button_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "button_update") || (params[:button] == "paste" && params[:action] == "resolve")
+  = render :partial => 'shared/buttons/group_form'
+- elsif %w(ab_button_edit ab_button_new).include?(params[:pressed]) || (params[:button] == "paste" && params[:action] == "resolve")
   = render :partial => 'shared/buttons/ab_form'
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")
   = render :partial => 'shared/buttons/group_order_form'
 - elsif @custom_button
-  - if params[:action] == 'button_update' && (params[:button] == 'visibility_expression' || params[:button] == 'enablement_expression')
-    = render :partial => 'shared/buttons/ab_form'
-  - else
-    = render :partial => 'shared/buttons/ab_show'
+  = render :partial => 'shared/buttons/ab_show'
