@@ -263,7 +263,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           nil,
           N_('Shutdown Guest OS the selected items'),
           N_('Shutdown Guest OS'),
-          :icon         => "fa fa-stop fa-lg",
+          :icon         => "fa fa-power-off fa-lg",
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Shutdown Guest OS on the selected items?"),
