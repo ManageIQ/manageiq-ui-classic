@@ -6,6 +6,7 @@ import { TagView } from '../tagging';
 import { TreeViewRedux } from '../components/tree-view';
 import { Toolbar } from '../components/toolbar';
 
+import AbForm from '../components/ab-form';
 import ActionForm from '../components/action-form';
 import AddRemoveHostAggregateForm from '../components/host-aggregate-form/add-remove-host-aggregate-form';
 import AddRemoveSecurityGroupForm from '../components/vm-cloud-add-remove-security-group-form';
@@ -206,6 +207,7 @@ import GitDomainRefreshForm from '../components/git-domain-refresh-form';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
+ManageIQ.component.addReact('AbForm', AbForm);
 ManageIQ.component.addReact('ActionForm', ActionForm);
 ManageIQ.component.addReact('AddRemoveHostAggregateForm', AddRemoveHostAggregateForm);
 ManageIQ.component.addReact('AddRemoveSecurityGroupForm', AddRemoveSecurityGroupForm);

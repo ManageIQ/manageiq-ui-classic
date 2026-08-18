@@ -16,11 +16,6 @@ Rails.application.routes.draw do
     search_clear
   ]
 
-  button_post = %w[
-    button_create
-    button_update
-  ]
-
   compare_get = %w[
     compare_miq
     compare_to_csv
@@ -296,6 +291,7 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w[
+        ab_button_form_data
         download_data
         explorer
         ot_edit
@@ -312,7 +308,6 @@ Rails.application.routes.draw do
         ae_tree_select_toggle
         atomic_form_field_changed
         atomic_st_edit
-        automate_button_field_changed
         playbook_options_field_changed
         embedded_workflows_modal
         explorer
@@ -348,7 +343,6 @@ Rails.application.routes.draw do
         x_history
         x_show
       ] +
-               button_post +
                exp_post +
                dialog_runner_post
     },
@@ -1960,6 +1954,7 @@ Rails.application.routes.draw do
     },
     :miq_ae_customization     => {
       :get  => %w[
+        ab_button_form_data
         explorer
         editor
         export_service_dialogs
@@ -1969,7 +1964,6 @@ Rails.application.routes.draw do
       :post => %w[
         ab_group_reorder
         accordion_select
-        automate_button_field_changed
         playbook_options_field_changed
         change_tab
         dialog_copy_editor
@@ -1994,7 +1988,7 @@ Rails.application.routes.draw do
         x_history
         x_show
       ] +
-               button_post + exp_post
+               exp_post
     },
 
     :miq_ae_tools             => {
