@@ -20,6 +20,8 @@ describe('Overview > Reports Tests', () => {
       cy.accordion('Reports');
       cy.expect_explorer_title('All Reports');
       cy.get('.miq-data-table.report-list').should('be.visible');
+      // FIXME: to be fixed by enhancing the toolbar command
+      cy.wait(2000);
 
       // Click add report
       cy.toolbar('Configuration', 'Add a new Report');
