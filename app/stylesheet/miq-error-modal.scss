@@ -1,4 +1,7 @@
 .miq-error-modal {
+  // Ensure error modal always appears on top of other modals
+  z-index: 20001;
+
   .cds--modal-container {
     max-inline-size: 64rem;
   }
