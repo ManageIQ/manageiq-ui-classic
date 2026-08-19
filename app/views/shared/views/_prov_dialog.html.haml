@@ -439,7 +439,7 @@
             :label                    => _("Shared Processor Pools"),
             :prefix                   => "/miq_request/",
             :keys                     => keys})
-      - keys = [:replicant_affinity_policy]
+      - keys = [:colocation_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
             :dialog                   => dialog,
