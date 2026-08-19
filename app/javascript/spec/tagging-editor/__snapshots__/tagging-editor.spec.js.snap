@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TaggingEditor component matches snapshot 1`] = `
+<div>
+  <div
+    class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
+  >
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+    >
+      <div
+        class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+      >
+        <div
+          class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        >
+          <h4>
+            Add/Modify tag
+          </h4>
+        </div>
+      </div>
+      <form
+        class="cds--form tag-modifier-form"
+        horizontal="true"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Category
+          </legend>
+          <div
+            class="tag-modifier-form-row category-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+            >
+              <div
+                class="cds--dropdown cds--list-box"
+                id="dropdown-tag-select"
+              >
+                <button
+                  aria-activedescendant=""
+                  aria-controls="downshift-:r1:-menu"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-labelledby="downshift-:r1:-label"
+                  class="cds--list-box__field"
+                  id="downshift-:r1:-toggle-button"
+                  role="combobox"
+                  tabindex="0"
+                  title="Select tag category"
+                  type="button"
+                >
+                  <span
+                    class="cds--list-box__label"
+                  >
+                    Select tag category
+                  </span>
+                  <div
+                    class="cds--list-box__menu-icon"
+                  >
+                    <svg
+                      aria-label="Open menu"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      name="chevron--down"
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                      <title>
+                        Open menu
+                      </title>
+                    </svg>
+                  </div>
+                </button>
+                <ul
+                  aria-labelledby="downshift-:r1:-label"
+                  class="cds--list-box__menu"
+                  id="downshift-:r1:-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Value
+          </legend>
+          <div
+            class="tag-modifier-form-row value-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--multi-select__wrapper cds--list-box__wrapper tag-select"
+            >
+              <label
+                class="cds--label"
+                for="downshift-:r4:-toggle-button"
+                id="downshift-:r4:-label"
+              />
+              <div
+                class="cds--multi-select cds--list-box cds--list-box--expanded"
+                id="multiselect-tag-select"
+              >
+                <div
+                  class="cds--list-box__field--wrapper cds--list-box__field--wrapper--input-focused"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-:r4:-menu"
+                    aria-expanded="true"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-:r4:-label"
+                    class="cds--list-box__field"
+                    id="downshift-:r4:-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                      id="multiselect-field-label-id-:r2:"
+                    >
+                      Select tag value
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon cds--list-box__menu-icon--open"
+                    >
+                      <svg
+                        aria-label="Close menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Close menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+                <ul
+                  aria-labelledby="downshift-:r4:-label"
+                  class="cds--list-box__menu"
+                  id="downshift-:r4:-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+    >
+      <div
+        id="assignments_div"
+      >
+        <div
+          class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <h4>
+              Assigned tags
+            </h4>
+          </div>
+        </div>
+        <div
+          class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <ul
+              class="list-inline"
+            >
+              <li>
+                <ul
+                  class="tag-category list-inline"
+                >
+                  <li
+                    id="tag_category_1"
+                  >
+                    <div
+                      class="category-label"
+                      title="Name"
+                    >
+                      Name
+                    </div>
+                  </li>
+                  <li
+                    class="tag"
+                  >
+                    <label
+                      class="cds--label cds--label--no-margin tagColor"
+                      dir="auto"
+                      for="tag_value_11"
+                      title="Pepa"
+                    >
+                      <div
+                        class="value-label"
+                      >
+                        <span
+                          class="value-span"
+                        >
+                          Pepa
+                        </span>
+                        <span
+                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        >
+                          <div
+                            class="cds--tooltip-trigger__wrapper"
+                          >
+                            <button
+                              aria-labelledby="tooltip-:r6:"
+                              class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="cds--popover"
+                            id="tooltip-:r6:"
+                            role="tooltip"
+                          >
+                            <span
+                              class="cds--popover-content cds--tooltip-content"
+                            >
+                              Close Icon
+                            </span>
+                            <span
+                              class="cds--popover-caret"
+                            />
+                          </span>
+                        </span>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

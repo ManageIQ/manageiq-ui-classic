@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TagModifier component matches snapshot 1`] = `
+<div>
+  <div
+    class="tag-modifier-header cds--css-grid"
+  >
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <h4>
+        Add/Modify tag
+      </h4>
+    </div>
+  </div>
+  <form
+    class="cds--form tag-modifier-form"
+    horizontal="true"
+  >
+    <fieldset
+      class="cds--fieldset"
+    >
+      <legend
+        class="cds--label"
+      >
+        Category
+      </legend>
+      <div
+        class="tag-modifier-form-row category-modifier cds--col"
+      >
+        <div
+          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+        >
+          <div
+            class="cds--dropdown cds--list-box"
+            id="dropdown-tag-select"
+          >
+            <button
+              aria-activedescendant=""
+              aria-controls="downshift-:r1:-menu"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="downshift-:r1:-label"
+              class="cds--list-box__field"
+              id="downshift-:r1:-toggle-button"
+              role="combobox"
+              tabindex="0"
+              title="Name"
+              type="button"
+            >
+              <span
+                class="cds--list-box__label"
+              >
+                Name
+              </span>
+              <div
+                class="cds--list-box__menu-icon"
+              >
+                <svg
+                  aria-label="Open menu"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  name="chevron--down"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                  <title>
+                    Open menu
+                  </title>
+                </svg>
+              </div>
+            </button>
+            <ul
+              aria-labelledby="downshift-:r1:-label"
+              class="cds--list-box__menu"
+              id="downshift-:r1:-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset
+      class="cds--fieldset"
+    >
+      <legend
+        class="cds--label"
+      >
+        Value
+      </legend>
+      <div
+        class="tag-modifier-form-row value-modifier cds--col"
+      >
+        <div
+          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+        >
+          <div
+            class="cds--dropdown cds--list-box"
+            id="dropdown-tag-select"
+          >
+            <button
+              aria-activedescendant=""
+              aria-controls="downshift-:r3:-menu"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="downshift-:r3:-label"
+              class="cds--list-box__field"
+              id="downshift-:r3:-toggle-button"
+              role="combobox"
+              tabindex="0"
+              title="Duck"
+              type="button"
+            >
+              <span
+                class="cds--list-box__label"
+              >
+                Duck
+              </span>
+              <div
+                class="cds--list-box__menu-icon"
+              >
+                <svg
+                  aria-label="Open menu"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  name="chevron--down"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                  <title>
+                    Open menu
+                  </title>
+                </svg>
+              </div>
+            </button>
+            <ul
+              aria-labelledby="downshift-:r3:-label"
+              class="cds--list-box__menu"
+              id="downshift-:r3:-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+`;
