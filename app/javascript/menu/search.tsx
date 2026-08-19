@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-
+import React from 'react';
 import { Search as SearchIcon } from '@carbon/react/icons';
 import {
   Search,
@@ -7,11 +6,16 @@ import {
   SideNavItem,
   Button,
 } from '@carbon/react';
+import type {
+  MenuItemType,
+  FlatMenuItemType,
+  SearchResultType,
+} from './menu-common-types';
 
-export const flatten = (menuItems = []) => {
-  const flat = [];
+export const flatten = (menuItems: MenuItemType[] = []) => {
+  const flat: FlatMenuItemType[] = [];
 
-  const process = (items, parents = []) => {
+  const process = (items: MenuItemType[], parents: MenuItemType[] = []) => {
     items.forEach((item) => {
       const newParents = [...parents, item];
 
@@ -29,8 +33,18 @@ export const flatten = (menuItems = []) => {
   return flat;
 };
 
-const MenuSearch = ({
-  expanded, menu, onSearch = () => null, toggle = () => null,
+type MenuSearchProps = {
+  expanded: boolean;
+  menu: MenuItemType[];
+  onSearch?: (results: SearchResultType[] | null) => void;
+  toggle?: () => void;
+};
+
+const MenuSearch: React.FC<MenuSearchProps> = ({
+  expanded,
+  menu,
+  onSearch = () => null,
+  toggle = () => null,
 }) => {
   if (!expanded) {
     return (
@@ -40,7 +54,7 @@ const MenuSearch = ({
             <fieldset className="miq-fieldset">
               <div className="miq-fieldset-content">
                 <div
-                  tabIndex="0"
+                  tabIndex={0}
                   className="search_div"
                   role="button"
                   onClick={toggle}
@@ -64,27 +78,28 @@ const MenuSearch = ({
     );
   }
 
-  const flatMenu = flatten(menu).map(({ item, parents }) => {
-    const titles = [...parents, item].map((p) => p.title);
-    const haystack = titles.join(' ').toLocaleLowerCase();
+  const flatMenu: SearchResultType[] = flatten(menu).map(
+    ({ item, parents }) => {
+      const titles = [...parents, item].map((p) => p.title);
+      const haystack = titles.join(' ').toLocaleLowerCase();
 
-    return {
-      haystack,
-      item,
-      parents,
-      titles,
-    };
-  });
+      return {
+        haystack,
+        item,
+        parents,
+        titles,
+      };
+    }
+  );
 
-  const searchResults = (string) => {
+  const searchResults = (string: string) => {
     if (!string || string.match(/^\s*$/)) {
       onSearch(null);
       return;
     }
 
     const needle = string.toLocaleLowerCase();
-    const results = flatMenu.filter((item) => item.haystack.includes(needle));
-
+    const results = flatMenu.filter((item) => item?.haystack?.includes(needle));
     onSearch(results);
   };
 
@@ -106,15 +121,6 @@ const MenuSearch = ({
       </SideNavItems>
     </div>
   );
-};
-
-MenuSearch.propTypes = {
-  expanded: PropTypes.bool.isRequired,
-  menu: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-  onSearch: PropTypes.func,
-  toggle: PropTypes.func,
 };
 
 export default MenuSearch;

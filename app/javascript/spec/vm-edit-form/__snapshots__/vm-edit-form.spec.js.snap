@@ -227,16 +227,15 @@ exports[`VM Edit form component should edit template with a parent and children 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r24:"
-                  id="search-input-:r24:-search"
+                  for="search-input-_r_24_"
+                  id="search-input-_r_24_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r24:"
+                  id="search-input-_r_24_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -267,7 +266,7 @@ exports[`VM Edit form component should edit template with a parent and children 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r26:"
+                    aria-labelledby="tooltip-_r_26_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -290,7 +289,7 @@ exports[`VM Edit form component should edit template with a parent and children 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r26:"
+                  id="tooltip-_r_26_"
                   role="tooltip"
                 >
                   <span
@@ -513,16 +512,15 @@ exports[`VM Edit form component should edit template with a parent and children 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r2h:"
-                  id="search-input-:r2h:-search"
+                  for="search-input-_r_2h_"
+                  id="search-input-_r_2h_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r2h:"
+                  id="search-input-_r_2h_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -553,7 +551,7 @@ exports[`VM Edit form component should edit template with a parent and children 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r2j:"
+                    aria-labelledby="tooltip-_r_2j_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -576,7 +574,7 @@ exports[`VM Edit form component should edit template with a parent and children 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r2j:"
+                  id="tooltip-_r_2j_"
                   role="tooltip"
                 >
                   <span
@@ -873,16 +871,15 @@ exports[`VM Edit form component should edit template with no parent and children
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r2r:"
-                  id="search-input-:r2r:-search"
+                  for="search-input-_r_2r_"
+                  id="search-input-_r_2r_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r2r:"
+                  id="search-input-_r_2r_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -913,7 +910,7 @@ exports[`VM Edit form component should edit template with no parent and children
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r2t:"
+                    aria-labelledby="tooltip-_r_2t_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -936,7 +933,7 @@ exports[`VM Edit form component should edit template with no parent and children
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r2t:"
+                  id="tooltip-_r_2t_"
                   role="tooltip"
                 >
                   <span
@@ -1159,16 +1156,15 @@ exports[`VM Edit form component should edit template with no parent and children
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r38:"
-                  id="search-input-:r38:-search"
+                  for="search-input-_r_38_"
+                  id="search-input-_r_38_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r38:"
+                  id="search-input-_r_38_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1199,7 +1195,7 @@ exports[`VM Edit form component should edit template with no parent and children
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r3a:"
+                    aria-labelledby="tooltip-_r_3a_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1222,7 +1218,7 @@ exports[`VM Edit form component should edit template with no parent and children
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r3a:"
+                  id="tooltip-_r_3a_"
                   role="tooltip"
                 >
                   <span
@@ -1519,16 +1515,15 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:rm:"
-                  id="search-input-:rm:-search"
+                  for="search-input-_r_m_"
+                  id="search-input-_r_m_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:rm:"
+                  id="search-input-_r_m_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1559,7 +1554,7 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:ro:"
+                    aria-labelledby="tooltip-_r_o_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1582,7 +1577,7 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:ro:"
+                  id="tooltip-_r_o_"
                   role="tooltip"
                 >
                   <span
@@ -1805,16 +1800,15 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r13:"
-                  id="search-input-:r13:-search"
+                  for="search-input-_r_13_"
+                  id="search-input-_r_13_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r13:"
+                  id="search-input-_r_13_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1845,7 +1839,7 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r15:"
+                    aria-labelledby="tooltip-_r_15_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1868,7 +1862,7 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r15:"
+                  id="tooltip-_r_15_"
                   role="tooltip"
                 >
                   <span
@@ -2165,16 +2159,15 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r1d:"
-                  id="search-input-:r1d:-search"
+                  for="search-input-_r_1d_"
+                  id="search-input-_r_1d_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r1d:"
+                  id="search-input-_r_1d_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -2205,7 +2198,7 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r1f:"
+                    aria-labelledby="tooltip-_r_1f_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2228,7 +2221,7 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r1f:"
+                  id="tooltip-_r_1f_"
                   role="tooltip"
                 >
                   <span
@@ -2451,16 +2444,15 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r1q:"
-                  id="search-input-:r1q:-search"
+                  for="search-input-_r_1q_"
+                  id="search-input-_r_1q_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r1q:"
+                  id="search-input-_r_1q_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -2491,7 +2483,7 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r1s:"
+                    aria-labelledby="tooltip-_r_1s_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2514,7 +2506,7 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r1s:"
+                  id="tooltip-_r_1s_"
                   role="tooltip"
                 >
                   <span
@@ -2797,16 +2789,15 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:r1:"
-                  id="search-input-:r1:-search"
+                  for="search-input-_r_1_"
+                  id="search-input-_r_1_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:r1:"
+                  id="search-input-_r_1_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -2837,7 +2828,7 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:r3:"
+                    aria-labelledby="tooltip-_r_3_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2860,7 +2851,7 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r3:"
+                  id="tooltip-_r_3_"
                   role="tooltip"
                 >
                   <span
@@ -3037,16 +3028,15 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-:rc:"
-                  id="search-input-:rc:-search"
+                  for="search-input-_r_c_"
+                  id="search-input-_r_c_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-:rc:"
+                  id="search-input-_r_c_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -3077,7 +3067,7 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-:re:"
+                    aria-labelledby="tooltip-_r_e_"
                     class="tooltipButton-0-2-9 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -3100,7 +3090,7 @@ exports[`VM Edit form component should render vm edit form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:re:"
+                  id="tooltip-_r_e_"
                   role="tooltip"
                 >
                   <span

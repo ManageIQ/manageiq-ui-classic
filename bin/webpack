@@ -36,6 +36,23 @@ newenv  = {
   "NODE_PATH"    => NODE_MODULES_PATH.shellescape,
   "NODE_OPTIONS" => node_options
 }
+
+# TODO: Replace this with eslint-webpack-plugin once webpack is upgraded to v5
+# Run ESLint on TypeScript files before webpack build (skip in watch mode)
+if ARGV.include?("--watch") || ARGV.include?("-w")
+  puts "[SKIP] Skipping ESLint check in watch mode.\n"
+else
+  puts "Running ESLint on TypeScript files..."
+  Dir.chdir(APP_PATH) do
+    eslint_result = system("yarn", "eslint", "app/javascript/**/*.{ts,tsx}")
+    unless eslint_result
+      puts "\n[ERROR] ESLint found errors in TypeScript files."
+      exit 1
+    end
+  end
+  puts "[OK] ESLint passed for TypeScript files.\n"
+end
+
 cmdline = ["yarn", "run", "webpack", "--config", WEBPACK_CONFIG] + ARGV
 
 Dir.chdir(APP_PATH) do

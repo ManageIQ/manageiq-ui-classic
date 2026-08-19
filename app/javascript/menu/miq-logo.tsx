@@ -1,7 +1,18 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import { SideNavHeader } from '@carbon/react';
 
-const MiqLogo = ({
+type MiqLogoProps = {
+  alt?: string;
+  customBrand?: boolean;
+  expanded: boolean;
+  href?: string;
+  logoCustom?: string;
+  logoLarge: string;
+  logoSmall: string;
+  title?: string;
+};
+
+const MiqLogo: React.FC<MiqLogoProps> = ({
   alt = 'ManageIQ',
   customBrand = false,
   expanded,
@@ -11,7 +22,14 @@ const MiqLogo = ({
   logoSmall,
   title = __('Go to my start page'),
 }) => {
-  const url = customBrand ? logoCustom : (expanded ? logoLarge : logoSmall);
+  let url;
+  if (customBrand) {
+    url = logoCustom;
+  } else if (expanded) {
+    url = logoLarge;
+  } else {
+    url = logoSmall;
+  }
 
   const miqLogo = () => (
     <a href={href} title={title}>
@@ -20,17 +38,6 @@ const MiqLogo = ({
   );
 
   return <SideNavHeader className="padded menu-logo" renderIcon={miqLogo} />;
-};
-
-MiqLogo.propTypes = {
-  alt: PropTypes.string,
-  customBrand: PropTypes.bool,
-  expanded: PropTypes.bool.isRequired,
-  href: PropTypes.string,
-  logoCustom: PropTypes.string,
-  logoLarge: PropTypes.string.isRequired,
-  logoSmall: PropTypes.string.isRequired,
-  title: PropTypes.string,
 };
 
 export default MiqLogo;

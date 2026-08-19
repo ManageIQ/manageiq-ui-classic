@@ -3,12 +3,18 @@
 // * big_iframe (id) - no menu, only navbar and ..a big iframe (external with our header)
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
+import React from 'react';
 
-const { miqSparkleOn, miqSparkleOff } = window;
+type LinkPropsParams = {
+  type?: string;
+  href?: string;
+  id?: string;
+  hideSecondary?: () => void;
+};
 
 export const linkProps = ({
   type, href, id, hideSecondary = () => null,
-}) => ({
+}: LinkPropsParams) => ({
   href: {
     big_iframe: `/dashboard/iframe?id=${id}`,
     default: href,
@@ -19,7 +25,7 @@ export const linkProps = ({
   target: (type === 'new_window' ? '_blank' : '_self'),
   rel: (type === 'new_window' ? 'noreferrer noopener' : undefined),
 
-  onClick: (event) => {
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (type === 'modal') {
       sendDataWithRx({ type: 'showAboutModal' });
       hideSecondary();
@@ -28,7 +34,7 @@ export const linkProps = ({
       return;
     }
 
-    if (['default', 'big_iframe'].includes(type) && miqCheckForChanges() === false) {
+    if (['default', 'big_iframe'].includes(type || 'default') && miqCheckForChanges() === false) {
       // cancelled
       event.preventDefault();
       return;
@@ -47,4 +53,4 @@ export const linkProps = ({
   },
 });
 
-export const itemId = (id, section) => (section ? `menu_section_${id}` : `menu_item_${id}`);
+export const itemId = (id: string, section?: boolean): string => (section ? `menu_section_${id}` : `menu_item_${id}`);

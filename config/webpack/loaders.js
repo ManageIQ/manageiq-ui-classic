@@ -19,7 +19,7 @@ if (env.WEBPACK_VERBOSE) {
 
 module.exports = [
   {
-    test: /\.(js|jsx|mjs|cjs)$/,
+    test: /\.(js|jsx|mjs|cjs|ts|tsx)$/,
     use: [{
       loader: 'babel-loader',
       options: babelOptions,

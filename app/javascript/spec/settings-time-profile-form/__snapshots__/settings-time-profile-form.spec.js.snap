@@ -124,7 +124,6 @@ exports[`VM common form component should render adding form variant add new time
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -374,7 +373,6 @@ exports[`VM common form component should render adding form variant add new time
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1291,7 +1289,6 @@ exports[`VM common form component should render adding form variant blank form 1
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1541,7 +1538,6 @@ exports[`VM common form component should render adding form variant blank form 1
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -2458,7 +2454,6 @@ exports[`VM common form component should render copying form variant new name on
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -2715,7 +2710,6 @@ exports[`VM common form component should render copying form variant new name on
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -3656,7 +3650,6 @@ exports[`VM common form component should render copying form variant with new va
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -3913,7 +3906,6 @@ exports[`VM common form component should render copying form variant with new va
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -4854,7 +4846,6 @@ exports[`VM common form component should render editing form variant all new val
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -5111,7 +5102,6 @@ exports[`VM common form component should render editing form variant all new val
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -6052,7 +6042,6 @@ exports[`VM common form component should render editing form variant some new va
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -6309,7 +6298,6 @@ exports[`VM common form component should render editing form variant some new va
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"

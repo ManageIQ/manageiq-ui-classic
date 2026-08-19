@@ -1,10 +1,29 @@
-import PropTypes from 'prop-types';
-import { Dropdown, Button, SideNavItems, SideNavItem } from '@carbon/react';
+import React from 'react';
+import {
+  Dropdown,
+  Button,
+  SideNavItems,
+  SideNavItem,
+} from '@carbon/react';
 import { Collaborate } from '@carbon/react/icons';
+import type { OptionType } from '../types/forms';
 
-const { miqChangeGroup } = window;
+type MiqGroupType = {
+  id: string;
+  description: string;
+};
 
-const GroupSwitcher = ({ miqGroups = [], currentGroup = {}, expanded: isExpanded = false }) => {
+type GroupSwitcherProps = {
+  miqGroups?: MiqGroupType[];
+  currentGroup: MiqGroupType;
+  expanded?: boolean;
+};
+
+const GroupSwitcher: React.FC<GroupSwitcherProps> = ({
+  miqGroups = [],
+  currentGroup,
+  expanded: isExpanded = false,
+}) => {
   const options = miqGroups.map(({ id, description }) => ({
     label: description,
     value: id,
@@ -15,9 +34,9 @@ const GroupSwitcher = ({ miqGroups = [], currentGroup = {}, expanded: isExpanded
     value: currentGroup.id,
   };
 
-  const groupChange = ({ selectedItem: { value } }) => {
-    if (value && value !== currentGroup.id) {
-      miqChangeGroup(value);
+  const groupChange = ({ selectedItem }: { selectedItem: OptionType }) => {
+    if (selectedItem?.value && selectedItem.value !== currentGroup.id) {
+      miqChangeGroup(selectedItem.value as string);
     }
   };
 
@@ -56,24 +75,12 @@ const GroupSwitcher = ({ miqGroups = [], currentGroup = {}, expanded: isExpanded
   const expanded = options.length > 1 ? multiGroup : singleGroup;
 
   return (
-    <div className={`menu-group${!isExpanded ? ' miq-menu-group-switcher-collapsed' : ''}`}>
-      <SideNavItems>
-        { isExpanded ? expanded : collapsed }
-      </SideNavItems>
+    <div
+      className={`menu-group${!isExpanded ? ' miq-menu-group-switcher-collapsed' : ''}`}
+    >
+      <SideNavItems>{isExpanded ? expanded : collapsed}</SideNavItems>
     </div>
   );
-};
-
-GroupSwitcher.propTypes = {
-  miqGroups: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  })),
-  currentGroup: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }),
-  expanded: PropTypes.bool,
 };
 
 export default GroupSwitcher;

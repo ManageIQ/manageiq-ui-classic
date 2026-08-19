@@ -463,7 +463,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               <input
                 checked=""
                 class="cds--radio-button"
-                id="radio-button-:r8:"
+                id="radio-button-_r_8_"
                 label="Default"
                 name="capabilities"
                 type="radio"
@@ -471,7 +471,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               />
               <label
                 class="cds--radio-button__label"
-                for="radio-button-:r8:"
+                for="radio-button-_r_8_"
               >
                 <span
                   class="cds--radio-button__appearance"
@@ -489,7 +489,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
             >
               <input
                 class="cds--radio-button"
-                id="radio-button-:r9:"
+                id="radio-button-_r_9_"
                 label="Custom"
                 name="capabilities"
                 type="radio"
@@ -497,7 +497,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               />
               <label
                 class="cds--radio-button__label"
-                for="radio-button-:r9:"
+                for="radio-button-_r_9_"
               >
                 <span
                   class="cds--radio-button__appearance"
@@ -565,7 +565,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
             id="edit_authentication"
             name="edit_authentication"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"

@@ -158,7 +158,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
             id="git_verify_ssl"
             name="git_verify_ssl"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"

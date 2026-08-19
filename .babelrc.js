@@ -11,6 +11,7 @@ module.exports = {
         targets: { browsers },
       },
     ],
+    require('@babel/preset-typescript').default,
     [
       require('@babel/preset-react').default,
       {

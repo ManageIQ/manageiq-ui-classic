@@ -172,16 +172,15 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   </div>
                   <label
                     class="cds--label"
-                    for="search-input-:r0:"
-                    id="search-input-:r0:-search"
+                    for="search-input-_r_0_"
+                    id="search-input-_r_0_-search"
                   />
                   <input
                     autocomplete="off"
                     class="cds--search-input"
-                    id="search-input-:r0:"
+                    id="search-input-_r_0_"
                     placeholder="Filter options"
                     type="search"
-                    value=""
                   />
                   <button
                     aria-label="Clear search input"
@@ -212,7 +211,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-:r2:"
+                      aria-labelledby="tooltip-_r_2_"
                       class="tooltipButton-0-2-10 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                       type="button"
                     >
@@ -235,7 +234,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-:r2:"
+                    id="tooltip-_r_2_"
                     role="tooltip"
                   >
                     <span
@@ -375,16 +374,15 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   </div>
                   <label
                     class="cds--label"
-                    for="search-input-:ra:"
-                    id="search-input-:ra:-search"
+                    for="search-input-_r_a_"
+                    id="search-input-_r_a_-search"
                   />
                   <input
                     autocomplete="off"
                     class="cds--search-input"
-                    id="search-input-:ra:"
+                    id="search-input-_r_a_"
                     placeholder="Filter values"
                     type="search"
-                    value=""
                   />
                   <button
                     aria-label="Clear search input"
@@ -415,7 +413,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-:rc:"
+                      aria-labelledby="tooltip-_r_c_"
                       class="tooltipButton-0-2-10 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                       type="button"
                     >
@@ -438,7 +436,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-:rc:"
+                    id="tooltip-_r_c_"
                     role="tooltip"
                   >
                     <span

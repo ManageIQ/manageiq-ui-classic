@@ -223,7 +223,7 @@ exports[`User Form Component should render add User form correctly 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-:r2:-label"
+          id="downshift-_r_2_-label"
         >
           <span
             aria-hidden="true"
@@ -242,19 +242,19 @@ exports[`User Form Component should render add User form correctly 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-:r2:-menu"
+              aria-controls="downshift-_r_2_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:r2:-label"
+              aria-labelledby="downshift-_r_2_-label"
               class="cds--list-box__field"
-              id="downshift-:r2:-toggle-button"
+              id="downshift-_r_2_-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-:r0:"
+                id="multiselect-field-label-id-_r_0_"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -284,10 +284,10 @@ exports[`User Form Component should render add User form correctly 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:r2:-label"
+            aria-labelledby="downshift-_r_2_-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-:r2:-menu"
+            id="downshift-_r_2_-menu"
             role="listbox"
           />
         </div>
@@ -548,7 +548,7 @@ exports[`User Form Component should render copy User form correclty 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-:rr:-label"
+          id="downshift-_r_r_-label"
         >
           <span
             aria-hidden="true"
@@ -567,19 +567,19 @@ exports[`User Form Component should render copy User form correclty 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-:rr:-menu"
+              aria-controls="downshift-_r_r_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:rr:-label"
+              aria-labelledby="downshift-_r_r_-label"
               class="cds--list-box__field"
-              id="downshift-:rr:-toggle-button"
+              id="downshift-_r_r_-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-:rp:"
+                id="multiselect-field-label-id-_r_p_"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -609,10 +609,10 @@ exports[`User Form Component should render copy User form correclty 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:rr:-label"
+            aria-labelledby="downshift-_r_r_-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-:rr:-menu"
+            id="downshift-_r_r_-menu"
             role="listbox"
           />
         </div>
@@ -812,7 +812,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:rg:"
+                  aria-labelledby="tooltip-_r_g_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -838,7 +838,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:rg:"
+                id="tooltip-_r_g_"
                 role="tooltip"
               >
                 <span
@@ -896,7 +896,7 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
       >
         <label
           class="cds--label cds--label--disabled"
-          id="downshift-:rl:-label"
+          id="downshift-_r_l_-label"
         >
           <span
             aria-hidden="true"
@@ -915,21 +915,21 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-:rl:-menu"
+              aria-controls="downshift-_r_l_-menu"
               aria-disabled="true"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:rl:-label"
+              aria-labelledby="downshift-_r_l_-label"
               class="cds--list-box__field"
               disabled=""
-              id="downshift-:rl:-toggle-button"
+              id="downshift-_r_l_-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-:rj:"
+                id="multiselect-field-label-id-_r_j_"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -959,10 +959,10 @@ exports[`User Form Component should render edit Admin User form correclty 1`] = 
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:rl:-label"
+            aria-labelledby="downshift-_r_l_-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-:rl:-menu"
+            id="downshift-_r_l_-menu"
             role="listbox"
           />
         </div>
@@ -1167,7 +1167,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r6:"
+                  aria-labelledby="tooltip-_r_6_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -1193,7 +1193,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r6:"
+                id="tooltip-_r_6_"
                 role="tooltip"
               >
                 <span
@@ -1251,7 +1251,7 @@ exports[`User Form Component should render edit User form correclty 1`] = `
       >
         <label
           class="cds--label"
-          id="downshift-:rb:-label"
+          id="downshift-_r_b_-label"
         >
           <span
             aria-hidden="true"
@@ -1270,19 +1270,19 @@ exports[`User Form Component should render edit User form correclty 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-:rb:-menu"
+              aria-controls="downshift-_r_b_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-:rb:-label"
+              aria-labelledby="downshift-_r_b_-label"
               class="cds--list-box__field"
-              id="downshift-:rb:-toggle-button"
+              id="downshift-_r_b_-toggle-button"
               role="combobox"
               tabindex="0"
               type="button"
             >
               <span
                 class="cds--list-box__label"
-                id="multiselect-field-label-id-:r9:"
+                id="multiselect-field-label-id-_r_9_"
               >
                 &lt;Choose one or more Groups&gt;
               </span>
@@ -1312,10 +1312,10 @@ exports[`User Form Component should render edit User form correclty 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-:rb:-label"
+            aria-labelledby="downshift-_r_b_-label"
             class="cds--list-box__menu"
             hidden=""
-            id="downshift-:rb:-menu"
+            id="downshift-_r_b_-menu"
             role="listbox"
           />
         </div>
