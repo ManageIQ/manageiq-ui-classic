@@ -439,13 +439,20 @@
             :label                    => _("Shared Processor Pools"),
             :prefix                   => "/miq_request/",
             :keys                     => keys})
+      - keys = [:colocation_policy]
+      = render(:partial => "/miq_request/prov_dialog_fieldset",
+        :locals         => {:workflow => wf,
+            :dialog                   => dialog,
+            :label                    => _("Colocation Policy"),
+            :prefix                   => "/miq_request/",
+            :keys                     => keys})
       - keys = %i[migratable pin_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
-           :dialog                    => dialog,
-           :label                     => _("Other"),
-           :prefix                    => "/miq_request/",
-           :keys                      => keys})
+            :dialog                   => dialog,
+            :label                    => _("Other"),
+            :prefix                   => "/miq_request/",
+            :keys                     => keys})
       - keys = [:root_username, :root_password]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
