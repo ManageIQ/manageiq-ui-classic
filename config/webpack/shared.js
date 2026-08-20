@@ -14,7 +14,7 @@ const fs = require('fs');
 const { env, settings, i18n, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
 const RailsEnginesPlugin = require('./RailsEnginesPlugin');
-const { generateTsConfigWebpack, needsRegeneration } = require('./generate-tsconfig.ts');
+const { generateTsConfigWebpack, needsRegeneration } = require('./generate-tsconfig.js');
 
 // Generate tsconfig.webpack.json before webpack runs
 // This ensures TypeScript checking includes all plugin directories
