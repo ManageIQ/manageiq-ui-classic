@@ -790,6 +790,16 @@ module VmCommon
 
   private
 
+  # Convert a raw numeric id (e.g. "2888") to a tree-node id (e.g. "v-2888").
+  # Visiting /explorer/:id directly with a plain DB id is a supported URL pattern;
+  # parse_nodetype_and_id requires the prefixed format, so normalise it here.
+  def normalize_vm_node_id(id)
+    return id if id.nil? || id.include?('-')
+
+    record = VmOrTemplate.find_by(:id => id)
+    record ? TreeBuilder.build_node_id(record) : id
+  end
+
   # if node is VM or Template is true - select parent node in explorer tree but show info of Vm/Template
   def resolve_node_info(id)
     nodetype, id = id.split("-")
