@@ -49,6 +49,7 @@ class VmInfraController < ApplicationController
   end
 
   def set_elements_and_redirect_unauthorized_user
+    params[:id] = normalize_vm_node_id(params[:id])
     @nodetype, _id = parse_nodetype_and_id(params[:id])
     prefix = prefix_by_nodetype(@nodetype)
 
