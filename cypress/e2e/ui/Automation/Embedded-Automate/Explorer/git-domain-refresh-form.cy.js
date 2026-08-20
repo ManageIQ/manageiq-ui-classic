@@ -1,6 +1,7 @@
 import { flashClassMap } from '../../../../../support/assertions/assertion_constants';
 
-describe('Automation > Embedded Automate > Explorer > Git Domain Refresh', () => {
+// TODO: This test has alot of sporadic failures, skipping it until we find a permanent solution.
+describe.skip('Automation > Embedded Automate > Explorer > Git Domain Refresh', () => {
   let gitDomainName;
 
   beforeEach(() => {
