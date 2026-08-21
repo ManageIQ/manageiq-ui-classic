@@ -3,27 +3,15 @@
  * This ensures TypeScript checking includes all plugin/engine directories
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-
-type Engine = {
-  root: string;
-  node_modules: string;
-};
-
-type Engines = {
-  [engineName: string]: Engine;
-};
+const fs = require('fs');
+const path = require('path');
 
 /**
  * Generate tsconfig.webpack.json with all engine paths
- * @param rootDir - Project root directory
- * @param engines - Engines configuration from paths.json
+ * @param {string} rootDir - Project root directory
+ * @param {Object} engines - Engines configuration from paths.json
  */
-export function generateTsConfigWebpack(
-  rootDir: string,
-  engines: Engines
-): void {
+function generateTsConfigWebpack(rootDir, engines) {
   // Extract engine roots and generate include paths
   const enginePaths = Object.keys(engines).map((engineName) => {
     const engineRoot = engines[engineName].root;
@@ -53,14 +41,11 @@ export function generateTsConfigWebpack(
 
 /**
  * Check if tsconfig.webpack.json needs regeneration
- * @param tsconfigPath - Path to tsconfig.webpack.json
- * @param pathsJsonPath - Path to paths.json
- * @returns True if regeneration is needed
+ * @param {string} tsconfigPath - Path to tsconfig.webpack.json
+ * @param {string} pathsJsonPath - Path to paths.json
+ * @returns {boolean} True if regeneration is needed
  */
-export function needsRegeneration(
-  tsconfigPath: string,
-  pathsJsonPath: string
-): boolean {
+function needsRegeneration(tsconfigPath, pathsJsonPath) {
   if (!fs.existsSync(tsconfigPath)) {
     return true;
   }
@@ -71,3 +56,5 @@ export function needsRegeneration(
 
   return pathsJsonMtime > tsconfigMtime;
 }
+
+module.exports = { generateTsConfigWebpack, needsRegeneration };
