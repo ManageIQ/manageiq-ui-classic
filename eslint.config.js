@@ -1064,6 +1064,9 @@ module.exports = [
         jQuery: 'readonly',
         // Shared ManageIQ globals
         ...sharedManageIQGlobals,
+        // Node/Jest test globals
+        global: 'readonly',
+        require: 'readonly',
         // JS-specific globals
         Promise: 'readonly',
         angular: 'readonly',
