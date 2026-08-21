@@ -35,8 +35,10 @@ Cypress.Commands.add('accordionItem', (name) => {
  * For example, `[/^ManageIQ Region/, 'Zone', 'Server']`
  * will expand the accordion until it finds the item with the label 'Server' under 'Zone' under 'ManageIQ Region'.
  * If the path is not found, it will throw an error.
+ * @param {Object} options - Optional configuration object
+ * @param {Function} options.onTreeSelectResponse - Callback function invoked with tree select API response data
  */
-Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
+Cypress.Commands.add('selectAccordionItem', (accordionPath, options = {}) => {
   cy.get('div.panel-collapse.collapse.in').then((accordionJqueryObject) => {
     /**
      * This variable stores the expanded accordion jquery object. This will be reassigned to the latest,
@@ -101,9 +103,12 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
               urlPattern: /\/[^/]+\/tree_select\?id=.*&text=.*/,
               triggerFn: () => cy.wrap(currentLiElement).click(),
               waitOnlyIfRequestIntercepted: true,
-              onApiResponse: () => {
+              onApiResponse: (res) => {
                 cy.get('body').find('.spinner').should('not.exist');
                 cy.get('body').find('#spinner_div').should('not.be.visible');
+                if (options?.onTreeSelectResponse) {
+                  options.onTreeSelectResponse(res);
+                }
               },
             });
             return;
