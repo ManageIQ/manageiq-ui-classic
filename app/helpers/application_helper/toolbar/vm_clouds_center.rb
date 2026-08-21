@@ -261,7 +261,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
         button(
           :vm_guest_shutdown,
           nil,
-          N_('Shutdown Guest OS the selected items'),
+          N_('Shutdown Guest OS on the selected items'),
           N_('Shutdown Guest OS'),
           :icon         => "fa fa-power-off fa-lg",
           :url_parms    => "main_div",
