@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import {
   Folder, Search, RuleFilled, Edit,
 } from '@carbon/react/icons';
@@ -9,24 +11,23 @@ import { Loading, Button } from '@carbon/react';
 import createSchema from './role-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-let idCounter = 0;
-
-let modified = false;
-let features = new Set();
 const RoleForm = (props) => {
   const {
     selectOptions, customProps, role, existingProductFeatures,
   } = props;
 
+  const idCounter = useRef(0);
+  const features = useRef(new Set());
+
   const generateId = () => {
-    idCounter += 1;
-    return idCounter;
+    idCounter.current += 1;
+    return idCounter.current;
   };
 
   // necessary for older roles that do only have top level nodes as features
   const checkChildren = (productFeature, child) => {
     if (!child.children) {
-      features.add(child.value);
+      features.current.add(child.value);
     } else {
       child.children.forEach((nextChild) => {
         checkChildren(productFeature, nextChild);
@@ -39,11 +40,12 @@ const RoleForm = (props) => {
     const result = node.value.split('__')[1].split('#')[0];
 
     if (result === productFeature) {
-      features.add(node.value);
       if (node.children) {
         node.children.forEach((child) => {
           checkChildren(productFeature, child);
         });
+      } else {
+        features.current.add(node.value);
       }
     }
     if (node.children) {
@@ -101,36 +103,28 @@ const RoleForm = (props) => {
     checked: [],
   });
 
-  const customValidation = (values) => {
+  const customValidation = useCallback((values) => {
     const errors = {};
-    if (values.tree_dropdown === undefined) {
-      values.tree_dropdown = formData.initialValues.miqProductFeatures || [];
+    const treeDropdown = values.tree_dropdown !== undefined
+      ? values.tree_dropdown
+      : (formData.initialValues.miqProductFeatures || []);
+
+    if (treeDropdown.length === 0) {
+      errors.tree_dropdown = 'Required';
     }
 
-    if (values) {
-      if (values.name === formData.initialValues.name
-        && values.vm_restriction === formData.initialValues.vm_restriction
-        && values.service_template_restriction === formData.initialValues.service_template_restriction
-        && JSON.stringify(values.tree_dropdown) === JSON.stringify(formData.initialValues.miqProductFeatures)) {
-        modified = false;
-      } else {
-        modified = true;
-      }
-
-      if (values.tree_dropdown.length === 0 || values.tree_dropdown.length === undefined) {
-        errors.tree_dropdown = 'Required';
-      }
-
-      if (values.name === '' || (values && values.tree_dropdown && values.tree_dropdown.length === 0)) {
-        errors.valid = 'not_valid';
-      }
+    if (values.name === '' || treeDropdown.length === 0) {
+      errors.valid = 'not_valid';
     }
+
     return errors;
-  };
+  }, [formData.initialValues]);
 
   const isEdit = !!role?.id;
 
   useEffect(() => {
+    features.current = new Set();
+    idCounter.current = 0;
     if (isEdit) {
       setFormData((prevState) => ({ ...prevState, isLoading: true }));
       miqSparkleOn();
@@ -152,7 +146,7 @@ const RoleForm = (props) => {
             params: {},
             initialValues: roleValues,
             nodes,
-            checked: Array.from(features),
+            checked: Array.from(features.current),
           });
           miqSparkleOff();
         }
@@ -166,19 +160,18 @@ const RoleForm = (props) => {
       const bsTree = JSON.parse(customProps.bs_tree);
       const nodes = bsTree.map(transformTree);
       if (role && role.name && existingProductFeatures) {
-        idCounter = 0;
         existingProductFeatures.forEach((productFeature) => {
           findCheck(productFeature.identifier, nodes[0]);
         });
       }
-      initialValues.tree_dropdown = Array.from(features);
+      initialValues.tree_dropdown = Array.from(features.current);
       if (initialValues) {
         setFormData({
           isLoading: false,
           params: {},
           initialValues,
           nodes,
-          checked: Array.from(features),
+          checked: Array.from(features.current),
         });
       }
     }
@@ -242,17 +235,14 @@ const RoleForm = (props) => {
   };
 
   const onCancel = () => {
-    const confirmation = role.id ? __(`Edit of Role was cancelled by the user`)
-      : __(`Add of new Role was cancelled by the user`);
-    const message = sprintf(
-      confirmation
-    );
+    const message = role.id ? __('Edit of Role was cancelled by the user')
+      : __('Add of new Role was cancelled by the user');
     miqRedirectBack(message, 'warning', '/ops/explorer');
   };
 
   const onReset = () => {
-    features = new Set();
-    idCounter = 0;
+    features.current = new Set();
+    idCounter.current = 0;
     setFormData((prevState) => ({ ...prevState, isLoading: true }));
     API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
       const roleValues = {
@@ -268,9 +258,9 @@ const RoleForm = (props) => {
           findCheck(productFeature.identifier, nodes[0]);
         });
       }
-      setFormData({
-        ...formData, isLoading: false, initialValues: roleValues, checked: features,
-      });
+      setFormData((prevState) => ({
+        ...prevState, isLoading: false, initialValues: roleValues, checked: Array.from(features.current),
+      }));
     });
   };
 
@@ -289,7 +279,7 @@ const RoleForm = (props) => {
               onSubmit={onSubmit}
               onCancel={onCancel}
               onReset={onReset}
-              validate={(values) => customValidation(values)}
+              validate={customValidation}
               FormTemplate={(props) => (
                 <FormTemplate {...props} roleId={role.id} />
               )}
@@ -307,8 +297,8 @@ const FormTemplate = ({
   const {
     handleSubmit, onReset, onCancel, getState,
   } = useFormApi();
-  const { valid } = getState();
-  const submitLabel = !!roleId ? __('Save') : __('Add');
+  const { valid, pristine } = getState();
+  const submitLabel = roleId ? __('Save') : __('Add');
   return (
     <form onSubmit={handleSubmit}>
       {formFields}
@@ -328,7 +318,7 @@ const FormTemplate = ({
                 </Button>
               ) : (
                 <Button
-                  disabled={!valid || !modified}
+                  disabled={!valid || pristine}
                   kind="primary"
                   className="btnRight"
                   type="submit"
@@ -340,7 +330,7 @@ const FormTemplate = ({
             {!!roleId
               ? (
                 <Button
-                  disabled={!modified}
+                  disabled={pristine}
                   kind="secondary"
                   className="btnRight"
                   variant="contained"
