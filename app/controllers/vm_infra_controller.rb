@@ -42,7 +42,10 @@ class VmInfraController < ApplicationController
   end
 
   def prefix_by_nodetype(nodetype)
-    case TreeBuilder.get_model_for_prefix(nodetype).underscore
+    model = TreeBuilder.get_model_for_prefix(nodetype)
+    return nil if model.nil?
+
+    case model.underscore
     when "miq_template" then "templates"
     when "vm"           then "vms"
     end
@@ -56,6 +59,11 @@ class VmInfraController < ApplicationController
     # Position in tree that matches selected record
     if role_allows?(:feature => "vandt_accord")
       set_active_elements_authorized_user('vandt_tree', 'vandt')
+    elsif prefix.nil?
+      session.delete(:exp_parms)
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:action => 'explorer', :id => nil)
+      return true
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
       set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else

@@ -115,7 +115,10 @@ class VmCloudController < ApplicationController
   end
 
   def prefix_by_nodetype(nodetype)
-    case TreeBuilder.get_model_for_prefix(nodetype).underscore
+    model = TreeBuilder.get_model_for_prefix(nodetype)
+    return nil if model.nil?
+
+    case model.underscore
     when "miq_template" then "images"
     when "vm"           then "instances"
     end
@@ -131,6 +134,11 @@ class VmCloudController < ApplicationController
       set_active_elements_authorized_user('instances_tree', 'instances')
     elsif role_allows?(:feature => "images_accord") && prefix == "images"
       set_active_elements_authorized_user('images_tree', 'images')
+    elsif prefix.nil?
+      session.delete(:exp_parms)
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:action => 'explorer', :id => nil)
+      return true
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
       set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else
