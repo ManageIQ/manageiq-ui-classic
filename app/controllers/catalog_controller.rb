@@ -2362,6 +2362,8 @@ class CatalogController < ApplicationController
                 r[:partial => "stcat_form"]
               elsif action == "dialog_provision"
                 r[:partial => "shared/dialogs/dialog_provision", :locals => options[:dialog_locals]]
+              elsif action == 'button_edit'
+                r[:partial => "shared/buttons/ab_form"]
               elsif %w[ot_add ot_copy ot_edit service_dialog_from_ot copy_catalog].include?(action)
                 r[:partial => action]
               elsif record_showing
@@ -2396,27 +2398,29 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
-        if (action == 'at_st_new' && (ansible_playbook_type? || terraform_template_type?)) || %w[st_catalog_new st_catalog_edit copy_catalog].include?(action)
+        # button_edit uses AbForm (React) which renders its own buttons — hide the legacy bottom bar
+        if (action == 'at_st_new' && (ansible_playbook_type? || terraform_template_type?)) ||
+           %w[st_catalog_new st_catalog_edit copy_catalog button_edit].include?(action)
           presenter.hide(:form_buttons_div)
         else
           presenter.show(:form_buttons_div)
         end
-        locals = {:record_id => @edit[:rec_id]}
-        case action
-        when 'group_edit'
-          locals[:action_url] = @edit[:rec_id] ? 'group_update' : 'group_create'
-        when 'group_reorder'
-          locals[:action_url]   = 'ab_group_reorder'
-          locals[:multi_record] = true
-        when 'button_edit'
-          locals[:action_url] = @edit[:rec_id] ? 'button_update' : 'button_create'
-        when 'st_catalog_new', 'st_catalog_edit'
-          locals[:action_url] = 'st_catalog_edit'
-        else
-          locals[:action_url] = 'servicetemplate_edit'
-          locals[:serialize] = true
+        if @edit
+          locals = {:record_id => @edit[:rec_id]}
+          case action
+          when 'group_edit'
+            locals[:action_url] = @edit[:rec_id] ? 'group_update' : 'group_create'
+          when 'group_reorder'
+            locals[:action_url]   = 'ab_group_reorder'
+            locals[:multi_record] = true
+          when 'st_catalog_new', 'st_catalog_edit'
+            locals[:action_url] = 'st_catalog_edit'
+          else
+            locals[:action_url] = 'servicetemplate_edit'
+            locals[:serialize] = true
+          end
+          presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) if allow_presenter_update(action)
         end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) if allow_presenter_update(action)
       elsif action == "dialog_provision"
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
