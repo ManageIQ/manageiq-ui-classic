@@ -32,18 +32,27 @@ class VmOrTemplateController < ApplicationController
   end
 
   def prefix_by_nodetype(nodetype)
-    case TreeBuilder.get_model_for_prefix(nodetype).underscore
+    model = TreeBuilder.get_model_for_prefix(nodetype)
+    return nil if model.nil?
+
+    case model.underscore
     when "miq_template" then "templates_images"
     when "vm"           then "vms_instances"
     end
   end
 
   def set_elements_and_redirect_unauthorized_user
+    params[:id] = normalize_vm_node_id(params[:id])
     @nodetype, = parse_nodetype_and_id(params[:id])
     prefix = prefix_by_nodetype(@nodetype)
 
     # Position in tree that matches selected record
-    if role_allows?(:feature => "#{prefix}_filter_accord")
+    if prefix.nil?
+      session.delete(:exp_parms)
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:action => 'explorer', :id => nil)
+      return true
+    elsif role_allows?(:feature => "#{prefix}_filter_accord")
       set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else
       redirect_to(:controller => 'dashboard', :action => "auth_error")
