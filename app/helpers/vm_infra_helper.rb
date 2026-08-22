@@ -17,6 +17,10 @@ module VmInfraHelper
         :isVmwareInfra       => vm.vendor == 'vmware' && vm.type.include?('InfraManager'),
         :isVmwareCloud       => vm.vendor == 'vmware' && vm.type.include?('CloudManager'),
         :isRedhat            => vm.vendor == 'redhat',
+        :isIbmPowerHmc       => vm.vendor == 'ibm_power_hmc',
+        # processor_share_type is 'dedicated', 'shared' (uncapped), or 'capped' — anything that
+        # is not 'dedicated' is a shared-processor partition and supports virtual processors.
+        :isSharedProcessor   => vm.vendor == 'ibm_power_hmc' && vm.try(:processor_share_type) != 'dedicated',
       },
       :memory    => {
         :min     => @reconfig_limits[:min__vm_memory],
