@@ -284,10 +284,25 @@ class StorageController < ApplicationController
     session.delete(:exp_parms)
     @in_a_form = false
     if params[:id] # If a tree node id came in, show in one of the trees
-      nodetype, id = params[:id].split("-")
+      node_id = normalize_storage_node_id(params[:id])
+
+      if node_id.exclude?('-')
+        flash_to_session(_("Can't access selected records"), :error)
+        redirect_to(:action => 'explorer', :id => nil)
+        return
+      end
+
+      nodetype, id = node_id.split("-")
       # treebuilder initializes x_node to root first time in locals_for_render,
       # need to set this here to force & activate node when link is clicked outside of explorer.
-      self.x_active_tree = :storage_tree
+      # StorageCluster nodes use the EmsFolder base-model prefix "f"; Storage nodes use "ds".
+      if nodetype == "f"
+        self.x_active_accord = 'storage_pod'
+        self.x_active_tree   = :storage_pod_tree
+      else
+        self.x_active_accord = 'storage'
+        self.x_active_tree   = :storage_tree
+      end
       self.x_node = "#{nodetype}-#{id}"
     end
 
@@ -489,6 +504,23 @@ class StorageController < ApplicationController
   end
 
   private
+
+  # Convert a raw numeric id (e.g. "2888") to a tree-node id (e.g. "ds-2888" or "f-124").
+  # Visiting /storage/explorer/:id directly with a plain DB id is a supported URL pattern;
+  # the split("-") call requires the prefixed format, so normalise it here.
+  # Checks Storage (prefix "ds") first, then StorageCluster. StorageCluster nodes use the
+  # EmsFolder base-model prefix "f" in the tree — not the "dsc" lookup prefix.
+  def normalize_storage_node_id(id)
+    return id if id.nil? || id.include?('-')
+
+    if (record = Storage.find_by(:id => id))
+      TreeBuilder.build_node_id(record)          # => "ds-<id>"
+    elsif StorageCluster.exists?(:id => id)
+      "f-#{id}"                                  # EmsFolder base model prefix
+    else
+      id
+    end
+  end
 
   def record_class
     %w[all_vms vms].include?(params[:display]) ? VmOrTemplate : Storage
