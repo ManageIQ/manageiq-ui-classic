@@ -17,6 +17,18 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :klass   => ApplicationHelper::Button::GenericFeatureButton,
             :options => {:feature => :stop}),
           included_class.button(
+            :vm_guest_shutdown,
+            nil,
+            N_('Shutdown Guest OS on this Instance'),
+            N_('Shutdown Guest'),
+            :icon    => "fa fa-power-off fa-lg",
+            :confirm => N_("Shutdown Guest OS on this Instance?"),
+            :klass   => ApplicationHelper::Button::GenericFeatureButton,
+            :options => {
+              :feature => :shutdown_guest
+            }
+          ),
+          included_class.button(
             :instance_start,
             nil,
             N_('Start this Instance'),

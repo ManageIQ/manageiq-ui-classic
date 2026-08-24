@@ -259,6 +259,18 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :onwhen       => "1+"),
         separator,
         button(
+          :vm_guest_shutdown,
+          nil,
+          N_('Shutdown Guest OS on the selected items'),
+          N_('Shutdown Guest OS'),
+          :icon         => "fa fa-power-off fa-lg",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Shutdown Guest OS on the selected items?"),
+          :enabled      => false,
+          :onwhen       => "1+"
+        ),
+        button(
           :instance_guest_restart,
           nil,
           N_('Soft Reboot the selected items'),
