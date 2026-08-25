@@ -907,6 +907,7 @@ class CatalogController < ApplicationController
   end
 
   def ot_show
+    assert_privileges("orchestration_templates_view")
     add_flash(params[:flash_message]) if params.key?(:flash_message)
     redirect_to(:action => 'explorer', :id => "ot-#{params[:id]}")
   end
