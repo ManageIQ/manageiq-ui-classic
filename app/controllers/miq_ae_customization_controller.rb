@@ -142,14 +142,21 @@ class MiqAeCustomizationController < ApplicationController
   def editor
     if params[:id].present?
       feature = 'dialog_edit_editor'
-      @record = Dialog.find(params[:id])
+      @record = Dialog.find_by(:id => params[:id])
     elsif params[:copy].present?
       feature = 'dialog_copy_editor'
-      @record = Dialog.find(params[:copy])
+      @record = Dialog.find_by(:id => params[:copy])
     else
       feature = 'dialog_new_editor'
       @record = Dialog.new
     end
+
+    if @record.nil?
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:controller => 'miq_ae_customization', :action => 'explorer')
+      return
+    end
+
     assert_privileges(feature)
     @title = @record.id ? _("Editing %{name} Service Dialog") % {:name => @record.name} : _("Add a new Dialog")
   end
