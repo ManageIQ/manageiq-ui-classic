@@ -160,7 +160,7 @@ describe OrchestrationStackController do
         post :button, :params => {:id => record.id, :pressed => "orchestration_templates_view"}
         expect(response.status).to eq(200)
         expect(response.body).to include("window.location.href")
-        expect(response.body).to include("/catalog/ot_show/")
+        expect(response.body).to include("/catalog/explorer/ot-")
       end
     end
 
