@@ -15,8 +15,8 @@ describe('Workflow Credential Form Component', () => {
     name: 'test-workflow.asl',
     payload: `{
       "States": {
-        "State1": { "Credentials": { "api_user": "$.api_user", "api_password": "$.api_password" } },
-        "State2": { "Credentials": { "api_user": "$.api_user", "api_password": "$.api_password" } }
+        "State1": { "Credentials": { "api_user": "$$.Credentials.api_user", "api_password": "$$.Credentials.api_password" } },
+        "State2": { "Credentials": { "api_user": "$$.Credentials.api_user", "api_password": "$$.Credentials.api_password" } }
       }
     }`,
     credentials: {
