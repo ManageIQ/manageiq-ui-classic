@@ -15,10 +15,10 @@ const JSONPATH_PATTERNS = {
 /**
  * Extracts the credential reference name from a JSONPath value
  * Supports both dot notation ($$.Credentials.xxx) and bracket notation ($$['Credentials']['xxx'])
- * 
+ *
  * @param {string} value - The JSONPath string (e.g., "$$.Credentials.my_ssh_credential")
  * @returns {string|null} The extracted credential reference name, or null if not found
- * 
+ *
  * @example
  * extractCredentialReference("$$.Credentials.my_ssh_credential") // returns "my_ssh_credential"
  * extractCredentialReference("$$['Credentials']['my_api_token']") // returns "my_api_token"
@@ -46,11 +46,11 @@ export const extractCredentialReference = (value) => {
 
 /**
  * Parses a workflow payload and extracts all credential references
- * 
+ *
  * @param {string} payload - JSON string containing the workflow definition
  * @returns {Object} Map of credential reference names to their JSONPath values
  * @throws {Error} If the payload is invalid or contains no credentials
- * 
+ *
  * @example
  * const payload = JSON.stringify({
  *   States: {
@@ -62,7 +62,7 @@ export const extractCredentialReference = (value) => {
  *     }
  *   }
  * });
- * 
+ *
  * parseWorkflowCredentials(payload)
  * // Returns: {
  * //   my_ssh_credential: "$$.Credentials.my_ssh_credential",
@@ -119,7 +119,7 @@ export const parseWorkflowCredentials = (payload) => {
 
 /**
  * Validates that a credential reference name is valid
- * 
+ *
  * @param {string} credentialRef - The credential reference to validate
  * @returns {boolean} True if valid, false otherwise
  */

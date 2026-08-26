@@ -26,7 +26,6 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line camelcase
     API.get(
       `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`
     ).then(({ resources }) => {
