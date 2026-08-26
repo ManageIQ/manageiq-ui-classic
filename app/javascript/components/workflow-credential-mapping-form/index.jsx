@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -122,9 +122,6 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
 
 WorkflowCredentialMappingForm.propTypes = {
   recordId: PropTypes.string,
-};
-WorkflowCredentialMappingForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default WorkflowCredentialMappingForm;

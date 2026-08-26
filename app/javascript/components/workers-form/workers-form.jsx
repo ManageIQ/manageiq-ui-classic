@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import { get } from 'lodash';
 import addSchema from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
-import {
-  toBytes, parseWorker, buildPatch, toRubyMethod,
-} from './helpers';
+import { parseWorker, buildPatch, toRubyMethod } from './helpers';
+import { toBytes } from '../../helpers/size';
 import './workers.style.scss';
 
 const WorkersForm = ({ server: { id, name }, product, zone }) => {

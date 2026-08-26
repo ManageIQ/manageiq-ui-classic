@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ToastItem } from './toast-item.jsx';
 
 export const ToastWrapper = ({ items, clear, remove, disable }) => {

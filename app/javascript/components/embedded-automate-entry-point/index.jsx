@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextInput } from '@carbon/react';
 import { Close, TreeViewAlt } from '@carbon/react/icons';
@@ -7,7 +7,7 @@ import AutomateEntryPoints from '../automate-entry-points';
 
 const EmbeddedAutomateEntryPoint = (props) => {
   const {
-    label, id, field, selected, type,
+    label, id, field, selected = '', type,
   } = props;
   const { input } = useFieldApi(props);
 
@@ -92,10 +92,6 @@ EmbeddedAutomateEntryPoint.propTypes = {
   field: PropTypes.string.isRequired,
   selected: PropTypes.string,
   type: PropTypes.string.isRequired,
-};
-
-EmbeddedAutomateEntryPoint.defaultProps = {
-  selected: '',
 };
 
 export default EmbeddedAutomateEntryPoint;

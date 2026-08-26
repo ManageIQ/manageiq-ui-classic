@@ -11,6 +11,11 @@ module.exports = defineConfig({
     numTestsKeptInMemory: 5,
     videoCompression: false,
     allowCypressEnv: false,
+    // Enable before:run event in open mode (cypress open) for local development.
+    // Required for on('before:run'...) hook (see #10026) to capture DB state.
+    // Note: after:run is only used in CI (run mode). Can be removed if Cypress defaults
+    // to enabling these events or if we no longer need the before:run hook.
+    experimentalInteractiveRunEvents: true,
 
     // See: https://docs.cypress.io/app/references/experiments#Experimental-Flake-Detection-Features
     retries: {

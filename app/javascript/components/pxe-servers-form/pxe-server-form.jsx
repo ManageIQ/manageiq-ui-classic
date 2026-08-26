@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -86,10 +86,6 @@ const PxeServersForm = ({ id }) => {
 
 PxeServersForm.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-PxeServersForm.defaultProps = {
-  id: undefined,
 };
 
 export default PxeServersForm;

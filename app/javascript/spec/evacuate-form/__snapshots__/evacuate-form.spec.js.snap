@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`evacuate form component should render evacuate form when hosts empty 1`] = `
 <div>
@@ -26,7 +26,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -38,7 +37,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -56,7 +54,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
             id="on_shared_storage"
             name="on_shared_storage"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -68,7 +65,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div
@@ -123,7 +119,6 @@ exports[`evacuate form component should render evacuate form with host options 1
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -135,7 +130,6 @@ exports[`evacuate form component should render evacuate form with host options 1
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -153,7 +147,6 @@ exports[`evacuate form component should render evacuate form with host options 1
             id="on_shared_storage"
             name="on_shared_storage"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -165,7 +158,6 @@ exports[`evacuate form component should render evacuate form with host options 1
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div
@@ -221,7 +213,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -233,7 +224,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -251,7 +241,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
             id="on_shared_storage"
             name="on_shared_storage"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -263,7 +252,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
               dir="auto"
             >
               On Shared Storage
-              
             </div>
           </label>
           <div

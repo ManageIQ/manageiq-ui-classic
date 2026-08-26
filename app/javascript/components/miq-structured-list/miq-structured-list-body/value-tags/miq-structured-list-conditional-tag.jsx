@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import MiqStructuredListInputs from './miq-structured-list-inputs';
 import MiqStructuredListLink from './miq-structured-list-link';
@@ -17,8 +16,4 @@ MiqStructuredListConditionalTag.propTypes = {
   row: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.shape({})]).isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-};
-
-MiqStructuredListConditionalTag.defaultProps = {
-  onClick: undefined,
 };

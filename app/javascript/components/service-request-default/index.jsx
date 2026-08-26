@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
@@ -115,14 +115,16 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
 
   return (
     <div className="service-request-form">
-      <MiqFormRenderer
-        initialValues={initialValues}
-        FormTemplate={(props) => <FormTemplate {...props} />}
-        schema={createSchema(miqRequestInitialOptions)}
-        canReset
-        onSubmit={onSubmit}
-        onReset={onReset}
-      />
+      {initialValues && (
+        <MiqFormRenderer
+          initialValues={initialValues}
+          FormTemplate={(props) => <FormTemplate {...props} />}
+          schema={createSchema(miqRequestInitialOptions)}
+          canReset
+          onSubmit={onSubmit}
+          onReset={onReset}
+        />
+      )}
     </div>
   );
 };

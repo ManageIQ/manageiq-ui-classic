@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
-    "module": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "target": "es5",
-    "typeRoots": [
-      "app/javascript/typings"
-    ],
-    "allowJs": true,
-    "jsx": "react",
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"],
+    // TODO: We can probably combine this with Webpack's resolve.alias once we get rid of the
+    // other stuff like PatternFly, Angular, Bootstrap, etc., and the two become identical
+    "paths": {
+      "@carbon/react": ["./node_modules/@carbon/react"],
+      "@carbon/react/*": ["./node_modules/@carbon/react/*"],
+      "@@ddf": ["./app/javascript/forms/data-driven-form"],
+      "@@miq-menu/*": ["./app/javascript/menu/*"],
+      "@@miq-redux/*": ["./app/javascript/redux/*"],
+      "@@miq-types/*": ["./app/javascript/types/*"]
+    }
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "node_modules",
-    "vendor",
-    "public",
-    "spec/manageiq"
-  ],
-  "compileOnSave": false
+  // Limit scope to app/javascript for IDE - without this, tsc would scan all .ts/.tsx files
+  // For webpack builds: tsconfig.webpack.json extends this and overrides include with plugin paths (auto-generated)
+  "include": ["app/javascript/**/*"],
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"]
 }

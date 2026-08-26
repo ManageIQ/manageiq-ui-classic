@@ -1,6 +1,3 @@
-import thunk from 'redux-thunk';
-import { routerMiddleware } from 'connected-react-router';
-import promiseMiddleware from 'redux-promise-middleware';
 import { TOGGLE_TAG_VALUE_CHANGE, DELETE_ASSIGNED_TAG } from '../tagging/actions/actions';
 
 /** Labels used to identify if the status selected item from state. */
@@ -52,7 +49,7 @@ export const taggingMiddleware = (store) => (next) => (action) => {
     if (type === TOGGLE_TAG_VALUE_CHANGE) {
       if (selected.status === tagLabels.added) {
         $.post({ url: meta.url, data: JSON.stringify(params), contentType: 'application/json' });
-      } else {
+      } else if (selected?.item) {
         params = meta.onDelete(meta.type, params, selected.item.id)();
         $.post({ url: meta.url, data: JSON.stringify(params), contentType: 'application/json' });
       }
@@ -63,10 +60,3 @@ export const taggingMiddleware = (store) => (next) => (action) => {
   }
   return next(action);
 };
-
-export default (history) => [
-  routerMiddleware(history),
-  taggingMiddleware,
-  thunk,
-  promiseMiddleware(),
-];

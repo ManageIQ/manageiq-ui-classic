@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Alert Profile Form Component should render correctly 1`] = `
 <div>
@@ -50,7 +50,6 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -118,7 +117,6 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -174,16 +172,15 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   </div>
                   <label
                     class="cds--label"
-                    for="search-input-1"
-                    id="search-input-1-search"
+                    for="search-input-_r_0_"
+                    id="search-input-_r_0_-search"
                   />
                   <input
                     autocomplete="off"
                     class="cds--search-input"
-                    id="search-input-1"
+                    id="search-input-_r_0_"
                     placeholder="Filter options"
                     type="search"
-                    value=""
                   />
                   <button
                     aria-label="Clear search input"
@@ -214,7 +211,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-3"
+                      aria-labelledby="tooltip-_r_2_"
                       class="tooltipButton-0-2-10 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                       type="button"
                     >
@@ -237,7 +234,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-3"
+                    id="tooltip-_r_2_"
                     role="tooltip"
                   >
                     <span
@@ -377,16 +374,15 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   </div>
                   <label
                     class="cds--label"
-                    for="search-input-10"
-                    id="search-input-10-search"
+                    for="search-input-_r_a_"
+                    id="search-input-_r_a_-search"
                   />
                   <input
                     autocomplete="off"
                     class="cds--search-input"
-                    id="search-input-10"
+                    id="search-input-_r_a_"
                     placeholder="Filter values"
                     type="search"
-                    value=""
                   />
                   <button
                     aria-label="Clear search input"
@@ -417,7 +413,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-12"
+                      aria-labelledby="tooltip-_r_c_"
                       class="tooltipButton-0-2-10 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                       type="button"
                     >
@@ -440,7 +436,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-12"
+                    id="tooltip-_r_c_"
                     role="tooltip"
                   >
                     <span
@@ -508,7 +504,6 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
             rows="4"
             style="width: 100%;"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"

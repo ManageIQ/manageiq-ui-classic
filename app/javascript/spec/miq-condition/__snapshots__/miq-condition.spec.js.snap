@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MiqConditionStructuredList should render condition expression structured list 1`] = `
 <div>
@@ -106,7 +106,19 @@ exports[`MiqConditionStructuredList should render condition info structured list
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          D
+          e
+          s
+          c
+          r
+          i
+          p
+          t
+          i
+          o
+          n
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -175,7 +187,6 @@ exports[`MiqConditionStructuredList should render condition notes structured lis
               >
                 text area description
               </textarea>
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"

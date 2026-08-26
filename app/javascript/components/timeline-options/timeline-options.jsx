@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchemaSimple from './timeline-options-simple.schema';
@@ -104,10 +104,6 @@ const TimelineOptions = ({ submitChosenFormOptions }) => {
 
 TimelineOptions.propTypes = {
   submitChosenFormOptions: PropTypes.func,
-};
-
-TimelineOptions.defaultProps = {
-  submitChosenFormOptions: undefined,
 };
 
 export default TimelineOptions;

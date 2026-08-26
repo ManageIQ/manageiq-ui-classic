@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import SimpleTable from '../../../components/textual_summary/simple_table';
 import { simpleTableData } from '../data/simple_table';

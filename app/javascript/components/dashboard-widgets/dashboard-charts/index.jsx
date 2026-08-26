@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   AreaChartGraph, DonutChartGraph, GroupBarChart, LineChartGraph, PieChartGraph,
@@ -7,7 +6,11 @@ import {
 import { getConvertedData } from '../../carbon-charts/helpers';
 import EmptyChart from './emptyChart';
 
-const DashboardWidget = ({ data, _id, title }) => {
+const DashboardWidget = ({
+  data = null,
+  _id = null,
+  title = null,
+}) => {
   const convertedData = getConvertedData(data);
   let showLegend = true;
   const nameTable = data.miq.name_table;
@@ -56,12 +59,6 @@ DashboardWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),
   _id: PropTypes.string,
   title: PropTypes.string,
-};
-
-DashboardWidget.defaultProps = {
-  data: null,
-  _id: null,
-  title: null,
 };
 
 export default DashboardWidget;

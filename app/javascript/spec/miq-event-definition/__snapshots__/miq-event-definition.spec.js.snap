@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MiqEventDefinitionStructuredList should render event definition info structured list 1`] = `
 <div>
@@ -21,7 +21,19 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          E
+          v
+          e
+          n
+          t
+           
+          G
+          r
+          o
+          u
+          p
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"
@@ -49,7 +61,26 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
           class="cds--structured-list-td label_header"
           dir="auto"
           role="cell"
-        />
+        >
+          A
+          t
+          t
+          a
+          c
+          h
+          e
+          d
+           
+          t
+          o
+           
+          P
+          o
+          l
+          i
+          c
+          y
+        </div>
         <div
           class="cds--structured-list-td content_value object_item"
           dir="auto"

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -21,8 +20,4 @@ export default MiqStructuredListText;
 
 MiqStructuredListText.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.bool]),
-};
-
-MiqStructuredListText.defaultProps = {
-  value: undefined,
 };

@@ -20,18 +20,11 @@ class MiqAeClassController < ApplicationController
 
   def change_tab
     assert_privileges("miq_ae_class")
-    # resetting flash array so messages don't get displayed when tab is changed
-    @flash_array = []
     @explorer = true
+    @flash_array = nil
     @record = @ae_class = MiqAeClass.find(x_node.split('-').last)
     @sb[:active_tab] = params[:tab_id]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page << javascript_reload_toolbars
-      page << "miqSparkle(false);"
-    end
+    replace_right_cell
   end
 
   AE_X_BUTTON_ALLOWED_ACTIONS = {
@@ -306,9 +299,11 @@ class MiqAeClassController < ApplicationController
     reload_trees_by_presenter(presenter, trees)
 
     if @sb[:action] == "miq_ae_field_seq"
-      presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
+      @sb[:active_tab] = 'schema'
+      presenter.update(:main_div, r[:partial => 'all_tabs'])
 
     elsif @sb[:action] == "miq_ae_domain_priority_edit"
+      @domain_order = ordered_domains_for_priority_edit_screen
       presenter.update(:ns_list_div, r[:partial => "domains_priority_form"])
 
     elsif MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
@@ -326,7 +321,7 @@ class MiqAeClassController < ApplicationController
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
     presenter.scroll_top if @flash_array.present?
 
-    if @in_a_form && !@angular_form
+    if @in_a_form && !@angular_form && !@react_form
       action_url = create_action_url(nodes.first)
       # incase it was hidden for summary screen, and incase there were no records on show_list
       presenter.show(:paging_div, :form_buttons_div)
@@ -1632,49 +1627,33 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def priority_form_field_changed
-    assert_privileges('miq_ae_domain_priority_edit')
-    return unless load_edit(params[:id], "replace_cell__explorer")
-
-    @in_a_form = true
-
-    unless handle_up_down_buttons(:domain_order, _('Domains'))
-      render_flash
-      return
-    end
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace('domains_list',
-                   :partial => 'domains_priority_form',
-                   :locals  => {:action => "domains_priority_edit"})
-      @changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(@changed) if @changed
-      page << "miqSparkle(false);"
-    end
-  end
-
   def domains_priority_edit
     assert_privileges("miq_ae_domain_priority_edit")
     case params[:button]
-    when "cancel"
-      @sb[:action] = @in_a_form = @edit = session[:edit] = nil  # clean out the saved info
-      add_flash(_("Edit of Priority Order was cancelled by the user"))
-      replace_right_cell
     when "save"
-      return unless load_edit("priority__edit", "replace_cell__explorer")
+      # Handle React form submission
+      begin
+        domain_order = params[:domain_order] || []
 
-      domains = @edit[:new][:domain_order].reverse!.collect do |domain|
-        MiqAeDomain.find_by(:name => domain.split(' (Locked)').first).id
+        # Parse domain names and get IDs
+        domains = domain_order.collect do |domain|
+          MiqAeDomain.find_by(:name => domain.split(' (Locked)').first).id
+        end
+
+        current_tenant.reset_domain_priority_by_ordered_ids(domains)
+        @sb[:action] = @in_a_form = nil
+
+        render :json => {}
+      rescue => e
+        render :json => {
+          :message => e.message,
+          :level   => 'error'
+        }, :status => 400
       end
-      current_tenant.reset_domain_priority_by_ordered_ids(domains)
-      add_flash(_("Priority Order was saved"))
-      @sb[:action] = @in_a_form = @edit = session[:edit] = nil  # clean out the saved info
-      replace_right_cell(:replace_trees => [:ae])
-    when "reset", nil # Reset or first time in
-      priority_edit_screen
-      add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      session[:changed] = @changed = false
+    else
+      # Initial form display (when button is clicked from toolbar)
+      @sb[:action] = "miq_ae_domain_priority_edit"
+      @domain_order = ordered_domains_for_priority_edit_screen
       replace_right_cell
     end
   end
@@ -1768,34 +1747,6 @@ class MiqAeClassController < ApplicationController
     session[:edit] = @edit
   end
 
-  def embedded_methods_add
-    assert_privileges(feature_by_action)
-    submit_embedded_method(CGI.unescape(params[:fqname]))
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_show("flash_msg_div")
-      page << javascript_for_miq_button_visibility(@changed)
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page.replace("embedded_methods_div", :partial => "embedded_methods")
-    end
-  end
-
-  def embedded_methods_remove
-    assert_privileges(feature_by_action)
-    @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(@changed)
-      page.replace("embedded_methods_div", :partial => "embedded_methods")
-      page << "miqSparkle(false);"
-    end
-  end
-
   def ae_tree_select
     assert_privileges(feature_by_action)
     @edit = session[:edit]
@@ -1808,24 +1759,6 @@ class MiqAeClassController < ApplicationController
     typ, id = params[:id].split("-")
     @record = TreeBuilder.get_model_for_prefix(typ).constantize.find(id)
     tree_select
-  end
-
-  def refresh_git_domain
-    assert_privileges("miq_ae_git_refresh")
-    if params[:button] == "save"
-      begin
-        git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
-        add_flash(_("Successfully refreshed!"), :info)
-      rescue MiqException::Error => err
-        add_flash(err.message, :error)
-      end
-    else
-      add_flash(_("Git based refresh canceled"), :info)
-    end
-
-    session[:edit] = nil
-    @in_a_form = false
-    replace_right_cell(:replace_trees => [:ae])
   end
 
   def namespace
@@ -2765,16 +2698,6 @@ class MiqAeClassController < ApplicationController
     User.current_tenant.sequenceable_domains.collect(&:name)
   end
 
-  def priority_edit_screen
-    @in_a_form = true
-    @edit = {
-      :key => "priority__edit",
-      :new => {:domain_order => ordered_domains_for_priority_edit_screen}
-    }
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit]  = @edit
-  end
-
   def domain_toggle(locked)
     assert_privileges("miq_ae_domain_#{locked ? 'lock' : 'unlock'}")
     action = locked ? _("Locked") : _("Unlocked")
@@ -2803,7 +2726,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def git_refresh
-    @in_a_form = true
+    @in_a_form = false
     @explorer = true
 
     session[:changed] = true
@@ -2831,17 +2754,15 @@ class MiqAeClassController < ApplicationController
     update_partial_div = :main_div
     update_partial = "git_domain_refresh"
 
-    presenter.update(update_partial_div, r[:partial => update_partial])
-
-    action_url = "refresh_git_domain"
-    presenter.show(:paging_div, :form_buttons_div)
-    presenter.update(:form_buttons_div, r[
-      :partial => "layouts/x_edit_buttons",
+    presenter.update(update_partial_div, r[
+      :partial => update_partial,
       :locals  => {
-        :record_id  => git_repo.id,
-        :action_url => action_url,
-        :serialize  => true,
-        :no_reset   => true
+        :domain_id    => params[:id],
+        :git_repo_id  => @git_repo_id,
+        :ref_type     => @ref_type,
+        :ref_name     => @ref_name,
+        :branch_names => @branch_names,
+        :tag_names    => @tag_names
       }
     ])
 
@@ -2919,7 +2840,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_class_node_info(node_id)
-    @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed]
+    @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed] && params[:action] != "change_tab"
     begin
       @record = @ae_class = MiqAeClass.find(node_id)
     rescue ActiveRecord::RecordNotFound

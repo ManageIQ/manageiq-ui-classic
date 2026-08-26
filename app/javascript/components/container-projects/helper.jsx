@@ -1,4 +1,3 @@
-import React from 'react';
 import ChartCard from './chart-card';
 import { chartConfig } from '../provider-dashboard-charts/charts_config';
 import PfAggregateStatusCard from '../pf_aggregate_status_card';

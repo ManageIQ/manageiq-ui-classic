@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { FormGroup, RadioButtonGroup, RadioButton } from '@carbon/react';
@@ -27,8 +27,8 @@ const CodeEditor = (props) => {
     helperText,
     meta: { error, warning, touched },
     validateOnMount,
-    mode,
-    modes,
+    mode = 'yaml',
+    modes = [],
     ...rest
   } = useFieldApi(prepareProps(props));
 
@@ -84,11 +84,6 @@ const CodeEditor = (props) => {
 CodeEditor.propTypes = {
   mode: PropTypes.oneOf(['json', 'yaml', 'xml', 'shell']),
   modes: PropTypes.arrayOf(PropTypes.string),
-};
-
-CodeEditor.defaultProps = {
-  mode: 'yaml',
-  modes: [],
 };
 
 export default CodeEditor;

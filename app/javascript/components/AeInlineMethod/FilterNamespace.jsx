@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, Search,
@@ -47,10 +46,9 @@ const FilterNamespace = ({ domains, onSearch }) => {
 export default FilterNamespace;
 
 FilterNamespace.propTypes = {
-  domains: PropTypes.arrayOf(PropTypes.any),
+  domains: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+  })),
   onSearch: PropTypes.func.isRequired,
-};
-
-FilterNamespace.defaultProps = {
-  domains: undefined,
 };

@@ -1,10 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormApi } from '@data-driven-forms/react-form-renderer';
 import { Button, ButtonSet } from '@carbon/react';
 
 const ReconfigureTemplate = ({
-  formFields, canSubmit,
+  formFields,
+  canSubmit = false,
 }) => {
   const {
     handleSubmit, onReset, onCancel, getState,
@@ -34,11 +34,6 @@ ReconfigureTemplate.propTypes = {
   formFields: PropTypes.node,
   canSubmit: PropTypes.bool,
   hideButtons: PropTypes.bool,
-};
-
-ReconfigureTemplate.defaultProps = {
-  canSubmit: false,
-  hideButtons: false,
 };
 
 export default ReconfigureTemplate;

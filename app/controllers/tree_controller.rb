@@ -13,12 +13,6 @@ class TreeController < ApplicationController
     render :body => json, :content_type => 'application/json'
   end
 
-  def automate_inline_methods
-    assert_privileges('miq_ae_method_admin')
-    json = fetch_tree(TreeBuilderAutomateInlineMethod, :automate_inline_method_tree, params[:id])
-    render :body => json, :content_type => 'application/json'
-  end
-
   private
 
   # This method returns with a JSON that can be directly consumed by a frontend

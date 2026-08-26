@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`TextualSummary renders just fine 1`] = `
 <div>
@@ -15,7 +15,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-4"
+            aria-controls="accordion-item-_r_0_"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -47,7 +47,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-4"
+              id="accordion-item-_r_0_"
             >
               <div
                 aria-label="Structured list"
@@ -159,7 +159,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-9"
+            aria-controls="accordion-item-_r_4_"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -191,7 +191,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-9"
+              id="accordion-item-_r_4_"
             >
               <div
                 aria-label="Structured list"
@@ -363,7 +363,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-19"
+            aria-controls="accordion-item-_r_9_"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -395,7 +395,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-19"
+              id="accordion-item-_r_9_"
             >
               <div
                 aria-label="Structured list"
@@ -809,7 +809,7 @@ exports[`TextualSummary renders just fine 1`] = `
           class="cds--accordion__item cds--accordion__item--active"
         >
           <button
-            aria-controls="accordion-item-22"
+            aria-controls="accordion-item-_r_j_"
             aria-expanded="true"
             class="cds--accordion__heading"
             type="button"
@@ -841,7 +841,7 @@ exports[`TextualSummary renders just fine 1`] = `
           >
             <div
               class="cds--accordion__content"
-              id="accordion-item-22"
+              id="accordion-item-_r_j_"
             >
               <div
                 aria-label="Structured list"

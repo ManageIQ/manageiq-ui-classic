@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
@@ -81,10 +81,6 @@ const HostInitiatorGroupForm = ({ recordId, storageManagerId }) => {
 HostInitiatorGroupForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
-};
-HostInitiatorGroupForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
 };
 
 export default HostInitiatorGroupForm;

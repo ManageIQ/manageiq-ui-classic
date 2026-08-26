@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './zone-form.schema';
@@ -67,10 +67,6 @@ const ZoneForm = ({ recordId }) => {
 
 ZoneForm.propTypes = {
   recordId: PropTypes.string,
-};
-
-ZoneForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default ZoneForm;

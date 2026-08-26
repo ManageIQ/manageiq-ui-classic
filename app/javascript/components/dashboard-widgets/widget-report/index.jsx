@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
@@ -20,10 +19,6 @@ const WidgetReport = ({ widgetModel }) => {
 
 WidgetReport.propTypes = {
   widgetModel: PropTypes.string,
-};
-
-WidgetReport.defaultProps = {
-  widgetModel: undefined,
 };
 
 export default WidgetReport;

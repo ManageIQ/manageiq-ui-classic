@@ -34,14 +34,12 @@ const ACCESS_CONTROL_ACCORDION_LABEL = 'Access Control';
 const MANAGEIQ_REGION_ACCORDION_LABEL = /^ManageIQ Region:/;
 const USERS_ACCORDION_LABEL = 'Users';
 
+// Selectors
+const GROUPS_MULTI_SELECT = '.cds--multi-select button.cds--list-box__field';
+const EDIT_PASSWORD_BUTTON = '.miq-pwd-field-grid .miq-pwd-field-edit-icon-grid-col button.cds--btn';
+
 function selectToolbarOption({ toolbar = 'Configuration', option }) {
-  cy.interceptApi({
-    alias: 'selectToolbarOption',
-    urlPattern: /\/ops\/x_button(\/\d+)?\?pressed=.*/,
-    triggerFn: () => cy.toolbar(toolbar, option),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
+  cy.toolbar(toolbar, option);
 }
 
 function assertSelectedGroups(selectedGroups, parentSelector, childSelector) {
@@ -56,15 +54,15 @@ function assertSelectedGroups(selectedGroups, parentSelector, childSelector) {
 function selectFromMultiSelect(optionsToClick) {
   // Expanding the select list
   cy.contains(
-    'button#downshift-0-toggle-button',
+    GROUPS_MULTI_SELECT,
     'Choose one or more Groups'
   ).click();
   optionsToClick.forEach((option) => {
-    cy.contains('#downshift-0-menu .cds--list-box__menu-item', option).click();
+    cy.contains('.cds--list-box__menu .cds--list-box__menu-item', option).click();
   });
   // Collapsing the select list
   cy.contains(
-    'button#downshift-0-toggle-button',
+    GROUPS_MULTI_SELECT,
     'Choose one or more Groups'
   ).click();
 }
@@ -149,7 +147,7 @@ describe('Settings > Application Settings > Users', () => {
           [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: 'E-mail Address',
         },
       ]);
-      cy.get('#downshift-0-label').contains('Available Groups');
+      cy.contains('.cds--label', 'Available Groups').should('be.visible');
       cy.getFormLegendByText({ legendText: 'Password' }).should('be.visible');
       cy.contains('form label#selected-groups-label', 'Selected Groups');
       cy.contains('form #selected-groups', 'EvmGroup-super_administrator');
@@ -174,7 +172,7 @@ describe('Settings > Application Settings > Users', () => {
         },
       ]);
       cy.contains(
-        'form button#downshift-0-toggle-button',
+        GROUPS_MULTI_SELECT,
         'Choose one or more Groups'
       ).should('be.disabled');
       cy.validateFormButtons([
@@ -335,7 +333,7 @@ describe('Settings > Application Settings > Users', () => {
       cy.getFormInputFieldByIdAndType({ inputId: 'userid' })
         .clear()
         .type(USERNAME_FOR_EDIT_TEST);
-      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
+      cy.get(EDIT_PASSWORD_BUTTON).click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',
@@ -654,13 +652,14 @@ describe('Settings > Application Settings > Users', () => {
             .click(),
         onApiResponse: (interception) =>
           expect(interception.response.statusCode).to.equal(200),
-      }).then(() => {
-        cy.selectAccordionItem([
-          MANAGEIQ_REGION_ACCORDION_LABEL,
-          USERS_ACCORDION_LABEL,
-          FULL_NAME_FOR_ADD_TEST,
-        ]);
       });
+      cy.expect_flash(flashClassMap.success, 'saved');
+      cy.expect_explorer_title('Users');
+      cy.selectAccordionItem([
+        MANAGEIQ_REGION_ACCORDION_LABEL,
+        USERS_ACCORDION_LABEL,
+        FULL_NAME_FOR_ADD_TEST,
+      ]);
 
       // Verify that the new user was created with the correct values on the summary page
       assertUserInformation({
@@ -709,7 +708,7 @@ describe('Settings > Application Settings > Users', () => {
         inputId: 'passwordPlaceholder',
         inputType: 'password',
       }).should('be.disabled');
-      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
+      cy.get(EDIT_PASSWORD_BUTTON).click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',
@@ -754,7 +753,7 @@ describe('Settings > Application Settings > Users', () => {
       }).should('be.disabled');
 
       // Click the cancel edit password button, update name field and verify that the submit button is now enabled & click it
-      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
+      cy.get(EDIT_PASSWORD_BUTTON).click();
       cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(' Edited');
 
       cy.interceptApi({
@@ -798,9 +797,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Click the edit user button
       selectToolbarOption({ option: 'Edit this User' });
+      cy.expect_explorer_title('Editing User');
+      cy.get('.export-spinner').should('not.exist');;
 
       // Enter new matching passwords and click the submit button
-      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
+      cy.get(EDIT_PASSWORD_BUTTON).click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',

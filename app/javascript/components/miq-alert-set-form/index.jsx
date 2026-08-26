@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
@@ -115,10 +115,6 @@ const MiqAlertSetForm = ({ recordId, mode }) => {
 MiqAlertSetForm.propTypes = {
   recordId: PropTypes.string,
   mode: PropTypes.arrayOf(PropTypes.any).isRequired,
-};
-
-MiqAlertSetForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default MiqAlertSetForm;

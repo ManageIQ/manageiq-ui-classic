@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './action-form.schema';
@@ -81,11 +81,6 @@ ActionForm.propTypes = {
   snapshotAge: PropTypes.arrayOf(PropTypes.any).isRequired,
   parentType: PropTypes.arrayOf(PropTypes.any).isRequired,
   inventoryType: PropTypes.string,
-};
-
-ActionForm.defaultProps = {
-  recordId: undefined,
-  inventoryType: undefined,
 };
 
 export default ActionForm;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import {
 
 import initNotifications from '../../notifications/init';
 
-const NotificationDrawer = ({ jsRequest }) => {
+const NotificationDrawer = ({ jsRequest = false }) => {
   const dispatch = useDispatch();
   const drawerTitle = __('Notifications');
   const [isDrawerExpanded, setDrawerExpanded] = useState(false);
@@ -193,8 +193,4 @@ export default NotificationDrawer;
 
 NotificationDrawer.propTypes = {
   jsRequest: PropTypes.bool,
-};
-
-NotificationDrawer.defaultProps = {
-  jsRequest: false,
 };

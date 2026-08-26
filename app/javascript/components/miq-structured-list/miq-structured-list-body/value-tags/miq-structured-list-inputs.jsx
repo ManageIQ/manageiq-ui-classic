@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, TextArea, Dropdown } from '@carbon/react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
@@ -105,8 +104,4 @@ const dynamicProps = { props: PropTypes.shape(PropTypes.any) };
 MiqStructuredListInputs.propTypes = {
   value: PropTypes.shape(stringProps || checkboxProps || dynamicProps || dropDownProps).isRequired,
   action: PropTypes.func,
-};
-
-MiqStructuredListInputs.defaultProps = {
-  action: undefined,
 };

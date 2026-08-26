@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const HelperTextBlock = ({ helperText, errorText, warnText }) => {
@@ -21,12 +20,6 @@ HelperTextBlock.propTypes = {
   helperText: PropTypes.node,
   errorText: PropTypes.node,
   warnText: PropTypes.node,
-};
-
-HelperTextBlock.defaultProps = {
-  helperText: undefined,
-  errorText: undefined,
-  warnText: undefined,
 };
 
 export default HelperTextBlock;

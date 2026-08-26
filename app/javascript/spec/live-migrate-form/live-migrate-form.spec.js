@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import LiveMigrateForm from '../../components/live-migrate-form/index';

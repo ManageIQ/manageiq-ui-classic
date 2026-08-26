@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { NotificationTypes } from '../helpers/notification-types';
@@ -23,9 +22,4 @@ export default NotificationMessage;
 NotificationMessage.propTypes = {
   type: PropTypes.string,
   message: PropTypes.string,
-};
-
-NotificationMessage.defaultProps = {
-  type: undefined,
-  message: undefined,
 };

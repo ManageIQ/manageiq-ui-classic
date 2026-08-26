@@ -683,6 +683,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
+        console
+        kube_exec_console
       ],
       :post => %w[
         button
@@ -1925,8 +1927,6 @@ Rails.application.routes.draw do
         create_method
         create_namespace
         domains_priority_edit
-        embedded_methods_add
-        embedded_methods_remove
         explorer
         expand_toggle
         field_accept
@@ -1942,8 +1942,6 @@ Rails.application.routes.draw do
         form_field_changed
         form_instance_field_changed
         form_method_field_changed
-        priority_form_field_changed
-        refresh_git_domain
         reload
         tree_select
         tree_autoload
@@ -2191,9 +2189,6 @@ Rails.application.routes.draw do
         show_list
       ],
       :post => %w[
-        condition_edit
-        condition_field_changed
-        edit
         show
         show_list
       ] +
@@ -2408,8 +2403,10 @@ Rails.application.routes.draw do
     :ops                      => {
       :get  => %w[
         all_categories
+        ap_form_data
         category_entries
         category_information
+        cu_collection_fetch
         dialog_load
         explorer
         fetch_audit_log
@@ -2421,11 +2418,8 @@ Rails.application.routes.draw do
       :post => %w[
         accordion_select
         apply_imports
-        ap_ce_delete
-        ap_ce_select
         ap_edit
-        ap_form_field_changed
-        ap_set_active_tab
+        ap_form_data
         aps_list
         automate_schedules_set_vars
         button
@@ -2437,7 +2431,6 @@ Rails.application.routes.draw do
         ce_new_cat
         ce_select
         change_tab
-        cu_collection_field_changed
         cu_collection_update
         cu_repair
         cu_repair_field_changed
@@ -2445,7 +2438,6 @@ Rails.application.routes.draw do
         diagnostics_tree_select
         explorer
         fetch_target_ids
-        help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
         label_tag_mapping_update
@@ -2460,7 +2452,6 @@ Rails.application.routes.draw do
         rbac_group_user_lookup
         rbac_groups_list
         rbac_role_edit
-        rbac_role_field_changed
         rbac_roles_list
         rbac_tags_edit
         rbac_tenant_edit
@@ -2475,7 +2466,6 @@ Rails.application.routes.draw do
         schedules_list
         settings_form_field_changed
         settings_update
-        settings_update_help_menu
         show
         smartproxy_affinity_field_changed
         tl_chooser
@@ -2666,7 +2656,6 @@ Rails.application.routes.draw do
         pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit
-        pxe_wimg_form_field_changed
         reload
         tagging_edit
         template_list
@@ -3337,7 +3326,14 @@ Rails.application.routes.draw do
 
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
-  get '/tree/automate_inline_methods', :to => 'tree#automate_inline_methods'
+
+  # Expression editor metadata endpoints (used by the React ExpressionEditor component)
+  scope '/expression_editor' do
+    get  'metadata',          :to => 'expression_editor#metadata'
+    get  'operators',         :to => 'expression_editor#operators'
+    get  'tag_values',        :to => 'expression_editor#tag_values'
+    get  'find_check_fields', :to => 'expression_editor#find_check_fields'
+  end
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false

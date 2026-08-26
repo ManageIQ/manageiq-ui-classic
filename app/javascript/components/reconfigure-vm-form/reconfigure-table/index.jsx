@@ -1,11 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import classNames from 'classnames';
 import MiqDataTable from '../../miq-data-table';
 
 const ReconfigureTable = ({
-  label, headers, rows, addButtonLabel, buttonClick, onCellClick, formType, roleAllowed,
+  label = '',
+  headers,
+  rows,
+  addButtonLabel = '',
+  buttonClick,
+  onCellClick,
+  formType = '',
+  roleAllowed = false,
 }) => {
   const renderAddButton = () => addButtonLabel && (
     <Button
@@ -43,14 +49,4 @@ ReconfigureTable.propTypes = {
   roleAllowed: PropTypes.bool,
 };
 
-ReconfigureTable.defaultProps = {
-  headers: undefined,
-  rows: undefined,
-  onCellClick: undefined,
-  buttonClick: undefined,
-  addButtonLabel: '',
-  formType: '',
-  label: '',
-  roleAllowed: false,
-};
 export default ReconfigureTable;

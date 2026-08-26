@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Network Router form component should render add form 1`] = `
 <div>
@@ -104,7 +104,6 @@ exports[`Network Router form component should render add form 1`] = `
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"
@@ -220,7 +219,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -261,7 +259,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               type="text"
               value="admin-project-router"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -291,7 +288,6 @@ exports[`Network Router form component should render edit variant 1`] = `
             id="admin_state_up"
             name="admin_state_up"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -303,7 +299,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               dir="auto"
             >
               Admin State
-              
             </div>
           </label>
           <div
@@ -331,7 +326,6 @@ exports[`Network Router form component should render edit variant 1`] = `
             id="enable"
             name="enable"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -343,7 +337,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               dir="auto"
             >
               Enable External Gateway
-              
             </div>
           </label>
           <div
@@ -388,7 +381,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -429,7 +421,6 @@ exports[`Network Router form component should render edit variant 1`] = `
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -479,7 +470,6 @@ exports[`Network Router form component should render edit variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -487,14 +477,16 @@ exports[`Network Router form component should render edit variant 1`] = `
       class="cds--btn-set"
     >
       <button
-        class="cds--btn cds--btn--primary"
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
         type="submit"
         variant="primary"
       >
         Save
       </button>
       <button
-        class="cds--btn cds--btn--secondary"
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
         type="button"
       >
         Reset

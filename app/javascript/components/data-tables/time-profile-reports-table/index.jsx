@@ -1,9 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 import { tableData } from './helper';
 
-const TimeProfileReportsTable = ({ initialData }) => {
+const TimeProfileReportsTable = ({
+  initialData = [],
+}) => {
   const { headers, rows } = tableData(initialData);
 
   if (rows) {
@@ -24,10 +25,6 @@ const TimeProfileReportsTable = ({ initialData }) => {
 
 TimeProfileReportsTable.propTypes = {
   initialData: PropTypes.arrayOf(PropTypes.any),
-};
-
-TimeProfileReportsTable.defaultProps = {
-  initialData: [],
 };
 
 export default TimeProfileReportsTable;

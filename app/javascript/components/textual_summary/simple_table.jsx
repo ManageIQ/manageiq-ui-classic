@@ -1,11 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import MiqStructuredList from '../miq-structured-list';
 
 export default function SimpleTable(props) {
   const {
-    rows, labels, title, className,
+    rows = [],
+    labels = '',
+    title,
+    className,
+    onClick,
   } = props;
 
   return (
@@ -15,7 +18,7 @@ export default function SimpleTable(props) {
       rows={rows}
       title={title}
       mode="simple_table"
-      onClick={() => props.onClick}
+      onClick={() => onClick}
     />
   );
 }
@@ -29,10 +32,4 @@ SimpleTable.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)),
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
-};
-
-SimpleTable.defaultProps = {
-  rows: [],
-  labels: '',
-  className: undefined,
 };

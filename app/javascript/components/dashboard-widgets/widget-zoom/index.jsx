@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import { Close } from '@carbon/react/icons';
@@ -39,10 +38,6 @@ const WidgetZoom = ({
 
 WidgetZoom.propTypes = {
   widgetModel: PropTypes.string,
-};
-
-WidgetZoom.defaultProps = {
-  widgetModel: undefined,
 };
 
 export default WidgetZoom;

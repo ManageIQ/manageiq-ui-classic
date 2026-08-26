@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Floating Ips Profile Form Component should render correctly 1`] = `
 <div>
@@ -84,7 +84,6 @@ exports[`Floating Ips Profile Form Component should render correctly 1`] = `
                 opacity="0"
               />
             </svg>
-            
           </div>
           <div
             class="cds--form-requirement"

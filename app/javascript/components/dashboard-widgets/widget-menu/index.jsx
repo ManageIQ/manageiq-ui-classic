@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const WidgetMenu = ({ widgetModel }) => {
@@ -35,10 +34,6 @@ const WidgetMenu = ({ widgetModel }) => {
 
 WidgetMenu.propTypes = {
   widgetModel: PropTypes.arrayOf(PropTypes.any),
-};
-
-WidgetMenu.defaultProps = {
-  widgetModel: undefined,
 };
 
 export default WidgetMenu;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -88,9 +88,6 @@ const AnsibleCredentialsForm = ({ recordId }) => {
 
 AnsibleCredentialsForm.propTypes = {
   recordId: PropTypes.string,
-};
-AnsibleCredentialsForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default AnsibleCredentialsForm;

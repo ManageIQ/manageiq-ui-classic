@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Loading, ModalBody } from '@carbon/react';
 import { API } from '../http_api';
+import { setLocationHref } from '../helpers/window-location';
 
 const parseApiError = (error) => {
   // eslint-disable-next-line no-prototype-builtins
@@ -45,7 +46,7 @@ export const removeCatalogItems = (catalogItems) => {
     })
     .then((apiData) => {
       if (catalogItems.length > 1 || (catalogItems.length === 1 && apiData[0].result === 'success')) {
-        window.location.href = '/catalog/explorer?report_deleted=true';
+        setLocationHref('/catalog/explorer?report_deleted=true');
         miqSparkleOff();
       }
     });

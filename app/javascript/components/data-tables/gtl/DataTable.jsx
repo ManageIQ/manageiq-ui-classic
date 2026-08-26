@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 import {
@@ -113,10 +113,6 @@ DataTable.propTypes = {
   onPageSet: PropTypes.func.isRequired,
   showPagination: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
-};
-
-DataTable.defaultProps = {
-  isLoading: undefined,
 };
 
 export default DataTable;

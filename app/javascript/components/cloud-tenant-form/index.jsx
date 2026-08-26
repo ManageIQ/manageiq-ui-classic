@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
@@ -60,10 +60,6 @@ const CloudTenantForm = ({ recordId }) => {
 
 CloudTenantForm.propTypes = {
   recordId: PropTypes.string,
-};
-
-CloudTenantForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default CloudTenantForm;

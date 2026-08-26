@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@carbon/react';
 import MiqStructuredListContent from '../miq-structured-list-content';
@@ -45,8 +44,4 @@ MiqStructuredListLink.propTypes = {
   row: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.shape({})]).isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-};
-
-MiqStructuredListLink.defaultProps = {
-  onClick: undefined,
 };

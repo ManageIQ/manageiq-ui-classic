@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Button Group form component should render the adding form 1`] = `
 <div>
@@ -45,7 +45,6 @@ exports[`Button Group form component should render the adding form 1`] = `
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -64,7 +63,6 @@ exports[`Button Group form component should render the adding form 1`] = `
               id="button_group_display"
               name="set_data.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -76,7 +74,6 @@ exports[`Button Group form component should render the adding form 1`] = `
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -119,7 +116,6 @@ exports[`Button Group form component should render the adding form 1`] = `
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -190,7 +186,6 @@ exports[`Button Group form component should render the adding form 1`] = `
               type="color"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -247,16 +242,15 @@ exports[`Button Group form component should render the adding form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-3"
-                  id="search-input-3-search"
+                  for="search-input-_r_2_"
+                  id="search-input-_r_2_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-3"
+                  id="search-input-_r_2_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -287,7 +281,7 @@ exports[`Button Group form component should render the adding form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-5"
+                    aria-labelledby="tooltip-_r_4_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -310,7 +304,7 @@ exports[`Button Group form component should render the adding form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-5"
+                  id="tooltip-_r_4_"
                   role="tooltip"
                 >
                   <span
@@ -450,16 +444,15 @@ exports[`Button Group form component should render the adding form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-12"
-                  id="search-input-12-search"
+                  for="search-input-_r_c_"
+                  id="search-input-_r_c_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-12"
+                  id="search-input-_r_c_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -490,7 +483,7 @@ exports[`Button Group form component should render the adding form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-14"
+                    aria-labelledby="tooltip-_r_e_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -513,7 +506,7 @@ exports[`Button Group form component should render the adding form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-14"
+                  id="tooltip-_r_e_"
                   role="tooltip"
                 >
                   <span
@@ -620,7 +613,6 @@ exports[`Button Group form component should render the adding form for generic o
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -639,7 +631,6 @@ exports[`Button Group form component should render the adding form for generic o
               id="button_group_display"
               name="set_data.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -651,7 +642,6 @@ exports[`Button Group form component should render the adding form for generic o
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -694,7 +684,6 @@ exports[`Button Group form component should render the adding form for generic o
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -765,7 +754,6 @@ exports[`Button Group form component should render the adding form for generic o
               type="color"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -822,16 +810,15 @@ exports[`Button Group form component should render the adding form for generic o
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-21"
-                  id="search-input-21-search"
+                  for="search-input-_r_m_"
+                  id="search-input-_r_m_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-21"
+                  id="search-input-_r_m_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -862,7 +849,7 @@ exports[`Button Group form component should render the adding form for generic o
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-23"
+                    aria-labelledby="tooltip-_r_o_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -885,7 +872,7 @@ exports[`Button Group form component should render the adding form for generic o
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-23"
+                  id="tooltip-_r_o_"
                   role="tooltip"
                 >
                   <span
@@ -1025,16 +1012,15 @@ exports[`Button Group form component should render the adding form for generic o
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-30"
-                  id="search-input-30-search"
+                  for="search-input-_r_10_"
+                  id="search-input-_r_10_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-30"
+                  id="search-input-_r_10_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1065,7 +1051,7 @@ exports[`Button Group form component should render the adding form for generic o
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-32"
+                    aria-labelledby="tooltip-_r_12_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1088,7 +1074,7 @@ exports[`Button Group form component should render the adding form for generic o
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-32"
+                  id="tooltip-_r_12_"
                   role="tooltip"
                 >
                   <span
@@ -1195,7 +1181,6 @@ exports[`Button Group form component should render the editing form 1`] = `
                 type="text"
                 value="OP VM Group"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1215,7 +1200,6 @@ exports[`Button Group form component should render the editing form 1`] = `
               id="button_group_display"
               name="set_data.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1227,7 +1211,6 @@ exports[`Button Group form component should render the editing form 1`] = `
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -1270,7 +1253,6 @@ exports[`Button Group form component should render the editing form 1`] = `
               type="text"
               value="OP VM Group"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1344,7 +1326,6 @@ exports[`Button Group form component should render the editing form 1`] = `
               type="color"
               value="#ed1a21"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1401,16 +1382,15 @@ exports[`Button Group form component should render the editing form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-39"
-                  id="search-input-39-search"
+                  for="search-input-_r_1a_"
+                  id="search-input-_r_1a_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-39"
+                  id="search-input-_r_1a_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1441,7 +1421,7 @@ exports[`Button Group form component should render the editing form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-41"
+                    aria-labelledby="tooltip-_r_1c_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1464,7 +1444,7 @@ exports[`Button Group form component should render the editing form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-41"
+                  id="tooltip-_r_1c_"
                   role="tooltip"
                 >
                   <span
@@ -1604,16 +1584,15 @@ exports[`Button Group form component should render the editing form 1`] = `
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-48"
-                  id="search-input-48-search"
+                  for="search-input-_r_1k_"
+                  id="search-input-_r_1k_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-48"
+                  id="search-input-_r_1k_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -1644,7 +1623,7 @@ exports[`Button Group form component should render the editing form 1`] = `
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-50"
+                    aria-labelledby="tooltip-_r_1m_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -1667,7 +1646,7 @@ exports[`Button Group form component should render the editing form 1`] = `
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-50"
+                  id="tooltip-_r_1m_"
                   role="tooltip"
                 >
                   <span
@@ -1781,7 +1760,6 @@ exports[`Button Group form component should render the editing form for generic 
                 type="text"
                 value="test group form"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -1801,7 +1779,6 @@ exports[`Button Group form component should render the editing form for generic 
               id="button_group_display"
               name="set_data.display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1813,7 +1790,6 @@ exports[`Button Group form component should render the editing form for generic 
                 dir="auto"
               >
                 Display on Button
-                
               </div>
             </label>
             <div
@@ -1856,7 +1832,6 @@ exports[`Button Group form component should render the editing form for generic 
               type="text"
               value="test"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1930,7 +1905,6 @@ exports[`Button Group form component should render the editing form for generic 
               type="color"
               value="ffffff"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1987,16 +1961,15 @@ exports[`Button Group form component should render the editing form for generic 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-58"
-                  id="search-input-58-search"
+                  for="search-input-_r_1v_"
+                  id="search-input-_r_1v_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-58"
+                  id="search-input-_r_1v_"
                   placeholder="Filter options"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -2027,7 +2000,7 @@ exports[`Button Group form component should render the editing form for generic 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-60"
+                    aria-labelledby="tooltip-_r_21_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2050,7 +2023,7 @@ exports[`Button Group form component should render the editing form for generic 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-60"
+                  id="tooltip-_r_21_"
                   role="tooltip"
                 >
                   <span
@@ -2190,16 +2163,15 @@ exports[`Button Group form component should render the editing form for generic 
                 </div>
                 <label
                   class="cds--label"
-                  for="search-input-67"
-                  id="search-input-67-search"
+                  for="search-input-_r_29_"
+                  id="search-input-_r_29_-search"
                 />
                 <input
                   autocomplete="off"
                   class="cds--search-input"
-                  id="search-input-67"
+                  id="search-input-_r_29_"
                   placeholder="Filter values"
                   type="search"
-                  value=""
                 />
                 <button
                   aria-label="Clear search input"
@@ -2230,7 +2202,7 @@ exports[`Button Group form component should render the editing form for generic 
                   class="cds--tooltip-trigger__wrapper"
                 >
                   <button
-                    aria-labelledby="tooltip-69"
+                    aria-labelledby="tooltip-_r_2b_"
                     class="tooltipButton-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                     type="button"
                   >
@@ -2253,7 +2225,7 @@ exports[`Button Group form component should render the editing form for generic 
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-69"
+                  id="tooltip-_r_2b_"
                   role="tooltip"
                 >
                   <span

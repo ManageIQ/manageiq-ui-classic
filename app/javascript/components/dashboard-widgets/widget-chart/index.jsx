@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import DashboardWidget from '../dashboard-charts';
 
@@ -21,10 +20,6 @@ const WidgetChart = ({
 
 WidgetChart.propTypes = {
   widgetModel: PropTypes.string,
-};
-
-WidgetChart.defaultProps = {
-  widgetModel: undefined,
 };
 
 export default WidgetChart;

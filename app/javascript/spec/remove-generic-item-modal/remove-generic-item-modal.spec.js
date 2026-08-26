@@ -1,7 +1,6 @@
-import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
+import { makeStore } from '../helpers/mountForm';
 import RemoveGenericItemModal, {
   removeItems,
 } from '../../components/remove-generic-item-modal';
@@ -25,7 +24,7 @@ describe('RemoveGenericItemModal', () => {
     name: 'name456',
     supports_safe_delete: false,
   };
-  const store = configureStore()({});
+  const store = makeStore({});
   const dispatchMock = jest.spyOn(store, 'dispatch');
   const modalData = {
     api_url: 'authentications',
@@ -33,17 +32,6 @@ describe('RemoveGenericItemModal', () => {
     redirect_url: '/go/home',
     modal_text: 'TEXT',
   };
-
-  beforeEach(() => {
-    global.window ??= Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: 'http://example.com',
-      },
-      writable: true,
-    });
-    dispatchMock.mockClear();
-  });
 
   afterEach(() => {
     fetchMock.reset();

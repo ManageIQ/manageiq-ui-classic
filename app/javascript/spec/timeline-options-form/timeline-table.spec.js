@@ -1,4 +1,3 @@
-import React from 'react';
 import { waitFor } from '@testing-library/react';
 import TimelineTable from '../../components/timeline-options/timeline-table';
 import { renderWithRedux } from '../helpers/mountForm';

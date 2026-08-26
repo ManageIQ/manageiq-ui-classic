@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextInput } from '@carbon/react';
 import { Close, TreeViewAlt } from '@carbon/react/icons';
@@ -7,7 +7,11 @@ import WorkflowEntryPoints from '../workflows/workflow-entry-points';
 
 const EmbeddedWorkflowEntryPoint = (props) => {
   const {
-    label, id, field, selected, type,
+    label,
+    id,
+    field,
+    selected = '',
+    type,
   } = props;
   const { input } = useFieldApi(props);
 
@@ -78,10 +82,6 @@ EmbeddedWorkflowEntryPoint.propTypes = {
   field: PropTypes.string.isRequired,
   selected: PropTypes.string,
   type: PropTypes.string.isRequired,
-};
-
-EmbeddedWorkflowEntryPoint.defaultProps = {
-  selected: '',
 };
 
 export default EmbeddedWorkflowEntryPoint;

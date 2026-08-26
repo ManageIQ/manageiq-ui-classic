@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`WindowsImagesTable component should not render table when initialData is empty 1`] = `<div />`;
+
+exports[`WindowsImagesTable component should render the table with data 1`] = `
+<div>
+  <div
+    class="miq-data-table"
+  >
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <thead>
+          <tr>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Name
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Description
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Path
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+            <th
+              class="miq-data-table-header"
+              scope="col"
+            >
+              <div
+                class="cds--table-header-label"
+              >
+                Index
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class="clickable-row"
+            tabindex="0"
+            title="Click to view details"
+          >
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Windows Image 1"
+                >
+                  Windows Image 1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Description 1"
+                >
+                  Test Description 1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="/path/to/image1"
+                >
+                  /path/to/image1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="1"
+                >
+                  1
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="1"
+            title="Click to view details"
+          >
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Windows Image 2"
+                >
+                  Windows Image 2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Test Description 2"
+                >
+                  Test Description 2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="/path/to/image2"
+                >
+                  /path/to/image2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="2"
+                >
+                  2
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

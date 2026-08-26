@@ -8,15 +8,24 @@ module.exports = {
     [
       require('@babel/preset-env').default,
       {
-        bugfixes: true,
-        corejs: 3,
         targets: { browsers },
-        useBuiltIns: 'entry',
       },
     ],
-    require('@babel/preset-react').default,
+    require('@babel/preset-typescript').default,
+    [
+      require('@babel/preset-react').default,
+      {
+        runtime: 'automatic',
+      },
+    ],
   ],
   plugins: [
+    [
+      require('babel-plugin-polyfill-corejs3').default,
+      {
+        method: 'entry-global',
+      },
+    ],
     require('@babel/plugin-transform-class-properties').default,
     require('@babel/plugin-transform-optional-chaining').default,
     require('@babel/plugin-transform-nullish-coalescing-operator').default,

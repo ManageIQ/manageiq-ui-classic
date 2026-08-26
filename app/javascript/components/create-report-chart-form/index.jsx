@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   AreaChartGraph, DonutChartGraph, GroupBarChart, LineChartGraph, GroupHorizontalBarChart, PieChartGraph,
@@ -6,7 +5,10 @@ import {
 } from '../carbon-charts';
 import { sampleData, pieData } from '../carbon-charts/helpers';
 
-const ReportChartWidget = ({ data, _id }) => {
+const ReportChartWidget = ({
+  data = null,
+  _id = null,
+}) => {
   if (data.miqChart === 'Area') {
     return (<AreaChartGraph data={sampleData} />);
   }
@@ -40,11 +42,6 @@ const ReportChartWidget = ({ data, _id }) => {
 ReportChartWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),
   _id: PropTypes.string,
-};
-
-ReportChartWidget.defaultProps = {
-  data: null,
-  _id: null,
 };
 
 export default ReportChartWidget;

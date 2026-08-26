@@ -1,3 +1,5 @@
+import { flashClassMap } from '../../../support/assertions/assertion_constants';
+
 describe('Overview > Reports Tests', () => {
   beforeEach(() => {
     cy.login();
@@ -10,23 +12,14 @@ describe('Overview > Reports Tests', () => {
 
   context('With cleanup of saved reports', () => {
     afterEach(() => {
-      // Delete report and verify that it was deleted
-      cy.get('li.node-treeview-reports_tree').contains('My Company').click();
-      cy.expect_show_list_title('My Company (All Groups) Reports');
-      cy.get('.clickable-row').contains('Custom').click({ force: true });
-      cy.expect_show_list_title('Custom Reports');
-      cy.get('.list-group-item').contains('Cypress Test Report').click();
-
-      cy.intercept(/\/report\/x_button\/[0-9]+\?pressed=miq_report_delete/).as('delete');
-      cy.toolbar('Configuration', 'Delete this Report from the Database');
-      cy.wait('@delete');
-      cy.get('.alert-success');
-      cy.get('.list-group-item').should('not.contain', 'Cypress Test Report Edit');
+      cy.appDbState('restore');
     });
 
     it('Can add, edit and delete a report', () => {
       // Open the reports accordion and wait for it to load
       cy.accordion('Reports');
+      cy.expect_explorer_title('All Reports');
+      cy.get('.miq-data-table.report-list').should('be.visible');
 
       // Click add report
       cy.toolbar('Configuration', 'Add a new Report');
@@ -44,47 +37,75 @@ describe('Overview > Reports Tests', () => {
       let tableName = '';
 
       cy.get('.btn[data-id="chosen_model"]').click({ force: true });
-      cy.get('.btn[data-id="chosen_model"] ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
+      cy.get(
+        '.btn[data-id="chosen_model"] ~ .dropdown-menu [data-original-index="1"] > a'
+      ).then((option) => {
         cy.get(option).click({ force: true });
         basedOn = option[0].innerText;
         tableName = basedOn.substring(0, basedOn.length - 1).replace(' ', '');
       });
       cy.get('.btn[data-id="available_fields"]').click({ force: true });
-      cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="0"] > a > .text').then((option) => {
+      cy.get(
+        '.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="0"] > a > .text'
+      ).then((option) => {
         cy.get(option).click({ force: true });
         columns.push(option[0].innerText.trim());
       });
-      cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="1"] > a > .text').then((option) => {
+      cy.get(
+        '.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="1"] > a > .text'
+      ).then((option) => {
         cy.get(option).click({ force: true });
         columns.push(option[0].innerText.trim());
       });
-      cy.get('.btn[data-id="available_fields"]').click({ force: true});
-      cy.intercept('/report/form_field_changed/new?button=right').as('fieldsChanged');
-      cy.get('[alt="Move selected fields down"]').click({force: true});
+      cy.get('.btn[data-id="available_fields"]').click({ force: true });
+      // intercepts for tab changes
+      cy.intercept('POST', '/report/change_tab/edit_*?tab=edit_*').as(
+        'tabChange'
+      );
+      cy.intercept('GET', '/report/miq_report_edit?tab=edit_*').as('tabLoad');
+
+      cy.intercept('/report/form_field_changed/new?button=right').as(
+        'fieldsChanged'
+      );
+      cy.get('[alt="Move selected fields down"]').click({ force: true });
       cy.wait('@fieldsChanged').then(() => {
-      // Verify all report page tabs load correctly
+        // Verify all report page tabs load correctly
         cy.get('#Consolidation_tab > a').click({ force: true });
-        cy.get('#consolidate_div > h3').contains('Group Records by up to 3 Columns');
+        cy.wait(['@tabChange', '@tabLoad']);
+        cy.get('#consolidate_div > h3').contains(
+          'Group Records by up to 3 Columns'
+        );
         cy.get('#Formatting_tab > a').click({ force: true });
+        cy.wait(['@tabChange', '@tabLoad']);
         cy.get('#formatting_div > h3').contains('PDF Output');
         cy.get('#Styling_tab > a').click({ force: true });
+        cy.wait(['@tabChange', '@tabLoad']);
         cy.get('#styling_div > h3').contains('Specify Column Styles');
         cy.get('#Filter_tab > a').click({ force: true });
-        cy.get('#filter_div > h3').contains(`Primary (Record) Filter - Filters the ${tableName} table records`);
+        cy.wait(['@tabChange', '@tabLoad']);
+        cy.get('#filter_div > h3').contains(
+          `Primary (Record) Filter - Filters the ${tableName} table records`
+        );
       });
 
       // Set chart type and make sure chart loads correctly
       let sortBy = '';
       let chartType = '';
       cy.get('#Summary_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
       cy.get('#sort_div .btn').click({ force: true });
-      cy.get('#sort_div .btn ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
+      cy.get(
+        '#sort_div .btn ~ .dropdown-menu [data-original-index="1"] > a'
+      ).then((option) => {
         cy.get(option).click({ force: true });
         sortBy = option[0].innerText;
       });
       cy.get('#Charts_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
       cy.get('#chart_div .btn').click({ force: true });
-      cy.get('#chart_div .btn ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
+      cy.get(
+        '#chart_div .btn ~ .dropdown-menu [data-original-index="1"] > a'
+      ).then((option) => {
         cy.get(option).click({ force: true });
         chartType = option[0].innerText;
       });
@@ -92,16 +113,17 @@ describe('Overview > Reports Tests', () => {
 
       // Load report preview and verify column values
       cy.get('#Preview_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
       cy.get('#form_preview a').click({ force: true });
       cy.get('#form_preview h3').contains('Chart Preview (up to 50 rows)');
       cy.get('#form_preview h3').contains('Report Preview (up to 50 rows)');
-      cy.get('#form_preview table th').then((result) => {
+      cy.get('#form_preview table th').should((result) => {
         expect(result[0].innerText).to.eq(columns[0]);
         expect(result[1].innerText).to.eq(columns[1]);
       });
 
       cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click Add button
-      cy.get('.alert-success');
+      cy.expect_flash(flashClassMap.success);
 
       // Navigate to the report that was just added
       cy.expect_show_list_title('All Reports');
@@ -109,18 +131,34 @@ describe('Overview > Reports Tests', () => {
       cy.expect_show_list_title('My Company (All Groups) Reports');
       cy.get('.clickable-row').contains('Custom').click({ force: true });
       cy.expect_show_list_title('Custom Reports');
-      cy.get('.list-group-item').contains('Cypress Test Report').click();
+      cy.selectAccordionItem(
+        ['All Reports', /^My Company/, 'Custom', 'Cypress Test Report'],
+        {
+          onTreeSelectResponse: (res) => {
+            // Verify toolbar has been updated with Queue button
+            const reloadToolbars = res.response.body.reloadToolbars;
+            expect(reloadToolbars).to.not.be.undefined;
+            expect(reloadToolbars[0]).to.be.an('array');
+            const queueButton = reloadToolbars[0].find(
+              (btn) => btn.id === 'miq_report_run'
+            );
+            expect(queueButton).to.not.be.undefined;
+            expect(queueButton.enabled).to.be.true;
+          },
+        }
+      );
+      cy.expect_explorer_title('Report "');
+      cy.contains('#toolbar button#miq_report_run', 'Queue').scrollIntoView().should('exist');
 
       // Verify report was added with correct values on summary page
-      let tableHeaders = [];
-      let tableValues = [];
+      let tableHeaders;
+      let tableValues;
       let id;
-      cy.get('.label_header').then((headers) => {
-        const nums = [...Array(headers.length).keys()];
-        nums.forEach((index) => {
-          tableHeaders.push(headers[index].innerText);
+      cy.get('.label_header').should((headers) => {
+        tableHeaders = [];
+        headers.each((index, header) => {
+          tableHeaders.push(header.innerText);
         });
-      }).then(() => {
         expect(tableHeaders[0]).to.eq('ID');
         expect(tableHeaders[1]).to.eq('Title');
         expect(tableHeaders[2]).to.eq('Sort By');
@@ -131,113 +169,169 @@ describe('Overview > Reports Tests', () => {
         expect(tableHeaders[7]).to.eq('Updated On');
       });
 
-      cy.get('.content_value').then((values) => {
-        const nums = [...Array(values.length).keys()];
+      cy.get('.content_value').should((values) => {
+        tableValues = [];
         id = values[0].innerText;
-        nums.forEach((index) => {
-          tableValues.push(values[index].innerText);
+        values.each((index, value) => {
+          tableValues.push(value.innerText);
         });
-      }).then(() => {
         expect(tableValues[1]).to.eq('Cypress test report title');
         expect(tableValues[2]).to.eq(sortBy);
         expect(chartType).to.include(tableValues[3]);
         expect(basedOn).to.include(tableValues[4]);
         expect(tableValues[5]).to.eq('admin');
-      }).then(() => {
-        // Click edit report
-        cy.toolbar('Configuration', 'Edit this Report');
-        // Edit report information
-        cy.intercept(/\/report\/form_field_changed\/[0-9]+/).as('fieldsUpdated');
-        cy.get('#name').clear({ force: true }).type('Cypress Test Report Edit', { force: true });
-        cy.wait('@fieldsUpdated');
+      });
 
-        cy.get('#title').clear({ force: true }).type('Cypress test report title edit', { force: true });
-        cy.wait('@fieldsUpdated');
+      // Click edit report
+      cy.toolbar('Configuration', 'Edit this Report');
+      // Edit report information
+      cy.intercept(/\/report\/form_field_changed\/[0-9]+/).as('fieldsUpdated');
+      cy.get('#name')
+        .clear({ force: true })
+        .type('Cypress Test Report Edit', { force: true });
+      cy.wait('@fieldsUpdated');
 
-        cy.get('.btn[data-id="available_fields"]').click({ force: true });
-        cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="3"] > a > .text').then((option) => {
-          cy.get(option).click({ force: true });
-          columns.push(option[0].innerText.trim());
-        });
-        cy.get('.btn[data-id="available_fields"] > .filter-option').click({ force: true });
-        cy.intercept(`/report/form_field_changed/${id}?button=right`).as('fieldsChanged');
-        cy.get('.text-center > [alt="Move selected fields down"]').click({force: true});
-        cy.wait('@fieldsChanged');
+      cy.get('#title')
+        .clear({ force: true })
+        .type('Cypress test report title edit', { force: true });
+      cy.wait('@fieldsUpdated');
 
-        // Verify all report page tabs load correctly
-        cy.get('#Consolidation_tab > a').click({ force: true });
-        cy.get('#consolidate_div > h3').contains('Group Records by up to 3 Columns');
-        cy.get('#Formatting_tab > a').click({ force: true });
-        cy.get('#formatting_div > h3').contains('PDF Output');
-        cy.get('#Styling_tab > a').click({ force: true });
-        cy.get('#styling_div > h3').contains('Specify Column Styles');
-        cy.get('#Filter_tab > a').click({ force: true });
-        cy.get('#filter_div > h3').contains(`Primary (Record) Filter - Filters the ${tableName} table records`);
+      cy.get('.btn[data-id="available_fields"]').click({ force: true });
+      cy.get(
+        '.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="3"] > a > .text'
+      ).then((option) => {
+        cy.get(option).click({ force: true });
+        columns.push(option[0].innerText.trim());
+      });
+      cy.get('.btn[data-id="available_fields"] > .filter-option').click({
+        force: true,
+      });
+      cy.get('.text-center > [alt="Move selected fields down"]').click({
+        force: true,
+      });
+      cy.wait('@fieldsUpdated');
 
-        // Edit report chart values and verify chart and report are correctly created
-        sortBy = '';
-        chartType = '';
-        cy.get('#Summary_tab > a').click({ force: true });
-        cy.get(':nth-child(2) > :nth-child(1) > .col-md-8 > .btn-group > .btn').click({ force: true });
-        cy.get(':nth-child(1) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="3"] > a').then((option) => {
-          cy.get(option).click({ force: true });
-          sortBy = option[0].innerText;
-        });
-        cy.get('#Charts_tab > a').click({ force: true });
-        cy.get('#chart_div').get(':nth-child(1) > .col-md-8 > .btn-group > .btn').click({ force: true });
-        cy.get(':nth-child(1) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="3"] > a').then((option) => {
-          cy.get(option).click({ force: true });
-          chartType = option[0].innerText;
-        });
-        cy.get('#chart_sample_div > fieldset');
+      // Verify all report page tabs load correctly
+      cy.get('#Consolidation_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#consolidate_div > h3').contains(
+        'Group Records by up to 3 Columns'
+      );
 
-        cy.get('#Preview_tab > a').click({ force: true });
-        cy.get('#form_preview > h3').get('a > .fa').click({ force: true });
-        cy.get('#form_preview').get('h3').contains('Chart Preview (up to 50 rows)');
-        cy.get('#form_preview').get('h3').contains('Report Preview (up to 50 rows)');
-        cy.get('#form_preview').get('th').then((result) => {
+      cy.get('#Formatting_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#formatting_div > h3').contains('PDF Output');
+
+      cy.get('#Styling_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#styling_div > h3').contains('Specify Column Styles');
+
+      cy.get('#Filter_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#filter_div > h3').should((h3) => {
+        expect(h3.text()).to.include(
+          `Primary (Record) Filter - Filters the ${tableName} table records`
+        );
+      });
+
+      // Edit report chart values and verify chart and report are correctly created
+      sortBy = '';
+      chartType = '';
+      cy.get('#Summary_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get(
+        ':nth-child(2) > :nth-child(1) > .col-md-8 > .btn-group > .btn'
+      ).click({ force: true });
+      cy.get(
+        ':nth-child(1) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="3"] > a'
+      ).then((option) => {
+        cy.get(option).click({ force: true });
+        sortBy = option[0].innerText;
+      });
+      cy.get('#Charts_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#chart_div')
+        .get(':nth-child(1) > .col-md-8 > .btn-group > .btn')
+        .click({ force: true });
+      cy.get(
+        ':nth-child(1) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="3"] > a'
+      ).then((option) => {
+        cy.get(option).click({ force: true });
+        chartType = option[0].innerText;
+      });
+      cy.get('#chart_sample_div > fieldset');
+
+      cy.get('#Preview_tab > a').click({ force: true });
+      cy.wait(['@tabChange', '@tabLoad']);
+      cy.get('#form_preview > h3').get('a > .fa').click({ force: true });
+      cy.get('#form_preview')
+        .get('h3')
+        .contains('Chart Preview (up to 50 rows)');
+      cy.get('#form_preview')
+        .get('h3')
+        .contains('Report Preview (up to 50 rows)');
+      cy.get('#form_preview')
+        .get('th')
+        .should((result) => {
           expect(result[0].innerText).to.eq(columns[0]);
           expect(result[1].innerText).to.eq(columns[1]);
           expect(result[2].innerText).to.eq(columns[2]);
         });
-        cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click save button
-      }).then(() => {
-        cy.get('.alert-success');
-        // Verify report was edited with correct values on summary page
+
+      cy.interceptApi({
+        alias: 'saveReport',
+        urlPattern: '/report/miq_report_edit/*?button=save',
+        triggerFn: () =>
+          cy.get('#buttons_on > .btn-primary').click({ force: true }),
+      });
+      cy.expect_flash(flashClassMap.success);
+
+      // Verify report was edited with correct values on summary page
+      cy.get('.list-group-item').contains('Cypress Test Report Edit').click();
+      cy.get('.label_header').should((headers) => {
         tableHeaders = [];
-        tableValues = [];
-        cy.get('.list-group-item').contains('Cypress Test Report Edit').click();
-        cy.get('.label_header').then((headers) => {
-          const nums = [...Array(headers.length).keys()];
-          nums.forEach((index) => {
-            tableHeaders.push(headers[index].innerText);
-          });
-        }).then(() => {
-          expect(tableHeaders[0]).to.eq('ID');
-          expect(tableHeaders[1]).to.eq('Title');
-          expect(tableHeaders[2]).to.eq('Sort By');
-          expect(tableHeaders[3]).to.eq('Chart');
-          expect(tableHeaders[4]).to.eq('Based On');
-          expect(tableHeaders[5]).to.eq('User');
-          expect(tableHeaders[6]).to.eq('EVM Group');
-          expect(tableHeaders[7]).to.eq('Updated On');
+        headers.each((index, header) => {
+          tableHeaders.push(header.innerText);
         });
 
-        cy.get('.content_value').then((values) => {
-          const nums = [...Array(values.length).keys()];
-          id = values[0].innerText;
-          nums.forEach((index) => {
-            tableValues.push(values[index].innerText);
-          });
-        }).then(() => {
-          expect(tableValues[0]).to.eq(`${id}`);
-          expect(tableValues[1]).to.eq('Cypress test report title edit');
-          expect(tableValues[2]).to.eq(sortBy);
-          expect(chartType).to.include(tableValues[3]);
-          expect(basedOn).to.include(tableValues[4]);
-          expect(tableValues[5]).to.eq('admin');
-        });
+        expect(tableHeaders[0]).to.eq('ID');
+        expect(tableHeaders[1]).to.eq('Title');
+        expect(tableHeaders[2]).to.eq('Sort By');
+        expect(tableHeaders[3]).to.eq('Chart');
+        expect(tableHeaders[4]).to.eq('Based On');
+        expect(tableHeaders[5]).to.eq('User');
+        expect(tableHeaders[6]).to.eq('EVM Group');
+        expect(tableHeaders[7]).to.eq('Updated On');
       });
+
+      cy.get('.content_value').should((values) => {
+        tableValues = [];
+        id = values[0].innerText;
+        values.each((index, value) => {
+          tableValues.push(value.innerText);
+        });
+        expect(tableValues[0]).to.eq(`${id}`);
+        expect(tableValues[1]).to.eq('Cypress test report title edit');
+        expect(tableValues[2]).to.eq(sortBy);
+        expect(chartType).to.include(tableValues[3]);
+        expect(basedOn).to.include(tableValues[4]);
+        expect(tableValues[5]).to.eq('admin');
+      });
+
+      // Delete report
+      cy.interceptApi({
+        alias: 'deleteReport',
+        urlPattern: /\/report\/x_button\/[0-9]+\?pressed=miq_report_delete/,
+        triggerFn: () =>
+          cy.expect_browser_confirm_with_text({
+            confirmTriggerFn: () =>
+              cy.toolbar(
+                'Configuration',
+                'Delete this Report from the Database'
+              ),
+          }),
+      });
+      cy.expect_flash(flashClassMap.success);
     });
   });
 
@@ -426,5 +520,52 @@ describe('Overview > Reports Tests', () => {
       // Delete the schedule
       cy.toolbar('Configuration', 'Delete this Schedule');
     });
+  });
+});
+
+describe('Report Info / Saved Reports Tabs', () => {
+  beforeEach(() => {
+    cy.login();
+    cy.menu('Overview', 'Reports');
+    cy.accordion('Reports');
+    cy.selectAccordionItem(['Configuration Management', 'Virtual Machines']);
+    cy.contains('.clickable-row', 'Account Groups - Linux').click();
+  });
+
+  it('displays report tabs and switches between Report Info and Saved Reports', () => {
+    cy.get('#rep-tabs-wrapper').should('be.visible');
+    cy.get('.miq_custom_tabs').should('be.visible');
+
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
+
+    cy.intercept('/report/rep_change_tab*').as('changeTab');
+    cy.contains('button', 'Saved Reports').should('be.visible').click();
+    cy.wait('@changeTab');
+
+    cy.get('#saved_reports').should('have.class', 'active');
+    cy.get('#gtl_div').should('be.visible');
+
+    cy.contains('button', 'Report Info').should('be.visible').click();
+    cy.wait('@changeTab');
+
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
+  });
+
+  it('resets to Report Info tab when navigating away and back to a report', () => {
+    cy.intercept('/report/rep_change_tab*').as('changeTab');
+    cy.contains('button', 'Saved Reports').should('be.visible').click();
+    cy.wait('@changeTab');
+    cy.get('#saved_reports').should('have.class', 'active');
+
+    cy.get('#reports_accord.in li.list-group-item').contains('Configuration Management').click();
+
+    cy.selectAccordionItem(['Configuration Management', 'Virtual Machines']);
+    cy.contains('.clickable-row', 'Account Groups - Linux').click();
+
+    cy.get('#rep-tabs-wrapper').should('be.visible');
+    cy.get('#report_info').should('have.class', 'active');
+    cy.contains('Basic Information').should('be.visible');
   });
 });

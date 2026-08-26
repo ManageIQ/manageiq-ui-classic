@@ -1,5 +1,4 @@
 require('./bootstrap_tree_subscription_service.js');
-require('./catalog/catalog_item_data.js');
 require('./dashboard_service.js');
 require('./dialog_editor_http_service.js');
 require('./dialog_field_refresh_service.js');

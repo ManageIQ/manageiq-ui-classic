@@ -3,6 +3,24 @@ module MiqAeCustomizationHelper
   include SharedHelper::AbShowHelper
   include SharedHelper::AbListHelper
 
+  DIALOG_TAB_IDS = %w[sample_tab info_tab].freeze
+
+  def dialog_tab_configuration
+    DIALOG_TAB_IDS.map(&:to_sym)
+  end
+
+  def dialog_tab_content(key_name, &)
+    if DIALOG_TAB_IDS.include?(key_name.to_s)
+      class_name = key_name == :sample_tab ? 'tab_content active' : 'tab_content'
+      tag.div(:id => key_name, :class => class_name, &)
+    end
+  end
+
+  def dialog_tab_index(active_tab)
+    index = DIALOG_TAB_IDS.index(active_tab.to_s)
+    index || 0
+  end
+
   def editor_automation_types
     AUTOMATION_TYPES.to_json
   end
@@ -10,7 +28,7 @@ module MiqAeCustomizationHelper
   def dialog_id_action
     url = request.parameters
     if url[:id].present?
-      {:id => @record.id.to_s, :action => 'edit'}
+      {:id => url[:id].to_s, :action => 'edit'}
     elsif url[:copy].present?
       {:id => url[:copy], :action => 'copy'}
     else

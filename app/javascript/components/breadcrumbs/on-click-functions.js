@@ -1,3 +1,5 @@
+import { locationAssign } from '../../helpers/window-location';
+
 export const onClickTree = (e, controllerName, { key, title }) => {
   if (window.miqCheckForChanges()) {
     const id = encodeURIComponent(key.split('__')[0]);
@@ -18,7 +20,7 @@ export const onClick = (e) => {
 export const onClickToExplorer = (e, controllerName, explorerLink) => {
   if (window.miqCheckForChanges()) {
     miqSparkleOn();
-    window.location.assign(`/${controllerName}/${explorerLink}`);
+    locationAssign(`/${controllerName}/${explorerLink}`);
   } else {
     e.preventDefault();
   }

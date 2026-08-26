@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Loading, ModalBody } from '@carbon/react';
 import { API } from '../http_api';
 import miqRedirectBack from '../helpers/miq-redirect-back';
+import { setLocationHref } from '../helpers/window-location';
 
 const apiTransformFunctions = {
   buttonGroup: (item) => ({
@@ -87,7 +88,7 @@ export const removeItems = (items, force, {
       if (apiData) {
         if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
           if (!treeSelect && !ajaxReload) {
-            window.location.href = redirectUrl;
+            setLocationHref(redirectUrl);
             miqSparkleOff();
           } else {
             sendDataWithRx({ type: 'gtlUnselectAll' });

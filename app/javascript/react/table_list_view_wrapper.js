@@ -1,4 +1,3 @@
-import React from 'react';
 import { TableListView } from '../components/textual_summary';
 import textualSummaryGenericClick from './textual_summary_click';
 

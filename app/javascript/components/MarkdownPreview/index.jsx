@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
@@ -89,10 +89,6 @@ MarkdownPreview.propTypes = {
   content: PropTypes.string,
   url: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-};
-
-MarkdownPreview.defaultProps = {
-  content: undefined,
 };
 
 export default MarkdownPreview;

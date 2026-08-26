@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, SelectItemGroup, Button,
@@ -64,10 +63,6 @@ FilterDropdown.propTypes = {
   filterSelected: PropTypes.string.isRequired,
   defaultSelected: PropTypes.string.isRequired,
   selectedFilter: PropTypes.objectOf(PropTypes.any),
-};
-
-FilterDropdown.defaultProps = {
-  selectedFilter: undefined,
 };
 
 export default FilterDropdown;

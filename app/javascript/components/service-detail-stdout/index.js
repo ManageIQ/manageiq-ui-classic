@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 

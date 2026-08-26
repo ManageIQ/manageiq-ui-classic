@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@carbon/react';
 import { ChevronDown } from '@carbon/react/icons';
 import PropTypes from 'prop-types';
@@ -6,7 +6,15 @@ import classNames from 'classnames';
 
 import IconModal from './icon-modal';
 
-const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
+const FontIconPicker = ({
+  iconTypes = {
+    ff: 'Font Fabulous',
+    pficon: 'PatternFly',
+    fa: 'Font Awesome',
+  },
+  selected,
+  onChangeURL,
+}) => {
   const [{
     showModal,
     selectedIcon,
@@ -58,15 +66,6 @@ FontIconPicker.propTypes = {
   iconTypes: PropTypes.objectOf(PropTypes.any),
   selected: PropTypes.string,
   onChangeURL: PropTypes.string.isRequired,
-};
-
-FontIconPicker.defaultProps = {
-  selected: undefined,
-  iconTypes: {
-    ff: 'Font Fabulous',
-    pficon: 'PatternFly',
-    fa: 'Font Awesome',
-  },
 };
 
 export default FontIconPicker;

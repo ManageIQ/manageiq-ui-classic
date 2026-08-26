@@ -20,4 +20,5 @@ jobs:
     with:
       pr_repository: miq-bot/manageiq-ui-classic
     secrets:
-      pr_token: "${{ secrets.PR_TOKEN }}"
+      GHA_STATUS_SLACK_WEBHOOK_URL: "${{ secrets.GHA_STATUS_SLACK_WEBHOOK_URL }}"
+      PR_TOKEN: "${{ secrets.PR_TOKEN }}"

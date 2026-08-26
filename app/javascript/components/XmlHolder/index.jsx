@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /** Component to display XML content.
@@ -17,10 +17,6 @@ const XmlHolder = ({ xmlData }) => {
 
 XmlHolder.propTypes = {
   xmlData: PropTypes.string,
-};
-
-XmlHolder.defaultProps = {
-  xmlData: undefined,
 };
 
 export default XmlHolder;

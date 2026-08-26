@@ -1,6 +1,3 @@
-const babelConfig = require('../.babelrc.js');
-require('@babel/register').default(babelConfig);
-
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 
@@ -19,9 +16,6 @@ require('../app/javascript/oldjs/miq_global.js');
 
 require('@testing-library/jest-dom');
 
-// TODO: These mocks(getSelection, MutationObserver & createRange) can likely be removed
-// after upgrading Jest to the latest version & adding jest-environment-jsdom if needed
-
 // Mock getSelection for @testing-library/user-event, user-event looks for 
 // element.ownerDocument.getSelection, so we need to mock it on document
 document.getSelection = () => ({
@@ -29,18 +23,6 @@ document.getSelection = () => ({
   addRange: () => {},
   rangeCount: 0,
 });
-
-// Mock MutationObserver for @testing-library/dom waitFor
-global.MutationObserver = class {
-  constructor(callback) {
-    this.callback = callback;
-  }
-  disconnect() {}
-  observe() {}
-  takeRecords() {
-    return [];
-  }
-};
 
 // Mock createRange for @testing-library/user-event selectOptions
 // Looks like the current jsdom has incomplete Range API implementation
@@ -121,6 +103,18 @@ Object.defineProperty(Array.prototype, 'flat', {
  * unfortunately this cannot be mocked in some helper file it will only work in global setup
  */
 jest.mock('../app/javascript/helpers/miq-redirect-back', () => jest.fn());
+
+/**
+ * Mock location helper to avoid jsdom navigation errors and enable easy testing
+ * This provides mockable alternatives to window.location which is non-configurable in jsdom
+ */
+jest.mock('../app/javascript/helpers/window-location', () => ({
+  getLocation: jest.fn().mockReturnValue({
+    pathname: '',
+  }),
+  locationAssign: jest.fn(),
+  setLocationHref: jest.fn(),
+}));
 
 // Mock ResizeObserver for Carbon v11 components
 Object.defineProperty(window, 'ResizeObserver', {

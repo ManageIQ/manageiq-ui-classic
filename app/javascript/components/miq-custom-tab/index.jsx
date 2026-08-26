@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, TabList, Tab } from '@carbon/react';
 import { useDispatch } from 'react-redux';
@@ -6,7 +6,7 @@ import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-acti
 import { labelConfig, tabText } from './helper';
 
 const MiqCustomTab = ({
-  containerId, tabLabels, type, activeTab, subtab, tabLength,
+  containerId, tabLabels, type, activeTab, subtab, tabLength, disableInactive = false,
 }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
@@ -27,6 +27,7 @@ const MiqCustomTab = ({
     { type: 'CATALOG_EDIT', js: () => name === 'detail' && dispatch(miqCustomTabActions.incrementClickCount()) },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
     { type: 'UTILIZATION' },
+    { type: 'DIALOG', url: `/miq_ae_customization/change_tab?tab_id=${name}` },
     {
       type: 'SETTINGS',
       url: name === 'tags'
@@ -34,6 +35,14 @@ const MiqCustomTab = ({
         : `/ops/change_tab?tab_id=settings_${name}`,
     },
     { type: 'SETTINGS_TAGS', url: `/ops/change_tab?parent_tab_id=settings_tags&tab_id=settings_${name}` },
+    { type: 'SETTINGS_ZONE', url: `/ops/change_tab?tab_id=settings_${name}` },
+    { type: 'SETTINGS_SERVER', url: `/ops/change_tab?tab_id=settings_${name}` },
+    { type: 'DIAGNOSTICS_ZONE', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'DIAGNOSTICS_SERVER', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'DIAGNOSTICS_ROOT', url: `/ops/change_tab?tab_id=diagnostics_${name}` },
+    { type: 'SERVICE' },
+    { type: 'REPORT', url: `/report/rep_change_tab?tab_id=${name}` },
+    { type: 'AE_CLASS', url: `/miq_ae_class/change_tab?tab_id=${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
@@ -64,10 +73,28 @@ const MiqCustomTab = ({
   /** Function to load the tab contents which are already available within the page. */
   const staticContents = (name, config) => {
     const tabs = containerTabs();
+    // Construct the expected tab ID based on the type
+    let expectedId;
+    if (type === 'DIAGNOSTICS_ZONE') {
+      expectedId = `diagnostics_zone_${name}`;
+    } else if (type === 'DIAGNOSTICS_SERVER') {
+      expectedId = `diagnostics_${name}`;
+    } else if (type === 'DIAGNOSTICS_ROOT') {
+      expectedId = `diagnostics_${name}`;
+    } else if (type === 'SETTINGS_ZONE') {
+      expectedId = `settings_${name}`;
+    } else if (type === 'SETTINGS_SERVER') {
+      expectedId = `settings_${name}`;
+    } else if (type === 'SETTINGS') {
+      expectedId = `settings_${name}`;
+    } else {
+      expectedId = name;
+    }
+
     tabs.forEach((child) => {
       if (child.parentElement.id === containerId) {
         child.classList.remove('active');
-        if (child.id === `${name}`) {
+        if (child.id === expectedId) {
           child.classList.add('active');
           if (config.js) config.js();
         }
@@ -99,8 +126,12 @@ const MiqCustomTab = ({
   };
 
   /** Function to render the tabs from the tabLabels props */
-  const renderTabs = () => tabLabels.map((label) => (
-    <Tab key={`tab${label}`} onClick={() => onTabSelect(label)}>
+  const renderTabs = () => tabLabels.map((label, index) => (
+    <Tab
+      key={`tab${label}`}
+      disabled={disableInactive && index !== activeTab}
+      onClick={() => (disableInactive && index === activeTab ? undefined : onTabSelect(label))}
+    >
       {tabText(selectedLabels, label)}
     </Tab>
   ));
@@ -139,10 +170,5 @@ MiqCustomTab.propTypes = {
   activeTab: PropTypes.number,
   subtab: PropTypes.number,
   tabLength: PropTypes.number,
-};
-
-MiqCustomTab.defaultProps = {
-  activeTab: undefined,
-  subtab: undefined,
-  tabLength: undefined,
+  disableInactive: PropTypes.bool,
 };

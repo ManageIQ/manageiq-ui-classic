@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import { rowData } from '../miq-data-table/helper';

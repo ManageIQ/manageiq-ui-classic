@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
 import componentMapper from '../../forms/mappers/componentMapper';
@@ -218,12 +218,6 @@ ReconfigureVmForm.propTypes = {
   roles: PropTypes.objectOf(PropTypes.any),
   options: PropTypes.objectOf(PropTypes.any),
   memory: PropTypes.objectOf(PropTypes.any),
-};
-
-ReconfigureVmForm.defaultProps = {
-  roles: undefined,
-  options: undefined,
-  memory: undefined,
 };
 
 export default ReconfigureVmForm;

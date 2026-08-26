@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const WidgetError = ({ widgetId }) => (
@@ -11,9 +10,6 @@ const WidgetError = ({ widgetId }) => (
 
 WidgetError.propTypes = {
   widgetId: PropTypes.number.isRequired,
-};
-
-WidgetError.defaultProps = {
 };
 
 export default WidgetError;

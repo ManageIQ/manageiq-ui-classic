@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import { API } from '../../http_api';
@@ -36,7 +36,11 @@ const copyStack = (values, message, otId) => {
   miqAjaxButton(`/orchestration_stack/stacks_ot_copy?button=add`, resources);
 };
 
-const OrcherstrationTemplateForm = ({ isStack, otId, copy }) => {
+const OrcherstrationTemplateForm = ({
+  isStack = false,
+  otId,
+  copy = false,
+}) => {
   const [initialValues, setinItialValues] = useState({});
   const [submitAction, setSubmitAction] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -112,12 +116,6 @@ OrcherstrationTemplateForm.propTypes = {
   isStack: PropTypes.bool,
   otId: PropTypes.number,
   copy: PropTypes.bool,
-};
-
-OrcherstrationTemplateForm.defaultProps = {
-  isStack: false,
-  otId: undefined,
-  copy: false,
 };
 
 export default OrcherstrationTemplateForm;

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, FormGroup } from '@carbon/react';
 import ValueSelector from './ValueSelector';
@@ -8,10 +7,10 @@ const ValueModifier = ({
   selectedTagCategory,
   values,
   onTagValueChange,
-  selectedTagValues,
-  multiValue,
-  valueLabel,
-  isDisabled,
+  selectedTagValues = [],
+  multiValue = true,
+  valueLabel = __('Value'),
+  isDisabled = false,
 }) => (
   <FormGroup legendText={valueLabel}>
     <Column className="tag-modifier-form-row value-modifier">
@@ -38,13 +37,6 @@ ValueModifier.propTypes = {
   multiValue: PropTypes.bool,
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
   isDisabled: PropTypes.bool,
-};
-
-ValueModifier.defaultProps = {
-  selectedTagValues: [],
-  valueLabel: __('Value'),
-  multiValue: true,
-  isDisabled: false,
 };
 
 export default ValueModifier;

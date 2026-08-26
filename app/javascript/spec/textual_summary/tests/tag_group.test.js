@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import TagGroup from '../../../components/textual_summary/tag_group';
 import { tagGroupData } from '../data/tag_group';

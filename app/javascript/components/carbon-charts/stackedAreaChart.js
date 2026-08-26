@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { StackedAreaChart } from '@carbon/charts-react';
 
-const StackAreaChart = ({ data, title }) => {
+const StackAreaChart = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     axes: {
@@ -33,11 +35,6 @@ const StackAreaChart = ({ data, title }) => {
 StackAreaChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-StackAreaChart.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default StackAreaChart;

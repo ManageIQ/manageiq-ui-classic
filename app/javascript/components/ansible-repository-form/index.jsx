@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
@@ -117,10 +117,6 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
 
 AnsibleRepositoryForm.propTypes = {
   repositoryId: PropTypes.string,
-};
-
-AnsibleRepositoryForm.defaultProps = {
-  repositoryId: undefined,
 };
 
 export default AnsibleRepositoryForm;

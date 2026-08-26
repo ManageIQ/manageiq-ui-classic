@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Button } from '@carbon/react';
@@ -93,9 +93,6 @@ const TenantQuotaForm = ({ recordId }) => {
 
 TenantQuotaForm.propTypes = {
   recordId: PropTypes.string,
-};
-TenantQuotaForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default TenantQuotaForm;

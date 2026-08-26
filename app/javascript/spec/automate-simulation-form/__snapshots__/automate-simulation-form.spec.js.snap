@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Automate Simulation Form should render the simulation form correctly 1`] = `
 <div>
@@ -24,7 +24,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
             class="cds--label"
             dir="auto"
             for="instance_name"
-            id="downshift-2-label"
+            id="downshift-_r_h_-label"
           >
             System/Process
           </label>
@@ -37,10 +37,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-2-menu"
+                aria-controls="downshift-_r_h_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-2-label"
+                aria-labelledby="downshift-_r_h_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="instance_name"
@@ -75,11 +75,11 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
               <button
-                aria-controls="downshift-2-menu"
+                aria-controls="downshift-_r_h_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-2-toggle-button"
+                id="downshift-_r_h_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -100,11 +100,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
             </div>
-            
             <ul
-              aria-labelledby="downshift-2-label"
+              aria-labelledby="downshift-_r_h_-label"
               class="cds--list-box__menu"
-              id="downshift-2-menu"
+              id="downshift-_r_h_-menu"
               role="listbox"
             />
           </div>
@@ -142,7 +141,6 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 type="text"
                 value="create"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -185,7 +183,6 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -210,7 +207,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
             class="cds--label"
             dir="auto"
             for="target_class"
-            id="downshift-3-label"
+            id="downshift-_r_k_-label"
           >
             <span
               aria-hidden="true"
@@ -229,10 +226,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-3-menu"
+                aria-controls="downshift-_r_k_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-3-label"
+                aria-labelledby="downshift-_r_k_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_class"
@@ -267,11 +264,11 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
               <button
-                aria-controls="downshift-3-menu"
+                aria-controls="downshift-_r_k_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-3-toggle-button"
+                id="downshift-_r_k_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -292,11 +289,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
             </div>
-            
             <ul
-              aria-labelledby="downshift-3-label"
+              aria-labelledby="downshift-_r_k_-label"
               class="cds--list-box__menu"
-              id="downshift-3-menu"
+              id="downshift-_r_k_-menu"
               role="listbox"
             />
           </div>
@@ -319,7 +315,6 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               id="readonly"
               name="readonly"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -331,7 +326,6 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 dir="auto"
               >
                 Execute Methods
-                
               </div>
             </label>
             <div

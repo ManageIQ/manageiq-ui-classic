@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
@@ -11,7 +11,10 @@ import {
 } from './helper';
 
 const RetirementForm = ({
-  retirementID, redirect, url, timezone,
+  retirementID,
+  redirect,
+  url,
+  timezone = { tzinfo: { info: { identifier: 'Etc/UTC' } } },
 }) => {
   const retireItems = JSON.parse(retirementID);
   const tz = timezone;
@@ -146,11 +149,6 @@ RetirementForm.propTypes = {
   redirect: PropTypes.string,
   url: PropTypes.string.isRequired,
   timezone: PropTypes.objectOf(PropTypes.any),
-};
-
-RetirementForm.defaultProps = {
-  redirect: undefined,
-  timezone: { tzinfo: { info: { identifier: 'Etc/UTC' } } },
 };
 
 export default RetirementForm;

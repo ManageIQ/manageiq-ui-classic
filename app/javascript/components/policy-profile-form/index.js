@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
@@ -74,10 +74,6 @@ const PolicyProfileForm = ({ recordId }) => {
 
 PolicyProfileForm.propTypes = {
   recordId: PropTypes.string,
-};
-
-PolicyProfileForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default PolicyProfileForm;

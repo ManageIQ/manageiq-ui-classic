@@ -1,10 +1,8 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { makeStore } from '../helpers/mountForm';
 import NotificationDrawer from '../../components/notification-drawer/notification-drawer';
 import * as initNotifications from '../../notifications/init';
 import '../helpers/miqFormatNotification';
@@ -37,7 +35,6 @@ describe('Notification drawer tests', () => {
       maxNotifications: 100,
     },
   };
-  const mockStore = configureStore([thunk]);
   const miqFormatNotificationSpy = jest.spyOn(window, 'miqFormatNotification');
 
   beforeEach(() => {
@@ -51,7 +48,7 @@ describe('Notification drawer tests', () => {
   });
 
   it('should render correctly', () => {
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     const { container } = render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -62,7 +59,7 @@ describe('Notification drawer tests', () => {
 
   it('should dispatch toggleDrawerVisibility after click on Close button', async() => {
     const user = userEvent.setup();
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -78,7 +75,7 @@ describe('Notification drawer tests', () => {
 
   it('should expand drawer after click on expand button', async() => {
     const user = userEvent.setup();
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     const { container } = render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -105,7 +102,7 @@ describe('Notification drawer tests', () => {
       action: 'mark_all_seen',
       resources: [{ id: '10000000003625' }],
     });
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -126,7 +123,7 @@ describe('Notification drawer tests', () => {
   });
 
   it('should show notification limit bar', () => {
-    const store = mockStore({
+    const store = makeStore({
       ...initialState,
       notificationReducer: {
         ...initialState.notificationReducer,
@@ -145,7 +142,7 @@ describe('Notification drawer tests', () => {
 
   it('should dispatch toogleMaxNotifications after click on Show all', async() => {
     const user = userEvent.setup();
-    const store = mockStore({
+    const store = makeStore({
       ...initialState,
       maxNotifications: lowerMaxNotifications,
     });
@@ -177,7 +174,7 @@ describe('Notification drawer tests', () => {
   it('should dispatch markAllRead after click on Mark all read', async() => {
     const user = userEvent.setup();
     fetchMock.postOnce('/api/notifications/', {});
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -198,7 +195,7 @@ describe('Notification drawer tests', () => {
   it('should clear all and init after click on Clear all', async() => {
     const user = userEvent.setup();
     fetchMock.postOnce('/api/notifications/', {});
-    const store = mockStore({ ...initialState });
+    const store = makeStore({ ...initialState });
     const { maxNotifications } = store.getState().notificationReducer;
     const limitFragment = !!maxNotifications
       ? `&limit=${maxNotifications}`
@@ -231,7 +228,7 @@ describe('Notification drawer tests', () => {
   });
 
   it('should not render notification drawer when hidden', () => {
-    const store = mockStore({
+    const store = makeStore({
       ...initialState,
       notificationReducer: {
         ...initialState.notificationReducer,

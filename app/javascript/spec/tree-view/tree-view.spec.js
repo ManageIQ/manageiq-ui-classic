@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderWithRedux } from '../helpers/mountForm';
 import { TreeViewRedux } from '../../components/tree-view';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { AreaChart } from '@carbon/charts-react';
 import { getConvertedData } from '../helpers';

@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import React from 'react';
 import { render } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import WidgetWrapper from '../../components/dashboard-widgets/widget-wrapper';

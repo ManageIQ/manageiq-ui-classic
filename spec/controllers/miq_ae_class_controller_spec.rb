@@ -64,21 +64,19 @@ describe MiqAeClassController do
       FactoryBot.create(:miq_ae_domain, :name => "test2", :parent => nil, :priority => 2)
       FactoryBot.create(:miq_ae_domain, :name => "test3", :parent => nil, :priority => 3)
       FactoryBot.create(:miq_ae_domain, :name => "test4", :parent => nil, :priority => 4)
-      order = %w(test3 test2 test4 test1)
-      edit = {
-        :new     => {:domain_order => order},
-        :key     => "priority__edit",
-        :current => {:domain_order => order},
-      }
-      controller.params = {:button => "save"}
-      controller.instance_variable_set(:@edit, edit)
+
+      order = %w[test1 test4 test2 test3]
+
+      controller.params = {:button => "save", :domain_order => order}
       controller.instance_variable_set(:@sb, {})
-      session[:edit] = edit
-      allow(controller).to receive(:replace_right_cell)
+
+      allow(controller).to receive(:render)
+
       controller.send(:domains_priority_edit)
+
       domain_order = []
       MiqAeDomain.order('priority ASC').collect { |d| domain_order.push(d.name) unless d.priority == 0 }
-      expect(domain_order).to eq(edit[:new][:domain_order])
+      expect(domain_order).to eq(order)
     end
   end
 

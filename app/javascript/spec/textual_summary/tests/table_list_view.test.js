@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import TableListView from '../../../components/textual_summary/table_list_view';
 import { tableListViewData } from '../data/table_list_view';

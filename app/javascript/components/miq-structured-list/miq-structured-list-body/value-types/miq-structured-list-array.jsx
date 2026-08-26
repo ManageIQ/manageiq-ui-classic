@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { StructuredListCell } from '@carbon/react';
@@ -67,8 +66,4 @@ MiqStructuredListArray.propTypes = {
   row: PropTypes.arrayOf(PropTypes.any).isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-};
-
-MiqStructuredListArray.defaultProps = {
-  onClick: undefined,
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer, { useFormApi } from '@@ddf';
@@ -7,7 +7,12 @@ import { Button } from '@carbon/react';
 import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const AttachDetachCloudVolumeForm = ({ recordId, isAttach, dropdownChoices, dropdownLabel }) => {
+const AttachDetachCloudVolumeForm = ({
+  recordId,
+  isAttach = true,
+  dropdownChoices = [],
+  dropdownLabel = '',
+}) => {
   const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
@@ -114,7 +119,9 @@ const verifyIsDisabled = (values, fields) => {
 };
 
 const FormTemplate = ({
-  isAttach, fields, formFields,
+  isAttach = true,
+  fields = [],
+  formFields = [],
 }) => {
   const {
     handleSubmit, onReset, onCancel, getState,
@@ -164,23 +171,11 @@ AttachDetachCloudVolumeForm.propTypes = {
   dropdownChoices: PropTypes.arrayOf(PropTypes.any),
   dropdownLabel: PropTypes.string,
 };
-AttachDetachCloudVolumeForm.defaultProps = {
-  recordId: undefined,
-  isAttach: true,
-  dropdownChoices: [],
-  dropdownLabel: "",
-};
 
 FormTemplate.propTypes = {
   isAttach: PropTypes.bool,
   fields: PropTypes.arrayOf(PropTypes.any),
   formFields: PropTypes.arrayOf(PropTypes.any),
-};
-
-FormTemplate.defaultProps = {
-  isAttach: true,
-  fields: [],
-  formFields: [],
 };
 
 export default AttachDetachCloudVolumeForm;

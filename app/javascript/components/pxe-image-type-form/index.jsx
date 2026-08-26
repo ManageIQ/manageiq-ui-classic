@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -63,9 +63,6 @@ const PxeImageForm = ({ recordId }) => {
 
 PxeImageForm.propTypes = {
   recordId: PropTypes.string,
-};
-PxeImageForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default PxeImageForm;

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import NotificationMessage from '../notification-message';
 
@@ -18,8 +17,4 @@ export default MiqStructuredListMessage;
 MiqStructuredListMessage.propTypes = {
   message: PropTypes.string,
   title: PropTypes.string.isRequired,
-};
-
-MiqStructuredListMessage.defaultProps = {
-  message: undefined,
 };

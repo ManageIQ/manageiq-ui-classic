@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ToastNotification, ActionableNotification, Link } from '@carbon/react';
 import { useDispatch } from 'react-redux';

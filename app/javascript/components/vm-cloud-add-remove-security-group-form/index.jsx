@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -8,7 +8,9 @@ import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const AddRemoveSecurityGroupForm = ({
-  recordId, redirectURL, isAdd,
+  recordId,
+  redirectURL,
+  isAdd = false,
 }) => {
   const [{
     isLoading, securityGroups,
@@ -111,10 +113,6 @@ AddRemoveSecurityGroupForm.propTypes = {
   recordId: PropTypes.string.isRequired,
   redirectURL: PropTypes.string.isRequired,
   isAdd: PropTypes.bool,
-};
-
-AddRemoveSecurityGroupForm.defaultProps = {
-  isAdd: false,
 };
 
 export default AddRemoveSecurityGroupForm;

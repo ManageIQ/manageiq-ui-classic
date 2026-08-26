@@ -1,6 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { Edit } from '@carbon/react/icons';
-import React from 'react';
 
 function createSchema(id, editMode, setState, disabled, dbMode, availableGroups, selectedGroups) {
   const fields = [

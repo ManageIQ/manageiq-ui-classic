@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import MiqDataTable from '../miq-data-table';
 import RegionForm from '../region-form';
 

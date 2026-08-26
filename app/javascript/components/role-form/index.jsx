@@ -1,0 +1,380 @@
+import {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
+import {
+  Folder, Search, RuleFilled, Edit,
+} from '@carbon/react/icons';
+import MiqFormRenderer, { useFormApi } from '@@ddf';
+import { FormSpy } from '@data-driven-forms/react-form-renderer';
+import PropTypes from 'prop-types';
+import { Loading, Button } from '@carbon/react';
+import createSchema from './role-form.schema';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
+
+const RoleForm = (props) => {
+  const {
+    selectOptions, customProps, role, existingProductFeatures,
+  } = props;
+
+  const idCounter = useRef(0);
+  const features = useRef(new Set());
+
+  const generateId = () => {
+    idCounter.current += 1;
+    return idCounter.current;
+  };
+
+  // necessary for older roles that do only have top level nodes as features
+  const checkChildren = (productFeature, child) => {
+    if (!child.children) {
+      features.current.add(child.value);
+    } else {
+      child.children.forEach((nextChild) => {
+        checkChildren(productFeature, nextChild);
+      });
+    }
+  };
+
+  // find checked boxes for all role features
+  const findCheck = (productFeature, node) => {
+    const result = node.value.split('__')[1].split('#')[0];
+
+    if (result === productFeature) {
+      if (node.children) {
+        node.children.forEach((child) => {
+          checkChildren(productFeature, child);
+        });
+      } else {
+        features.current.add(node.value);
+      }
+    }
+    if (node.children) {
+      node.children.forEach((child) => {
+        findCheck(productFeature, child);
+      });
+    }
+  };
+
+  const transformTree = (node) => {
+    const currentId = generateId();
+
+    const nodeObject = {
+      value: `${node.key}#${currentId}`,
+      label: node.text,
+    };
+
+    let icon;
+    switch (node.icon) {
+      case 'fa fa-search':
+        icon = <Search color="black" />;
+        break;
+
+      case 'fa fa-shield':
+        icon = <RuleFilled color="black" />;
+        break;
+
+      case 'pficon pficon-edit':
+        icon = <Edit color="black" />;
+        break;
+
+      case 'pficon pficon-folder-close':
+        if (node.nodes === undefined) {
+          icon = <Folder color="black" />;
+        }
+        break;
+      default:
+        break;
+    }
+    if (icon) {
+      nodeObject.icon = <span>{ icon }</span>;
+    }
+
+    if (node.nodes) {
+      nodeObject.children = node.nodes.map(transformTree);
+    }
+    return nodeObject;
+  };
+
+  const [formData, setFormData] = useState({
+    isLoading: false,
+    params: {},
+    initialValues: null,
+    nodes: [],
+    checked: [],
+  });
+
+  const customValidation = useCallback((values) => {
+    const errors = {};
+    const treeDropdown = values.tree_dropdown !== undefined
+      ? values.tree_dropdown
+      : (formData.initialValues.miqProductFeatures || []);
+
+    if (treeDropdown.length === 0) {
+      errors.tree_dropdown = 'Required';
+    }
+
+    if (values.name === '' || treeDropdown.length === 0) {
+      errors.valid = 'not_valid';
+    }
+
+    return errors;
+  }, [formData.initialValues]);
+
+  const isEdit = !!role?.id;
+
+  useEffect(() => {
+    features.current = new Set();
+    idCounter.current = 0;
+    if (isEdit) {
+      setFormData((prevState) => ({ ...prevState, isLoading: true }));
+      miqSparkleOn();
+      API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
+        const roleValues = {
+          name: response.name,
+          vm_restriction: response.settings?.restrictions?.vms,
+          service_template_restriction: response.settings?.restrictions?.service_templates,
+          miqProductFeatures: response.miq_product_features || [],
+        };
+        if (roleValues) {
+          const bsTree = JSON.parse(customProps.bs_tree);
+          const nodes = bsTree.map(transformTree);
+          roleValues.miqProductFeatures.forEach((productFeature) => {
+            findCheck(productFeature.identifier, nodes[0]);
+          });
+          setFormData({
+            isLoading: false,
+            params: {},
+            initialValues: roleValues,
+            nodes,
+            checked: Array.from(features.current),
+          });
+          miqSparkleOff();
+        }
+      });
+    } else {
+      const initialValues = {
+        name: role && role.name ? `Copy of ${role.name}` : '',
+        vm_restriction: role && role.settings && role.settings.restrictions && role.settings.restrictions.vms,
+        service_template_restriction: role && role.settings && role.settings.restrictions && role.settings.restrictions.service_templates,
+      };
+      const bsTree = JSON.parse(customProps.bs_tree);
+      const nodes = bsTree.map(transformTree);
+      if (role && role.name && existingProductFeatures) {
+        existingProductFeatures.forEach((productFeature) => {
+          findCheck(productFeature.identifier, nodes[0]);
+        });
+      }
+      initialValues.tree_dropdown = Array.from(features.current);
+      if (initialValues) {
+        setFormData({
+          isLoading: false,
+          params: {},
+          initialValues,
+          nodes,
+          checked: Array.from(features.current),
+        });
+      }
+    }
+  }, [role?.id]);
+
+  const onSubmit = (values) => {
+    miqSparkleOn();
+    if (!values.tree_dropdown) {
+      values.tree_dropdown = formData.checked;
+    }
+    const checkedBoxes = Array.from(values.tree_dropdown);
+    const treeValues = checkedBoxes.map((feature) => feature.split('#')[0]);
+    const splitValues = treeValues.map((string) => string.split('__')[1]);
+    const productFeatures = splitValues;
+
+    // Build resource object
+    const resource = {
+      name: values.name,
+      features: productFeatures.map((identifier) => ({ identifier })),
+    };
+
+    // Add settings.restrictions if any restrictions are set
+    const restrictions = {};
+    if (values.vm_restriction && values.vm_restriction !== '-1') {
+      restrictions.vms = values.vm_restriction;
+    }
+    if (values.service_template_restriction && values.service_template_restriction !== '-1') {
+      restrictions.service_templates = values.service_template_restriction;
+    }
+    if (Object.keys(restrictions).length > 0) {
+      resource.settings = { restrictions };
+    }
+
+    // Build API payload
+    let payload;
+    let apiUrl;
+
+    if (isEdit) {
+      // For edit, use POST with action: "edit" and wrap in resource
+      apiUrl = `/api/roles/${role.id}`;
+      payload = {
+        action: 'edit',
+        resource,
+      };
+    } else {
+      // For create, use POST without action wrapper
+      apiUrl = '/api/roles';
+      payload = resource;
+    }
+
+    return API.post(apiUrl, payload)
+      .then(() => {
+        const confirmation = sprintf(__('Role "%s" was saved'), resource.name);
+        miqRedirectBack(confirmation, 'success', '/ops/explorer');
+      })
+      .catch((error) => {
+        miqSparkleOff();
+        const message = error.data?.error?.message || error.message || __('An error occurred while saving the role');
+        miqRedirectBack(message, 'error', '/ops/explorer');
+      });
+  };
+
+  const onCancel = () => {
+    const message = role.id ? __('Edit of Role was cancelled by the user')
+      : __('Add of new Role was cancelled by the user');
+    miqRedirectBack(message, 'warning', '/ops/explorer');
+  };
+
+  const onReset = () => {
+    features.current = new Set();
+    idCounter.current = 0;
+    setFormData((prevState) => ({ ...prevState, isLoading: true }));
+    API.get(`/api/roles/${role.id}?expand=resources&attributes=miq_product_features`).then((response) => {
+      const roleValues = {
+        name: response.name,
+        vm_restriction: response.settings?.restrictions?.vms,
+        service_template_restriction: response.settings?.restrictions?.service_templates,
+        miqProductFeatures: response.miq_product_features || [],
+      };
+      if (roleValues.miqProductFeatures) {
+        const bsTree = JSON.parse(customProps.bs_tree);
+        const nodes = bsTree.map(transformTree);
+        roleValues.miqProductFeatures.forEach((productFeature) => {
+          findCheck(productFeature.identifier, nodes[0]);
+        });
+      }
+      setFormData((prevState) => ({
+        ...prevState, isLoading: false, initialValues: roleValues, checked: Array.from(features.current),
+      }));
+    });
+  };
+
+  return (
+    <div>
+      {formData.isLoading ? (
+        <div className="summary-spinner">
+          <Loading active small withOverlay={false} className="loading" />
+        </div>
+      ) : (
+        <div className="role-form">
+          {formData.initialValues && (
+            <MiqFormRenderer
+              schema={createSchema(selectOptions, customProps, formData)}
+              initialValues={formData.initialValues}
+              onSubmit={onSubmit}
+              onCancel={onCancel}
+              onReset={onReset}
+              validate={customValidation}
+              FormTemplate={(props) => (
+                <FormTemplate {...props} roleId={role.id} />
+              )}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const FormTemplate = ({
+  formFields, roleId,
+}) => {
+  const {
+    handleSubmit, onReset, onCancel, getState,
+  } = useFormApi();
+  const { valid, pristine } = getState();
+  const submitLabel = roleId ? __('Save') : __('Add');
+  return (
+    <form onSubmit={handleSubmit}>
+      {formFields}
+      <FormSpy>
+        {() => (
+          <div className="custom-button-wrapper">
+            { !roleId
+              ? (
+                <Button
+                  disabled={!valid}
+                  kind="primary"
+                  className="btnRight"
+                  type="submit"
+                  variant="contained"
+                >
+                  {submitLabel}
+                </Button>
+              ) : (
+                <Button
+                  disabled={!valid || pristine}
+                  kind="primary"
+                  className="btnRight"
+                  type="submit"
+                  variant="contained"
+                >
+                  {submitLabel}
+                </Button>
+              )}
+            {!!roleId
+              ? (
+                <Button
+                  disabled={pristine}
+                  kind="secondary"
+                  className="btnRight"
+                  variant="contained"
+                  onClick={onReset}
+                  type="button"
+                >
+                  { __('Reset')}
+                </Button>
+              ) : null}
+
+            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
+              { __('Cancel')}
+            </Button>
+          </div>
+        )}
+      </FormSpy>
+    </form>
+  );
+};
+
+RoleForm.propTypes = {
+  selectOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
+  customProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]).isRequired,
+  role: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    settings: PropTypes.shape({
+      restrictions: PropTypes.shape({
+        service_templates: PropTypes.string.isRequired,
+        vms: PropTypes.string.isRequired,
+      }),
+    }),
+  }),
+  existingProductFeatures: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+};
+
+FormTemplate.propTypes = {
+  formFields: PropTypes.arrayOf(
+    PropTypes.shape({ selectOptions: PropTypes.arrayOf(PropTypes.string) }),
+    PropTypes.shape({ url: PropTypes.string }),
+    PropTypes.shape({ customProps: PropTypes.shape({}) }),
+    PropTypes.shape({ role: PropTypes.shape({}) }),
+  ),
+  roleId: PropTypes.number,
+};
+
+export default RoleForm;

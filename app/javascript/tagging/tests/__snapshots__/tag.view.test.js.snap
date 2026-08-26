@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Tag view should match snapshot 1`] = `
 <div>
@@ -63,7 +63,7 @@ exports[`Tag view should match snapshot 1`] = `
                         class="cds--tooltip-trigger__wrapper"
                       >
                         <button
-                          aria-labelledby="tooltip-2"
+                          aria-labelledby="tooltip-_r_1_"
                           class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
                           type="button"
                         >
@@ -86,7 +86,7 @@ exports[`Tag view should match snapshot 1`] = `
                       <span
                         aria-hidden="true"
                         class="cds--popover"
-                        id="tooltip-2"
+                        id="tooltip-_r_1_"
                         role="tooltip"
                       >
                         <span

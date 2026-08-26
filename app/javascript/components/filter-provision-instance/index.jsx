@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Search, Close } from '@carbon/react/icons';
 import { Button, Checkbox, TextInput } from '@carbon/react';
 
 /** Component to filter the images at provisioning instances page. */
 const FilterProvisionInstance = ({
-  hideDeprecated, searchText, url, showCheckbox,
+  hideDeprecated = false,
+  searchText,
+  url,
+  showCheckbox,
 }) => {
   const [data, setData] = useState({
     loading: false,
@@ -95,8 +98,4 @@ FilterProvisionInstance.propTypes = {
   searchText: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   showCheckbox: PropTypes.bool.isRequired,
-};
-
-FilterProvisionInstance.defaultProps = {
-  hideDeprecated: false,
 };

@@ -1,10 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { reportListData } from './helper';
 import MiqDataTable from '../../miq-data-table';
 
 const ReportList = ({
-  nodes, reportMenu, reportTitle, reportDetails,
+  nodes = [],
+  reportMenu = [],
+  reportTitle = '',
+  reportDetails = {},
 }) => {
   const { headers, rows } = reportListData(nodes, reportMenu, reportTitle, reportDetails);
 
@@ -33,11 +35,4 @@ ReportList.propTypes = {
   reportMenu: PropTypes.arrayOf(PropTypes.any),
   reportTitle: PropTypes.string,
   reportDetails: PropTypes.shape({}),
-};
-
-ReportList.defaultProps = {
-  nodes: [],
-  reportMenu: [],
-  reportTitle: '',
-  reportDetails: {},
 };

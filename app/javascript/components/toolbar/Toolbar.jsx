@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { ToolbarView } from './ToolbarView';
 import { ToolbarButton } from './ToolbarButton';
@@ -14,7 +12,6 @@ export const ButtonType = {
   SEPARATOR: 'separator',
   KEBAB: 'kebab',
 };
-const ref = React.createRef();
 const isButton = (item) => (item.type === ButtonType.BUTTON);
 const isButtonTwoState = (item) => (item.type === ButtonType.BUTTON_TWO_STATE);
 const isButtonSelect = (item) => (item.type === ButtonType.BUTTON_SELECT);
@@ -36,26 +33,22 @@ const toolbarGroupHasContent = (group) =>
     && group.filter((item) => item
       && isVisibleButtonOrSelect(item)).length !== 0;
 
-export const ButtonCase = forwardRef(({ item, index, onClick }, ref) => {
+export const ButtonCase = ({ item, index = 0, onClick }) => {
   if (isButton(item) || isButtonTwoState(item)) {
     return <ToolbarButton key={index} {...item} onClick={onClick} />;
   } if (isButtonSelect(item) && (item.items.length > 0)) {
     return <ToolbarList key={index} {...item} onClick={onClick} />;
   }
   if (isKebabMenu(item) && (item.items.length > 0)) {
-    return <ToolbarKebab key={index} {...item} onClick={onClick} ref={ref} />;
+    return <ToolbarKebab key={index} {...item} onClick={onClick} />;
   }
   return null;
-});
+};
 
 ButtonCase.propTypes = {
   item: PropTypes.objectOf(PropTypes.any).isRequired,
   index: PropTypes.number,
   onClick: PropTypes.func.isRequired,
-};
-
-ButtonCase.defaultProps = {
-  index: 0,
 };
 
 /* custom buttons have ID's starting with this: */
@@ -90,7 +83,7 @@ const collapseCustomGroups = (itemsGroup, kebabLimit) => (
     : collapseOverlimit(itemsGroup, kebabLimit)
 );
 
-export const ToolbarGroup = forwardRef(({ group, onClick }, ref) => {
+export const ToolbarGroup = ({ group, onClick }) => {
   const visibleItems = group.filter(isVisibleButtonOrSelect);
 
   if (visibleItems.length === 0) {
@@ -99,25 +92,32 @@ export const ToolbarGroup = forwardRef(({ group, onClick }, ref) => {
 
   return (
     <div className="miq-toolbar-group form-group">
-      {visibleItems.map((i, index) => <ButtonCase item={i} key={index} index={index} onClick={onClick} ref={ref} />)}
+      {visibleItems.map((i, index) => <ButtonCase item={i} key={index} index={index} onClick={onClick} />)}
     </div>
   );
-});
+};
 
 ToolbarGroup.propTypes = {
   group: PropTypes.arrayOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export const Toolbar = (props) => (
-  <CountContext.Provider value={props.count}>
+export const Toolbar = ({
+  count = 0,
+  kebabLimit = 3,
+  groups,
+  onClick,
+  onViewClick,
+  views,
+}) => (
+  <CountContext.Provider value={count}>
     <div className="toolbar-pf-actions miq-toolbar-actions">
-      { props.groups
+      { groups
         .filter(toolbarGroupHasContent)
         .map((group, index) =>
           // eslint-disable-next-line react/no-array-index-key
-          <ToolbarGroup key={index} ref={ref} onClick={props.onClick} group={collapseCustomGroups(group, props.kebabLimit)} />)}
-      <ToolbarView onClick={props.onViewClick} views={props.views} />
+          <ToolbarGroup key={index} onClick={onClick} group={collapseCustomGroups(group, kebabLimit)} />)}
+      <ToolbarView onClick={onViewClick} views={views} />
     </div>
   </CountContext.Provider>
 );
@@ -129,9 +129,4 @@ Toolbar.propTypes = {
   views: PropTypes.arrayOf(PropTypes.any).isRequired, // array of view buttons
   onClick: PropTypes.func.isRequired,
   onViewClick: PropTypes.func.isRequired,
-};
-
-Toolbar.defaultProps = {
-  count: 0,
-  kebabLimit: 3,
 };

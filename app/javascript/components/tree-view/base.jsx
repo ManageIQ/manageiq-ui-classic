@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
 
 import { convert } from './helpers';
 
 const TreeViewBase = ({
-  actionMapper: overrideActionMapper,
+  actionMapper: overrideActionMapper = {},
   loadData,
-  lazyLoadData,
-  isMulti,
+  lazyLoadData = () => {},
+  isMulti = false,
   check,
   select,
   ...props
@@ -93,14 +93,6 @@ TreeViewBase.propTypes = {
   isMulti: PropTypes.bool,
   check: PropTypes.func,
   select: PropTypes.func,
-};
-
-TreeViewBase.defaultProps = {
-  actionMapper: {},
-  lazyLoadData: () => undefined,
-  isMulti: false,
-  check: undefined,
-  select: undefined,
 };
 
 export default TreeViewBase;

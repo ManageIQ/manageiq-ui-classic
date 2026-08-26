@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { StructuredListBody, StructuredListRow } from '@carbon/react';
@@ -45,9 +44,4 @@ MiqStructuredListBody.propTypes = {
   mode: PropTypes.string.isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-};
-
-MiqStructuredListBody.defaultProps = {
-  rows: undefined,
-  onClick: undefined,
 };

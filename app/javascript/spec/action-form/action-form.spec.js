@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock';
 import { waitFor } from '@testing-library/react';
 import ActionForm from '../../components/action-form/index';

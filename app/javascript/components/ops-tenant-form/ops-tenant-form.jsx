@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import createSchema from './ops-tenant-form.schema';
@@ -101,10 +101,6 @@ OpsTenantForm.propTypes = {
   divisible: PropTypes.bool.isRequired,
   redirectUrl: PropTypes.string.isRequired,
   ancestry: PropTypes.objectOf(PropTypes.any),
-};
-
-OpsTenantForm.defaultProps = {
-  ancestry: undefined,
 };
 
 export default OpsTenantForm;

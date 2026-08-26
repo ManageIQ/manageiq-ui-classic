@@ -490,6 +490,7 @@ module VmCommon
     @lastaction = "right_size"
     @rightsize = true
     @in_a_form = true
+    @right_size_data = right_size_data_for(@record)
     if params[:button] == "back"
       javascript_prologue
       javascript_redirect(previous_breadcrumb_url)
@@ -502,7 +503,6 @@ module VmCommon
 
   def right_size_print
     @record = find_record_with_rbac(Vm, params[:id])
-    @display = "download_pdf"
     disable_client_cache
 
     @options = {
@@ -511,7 +511,59 @@ module VmCommon
       :title       => "\"#{@record.name}\"".html_safe,
     }
 
-    render :template => 'vm_common/_right_size', :layout => '/layouts/print'
+    render :template => 'vm_common/_right_size', :layout => 'layouts/print',
+           :locals => {:print_data => right_size_data_for(@record)}
+  end
+
+  def right_size_data_for(record)
+    {
+      :cpu_total_cores => record.cpu_total_cores&.to_s,
+      :mem_cpu         => record.mem_cpu&.then { |v| "#{v} MB" },
+      :cpu_minimum     => Vm.cpu_recommendation_minimum.to_s,
+      :mem_minimum     => MiqReport.new.format_mbytes_to_human_size(Vm.mem_recommendation_minimum),
+      :norm            => {
+        :cpu_mhz_max  => mhz_to_human_size(record.cpu_usagemhz_rate_average_max_over_time_period, 2),
+        :cpu_mhz_high => mhz_to_human_size(record.cpu_usagemhz_rate_average_high_over_time_period, 2),
+        :cpu_mhz_avg  => mhz_to_human_size(record.cpu_usagemhz_rate_average_avg_over_time_period, 2),
+        :cpu_mhz_low  => mhz_to_human_size(record.cpu_usagemhz_rate_average_low_over_time_period, 2),
+        :cpu_pct_max  => number_to_percentage(record.max_cpu_usage_rate_average_max_over_time_period, :precision => 2),
+        :cpu_pct_high => number_to_percentage(record.max_cpu_usage_rate_average_high_over_time_period, :precision => 2),
+        :cpu_pct_avg  => number_to_percentage(record.max_cpu_usage_rate_average_avg_over_time_period, :precision => 2),
+        :cpu_pct_low  => number_to_percentage(record.max_cpu_usage_rate_average_low_over_time_period, :precision => 2),
+        :mem_max      => number_to_human_size(record.derived_memory_used_max_over_time_period&.megabytes, :precision => 2),
+        :mem_high     => number_to_human_size(record.derived_memory_used_high_over_time_period&.megabytes, :precision => 2),
+        :mem_avg      => number_to_human_size(record.derived_memory_used_avg_over_time_period&.megabytes, :precision => 2),
+        :mem_low      => number_to_human_size(record.derived_memory_used_low_over_time_period&.megabytes, :precision => 2),
+        :mem_pct_max  => number_to_percentage(record.max_mem_usage_absolute_average_max_over_time_period, :precision => 2),
+        :mem_pct_high => number_to_percentage(record.max_mem_usage_absolute_average_high_over_time_period, :precision => 2),
+        :mem_pct_avg  => number_to_percentage(record.max_mem_usage_absolute_average_avg_over_time_period, :precision => 2),
+        :mem_pct_low  => number_to_percentage(record.max_mem_usage_absolute_average_low_over_time_period, :precision => 2),
+      },
+      :conservative    => {
+        :recommended_vcpus => record.conservative_recommended_vcpus&.to_s,
+        :vcpus_change_pct  => number_to_percentage(record.conservative_vcpus_recommended_change_pct, :precision => 2),
+        :vcpus_change      => record.conservative_vcpus_recommended_change&.to_s,
+        :recommended_mem   => record.conservative_recommended_mem&.then { |v| "#{v} MB" },
+        :mem_change_pct    => number_to_percentage(record.conservative_mem_recommended_change_pct, :precision => 2),
+        :mem_change        => record.conservative_mem_recommended_change&.then { |v| "#{v} MB" },
+      },
+      :moderate        => {
+        :recommended_vcpus => record.moderate_recommended_vcpus&.to_s,
+        :vcpus_change_pct  => number_to_percentage(record.moderate_vcpus_recommended_change_pct, :precision => 2),
+        :vcpus_change      => record.moderate_vcpus_recommended_change&.to_s,
+        :recommended_mem   => record.moderate_recommended_mem&.then { |v| "#{v} MB" },
+        :mem_change_pct    => number_to_percentage(record.moderate_mem_recommended_change_pct, :precision => 2),
+        :mem_change        => record.moderate_mem_recommended_change&.then { |v| "#{v} MB" },
+      },
+      :aggressive      => {
+        :recommended_vcpus => record.aggressive_recommended_vcpus&.to_s,
+        :vcpus_change_pct  => number_to_percentage(record.aggressive_vcpus_recommended_change_pct, :precision => 2),
+        :vcpus_change      => record.aggressive_vcpus_recommended_change&.to_s,
+        :recommended_mem   => record.aggressive_recommended_mem&.then { |v| "#{v} MB" },
+        :mem_change_pct    => number_to_percentage(record.aggressive_mem_recommended_change_pct, :precision => 2),
+        :mem_change        => record.aggressive_mem_recommended_change&.then { |v| "#{v} MB" },
+      },
+    }
   end
 
   def evm_relationship

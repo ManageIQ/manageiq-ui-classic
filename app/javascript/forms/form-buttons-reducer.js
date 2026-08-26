@@ -1,4 +1,4 @@
-import FormButtons from './form-buttons';
+import { formButtonsDefaultProps } from './form-buttons';
 
 export const formButtonsActionTypes = {
   init: 'FormButtons.init',
@@ -11,7 +11,7 @@ export const formButtonsActionTypes = {
 };
 
 const formsButtonsActions = {
-  [formButtonsActionTypes.init]: (_state, payload) => ({ ...FormButtons.defaultProps, ...payload }),
+  [formButtonsActionTypes.init]: (_state, payload) => ({ ...formButtonsDefaultProps, ...payload }),
   [formButtonsActionTypes.customLabel]: (state, payload) => ({ ...state, customLabel: payload || '' }),
   [formButtonsActionTypes.newRecord]: (state, payload) => ({ ...state, newRecord: !!payload }),
   [formButtonsActionTypes.pristine]: (state, payload) => ({ ...state, pristine: !!payload, in_a_form: true }),
@@ -26,7 +26,7 @@ export const createFormButtonsActions = ({ dispatch }) =>
     [key]: payload => dispatch({ type: formButtonsActionTypes[key], payload }),
   }), {});
 
-export default (state = FormButtons.defaultProps, action) => {
+export default (state = formButtonsDefaultProps, action) => {
   const mutator = formsButtonsActions[action.type];
   return mutator ? mutator(state, action.payload) : state;
 };

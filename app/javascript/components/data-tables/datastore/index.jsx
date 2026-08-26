@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   tableData, addSelected, removeSelected,
@@ -8,7 +8,10 @@ import MiqDataTable from '../../miq-data-table';
 import { CellAction } from '../../miq-data-table/helper';
 
 const Datastore = ({
-  type, initialData, hasOptions, datastoreTypes,
+  type,
+  initialData,
+  hasOptions = false,
+  datastoreTypes,
 }) => {
   const {
     miqHeaders, miqRows, hasCheckbox, nodeTree,
@@ -111,8 +114,4 @@ Datastore.propTypes = {
   initialData: PropTypes.arrayOf(PropTypes.any).isRequired,
   hasOptions: PropTypes.bool,
   datastoreTypes: PropTypes.shape({}).isRequired,
-};
-
-Datastore.defaultProps = {
-  hasOptions: false,
 };

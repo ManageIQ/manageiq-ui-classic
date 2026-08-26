@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import MiqStructuredListIcon from '../value-tags/miq-structured-list-icon';
 import MiqStructuredListText from '../value-tags/miq-structured-list-text';

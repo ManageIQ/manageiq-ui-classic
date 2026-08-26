@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Live Migrate form component should render live migrate form when hosts empty 1`] = `
 <div>
@@ -26,7 +26,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -38,7 +37,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -55,7 +53,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
             id="block_migration"
             name="block_migration"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -67,7 +64,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -84,7 +80,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
             id="disk_over_commit"
             name="disk_over_commit"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -96,7 +91,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div
@@ -152,7 +146,6 @@ exports[`Live Migrate form component should render live migrate form with host o
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -164,7 +157,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -181,7 +173,6 @@ exports[`Live Migrate form component should render live migrate form with host o
             id="block_migration"
             name="block_migration"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -193,7 +184,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -210,7 +200,6 @@ exports[`Live Migrate form component should render live migrate form with host o
             id="disk_over_commit"
             name="disk_over_commit"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -222,7 +211,6 @@ exports[`Live Migrate form component should render live migrate form with host o
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div
@@ -279,7 +267,6 @@ exports[`Live Migrate form component should render live migrate form with multip
             id="auto_select_host"
             name="auto_select_host"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -291,7 +278,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Auto-select Host?
-              
             </div>
           </label>
           <div
@@ -308,7 +294,6 @@ exports[`Live Migrate form component should render live migrate form with multip
             id="block_migration"
             name="block_migration"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -320,7 +305,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Block Migration
-              
             </div>
           </label>
           <div
@@ -337,7 +321,6 @@ exports[`Live Migrate form component should render live migrate form with multip
             id="disk_over_commit"
             name="disk_over_commit"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -349,7 +332,6 @@ exports[`Live Migrate form component should render live migrate form with multip
               dir="auto"
             >
               Disk Over Commit
-              
             </div>
           </label>
           <div

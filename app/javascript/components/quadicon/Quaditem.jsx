@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
@@ -86,15 +85,4 @@ Quaditem.propTypes = {
   background: PropTypes.string,
   color: PropTypes.string,
   piechart: PropTypes.number,
-};
-
-Quaditem.defaultProps = {
-  fonticon: undefined,
-  fileicon: undefined,
-  text: undefined,
-  background: undefined,
-  color: undefined,
-  piechart: undefined,
-  tooltip: undefined,
-  className: undefined,
 };

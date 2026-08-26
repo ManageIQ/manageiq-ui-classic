@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -38,9 +37,6 @@ const PxeIsoDatastoreForm = ({ emses }) => {
 
 PxeIsoDatastoreForm.propTypes = {
   emses: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })),
-};
-PxeIsoDatastoreForm.defaultProps = {
-  emses: undefined,
 };
 
 export default PxeIsoDatastoreForm;

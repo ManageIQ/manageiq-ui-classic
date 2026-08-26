@@ -1,4 +1,3 @@
-import React from 'react';
 import { pick } from 'lodash';
 import AsyncAction from '../async-action-button';
 
@@ -15,7 +14,13 @@ const getResourceNames = (emsRefList) =>
       return __('Compliant resources: ') + nameArray.join(', ');
     });
 
-const GetCompliantResources = ({ ...props }) => {
+const GetCompliantResources = ({
+  actionSuccessLabel = __('Action successful'),
+  edit = false,
+  actionDependencies = [],
+  isRequired,
+  ...props
+}) => {
   const buttonLabel = __('Check Compliant Resources');
   const progressMsg = __('Checking');
   const defaultText = __(' ');
@@ -48,16 +53,16 @@ const GetCompliantResources = ({ ...props }) => {
       actionProgressLabel={progressMsg}
       actionDefaultError={defaultText}
       helperText={helperText}
+      actionSuccessLabel={actionSuccessLabel}
+      edit={edit}
+      actionDependencies={actionDependencies}
+      isRequired={isRequired}
     />
   );
 };
 
 GetCompliantResources.propTypes = {
   ...AsyncAction.propTypes,
-};
-
-GetCompliantResources.defaultPrps = {
-  ...AsyncAction.defaultProps,
 };
 
 export default GetCompliantResources;

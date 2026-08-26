@@ -196,3 +196,55 @@ describe('Automation > Embedded Automate > Customization', () => {
     });
   });
 });
+
+describe('Dialog Details Tabs', () => {
+  const DIALOG_LABEL = 'Tab Test Dialog';
+
+  beforeEach(() => {
+    cy.appFactories([
+      ['create', 'dialog', {label: DIALOG_LABEL}],
+    ]);
+    cy.login();
+    cy.menu('Automation', 'Embedded Automate', 'Customization');
+    cy.accordion('Service Dialogs');
+    cy.selectAccordionItem(['All Dialogs', DIALOG_LABEL]);
+  });
+
+  afterEach(() => {
+    cy.appDbState('restore');
+  });
+
+  it('displays dialog tabs and switches between them', () => {
+    // Verify the React tab wrapper and tab list are visible
+    cy.get('.miq_custom_tab_wrapper').should('be.visible');
+    cy.get('.miq_custom_tabs').should('be.visible');
+
+    // Sample tab is active by default — its content panel should be visible
+    cy.get('#sample_tab').should('have.class', 'active');
+
+    // Switch to Basic Info tab and verify its content panel becomes active
+    cy.contains('button', 'Basic Info').should('be.visible').click();
+    cy.get('#info_tab').should('have.class', 'active');
+    cy.get('#info_tab').contains('Basic Information').should('be.visible');
+
+    // Switch back to Sample tab
+    cy.contains('button', 'Sample').should('be.visible').click();
+    cy.get('#sample_tab').should('have.class', 'active');
+  });
+
+  it('resets to default tab when navigating away and back', () => {
+    // Switch to the Basic Info tab
+    cy.contains('button', 'Basic Info').should('be.visible').click();
+    cy.get('#info_tab').should('have.class', 'active');
+
+    // Navigate away by clicking the root 'All Dialogs' node
+    cy.selectAccordionItem(['All Dialogs']);
+
+    // Navigate back to the dialog record
+    cy.selectAccordionItem(['All Dialogs', DIALOG_LABEL]);
+
+    // Tabs should have re-rendered with the default (Sample) tab active
+    cy.get('.miq_custom_tab_wrapper').should('be.visible');
+    cy.get('#sample_tab').should('have.class', 'active');
+  });
+});

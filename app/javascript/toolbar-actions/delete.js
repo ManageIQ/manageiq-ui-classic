@@ -1,3 +1,4 @@
+import { setLocationHref } from '../helpers/window-location';
 import { API } from '../http_api';
 
 export function showMessage(messages, labels = { single: '', multiple: '' }) {
@@ -30,7 +31,7 @@ export function APIDelete(entity, resources, labels = { single: '', multiple: ''
   }).then((data) => {
     if (redirectUrl) {
       miqFlashLater({ message: sprintf(__('%s: "%s" was successfully deleted'), labels.single, name) });
-      window.location.href = redirectUrl;
+      setLocationHref(redirectUrl)
     } else {
       showMessage(generateMessages(data.results), labels);
     };

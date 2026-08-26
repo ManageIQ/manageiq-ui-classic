@@ -1,4 +1,3 @@
-import React from 'react';
 import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import VisualSettingsForm from '../../components/visual-settings-form';

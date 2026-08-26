@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ChartCard from '../../components/container-projects/chart-card';
 import { chartConfig } from '../../components/provider-dashboard-charts/charts_config';

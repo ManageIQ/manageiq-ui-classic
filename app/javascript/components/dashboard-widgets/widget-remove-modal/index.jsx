@@ -1,10 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from '@carbon/react';
 import miqRedirectBack from '../../../helpers/miq-redirect-back';
 
 const WidgetRemoveModal = ({
-  showConfirm, setState, widgetTitle, href,
+  showConfirm = false,
+  setState,
+  widgetTitle,
+  href = '',
 }) => (
   <Modal
     className="miq-widget-remove-modal"
@@ -37,11 +39,6 @@ WidgetRemoveModal.propTypes = {
   setState: PropTypes.func.isRequired,
   widgetTitle: PropTypes.string.isRequired,
   href: PropTypes.string,
-};
-
-WidgetRemoveModal.defaultProps = {
-  showConfirm: false,
-  href: '',
 };
 
 export default WidgetRemoveModal;

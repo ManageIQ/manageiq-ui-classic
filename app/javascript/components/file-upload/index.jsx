@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useFieldApi } from '@@ddf';
@@ -28,10 +27,6 @@ const FileUploadComponent = (props) => {
 
 FileUploadComponent.propTypes = {
   type: PropTypes.string,
-};
-
-FileUploadComponent.defaultProps = {
-  type: undefined,
 };
 
 export default FileUploadComponent;

@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './network-routers-interfaces-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const InterfacesForm = ({ interfaces, add, routerId }) => {
+const InterfacesForm = ({
+  interfaces,
+  add = false,
+  routerId,
+}) => {
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!routerId });
 
   const onSubmit = (values) => {
@@ -83,11 +87,6 @@ InterfacesForm.propTypes = {
   routerId: PropTypes.string.isRequired,
   interfaces: PropTypes.objectOf(PropTypes.any),
   add: PropTypes.bool,
-};
-
-InterfacesForm.defaultProps = {
-  interfaces: undefined,
-  add: false,
 };
 
 export default InterfacesForm;

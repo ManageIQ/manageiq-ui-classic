@@ -1,6 +1,11 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  Suspense,
+} from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Loading } from '@carbon/react';
 import { debounce } from 'lodash';
 import FilterNamespace from './FilterNamespace';
@@ -16,21 +21,19 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
   const [filterData, setFilterData] = useState({ searchText: '', selectedDomain: '' });
 
   /** Loads the domains and stores in domainData for 60 seconds. */
-  const { data: domainsData, isLoading: domainsLoading } = useQuery(
-    'domainsData',
-    async() => (await http.get(namespaceUrls.aeDomainsUrl)).domains,
-    {
-      staleTime: 60000,
-    }
-  );
+  const { data: domainsData } = useSuspenseQuery({
+    queryKey: ['domainsData'],
+    queryFn: async() => (await http.get(namespaceUrls.aeDomainsUrl)).domains,
+    staleTime: 60000,
+  });
 
   /** Loads the methods and stores in methodsData for 60 seconds.
    * If condition works on page load
    * Else part would work if there is a change in filterData.
    */
-  const { data, isLoading: methodsLoading } = useQuery(
-    ['methodsData', filterData.searchText, filterData.selectedDomain],
-    async() => {
+  const { data } = useSuspenseQuery({
+    queryKey: ['methodsData', filterData.searchText, filterData.selectedDomain],
+    queryFn: async() => {
       if (!filterData.searchText && !filterData.selectedDomain) {
         const response = await http.get(namespaceUrls.aeMethodsUrl);
         return formatMethods(response.methods);
@@ -39,12 +42,10 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
       const response = await http.get(url);
       return formatMethods(response.methods);
     },
-    {
-      keepPreviousData: true,
-      refetchOnWindowFocus: false,
-      staleTime: 60000,
-    }
-  );
+    placeholderData: (previousData) => previousData,
+    refetchOnWindowFocus: false,
+    staleTime: 60000,
+  });
 
   /** Debounce the search text by delaying the text input provided to the API. */
   const debouncedSearch = debounce((newFilterData) => {
@@ -90,9 +91,7 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
     <div className="inline-method-selector">
       <FilterNamespace domains={domainsData} onSearch={onSearch} />
       <div className="inline-contents-wrapper">
-        {(domainsLoading || methodsLoading)
-          ? <Loading active small withOverlay={false} className="loading" />
-          : renderContents}
+        {renderContents}
       </div>
     </div>
   );
@@ -100,7 +99,18 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
 
 NamespaceSelector.propTypes = {
   onSelectMethod: PropTypes.func.isRequired,
-  selectedIds: PropTypes.arrayOf(PropTypes.any).isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
 };
 
-export default NamespaceSelector;
+const NamespaceSelectorWithSuspense = (props) => (
+  <Suspense fallback={<Loading active small withOverlay={false} className="loading" />}>
+    <NamespaceSelector {...props} />
+  </Suspense>
+);
+
+NamespaceSelectorWithSuspense.propTypes = {
+  onSelectMethod: PropTypes.func.isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+};
+
+export default NamespaceSelectorWithSuspense;

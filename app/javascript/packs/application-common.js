@@ -6,6 +6,13 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+// TODO: Remove this import once TypeScript migration is complete
+// This enables PropTypes validation for external library components (Carbon, PatternFly, etc.)
+// React 19 removed automatic PropTypes checking, so we manually enable it via monkey-patch
+// Note: This only catches library components. Our own ManageIQ components are validated
+// in app/javascript/miq-component/react-blueprint.jsx before they're wrapped and rendered
+import '../utils/enable-proptypes-globally';
+
 import 'proxy-polyfill';
 import { Spinner } from 'spin.js';
 import 'spin.js/spin.css';
@@ -18,8 +25,6 @@ import * as helpers from '../miq-component/helpers';
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 
 import { initializeStore } from '../miq-redux';
-import { history } from '../miq-component/react-history.js';
-import createReduxRoutingActions from '../miq-redux/redux-router-actions';
 import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
 import { miqOptimizationInit } from '../components/data-tables/optimization/listen.js';
 
@@ -39,8 +44,6 @@ const store = initializeStore();
 ManageIQ.redux = {
   store,
   addReducer: store.injectReducers,
-  history,
-  ...createReduxRoutingActions(store),
   formButtonsActions: createFormButtonsActions(store),
   formButtonsActionTypes: { ...formButtonsActionTypes },
 };

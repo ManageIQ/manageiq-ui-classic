@@ -2,6 +2,7 @@ import { onClickTree, onClick, onClickToExplorer } from '../../components/breadc
 
 import '../helpers/miqAjax';
 import '../helpers/miqSparkle';
+import { locationAssign } from '../../helpers/window-location';
 
 describe('Breadcrumbs onClick functions', () => {
   let preventDefaultMock;
@@ -65,16 +66,6 @@ describe('Breadcrumbs onClick functions', () => {
   });
 
   describe('onClickToExplorer', () => {
-    const realLocation = window.location;
-
-    beforeAll(() => {
-      delete window.location;
-      window.location = { ...realLocation, assign: jest.fn() };
-    });
-    afterAll(() => {
-      window.location = realLocation;
-    });
-
     it('calls prevent default', () => {
       window.miqCheckForChanges = () => false;
 
@@ -89,7 +80,7 @@ describe('Breadcrumbs onClick functions', () => {
       onClickToExplorer(event, 'pxe', 'explorer');
 
       expect(preventDefaultMock).not.toHaveBeenCalled();
-      expect(window.location.assign).toHaveBeenCalledWith('/pxe/explorer');
+      expect(locationAssign).toHaveBeenCalledWith('/pxe/explorer');
     });
   });
 });

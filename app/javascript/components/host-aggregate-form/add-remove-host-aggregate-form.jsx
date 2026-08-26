@@ -1,11 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
 import createSchema from './add-remove-host-aggregate-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const AddRemoveHostAggregateForm = ({ recordId, hostChoices, isAdd }) => {
+const AddRemoveHostAggregateForm = ({
+  recordId,
+  hostChoices = [],
+  isAdd = true,
+}) => {
   const hostOptions = [];
   hostChoices.forEach((host) => {
     hostOptions.push({ label: host[0], value: host[1].toString() });
@@ -55,11 +58,6 @@ AddRemoveHostAggregateForm.propTypes = {
   recordId: PropTypes.string,
   hostChoices: PropTypes.arrayOf(PropTypes.any),
   isAdd: PropTypes.bool,
-};
-AddRemoveHostAggregateForm.defaultProps = {
-  recordId: undefined,
-  hostChoices: [],
-  isAdd: true,
 };
 
 export default AddRemoveHostAggregateForm;

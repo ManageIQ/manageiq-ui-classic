@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Ansible playbook edit catalog Form Component should not render some fields in retirement tab when repository id is not present in retirement section 1`] = `
 <div>
@@ -37,12 +37,12 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
         role="tablist"
       >
         <button
-          aria-controls="ccs-19-tabpanel-0"
+          aria-controls="ccs-_r_i_-tabpanel-0"
           aria-selected="true"
           class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-19-tab-0"
+          id="ccs-_r_i_-tab-0"
           role="tab"
           tabindex="0"
           type="button"
@@ -87,12 +87,12 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
           </button>
         </div>
         <button
-          aria-controls="ccs-19-tabpanel-1"
+          aria-controls="ccs-_r_i_-tabpanel-1"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-19-tab-1"
+          id="ccs-_r_i_-tab-1"
           role="tab"
           tabindex="-1"
           type="button"
@@ -137,12 +137,12 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
           </button>
         </div>
         <button
-          aria-controls="ccs-19-tabpanel-2"
+          aria-controls="ccs-_r_i_-tabpanel-2"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-19-tab-2"
+          id="ccs-_r_i_-tab-2"
           role="tab"
           tabindex="-1"
           type="button"
@@ -211,9 +211,9 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
       </button>
     </div>
     <div
-      aria-labelledby="ccs-19-tab-0"
+      aria-labelledby="ccs-_r_i_-tab-0"
       class="cds--tab-content"
-      id="ccs-19-tabpanel-0"
+      id="ccs-_r_i_-tabpanel-0"
       role="tabpanel"
     >
       <div
@@ -252,7 +252,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 type="text"
                 value="hh"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -289,7 +288,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 type="text"
                 value="hhhk"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -309,7 +307,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
               id="display"
               name="display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -321,7 +318,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 dir="auto"
               >
                 Display in Catalog
-                
               </div>
             </label>
             <div
@@ -357,7 +353,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
             >
               123
             </textarea>
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -551,7 +546,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -803,7 +797,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2014,7 +2007,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2045,7 +2037,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 type="text"
                 value="1224"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -2058,10 +2049,10 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
       </div>
     </div>
     <div
-      aria-labelledby="ccs-19-tab-1"
+      aria-labelledby="ccs-_r_i_-tab-1"
       class="cds--tab-content"
       hidden=""
-      id="ccs-19-tabpanel-1"
+      id="ccs-_r_i_-tabpanel-1"
       role="tabpanel"
     >
       <div
@@ -2209,7 +2200,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2747,7 +2737,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2837,7 +2826,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2886,7 +2874,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -2977,7 +2964,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3033,7 +3019,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3059,7 +3044,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-23"
+                  id="radio-button-_r_m_"
                   label="Localhost"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -3067,7 +3052,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-23"
+                  for="radio-button-_r_m_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -3077,7 +3062,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -3086,7 +3070,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-24"
+                  id="radio-button-_r_n_"
                   label="Specify host values"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -3094,7 +3078,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-24"
+                  for="radio-button-_r_n_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -3104,7 +3088,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -3141,7 +3124,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -3210,7 +3192,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3294,7 +3275,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -3337,7 +3317,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-27"
+                  id="radio-button-_r_q_"
                   label="Use Existing"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -3345,7 +3325,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-27"
+                  for="radio-button-_r_q_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -3355,7 +3335,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Use Existing
-                    
                   </span>
                 </label>
               </div>
@@ -3364,7 +3343,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-28"
+                  id="radio-button-_r_r_"
                   label="Create New"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -3372,7 +3351,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-28"
+                  for="radio-button-_r_r_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -3382,7 +3361,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Create New
-                    
                   </span>
                 </label>
               </div>
@@ -4045,17 +4023,16 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      aria-labelledby="ccs-19-tab-2"
+      aria-labelledby="ccs-_r_i_-tab-2"
       class="cds--tab-content"
       hidden=""
-      id="ccs-19-tabpanel-2"
+      id="ccs-_r_i_-tabpanel-2"
       role="tabpanel"
     >
       <div
@@ -4205,7 +4182,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -4231,7 +4207,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-31"
+                  id="radio-button-_r_u_"
                   label="Localhost"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -4239,7 +4215,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-31"
+                  for="radio-button-_r_u_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -4249,7 +4225,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -4258,7 +4233,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-32"
+                  id="radio-button-_r_v_"
                   label="Specify host values"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -4266,7 +4241,7 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-32"
+                  for="radio-button-_r_v_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -4276,7 +4251,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -4313,7 +4287,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -4382,7 +4355,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -4466,7 +4438,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -4522,7 +4493,6 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -4611,12 +4581,12 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
         role="tablist"
       >
         <button
-          aria-controls="ccs-15-tabpanel-0"
+          aria-controls="ccs-_r_0_-tabpanel-0"
           aria-selected="true"
           class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-15-tab-0"
+          id="ccs-_r_0_-tab-0"
           role="tab"
           tabindex="0"
           type="button"
@@ -4661,12 +4631,12 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
           </button>
         </div>
         <button
-          aria-controls="ccs-15-tabpanel-1"
+          aria-controls="ccs-_r_0_-tabpanel-1"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-15-tab-1"
+          id="ccs-_r_0_-tab-1"
           role="tab"
           tabindex="-1"
           type="button"
@@ -4711,12 +4681,12 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
           </button>
         </div>
         <button
-          aria-controls="ccs-15-tabpanel-2"
+          aria-controls="ccs-_r_0_-tabpanel-2"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-15-tab-2"
+          id="ccs-_r_0_-tab-2"
           role="tab"
           tabindex="-1"
           type="button"
@@ -4785,9 +4755,9 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
       </button>
     </div>
     <div
-      aria-labelledby="ccs-15-tab-0"
+      aria-labelledby="ccs-_r_0_-tab-0"
       class="cds--tab-content"
-      id="ccs-15-tabpanel-0"
+      id="ccs-_r_0_-tabpanel-0"
       role="tabpanel"
     >
       <div
@@ -4826,7 +4796,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 type="text"
                 value="hh"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -4863,7 +4832,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 type="text"
                 value="hhhk"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -4883,7 +4851,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
               id="display"
               name="display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -4895,7 +4862,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 dir="auto"
               >
                 Display in Catalog
-                
               </div>
             </label>
             <div
@@ -4931,7 +4897,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
             >
               123
             </textarea>
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -5125,7 +5090,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -5377,7 +5341,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -6588,7 +6551,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -6619,7 +6581,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 type="text"
                 value="1224"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -6632,10 +6593,10 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
       </div>
     </div>
     <div
-      aria-labelledby="ccs-15-tab-1"
+      aria-labelledby="ccs-_r_0_-tab-1"
       class="cds--tab-content"
       hidden=""
-      id="ccs-15-tabpanel-1"
+      id="ccs-_r_0_-tabpanel-1"
       role="tabpanel"
     >
       <div
@@ -6783,7 +6744,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7321,7 +7281,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7411,7 +7370,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7460,7 +7418,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7551,7 +7508,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7607,7 +7563,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7633,7 +7588,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-3"
+                  id="radio-button-_r_4_"
                   label="Localhost"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -7641,7 +7596,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-3"
+                  for="radio-button-_r_4_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -7651,7 +7606,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -7660,7 +7614,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-4"
+                  id="radio-button-_r_5_"
                   label="Specify host values"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -7668,7 +7622,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-4"
+                  for="radio-button-_r_5_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -7678,7 +7632,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -7715,7 +7668,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -7784,7 +7736,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7868,7 +7819,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -7911,7 +7861,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-7"
+                  id="radio-button-_r_8_"
                   label="Use Existing"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -7919,7 +7869,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-7"
+                  for="radio-button-_r_8_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -7929,7 +7879,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Use Existing
-                    
                   </span>
                 </label>
               </div>
@@ -7938,7 +7887,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-8"
+                  id="radio-button-_r_9_"
                   label="Create New"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -7946,7 +7895,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-8"
+                  for="radio-button-_r_9_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -7956,7 +7905,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Create New
-                    
                   </span>
                 </label>
               </div>
@@ -8619,17 +8567,16 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      aria-labelledby="ccs-15-tab-2"
+      aria-labelledby="ccs-_r_0_-tab-2"
       class="cds--tab-content"
       hidden=""
-      id="ccs-15-tabpanel-2"
+      id="ccs-_r_0_-tabpanel-2"
       role="tabpanel"
     >
       <div
@@ -8779,7 +8726,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9311,7 +9257,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9395,7 +9340,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9444,7 +9388,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9535,7 +9478,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9591,7 +9533,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9617,7 +9558,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-11"
+                  id="radio-button-_r_c_"
                   label="Localhost"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -9625,7 +9566,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-11"
+                  for="radio-button-_r_c_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -9635,7 +9576,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -9644,7 +9584,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-12"
+                  id="radio-button-_r_d_"
                   label="Specify host values"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -9652,7 +9592,7 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-12"
+                  for="radio-button-_r_d_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -9662,7 +9602,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -9699,7 +9638,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -9768,7 +9706,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9852,7 +9789,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -9915,7 +9851,6 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -10004,12 +9939,12 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
         role="tablist"
       >
         <button
-          aria-controls="ccs-37-tabpanel-0"
+          aria-controls="ccs-_r_14_-tabpanel-0"
           aria-selected="true"
           class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-37-tab-0"
+          id="ccs-_r_14_-tab-0"
           role="tab"
           tabindex="0"
           type="button"
@@ -10054,12 +9989,12 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
           </button>
         </div>
         <button
-          aria-controls="ccs-37-tabpanel-1"
+          aria-controls="ccs-_r_14_-tabpanel-1"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-37-tab-1"
+          id="ccs-_r_14_-tab-1"
           role="tab"
           tabindex="-1"
           type="button"
@@ -10104,12 +10039,12 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
           </button>
         </div>
         <button
-          aria-controls="ccs-37-tabpanel-2"
+          aria-controls="ccs-_r_14_-tabpanel-2"
           aria-selected="false"
           class="cds--tabs__nav-item cds--tabs__nav-link"
           component="tab-item"
           fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-          id="ccs-37-tab-2"
+          id="ccs-_r_14_-tab-2"
           role="tab"
           tabindex="-1"
           type="button"
@@ -10178,9 +10113,9 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
       </button>
     </div>
     <div
-      aria-labelledby="ccs-37-tab-0"
+      aria-labelledby="ccs-_r_14_-tab-0"
       class="cds--tab-content"
-      id="ccs-37-tabpanel-0"
+      id="ccs-_r_14_-tabpanel-0"
       role="tabpanel"
     >
       <div
@@ -10219,7 +10154,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 type="text"
                 value="hh"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -10256,7 +10190,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 type="text"
                 value="hhhk"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -10276,7 +10209,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
               id="display"
               name="display"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -10288,7 +10220,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 dir="auto"
               >
                 Display in Catalog
-                
               </div>
             </label>
             <div
@@ -10324,7 +10255,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
             >
               123
             </textarea>
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -10518,7 +10448,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -10770,7 +10699,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -11981,7 +11909,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -12012,7 +11939,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 type="text"
                 value="1224"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -12025,10 +11951,10 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
       </div>
     </div>
     <div
-      aria-labelledby="ccs-37-tab-1"
+      aria-labelledby="ccs-_r_14_-tab-1"
       class="cds--tab-content"
       hidden=""
-      id="ccs-37-tabpanel-1"
+      id="ccs-_r_14_-tabpanel-1"
       role="tabpanel"
     >
       <div
@@ -12176,7 +12102,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -12714,7 +12639,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -12804,7 +12728,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -12853,7 +12776,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -12944,7 +12866,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -13000,7 +12921,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -13026,7 +12946,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-41"
+                  id="radio-button-_r_18_"
                   label="Localhost"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -13034,7 +12954,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-41"
+                  for="radio-button-_r_18_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -13044,7 +12964,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -13053,7 +12972,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-42"
+                  id="radio-button-_r_19_"
                   label="Specify host values"
                   name="config_info.provision.specify_host_type"
                   type="radio"
@@ -13061,7 +12980,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-42"
+                  for="radio-button-_r_19_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -13071,7 +12990,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -13108,7 +13026,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -13177,7 +13094,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -13261,7 +13177,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -13304,7 +13219,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-45"
+                  id="radio-button-_r_1c_"
                   label="Use Existing"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -13312,7 +13227,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-45"
+                  for="radio-button-_r_1c_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -13322,7 +13237,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Use Existing
-                    
                   </span>
                 </label>
               </div>
@@ -13331,7 +13245,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-46"
+                  id="radio-button-_r_1d_"
                   label="Create New"
                   name="config_info.provision.dialog_type"
                   type="radio"
@@ -13339,7 +13253,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-46"
+                  for="radio-button-_r_1d_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -13349,7 +13263,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Create New
-                    
                   </span>
                 </label>
               </div>
@@ -14012,17 +13925,16 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      aria-labelledby="ccs-37-tab-2"
+      aria-labelledby="ccs-_r_14_-tab-2"
       class="cds--tab-content"
       hidden=""
-      id="ccs-37-tabpanel-2"
+      id="ccs-_r_14_-tabpanel-2"
       role="tabpanel"
     >
       <div
@@ -14172,7 +14084,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -14727,7 +14638,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   opacity="0"
                 />
               </svg>
-              
             </div>
             <div
               class="cds--form-requirement"
@@ -14841,7 +14751,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   opacity="0"
                 />
               </svg>
-              
             </div>
             <div
               class="cds--form-requirement"
@@ -14897,7 +14806,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -14988,7 +14896,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -15014,7 +14921,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 <input
                   checked=""
                   class="cds--radio-button"
-                  id="radio-button-49"
+                  id="radio-button-_r_1g_"
                   label="Localhost"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -15022,7 +14929,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-49"
+                  for="radio-button-_r_1g_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -15032,7 +14939,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Localhost
-                    
                   </span>
                 </label>
               </div>
@@ -15041,7 +14947,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
               >
                 <input
                   class="cds--radio-button"
-                  id="radio-button-50"
+                  id="radio-button-_r_1h_"
                   label="Specify host values"
                   name="config_info.retirement.specify_host_type"
                   type="radio"
@@ -15049,7 +14955,7 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 />
                 <label
                   class="cds--radio-button__label"
-                  for="radio-button-50"
+                  for="radio-button-_r_1h_"
                 >
                   <span
                     class="cds--radio-button__appearance"
@@ -15059,7 +14965,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                     dir="auto"
                   >
                     Specify host values
-                    
                   </span>
                 </label>
               </div>
@@ -15096,7 +15001,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -15165,7 +15069,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -15249,7 +15152,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>
@@ -15312,7 +15214,6 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
                   d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                 />
               </svg>
-              
             </div>
           </div>
         </div>

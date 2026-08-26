@@ -1,5 +1,5 @@
 /* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check", "silent_activate", "select_node"]}] */
-import React, { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tree, Node } from 'react-wooden-tree';
@@ -17,13 +17,13 @@ const TreeView = (props) => {
   const {
     tree_name,
     bs_tree,
-    check_url,
-    click_url,
+    check_url = '',
+    click_url = '',
     oncheck,
     onclick,
-    checkboxes,
-    allow_reselect,
-    hierarchical_check,
+    checkboxes = false,
+    allow_reselect = false,
+    hierarchical_check = false,
     callBack,
     silent_activate,
     select_node,
@@ -162,18 +162,6 @@ TreeView.propTypes = {
   hierarchical_check: PropTypes.bool,
   silent_activate: PropTypes.bool || undefined,
   select_node: PropTypes.string,
-};
-
-TreeView.defaultProps = {
-  checkboxes: false,
-  allow_reselect: false,
-  oncheck: undefined,
-  onclick: undefined,
-  check_url: '',
-  click_url: '',
-  hierarchical_check: false,
-  silent_activate: undefined,
-  select_node: undefined,
 };
 
 const TreeViewRedux = connect(null, { callBack })(TreeView);

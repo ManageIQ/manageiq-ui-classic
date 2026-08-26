@@ -1,5 +1,3 @@
-// Note: You must restart bin/webpack-dev-server for changes to take effect
-
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 
@@ -9,12 +7,29 @@ const { sync } = require('glob');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
 const fs = require('fs');
 
 const { env, settings, i18n, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
 const RailsEnginesPlugin = require('./RailsEnginesPlugin');
+const { generateTsConfigWebpack, needsRegeneration } = require('./generate-tsconfig.ts');
+
+// Generate tsconfig.webpack.json before webpack runs
+// This ensures TypeScript checking includes all plugin directories
+const rootDir = resolve(__dirname, '../..');
+const tsconfigWebpackPath = resolve(rootDir, 'tsconfig.webpack.json');
+const pathsJsonPath = resolve(__dirname, './paths.json');
+
+if (needsRegeneration(tsconfigWebpackPath, pathsJsonPath)) {
+  console.log('Generating tsconfig.webpack.json...');
+  try {
+    generateTsConfigWebpack(rootDir, engines);
+  } catch (error) {
+    console.error('Failed to generate tsconfig.webpack.json:', error.message);
+  }
+}
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
@@ -23,21 +38,15 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 const gettextDir = i18n;
 
 const sharedPackages = [
-  // manageiq-providers-lenovo, manageiq-providers-nxst & bluecf-customization need this to resolve the Carbon package
   '@carbon/react',
   'angular',
-  'connected-react-router',
   'jquery',
   'lodash',
   'moment',
   'prop-types',
   'react',
-  'react-bootstrap',
   'react-dom',
   'react-redux',
-  'react-router',
-  'react-router-dom',
-  'redux',
 ];
 
 let packPaths = {};
@@ -65,6 +74,32 @@ let plugins = [
   new WebpackManifestPlugin({
     publicPath: output.publicPath,
     writeToFileEmit: true,
+  }),
+
+  // TypeScript type checking in parallel with webpack build
+  // Uses tsconfig.webpack.json which includes all plugin directories
+  new ForkTsCheckerWebpackPlugin({
+    async: process.env.NODE_ENV === 'development',
+    typescript: {
+      configFile: resolve(__dirname, '../../tsconfig.webpack.json'),
+      diagnosticOptions: {
+        semantic: true,
+        syntactic: true,
+      },
+      extensions: {
+        vue: false,
+      },
+      build: false,
+    },
+    issue: {
+      exclude: [
+        { file: '**/node_modules/**' },
+      ],
+    },
+    logger: {
+      infrastructure: 'console',
+      issues: 'console',
+    },
   }),
 
   // plugin to output timestamp after compilation (useful for --watch)
@@ -169,6 +204,9 @@ module.exports = {
       '@patternfly/patternfly': resolveModule('NONEXISTENT'),
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
       '@@ddf': resolve(dirname(__filename), '../../app/javascript/forms/data-driven-form'),
+      '@@miq-menu': resolve(dirname(__filename), '../../app/javascript/menu'),
+      '@@miq-redux': resolve(dirname(__filename), '../../app/javascript/redux'),
+      '@@miq-types': resolve(dirname(__filename), '../../app/javascript/types'),
       'gettext_i18n_rails_js': gettextDir,
     },
     extensions: settings.extensions,

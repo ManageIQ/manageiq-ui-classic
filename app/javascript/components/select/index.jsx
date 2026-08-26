@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { components } from '@data-driven-forms/carbon-component-mapper';
 
@@ -9,7 +9,7 @@ const SelectWithOnChange = ({
   loadOptions: _loadOptions,
   options: _options,
   onChange,
-  placeholder,
+  placeholder = `<${__('Choose')}>`,
   ...props
 }) => {
   if (onChange) {
@@ -57,15 +57,6 @@ SelectWithOnChange.propTypes = {
   })),
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-};
-
-SelectWithOnChange.defaultProps = {
-  includeEmpty: undefined,
-  isDisabled: undefined,
-  loadOptions: undefined,
-  onChange: undefined,
-  options: [],
-  placeholder: `<${__('Choose')}>`,
 };
 
 export default SelectWithOnChange;

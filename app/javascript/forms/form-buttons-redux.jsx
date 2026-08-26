@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import FormButtons from './form-buttons';
 
-function FormButtonsRedux(props) {
-  return <FormButtons {...props} />;
+function FormButtonsRedux({ callbackOverrides = {}, ...props }) {
+  return <FormButtons callbackOverrides={callbackOverrides} {...props} />;
 }
 
 FormButtonsRedux.propTypes = {
@@ -15,10 +14,6 @@ FormButtonsRedux.propTypes = {
     resetClicked: PropTypes.func,
     cancelClicked: PropTypes.func,
   }),
-};
-
-FormButtonsRedux.defaultProps = {
-  callbackOverrides: {},
 };
 
 function mapStateToProps(state, ownProps) {

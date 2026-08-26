@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
@@ -64,11 +64,6 @@ const VmResizeForm = ({ recordId, vmCloudResizeFormId }) => {
 VmResizeForm.propTypes = {
   recordId: PropTypes.string,
   vmCloudResizeFormId: PropTypes.string,
-};
-
-VmResizeForm.defaultProps = {
-  recordId: undefined,
-  vmCloudResizeFormId: undefined,
 };
 
 export default VmResizeForm;

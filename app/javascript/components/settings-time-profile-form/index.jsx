@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
 import PropTypes from 'prop-types';
@@ -8,7 +8,10 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { dataHelper } from './helper';
 
 const SettingsTimeProfileForm = ({
-  timeProfileId, timezones, action, userid,
+  timeProfileId = '',
+  timezones,
+  action,
+  userid = '',
 }) => {
   const [{
     isLoading, initialValues, fields, tz,
@@ -115,11 +118,6 @@ SettingsTimeProfileForm.propTypes = {
   timezones: PropTypes.arrayOf(PropTypes.any).isRequired,
   action: PropTypes.string.isRequired,
   userid: PropTypes.string,
-};
-
-SettingsTimeProfileForm.defaultProps = {
-  timeProfileId: '',
-  userid: '',
 };
 
 export default SettingsTimeProfileForm;

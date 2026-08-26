@@ -3,6 +3,7 @@ module ReportHelper
   include ReportInformationHelper
   include ReportDashboardWidgetHelper
   include ReportScheduleHelper
+  include ReportTabsHelper
   include DataTableHelper
 
   STYLE_CLASSES = {

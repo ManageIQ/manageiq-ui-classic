@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, OverflowMenu, OverflowMenuItem,
@@ -58,11 +57,6 @@ const MenuIcon = (props) => {
 MenuIcon.propTypes = {
   image: PropTypes.string,
   text: PropTypes.string,
-};
-
-MenuIcon.defaultProps = {
-  image: undefined,
-  text: undefined,
 };
 
 const addMenu = (items, locked) => {

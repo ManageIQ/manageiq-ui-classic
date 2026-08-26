@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock';
 import { screen, waitFor } from '@testing-library/react';
 import CloudTenantForm from '../../components/cloud-tenant-form';

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`VM common form component should render adding form variant add new time profile 1`] = `
 <div>
@@ -41,7 +41,6 @@ exports[`VM common form component should render adding form variant add new time
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -103,7 +102,6 @@ exports[`VM common form component should render adding form variant add new time
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -126,7 +124,6 @@ exports[`VM common form component should render adding form variant add new time
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -138,7 +135,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -182,7 +178,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -211,7 +206,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -240,7 +234,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -269,7 +262,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -298,7 +290,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -327,7 +318,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -356,7 +346,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -384,7 +373,6 @@ exports[`VM common form component should render adding form variant add new time
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -396,7 +384,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -440,7 +427,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -469,7 +455,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -498,7 +483,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -527,7 +511,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -556,7 +539,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -585,7 +567,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -614,7 +595,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -643,7 +623,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -672,7 +651,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -701,7 +679,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -730,7 +707,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -759,7 +735,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -803,7 +778,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -832,7 +806,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -861,7 +834,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -890,7 +862,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -919,7 +890,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -948,7 +918,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -977,7 +946,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -1006,7 +974,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -1035,7 +1002,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -1064,7 +1030,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -1093,7 +1058,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -1122,7 +1086,6 @@ exports[`VM common form component should render adding form variant add new time
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -1176,7 +1139,6 @@ exports[`VM common form component should render adding form variant add new time
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1244,7 +1206,6 @@ exports[`VM common form component should render adding form variant blank form 1
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -1306,7 +1267,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -1329,7 +1289,6 @@ exports[`VM common form component should render adding form variant blank form 1
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1341,7 +1300,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -1385,7 +1343,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -1414,7 +1371,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -1443,7 +1399,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -1472,7 +1427,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -1501,7 +1455,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -1530,7 +1483,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -1559,7 +1511,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -1587,7 +1538,6 @@ exports[`VM common form component should render adding form variant blank form 1
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -1599,7 +1549,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -1643,7 +1592,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -1672,7 +1620,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -1701,7 +1648,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -1730,7 +1676,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -1759,7 +1704,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -1788,7 +1732,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -1817,7 +1760,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -1846,7 +1788,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -1875,7 +1816,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -1904,7 +1844,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -1933,7 +1872,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -1962,7 +1900,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -2006,7 +1943,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -2035,7 +1971,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -2064,7 +1999,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -2093,7 +2027,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -2122,7 +2055,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -2151,7 +2083,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -2180,7 +2111,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -2209,7 +2139,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -2238,7 +2167,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -2267,7 +2195,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -2296,7 +2223,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -2325,7 +2251,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -2379,7 +2304,6 @@ exports[`VM common form component should render adding form variant blank form 1
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2447,7 +2371,6 @@ exports[`VM common form component should render copying form variant new name on
               type="text"
               value="UTC_Copy"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -2509,7 +2432,6 @@ exports[`VM common form component should render copying form variant new name on
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -2532,7 +2454,6 @@ exports[`VM common form component should render copying form variant new name on
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -2544,7 +2465,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -2589,7 +2509,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -2619,7 +2538,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -2649,7 +2567,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -2679,7 +2596,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -2709,7 +2625,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -2739,7 +2654,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -2769,7 +2683,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -2797,7 +2710,6 @@ exports[`VM common form component should render copying form variant new name on
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -2809,7 +2721,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -2854,7 +2765,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -2884,7 +2794,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -2914,7 +2823,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -2944,7 +2852,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -2974,7 +2881,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -3004,7 +2910,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -3034,7 +2939,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -3064,7 +2968,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -3094,7 +2997,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -3124,7 +3026,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -3154,7 +3055,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -3184,7 +3084,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -3229,7 +3128,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -3259,7 +3157,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -3289,7 +3186,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -3319,7 +3215,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -3349,7 +3244,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -3379,7 +3273,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -3409,7 +3302,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -3439,7 +3331,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -3469,7 +3360,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -3499,7 +3389,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -3529,7 +3418,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -3559,7 +3447,6 @@ exports[`VM common form component should render copying form variant new name on
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -3613,7 +3500,6 @@ exports[`VM common form component should render copying form variant new name on
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -3681,7 +3567,6 @@ exports[`VM common form component should render copying form variant with new va
               type="text"
               value="UTC_Copy"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -3743,7 +3628,6 @@ exports[`VM common form component should render copying form variant with new va
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -3766,7 +3650,6 @@ exports[`VM common form component should render copying form variant with new va
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -3778,7 +3661,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -3823,7 +3705,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -3853,7 +3734,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -3883,7 +3763,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -3913,7 +3792,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -3943,7 +3821,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -3973,7 +3850,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -4003,7 +3879,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -4031,7 +3906,6 @@ exports[`VM common form component should render copying form variant with new va
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -4043,7 +3917,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -4088,7 +3961,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -4118,7 +3990,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -4148,7 +4019,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -4178,7 +4048,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -4208,7 +4077,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -4238,7 +4106,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -4268,7 +4135,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -4298,7 +4164,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -4328,7 +4193,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -4358,7 +4222,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -4388,7 +4251,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -4418,7 +4280,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -4463,7 +4324,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -4493,7 +4353,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -4523,7 +4382,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -4553,7 +4411,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -4583,7 +4440,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -4613,7 +4469,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -4643,7 +4498,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -4673,7 +4527,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -4703,7 +4556,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -4733,7 +4585,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -4763,7 +4614,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -4793,7 +4643,6 @@ exports[`VM common form component should render copying form variant with new va
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -4847,7 +4696,6 @@ exports[`VM common form component should render copying form variant with new va
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -4915,7 +4763,6 @@ exports[`VM common form component should render editing form variant all new val
               type="text"
               value="UTC"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -4977,7 +4824,6 @@ exports[`VM common form component should render editing form variant all new val
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -5000,7 +4846,6 @@ exports[`VM common form component should render editing form variant all new val
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -5012,7 +4857,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -5057,7 +4901,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -5087,7 +4930,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -5117,7 +4959,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -5147,7 +4988,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -5177,7 +5017,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -5207,7 +5046,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -5237,7 +5075,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -5265,7 +5102,6 @@ exports[`VM common form component should render editing form variant all new val
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -5277,7 +5113,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -5322,7 +5157,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -5352,7 +5186,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -5382,7 +5215,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -5412,7 +5244,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -5442,7 +5273,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -5472,7 +5302,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -5502,7 +5331,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -5532,7 +5360,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -5562,7 +5389,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -5592,7 +5418,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -5622,7 +5447,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -5652,7 +5476,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -5697,7 +5520,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -5727,7 +5549,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -5757,7 +5578,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -5787,7 +5607,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -5817,7 +5636,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -5847,7 +5665,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -5877,7 +5694,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -5907,7 +5723,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -5937,7 +5752,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -5967,7 +5781,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -5997,7 +5810,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -6027,7 +5839,6 @@ exports[`VM common form component should render editing form variant all new val
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -6081,7 +5892,6 @@ exports[`VM common form component should render editing form variant all new val
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -6149,7 +5959,6 @@ exports[`VM common form component should render editing form variant some new va
               type="text"
               value="UTC"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -6211,7 +6020,6 @@ exports[`VM common form component should render editing form variant some new va
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>
@@ -6234,7 +6042,6 @@ exports[`VM common form component should render editing form variant some new va
               id="DaysSelectAll"
               name="DaysSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -6246,7 +6053,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Select All Days
-                
               </div>
             </label>
             <div
@@ -6291,7 +6097,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Sunday
-                
               </div>
             </label>
             <div
@@ -6321,7 +6126,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Monday
-                
               </div>
             </label>
             <div
@@ -6351,7 +6155,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Tuesday
-                
               </div>
             </label>
             <div
@@ -6381,7 +6184,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Wedensday
-                
               </div>
             </label>
             <div
@@ -6411,7 +6213,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Thursday
-                
               </div>
             </label>
             <div
@@ -6441,7 +6242,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Friday
-                
               </div>
             </label>
             <div
@@ -6471,7 +6271,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Saturday
-                
               </div>
             </label>
             <div
@@ -6499,7 +6298,6 @@ exports[`VM common form component should render editing form variant some new va
               id="HoursSelectAll"
               name="HoursSelectAll"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -6511,7 +6309,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 Select All Hours
-                
               </div>
             </label>
             <div
@@ -6556,7 +6353,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -6586,7 +6382,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -6616,7 +6411,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -6646,7 +6440,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -6676,7 +6469,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -6706,7 +6498,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -6736,7 +6527,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -6766,7 +6556,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -6796,7 +6585,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -6826,7 +6614,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -6856,7 +6643,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -6886,7 +6672,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -6931,7 +6716,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 12-1
-                
               </div>
             </label>
             <div
@@ -6961,7 +6745,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 1-2
-                
               </div>
             </label>
             <div
@@ -6991,7 +6774,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 2-3
-                
               </div>
             </label>
             <div
@@ -7021,7 +6803,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 3-4
-                
               </div>
             </label>
             <div
@@ -7051,7 +6832,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 4-5
-                
               </div>
             </label>
             <div
@@ -7081,7 +6861,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 5-6
-                
               </div>
             </label>
             <div
@@ -7111,7 +6890,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 6-7
-                
               </div>
             </label>
             <div
@@ -7141,7 +6919,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 7-8
-                
               </div>
             </label>
             <div
@@ -7171,7 +6948,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 8-9
-                
               </div>
             </label>
             <div
@@ -7201,7 +6977,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 9-10
-                
               </div>
             </label>
             <div
@@ -7231,7 +7006,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 10-11
-                
               </div>
             </label>
             <div
@@ -7261,7 +7035,6 @@ exports[`VM common form component should render editing form variant some new va
                 dir="auto"
               >
                 11-12
-                
               </div>
             </label>
             <div
@@ -7315,7 +7088,6 @@ exports[`VM common form component should render editing form variant some new va
                 d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
               />
             </svg>
-            
           </div>
         </div>
       </div>

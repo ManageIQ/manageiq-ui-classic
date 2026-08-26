@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { HeatmapChart } from '@carbon/charts-react';
 import { getHeatMapData } from '../helpers';

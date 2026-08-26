@@ -1,4 +1,3 @@
-import React from 'react';
 import { tableData } from './helper';
 import MiqDataTable from '../../miq-data-table';
 

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMapping component with warning 1`] = `
 <div>
@@ -50,256 +50,56 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
         <thead>
           <tr>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-11"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Resource Entity header in ascending order
+                Resource Entity
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-11"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Resource Entity
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-12"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Resource Label header in ascending order
+                Resource Label
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-12"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Resource Label
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-13"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Tag Category header in ascending order
+                Tag Category
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-13"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Tag Category
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-14"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Actions header in ascending order
+                Actions
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-14"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Actions
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
           </tr>
         </thead>
@@ -352,7 +152,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-15"
+                  aria-describedby="danger-description-_r_e_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -360,7 +160,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-15"
+                    id="danger-description-_r_e_"
                   >
                     danger
                   </span>
@@ -420,7 +220,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-16"
+                  aria-describedby="danger-description-_r_f_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -428,7 +228,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-16"
+                    id="danger-description-_r_f_"
                   >
                     danger
                   </span>
@@ -488,7 +288,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-17"
+                  aria-describedby="danger-description-_r_g_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -496,7 +296,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-17"
+                    id="danger-description-_r_g_"
                   >
                     danger
                   </span>
@@ -556,7 +356,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-18"
+                  aria-describedby="danger-description-_r_h_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -564,7 +364,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-18"
+                    id="danger-description-_r_h_"
                   >
                     danger
                   </span>
@@ -621,256 +421,56 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
         <thead>
           <tr>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-2"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Resource Entity header in ascending order
+                Resource Entity
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-2"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Resource Entity
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-3"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Resource Label header in ascending order
+                Resource Label
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-3"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Resource Label
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-4"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Tag Category header in ascending order
+                Tag Category
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-4"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Tag Category
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
             <th
-              aria-sort="none"
-              class="miq-data-table-header cds--table-sort__header"
+              class="miq-data-table-header"
               scope="col"
             >
               <div
-                class="cds--table-sort__description"
-                id="table-sort-5"
+                class="cds--table-header-label"
               >
-                Click to sort rows by Actions header in ascending order
+                Actions
+                <div
+                  class="cds--table-header-label--decorator-inner"
+                />
               </div>
-              <button
-                aria-describedby="table-sort-5"
-                class="miq-data-table-header cds--table-sort"
-                type="button"
-              >
-                <span
-                  class="cds--table-sort__flex"
-                >
-                  <div
-                    class="cds--table-header-label"
-                  >
-                    Actions
-                  </div>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
-                    />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    class="cds--table-sort__icon-unsorted"
-                    fill="currentColor"
-                    focusable="false"
-                    height="20"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
-                    />
-                    <path
-                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
-                    />
-                  </svg>
-                  <div
-                    class="cds--table-header-label--decorator-inner"
-                  />
-                </span>
-              </button>
             </th>
           </tr>
         </thead>
@@ -923,7 +523,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-6"
+                  aria-describedby="danger-description-_r_5_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -931,7 +531,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-6"
+                    id="danger-description-_r_5_"
                   >
                     danger
                   </span>
@@ -991,7 +591,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-7"
+                  aria-describedby="danger-description-_r_6_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -999,7 +599,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-7"
+                    id="danger-description-_r_6_"
                   >
                     danger
                   </span>
@@ -1059,7 +659,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-8"
+                  aria-describedby="danger-description-_r_7_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -1067,7 +667,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-8"
+                    id="danger-description-_r_7_"
                   >
                     danger
                   </span>
@@ -1127,7 +727,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-9"
+                  aria-describedby="danger-description-_r_8_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
@@ -1135,7 +735,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 >
                   <span
                     class="cds--visually-hidden"
-                    id="danger-description-9"
+                    id="danger-description-_r_8_"
                   >
                     danger
                   </span>

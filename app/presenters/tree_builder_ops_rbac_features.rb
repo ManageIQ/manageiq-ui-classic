@@ -58,7 +58,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :checkboxes   => true,
       :three_checks => true,
       :post_check   => true,
-      :check_url    => "/ops/rbac_role_field_changed/",
       :oncheck      => @editable ? "miqOnCheckGeneric" : nil
     }
   end

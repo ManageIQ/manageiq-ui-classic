@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import React from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import miqRedirectBack from '../../helpers/miq-redirect-back';

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { keyBy } from 'lodash';
 import EditingContext from './editing-context';
@@ -10,7 +10,9 @@ import ProtocolSelector from '../provider-form/protocol-selector';
 import ValidateHostCredentials from './validate-host-credentials';
 import mapper from '../../forms/mappers/componentMapper';
 
-const HostEditForm = ({ ids }) => {
+const HostEditForm = ({
+  ids = [],
+}) => {
   const [{
     initialValues, isLoading, fields,
   }, setState] = useState({
@@ -123,10 +125,6 @@ const HostEditForm = ({ ids }) => {
 
 HostEditForm.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.any),
-};
-
-HostEditForm.defaultProps = {
-  ids: [],
 };
 
 export default HostEditForm;

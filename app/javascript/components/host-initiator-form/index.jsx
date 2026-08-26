@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
@@ -74,9 +74,6 @@ HostInitiatorForm.propTypes = {
 
 HostInitiatorForm.propTypes = {
   storageManagerId: PropTypes.string,
-};
-HostInitiatorForm.defaultProps = {
-  storageManagerId: undefined,
 };
 
 export default HostInitiatorForm;

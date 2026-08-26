@@ -1,4 +1,3 @@
-import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   OverflowMenu,
@@ -49,31 +48,27 @@ KebabListItem.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-KebabListItem.defaultProps = {
-  item: null,
+export const DropDownMenu = (props) => {
+  const { items = null } = props;
+  
+  return (
+    <SideNavItems className="button_groups">
+      {items.map((item) => KebabListItem(item, props))}
+    </SideNavItems>
+  );
 };
-
-export const DropDownMenu = forwardRef((props, _ref) => (
-  <SideNavItems className="button_groups">
-    {props.items.map((item) => KebabListItem(item, props))}
-  </SideNavItems>
-));
 
 DropDownMenu.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
 };
 
-DropDownMenu.defaultProps = {
-  items: null,
-};
-
-export const ToolbarKebab = forwardRef((props, ref) => (
+export const ToolbarKebab = (props) => (
   <div className="btn-group kebab">
-    <OverflowMenu ref={ref}>
-      <DropDownMenu {...props} ref={ref} />
+    <OverflowMenu>
+      <DropDownMenu {...props} />
     </OverflowMenu>
   </div>
-));
+);
 
 ToolbarKebab.propTypes = {
   id: PropTypes.string.isRequired,
@@ -83,12 +78,4 @@ ToolbarKebab.propTypes = {
   color: PropTypes.string,
   text: PropTypes.string,
   title: PropTypes.string,
-};
-
-ToolbarKebab.defaultProps = {
-  color: null,
-  text: null,
-  icon: null,
-  title: null,
-  items: null,
 };

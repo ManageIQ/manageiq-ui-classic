@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './network-floatingIPs-form.schema';
@@ -115,10 +115,6 @@ const NetworkFloatingIPsForm = ({
 
 NetworkFloatingIPsForm.propTypes = {
   recordId: PropTypes.string,
-};
-
-NetworkFloatingIPsForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default NetworkFloatingIPsForm;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes, validatorTypes, FormError } from '@@ddf';
 import { pick, keyBy } from 'lodash';
@@ -244,13 +244,6 @@ ProviderForm.propTypes = {
   kind: PropTypes.string,
   title: PropTypes.string,
   redirect: PropTypes.string,
-};
-
-ProviderForm.defaultProps = {
-  providerId: undefined,
-  kind: undefined,
-  title: undefined,
-  redirect: undefined,
 };
 
 export default ProviderForm;

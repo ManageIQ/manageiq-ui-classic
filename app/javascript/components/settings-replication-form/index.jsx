@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -287,9 +287,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
 SettingsReplicationForm.propTypes = {
   pglogicalReplicationFormId: PropTypes.string,
-};
-SettingsReplicationForm.defaultProps = {
-  pglogicalReplicationFormId: undefined,
 };
 
 export default SettingsReplicationForm;

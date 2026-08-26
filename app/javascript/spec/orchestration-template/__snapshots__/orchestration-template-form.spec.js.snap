@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Orcherstration Stack form should render copy variant 1`] = `
 <div>
@@ -45,7 +45,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                 type="text"
                 value="bar"
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -81,7 +80,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
               rows="4"
               style="width: 100%;"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -109,7 +107,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
               id="draft"
               name="draft"
               type="checkbox"
-              value=""
             />
             <label
               class="cds--checkbox-label"
@@ -121,7 +118,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                 dir="auto"
               >
                 Draft
-                
               </div>
             </label>
             <div
@@ -160,14 +156,14 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                   <input
                     checked=""
                     class="cds--radio-button"
-                    id="radio-button-33"
+                    id="radio-button-_r_10_"
                     name="--content--mode"
                     type="radio"
                     value="yaml"
                   />
                   <label
                     class="cds--radio-button__label"
-                    for="radio-button-33"
+                    for="radio-button-_r_10_"
                   >
                     <span
                       class="cds--radio-button__appearance"
@@ -177,7 +173,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                       dir="auto"
                     >
                       yaml
-                      
                     </span>
                   </label>
                 </div>
@@ -186,14 +181,14 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                 >
                   <input
                     class="cds--radio-button"
-                    id="radio-button-34"
+                    id="radio-button-_r_11_"
                     name="--content--mode"
                     type="radio"
                     value="json"
                   />
                   <label
                     class="cds--radio-button__label"
-                    for="radio-button-34"
+                    for="radio-button-_r_11_"
                   >
                     <span
                       class="cds--radio-button__appearance"
@@ -203,7 +198,6 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                       dir="auto"
                     >
                       json
-                      
                     </span>
                   </label>
                 </div>
@@ -288,7 +282,7 @@ exports[`Orcherstration Stack form should render copy variant 1`] = `
                             >
                               <span
                                 role="presentation"
-                                style="padding-right: .1px;"
+                                style="padding-right: 0.1px;"
                               >
                                 content edited
                               </span>

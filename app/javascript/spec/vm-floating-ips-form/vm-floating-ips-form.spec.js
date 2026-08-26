@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock';
 import { waitFor } from '@testing-library/react';
 import VmFloatingIPsForm from '../../components/vm-floating-ips/vm-floating-ips-form';

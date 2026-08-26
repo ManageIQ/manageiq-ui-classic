@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Datastore form component Datastore domain form component should render the Domain adding form 1`] = `
 <div>
@@ -50,7 +50,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -88,7 +87,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -108,7 +106,6 @@ exports[`Datastore form component Datastore domain form component should render 
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -120,7 +117,6 @@ exports[`Datastore form component Datastore domain form component should render 
               dir="auto"
             >
               Enabled
-              
             </div>
           </label>
           <div
@@ -201,7 +197,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -239,7 +234,6 @@ exports[`Datastore form component Datastore domain form component should render 
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -259,7 +253,6 @@ exports[`Datastore form component Datastore domain form component should render 
             id="enabled"
             name="enabled"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -271,7 +264,6 @@ exports[`Datastore form component Datastore domain form component should render 
               dir="auto"
             >
               Enabled
-              
             </div>
           </label>
           <div
@@ -353,7 +345,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="/test/infrastructure"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -397,7 +388,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -435,7 +425,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value=""
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -512,7 +501,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="/test/infrastructure"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -556,7 +544,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="name"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -594,7 +581,6 @@ exports[`Datastore form component Datastore namespace form component should rend
               type="text"
               value="description"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"

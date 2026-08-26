@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { StackedBarChart } from '@carbon/charts-react';
 
-const StackHorizontalChart = ({ data, title }) => {
+const StackHorizontalChart = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     axes: {
@@ -29,11 +31,6 @@ const StackHorizontalChart = ({ data, title }) => {
 StackHorizontalChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-StackHorizontalChart.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default StackHorizontalChart;

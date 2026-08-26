@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './vm-common-rename-form.schema';
@@ -58,10 +58,6 @@ const VmCommonRenameForm = ({ vmId }) => {
 
 VmCommonRenameForm.propTypes = {
   vmId: PropTypes.string,
-};
-
-VmCommonRenameForm.defaultProps = {
-  vmId: undefined,
 };
 
 export default VmCommonRenameForm;

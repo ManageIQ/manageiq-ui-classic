@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { componentTypes, useFormApi } from '@@ddf';
 import componentMapper from '../../forms/mappers/componentMapper';
 

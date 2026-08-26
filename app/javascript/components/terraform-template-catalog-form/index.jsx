@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './terraform-template-catalog-form.schema';
@@ -17,6 +17,7 @@ import {
 } from './helper';
 
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { setLocationHref } from '../../helpers/window-location';
 
 const TerraformTemplateCatalogForm = ({ initialData }) => {
   const [data, setData] = useState({
@@ -120,7 +121,7 @@ const TerraformTemplateCatalogForm = ({ initialData }) => {
     const msg = sprintf(__('Edit of Catalog Item %s was cancelled by the user'), data.formData.description);
     // eslint-disable-next-line no-undef
     miqFlashLater({ message: msg });
-    window.location.href = '/catalog/explorer?';
+    setLocationHref('/catalog/explorer?');
   };
 
   const onSubmit = (values) => {

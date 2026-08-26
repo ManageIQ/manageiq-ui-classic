@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -55,9 +55,6 @@ const HostAggregateForm = ({ recordId }) => {
 
 HostAggregateForm.propTypes = {
   recordId: PropTypes.string,
-};
-HostAggregateForm.defaultProps = {
-  recordId: undefined,
 };
 
 export default HostAggregateForm;

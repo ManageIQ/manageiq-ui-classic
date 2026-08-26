@@ -6,8 +6,9 @@ describe "miq_ae_class/_fields_seq_form.html.haml" do
            })
   end
 
-  it "Check links in the list view", :js => true do
+  it "renders the schema sequencing form" do
     render :template => "miq_ae_class/_fields_seq_form"
-    expect(response).to have_text("miq_tabs_disable_inactive('#ae_tabs')")
+    expect(rendered).to have_text("Class Schema Sequencing")
+    expect(rendered).to have_selector("select#seq_fields")
   end
 end

@@ -1,31 +1,28 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import createReducer from './reducer';
-import createMiddlewares from './middleware';
-import { history } from '../miq-component/react-history.js';
+import { taggingMiddleware } from './middleware';
 
 import { notificationReducer } from './notification-reducer';
 import formButtonsReducer from '../forms/form-buttons-reducer';
 import miqCustomTabReducer from './miq-custom-tab-reducer';
 
-const initialState = {};
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const initializeStore = () => {
-  const store = createStore(
-    createReducer({ history }),
-    initialState,
-    composeEnhancers(applyMiddleware(...createMiddlewares(history))),
-  );
-
   /**
    * storage for all future reducers
    */
-  store.asyncReducers = {
+  const asyncReducers = {
     FormButtons: formButtonsReducer,
     notificationReducer,
     miqCustomTabReducer,
   };
+
+  const store = configureStore({
+    reducer: createReducer(asyncReducers),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }).concat(taggingMiddleware),
+  });
+
+  store.asyncReducers = asyncReducers;
 
   /**
    * @param {Object} reducers object where key is the name of reducer and value reducer function
@@ -35,13 +32,10 @@ const initializeStore = () => {
       ...store.asyncReducers,
       ...reducers,
     };
-    /**
-     * replace current reducer with new function containing all new reducers
-     * must be connected to router again
-     */
-    store.replaceReducer(createReducer({ asyncReducers: store.asyncReducers, history }));
+    store.replaceReducer(createReducer(store.asyncReducers));
     return store;
   };
+
   return store;
 };
 

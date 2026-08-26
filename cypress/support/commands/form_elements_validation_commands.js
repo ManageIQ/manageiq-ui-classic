@@ -157,9 +157,9 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
               const shouldBeChecked =
                 config[FIELD_CONFIG_KEYS.SHOULD_BE_CHECKED] || false;
               if (shouldBeChecked) {
-                expect(field).to.be.checked;
+                cy.wrap(field).should('be.checked');
               } else {
-                expect(field).to.not.be.checked;
+                cy.wrap(field).should('not.be.checked');
               }
             }
           });

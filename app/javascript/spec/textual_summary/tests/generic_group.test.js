@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import GenericGroup from '../../../components/textual_summary/generic_group';
 import { genericGroupData } from '../data/generic_group';

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Simple Table renders just fine... 1`] = `
 <div>
@@ -9,7 +9,7 @@ exports[`Simple Table renders just fine... 1`] = `
       class="cds--accordion__item cds--accordion__item--active"
     >
       <button
-        aria-controls="accordion-item-5"
+        aria-controls="accordion-item-_r_0_"
         aria-expanded="true"
         class="cds--accordion__heading"
         type="button"
@@ -41,7 +41,7 @@ exports[`Simple Table renders just fine... 1`] = `
       >
         <div
           class="cds--accordion__content"
-          id="accordion-item-5"
+          id="accordion-item-_r_0_"
         >
           <div
             aria-label="Structured list"

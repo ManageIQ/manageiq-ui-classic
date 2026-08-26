@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Ansible Repository form component should render add form 1`] = `
 <div>
@@ -40,7 +40,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -78,7 +77,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -122,7 +120,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -141,7 +138,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -153,7 +149,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -213,7 +208,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -245,7 +239,6 @@ exports[`Ansible Repository form component should render add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -317,7 +310,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
             type="text"
             value="avaleror_test"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -355,7 +347,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
             type="text"
             value="playbooks for testing"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -399,7 +390,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
             type="text"
             value="https://github.com/avaleror/ansible"
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -418,7 +408,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -430,7 +419,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -490,7 +478,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -528,7 +515,6 @@ exports[`Ansible Repository form component should render edit variant 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -607,7 +593,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -645,7 +630,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -689,7 +673,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -708,7 +691,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -720,7 +702,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -780,7 +761,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -812,7 +792,6 @@ exports[`Ansible Repository form component should submit add form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -884,7 +863,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -922,7 +900,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -966,7 +943,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"
@@ -985,7 +961,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
           id="verify_ssl"
           name="verify_ssl"
           type="checkbox"
-          value=""
         />
         <label
           class="cds--checkbox-label"
@@ -997,7 +972,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
             dir="auto"
           >
             Verify SSL
-            
           </div>
         </label>
         <div
@@ -1057,7 +1031,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
               d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
             />
           </svg>
-          
         </div>
       </div>
     </div>
@@ -1089,7 +1062,6 @@ exports[`Ansible Repository form component should submit edit form 1`] = `
             type="text"
             value=""
           />
-          
           <span
             aria-atomic="true"
             aria-live="assertive"

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import debouncePromise from '../../helpers/promise-debounce';
 import {
   getCPUChart, getStatusCards, getMemoryChart, getNetworkChart, getPodsTrendChart, getPodsTable, getQuotasChart,
 } from './helper';
+import { getLocation } from '../../helpers/window-location';
 
 const ContainerProjects = ({ url }) => {
   const [{ dashboardData, isLoading }, setState] = useState({ isLoading: true });
@@ -20,7 +21,7 @@ const ContainerProjects = ({ url }) => {
 
   useEffect(() => {
     const scope = {};
-    const pathname = window.location.pathname.replace(/\/$/, '');
+    const pathname = getLocation().pathname.replace(/\/$/, '');
     if (pathname.match(/show$/)) {
       scope.id = '';
     } else if (pathname.match(/^\/[^/]+\/show\/(\d+)/)) {
@@ -71,9 +72,6 @@ const ContainerProjects = ({ url }) => {
 
 ContainerProjects.propTypes = {
   url: PropTypes.string.isRequired,
-};
-
-ContainerProjects.defaultProps = {
 };
 
 export default ContainerProjects;

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Grid, Column } from '@carbon/react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -49,10 +49,6 @@ IconList.propTypes = {
   type: PropTypes.string.isRequired,
   activeIcon: PropTypes.string,
   setState: PropTypes.func.isRequired,
-};
-
-IconList.defaultProps = {
-  activeIcon: undefined,
 };
 
 export default IconList;

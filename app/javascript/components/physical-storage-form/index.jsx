@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
@@ -120,10 +120,6 @@ const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
 PhysicalStorageForm.propTypes = {
   recordId: PropTypes.string,
   storageManagerId: PropTypes.string,
-};
-PhysicalStorageForm.defaultProps = {
-  recordId: undefined,
-  storageManagerId: undefined,
 };
 
 export default PhysicalStorageForm;

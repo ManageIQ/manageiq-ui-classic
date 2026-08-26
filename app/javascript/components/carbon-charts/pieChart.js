@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { PieChart } from '@carbon/charts-react';
 
-const PieChartGraph = ({ data, title }) => {
+const PieChartGraph = ({
+  data = null,
+  title = '',
+}) => {
   const options = {
     title,
     resizable: true,
@@ -22,11 +24,6 @@ const PieChartGraph = ({ data, title }) => {
 PieChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
-};
-
-PieChartGraph.defaultProps = {
-  data: null,
-  title: '',
 };
 
 export default PieChartGraph;

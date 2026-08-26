@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import { Loading } from '@carbon/react';
@@ -118,9 +118,6 @@ const NetworkSecurityGroupsForm = ({ securityGroupId }) => {
 
 NetworkSecurityGroupsForm.propTypes = {
   securityGroupId: PropTypes.string,
-};
-NetworkSecurityGroupsForm.defaultProps = {
-  securityGroupId: undefined,
 };
 
 export default NetworkSecurityGroupsForm;

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { isObject, isArray, isSubItem } from '../helpers';
 import MiqStructuredListArray from './value-types/miq-structured-list-array';
@@ -20,8 +19,4 @@ MiqStructuredListBodyValue.propTypes = {
   row: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.shape({})]).isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-};
-
-MiqStructuredListBodyValue.defaultProps = {
-  onClick: undefined,
 };

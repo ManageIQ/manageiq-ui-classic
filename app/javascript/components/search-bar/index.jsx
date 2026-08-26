@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TextInput, Form,
@@ -8,7 +8,11 @@ import {
   ChevronDown, Search, ProgressBarRound, Close,
 } from '@carbon/react/icons';
 
-const SearchBar = ({ searchText, advancedSearch, action }) => {
+const SearchBar = ({
+  searchText = '',
+  advancedSearch = true,
+  action = '',
+}) => {
   const formToken = () => {
     const csrfToken = document.querySelector('meta[name=csrf-token]');
     return csrfToken ? csrfToken.getAttribute('content') : '';
@@ -127,10 +131,4 @@ SearchBar.propTypes = {
   searchText: PropTypes.string,
   advancedSearch: PropTypes.bool,
   action: PropTypes.string,
-};
-
-SearchBar.defaultProps = {
-  searchText: '',
-  advancedSearch: true,
-  action: '',
 };
