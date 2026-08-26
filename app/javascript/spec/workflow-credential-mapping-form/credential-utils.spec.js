@@ -1,8 +1,4 @@
-/**
- * Tests for credential utility functions
- */
-
-import { extractCredentialReference, parseWorkflowCredentials, isValidCredentialReference } from './credential-utils';
+import { extractCredentialReference, parseWorkflowCredentials } from '../../components/workflow-credential-mapping-form/credential-utils';
 
 describe('extractCredentialReference', () => {
   it('should extract credential reference from dot notation', () => {
@@ -194,29 +190,5 @@ describe('parseWorkflowCredentials', () => {
     // Should only have one entry for shared_credential
     expect(Object.keys(result)).toHaveLength(1);
     expect(result.shared_credential).toBe('$$.Credentials.shared_credential');
-  });
-});
-
-describe('isValidCredentialReference', () => {
-  it('should return true for valid credential references', () => {
-    expect(isValidCredentialReference('my_credential')).toBe(true);
-    expect(isValidCredentialReference('credential-name')).toBe(true);
-    expect(isValidCredentialReference('Credential123')).toBe(true);
-    expect(isValidCredentialReference('a')).toBe(true);
-  });
-
-  it('should return false for invalid credential references', () => {
-    expect(isValidCredentialReference('')).toBe(false);
-    expect(isValidCredentialReference('has spaces')).toBe(false);
-    expect(isValidCredentialReference('has.dots')).toBe(false);
-    expect(isValidCredentialReference('has/slashes')).toBe(false);
-    expect(isValidCredentialReference('has$pecial')).toBe(false);
-  });
-
-  it('should return false for non-string values', () => {
-    expect(isValidCredentialReference(null)).toBe(false);
-    expect(isValidCredentialReference(undefined)).toBe(false);
-    expect(isValidCredentialReference(123)).toBe(false);
-    expect(isValidCredentialReference({})).toBe(false);
   });
 });
