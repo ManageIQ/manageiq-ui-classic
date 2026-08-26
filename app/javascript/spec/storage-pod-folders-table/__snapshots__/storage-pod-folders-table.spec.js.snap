@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`StoragePodFoldersTable Component should render with empty folders array 1`] = `
+<div>
+  <div
+    class="storage-pod-folders-table"
+  >
+    <div
+      class="miq-data-table miq-data-table-default"
+    >
+      <div
+        class="cds--data-table-content"
+      >
+        <table
+          class="cds--data-table cds--data-table--md cds--data-table--visible-overflow-menu"
+        >
+          <tbody
+            aria-live="polite"
+          />
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`StoragePodFoldersTable Component should render with folders data 1`] = `
+<div>
+  <div
+    class="storage-pod-folders-table"
+  >
+    <div
+      class="miq-data-table miq-data-table-default"
+    >
+      <div
+        class="cds--data-table-content"
+      >
+        <table
+          class="cds--data-table cds--data-table--md cds--data-table--visible-overflow-menu"
+        >
+          <tbody
+            aria-live="polite"
+          >
+            <tr
+              class="clickable-row"
+              tabindex="0"
+              title="Click to view details"
+            >
+              <td>
+                <div
+                  class="cell"
+                  title=""
+                >
+                  <svg
+                    aria-label="carbon--Folder"
+                    class="icon carbon-icons-style carbon--Folder"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.17,6l3.42,3.41.58.59H28V26H4V6h7.17m0-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4Z"
+                    />
+                  </svg>
+                  <span
+                    class="cds--front-line"
+                    title="DSC-Production"
+                  >
+                    DSC-Production
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="clickable-row"
+              tabindex="1"
+              title="Click to view details"
+            >
+              <td>
+                <div
+                  class="cell"
+                  title=""
+                >
+                  <svg
+                    aria-label="carbon--Folder"
+                    class="icon carbon-icons-style carbon--Folder"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.17,6l3.42,3.41.58.59H28V26H4V6h7.17m0-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4Z"
+                    />
+                  </svg>
+                  <span
+                    class="cds--front-line"
+                    title="DSC-Development"
+                  >
+                    DSC-Development
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
