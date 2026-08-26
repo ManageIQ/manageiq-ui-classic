@@ -45,7 +45,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     expect(result).toEqual({
       my_ssh_credential: '$$.Credentials.my_ssh_credential',
       my_api_token: '$$.Credentials.my_api_token',
@@ -64,7 +64,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     expect(result).toEqual({
       my_ssh_credential: "$$['Credentials']['my_ssh_credential']",
     });
@@ -87,7 +87,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     expect(result).toEqual({
       credential_one: '$$.Credentials.credential_one',
       credential_two: '$$.Credentials.credential_two',
@@ -109,7 +109,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     expect(result).toEqual({
       my_credential: '$$.Credentials.my_credential',
     });
@@ -127,7 +127,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     expect(result).toEqual({
       plain_credential: 'some_non_jsonpath_value',
     });
@@ -190,7 +190,7 @@ describe('parseWorkflowCredentials', () => {
     });
 
     const result = parseWorkflowCredentials(payload);
-    
+
     // Should only have one entry for shared_credential
     expect(Object.keys(result)).toHaveLength(1);
     expect(result.shared_credential).toBe('$$.Credentials.shared_credential');
