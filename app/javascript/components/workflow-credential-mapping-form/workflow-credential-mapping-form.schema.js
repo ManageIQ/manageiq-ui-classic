@@ -52,7 +52,10 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
         id: index.toString(),
         CredentialsIdentifier: { text: value },
         CredentialRecord: {
-          text: credentials[value] ? workflowAuthentications.find((item) => item.value === credentials[value].credential_ref).label : '',
+          text: credentials[value]
+            ? (workflowAuthentications.find((item) => item.value === credentials[value].credential_ref) || {}).label
+              || credentials[value].credential_ref
+            : '',
         },
         CredentialField: { text: credentials[value] ? fieldLabels[credentials[value].credential_field] : '' },
         Delete: {
@@ -88,7 +91,7 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
           value: key,
           label: key,
         })),
-        resolveProps: (props, { meta, input }, formOptions) => {
+        resolveProps: (_props, { meta, input }, formOptions) => {
           // This ensures credentialReferences is set back to undefined when credential_references is reset to default
           if (meta.pristine && credentialReferences !== undefined) {
             setState((state) => ({
