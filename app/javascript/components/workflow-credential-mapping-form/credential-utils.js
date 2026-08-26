@@ -116,18 +116,3 @@ export const parseWorkflowCredentials = (payload) => {
 
   return payloadCredentials;
 };
-
-/**
- * Validates that a credential reference name is valid
- *
- * @param {string} credentialRef - The credential reference to validate
- * @returns {boolean} True if valid, false otherwise
- */
-export const isValidCredentialReference = (credentialRef) => {
-  if (typeof credentialRef !== 'string' || credentialRef.length === 0) {
-    return false;
-  }
-
-  // Valid credential references should only contain alphanumeric characters, underscores, and hyphens
-  return /^[a-zA-Z0-9_-]+$/.test(credentialRef);
-};
