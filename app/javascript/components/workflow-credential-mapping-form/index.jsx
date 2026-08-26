@@ -34,7 +34,7 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
 
         // Parse the workflow payload and extract credential references
         // This now correctly extracts the actual credential names from JSONPath values
-        // (e.g., "my_ssh_credential" from "$.Credentials.my_ssh_credential")
+        // (e.g., "my_ssh_credential" from "$$.Credentials.my_ssh_credential")
         let payloadCredentials;
         try {
           payloadCredentials = parseWorkflowCredentials(payload);
