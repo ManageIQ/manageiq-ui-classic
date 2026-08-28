@@ -14,7 +14,7 @@ import {
 } from '@carbon/react';
 
 const TagSelection = ({
-  rates, assignments, savedAssignments, onRateChange, assignmentType, dropdownId = 'tag-category',
+  rates, assignments, savedAssignments, onRateChange, onError, assignmentType, dropdownId = 'tag-category',
 }) => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -53,7 +53,7 @@ const TagSelection = ({
         setLoading(false);
       } catch (error) {
         const message = error.data?.error?.message || __('Failed to load tag categories');
-        add_flash(message, 'error');
+        onError(message);
         setLoading(false);
       }
     };
@@ -286,6 +286,7 @@ TagSelection.propTypes = {
     rateDescription: PropTypes.string.isRequired,
   })).isRequired,
   onRateChange: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   assignmentType: PropTypes.string.isRequired,
   dropdownId: PropTypes.string,
 };

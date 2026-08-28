@@ -48,10 +48,10 @@ describe('LabelSelection component', () => {
   const mockAssignments = {};
   const mockSavedAssignments = [];
   const mockOnRateChange = jest.fn();
+  const mockOnError = jest.fn();
 
   beforeEach(() => {
     API.get = jest.fn().mockResolvedValue(mockContainerImages);
-    window.add_flash = jest.fn();
   });
 
   afterEach(() => {
@@ -65,6 +65,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -78,6 +79,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -94,6 +96,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -118,6 +121,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -145,6 +149,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -171,6 +176,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -215,6 +221,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={savedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -234,11 +241,12 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
     await waitFor(() => {
-      expect(window.add_flash).toHaveBeenCalledWith('API Error', 'error');
+      expect(mockOnError).toHaveBeenCalledWith('API Error');
     });
   });
 
@@ -255,6 +263,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -280,6 +289,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 
@@ -308,6 +318,7 @@ describe('LabelSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
       />
     );
 

@@ -38,10 +38,10 @@ describe('TagSelection component', () => {
   const mockAssignments = {};
   const mockSavedAssignments = [];
   const mockOnRateChange = jest.fn();
+  const mockOnError = jest.fn();
 
   beforeEach(() => {
     API.get = jest.fn().mockResolvedValue(mockCategories);
-    window.add_flash = jest.fn();
   });
 
   afterEach(() => {
@@ -55,6 +55,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -69,6 +70,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -86,6 +88,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -111,6 +114,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -139,6 +143,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -166,6 +171,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -217,6 +223,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={savedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -237,12 +244,13 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
 
     await waitFor(() => {
-      expect(window.add_flash).toHaveBeenCalledWith('API Error', 'error');
+      expect(mockOnError).toHaveBeenCalledWith('API Error');
     });
   });
 
@@ -253,6 +261,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
@@ -267,6 +276,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="storage-tags"
       />
     );
@@ -283,6 +293,7 @@ describe('TagSelection component', () => {
         assignments={mockAssignments}
         savedAssignments={mockSavedAssignments}
         onRateChange={mockOnRateChange}
+        onError={mockOnError}
         assignmentType="vm-tags"
       />
     );
