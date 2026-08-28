@@ -524,6 +524,7 @@ const ChargebackAssignmentsForm = ({ rateType }) => {
             assignments={assignments}
             savedAssignments={savedAssignmentsData.filter((a) => a.type === 'tag' && a.assignmentType === assignmentType)}
             onRateChange={handleRateChange}
+            onError={(message) => setNotification({ kind: 'error', title: message })}
             assignmentType={assignmentType}
             dropdownId={`tag-category-${rateType.toLowerCase()}`}
           />
@@ -535,6 +536,7 @@ const ChargebackAssignmentsForm = ({ rateType }) => {
             assignments={assignments}
             savedAssignments={savedAssignmentsData.filter((a) => a.type === 'label')}
             onRateChange={handleRateChange}
+            onError={(message) => setNotification({ kind: 'error', title: message })}
             dropdownId={`label-key-${rateType.toLowerCase()}`}
           />
         )}

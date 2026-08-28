@@ -14,7 +14,7 @@ import {
 } from '@carbon/react';
 
 const LabelSelection = ({
-  rates, assignments, savedAssignments, onRateChange, dropdownId = 'label-key',
+  rates, assignments, savedAssignments, onRateChange, onError, dropdownId = 'label-key',
 }) => {
   const [savedLabelRows, setSavedLabelRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ const LabelSelection = ({
         setLoading(false);
       } catch (error) {
         const message = error.data?.error?.message || __('Failed to load image labels');
-        add_flash(message, 'error');
+        onError(message);
         setLoading(false);
       }
     };
@@ -194,7 +194,7 @@ const LabelSelection = ({
         setLoadingLabelValues(false);
       } catch (error) {
         const message = error.data?.error?.message || __('Failed to load label values');
-        add_flash(message, 'error');
+        onError(message);
         setLabelValues([]);
         setLoadingLabelValues(false);
       }
@@ -378,6 +378,7 @@ LabelSelection.propTypes = {
     rateDescription: PropTypes.string.isRequired,
   })).isRequired,
   onRateChange: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   dropdownId: PropTypes.string,
 };
 
