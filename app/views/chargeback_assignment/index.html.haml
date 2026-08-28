@@ -1,6 +1,2 @@
 #main_div
-  - case @tabform
-    - when 'Compute'
-      = render :partial => 'compute_assignments'
-    - when 'Storage'
-      = render :partial => 'storage_assignments'
+  = react('ChargebackAssignmentsTabs', :initialTab => (@tabform == 'Storage' ? 1 : 0))
