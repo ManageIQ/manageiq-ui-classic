@@ -39,14 +39,11 @@ const gettextDir = i18n;
 
 const sharedPackages = [
   '@carbon/react',
-  'angular',
   'jquery',
   'lodash',
   'moment',
-  'prop-types',
   'react',
   'react-dom',
-  'react-redux',
 ];
 
 let packPaths = {};
