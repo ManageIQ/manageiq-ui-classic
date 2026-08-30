@@ -1097,6 +1097,7 @@ class CatalogController < ApplicationController
       common_st_record_vars(st)
       add_orchestration_template_vars(st)  if st.kind_of?(ServiceTemplateOrchestration)
       add_configuration_script_vars(st)    if st.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@edit[:new][:st_prov_type])
+      add_configuration_script_vars(st)    if @edit[:new][:st_prov_type] == 'embedded_terraform'
       add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
       st.service_type = "atomic"
 
@@ -1299,6 +1300,8 @@ class CatalogController < ApplicationController
     @edit[:new][:display] = @record.display || false
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:dialog_id] = nil # initialize
+    @edit[:new][:dialog_type] = 'useExisting'
+    @edit[:new][:new_dialog_name] = nil
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
     @edit[:new][:tenant_ids] = @record.additional_tenant_ids
@@ -1491,7 +1494,7 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    copy_params_if_present(@edit[:new], params, %i[st_prov_type name description provision_cost catalog_id dialog_id generic_subtype long_description zone_id price retire_fqname reconfigure_fqname fqname])
+    copy_params_if_present(@edit[:new], params, %i[st_prov_type name description provision_cost catalog_id dialog_id dialog_type new_dialog_name generic_subtype long_description zone_id price retire_fqname reconfigure_fqname fqname])
 
     @edit[:new][:display] = params[:display] == "1" if params[:display] # @edit[:new][:display] should't be changed if params[:display] is not set
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
@@ -1661,7 +1664,26 @@ class CatalogController < ApplicationController
   end
 
   def add_configuration_script_vars(st)
-    st.configuration_script = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
+    unless @edit[:new][:st_prov_type] == 'embedded_terraform'
+      st.configuration_script = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
+      return
+    end
+
+    cs_id = @edit[:wf]&.get_value(@edit[:wf].values[:src_configuration_script_id])
+
+    if @edit[:new][:dialog_type] == 'createNew' && @edit[:new][:new_dialog_name].present? && cs_id.present?
+      configuration_script = ConfigurationScript.find(cs_id)
+      terraform_template = configuration_script.parent || configuration_script
+      dialog = Dialog::TerraformTemplateServiceDialog.create_dialog(@edit[:new][:new_dialog_name], terraform_template)
+      @edit[:new][:dialog_id] = dialog.id
+    end
+
+    st.options ||= {}
+    st.options[:config_info] ||= {}
+    st.options[:config_info][:provision] ||= {}
+    if @edit[:new][:dialog_id].present?
+      st.options[:config_info][:provision][:dialog_id] = @edit[:new][:dialog_id]
+    end
   end
 
   def add_server_profile_template_vars(service_template)
@@ -2171,7 +2193,7 @@ class CatalogController < ApplicationController
   end
 
   def automate_tree_needed?
-    options = %i[display template_id manager_id ovf_template_id datacenter_id resource_pool_id ems_folder_id host_id storage_id]
+    options = %i[display template_id manager_id ovf_template_id datacenter_id resource_pool_id ems_folder_id host_id storage_id dialog_type]
     options.any? { |x| params[x] }
   end
   helper_method :automate_tree_needed?
@@ -2497,9 +2519,16 @@ class CatalogController < ApplicationController
   end
 
   def dialog_catalog_check
-    return unless @edit[:new][:display] && (@edit[:new][:dialog_id].nil? || @edit[:new][:dialog_id].to_i.zero?)
+    return unless @edit[:new][:display]
 
-    add_flash(_("Dialog has to be set if Display in Catalog is chosen"), :error)
+    if @edit[:new][:st_prov_type] == 'embedded_terraform'
+      no_dialog_set = (@edit[:new][:dialog_type] == 'createNew' && @edit[:new][:new_dialog_name].blank?) ||
+                      (@edit[:new][:dialog_type] == 'useExisting' && (@edit[:new][:dialog_id].nil? || @edit[:new][:dialog_id].to_i.zero?))
+      add_flash(_("Dialog has to be set if Display in Catalog is chosen"), :error) if no_dialog_set
+      return
+    end
+
+    add_flash(_("Dialog has to be set if Display in Catalog is chosen"), :error) if @edit[:new][:dialog_id].nil? || @edit[:new][:dialog_id].to_i.zero?
   end
 
   def validate_price
