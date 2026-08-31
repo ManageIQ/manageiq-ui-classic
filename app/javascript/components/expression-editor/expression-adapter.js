@@ -215,7 +215,8 @@ const rqbGroupToMiq = (rqbGroup, isRoot = false) => {
       if (nested !== null) {
         acc.push(nested);
       }
-    } else {
+    } else if (r.field && r.field !== '') {
+      // Skip incomplete rules (no field selected yet) — they have no valid MiqExpression form.
       acc.push(ruleToMiqAtom(r));
     }
     return acc;

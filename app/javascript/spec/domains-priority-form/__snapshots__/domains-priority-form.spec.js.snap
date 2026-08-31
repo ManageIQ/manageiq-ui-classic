@@ -34,7 +34,7 @@ exports[`DomainsPriorityForm component should render correctly 1`] = `
             aria-label="ManageIQ. Press arrow keys to reorder."
             class="sortable-list-item "
             draggable="true"
-            role="button"
+            role="listitem"
             tabindex="0"
           >
             <svg
@@ -77,7 +77,7 @@ exports[`DomainsPriorityForm component should render correctly 1`] = `
             aria-label="RedHat. Press arrow keys to reorder."
             class="sortable-list-item "
             draggable="true"
-            role="button"
+            role="listitem"
             tabindex="0"
           >
             <svg
@@ -120,7 +120,7 @@ exports[`DomainsPriorityForm component should render correctly 1`] = `
             aria-label="CustomDomain. Press arrow keys to reorder."
             class="sortable-list-item "
             draggable="true"
-            role="button"
+            role="listitem"
             tabindex="0"
           >
             <svg
@@ -163,7 +163,7 @@ exports[`DomainsPriorityForm component should render correctly 1`] = `
             aria-label="TestDomain (Locked). Press arrow keys to reorder."
             class="sortable-list-item "
             draggable="true"
-            role="button"
+            role="listitem"
             tabindex="0"
           >
             <svg

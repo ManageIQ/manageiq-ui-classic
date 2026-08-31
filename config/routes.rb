@@ -2672,6 +2672,12 @@ Rails.application.routes.draw do
         miq_report_edit
         miq_report_new
         preview_chart
+        react_available_fields
+        react_chargeback_entities
+        react_chargeback_options
+        react_edit
+        react_form_data
+        react_trend_limit_cols
         render_chart
         report_only
         sample_chart
@@ -2684,6 +2690,8 @@ Rails.application.routes.draw do
         accordion_select
         change_tab
         dashboard_render
+        react_preview
+        react_save
         db_copy
         db_edit
         db_form_field_changed
