@@ -157,10 +157,11 @@ describe ReportController do
         )
         allow(controller).to receive(:load_edit).and_return(true)
         allow(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:javascript_redirect)
         controller.instance_variable_set(:@sb, {})
         controller.params = {:id => rep.id}
         controller.send(:miq_report_edit)
-        expect(response.status).to eq(200)
+        expect(controller).to have_received(:javascript_redirect)
       end
 
       it "should allow user with miq_report_new access to add a new report" do
@@ -170,10 +171,11 @@ describe ReportController do
 
         allow(controller).to receive(:load_edit).and_return(true)
         allow(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:javascript_redirect)
         controller.instance_variable_set(:@sb, {})
         controller.params = {:pressed => 'miq_report_new'}
         controller.send(:miq_report_edit)
-        expect(response.status).to eq(200)
+        expect(controller).to have_received(:javascript_redirect)
       end
     end
 
