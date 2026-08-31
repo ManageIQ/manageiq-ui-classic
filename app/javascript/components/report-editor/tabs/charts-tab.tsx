@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Checkbox,
   Select,
@@ -21,11 +20,17 @@ import { pieData, sampleData } from '../../carbon-charts/helpers';
 import { FormRow } from '../form-row';
 import { NOTHING, buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
+import type { FormData } from '../report-editor-types';
 
 const NO_CHART = '';
 const TOP_VALUE_OPTIONS = Array.from({ length: 18 }, (_, index) => String(index + 3));
 
-const CHART_COMPONENTS = {
+// Carbon-charts components accept optional props; use a permissive type to avoid
+// fighting PropTypes-annotated JS component signatures.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ChartComponent = React.ComponentType<any>;
+
+const CHART_COMPONENTS: Record<string, ChartComponent> = {
   Area: AreaChartGraph,
   Bar: GroupHorizontalBarChart,
   Column: GroupBarChart,
@@ -37,33 +42,37 @@ const CHART_COMPONENTS = {
   StackedColumn: StackBarChartGraph,
 };
 
-const ChartsTab = ({ formData }) => {
+type ChartsTabProps = {
+  formData: Pick<FormData, 'chart_types'>;
+};
+
+const ChartsTab = ({ formData }: ChartsTabProps) => {
   const formOptions = useFormApi();
   const { input: { value: graphType = NO_CHART } } = useFieldApi({ name: 'graph_type' });
-  const { input: { value: sortby = [] } } = useFieldApi({ name: 'sortby' });
+  const { input: { value: sortby = [] as string[] } } = useFieldApi({ name: 'sortby' });
   const { input: { value: group = 'No' } } = useFieldApi({ name: 'group' });
   const { input: { value: graphMode = 'counts' } } = useFieldApi({ name: 'graph_mode' });
   const { input: { value: graphCount = '10' } } = useFieldApi({ name: 'graph_count' });
   const { input: { value: graphColumn = '' } } = useFieldApi({ name: 'graph_column' });
   const { input: { value: graphOther = true } } = useFieldApi({ name: 'graph_other' });
-  const { input: { value: colOrder = [] } } = useFieldApi({ name: 'col_order' });
+  const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
   const { availableFields, fieldMetadata } = useFieldMetadata();
 
   const chartTypes = formData.chart_types || [];
-  const primarySort = sortby[0] || NOTHING;
+  const primarySort = (sortby as string[])[0] || NOTHING;
   const hasSort = primarySort !== NOTHING && primarySort !== '';
   const valuesAllowed = group !== 'Counts';
   const effectiveGraphMode = valuesAllowed ? graphMode : 'counts';
   const labelMap = buildLabelMap(availableFields);
-  const numericColumns = colOrder
+  const numericColumns = (colOrder as string[])
     .filter((fieldId) => getColumnMeta(fieldMetadata, fieldId).numeric)
     .map((fieldId) => [labelMap[fieldId] || fieldId, fieldId]);
 
-  const previewTitle = graphType ? sprintf(__('%s Chart Preview'), graphType) : __('Chart Preview');
-  const PreviewComponent = CHART_COMPONENTS[graphType];
-  const previewData = ['Pie', 'Donut'].includes(graphType) ? pieData : sampleData;
+  const previewTitle = graphType ? sprintf(__('%s Chart Preview'), graphType as string) : __('Chart Preview');
+  const PreviewComponent = CHART_COMPONENTS[graphType as string];
+  const previewData = ['Pie', 'Donut'].includes(graphType as string) ? pieData : sampleData;
 
-  const selectChartType = (value) => {
+  const selectChartType = (value: string) => {
     if (!hasSort) {
       return;
     }
@@ -127,7 +136,7 @@ const ChartsTab = ({ formData }) => {
                 id="chart-mode"
                 labelText=""
                 hideLabel
-                value={effectiveGraphMode}
+                value={effectiveGraphMode as string}
                 onChange={(e) => formOptions.change('graph_mode', e.target.value)}
               >
                 <SelectItem value="counts" text={__('Counts')} />
@@ -146,7 +155,7 @@ const ChartsTab = ({ formData }) => {
                 id="chart-column"
                 labelText=""
                 hideLabel
-                value={graphColumn}
+                value={graphColumn as string}
                 onChange={(e) => formOptions.change('graph_column', e.target.value)}
               >
                 <SelectItem value="" text={__('Nothing selected')} />
@@ -160,7 +169,7 @@ const ChartsTab = ({ formData }) => {
               id="chart-count"
               labelText=""
               hideLabel
-              value={graphCount || '10'}
+              value={(graphCount as string) || '10'}
               onChange={(e) => formOptions.change('graph_count', e.target.value)}
             >
               {TOP_VALUE_OPTIONS.map((value) => <SelectItem key={value} value={value} text={value} />)}
@@ -172,11 +181,11 @@ const ChartsTab = ({ formData }) => {
               id="chart-other"
               labelText=""
               checked={graphOther !== false}
-              onChange={(_, { checked }) => formOptions.change('graph_other', checked)}
+              onChange={(_: unknown, { checked }: { checked: boolean }) => formOptions.change('graph_other', checked)}
             />
           </FormRow>
 
-          {['Pie', 'Donut'].includes(graphType) && (
+          {['Pie', 'Donut'].includes(graphType as string) && (
             <p className="report-editor-preview__toolbar">
               {__('Pie and Donut charts are not recommended for small percentages because the labels may overlap.')}
             </p>
@@ -192,12 +201,6 @@ const ChartsTab = ({ formData }) => {
       )}
     </div>
   );
-};
-
-ChartsTab.propTypes = {
-  formData: PropTypes.shape({
-    chart_types: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
-  }).isRequired,
 };
 
 export default ChartsTab;

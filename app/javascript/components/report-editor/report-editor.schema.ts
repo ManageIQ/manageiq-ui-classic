@@ -1,10 +1,17 @@
 import { componentTypes, validatorTypes } from '@@ddf';
+import type { MiqFormSchemaType, BaseFieldType } from '../../types/forms';
+import type { FormDataWithType } from './report-editor-types';
 
-const STANDARD_TABS = ['columns', 'filter', 'summary', 'charts', 'styling', 'preview'];
+const STANDARD_TABS = ['columns', 'filter', 'summary', 'charts', 'styling', 'preview'] as const;
 // Trend and chargeback have a reduced tab set; performance now uses all standard tabs.
-const REDUCED_TABS = ['columns', 'filter', 'preview'];
+const REDUCED_TABS = ['columns', 'filter', 'preview'] as const;
 
-const columnsTab = (formData) => {
+type TabName = typeof STANDARD_TABS[number];
+
+// SchemaField is wide; use BaseFieldType for tab field objects
+type TabField = BaseFieldType & Record<string, unknown>;
+
+const columnsTab = (formData: FormDataWithType): TabField => {
   const isPerformance = formData.report_type === 'performance';
   const isTrend = formData.report_type === 'trend';
   return {
@@ -112,7 +119,7 @@ const columnsTab = (formData) => {
   };
 };
 
-const filterTab = (formData) => ({
+const filterTab = (formData: FormDataWithType): TabField => ({
   component: componentTypes.TAB_ITEM,
   name: 'filter-tab',
   title: __('Filter'),
@@ -142,7 +149,7 @@ const filterTab = (formData) => ({
   ],
 });
 
-const summaryTab = () => ({
+const summaryTab = (): TabField => ({
   component: componentTypes.TAB_ITEM,
   name: 'summary-tab',
   title: __('Summary'),
@@ -155,7 +162,7 @@ const summaryTab = () => ({
   ],
 });
 
-const chartsTab = (formData) => ({
+const chartsTab = (formData: FormDataWithType): TabField => ({
   component: componentTypes.TAB_ITEM,
   name: 'charts-tab',
   title: __('Charts'),
@@ -169,7 +176,7 @@ const chartsTab = (formData) => ({
   ],
 });
 
-const stylingTab = (formData) => ({
+const stylingTab = (formData: FormDataWithType): TabField => ({
   component: componentTypes.TAB_ITEM,
   name: 'styling-tab',
   title: __('Styling'),
@@ -183,7 +190,7 @@ const stylingTab = (formData) => ({
   ],
 });
 
-const previewTab = () => ({
+const previewTab = (): TabField => ({
   component: componentTypes.TAB_ITEM,
   name: 'preview-tab',
   title: __('Preview'),
@@ -196,7 +203,7 @@ const previewTab = () => ({
   ],
 });
 
-const TAB_BUILDERS = {
+const TAB_BUILDERS: Record<TabName, (formData: FormDataWithType) => TabField> = {
   columns: columnsTab,
   filter: filterTab,
   summary: () => summaryTab(),
@@ -205,12 +212,12 @@ const TAB_BUILDERS = {
   preview: () => previewTab(),
 };
 
-const createSchema = (formData) => {
+const createSchema = (formData: FormDataWithType): MiqFormSchemaType => {
   const reportType = formData.report_type || 'standard';
   // Trend and chargeback use the reduced 3-tab set.
   // Performance now uses the full standard tab set (same as standard reports),
   // matching the old HAML which showed all 8 tabs for performance models.
-  const tabNames = (reportType === 'trend' || reportType === 'chargeback')
+  const tabNames: readonly TabName[] = (reportType === 'trend' || reportType === 'chargeback')
     ? REDUCED_TABS
     : STANDARD_TABS;
 
@@ -220,7 +227,7 @@ const createSchema = (formData) => {
         component: componentTypes.TABS,
         name: 'report-editor-tabs',
         fields: tabNames.map((name) => TAB_BUILDERS[name](formData)),
-      },
+      } as BaseFieldType,
     ],
   };
 };

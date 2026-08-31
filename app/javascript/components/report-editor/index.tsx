@@ -1,7 +1,6 @@
 import {
   useState, useEffect, useRef, useMemo,
 } from 'react';
-import PropTypes from 'prop-types';
 import { Loading, InlineNotification } from '@carbon/react';
 import MiqFormRenderer, { FormSpy } from '@@ddf';
 import { rqbToMiq } from '../expression-editor/expression-adapter';
@@ -18,6 +17,14 @@ import PreviewTab from './tabs/preview-tab';
 import TrendColumnsTab from './tabs/trend-columns-tab';
 import { FieldMetadataContext } from './field-metadata-context';
 import { modelToReportType } from './utils';
+import type {
+  FormData,
+  FieldMetadataContextValue,
+  AvailableField,
+  FieldMetadata,
+  ReportFormValues,
+  ReportFilter,
+} from './report-editor-types';
 
 const componentMapper = {
   ...defaultComponentMapper,
@@ -33,31 +40,47 @@ const componentMapper = {
 
 const REDIRECT_URL = '/report/explorer';
 
-const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
-  const [{ isLoading, formData, loadError }, setState] = useState({
+type ReportEditorProps = {
+  recordId?: string | number;
+  copyFrom?: string | number | null;
+};
+
+type EditorState = {
+  isLoading: boolean;
+  formData: FormData | null;
+  loadError: string | null;
+};
+
+type FieldMetadataState = {
+  availableFields: AvailableField[];
+  fieldMetadata: FieldMetadata;
+};
+
+const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) => {
+  const [{ isLoading, formData, loadError }, setState] = useState<EditorState>({
     isLoading: true,
     formData: null,
     loadError: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [flashError, setFlashError] = useState(null);
+  const [flashError, setFlashError] = useState<string | null>(null);
   const [reportType, setReportType] = useState('standard');
 
-  const [fieldMetadataState, setFieldMetadataState] = useState({
+  const [fieldMetadataState, setFieldMetadataState] = useState<FieldMetadataState>({
     availableFields: [],
     fieldMetadata: {},
   });
 
-  const prevModelRef = useRef(null);
+  const prevModelRef = useRef<string | null>(null);
   const isNew = !recordId || recordId === 'new';
 
   useEffect(() => {
     let url = isNew ? '/report/react_form_data/new' : `/report/react_form_data/${recordId}`;
     if (isNew && copyFrom) {
-      url += `?copy_from=${encodeURIComponent(copyFrom)}`;
+      url += `?copy_from=${encodeURIComponent(String(copyFrom))}`;
     }
 
-    http.get(url)
+    http.get<FormData>(url)
       .then((data) => {
         setState({ isLoading: false, formData: data, loadError: null });
         setReportType(data.report_type || 'standard');
@@ -76,7 +99,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
       });
   }, [recordId]);
 
-  const buildInitialValues = (data) => {
+  const buildInitialValues = (data: FormData): ReportFormValues => {
     const report = data.report || {};
     const dbOptions = report.db_options || {};
     const cbOpts = dbOptions.options || {};
@@ -93,18 +116,18 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
     const sort2Parts = sort2Raw.split('__');
 
     const rawTagVal = cbOpts.tag ? cbOpts.tag[1] : [];
-    let cbTagValue = [];
+    let cbTagValue: string[] = [];
     if (Array.isArray(rawTagVal)) {
-      cbTagValue = rawTagVal;
+      cbTagValue = rawTagVal as string[];
     } else if (rawTagVal) {
-      cbTagValue = [rawTagVal];
+      cbTagValue = [rawTagVal as string];
     }
     const rawGroupbyTag = cbOpts.groupby_tag || [];
-    let cbGroupbyTag = [];
+    let cbGroupbyTag: string[] = [];
     if (Array.isArray(rawGroupbyTag)) {
-      cbGroupbyTag = rawGroupbyTag;
+      cbGroupbyTag = rawGroupbyTag as string[];
     } else if (rawGroupbyTag) {
-      cbGroupbyTag = [rawGroupbyTag];
+      cbGroupbyTag = [rawGroupbyTag as string];
     }
 
     return {
@@ -142,8 +165,8 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
       graph_column: report.graph_column || '',
       graph_count: report.graph_count != null ? String(report.graph_count) : '10',
       graph_other: report.graph_other !== false,
-      record_filter: report.record_filter || null,
-      display_filter: report.display_filter || null,
+      record_filter: (report.record_filter as ReportFilter) || null,
+      display_filter: (report.display_filter as ReportFilter) || null,
       perf_interval: dbOptions.interval || 'daily',
       perf_avgs: dbOptions.calc_avgs_by || 'time_interval',
       perf_end: dbOptions.end_offset != null ? String(dbOptions.end_offset) : '0',
@@ -155,18 +178,10 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
       trend_pct2: report.trend_pct2 != null ? String(report.trend_pct2) : '',
       trend_pct3: report.trend_pct3 != null ? String(report.trend_pct3) : '',
       cb_show_typ: (() => {
-        if (cbOpts.owner !== undefined) {
-          return 'owner';
-        }
-        if (cbOpts.tenant_id !== undefined) {
-          return 'tenant';
-        }
-        if (cbOpts.tag !== undefined) {
-          return 'tag';
-        }
-        if (cbOpts.entity_id !== undefined) {
-          return 'entity';
-        }
+        if (cbOpts.owner !== undefined) return 'owner';
+        if (cbOpts.tenant_id !== undefined) return 'tenant';
+        if (cbOpts.tag !== undefined) return 'tag';
+        if (cbOpts.entity_id !== undefined) return 'entity';
         return '';
       })(),
       cb_owner_id: cbOpts.owner || '',
@@ -188,10 +203,13 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
     };
   };
 
-  const initialValues = useMemo(() => (formData ? buildInitialValues(formData) : {}), [formData]);
+  const initialValues = useMemo<ReportFormValues>(
+    () => (formData ? buildInitialValues(formData) : {}),
+    [formData],
+  );
 
-  const handleFormChange = ({ values }) => {
-    const model = values.model?.value ?? values.model ?? '';
+  const handleFormChange = ({ values }: { values: ReportFormValues }) => {
+    const model = (values.model as { value?: string })?.value ?? (values.model as string) ?? '';
     if (model !== prevModelRef.current) {
       prevModelRef.current = model;
       const next = modelToReportType(model || null);
@@ -199,7 +217,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
     }
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: ReportFormValues) => {
     if (isSubmitting) {
       return;
     }
@@ -223,16 +241,12 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
       col_options: values.col_options || {},
       record_filter: (() => {
         const f = values.record_filter;
-        if (!f) {
-          return null;
-        }
+        if (!f) return null;
         return (f.combinator !== undefined) ? rqbToMiq(f) : f;
       })(),
       display_filter: (() => {
         const f = values.display_filter;
-        if (!f) {
-          return null;
-        }
+        if (!f) return null;
         return (f.combinator !== undefined) ? rqbToMiq(f) : f;
       })(),
       perf_interval: values.perf_interval,
@@ -282,7 +296,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
     };
 
     const url = isNew ? '/report/react_save/new' : `/report/react_save/${recordId}`;
-    http.post(url, { report_data: reportData })
+    http.post<{ success: boolean; message?: string }>(url, { report_data: reportData })
       .then((response) => {
         if (response.success) {
           const message = response.message || __('Report was saved');
@@ -292,7 +306,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
           setFlashError(response.message || __('An error occurred while saving'));
         }
       })
-      .catch((error) => {
+      .catch((error: { data?: { message?: string }; message?: string }) => {
         setIsSubmitting(false);
         setFlashError(error.data?.message || error.message || __('An error occurred while saving'));
       });
@@ -321,9 +335,9 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
     );
   }
 
-  const fieldMetadataContextValue = {
+  const fieldMetadataContextValue: FieldMetadataContextValue = {
     ...fieldMetadataState,
-    setFieldData: ({ availableFields, fieldMetadata }) => {
+    setFieldData: ({ availableFields, fieldMetadata }: FieldMetadataState) => {
       setFieldMetadataState({ availableFields, fieldMetadata });
     },
   };
@@ -331,11 +345,11 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
   return (
     <FieldMetadataContext.Provider value={fieldMetadataContextValue}>
       <div className="report-editor">
-        {formData.unavailable_fields_warning && (
+        {formData!.unavailable_fields_warning && (
           <InlineNotification
             kind="warning"
             role="status"
-            title={formData.unavailable_fields_warning}
+            title={formData!.unavailable_fields_warning}
             lowContrast
             hideCloseButton
           />
@@ -351,23 +365,18 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }) => {
         )}
         <MiqFormRenderer
           componentMapper={componentMapper}
-          schema={createSchema({ ...formData, report_type: reportType })}
+          schema={createSchema({ ...formData!, report_type: reportType as import('./report-editor-types').ReportType })}
           initialValues={initialValues}
           onSubmit={onSubmit}
           onCancel={onCancel}
           disableSubmit={isSubmitting ? ['submitting'] : ['invalid']}
           buttonsLabels={{ submitLabel: isNew ? __('Add') : __('Save') }}
         >
-          <FormSpy subscription={{ values: true }} onChange={handleFormChange} />
+          <FormSpy subscription={{ values: true }} onChange={handleFormChange as Parameters<typeof FormSpy>[0]['onChange']} />
         </MiqFormRenderer>
       </div>
     </FieldMetadataContext.Provider>
   );
-};
-
-ReportEditor.propTypes = {
-  recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  copyFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ReportEditor;

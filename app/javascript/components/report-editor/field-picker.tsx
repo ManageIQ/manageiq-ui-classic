@@ -1,45 +1,52 @@
 import { useState, useEffect, useRef } from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
+import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
 import {
   FilterableMultiSelect, InlineNotification, Loading, Modal,
 } from '@carbon/react';
 import SortableList from '../sortable-list';
 import { useFieldMetadata } from './field-metadata-context';
+import type { AvailableField, FieldMetadata } from './report-editor-types';
 
 const MAX_COLUMNS = 100;
 const WARN_COLUMNS = 80;
 
-const FieldPicker = (props) => {
-  const { input: { value: colOrder = [], onChange } } = useFieldApi(props);
+type FieldsResponse = {
+  fields?: AvailableField[];
+  field_metadata?: FieldMetadata;
+};
+
+const FieldPicker = (props: UseFieldApiConfig) => {
+  const { input: { value: colOrder = [] as string[], onChange } } = useFieldApi(props);
   const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
-  const model = modelRaw?.value ?? modelRaw;
+  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
   const formOptions = useFormApi();
   const { availableFields: contextFields, setFieldData } = useFieldMetadata();
 
   const [pendingClear, setPendingClear] = useState(false);
-  const [pendingSelection, setPendingSelection] = useState(null);
+  const [pendingSelection, setPendingSelection] = useState<(() => void) | null>(null);
   const [fieldsLoading, setFieldsLoading] = useState(false);
-  const [availableFields, setAvailableFields] = useState(contextFields);
-  const prevModelRef = useRef(undefined);
+  const [availableFields, setAvailableFields] = useState<AvailableField[]>(contextFields);
+  const prevModelRef = useRef<string | undefined>(undefined);
 
-  const applySelection = (newIds, fields = availableFields) => {
+  const applySelection = (newIds: string[], fields: AvailableField[] = availableFields) => {
     onChange(newIds);
-    const colOptions = formOptions.getState().values.col_options || {};
+    const colOptions: Record<string, { header?: string; format?: string }> = (formOptions.getState().values as Record<string, unknown>).col_options as Record<string, { header?: string; format?: string }> || {};
     const labelMap = Object.fromEntries(fields.map(([label, id]) => [id, label]));
     const nextColOptions = Object.fromEntries(
-      newIds.map((id) => [id, colOptions[id] || { header: labelMap[id] || '', format: '' }]),
+      newIds.map((id: string) => [id, colOptions[id] || { header: labelMap[id] || '', format: '' }]),
     );
     formOptions.change('col_options', nextColOptions);
   };
 
-  const fetchFieldsForModel = (m) => {
+  const fetchFieldsForModel = (m: string) => {
     if (!m) {
       setAvailableFields([]);
       setFieldData({ availableFields: [], fieldMetadata: {} });
       return;
     }
     setFieldsLoading(true);
-    http.get(`/report/react_available_fields?model=${encodeURIComponent(m)}`)
+    http.get<FieldsResponse>(`/report/react_available_fields?model=${encodeURIComponent(m)}`)
       .then((data) => {
         const fields = data.fields || [];
         setAvailableFields(fields);
@@ -65,7 +72,7 @@ const FieldPicker = (props) => {
       return;
     }
 
-    const currentColOrder = formOptions.getState().values.col_order || [];
+    const currentColOrder: string[] = (formOptions.getState().values as Record<string, unknown>).col_order as string[] || [];
     if (currentColOrder.length > 0) {
       setPendingSelection(() => () => {
         applySelection([], []);
@@ -92,22 +99,22 @@ const FieldPicker = (props) => {
     prevColOrderLenRef.current = colOrder.length;
   }, [colOrder]);
 
-  const handleSelectionChange = ({ selectedItems: newSelection }) => {
-    const newIds = newSelection.map((i) => i.id);
+  const handleSelectionChange = ({ selectedItems: newSelection }: { selectedItems: { id: string; label: string }[] }) => {
+    const newIds = newSelection.map((i: { id: string }) => i.id);
 
     // preserve order: keep existing selections in their current order,
     // then append newly added ones at the end
-    const added = newIds.filter((id) => !colOrder.includes(id));
-    const kept = colOrder.filter((id) => newIds.includes(id));
+    const added = newIds.filter((id: string) => !colOrder.includes(id));
+    const kept = colOrder.filter((id: string) => newIds.includes(id));
     applySelection([...kept, ...added]);
   };
 
-  const handleReorder = (newOrder) => {
+  const handleReorder = (newOrder: string[]) => {
     onChange(newOrder);
   };
 
-  const handleRemove = (fieldId) => {
-    applySelection(colOrder.filter((id) => id !== fieldId));
+  const handleRemove = (fieldId: string) => {
+    applySelection(colOrder.filter((id: string) => id !== fieldId));
   };
 
   const count = colOrder.length;
@@ -186,10 +193,10 @@ const FieldPicker = (props) => {
 
         {colOrder.length > 0 ? (
           <SortableList
-            input={{ value: colOrder, onChange: handleReorder }}
+            input={{ value: colOrder, onChange: handleReorder as () => void }}
             helperText={__('Drag to reorder · click × to remove')}
             labelMap={Object.fromEntries(items.map(({ id, label }) => [id, label]))}
-            onRemove={handleRemove}
+            onRemove={handleRemove as unknown as null}
           />
         ) : (
           <p className="report-editor-field-picker__empty">
