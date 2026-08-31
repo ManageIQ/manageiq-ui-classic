@@ -13,8 +13,21 @@ import {
 } from '@carbon/react';
 import { Renew } from '@carbon/react/icons';
 import { useFormApi, useFieldApi } from '@@ddf';
+import type { ReportFormValues } from '../report-editor-types';
 
-const buildReportData = (values) => {
+type PreviewData = {
+  columns?: string[];
+  col_keys?: string[];
+  rows?: (string[] | Record<string, string>)[];
+};
+
+type PreviewState = {
+  isLoading: boolean;
+  data: PreviewData | null;
+  error: string | null;
+};
+
+const buildReportData = (values: ReportFormValues) => {
   const colOrder = values.col_order || [];
   const colOptions = values.col_options || {};
   const headers = colOrder.map((id) => colOptions[id]?.header || '');
@@ -38,9 +51,9 @@ const buildReportData = (values) => {
 
 const PreviewTab = () => {
   const formOptions = useFormApi();
-  const { input: { value: colOrder = [] } } = useFieldApi({ name: 'col_order' });
+  const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
 
-  const [{ isLoading, data, error }, setState] = useState({
+  const [{ isLoading, data, error }, setState] = useState<PreviewState>({
     isLoading: false,
     data: null,
     error: null,
@@ -48,7 +61,7 @@ const PreviewTab = () => {
 
   const fetchPreview = useCallback(() => {
     const { values } = formOptions.getState();
-    const currentColOrder = values.col_order || [];
+    const currentColOrder: string[] = (values as ReportFormValues).col_order || [];
 
     if (currentColOrder.length === 0) {
       setState({ isLoading: false, data: null, error: null });
@@ -56,11 +69,11 @@ const PreviewTab = () => {
     }
 
     setState({ isLoading: true, data: null, error: null });
-    http.post('/report/react_preview', { report_data: buildReportData(values) })
+    http.post<PreviewData>('/report/react_preview', { report_data: buildReportData(values as ReportFormValues) })
       .then((result) => {
         setState({ isLoading: false, data: result, error: null });
       })
-      .catch((err) => {
+      .catch((err: { data?: { message?: string }; message?: string }) => {
         setState({
           isLoading: false,
           data: null,
@@ -70,7 +83,7 @@ const PreviewTab = () => {
   }, [formOptions]);
 
   const renderContent = () => {
-    if (colOrder.length === 0) {
+    if ((colOrder as string[]).length === 0) {
       return (
         <p className="report-editor-filter__text-muted">
           {__('Add columns on the Columns tab, then click Refresh to preview.')}
@@ -113,8 +126,8 @@ const PreviewTab = () => {
     const tableHeaders = columns.map((col, idx) => ({ key: colKeys[idx] || col, header: col }));
     const tableRows = rows.map((row, idx) => ({
       id: String(idx),
-      ...colKeys.reduce((acc, key, colIdx) => {
-        acc[key] = Array.isArray(row) ? (row[colIdx] ?? '') : (row[key] ?? '');
+      ...colKeys.reduce<Record<string, string>>((acc, key, colIdx) => {
+        acc[key] = Array.isArray(row) ? (row[colIdx] ?? '') : ((row as Record<string, string>)[key] ?? '');
         return acc;
       }, {}),
     }));

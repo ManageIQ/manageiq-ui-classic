@@ -1,4 +1,5 @@
 import { useFieldApi } from '@@ddf';
+import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
 import {
   DataTable,
   Table,
@@ -12,6 +13,7 @@ import {
   SelectItem,
 } from '@carbon/react';
 import { useFieldMetadata } from './field-metadata-context';
+import type { ColOptions } from './report-editor-types';
 
 /**
  * ColumnFormattingTable — custom DDF component.
@@ -22,18 +24,18 @@ import { useFieldMetadata } from './field-metadata-context';
  * Reads available fields and per-field formats from FieldMetadataContext
  * instead of form state.
  */
-const ColumnFormattingTable = (props) => {
+const ColumnFormattingTable = (props: UseFieldApiConfig) => {
   const {
-    input: { value: colOptions = {}, onChange },
+    input: { value: colOptions = {} as ColOptions, onChange },
   } = useFieldApi(props);
   // Subscribe to col_order so the table re-renders when order changes.
-  const { input: { value: colOrder = [] } } = useFieldApi({ name: 'col_order' });
+  const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
   const { availableFields, fieldMetadata } = useFieldMetadata();
 
   // Build a label map from available_fields [[label, id], ...]
   const labelMap = Object.fromEntries((availableFields || []).map(([label, id]) => [id, label]));
 
-  const updateOption = (fieldId, key, val) => {
+  const updateOption = (fieldId: string, key: string, val: string) => {
     onChange({ ...colOptions, [fieldId]: { ...(colOptions[fieldId] || {}), [key]: val } });
   };
 
@@ -45,8 +47,8 @@ const ColumnFormattingTable = (props) => {
 
   // col_options is the source of truth for which fields are selected and their settings;
   // use colOrder only for display ordering, falling back to col_options keys
-  const orderedIds = colOrder.length > 0 ? colOrder : Object.keys(colOptions);
-  const rows = orderedIds.map((fieldId) => ({
+  const orderedIds: string[] = colOrder.length > 0 ? colOrder : Object.keys(colOptions);
+  const rows = orderedIds.map((fieldId: string) => ({
     id: fieldId,
     field: labelMap[fieldId] || fieldId,
     header: colOptions[fieldId]?.header ?? '',

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
 import {
   Select,
   SelectItem,
@@ -11,6 +11,8 @@ import { FormRow, LabeledSection } from '../form-row';
 
 // Percent steps 0, 5, 10 … 100
 const PCT_STEPS = Array.from({ length: 21 }, (_, i) => i * 5);
+
+type LabelValuePair = [string, string];
 
 /**
  * TrendColumnsTab — replaces the standard FieldPicker for VimPerformanceTrend reports.
@@ -24,12 +26,12 @@ const PCT_STEPS = Array.from({ length: 21 }, (_, i) => i * 5);
  * trend_col is stored as "db-col" e.g. "VmPerformance-cpu_usage_rate_average",
  * matching the format the old chosen_trend_col param used.
  */
-const TrendColumnsTab = (props) => {
+const TrendColumnsTab = (props: UseFieldApiConfig) => {
   useFieldApi(props); // bind to the DDF field (trend_col)
   const formOptions = useFormApi();
 
   const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
-  const model = modelRaw?.value ?? modelRaw;
+  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
   const { input: { value: perfInterval = 'daily' } } = useFieldApi({ name: 'perf_interval' });
   const { input: { value: trendCol = '' } } = useFieldApi({ name: 'trend_col' });
   const { input: { value: trendLimitCol = '' } } = useFieldApi({ name: 'trend_limit_col' });
@@ -38,9 +40,9 @@ const TrendColumnsTab = (props) => {
   const { input: { value: trendPct2 = '' } } = useFieldApi({ name: 'trend_pct2' });
   const { input: { value: trendPct3 = '' } } = useFieldApi({ name: 'trend_pct3' });
 
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState<LabelValuePair[]>([]);
   const [fieldsLoading, setFieldsLoading] = useState(false);
-  const [limitCols, setLimitCols] = useState([]);
+  const [limitCols, setLimitCols] = useState<LabelValuePair[]>([]);
 
   // Fetch available trend fields whenever model or perf_interval changes
   useEffect(() => {
@@ -49,7 +51,9 @@ const TrendColumnsTab = (props) => {
       return;
     }
     setFieldsLoading(true);
-    http.get(`/report/react_available_fields?model=${encodeURIComponent(model)}&perf_interval=${encodeURIComponent(perfInterval)}`)
+    http.get<{ fields?: LabelValuePair[] }>(
+      `/report/react_available_fields?model=${encodeURIComponent(model)}&perf_interval=${encodeURIComponent(perfInterval as string)}`
+    )
       .then((data) => {
         const sorted = (data.fields || []).slice().sort((a, b) => a[0].localeCompare(b[0]));
         setFields(sorted);
@@ -67,15 +71,15 @@ const TrendColumnsTab = (props) => {
       setLimitCols([]);
       return;
     }
-    const interval = perfInterval || 'daily';
-    http.get(
-      `/report/react_trend_limit_cols?trend_col=${encodeURIComponent(trendCol)}&perf_interval=${encodeURIComponent(interval)}`
+    const interval = (perfInterval as string) || 'daily';
+    http.get<{ limit_cols?: LabelValuePair[] }>(
+      `/report/react_trend_limit_cols?trend_col=${encodeURIComponent(trendCol as string)}&perf_interval=${encodeURIComponent(interval)}`
     )
       .then((data) => setLimitCols(data.limit_cols || []))
       .catch(() => setLimitCols([]));
   }, [trendCol, perfInterval]);
 
-  const change = (field, value) => formOptions.change(field, value);
+  const change = (field: string, value: unknown) => formOptions.change(field, value);
 
   return (
     <div className="report-editor-trend-columns">
@@ -87,7 +91,7 @@ const TrendColumnsTab = (props) => {
             id="trend_col"
             labelText=""
             hideLabel
-            value={trendCol}
+            value={trendCol as string}
             onChange={(e) => {
               change('trend_col', e.target.value);
               // Reset dependent fields when trend column changes
@@ -116,7 +120,7 @@ const TrendColumnsTab = (props) => {
                   id="trend_limit_col"
                   labelText=""
                   hideLabel
-                  value={trendLimitCol}
+                  value={trendLimitCol as string}
                   onChange={(e) => {
                     change('trend_limit_col', e.target.value);
                     // Choosing a column clears the manual value
@@ -140,7 +144,7 @@ const TrendColumnsTab = (props) => {
                   id="trend_limit_val"
                   labelText=""
                   hideLabel
-                  value={trendLimitVal}
+                  value={trendLimitVal as string}
                   maxLength={20}
                   onChange={(e) => change('trend_limit_val', e.target.value)}
                 />
@@ -197,10 +201,6 @@ const TrendColumnsTab = (props) => {
       )}
     </div>
   );
-};
-
-TrendColumnsTab.propTypes = {
-  input: PropTypes.shape({}),
 };
 
 export default TrendColumnsTab;

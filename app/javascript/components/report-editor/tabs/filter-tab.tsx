@@ -1,7 +1,6 @@
 import {
   useState, useEffect, useCallback, useRef,
 } from 'react';
-import PropTypes from 'prop-types';
 import {
   MultiSelect,
   Select,
@@ -11,67 +10,88 @@ import {
   Loading,
 } from '@carbon/react';
 import { useFormApi, useFieldApi } from '@@ddf';
-import ExpressionEditor from '../../expression-editor';
+import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
+// ExpressionEditor is a JS component without TS declarations; cast to any to avoid
+// strict-mode prop-shape errors.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+import ExpressionEditorRaw from '../../expression-editor';
+const ExpressionEditor = ExpressionEditorRaw as any;
 import { rqbToMiq } from '../../expression-editor/expression-adapter';
 import { miqExpressionToHuman } from '../../expression-editor/expression-human';
 import { FormRow, LabeledSection } from '../form-row';
+import type { ReportFormValues, ReportType } from '../report-editor-types';
+
+type LabelValuePair = [string, string];
+type LabelNumPair = [string, number];
+
+import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
+type FormOptionsApi = FormOptions<Record<string, unknown>>;
 
 // ---------------------------------------------------------------------------
 // Standard filter variant
 // ---------------------------------------------------------------------------
 
-const StandardFilter = ({ formValues, formOptions }) => {
+type StandardFilterProps = {
+  formValues: ReportFormValues;
+  formOptions: FormOptionsApi;
+};
+
+const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
   const hasColumns = (formValues.col_order || []).length > 0;
 
   // Preview state — same pattern as ExpressionEditorField in condition-form.
   // *Ref naming: ExpressionEditor passes tagValuesCache as a { current: Map } ref object
   // so that tag lookups always read the latest values without re-firing the callback.
   // We store the ref object itself, then read .current when we need the Map.
-  const recordLabelMapRef = useRef(new Map());
-  const recordTagCacheRefObj = useRef(null); // holds the { current: Map } ref from ExpressionEditor
-  const displayLabelMapRef = useRef(new Map());
-  const displayTagCacheRefObj = useRef(null);
+  const recordLabelMapRef = useRef<Map<string, string>>(new Map());
+  const recordTagCacheRefObj = useRef<{ current: Map<string, unknown> } | null>(null);
+  const displayLabelMapRef = useRef<Map<string, string>>(new Map());
+  const displayTagCacheRefObj = useRef<{ current: Map<string, unknown> } | null>(null);
   const [recordPreview, setRecordPreview] = useState('');
   const [displayPreview, setDisplayPreview] = useState('');
 
-  const handleRecordContextReady = useCallback((labelMap, tagValuesCache) => {
+  const handleRecordContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
     recordLabelMapRef.current = labelMap;
     recordTagCacheRefObj.current = tagValuesCache; // store the ref object
     // Seed the preview from the initial value (a MiqExpression hash when editing
     // an existing report that already has a filter).
-    const initial = formOptions.getState().values.record_filter;
-    if (initial && initial.combinator === undefined) {
+    const initial = (formOptions.getState().values as ReportFormValues).record_filter;
+    if (initial && (initial as Record<string, unknown>).combinator === undefined) {
       // It's a MiqExpression hash (not yet touched by the user) — render it directly.
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
       setRecordPreview(miqExpressionToHuman(initial, labelMap, tagMap));
     }
   }, [formOptions]);
 
-  const handleDisplayContextReady = useCallback((labelMap, tagValuesCache) => {
+  const handleDisplayContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
     displayLabelMapRef.current = labelMap;
     displayTagCacheRefObj.current = tagValuesCache; // store the ref object
-    const initial = formOptions.getState().values.display_filter;
-    if (initial && initial.combinator === undefined) {
+    const initial = (formOptions.getState().values as ReportFormValues).display_filter;
+    if (initial && (initial as Record<string, unknown>).combinator === undefined) {
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
       setDisplayPreview(miqExpressionToHuman(initial, displayLabelMapRef.current, tagMap));
     }
   }, [formOptions]);
 
-  const handleRecordFilterChange = useCallback((query) => {
+  const handleRecordFilterChange = useCallback((query: unknown) => {
     formOptions.change('record_filter', query);
     const miq = rqbToMiq(query);
     const tagMap = recordTagCacheRefObj.current ? recordTagCacheRefObj.current.current : new Map();
     setRecordPreview(miq ? miqExpressionToHuman(miq, recordLabelMapRef.current, tagMap) : '');
   }, [formOptions]);
 
-  const handleDisplayFilterChange = useCallback((query) => {
+  const handleDisplayFilterChange = useCallback((query: unknown) => {
     formOptions.change('display_filter', query);
     const miq = rqbToMiq(query);
     const tagMap = displayTagCacheRefObj.current ? displayTagCacheRefObj.current.current : new Map();
     setDisplayPreview(miq ? miqExpressionToHuman(miq, displayLabelMapRef.current, tagMap) : '');
   }, [formOptions]);
 
-  if (!formValues.model) {
+  const model = typeof formValues.model === 'string'
+    ? formValues.model
+    : (formValues.model as { value?: string })?.value || '';
+
+  if (!model) {
     return (
       <p className="report-editor-filter__text-muted">
         {__('Select a model on the Columns tab to configure filters.')}
@@ -82,10 +102,10 @@ const StandardFilter = ({ formValues, formOptions }) => {
   return (
     <>
       <LabeledSection
-        title={__('Record Filter — filters the %{model} table records').replace('%{model}', formValues.model)}
+        title={__('Record Filter — filters the %{model} table records').replace('%{model}', model)}
       >
         <ExpressionEditor
-          model={formValues.model}
+          model={model}
           value={formValues.record_filter || null}
           onQueryChange={handleRecordFilterChange}
           onContextReady={handleRecordContextReady}
@@ -103,7 +123,7 @@ const StandardFilter = ({ formValues, formOptions }) => {
         {hasColumns ? (
           <>
             <ExpressionEditor
-              model={formValues.model}
+              model={model}
               value={formValues.display_filter || null}
               onQueryChange={handleDisplayFilterChange}
               onContextReady={handleDisplayContextReady}
@@ -126,22 +146,11 @@ const StandardFilter = ({ formValues, formOptions }) => {
   );
 };
 
-StandardFilter.propTypes = {
-  formValues: PropTypes.shape({
-    model: PropTypes.string,
-    col_order: PropTypes.arrayOf(PropTypes.string),
-    record_filter: PropTypes.shape({}),
-    display_filter: PropTypes.shape({}),
-  }).isRequired,
-  formOptions: PropTypes.shape({ change: PropTypes.func }).isRequired,
-};
-
 // ---------------------------------------------------------------------------
 // Performance Timeframe constants (used by both Trend and Performance)
 // ---------------------------------------------------------------------------
 
-// End options: daily / hourly
-const PERF_END_DAILY = [
+const PERF_END_DAILY: LabelValuePair[] = [
   [__('Today (partial)'), '0'],
   [__('Yesterday'), '1'],
   [__('2 Days Ago'), '2'],
@@ -152,7 +161,7 @@ const PERF_END_DAILY = [
   [__('1 Week Ago'), '7'],
 ];
 
-const PERF_END_HOURLY = [
+const PERF_END_HOURLY: LabelValuePair[] = [
   [__('Now (partial)'), '0'],
   [__('1 Hour Ago'), '1'],
   [__('2 Hours Ago'), '2'],
@@ -163,8 +172,7 @@ const PERF_END_HOURLY = [
   [__('1 Day Ago'), '24'],
 ];
 
-// Start (going back) options
-const PERF_START_DAILY = [
+const PERF_START_DAILY: LabelValuePair[] = [
   [__('1 Day'), (1 * 24 * 3600).toString()],
   [__('2 Days'), (2 * 24 * 3600).toString()],
   [__('3 Days'), (3 * 24 * 3600).toString()],
@@ -175,7 +183,7 @@ const PERF_START_DAILY = [
   [__('2 Weeks'), (14 * 24 * 3600).toString()],
 ];
 
-const PERF_START_HOURLY = [
+const PERF_START_HOURLY: LabelValuePair[] = [
   [__('1 Hour'), '3600'],
   [__('2 Hours'), '7200'],
   [__('3 Hours'), '10800'],
@@ -190,7 +198,12 @@ const PERF_START_HOURLY = [
 // Shared: the Performance Timeframe rows (reused by Trend and Performance)
 // ---------------------------------------------------------------------------
 
-const PerformanceTimeframe = ({ formValues, formOptions }) => {
+type PerfTimeframeProps = {
+  formValues: ReportFormValues;
+  formOptions: FormOptionsApi;
+};
+
+const PerformanceTimeframe = ({ formValues, formOptions }: PerfTimeframeProps) => {
   const isHourly = formValues.perf_interval === 'hourly';
   const endOptions = isHourly ? PERF_END_HOURLY : PERF_END_DAILY;
   const startOptions = isHourly ? PERF_START_HOURLY : PERF_START_DAILY;
@@ -228,50 +241,36 @@ const PerformanceTimeframe = ({ formValues, formOptions }) => {
   );
 };
 
-PerformanceTimeframe.propTypes = {
-  formValues: PropTypes.shape({
-    perf_interval: PropTypes.string,
-    perf_end: PropTypes.string,
-    perf_start: PropTypes.string,
-  }).isRequired,
-  formOptions: PropTypes.shape({ change: PropTypes.func }).isRequired,
-};
-
 // ---------------------------------------------------------------------------
 // Trend filter variant — Performance Timeframe only; no expression editors
 // ---------------------------------------------------------------------------
 
-const TrendFilter = ({ formValues, formOptions }) => (
+const TrendFilter = ({ formValues, formOptions }: PerfTimeframeProps) => (
   <PerformanceTimeframe formValues={formValues} formOptions={formOptions} />
 );
-
-TrendFilter.propTypes = {
-  formValues: PropTypes.shape({
-    perf_interval: PropTypes.string,
-    perf_end: PropTypes.string,
-    perf_start: PropTypes.string,
-  }).isRequired,
-  formOptions: PropTypes.shape({ change: PropTypes.func }).isRequired,
-};
 
 // ---------------------------------------------------------------------------
 // Performance filter variant — Timeframe + Primary Record Filter
 // ---------------------------------------------------------------------------
 
-const PerformanceFilter = ({ formValues, formOptions }) => {
-  const handleRecordFilterChange = useCallback((query) => {
+const PerformanceFilter = ({ formValues, formOptions }: PerfTimeframeProps) => {
+  const handleRecordFilterChange = useCallback((query: unknown) => {
     formOptions.change('record_filter', query);
   }, [formOptions]);
+
+  const model = typeof formValues.model === 'string'
+    ? formValues.model
+    : (formValues.model as { value?: string })?.value || '';
 
   return (
     <>
       <PerformanceTimeframe formValues={formValues} formOptions={formOptions} />
 
       <LabeledSection
-        title={__('Primary (Record) Filter — filters the %{model} table records').replace('%{model}', formValues.model || '')}
+        title={__('Primary (Record) Filter — filters the %{model} table records').replace('%{model}', model)}
       >
         <ExpressionEditor
-          model={formValues.model}
+          model={model}
           value={formValues.record_filter || null}
           onQueryChange={handleRecordFilterChange}
           seedEmpty
@@ -281,23 +280,16 @@ const PerformanceFilter = ({ formValues, formOptions }) => {
   );
 };
 
-PerformanceFilter.propTypes = {
-  formValues: PropTypes.shape({
-    model: PropTypes.string,
-    perf_interval: PropTypes.string,
-    perf_end: PropTypes.string,
-    perf_start: PropTypes.string,
-    record_filter: PropTypes.shape({}),
-  }).isRequired,
-  formOptions: PropTypes.shape({ change: PropTypes.func }).isRequired,
-};
-
 // ---------------------------------------------------------------------------
 // Chargeback filter variant
 // ---------------------------------------------------------------------------
 
-// Build interval-dependent end/going-back option arrays (mirroring the HAML).
-function buildCbIntervalOptions(interval) {
+type CbIntervalOptions = {
+  endOpts: LabelNumPair[];
+  sizeOpts: LabelNumPair[];
+};
+
+function buildCbIntervalOptions(interval: string): CbIntervalOptions {
   switch (interval) {
     case 'daily':
       return {
@@ -364,8 +356,31 @@ function buildCbIntervalOptions(interval) {
   }
 }
 
-const ChargebackFilter = ({ formValues, formOptions, model }) => {
-  const [{ loading, cbOpts, error }, setCbState] = useState({
+type ChargebackOptions = {
+  users?: Record<string, string>;
+  tenants?: Record<string, string>;
+  categories?: Record<string, string>;
+  container_providers?: LabelValuePair[];
+  image_labels?: string[];
+  timezones?: LabelValuePair[];
+  cb_model?: string;
+  tag_values?: Record<string, LabelValuePair[]>;
+};
+
+type CbState = {
+  loading: boolean;
+  cbOpts: ChargebackOptions | null;
+  error: string | null;
+};
+
+type ChargebackFilterProps = {
+  formValues: ReportFormValues;
+  formOptions: FormOptionsApi;
+  model: string;
+};
+
+const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterProps) => {
+  const [{ loading, cbOpts, error }, setCbState] = useState<CbState>({
     loading: true,
     cbOpts: null,
     error: null,
@@ -384,7 +399,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
       return;
     }
     setCbState({ loading: true, cbOpts: null, error: null });
-    http.get(`/report/react_chargeback_options?model=${encodeURIComponent(model)}`)
+    http.get<ChargebackOptions>(`/report/react_chargeback_options?model=${encodeURIComponent(model)}`)
       .then((data) => setCbState({ loading: false, cbOpts: data, error: null }))
       .catch(() => setCbState({
         loading: false,
@@ -394,24 +409,24 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
   }, [model]);
 
   // Derive tag values for the selected category directly from the initial payload.
-  // The server now includes tag_values: { category_name: [[name, desc], ...] }.
-  // No second request is needed.
-  const tagValues = cbOpts?.tag_values?.[formValues.cb_tag_cat] || [];
+  const tagValues = cbOpts?.tag_values?.[formValues.cb_tag_cat || ''] || [];
 
   // Entity list for the selected container provider (GAP 4).
-  const [entityList, setEntityList] = useState([]);
+  const [entityList, setEntityList] = useState<LabelValuePair[]>([]);
   useEffect(() => {
     const providerId = formValues.cb_provider_id;
     if (!providerId || providerId === 'all') {
       setEntityList([]);
       return;
     }
-    http.get(`/report/react_chargeback_entities?provider_id=${encodeURIComponent(providerId)}&model=${encodeURIComponent(model)}`)
+    http.get<{ entities?: LabelValuePair[] }>(
+      `/report/react_chargeback_entities?provider_id=${encodeURIComponent(providerId)}&model=${encodeURIComponent(model)}`
+    )
       .then((data) => setEntityList(data.entities || []))
       .catch(() => setEntityList([]));
   }, [formValues.cb_provider_id, model]);
 
-  const change = useCallback((field, value) => formOptions.change(field, value), [formOptions]);
+  const change = useCallback((field: string, value: unknown) => formOptions.change(field, value), [formOptions]);
 
   if (loading) {
     return <Loading small withOverlay={false} description={__('Loading chargeback options…')} />;
@@ -431,15 +446,16 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
   const cbInterval = formValues.cb_interval || 'daily';
   const { endOpts, sizeOpts } = buildCbIntervalOptions(cbInterval);
   const showCostLabel = isMetering ? __('Show usage by') : __('Show Costs by');
+  const cbModel = cbOpts?.cb_model || model;
 
   // Build Show Costs By options depending on model
-  const buildShowByOpts = () => {
-    const none = [__('<Choose>'), ''];
+  const buildShowByOpts = (): LabelValuePair[] => {
+    const none: LabelValuePair = [__('<Choose>'), ''];
     if (isContainerProject) {
-      return [none, [cbOpts.cb_model, 'entity'], [__('Tag'), 'tag']];
+      return [none, [cbModel, 'entity'], [__('Tag'), 'tag']];
     }
     if (isContainerImage) {
-      return [none, [cbOpts.cb_model, 'entity'], [__('Tag'), 'tag']];
+      return [none, [cbModel, 'entity'], [__('Tag'), 'tag']];
     }
     if (isVm) {
       return [none, [__('Owner'), 'owner'], [__('Tag'), 'tag'], [__('Tenant'), 'tenant']];
@@ -447,16 +463,15 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
     if (model === 'ChargebackConfiguredSystem') {
       return [none, [__('Tag'), 'tag']];
     }
-    return [none, [__('Owner'), 'owner'], [__('Tag'), 'tag'], [cbOpts.cb_model || model, 'entity']];
+    return [none, [__('Owner'), 'owner'], [__('Tag'), 'tag'], [cbModel, 'entity']];
   };
 
   const showByOpts = buildShowByOpts();
   const cbShowTyp = formValues.cb_show_typ || '';
   const cbGroupby = formValues.cb_groupby || 'date';
-  const cbModel = cbOpts.cb_model || model;
 
   // Group-by options (mirror HAML)
-  const groupByOpts = [
+  const groupByOpts: LabelValuePair[] = [
     [`${cbModel} ${__('and Date')}`, 'date'],
     [`${__('Date')} ${__('and')} ${cbModel}`, 'date-first'],
     [__('Date Only'), 'date-only'],
@@ -477,10 +492,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
 
   return (
     <>
-      {/* Chargeback Resources — mirrors HAML:
-          isVm block:       MeteringVm / ChargebackVm → cb_include_metrics (ChargebackVm only) + method_for_allocated_metrics
-          isChargeback block: Chargeback* → cumulative_rate_calculation
-          Both may be visible simultaneously for ChargebackVm, so they share one section heading. */}
+      {/* Chargeback Resources */}
       {(isVm || isChargeback) && (
         <LabeledSection title={__('Chargeback Resources')}>
           {model === 'ChargebackVm' && (
@@ -490,7 +502,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
                 labelA={__('No')}
                 labelB={__('Yes')}
                 toggled={!!formValues.cb_include_metrics}
-                onToggle={(checked) => change('cb_include_metrics', checked)}
+                onToggle={(checked: boolean) => change('cb_include_metrics', checked)}
                 hideLabel
               />
             </FormRow>
@@ -516,7 +528,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
                 labelA={__('No')}
                 labelB={__('Yes')}
                 toggled={!!formValues.cumulative_rate_calculation}
-                onToggle={(checked) => change('cumulative_rate_calculation', checked)}
+                onToggle={(checked: boolean) => change('cumulative_rate_calculation', checked)}
                 hideLabel
               />
             </FormRow>
@@ -576,7 +588,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
           </FormRow>
         )}
 
-        {/* Cascade: tag — multi-select matching HAML behaviour */}
+        {/* Cascade: tag */}
         {cbShowTyp === 'tag' && (
           <>
             <FormRow label={__('Tag Category')}>
@@ -608,15 +620,15 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
                     (Array.isArray(formValues.cb_tag_value) ? formValues.cb_tag_value : [])
                       .map((v) => ({ id: v, label: tagValues.find(([n]) => n === v)?.[1] || v }))
                   }
-                  itemToString={(item) => item?.label || ''}
-                  onChange={({ selectedItems }) => change('cb_tag_value', selectedItems.map((i) => i.id))}
+                  itemToString={(item: { id: string; label?: string }) => item?.label || ''}
+                  onChange={({ selectedItems }: { selectedItems: { id: string }[] }) => change('cb_tag_value', selectedItems.map((i) => i.id))}
                 />
               </FormRow>
             )}
           </>
         )}
 
-        {/* Cascade: entity (provider + entity) */}
+        {/* Cascade: entity */}
         {cbShowTyp === 'entity' && (
           <>
             <FormRow label={__('Provider')}>
@@ -684,8 +696,8 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
                 (Array.isArray(formValues.cb_groupby_tag) ? formValues.cb_groupby_tag : [])
                   .map((v) => ({ id: v, label: catsList.find(([n]) => n === v)?.[1] || v }))
               }
-              itemToString={(item) => item?.label || ''}
-              onChange={({ selectedItems }) => change('cb_groupby_tag', selectedItems.map((i) => i.id))}
+              itemToString={(item: { id: string; label?: string }) => item?.label || ''}
+              onChange={({ selectedItems }: { selectedItems: { id: string }[] }) => change('cb_groupby_tag', selectedItems.map((i) => i.id))}
             />
           </FormRow>
         )}
@@ -771,26 +783,23 @@ const ChargebackFilter = ({ formValues, formOptions, model }) => {
   );
 };
 
-ChargebackFilter.propTypes = {
-  formValues: PropTypes.shape({}).isRequired,
-  formOptions: PropTypes.shape({ change: PropTypes.func }).isRequired,
-  model: PropTypes.string.isRequired,
-};
-
 // ---------------------------------------------------------------------------
 // FilterTab — top-level dispatcher
 // ---------------------------------------------------------------------------
 
+type FilterTabProps = {
+  reportType?: ReportType;
+  input?: Record<string, unknown>;
+};
+
 // FilterTab is a pure display component — it just dispatches to the correct
 // filter variant based on reportType. The reportType is driven by the parent
 // ReportEditor via onStateChange, so no callbacks are needed here.
-const FilterTab = ({ reportType, input }) => {
-  useFieldApi(input || { name: 'filter_tab_content' }); // bind DDF field
+const FilterTab = ({ reportType, input }: FilterTabProps) => {
+  useFieldApi((input || { name: 'filter_tab_content' }) as UseFieldApiConfig); // bind DDF field
   const formOptions = useFormApi();
   // Subscribe to every field read as a controlled-input value so FilterTab
   // (and its sub-components) re-renders when any of them change.
-  // Without these subscriptions formOptions.getState() returns a stale snapshot
-  // and dropdowns/toggles appear to do nothing.
   const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
   const { input: { value: colOrder = [] } } = useFieldApi({ name: 'col_order' });
   // Performance / trend fields
@@ -816,8 +825,12 @@ const FilterTab = ({ reportType, input }) => {
   useFieldApi({ name: 'method_for_allocated_metrics' });
   useFieldApi({ name: 'cumulative_rate_calculation' });
 
-  const model = modelRaw?.value ?? modelRaw;
-  const formValues = { ...formOptions.getState().values, model, col_order: colOrder };
+  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
+  const formValues: ReportFormValues = {
+    ...formOptions.getState().values as ReportFormValues,
+    model,
+    col_order: colOrder as string[],
+  };
 
   switch (reportType) {
     case 'trend':
@@ -832,11 +845,6 @@ const FilterTab = ({ reportType, input }) => {
     default:
       return <StandardFilter formValues={formValues} formOptions={formOptions} />;
   }
-};
-
-FilterTab.propTypes = {
-  reportType: PropTypes.oneOf(['standard', 'performance', 'trend', 'chargeback']),
-  input: PropTypes.shape({}),
 };
 
 export default FilterTab;
