@@ -71,7 +71,7 @@ describe('DomainsPriorityForm component', () => {
     await user.keyboard('{ArrowDown}');
 
     // Verify order changed - get all draggable items
-    const items = screen.getAllByRole('listitem', { name: /Press arrow keys to reorder/i });
+    const items = screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
     expect(items[0]).toHaveAccessibleName(/RedHat.*Press arrow keys/i);
     expect(items[1]).toHaveAccessibleName(/ManageIQ.*Press arrow keys/i);
 
@@ -80,7 +80,7 @@ describe('DomainsPriorityForm component', () => {
     await user.click(resetButton);
 
     // Verify order is restored to initial
-    const resetItems = screen.getAllByRole('listitem', { name: /Press arrow keys to reorder/i });
+    const resetItems = screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
     expect(resetItems[0]).toHaveAccessibleName(/ManageIQ.*Press arrow keys/i);
     expect(resetItems[1]).toHaveAccessibleName(/RedHat.*Press arrow keys/i);
   });

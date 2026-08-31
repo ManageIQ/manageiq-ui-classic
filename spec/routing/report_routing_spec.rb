@@ -43,12 +43,6 @@ describe "routes for ReportController" do
     end
   end
 
-  describe "#filter_change" do
-    it "routes with POST" do
-      expect(post("/report/filter_change")).to route_to("report#filter_change")
-    end
-  end
-
   describe "#miq_report_edit" do
     it "routes with GET" do
       expect(get("/report/miq_report_edit")).to route_to("report#miq_report_edit")
@@ -156,12 +150,6 @@ describe "routes for ReportController" do
     it "routes with POST" do
       expect(post("/report/export_field_changed"))
         .to route_to("report#export_field_changed")
-    end
-  end
-
-  describe "#form_field_changed" do
-    it "routes with POST" do
-      expect(post("/report/form_field_changed")).to route_to("report#form_field_changed")
     end
   end
 

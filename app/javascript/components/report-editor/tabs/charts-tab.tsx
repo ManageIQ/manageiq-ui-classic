@@ -1,3 +1,4 @@
+import type { ChangeEvent, ComponentType } from 'react';
 import {
   Checkbox,
   Select,
@@ -28,7 +29,7 @@ const TOP_VALUE_OPTIONS = Array.from({ length: 18 }, (_, index) => String(index 
 // Carbon-charts components accept optional props; use a permissive type to avoid
 // fighting PropTypes-annotated JS component signatures.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ChartComponent = React.ComponentType<any>;
+type ChartComponent = ComponentType<any>;
 
 const CHART_COMPONENTS: Record<string, ChartComponent> = {
   Area: AreaChartGraph,
@@ -181,7 +182,7 @@ const ChartsTab = ({ formData }: ChartsTabProps) => {
               id="chart-other"
               labelText=""
               checked={graphOther !== false}
-              onChange={(_: unknown, { checked }: { checked: boolean }) => formOptions.change('graph_other', checked)}
+              onChange={(_evt: ChangeEvent<HTMLInputElement>, { checked }: { checked: boolean }) => formOptions.change('graph_other', checked)}
             />
           </FormRow>
 

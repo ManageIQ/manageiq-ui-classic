@@ -2701,8 +2701,6 @@ Rails.application.routes.draw do
         discard_changes
         explorer
         export_field_changed
-        filter_change
-        form_field_changed
         get_report
         import_widgets
         menu_editor

@@ -79,7 +79,7 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
       .catch(() => setLimitCols([]));
   }, [trendCol, perfInterval]);
 
-  const change = (field: string, value: unknown) => formOptions.change(field, value);
+  const change: typeof formOptions.change = (field, value) => formOptions.change(field, value);
 
   return (
     <div className="report-editor-trend-columns">

@@ -221,7 +221,7 @@ export type ChargebackOptions = {
 // ---------------------------------------------------------------------------
 
 export type FormOptions = {
-  change: (field: string, value: unknown) => void;
+  change: (field: string, value: string | boolean | string[] | Record<string, unknown> | null | undefined) => void;
   getState: () => { values: ReportFormValues };
 };
 

@@ -1,5 +1,5 @@
 import {
-  useState, useEffect, useCallback, useRef,
+  type ComponentType, useState, useEffect, useCallback, useRef,
 } from 'react';
 import {
   MultiSelect,
@@ -11,20 +11,31 @@ import {
 } from '@carbon/react';
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
-// ExpressionEditor is a JS component without TS declarations; cast to any to avoid
-// strict-mode prop-shape errors.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
+import type { RuleGroupType } from 'react-querybuilder';
+// ExpressionEditor is a JS component without TS declarations; use a minimal
+// structural type to avoid fighting missing prop declarations.
 import ExpressionEditorRaw from '../../expression-editor';
-const ExpressionEditor = ExpressionEditorRaw as any;
 import { rqbToMiq } from '../../expression-editor/expression-adapter';
 import { miqExpressionToHuman } from '../../expression-editor/expression-human';
 import { FormRow, LabeledSection } from '../form-row';
 import type { ReportFormValues, ReportType } from '../report-editor-types';
 
+type ExpressionEditorProps = {
+  model: string;
+  value?: Record<string, unknown> | null;
+  onlyTags?: boolean;
+  onQueryChange: (query: RuleGroupType) => void;
+  onContextReady?: (labelMap: Map<string, string>, tagValuesCache: { current: Map<string, string> } | null) => void;
+  showAlias?: boolean;
+  showUserInput?: boolean;
+  seedEmpty?: boolean;
+};
+
+const ExpressionEditor = ExpressionEditorRaw as ComponentType<ExpressionEditorProps>;
+
 type LabelValuePair = [string, string];
 type LabelNumPair = [string, number];
-
-import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
 type FormOptionsApi = FormOptions<Record<string, unknown>>;
 
 // ---------------------------------------------------------------------------
@@ -73,14 +84,14 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
     }
   }, [formOptions]);
 
-  const handleRecordFilterChange = useCallback((query: unknown) => {
+  const handleRecordFilterChange = useCallback((query: RuleGroupType) => {
     formOptions.change('record_filter', query);
     const miq = rqbToMiq(query);
     const tagMap = recordTagCacheRefObj.current ? recordTagCacheRefObj.current.current : new Map();
     setRecordPreview(miq ? miqExpressionToHuman(miq, recordLabelMapRef.current, tagMap) : '');
   }, [formOptions]);
 
-  const handleDisplayFilterChange = useCallback((query: unknown) => {
+  const handleDisplayFilterChange = useCallback((query: RuleGroupType) => {
     formOptions.change('display_filter', query);
     const miq = rqbToMiq(query);
     const tagMap = displayTagCacheRefObj.current ? displayTagCacheRefObj.current.current : new Map();
@@ -254,7 +265,7 @@ const TrendFilter = ({ formValues, formOptions }: PerfTimeframeProps) => (
 // ---------------------------------------------------------------------------
 
 const PerformanceFilter = ({ formValues, formOptions }: PerfTimeframeProps) => {
-  const handleRecordFilterChange = useCallback((query: unknown) => {
+  const handleRecordFilterChange = useCallback((query: RuleGroupType) => {
     formOptions.change('record_filter', query);
   }, [formOptions]);
 
@@ -426,7 +437,10 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
       .catch(() => setEntityList([]));
   }, [formValues.cb_provider_id, model]);
 
-  const change = useCallback((field: string, value: unknown) => formOptions.change(field, value), [formOptions]);
+  const change = useCallback(
+    (field: string, value: Parameters<FormOptionsApi['change']>[1]) => formOptions.change(field, value),
+    [formOptions],
+  );
 
   if (loading) {
     return <Loading small withOverlay={false} description={__('Loading chargeback options…')} />;
