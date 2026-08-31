@@ -11,7 +11,9 @@ import type { FormOptions } from '@data-driven-forms/react-form-renderer/rendere
 import { FormRow } from '../form-row';
 import { buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
-import type { ColOptions, FieldMeta, FormData, ReportFormValues, StyleRule } from '../report-editor-types';
+import type {
+  ColOptions, FieldMeta, FormData, ReportFormValues, StyleRule,
+} from '../report-editor-types';
 
 const MAX_RULES = 3;
 const DEFAULT_OPERATOR = 'DEFAULT';

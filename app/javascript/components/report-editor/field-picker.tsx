@@ -31,7 +31,9 @@ const FieldPicker = (props: UseFieldApiConfig) => {
 
   const applySelection = (newIds: string[], fields: AvailableField[] = availableFields) => {
     onChange(newIds);
-    const colOptions: Record<string, { header?: string; format?: string }> = (formOptions.getState().values as Record<string, unknown>).col_options as Record<string, { header?: string; format?: string }> || {};
+    type ColOptionsMap = Record<string, { header?: string; format?: string }>;
+    const formValues = formOptions.getState().values as Record<string, ColOptionsMap>;
+    const colOptions: ColOptionsMap = formValues.col_options || {};
     const labelMap = Object.fromEntries(fields.map(([label, id]) => [id, label]));
     const nextColOptions = Object.fromEntries(
       newIds.map((id: string) => [id, colOptions[id] || { header: labelMap[id] || '', format: '' }]),
@@ -196,7 +198,7 @@ const FieldPicker = (props: UseFieldApiConfig) => {
             input={{ value: colOrder, onChange: handleReorder as () => void }}
             helperText={__('Drag to reorder · click × to remove')}
             labelMap={Object.fromEntries(items.map(({ id, label }) => [id, label]))}
-            onRemove={handleRemove as unknown as null}
+            onRemove={handleRemove}
           />
         ) : (
           <p className="report-editor-field-picker__empty">

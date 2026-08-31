@@ -178,10 +178,18 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
       trend_pct2: report.trend_pct2 != null ? String(report.trend_pct2) : '',
       trend_pct3: report.trend_pct3 != null ? String(report.trend_pct3) : '',
       cb_show_typ: (() => {
-        if (cbOpts.owner !== undefined) return 'owner';
-        if (cbOpts.tenant_id !== undefined) return 'tenant';
-        if (cbOpts.tag !== undefined) return 'tag';
-        if (cbOpts.entity_id !== undefined) return 'entity';
+        if (cbOpts.owner !== undefined) {
+          return 'owner';
+        }
+        if (cbOpts.tenant_id !== undefined) {
+          return 'tenant';
+        }
+        if (cbOpts.tag !== undefined) {
+          return 'tag';
+        }
+        if (cbOpts.entity_id !== undefined) {
+          return 'entity';
+        }
         return '';
       })(),
       cb_owner_id: cbOpts.owner || '',
@@ -241,12 +249,16 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
       col_options: values.col_options || {},
       record_filter: (() => {
         const f = values.record_filter;
-        if (!f) return null;
+        if (!f) {
+          return null;
+        }
         return (f.combinator !== undefined) ? rqbToMiq(f) : f;
       })(),
       display_filter: (() => {
         const f = values.display_filter;
-        if (!f) return null;
+        if (!f) {
+          return null;
+        }
         return (f.combinator !== undefined) ? rqbToMiq(f) : f;
       })(),
       perf_interval: values.perf_interval,
