@@ -28,12 +28,10 @@ const UtilizationDetails = ({
       <br />
       <hr />
       <p>
-        {sprintf(
-          __('* Information shown is based on available trend data from %s to %s in the %s time zone.'),
-          trendStart,
-          trendEnd,
-          timezone,
-        )}
+        {__('* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone.')
+          .replace('%{start_time}', trendStart)
+          .replace('%{end_time}', trendEnd)
+          .replace('%{timezone}', timezone)}
       </p>
       <p />
       <br />
