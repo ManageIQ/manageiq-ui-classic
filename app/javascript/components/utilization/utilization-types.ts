@@ -25,3 +25,11 @@ export interface SummaryProps {
   timezone?: string;
   noNodeSelected?: boolean;
 }
+
+export interface DetailsProps {
+  hasTrendData: boolean;
+  trendStart?: string;
+  trendEnd?: string;
+  timezone?: string;
+  noNodeSelected?: boolean;
+}
