@@ -51,9 +51,12 @@ const buildErrorDetails = ({ backendName, error, source }) => {
 
   let data = rawData;
   const isHtml = (contentType || '').match('text/html');
+  const isJson = (contentType || '').match('application/json');
 
   if (isHtml && data) {
     data = findError(data);
+  } else if (isJson && data?.error?.message) {
+    data = data.error.message;
   }
 
   if (source !== 'server') {
