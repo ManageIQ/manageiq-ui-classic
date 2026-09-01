@@ -16,6 +16,8 @@ export interface SummaryData {
   storage?: string[][];
 }
 
+// Each row is [label, value, type] where type is a stable untranslated key
+// e.g. 'total', 'available', 'trend_max', 'trend_min'
 export interface ReportData extends SummaryData {
   info?: string[][];
 }
