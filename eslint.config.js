@@ -1519,12 +1519,15 @@ module.exports = [
         ecmaFeatures: {
           jsx: true,
         },
-        project: './tsconfig.json',
+        // tsconfig.json covers source files (excludes *.spec.ts/tsx)
+        // tsconfig.spec.json extends it and re-includes spec files
+        project: ['./tsconfig.json', './tsconfig.spec.json'],
       },
       globals: {
         ...globals.browser,
         ...globals.es2020,
         ...globals.node,
+        ...globals.jest,
         // Shared ManageIQ globals
         ...sharedManageIQGlobals,
       },
