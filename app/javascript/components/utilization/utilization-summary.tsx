@@ -54,10 +54,10 @@ const UtilizationSummary = ({
     }
 
     const filtered = rows
-      .filter(([item]) => (
-        (item.includes('Trend:') && item.includes('Max'))
-        || (item.includes('Available') && model !== 'Host')
-        || item.includes('Total')
+      .filter(([_item, _value, type]) => (
+        type === 'trend_max'
+        || type === 'total'
+        || (type === 'available' && model !== 'Host')
       ))
       .map(([item, value], idx) => ({ id: String(idx), item, value }));
 
