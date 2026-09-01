@@ -172,6 +172,7 @@ import UsageTrendChart from '../components/provider-dashboard-charts/usage-netwo
 import UserForm from '../components/user-form';
 import UtilizationChartGraph from '../components/provider-dashboard-charts/provider-dashboard-utilization-chart';
 import UtilizationDetails from '../components/utilization/utilization-details';
+import UtilizationReport from '../components/utilization/utilization-report';
 import UtilizationSummary from '../components/utilization/utilization-summary';
 import VisualSettingsForm from '../components/visual-settings-form';
 import VmCommonRenameForm from '../components/vm-common-rename-form';
@@ -386,6 +387,7 @@ ManageIQ.component.addReact('UsageTrendChart', UsageTrendChart);
 ManageIQ.component.addReact('UserForm', UserForm);
 ManageIQ.component.addReact('UtilizationChartGraph', UtilizationChartGraph);
 ManageIQ.component.addReact('UtilizationDetails', UtilizationDetails);
+ManageIQ.component.addReact('UtilizationReport', UtilizationReport);
 ManageIQ.component.addReact('UtilizationSummary', UtilizationSummary);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('VmCommonRenameForm', VmCommonRenameForm);

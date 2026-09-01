@@ -16,6 +16,10 @@ export interface SummaryData {
   storage?: string[][];
 }
 
+export interface ReportData extends SummaryData {
+  info?: string[][];
+}
+
 export interface SummaryProps {
   hasTrendData: boolean;
   summary?: string | SummaryData | null;
@@ -28,6 +32,15 @@ export interface SummaryProps {
 
 export interface DetailsProps {
   hasTrendData: boolean;
+  trendStart?: string;
+  trendEnd?: string;
+  timezone?: string;
+  noNodeSelected?: boolean;
+}
+
+export interface ReportProps {
+  hasTrendData: boolean;
+  summary?: string | ReportData | null;
   trendStart?: string;
   trendEnd?: string;
   timezone?: string;
