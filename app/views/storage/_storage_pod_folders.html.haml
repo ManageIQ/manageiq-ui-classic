@@ -1,4 +1,4 @@
 #storage_pod_folders_div
-  - if @folders
-    = render(:partial => "layouts/flash_msg")
-    = react('StoragePodFoldersTable', {:folders => @folders.map { |f| {:id => f.id, :name => f.name} }})
+  - @folders ||= []
+  = render(:partial => "layouts/flash_msg")
+  = react('StoragePodFoldersTable', {:folders => @folders.map { |f| {:id => f.id, :name => f.name} }})
