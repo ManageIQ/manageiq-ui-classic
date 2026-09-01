@@ -875,6 +875,64 @@ const sharedAirbnbBaseRules = {
   ],
 };
 
+const sharedNoUnknownRules = {
+  'no-restricted-syntax': [
+    ...sharedAirbnbBaseRules['no-restricted-syntax'],
+    {
+      // Catches explicit type assertions like "data as unknown" or "<unknown>data"
+      selector: "TSAsExpression[typeAnnotation.type='TSUnknownKeyword']",
+      message:
+        "Avoid casting values directly to 'unknown'. Use a type guard or an explicit schema validation instead.",
+    },
+    {
+      // Catches unknown anywhere in a type annotation:
+      // - direct:   data: unknown
+      // - array:    data: unknown[]
+      // - generic:  data: Foo<unknown>
+      // - union:    data: string | unknown
+      selector: 'TSTypeAnnotation TSUnknownKeyword',
+      message:
+        "Explicitly declaring variables as 'unknown' is restricted. Narrow down the type or define a domain-specific layout.",
+    },
+  ],
+};
+
+const sharedCypressGlobals = {
+  cy: 'readonly',
+  Cypress: 'readonly',
+  describe: 'readonly',
+  context: 'readonly',
+  it: 'readonly',
+  specify: 'readonly',
+  before: 'readonly',
+  beforeEach: 'readonly',
+  after: 'readonly',
+  afterEach: 'readonly',
+  expect: 'readonly',
+  assert: 'readonly',
+  // Browser environment
+  window: 'readonly',
+  document: 'readonly',
+  navigator: 'readonly',
+  console: 'readonly',
+};
+
+const sharedCypressRules = {
+  'no-console': 0,
+  'no-unused-expressions': 0,
+  'no-trailing-spaces': 2,
+  semi: [2, 'always'],
+  'semi-spacing': [2, { before: false, after: true }],
+  quotes: ['warn', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+  'comma-dangle': ['warn', { arrays: 'always-multiline', objects: 'always-multiline', imports: 'always-multiline', exports: 'always-multiline', functions: 'only-multiline' }],
+  indent: ['error', 2, { SwitchCase: 1, VariableDeclarator: 1 }],
+  'eol-last': 2,
+  'no-multiple-empty-lines': [2, { max: 2 }],
+  'space-before-blocks': 2,
+  'keyword-spacing': 2,
+  'comma-spacing': [2, { before: false, after: true }],
+};
+
 module.exports = [
   // ESLint recommended rules (similar to airbnb base)
   js.configs.recommended,
@@ -890,6 +948,8 @@ module.exports = [
       'coverage/',
       // Yarn release files
       '.yarn/',
+      // TypeScript declaration files — pure type annotations, no runtime code
+      '**/*.d.ts',
     ],
   },
   {
@@ -930,88 +990,42 @@ module.exports = [
     },
   },
   {
-    // Cypress test files
+    // Cypress test files (JS)
     files: ['cypress/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
+      globals: { ...sharedCypressGlobals },
+    },
+    rules: { ...sharedCypressRules },
+  },
+  {
+    // Cypress test files (TS)
+    files: ['cypress/**/*.ts'],
+    languageOptions: {
+      parser: tsParser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
+        project: './cypress/tsconfig.json',
       },
-      globals: {
-        // Cypress globals
-        cy: 'readonly',
-        Cypress: 'readonly',
-        describe: 'readonly',
-        context: 'readonly',
-        it: 'readonly',
-        specify: 'readonly',
-        before: 'readonly',
-        beforeEach: 'readonly',
-        after: 'readonly',
-        afterEach: 'readonly',
-        expect: 'readonly',
-        assert: 'readonly',
-        // Browser environment
-        window: 'readonly',
-        document: 'readonly',
-        navigator: 'readonly',
-        console: 'readonly',
-      },
+      globals: { ...sharedCypressGlobals },
+    },
+    plugins: {
+      '@typescript-eslint': tsPlugin,
     },
     rules: {
-      'no-console': 0,
-      'no-unused-expressions': 0,
-      'no-trailing-spaces': 2,
-      semi: [2, 'always'],
-      'semi-spacing': [
-        2,
-        {
-          before: false,
-          after: true,
-        },
-      ],
-      quotes: [
-        'warn',
-        'single',
-        {
-          avoidEscape: true,
-          allowTemplateLiterals: true,
-        },
-      ],
-      'comma-dangle': [
-        'warn',
-        {
-          arrays: 'always-multiline',
-          objects: 'always-multiline',
-          imports: 'always-multiline',
-          exports: 'always-multiline',
-          functions: 'only-multiline',
-        },
-      ],
-      indent: [
+      ...sharedCypressRules,
+      ...sharedNoUnknownRules,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
         'error',
-        2,
         {
-          SwitchCase: 1,
-          VariableDeclarator: 1,
-        },
-      ],
-      'eol-last': 2,
-      'no-multiple-empty-lines': [
-        2,
-        {
-          max: 2,
-        },
-      ],
-      'space-before-blocks': 2,
-      'keyword-spacing': 2,
-      'comma-spacing': [
-        2,
-        {
-          before: false,
-          after: true,
+          args: 'all',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
         },
       ],
     },
@@ -1587,21 +1601,7 @@ module.exports = [
       ],
 
       // Extend no-restricted-syntax to add TypeScript-specific restrictions
-      'no-restricted-syntax': [
-        ...sharedAirbnbBaseRules['no-restricted-syntax'],
-        {
-          // Catches explicit type assertions like "data as unknown" or "<unknown>data"
-          selector: "TSAsExpression[typeAnnotation.type='TSUnknownKeyword']",
-          message:
-            "Avoid casting values directly to 'unknown'. Use a type guard or an explicit schema validation instead.",
-        },
-        {
-          // Catches explicit variable/property type annotations like "data: unknown"
-          selector: "TSTypeAnnotation[typeAnnotation.type='TSUnknownKeyword']",
-          message:
-            "Explicitly declaring variables as 'unknown' is restricted. Narrow down the type or define a domain-specific layout.",
-        },
-      ],
+      ...sharedNoUnknownRules,
 
       // Disable base ESLint rules that conflict with TypeScript
       'no-unused-vars': 'off',
