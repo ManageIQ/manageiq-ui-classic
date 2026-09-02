@@ -201,8 +201,8 @@ exports[`VM Edit form component should edit template with a parent and children 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_24_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -486,8 +486,8 @@ exports[`VM Edit form component should edit template with a parent and children 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_2h_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -845,8 +845,8 @@ exports[`VM Edit form component should edit template with no parent and children
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_2r_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1130,8 +1130,8 @@ exports[`VM Edit form component should edit template with no parent and children
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_38_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1489,8 +1489,8 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_m_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1774,8 +1774,8 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_13_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -2133,8 +2133,8 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1d_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -2418,8 +2418,8 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1q_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -2763,8 +2763,8 @@ exports[`VM Edit form component should render vm edit form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -3002,8 +3002,8 @@ exports[`VM Edit form component should render vm edit form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_c_-search"
+                class="cds--search"
                 role="search"
               >
                 <div

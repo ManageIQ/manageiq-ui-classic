@@ -18,6 +18,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Device Type"
                 scope="col"
               >
                 <div
@@ -31,6 +32,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Type"
                 scope="col"
               >
                 <div
@@ -44,6 +46,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Mode"
                 scope="col"
               >
                 <div
@@ -57,6 +60,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Partitions Aligned"
                 scope="col"
               >
                 <div
@@ -70,6 +74,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Provisioned Size"
                 scope="col"
               >
                 <div
@@ -83,6 +88,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Used Size"
                 scope="col"
               >
                 <div
@@ -96,6 +102,7 @@ exports[`VmDisks Component should render a table when disks are provided 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Percent Used of Provisioned Size"
                 scope="col"
               >
                 <div

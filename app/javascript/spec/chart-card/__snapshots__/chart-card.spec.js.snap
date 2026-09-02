@@ -103,6 +103,7 @@ exports[`Chart Card component should render the pods table card 1`] = `
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-name"
                     scope="col"
                   >
                     <div
@@ -116,6 +117,7 @@ exports[`Chart Card component should render the pods table card 1`] = `
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-phase"
                     scope="col"
                   >
                     <div
@@ -129,6 +131,7 @@ exports[`Chart Card component should render the pods table card 1`] = `
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-ready_condition_status"
                     scope="col"
                   >
                     <div
@@ -142,6 +145,7 @@ exports[`Chart Card component should render the pods table card 1`] = `
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-running_containers_summary"
                     scope="col"
                   >
                     <div

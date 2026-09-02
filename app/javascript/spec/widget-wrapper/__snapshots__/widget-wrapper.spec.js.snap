@@ -24,7 +24,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-labelledby="widget-title-1"
-                class="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                class="widget-overflow-menu cds--overflow-menu cds--btn cds--btn--ghost cds--btn--icon-only"
                 id="1-menu"
                 type="button"
               >
@@ -150,7 +150,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-labelledby="widget-title-83"
-                class="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                class="widget-overflow-menu cds--overflow-menu cds--btn cds--btn--ghost cds--btn--icon-only"
                 id="83-menu"
                 type="button"
               >
@@ -276,7 +276,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-labelledby="widget-title-19"
-                class="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                class="widget-overflow-menu cds--overflow-menu cds--btn cds--btn--ghost cds--btn--icon-only"
                 id="19-menu"
                 type="button"
               >

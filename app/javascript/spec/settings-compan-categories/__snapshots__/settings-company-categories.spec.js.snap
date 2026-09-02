@@ -37,6 +37,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
           <tr>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-name"
               scope="col"
             >
               <div
@@ -53,6 +54,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-description"
               scope="col"
             >
               <div
@@ -76,6 +78,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-show"
               scope="col"
             >
               <div
@@ -103,6 +106,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-single_value"
               scope="col"
             >
               <div
@@ -127,6 +131,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-perf_by_tag"
               scope="col"
             >
               <div
@@ -157,6 +162,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-default"
               scope="col"
             >
               <div
@@ -176,6 +182,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-actions"
               scope="col"
             >
               <div
@@ -280,18 +287,11 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_8_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Category cannot be deleted"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_8_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Category cannot be deleted"
@@ -384,19 +384,12 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_9_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
                   title="Click to delete this category"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_9_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this category"
@@ -489,19 +482,12 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_a_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
                   title="Click to delete this category"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_a_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this category"
@@ -594,19 +580,12 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_b_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger cds--btn--disabled"
                   disabled=""
                   tabindex="0"
                   title="Click to delete this category"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_b_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this category"

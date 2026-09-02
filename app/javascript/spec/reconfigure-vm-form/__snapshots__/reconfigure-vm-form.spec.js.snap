@@ -80,6 +80,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                   <tr>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-31__header-name"
                       scope="col"
                     >
                       <div
@@ -93,6 +94,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-31__header-hostFile"
                       scope="col"
                     >
                       <div
@@ -106,6 +108,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-31__header-disconnect"
                       scope="col"
                     >
                       <div
@@ -119,6 +122,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-31__header-action"
                       scope="col"
                     >
                       <div
@@ -292,6 +296,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-name"
                     scope="col"
                   >
                     <div
@@ -305,6 +310,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-type"
                     scope="col"
                   >
                     <div
@@ -318,6 +324,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-size"
                     scope="col"
                   >
                     <div
@@ -331,6 +338,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-unit"
                     scope="col"
                   >
                     <div
@@ -344,6 +352,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-mode"
                     scope="col"
                   >
                     <div
@@ -357,6 +366,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-controller"
                     scope="col"
                   >
                     <div
@@ -370,6 +380,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-dependent"
                     scope="col"
                   >
                     <div
@@ -383,6 +394,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-backing"
                     scope="col"
                   >
                     <div
@@ -396,6 +408,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-bootable"
                     scope="col"
                   >
                     <div
@@ -409,6 +422,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-28__header-resize"
                     scope="col"
                   >
                     <div
@@ -422,6 +436,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-28__header-action"
                     scope="col"
                   >
                     <div
@@ -660,6 +675,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-29__header-name"
                     scope="col"
                   >
                     <div
@@ -673,6 +689,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-29__header-mac"
                     scope="col"
                   >
                     <div
@@ -686,6 +703,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-29__header-vlan"
                     scope="col"
                   >
                     <div
@@ -699,6 +717,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-29__header-edit"
                     scope="col"
                   >
                     <div
@@ -712,6 +731,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-29__header-action"
                     scope="col"
                   >
                     <div
@@ -755,6 +775,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-30__header-name"
                     scope="col"
                   >
                     <div
@@ -768,6 +789,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-30__header-hostFile"
                     scope="col"
                   >
                     <div
@@ -781,6 +803,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-30__header-disconnect"
                     scope="col"
                   >
                     <div
@@ -794,6 +817,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-30__header-action"
                     scope="col"
                   >
                     <div
@@ -2827,6 +2851,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-name"
                     scope="col"
                   >
                     <div
@@ -2840,6 +2865,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-type"
                     scope="col"
                   >
                     <div
@@ -2853,6 +2879,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-size"
                     scope="col"
                   >
                     <div
@@ -2866,6 +2893,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-unit"
                     scope="col"
                   >
                     <div
@@ -2879,6 +2907,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-mode"
                     scope="col"
                   >
                     <div
@@ -2892,6 +2921,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-controller"
                     scope="col"
                   >
                     <div
@@ -2905,6 +2935,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-dependent"
                     scope="col"
                   >
                     <div
@@ -2918,6 +2949,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-backing"
                     scope="col"
                   >
                     <div
@@ -2931,6 +2963,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-bootable"
                     scope="col"
                   >
                     <div
@@ -2944,6 +2977,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-resize"
                     scope="col"
                   >
                     <div
@@ -2957,6 +2991,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-1__header-action"
                     scope="col"
                   >
                     <div
@@ -3195,6 +3230,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-2__header-name"
                     scope="col"
                   >
                     <div
@@ -3208,6 +3244,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-2__header-mac"
                     scope="col"
                   >
                     <div
@@ -3221,6 +3258,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-2__header-vlan"
                     scope="col"
                   >
                     <div
@@ -3234,6 +3272,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-2__header-edit"
                     scope="col"
                   >
                     <div
@@ -3247,6 +3286,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-2__header-action"
                     scope="col"
                   >
                     <div
@@ -3374,6 +3414,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                   <tr>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-3__header-name"
                       scope="col"
                     >
                       <div
@@ -3387,6 +3428,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-3__header-hostFile"
                       scope="col"
                     >
                       <div
@@ -3400,6 +3442,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-3__header-disconnect"
                       scope="col"
                     >
                       <div
@@ -3413,6 +3456,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                     </th>
                     <th
                       class="miq-data-table-header"
+                      id="data-table-3__header-action"
                       scope="col"
                     >
                       <div
@@ -4053,6 +4097,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-name"
                     scope="col"
                   >
                     <div
@@ -4066,6 +4111,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-type"
                     scope="col"
                   >
                     <div
@@ -4079,6 +4125,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-size"
                     scope="col"
                   >
                     <div
@@ -4092,6 +4139,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-unit"
                     scope="col"
                   >
                     <div
@@ -4105,6 +4153,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-mode"
                     scope="col"
                   >
                     <div
@@ -4118,6 +4167,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-controller"
                     scope="col"
                   >
                     <div
@@ -4131,6 +4181,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-dependent"
                     scope="col"
                   >
                     <div
@@ -4144,6 +4195,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-backing"
                     scope="col"
                   >
                     <div
@@ -4157,6 +4209,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-bootable"
                     scope="col"
                   >
                     <div
@@ -4170,6 +4223,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-22__header-resize"
                     scope="col"
                   >
                     <div
@@ -4183,6 +4237,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-22__header-action"
                     scope="col"
                   >
                     <div
@@ -4423,6 +4478,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-23__header-name"
                     scope="col"
                   >
                     <div
@@ -4436,6 +4492,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-23__header-mac"
                     scope="col"
                   >
                     <div
@@ -4449,6 +4506,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-23__header-vlan"
                     scope="col"
                   >
                     <div
@@ -4462,6 +4520,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-23__header-edit"
                     scope="col"
                   >
                     <div
@@ -4475,6 +4534,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header header-button"
+                    id="data-table-23__header-action"
                     scope="col"
                   >
                     <div
@@ -4518,6 +4578,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-24__header-name"
                     scope="col"
                   >
                     <div
@@ -4531,6 +4592,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-24__header-hostFile"
                     scope="col"
                   >
                     <div
@@ -4544,6 +4606,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-24__header-disconnect"
                     scope="col"
                   >
                     <div
@@ -4557,6 +4620,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                   </th>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-24__header-action"
                     scope="col"
                   >
                     <div

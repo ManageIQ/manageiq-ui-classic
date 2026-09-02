@@ -30,6 +30,16 @@ exports[`Import datastore via git component should render correctly 1`] = `
             class="cds--text-input__field-wrapper"
             data-invalid="true"
           >
+            <input
+              aria-errormessage="git_url-error-msg"
+              aria-invalid="true"
+              class="cds--text-input cds--text-input--invalid"
+              data-invalid="true"
+              id="git_url"
+              name="git_url"
+              type="text"
+              value=""
+            />
             <svg
               aria-hidden="true"
               class="cds--text-input__invalid-icon"
@@ -50,16 +60,6 @@ exports[`Import datastore via git component should render correctly 1`] = `
                 opacity="0"
               />
             </svg>
-            <input
-              aria-describedby="git_url-error-msg"
-              aria-invalid="true"
-              class="cds--text-input cds--text-input--invalid"
-              data-invalid="true"
-              id="git_url"
-              name="git_url"
-              type="text"
-              value=""
-            />
             <span
               aria-atomic="true"
               aria-live="assertive"
