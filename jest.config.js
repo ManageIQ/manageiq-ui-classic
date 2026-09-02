@@ -37,5 +37,6 @@ module.exports = {
     '@@ddf': '<rootDir>/app/javascript/forms/data-driven-form',
     '^fetch-mock$': '<rootDir>/node_modules/fetch-mock/dist/cjs/index.js',
     '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
+    '^temporal-polyfill/global$': '<rootDir>/node_modules/temporal-polyfill/global.js', // Jest's CJS transform can't handle ESM
   },
 };
