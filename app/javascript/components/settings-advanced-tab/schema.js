@@ -5,6 +5,7 @@ const createSchema = () => ({
       id: 'fileData',
       name: 'fileData',
       mode: 'yaml',
+      showSearch: true,
       isRequired: true,
     },
   ],
