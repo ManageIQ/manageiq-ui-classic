@@ -359,12 +359,47 @@ class CatalogController < ApplicationController
     end
 
     if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
-      @nodetype, id = parse_nodetype_and_id(params[:id])
-      self.x_active_tree   = 'sandt_tree'
-      self.x_active_accord = 'sandt'
-      st = ServiceTemplate.find(params[:id].split("-").last)
-      prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
-      self.x_node = "#{prefix}#{id}"
+      node_id = normalize_catalog_node_id(params[:id])
+
+      if node_id.nil?
+        flash_to_session(_("Can't access selected records"), :error)
+        redirect_to(:action => 'explorer', :id => nil)
+        return
+      end
+
+      @nodetype, id = parse_nodetype_and_id(node_id)
+
+      if @nodetype == "ot"
+        ot = OrchestrationTemplate.find_by(:id => id)
+
+        if ot.nil?
+          flash_to_session(_("Can't access selected records"), :error)
+          redirect_to(:action => 'explorer', :id => nil)
+          return
+        end
+
+        self.x_active_tree   = :ot_tree
+        self.x_active_accord = 'ot'
+        x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
+        ot_type = template_to_node_name(ot)
+        x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
+        self.x_node = "ot-#{ot.id}"
+        x_tree[:open_nodes].push(x_node)
+      else
+        st = ServiceTemplate.find_by(:id => id)
+
+        if st.nil?
+          flash_to_session(_("Can't access selected records"), :error)
+          redirect_to(:action => 'explorer', :id => nil)
+          return
+        end
+
+        self.x_active_tree   = 'sandt_tree'
+        self.x_active_accord = 'sandt'
+        prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
+        self.x_node = "#{prefix}#{id}"
+      end
+
       get_node_info(x_node)
     else
       @in_a_form = false
@@ -411,25 +446,32 @@ class CatalogController < ApplicationController
         # link to Catalog Item clicked on catalog summary screen
         self.x_active_tree = :sandt_tree
         self.x_active_accord = 'sandt'
-        @record = ServiceTemplate.find(params[:rec_id])
+        @record = ServiceTemplate.find_by(:id => params[:rec_id])
       else
-        @record = ServiceTemplateCatalog.find(params[:id])
+        @record = ServiceTemplateCatalog.find_by(:id => params[:id])
       end
     elsif x_active_tree == :sandt_tree
       assert_privileges("catalog_items_view")
 
       identify_catalog(params[:id])
-      @record ||= ServiceTemplateCatalog.find(params[:id])
+      @record ||= ServiceTemplateCatalog.find_by(:id => params[:id])
     elsif x_active_tree == :ot_tree
       assert_privileges("orchestration_templates_view")
 
-      @record ||= OrchestrationTemplate.find(params[:id])
+      @record ||= OrchestrationTemplate.find_by(:id => params[:id])
     else
       assert_privileges("svc_catalog_provision", "svc_catalog_archive", "svc_catalog_unarchive")
 
       identify_catalog(params[:id])
-      @record ||= ServiceTemplateCatalog.find(params[:id])
+      @record ||= ServiceTemplateCatalog.find_by(:id => params[:id])
     end
+
+    if @record.nil?
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:action => 'explorer', :id => nil)
+      return
+    end
+
     params[:id] = x_build_node_id(@record) # Get the tree node id
     tree_select
   end
@@ -866,20 +908,24 @@ class CatalogController < ApplicationController
 
   def ot_show
     assert_privileges("orchestration_templates_view")
-    id = params.delete(:id)
-    ot = OrchestrationTemplate.find(id)
-    self.x_active_tree = :ot_tree
-    self.x_active_accord = 'ot'
-    x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
-    ot_type = template_to_node_name(ot)
-    x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
-    self.x_node = "ot-#{ot.id}"
-    x_tree[:open_nodes].push(x_node)
     add_flash(params[:flash_message]) if params.key?(:flash_message)
-    explorer
+    redirect_to(:action => 'explorer', :id => "ot-#{params[:id]}")
   end
 
   private
+
+  # Convert a raw numeric id to a prefixed tree-node id.
+  # Tries ServiceTemplate first (prefix "st"), then OrchestrationTemplate (prefix "ot").
+  # Returns nil if the record does not exist (bad or deleted id).
+  def normalize_catalog_node_id(id)
+    return id if id.nil? || id.include?('-')
+
+    if (record = ServiceTemplate.find_by(:id => id))
+      TreeBuilder.build_node_id(record)          # => "st-<id>"
+    elsif (record = OrchestrationTemplate.find_by(:id => id))
+      TreeBuilder.build_node_id(record)          # => "ot-<id>"
+    end
+  end
 
   # Method to return the entry point name and its automation type
   # Used for summary and edit pages.

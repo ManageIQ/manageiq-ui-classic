@@ -790,6 +790,38 @@ module VmCommon
 
   private
 
+  # Convert a raw numeric id (e.g. "2888") to a tree-node id (e.g. "v-2888").
+  # Visiting /explorer/:id directly with a plain DB id is a supported URL pattern;
+  # parse_nodetype_and_id requires the prefixed format, so normalise it here.
+  def normalize_vm_node_id(id)
+    return id if id.nil? || id.include?('-')
+
+    record = VmOrTemplate.find_by(:id => id)
+    record ? TreeBuilder.build_node_id(record) : id
+  end
+
+  # Shared preamble for all VM explorer set_elements_and_redirect_unauthorized_user methods.
+  # Normalises params[:id], parses the nodetype, resolves the accordion prefix, and handles
+  # the case where the prefix is nil (bad/unrecognised node id) by redirecting back to the
+  # explorer with an error flash.
+  #
+  # Returns the resolved prefix string, or nil if a redirect was already issued (in which
+  # case the caller should return immediately).
+  def setup_node_and_prefix
+    params[:id] = normalize_vm_node_id(params[:id])
+    @nodetype, = parse_nodetype_and_id(params[:id])
+    prefix = prefix_by_nodetype(@nodetype)
+
+    if prefix.nil?
+      session.delete(:exp_parms)
+      flash_to_session(_("Can't access selected records"), :error)
+      redirect_to(:action => 'explorer', :id => nil)
+      return nil
+    end
+
+    prefix
+  end
+
   # if node is VM or Template is true - select parent node in explorer tree but show info of Vm/Template
   def resolve_node_info(id)
     nodetype, id = id.split("-")
