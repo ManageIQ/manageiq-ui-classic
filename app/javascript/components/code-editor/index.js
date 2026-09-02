@@ -16,6 +16,8 @@ import 'codemirror/mode/shell/shell';
 // editor help
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/search/search';
+import 'codemirror/addon/dialog/dialog';
 import 'codemirror/addon/search/searchcursor';
 import 'codemirror/addon/search/matchesonscrollbar';
 import 'codemirror/addon/search/matchesonscrollbar.css';
@@ -45,6 +47,7 @@ const CodeEditor = (props) => {
   const editorRef = useRef(null);
   const cursorRef = useRef(null);
   const scrollbarRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   const runSearch = useCallback((query, forward = true) => {
     const cm = editorRef.current;
@@ -120,6 +123,20 @@ const CodeEditor = (props) => {
           styleActiveLine: true,
           gutters: ['CodeMirror-lint-markers'],
           highlightSelectionMatches: { annotateScrollbar: true },
+          extraKeys: showSearch ? {
+            'Ctrl-F': () => {
+              if (searchInputRef.current) {
+                searchInputRef.current.focus();
+                searchInputRef.current.select();
+              }
+            },
+            'Cmd-F': () => {
+              if (searchInputRef.current) {
+                searchInputRef.current.focus();
+                searchInputRef.current.select();
+              }
+            },
+          } : {},
         }}
         style={{ height: 'auto' }}
         onBeforeChange={(_editor, _data, value) => {
@@ -141,6 +158,7 @@ const CodeEditor = (props) => {
             input.type = 'text';
             input.placeholder = 'Search…';
             input.style.cssText = 'flex:1;min-width:0;padding:2px 6px;border:1px solid #ccc;border-radius:3px;font-size:13px;';
+            searchInputRef.current = input;
 
             const btnPrev = document.createElement('button');
             btnPrev.type = 'button';
