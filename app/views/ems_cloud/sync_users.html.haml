@@ -37,19 +37,17 @@
                              selected_verify,
                              :maxlength         => 50,
                              :class => "form-control")
-  %table{:width => "100%"}
-    %tr
-      %td{:align => "right"}
-        #buttons_on
-          = button_tag(_("Sync"),
+  %div.text-right
+    #buttons_on
+      = button_tag(_("Sync"),
                        :name  => "sync",
                        :class => "btn btn-primary",
                        :alt   => t = _("Sync Users"),
                        :title => t,
-                       :type  => "submit")
-          = button_tag(_("Cancel"),
-                       :name  => "cancel",
-                       :class => "btn btn-default",
-                       :alt   => t = _("Cancel"),
-                       :title => t,
-                       :type  => "submit")
+                     :type  => "submit")
+      = button_tag(_("Cancel"),
+                   :name  => "cancel",
+                   :class => "btn btn-default",
+                   :alt   => t = _("Cancel"),
+                   :title => t,
+                   :type  => "submit")
