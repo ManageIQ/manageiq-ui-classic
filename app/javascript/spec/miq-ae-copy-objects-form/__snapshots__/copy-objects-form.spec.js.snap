@@ -120,7 +120,6 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
             id="override_source"
             name="override_source"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -195,7 +194,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r2:"
+                  aria-labelledby="tooltip-_r_2_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
                   type="button"
                 >
@@ -219,7 +218,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r2:"
+                id="tooltip-_r_2_"
                 role="tooltip"
               >
                 <span
@@ -239,7 +238,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r6:"
+                  aria-labelledby="tooltip-_r_6_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
                   type="button"
                 >
@@ -262,7 +261,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r6:"
+                id="tooltip-_r_6_"
                 role="tooltip"
               >
                 <span
@@ -302,7 +301,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
             <h2
               class="cds--modal-header__heading"
               dir="auto"
-              id="cds--modal-header__heading--modal-id-:ra:"
+              id="cds--modal-header__heading--modal-id-_r_a_"
             >
               Select Entry Point %s
             </h2>
@@ -317,7 +316,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
                 >
                   <button
                     aria-label="Close"
-                    aria-labelledby="tooltip-:rc:"
+                    aria-labelledby="tooltip-_r_c_"
                     class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
                     type="button"
                   >
@@ -341,7 +340,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:rc:"
+                  id="tooltip-_r_c_"
                   role="tooltip"
                 >
                   <span
@@ -358,7 +357,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
           </div>
           <div
             class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
-            id="cds--modal-body--modal-id-:ra:"
+            id="cds--modal-body--modal-id-_r_a_"
           >
             <div
               class="ae-ns-loading"
@@ -681,7 +680,6 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
             id="override_source"
             name="override_source"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -709,7 +707,6 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
             id="override_existing"
             name="override_existing"
             type="checkbox"
-            value=""
           />
           <label
             class="cds--checkbox-label"
@@ -784,7 +781,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r41:"
+                  aria-labelledby="tooltip-_r_41_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
                   type="button"
                 >
@@ -808,7 +805,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r41:"
+                id="tooltip-_r_41_"
                 role="tooltip"
               >
                 <span
@@ -828,7 +825,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-:r45:"
+                  aria-labelledby="tooltip-_r_45_"
                   class="cds--btn cds--btn--md cds--layout--size-md cds--btn--secondary cds--btn--icon-only"
                   type="button"
                 >
@@ -851,7 +848,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r45:"
+                id="tooltip-_r_45_"
                 role="tooltip"
               >
                 <span
@@ -891,7 +888,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
             <h2
               class="cds--modal-header__heading"
               dir="auto"
-              id="cds--modal-header__heading--modal-id-:r49:"
+              id="cds--modal-header__heading--modal-id-_r_49_"
             >
               Select Entry Point %s
             </h2>
@@ -906,7 +903,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
                 >
                   <button
                     aria-label="Close"
-                    aria-labelledby="tooltip-:r4b:"
+                    aria-labelledby="tooltip-_r_4b_"
                     class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
                     type="button"
                   >
@@ -930,7 +927,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
                 <span
                   aria-hidden="true"
                   class="cds--popover"
-                  id="tooltip-:r4b:"
+                  id="tooltip-_r_4b_"
                   role="tooltip"
                 >
                   <span
@@ -947,7 +944,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
           </div>
           <div
             class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
-            id="cds--modal-body--modal-id-:r49:"
+            id="cds--modal-body--modal-id-_r_49_"
           >
             <div
               class="ae-ns-loading"

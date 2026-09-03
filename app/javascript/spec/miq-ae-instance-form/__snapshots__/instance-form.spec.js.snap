@@ -503,7 +503,7 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
               >
                 <button
                   aria-label="Close"
-                  aria-labelledby="tooltip-:rc:"
+                  aria-labelledby="tooltip-_r_c_"
                   class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -527,7 +527,7 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:rc:"
+                id="tooltip-_r_c_"
                 role="tooltip"
               >
                 <span
@@ -544,14 +544,14 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
           <h2
             class="cds--modal-header__heading"
             dir="auto"
-            id="cds--modal-header__heading--modal-id-:ra:"
+            id="cds--modal-header__heading--modal-id-_r_a_"
           >
             Edit Field
           </h2>
         </div>
         <div
           class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
-          id="cds--modal-body--modal-id-:ra:"
+          id="cds--modal-body--modal-id-_r_a_"
         />
       </div>
       <span
@@ -1076,7 +1076,7 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
               >
                 <button
                   aria-label="Close"
-                  aria-labelledby="tooltip-:r1o:"
+                  aria-labelledby="tooltip-_r_1o_"
                   class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
                   type="button"
                 >
@@ -1100,7 +1100,7 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-:r1o:"
+                id="tooltip-_r_1o_"
                 role="tooltip"
               >
                 <span
@@ -1117,14 +1117,14 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
           <h2
             class="cds--modal-header__heading"
             dir="auto"
-            id="cds--modal-header__heading--modal-id-:r1m:"
+            id="cds--modal-header__heading--modal-id-_r_1m_"
           >
             Edit Field
           </h2>
         </div>
         <div
           class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
-          id="cds--modal-body--modal-id-:r1m:"
+          id="cds--modal-body--modal-id-_r_1m_"
         />
       </div>
       <span
