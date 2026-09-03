@@ -38,7 +38,7 @@ const ReviewImportForm = ({
           setLoading(false);
         })
         .catch((err) => {
-          setError(err.message || 'Failed to load data');
+          setError(err.message || __('Failed to load data'));
           setLoading(false);
         });
     }
@@ -74,7 +74,7 @@ const ReviewImportForm = ({
         onClose();
       })
       .catch((err) => {
-        setError(err.message || 'Import failed');
+        setError(err.message || __('Import failed'));
         setImporting(false);
         throw err;
       });
@@ -146,7 +146,7 @@ const ReviewImportForm = ({
       )}
 
       {importing && (
-        <div style={{ padding: '1rem' }}>
+        <div className="review-import-loading">
           <InlineLoading description={__('Importing datastore...')} />
         </div>
       )}

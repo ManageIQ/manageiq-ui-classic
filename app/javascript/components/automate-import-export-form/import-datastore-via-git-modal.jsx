@@ -95,7 +95,7 @@ const ImportDatastoreViaGitModal = ({
           setNewGitRepo(response.new_git_repo || false);
           // Loading will be turned off by polling effect
         } else if (response.message) {
-          setError(response.message?.message || response.message);
+          setError(response.message?.message || __('Failed to submit git URL'));
           setLoading(false);
         }
       })

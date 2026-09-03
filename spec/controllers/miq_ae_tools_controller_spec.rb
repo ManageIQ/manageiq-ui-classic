@@ -34,28 +34,11 @@ describe MiqAeToolsController do
   describe "#import_export" do
     include_context "valid session"
 
-    let(:fake_domain) { double("MiqAeDomain", :name => "test_domain") }
-    let(:fake_domain2) { double("MiqAeDomain", :name => "uneditable") }
-    let(:tenant) do
-      double(
-        "Tenant",
-        :editable_domains => [double(:name => "test_domain")]
-      )
-    end
+    before { bypass_rescue }
 
-    before do
-      bypass_rescue
-      allow(controller).to receive(:current_tenant).and_return(tenant)
-      allow(MiqAeDomain).to receive(:all_unlocked).and_return([fake_domain, fake_domain2])
-    end
-
-    it "includes a list of importable domain options" do
+    it "renders successfully" do
       get :import_export
-
-      expect(assigns(:importable_domain_options)).to eq([
-                                                          ["<Same as import from>", nil],
-                                                          %w(test_domain test_domain)
-                                                        ])
+      expect(response).to be_successful
     end
   end
 
@@ -222,7 +205,6 @@ describe MiqAeToolsController do
       end
     end
   end
-
 
   describe "#retrieve_git_datastore" do
     include_context "valid session"
@@ -472,6 +454,8 @@ describe MiqAeToolsController do
   end
 
   describe "#import_via_git" do
+    include_context "valid session"
+
     let(:params) { {:git_repo_id => "123", :git_branch_or_tag => "branch_or_tag"} }
     let(:git_based_domain_import_service) { double("GitBasedDomainImportService") }
     let(:git_repo) { double("GitRepository", :url => "https://example.com/repo.git") }

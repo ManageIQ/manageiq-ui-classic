@@ -91,17 +91,6 @@ class MiqAeToolsController < ApplicationController
     drop_breadcrumb(:name => _("Import / Export"), :url => "/miq_ae_tools/import_export")
     @lastaction = "import_export"
     @layout = "miq_ae_export"
-    @importable_domain_options = []
-    MiqAeDomain.all_unlocked.collect do |domain|
-      @importable_domain_options << [domain.name, domain.name]
-    end
-
-    editable_domains = current_tenant.editable_domains.collect(&:name)
-    @importable_domain_options = @importable_domain_options.select do |importable_domain|
-      editable_domains.include?(importable_domain[0])
-    end
-
-    @importable_domain_options.unshift([_("<Same as import from>"), nil])
     render :action => "show"
   end
 
@@ -292,22 +281,16 @@ class MiqAeToolsController < ApplicationController
   # Reset all custom classes and instances to default
   def reset_datastore
     assert_privileges('miq_ae_class_import_export')
-    unless params[:task_id]                       # First time thru, kick off the report generate task
-      initiate_wait_for_task(:task_id => MiqAutomate.async_datastore_reset)
-      return
-    end
-    miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
-    session[:ae_id] = params[:id]
-    session[:ae_task_id] = params[:task_id]
-
-    if miq_task.status != "Ok" # Check to see if any results came back or status not Ok
-      add_flash(_("Error during reset: Status [%{status}] Message [%{message}]") %
-                  {:status => miq_task.status, :message => miq_task.message}, :error)
-    else
-      self.x_node = "root" if x_active_tree == :ae_tree && x_tree
+    begin
+      MiqAutomate.async_datastore_reset
       add_flash(_("All custom classes and instances have been reset to default"))
+    rescue => error
+      add_flash(_("Error during reset: %{message}") % {:message => error.message}, :error)
     end
-    javascript_flash(:spinner_off => true)
+
+    respond_to do |format|
+      format.json { render :json => @flash_array.to_json, :status => 200 }
+    end
   end
 
   def get_simulation_form_vars

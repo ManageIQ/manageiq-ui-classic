@@ -26,7 +26,6 @@ const ImportExportPage = ({
   };
 
   const handleImportComplete = () => {
-    // Refresh the page or update state as needed
     locationReload();
   };
 
@@ -45,11 +44,6 @@ const ImportExportPage = ({
 
   const handleCloseGitReview = () => {
     setGitImportData(null);
-  };
-
-  const handleGitImportComplete = () => {
-    // Refresh the page or update state as needed
-    locationReload();
   };
 
   return (
@@ -71,7 +65,7 @@ const ImportExportPage = ({
                 gitBranchOrTag={gitImportData.git_branch_or_tag}
                 refType={gitImportData.ref_type}
                 onClose={handleCloseGitReview}
-                onImportComplete={handleGitImportComplete}
+                onImportComplete={handleImportComplete}
               />
             ) : (
               <ImportDatastoreViaGit

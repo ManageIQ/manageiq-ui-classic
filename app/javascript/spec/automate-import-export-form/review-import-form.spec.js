@@ -199,8 +199,8 @@ describe('ReviewImportForm component', () => {
     });
   });
 
-  it('should render both domain selection dropdowns', async() => {
-    http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
+  it('should show error notification when http.get fails to load import data', async() => {
+    http.get.mockRejectedValueOnce(new Error('Failed to load file'));
     window.API.get.mockResolvedValueOnce(mockDomainsResponse);
 
     renderWithRedux(
@@ -211,8 +211,96 @@ describe('ReviewImportForm component', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole('combobox', { name: /Import to Existing Domain/i })).toBeInTheDocument();
-      expect(screen.getByRole('combobox', { name: /Import from Domain/i })).toBeInTheDocument();
+      expect(screen.getByText(/Failed to load file/i)).toBeInTheDocument();
     });
+  });
+
+  it('should show error notification when API.get fails to load domains', async() => {
+    http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
+    window.API.get.mockRejectedValueOnce(new Error('Failed to load domains'));
+
+    renderWithRedux(
+      <ReviewImportForm
+        importFileUploadId="test-123"
+        onClose={jest.fn()}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to load domains/i)).toBeInTheDocument();
+    });
+  });
+
+  it('should call import API and invoke onImportComplete on successful submission', async() => {
+    const user = userEvent.setup({ delay: null });
+    const mockOnClose = jest.fn();
+    const mockOnImportComplete = jest.fn();
+
+    http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
+    window.API.get.mockResolvedValueOnce(mockDomainsResponse);
+    http.post.mockResolvedValueOnce([{ message: 'Import successful', level: 'success' }]);
+
+    renderWithRedux(
+      <ReviewImportForm
+        importFileUploadId="test-123"
+        onClose={mockOnClose}
+        onImportComplete={mockOnImportComplete}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: /Import to Existing Domain/i })).toBeInTheDocument();
+    });
+
+    // Dirty the form by changing the "Import to" domain so the Commit button becomes enabled
+    const importToSelect = screen.getByRole('combobox', { name: /Import to Existing Domain/i });
+    await user.selectOptions(importToSelect, 'ExistingDomain2');
+
+    const commitButton = screen.getByRole('button', { name: /Commit/i });
+    await waitFor(() => expect(commitButton).not.toBeDisabled());
+    await user.click(commitButton);
+
+    await waitFor(() => {
+      expect(http.post).toHaveBeenCalledWith(
+        '/miq_ae_tools/import_automate_datastore',
+        expect.objectContaining({ import_file_upload_id: 'test-123' })
+      );
+      expect(window.miqFlashLater).toHaveBeenCalledWith({ message: 'Import successful', level: 'success' });
+      expect(mockOnImportComplete).toHaveBeenCalled();
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+  });
+
+  it('should show error notification when http.post fails on submission', async() => {
+    const user = userEvent.setup({ delay: null });
+    const mockOnClose = jest.fn();
+
+    http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
+    window.API.get.mockResolvedValueOnce(mockDomainsResponse);
+    http.post.mockRejectedValueOnce(new Error('Import failed'));
+
+    renderWithRedux(
+      <ReviewImportForm
+        importFileUploadId="test-123"
+        onClose={mockOnClose}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: /Import to Existing Domain/i })).toBeInTheDocument();
+    });
+
+    const importToSelect = screen.getByRole('combobox', { name: /Import to Existing Domain/i });
+    await user.selectOptions(importToSelect, 'ExistingDomain2');
+
+    const commitButton = screen.getByRole('button', { name: /Commit/i });
+    await waitFor(() => expect(commitButton).not.toBeDisabled());
+    await user.click(commitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Import failed/i)).toBeInTheDocument();
+    });
+
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 });

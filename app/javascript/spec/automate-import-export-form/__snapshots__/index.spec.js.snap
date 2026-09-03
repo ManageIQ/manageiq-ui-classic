@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ImportExportPage component should render all sections 1`] = `
+<div
+  class="import-export-page"
+>
+  <div
+    class="cds--css-grid"
+  >
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <div
+        class="import-export-section"
+      >
+        <div
+          data-testid="file-upload-section"
+        >
+          <button
+            type="button"
+          >
+            Mock Upload
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <div
+        class="import-export-section-divider"
+      />
+      <div
+        class="import-export-section"
+      >
+        <div
+          data-testid="import-via-git"
+        >
+          <button
+            type="button"
+          >
+            Mock Git Import
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <div
+        class="import-export-section-divider"
+      />
+      <div
+        class="import-export-section"
+      >
+        <div
+          data-testid="export-section"
+        >
+          Export Section
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <div
+        class="import-export-section-divider"
+      />
+      <div
+        class="import-export-section"
+      >
+        <div
+          data-testid="reset-section"
+        >
+          Reset Section
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

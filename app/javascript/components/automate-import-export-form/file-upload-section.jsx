@@ -15,12 +15,8 @@ const FileUploadSection = ({ onUploadComplete = null }) => {
 
   const handleFileDelete = () => {
     setSelectedFile(null);
-
     if (fileUploaderRef.current) {
-      const input = fileUploaderRef.current.querySelector('input[type="file"]');
-      if (input) {
-        input.value = '';
-      }
+      fileUploaderRef.current.clearFiles();
     }
   };
 
@@ -39,7 +35,7 @@ const FileUploadSection = ({ onUploadComplete = null }) => {
       const response = await miqFetch({
         url: '/miq_ae_tools/upload_import_file',
         method: 'POST',
-        backendName: __('http'),
+        backendName: 'http',
         cookieAndCsrf: true,
         skipErrors: [400],
       }, formData);
@@ -51,9 +47,6 @@ const FileUploadSection = ({ onUploadComplete = null }) => {
         onUploadComplete(response.import_file_upload_id);
       }
     } catch (error) {
-      // Error handling is done by miqFetch
-      // eslint-disable-next-line no-console
-      console.error('Upload error:', error);
       if (error.data && error.data.message) {
         add_flash(error.data.message, 'error');
       }
@@ -65,23 +58,22 @@ const FileUploadSection = ({ onUploadComplete = null }) => {
   return (
     <div className="file-upload-section">
       <h3>{__('Import Datastore classes (*.zip)')}</h3>
-      <div ref={fileUploaderRef}>
-        <FileUploader
-          labelTitle={__('Upload file')}
-          buttonLabel={__('Choose file')}
-          buttonKind="primary"
-          size="md"
-          filenameStatus={selectedFile ? 'edit' : 'complete'}
-          accept={['.zip']}
-          multiple={false}
-          disabled={isUploading}
-          iconDescription={__('Clear file')}
-          name="upload[file]"
-          onChange={handleFileChange}
-          onDelete={handleFileDelete}
-        />
-      </div>
-      <div className="upload-button-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <FileUploader
+        ref={fileUploaderRef}
+        labelTitle={__('Upload file')}
+        buttonLabel={__('Choose file')}
+        buttonKind="primary"
+        size="md"
+        filenameStatus={selectedFile ? 'edit' : 'complete'}
+        accept={['.zip']}
+        multiple={false}
+        disabled={isUploading}
+        iconDescription={__('Clear file')}
+        name="upload[file]"
+        onChange={handleFileChange}
+        onDelete={handleFileDelete}
+      />
+      <div className="upload-button-wrapper">
         <Button
           id="upload-datastore-import"
           type="button"

@@ -34,7 +34,9 @@ jest.mock('../../components/automate-import-export-form/import-datastore-via-git
 });
 
 jest.mock('../../components/automate-import-export-form/import-datastore-via-git-modal', () => {
-  const MockImportDatastoreViaGitModal = ({ isOpen, onClose, disableSubmit }) => (
+  const MockImportDatastoreViaGitModal = ({
+    isOpen, onClose, onSelectGitRepo, disableSubmit,
+  }) => (
     isOpen ? (
       <div data-testid="git-modal">
         <p>Git Modal Open</p>
@@ -45,6 +47,17 @@ jest.mock('../../components/automate-import-export-form/import-datastore-via-git
         </p>
         <button type="button" onClick={onClose}>
           Close Modal
+        </button>
+        <button
+          type="button"
+          onClick={() => onSelectGitRepo({
+            git_repo_id: 'repo-456',
+            git_url: 'https://github.com/test/repo.git',
+            git_branch_or_tag: 'main',
+            ref_type: 'branch',
+          })}
+        >
+          Select Git Repo
         </button>
       </div>
     ) : null
@@ -69,6 +82,30 @@ jest.mock('../../components/automate-import-export-form/reset-datastore-section'
   return MockResetDatastoreSection;
 });
 
+jest.mock('../../components/automate-import-export-form/review-git-import', () => {
+  const MockReviewGitImport = ({
+    gitUrl, gitBranchOrTag, onClose, onImportComplete,
+  }) => (
+    <div data-testid="review-git-import">
+      <p>
+        Git Review:
+        {' '}
+        {gitUrl}
+        {' '}
+        {gitBranchOrTag}
+      </p>
+      <button type="button" onClick={onClose}>
+        Close Git Review
+      </button>
+      <button type="button" onClick={onImportComplete}>
+        Complete Git Import
+      </button>
+    </div>
+  );
+  MockReviewGitImport.displayName = 'ReviewGitImport';
+  return MockReviewGitImport;
+});
+
 jest.mock('../../components/automate-import-export-form/review-import-form', () => {
   const MockReviewImportForm = ({ importFileUploadId, onClose, onImportComplete }) => (
     <div data-testid="review-import-form">
@@ -90,13 +127,18 @@ jest.mock('../../components/automate-import-export-form/review-import-form', () 
 });
 
 describe('ImportExportPage component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render all sections', () => {
-    renderWithRedux(<ImportExportPage gitImportEnabled />);
+    const { container } = renderWithRedux(<ImportExportPage gitImportEnabled />);
 
     expect(screen.getByTestId('file-upload-section')).toBeInTheDocument();
     expect(screen.getByTestId('import-via-git')).toBeInTheDocument();
     expect(screen.getByTestId('export-section')).toBeInTheDocument();
     expect(screen.getByTestId('reset-section')).toBeInTheDocument();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should pass gitImportEnabled prop to git import components', () => {
@@ -104,13 +146,6 @@ describe('ImportExportPage component', () => {
 
     const gitButton = screen.getByRole('button', { name: /Mock Git Import/i });
     expect(gitButton).not.toBeDisabled();
-  });
-
-  it('should disable git import when gitImportEnabled is false', () => {
-    renderWithRedux(<ImportExportPage gitImportEnabled={false} />);
-
-    const gitButton = screen.getByRole('button', { name: /Mock Git Import/i });
-    expect(gitButton).toBeDisabled();
   });
 
   it('should show review import form when upload completes', async() => {
@@ -150,5 +185,58 @@ describe('ImportExportPage component', () => {
     // The disabled button test already verifies the disableSubmit prop works
     const gitButton = screen.getByRole('button', { name: /Mock Git Import/i });
     expect(gitButton).toBeDisabled();
+  });
+
+  describe('ReviewGitImport section', () => {
+    const openGitModalAndSelectRepo = async(user) => {
+      await user.click(screen.getByRole('button', { name: /Mock Git Import/i }));
+      await waitFor(() => expect(screen.getByTestId('git-modal')).toBeInTheDocument());
+      await user.click(screen.getByRole('button', { name: /Select Git Repo/i }));
+    };
+
+    it('should show ReviewGitImport after selecting a git repo', async() => {
+      const user = userEvent.setup({ delay: null });
+      renderWithRedux(<ImportExportPage gitImportEnabled />);
+
+      await openGitModalAndSelectRepo(user);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('review-git-import')).toBeInTheDocument();
+        expect(screen.getByText(/https:\/\/github\.com\/test\/repo\.git/i)).toBeInTheDocument();
+        expect(screen.getByText(/main/i)).toBeInTheDocument();
+      });
+
+      // ImportDatastoreViaGit is replaced by ReviewGitImport
+      expect(screen.queryByTestId('import-via-git')).not.toBeInTheDocument();
+    });
+
+    it('should show ImportDatastoreViaGit again when git review is closed', async() => {
+      const user = userEvent.setup({ delay: null });
+      renderWithRedux(<ImportExportPage gitImportEnabled />);
+
+      await openGitModalAndSelectRepo(user);
+
+      await waitFor(() => expect(screen.getByTestId('review-git-import')).toBeInTheDocument());
+
+      await user.click(screen.getByRole('button', { name: /Close Git Review/i }));
+
+      await waitFor(() => {
+        expect(screen.queryByTestId('review-git-import')).not.toBeInTheDocument();
+        expect(screen.getByTestId('import-via-git')).toBeInTheDocument();
+      });
+    });
+
+    it('should reload page when git import completes', async() => {
+      const user = userEvent.setup({ delay: null });
+      renderWithRedux(<ImportExportPage gitImportEnabled />);
+
+      await openGitModalAndSelectRepo(user);
+
+      await waitFor(() => expect(screen.getByTestId('review-git-import')).toBeInTheDocument());
+
+      await user.click(screen.getByRole('button', { name: /Complete Git Import/i }));
+
+      expect(locationReload).toHaveBeenCalled();
+    });
   });
 });
