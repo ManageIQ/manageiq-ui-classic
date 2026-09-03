@@ -7,27 +7,29 @@ import { http } from '../../http_api';
 jest.mock('../../http_api');
 
 describe('ReviewGitImport component', () => {
+  let defaultProps;
+
   beforeEach(() => {
     jest.clearAllMocks();
     window.miqFlashLater = jest.fn();
+    defaultProps = {
+      gitRepoId: 'repo-123',
+      gitBranchOrTag: 'main',
+      refType: 'branch',
+      onClose: jest.fn(),
+      onImportComplete: jest.fn(),
+    };
   });
-
-  const defaultProps = {
-    gitRepoId: 'repo-123',
-    gitBranchOrTag: 'main',
-    refType: 'branch',
-    onClose: jest.fn(),
-    onImportComplete: jest.fn(),
-  };
 
   it('should render the review section with git information', () => {
     const props = { ...defaultProps, gitUrl: 'https://github.com/test/repo.git' };
-    renderWithRedux(<ReviewGitImport {...props} />);
+    const { container } = renderWithRedux(<ReviewGitImport {...props} />);
 
     expect(screen.getByText(/Review Git Import/i)).toBeInTheDocument();
     expect(screen.getByText(/Branch/i)).toBeInTheDocument();
     expect(screen.getByText(/main/i)).toBeInTheDocument();
     expect(screen.getByText(/https:\/\/github\.com\/test\/repo\.git/i)).toBeInTheDocument();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should show tag label when refType is tag', () => {
@@ -92,6 +94,24 @@ describe('ReviewGitImport component', () => {
     await user.click(cancelButton);
 
     expect(defaultProps.onClose).toHaveBeenCalled();
+  });
+
+  it('should show error notification and re-enable import button when http.post fails', async() => {
+    const user = userEvent.setup({ delay: null });
+    http.post.mockRejectedValueOnce(new Error('Git import failed'));
+
+    renderWithRedux(<ReviewGitImport {...defaultProps} />);
+
+    const importButton = screen.getByRole('button', { name: /import/i });
+    await user.click(importButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Git import failed/i)).toBeInTheDocument();
+    });
+
+    expect(importButton).not.toBeDisabled();
+    expect(defaultProps.onImportComplete).not.toHaveBeenCalled();
+    expect(defaultProps.onClose).not.toHaveBeenCalled();
   });
 
   it('should disable import button while importing', async() => {

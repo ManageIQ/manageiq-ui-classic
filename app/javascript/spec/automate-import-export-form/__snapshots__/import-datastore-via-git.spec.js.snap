@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ImportDatastoreViaGit component should render the button and heading 1`] = `
+<div
+  class="import-datastore-via-git"
+>
+  <h3>
+    Import Datastore via Git
+  </h3>
+  <button
+    class="cds--btn cds--btn--primary"
+    type="button"
+  >
+    Import from Git Repository
+  </button>
+</div>
+`;
+
+exports[`ImportDatastoreViaGit component should show helper text when disableSubmit is true 1`] = `
+<div
+  class="import-datastore-via-git"
+>
+  <h3>
+    Import Datastore via Git
+  </h3>
+  <p
+    class="cds--form__helper-text"
+  >
+    Please enable the git owner role in order to import git repositories
+  </p>
+  <button
+    class="cds--btn cds--btn--primary cds--btn--disabled"
+    disabled=""
+    type="button"
+  >
+    Import from Git Repository
+  </button>
+</div>
+`;

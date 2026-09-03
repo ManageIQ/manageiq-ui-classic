@@ -22,8 +22,7 @@ const ResetDatastoreSection = () => {
         setLoading(false);
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch domains:', error);
+        add_flash(error.message || __('Failed to fetch domains'), 'error');
         setLoading(false);
       });
   }, []);
@@ -38,8 +37,7 @@ const ResetDatastoreSection = () => {
       })
       .catch((error) => {
         setResetting(false);
-        // eslint-disable-next-line no-console
-        console.error('Reset failed:', error);
+        add_flash(error.message || __('Reset failed'), 'error');
       });
   };
 
@@ -56,7 +54,7 @@ const ResetDatastoreSection = () => {
   return (
     <div className="reset-datastore-section">
       <h3>{title}</h3>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="reset-datastore-actions">
         <IconButton
           kind="secondary"
           label={__('Reset')}

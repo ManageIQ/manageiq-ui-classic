@@ -55,25 +55,19 @@ const ReviewGitImport = ({
       )}
 
       <div className="git-import-details">
-        <dl>
-          <dt>
-            <strong>
-              {__('Git Repository')}
-              :
-            </strong>
-          </dt>
-          <dd>{gitUrl || gitRepoId}</dd>
-          <dt>
-            <strong>
-              {refType === 'branch' ? __('Branch') : __('Tag')}
-              :
-            </strong>
-          </dt>
-          <dd>{gitBranchOrTag}</dd>
-        </dl>
+        <p>
+          <strong>{__('Git Repository')}</strong>
+          {': '}
+          {gitUrl || gitRepoId}
+        </p>
+        <p>
+          <strong>{refType === 'branch' ? __('Branch') : __('Tag')}</strong>
+          {': '}
+          {gitBranchOrTag}
+        </p>
       </div>
 
-      <div className="form-buttons" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="form-buttons">
         <Button
           kind="primary"
           onClick={handleImport}

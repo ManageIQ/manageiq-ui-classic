@@ -47,7 +47,7 @@ describe('FileUploadSection component', () => {
 
     // eslint-disable-next-line no-undef
     const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
-    const input = document.querySelector('input[type="file"]');
+    const input = screen.getByLabelText(/Choose file/i);
 
     await user.upload(input, file);
 
@@ -63,7 +63,7 @@ describe('FileUploadSection component', () => {
 
     // eslint-disable-next-line no-undef
     const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
-    const input = document.querySelector('input[type="file"]');
+    const input = screen.getByLabelText(/Choose file/i);
 
     await user.upload(input, file);
 
@@ -82,7 +82,7 @@ describe('FileUploadSection component', () => {
   it('should only allow selecting one file', async() => {
     renderWithRedux(<FileUploadSection />);
 
-    const input = document.querySelector('input[type="file"]');
+    const input = screen.getByLabelText(/Choose file/i);
     expect(input).not.toHaveAttribute('multiple');
   });
 
@@ -100,7 +100,7 @@ describe('FileUploadSection component', () => {
 
     // eslint-disable-next-line no-undef
     const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
-    const input = document.querySelector('input[type="file"]');
+    const input = screen.getByLabelText(/Choose file/i);
 
     await user.upload(input, file);
 
@@ -137,7 +137,7 @@ describe('FileUploadSection component', () => {
 
     // eslint-disable-next-line no-undef
     const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
-    const input = document.querySelector('input[type="file"]');
+    const input = screen.getByLabelText(/Choose file/i);
 
     await user.upload(input, file);
 
@@ -158,5 +158,30 @@ describe('FileUploadSection component', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Uploading.../i)).not.toBeInTheDocument();
     });
+  });
+  it('should call add_flash with error message when upload fails', async() => {
+    const user = userEvent.setup({ delay: null });
+    const mockOnUploadComplete = jest.fn();
+
+    miqFetch.mockRejectedValue({ data: { message: 'Invalid file format' } });
+
+    renderWithRedux(<FileUploadSection onUploadComplete={mockOnUploadComplete} />);
+
+    // eslint-disable-next-line no-undef
+    const file = new File(['test content'], 'test.zip', { type: 'application/zip' });
+    const input = screen.getByLabelText(/Choose file/i);
+
+    await user.upload(input, file);
+
+    const uploadButton = screen.getByRole('button', { name: /Upload/i });
+    await user.click(uploadButton);
+
+    await waitFor(() => {
+      expect(window.add_flash).toHaveBeenCalledWith('Invalid file format', 'error');
+      expect(mockOnUploadComplete).not.toHaveBeenCalled();
+    });
+
+    // Upload button should be re-enabled after failure
+    expect(uploadButton).not.toBeDisabled();
   });
 });

@@ -10,7 +10,16 @@
   }
 
   .upload-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     margin-top: 1rem;
+  }
+
+  .reset-datastore-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .import-export-section-divider {
@@ -27,24 +36,19 @@
 .review-git-import {
   .git-import-details {
     margin: 1rem 0;
-
-    dl {
-      dt {
-        font-weight: bold;
-        margin-top: 0.5rem;
-      }
-
-      dd {
-        margin-left: 0;
-        margin-bottom: 0.5rem;
-      }
-    }
   }
 
   .form-buttons {
     display: flex;
+    align-items: center;
     gap: 1rem;
     margin-top: 1rem;
+  }
+}
+
+.review-import-form {
+  .review-import-loading {
+    padding: 1rem;
   }
 }
 

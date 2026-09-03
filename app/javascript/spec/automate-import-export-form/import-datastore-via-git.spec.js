@@ -4,12 +4,17 @@ import { renderWithRedux } from '../helpers/mountForm';
 import ImportDatastoreViaGit from '../../components/automate-import-export-form/import-datastore-via-git';
 
 describe('ImportDatastoreViaGit component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render the button and heading', () => {
     const mockOnOpenModal = jest.fn();
-    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} />);
+    const { container } = renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} />);
 
     expect(screen.getByText(/Import Datastore via Git/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Import from Git Repository/i })).toBeInTheDocument();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should call onOpenModal when button is clicked', async() => {
@@ -25,9 +30,10 @@ describe('ImportDatastoreViaGit component', () => {
 
   it('should show helper text when disableSubmit is true', () => {
     const mockOnOpenModal = jest.fn();
-    renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} disableSubmit />);
+    const { container } = renderWithRedux(<ImportDatastoreViaGit onOpenModal={mockOnOpenModal} disableSubmit />);
 
     expect(screen.getByText(/Please enable the git owner role/i)).toBeInTheDocument();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should disable button when disableSubmit is true', () => {

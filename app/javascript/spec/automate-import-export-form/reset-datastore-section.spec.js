@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRedux } from '../helpers/mountForm';
 import ResetDatastoreSection from '../../components/automate-import-export-form/reset-datastore-section';
@@ -14,6 +14,7 @@ jest.mock('../../helpers/window-location', () => ({
 describe('ResetDatastoreSection component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.add_flash = jest.fn();
     window.API = {
       get: jest.fn(),
     };
@@ -78,18 +79,63 @@ describe('ResetDatastoreSection component', () => {
       expect(screen.getByText(/Reset all components in the following domains: TestDomain/i)).toBeInTheDocument();
     });
 
-    const resetButton = document.querySelector('.cds--btn--icon-only');
-    await user.click(resetButton);
+    // Open confirmation modal
+    await user.click(screen.getByRole('button', { name: /^Reset$/i }));
 
-    // Find the danger/reset button in the modal footer
-    const modalFooter = document.querySelector('.cds--modal-footer');
-    const confirmButton = modalFooter.querySelector('.cds--btn--danger');
-    await user.click(confirmButton);
+    // Wait for modal to open then click the modal's primary danger button
+    await waitFor(() => {
+      expect(screen.getByText(/Are you sure you want to reset/i)).toBeInTheDocument();
+    });
+
+    const modal = screen.getByRole('dialog');
+    await user.click(within(modal).getByRole('button', { name: /Reset/i }));
 
     await waitFor(() => {
       expect(http.post).toHaveBeenCalledWith('/miq_ae_tools/reset_datastore', { button: 'reset' });
       expect(locationReload).toHaveBeenCalled();
     });
+  });
+
+  it('should show error notification when reset fails', async() => {
+    const user = userEvent.setup({ delay: null });
+    window.API.get.mockResolvedValueOnce({
+      resources: [{ name: 'TestDomain', source: 'system' }],
+    });
+    http.post.mockRejectedValueOnce(new Error('Reset failed'));
+
+    renderWithRedux(<ResetDatastoreSection />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Reset all components in the following domains: TestDomain/i)).toBeInTheDocument();
+    });
+
+    // Open confirmation modal
+    await user.click(screen.getByRole('button', { name: /^Reset$/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Are you sure you want to reset/i)).toBeInTheDocument();
+    });
+
+    const modal = screen.getByRole('dialog');
+    await user.click(within(modal).getByRole('button', { name: /Reset/i }));
+
+    await waitFor(() => {
+      expect(http.post).toHaveBeenCalledWith('/miq_ae_tools/reset_datastore', { button: 'reset' });
+      expect(locationReload).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should call add_flash when API.get fails to fetch domains', async() => {
+    window.API.get.mockRejectedValueOnce(new Error('Network error'));
+
+    renderWithRedux(<ResetDatastoreSection />);
+
+    await waitFor(() => {
+      expect(window.add_flash).toHaveBeenCalledWith('Network error', 'error');
+    });
+
+    // Loading spinner should be cleared
+    expect(screen.queryByText(/Loading domains/i)).not.toBeInTheDocument();
   });
 
   it('should handle empty domains list', async() => {

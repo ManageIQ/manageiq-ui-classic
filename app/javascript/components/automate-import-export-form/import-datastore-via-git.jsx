@@ -5,7 +5,7 @@ const ImportDatastoreViaGit = ({ onOpenModal, disableSubmit }) => (
   <div className="import-datastore-via-git">
     <h3>{__('Import Datastore via Git')}</h3>
     {disableSubmit && (
-      <p className="bx--form__helper-text">
+      <p className="cds--form__helper-text">
         {__('Please enable the git owner role in order to import git repositories')}
       </p>
     )}
