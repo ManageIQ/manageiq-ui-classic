@@ -1,2 +1,2 @@
 = render :partial => "layouts/flash_msg"
-= react('VmDisks', {:recordId => @record.id})
+= react('VmDisks', {:recordId => @record.id, :isTemplate => @record.kind_of?(::MiqTemplate)})

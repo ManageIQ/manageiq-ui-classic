@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import { tableData } from './helper';
 
-const VmDisks = ({ recordId }) => {
+const VmDisks = ({ recordId, isTemplate }) => {
   const [{ disks, isLoading }, setState] = useState({ disks: [], isLoading: true });
 
   useEffect(() => {
-    API.get(`/api/vms/${recordId}/disks?expand=resources&attributes=partitions_aligned`)
+    const base = isTemplate ? 'templates' : 'vms';
+    API.get(`/api/${base}/${recordId}/disks?expand=resources&attributes=partitions_aligned`)
       .then(({ resources }) => {
         setState({ disks: resources, isLoading: false });
       });
@@ -33,6 +34,11 @@ const VmDisks = ({ recordId }) => {
 
 VmDisks.propTypes = {
   recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  isTemplate: PropTypes.bool,
+};
+
+VmDisks.defaultProps = {
+  isTemplate: false,
 };
 
 export default VmDisks;
