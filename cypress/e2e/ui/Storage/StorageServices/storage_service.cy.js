@@ -237,7 +237,9 @@ function verifyFormElements({ isEdit = false }) {
   cy.get('#storage_resource_id button').should('be.visible').and('be.enabled');
   cy.contains(
     '.cds--form__helper-text',
-    'Select storage resources to attach'
+    isEdit
+      ? 'Run the compliance check above, then select storage resources'
+      : 'Select storage resources to attach'
   ).should('be.visible');
 }
 
@@ -399,6 +401,40 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
       }).should('be.disabled');
     });
 
+    it('Verify resources dropdown remains empty when there are no compliance results', () => {
+      cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
+      const taskResultsMockResponse = {
+        state: 'Finished',
+        status: 'Ok',
+        task_results: {
+          compliant_resources: [],
+        },
+      };
+      cy.interceptApi({
+        method: 'GET',
+        alias: 'taskResultsApi',
+        urlPattern: '/api/tasks/*?attributes=task_results',
+        triggerFn: () =>
+          cy
+            .getFormButtonByTypeWithText({
+              buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
+            })
+            .click(),
+        responseInterceptor: (req) =>
+          req.reply({ body: taskResultsMockResponse }),
+      });
+      cy.contains(
+        '.ddorg__carbon-warning-helper-text',
+        'No currently attached storage resource'
+      ).should('be.visible');
+      cy.get('#storage_resource_id').click();
+      cy.get('.cds--list-box__menu-item__option').should('not.exist');
+      cy.getFormButtonByTypeWithText({
+        buttonText: SAVE_BUTTON_TEXT,
+        buttonType: 'submit',
+      }).should('be.disabled');
+    });
+
     it('Verify edit operation', () => {
       cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
       // Ensure save button remains disabled while compliance check & resource selection are pending
@@ -426,7 +462,7 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
       ).as('taskResultsApi');
       cy.intercept(
         'GET',
-        '/api/storage_resources?expand=resources&attributes=id,name,capabilities'
+        '/api/storage_resources?expand=resources&attributes=id,name,ems_ref,capabilities'
       ).as('storageResourcesApi');
       cy.getFormButtonByTypeWithText({
         buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
@@ -438,11 +474,9 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
         buttonText: SAVE_BUTTON_TEXT,
         buttonType: 'submit',
       }).should('be.disabled');
-      cy.get('.ddorg__carbon-warning-helper-text')
-        .should('contain.text', STORAGE_RESOURCE_1)
-        .and('contain.text', STORAGE_RESOURCE_2)
-        .and('contain.text', STORAGE_RESOURCE_3)
-        .and('be.visible');
+      cy.contains('.ddorg__carbon-warning-helper-text', 'successful').should(
+        'be.visible'
+      );
 
       cy.changeSelect('storage_resource_id', STORAGE_RESOURCE_3);
       // FIXME: Fix this from the support command
