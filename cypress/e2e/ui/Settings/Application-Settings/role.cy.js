@@ -27,8 +27,6 @@ const APP_SETTINGS_MENU_OPTION = 'Application Settings';
 const ACCESS_CONTROL_ACCORDION_LABEL = 'Access Control';
 const MANAGEIQ_REGION_ACCORDION_LABEL = /^ManageIQ Region:/;
 const ROLES_ACCORDION_LABEL = 'Roles';
-const GROUPS_ACCORDION_LABEL = 'Groups';
-const USERS_ACCORDION_LABEL = 'Users';
 
 // Restriction labels
 // Restriction values for select dropdowns (these are the option values, not display text)
@@ -45,9 +43,6 @@ const NONE_RESTRICTION = 'None';
 const COMMON_FEATURES_IN_UI = 'Common Features in UI';
 const MAIN_CONFIGURATION = 'Main Configuration';
 const SETTINGS = 'Settings';
-
-// Selectors
-const MULTI_SELECT = '.cds--multi-select button.cds--list-box__field';
 
 function selectToolbarOption({ toolbar = 'Configuration', option }) {
   cy.toolbar(toolbar, option);
@@ -160,23 +155,6 @@ function saveRole(buttonText = 'Add') {
   cy.expect_flash(flashClassMap.success, 'saved');
 }
 
-function navigateToGroups() {
-  cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
-  cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
-  cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_LABEL, GROUPS_ACCORDION_LABEL]);
-}
-
-function navigateToUsers() {
-  cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
-  cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
-  cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_LABEL, USERS_ACCORDION_LABEL]);
-}
-
-function selectBootstrapDropdownOption(buttonSelector, optionText) {
-  cy.get(buttonSelector).click();
-  cy.get(`${buttonSelector} ~ .dropdown-menu`).contains('a', optionText).click();
-}
-
 function createTenantViaFactory({ name, description = 'Test tenant description' }) {
   return cy.appFactories([
     [
@@ -191,35 +169,20 @@ function createTenantViaFactory({ name, description = 'Test tenant description' 
 }
 
 function createGroup({ description, detailedDescription, role, tenant = 'My Company' }) {
-  navigateToGroups();
-  selectToolbarOption({ option: 'Add a new Group' });
-  cy.get('#description').click({ force: true });
-  cy.get('#description').clear({ force: true });
-  cy.get('#description').type(description, { delay: 50, force: true });
-  cy.get('#detailed_description').click({ force: true });
-  cy.get('#detailed_description').clear({ force: true });
-  cy.get('#detailed_description').type(detailedDescription, { delay: 50, force: true });
-  selectBootstrapDropdownOption('.btn[data-id="group_role"]', role);
-  selectBootstrapDropdownOption('.btn[data-id="group_tenant"]', tenant);
-  cy.getFormButtonByTypeWithText({
-    buttonText: 'Add',
-    buttonType: 'submit',
-  }).click();
-  cy.expect_flash(flashClassMap.success, 'saved');
-}
-
-function selectFromMultiSelect(optionsToClick) {
-  cy.contains(
-    MULTI_SELECT,
-    'Choose one or more Groups'
-  ).click();
-  optionsToClick.forEach((option) => {
-    cy.contains('.cds--list-box__menu .cds--list-box__menu-item', option).click();
-  });
-  cy.contains(
-    MULTI_SELECT,
-    'Choose one or more Groups'
-  ).click();
+  // appFactories cannot be used here: FactoryBot 6 unconditionally creates a new miq_user_role
+  // via the belongs_to association on the entitlement factory, ignoring any miq_user_role_id
+  // scalar we pass. Use appEval to build the group directly with the correct AR objects.
+  cy.appEval(`
+    user_role = MiqUserRole.find_by!(:name => ${JSON.stringify(role)})
+    tenant    = Tenant.find_by!(:name => ${JSON.stringify(tenant)})
+    group     = MiqGroup.create!(
+      :description          => ${JSON.stringify(description)},
+      :detailed_description => ${JSON.stringify(detailedDescription)},
+      :tenant               => tenant
+    )
+    Entitlement.create!(:miq_group => group, :miq_user_role => user_role)
+    nil
+  `);
 }
 
 function createUser({
@@ -229,34 +192,28 @@ function createUser({
   email,
   groups,
 }) {
-  navigateToUsers();
-  selectToolbarOption({ option: 'Add a new User' });
-  cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(fullName, { delay: 50, force: true });
-  cy.getFormInputFieldByIdAndType({ inputId: 'userid' }).type(userName, { delay: 50, force: true });
-  cy.getFormInputFieldByIdAndType({
-    inputId: 'password',
-    inputType: 'password',
-  }).type(password, { delay: 50, force: true });
-  cy.getFormInputFieldByIdAndType({
-    inputId: 'confirmPassword',
-    inputType: 'password',
-  }).type(password, { delay: 50, force: true });
-  cy.getFormInputFieldByIdAndType({ inputId: 'email' }).type(email, { delay: 50, force: true });
-  selectFromMultiSelect(groups);
-  cy.interceptApi({
-    alias: 'addUserApi',
-    urlPattern: '/api/users',
-    triggerFn: () =>
-      cy
-        .getFormButtonByTypeWithText({
-          buttonText: 'Add',
-          buttonType: 'submit',
-        })
-        .click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
+  // Create the user via FactoryBot.
+  // miq_group_ids= is a plain integer-array setter from has_and_belongs_to_many,
+  // so it survives the JSON boundary — unlike passing AR objects via miq_groups=.
+  cy.appEval(`[
+    BCrypt::Password.create(${JSON.stringify(password)}),
+    MiqGroup.where(:description => ${JSON.stringify(groups)}).pluck(:id)
+  ]`).then(([passwordDigest, groupIds]) => {
+    cy.appFactories([
+      [
+        'create',
+        'user',
+        {
+          name: fullName,
+          userid: userName,
+          email,
+          password_digest: passwordDigest,
+          miq_group_ids: groupIds,
+          current_group_id: groupIds[0],
+        },
+      ],
+    ]);
   });
-  cy.expect_flash(flashClassMap.success, 'saved');
 }
 
 describe('Settings > Application Settings > Access Control > Roles', () => {
