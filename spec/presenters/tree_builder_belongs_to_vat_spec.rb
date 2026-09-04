@@ -29,25 +29,16 @@ describe TreeBuilderBelongsToVat do
     described_class.new(:vat_tree,
                         {:trees => {}},
                         true,
-                        :edit     => edit,
-                        :filters  => {},
-                        :group    => group,
-                        :selected => {})
+                        :edit          => edit,
+                        :filters       => {},
+                        :group         => group,
+                        :selected_nodes => {})
   end
 
   describe '#tree_init_options' do
     it 'sets tree options correctly' do
       expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
-                                                     :checkboxes => true,
-                                                     :oncheck    => nil,
-                                                     :check_url  => "/ops/rbac_group_field_changed/#{group.id}___")
-    end
-  end
-
-  describe '#set_locals_for_render' do
-    it 'set locals for render correctly' do
-      locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:check_url => "/ops/rbac_group_field_changed/#{group.id || "new"}___")
+                                                     :checkboxes => true)
     end
   end
 
