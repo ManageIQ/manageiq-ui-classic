@@ -1040,6 +1040,15 @@ module.exports = [
         document: 'readonly',
         navigator: 'readonly',
         console: 'readonly',
+        fetch: 'readonly',
+        WebSocket: 'readonly',
+        Blob: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
+        setTimeout: 'readonly',
+        setInterval: 'readonly',
+        ArrayBuffer: 'readonly',
+        Uint8Array: 'readonly',
         // Jest
         describe: 'readonly',
         test: 'readonly',
@@ -1055,6 +1064,9 @@ module.exports = [
         jQuery: 'readonly',
         // Shared ManageIQ globals
         ...sharedManageIQGlobals,
+        // Node/Jest test globals
+        global: 'readonly',
+        require: 'readonly',
         // JS-specific globals
         Promise: 'readonly',
         angular: 'readonly',
