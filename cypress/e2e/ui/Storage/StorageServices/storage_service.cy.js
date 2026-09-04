@@ -422,7 +422,7 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
       ).as('taskResultsApi');
       cy.intercept(
         'GET',
-        '/api/storage_resources?expand=resources&attributes=id,name,capabilities'
+        '/api/storage_resources?expand=resources&attributes=id,name,ems_ref,capabilities'
       ).as('storageResourcesApi');
       cy.getFormButtonByTypeWithText({
         buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
@@ -434,11 +434,9 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
         buttonText: SAVE_BUTTON_TEXT,
         buttonType: 'submit',
       }).should('be.disabled');
-      cy.get('.ddorg__carbon-warning-helper-text')
-        .should('contain.text', STORAGE_RESOURCE_1)
-        .and('contain.text', STORAGE_RESOURCE_2)
-        .and('contain.text', STORAGE_RESOURCE_3)
-        .and('be.visible');
+      cy.contains('.ddorg__carbon-warning-helper-text', 'successful').should(
+        'be.visible'
+      );
 
       cy.changeSelect('storage_resource_id', STORAGE_RESOURCE_3);
       // FIXME: Fix this from the support command

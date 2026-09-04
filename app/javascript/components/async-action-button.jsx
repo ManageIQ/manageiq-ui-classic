@@ -24,6 +24,7 @@ const AsyncAction = ({
   fields,
   name,
   asyncAction,
+  onSuccess,
   actionDependencies = [],
   isRequired,
   edit = false,
@@ -66,13 +67,16 @@ const AsyncAction = ({
 
     asyncAction(values, dependencies).then((resolvedValue) => {
       formOptions.change(name, true);
+      if (onSuccess) {
+        onSuccess(formOptions, resolvedValue);
+      }
       setState((state) => ({
         ...state,
         performing:
         false,
         lastState: snapshot(values),
         errorMessage: undefined,
-        successMessage: resolvedValue || actionSuccessLabel,
+        successMessage: (typeof resolvedValue === 'string' ? resolvedValue : null) || actionSuccessLabel,
       }));
     }).catch((error) => {
       formOptions.change(name, undefined);
@@ -105,8 +109,10 @@ const AsyncAction = ({
             useEffect(() => {
               // The list of registered fields shows up after this render, so the validation has to happen
               // with a delay and has to be pulled back via the state.
-              setTimeout(() => setState((state) => ({ ...state, depsValid: dv })));
+              const timeoutId = setTimeout(() => setState((state) => ({ ...state, depsValid: dv })));
               formOptions.change(name, isValid);
+              // Cancel the timeout if component unmounts
+              return () => clearTimeout(timeoutId);
             }, [isValid, name, dv]);
 
             return (
@@ -142,6 +148,7 @@ AsyncAction.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.any).isRequired,
   isRequired: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  onSuccess: PropTypes.func,
   actionDependencies: PropTypes.arrayOf(PropTypes.string),
 };
 

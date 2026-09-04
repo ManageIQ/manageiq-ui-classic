@@ -1,21 +1,8 @@
 import { pick } from 'lodash';
 import AsyncAction from '../async-action-button';
 
-const getResourceNames = (emsRefList) =>
-  API.get(`/api/storage_resources?expand=resources&attributes=name,ems_ref`)
-    .then(({ resources }) => {
-      const nameArray = [];
-      resources.forEach((resource) => {
-        if (emsRefList.includes(resource.ems_ref)) {
-          nameArray.push(resource.name);
-        }
-      });
-
-      return __('Compliant resources: ') + nameArray.join(', ');
-    });
-
 const GetCompliantResources = ({
-  actionSuccessLabel = __('Action successful'),
+  actionSuccessLabel = __('Compliance check successful'),
   edit = false,
   actionDependencies = [],
   isRequired,
@@ -29,8 +16,14 @@ const GetCompliantResources = ({
     + 'Attach resources which will comply with them or select other capabilities.');
   const asyncGetCompliance = (fields, fieldNames) => new Promise((resolve, reject) => {
     const url = '/api/storage_services/';
-    fieldNames.push('id', 'ems_id', 'compression', 'thin_provision');
-    const resource = pick(fields, fieldNames);
+    const resourceFields = [
+      ...fieldNames,
+      'id',
+      'ems_id',
+      'compression',
+      'thin_provision',
+    ];
+    const resource = pick(fields, resourceFields);
 
     API.post(url, { action: 'check_compliant_resources', resource })
       // eslint-disable-next-line camelcase
@@ -39,25 +32,40 @@ const GetCompliantResources = ({
         const { task_id, success } = compliant_resources || single;
         return success ? API.wait_for_task(task_id) : Promise.reject(compliant_resources);
       })
-      .then((result) => (result.task_results.compliant_resources.length
-        ? resolve(getResourceNames(result.task_results.compliant_resources))
-        : resolve(noCompliantMsg)))
-      .catch(({ message }) => reject([__('compliance check failed:'), message].join(' ')));
+      .then((result) => {
+        const emsRefList = result.task_results.compliant_resources;
+        // Resolve with the emsRefList so onSuccess can store it for the select's loadOptions.
+        // AsyncAction will use resolvedValue as the success label only if it's a string;
+        // when it's an array it falls back to actionSuccessLabel.
+        resolve(emsRefList.length ? emsRefList : noCompliantMsg);
+      })
+      .catch(({ message }) => reject([__('Compliance check failed:'), message].join(' ')));
   });
 
+  // Store the emsRefList in the form so storage_resource_id's resolveProps can pass it
+  // to filterResourcesByCapabilities as the third argument
+  const handleSuccess = (formOptions, emsRefList) => {
+    if (Array.isArray(emsRefList)) {
+      formOptions.change('compliant_ems_refs', emsRefList);
+    }
+  };
+
   return (
-    <AsyncAction
-      {...props}
-      asyncAction={asyncGetCompliance}
-      actionLabel={buttonLabel}
-      actionProgressLabel={progressMsg}
-      actionDefaultError={defaultText}
-      helperText={helperText}
-      actionSuccessLabel={actionSuccessLabel}
-      edit={edit}
-      actionDependencies={actionDependencies}
-      isRequired={isRequired}
-    />
+    <div className="storage-service-form-async-action">
+      <AsyncAction
+        {...props}
+        asyncAction={asyncGetCompliance}
+        actionLabel={buttonLabel}
+        actionProgressLabel={progressMsg}
+        actionDefaultError={defaultText}
+        helperText={helperText}
+        actionSuccessLabel={actionSuccessLabel}
+        edit={edit}
+        actionDependencies={actionDependencies}
+        isRequired={isRequired}
+        onSuccess={handleSuccess}
+      />
+    </div>
   );
 };
 

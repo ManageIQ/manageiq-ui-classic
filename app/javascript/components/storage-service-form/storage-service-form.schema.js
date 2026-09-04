@@ -131,10 +131,16 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
           { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
         ],
         isMulti: true,
-        resolveProps: (_props, _field, { getState }) => {
+        resolveProps: (_props, _field, { getState, change }) => {
           const stateValues = getState().values;
+          const emsRefList = stateValues?.compliant_ems_refs || [];
+          // In edit mode, don't load options until compliance check has run
+          if (edit && !emsRefList?.length) {
+            return null;
+          }
+
           const emsId = stateValues.ems_id;
-          const selectedResources = stateValues.storage_resource_id ? stateValues.storage_resource_id : [];
+          const selectedResources = stateValues?.storage_resource_id || [];
           const capabilityValues = [];
 
           const capabilityNames = fields
@@ -145,18 +151,15 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             capabilityValues.push(stateValues[capabilityName]));
           if (capabilityValues?.length) {
             return {
-              key: JSON.stringify(capabilityValues),
+              key: JSON.stringify([...capabilityValues, ...(emsRefList)]),
               loadOptions: async() => {
                 providerCapabilities = await getProviderCapabilities(emsId);
                 const filteredResources = await filterResourcesByCapabilities(
                   capabilityValues,
-                  providerCapabilities
+                  providerCapabilities,
+                  emsRefList,
                 );
-                stateValues.storage_resource_id = filterSelectedResources(
-                  selectedResources,
-                  filteredResources
-                );
-
+                change('storage_resource_id', filterSelectedResources(selectedResources, filteredResources));
                 return filteredResources;
               },
             };
