@@ -208,6 +208,14 @@ module.exports = {
       '@@miq-redux': resolve(dirname(__filename), '../../app/javascript/redux'),
       '@@miq-types': resolve(dirname(__filename), '../../app/javascript/types'),
       'gettext_i18n_rails_js': gettextDir,
+      // TODO: remove once webpack is upgraded to v5
+      // Webpack 4 does not support the package.json "exports" field; alias packages
+      // that rely on it to the correct build directly.
+      // downshift v9 "module" field points to an ESM build that uses named imports from
+      // react (CJS) — webpack 4 can't resolve them. Use the CJS build instead.
+      'downshift': resolveModule('downshift/dist/downshift.cjs.cjs'),
+      // @carbon/utilities maps subpaths via exports-field wildcards that webpack 4 ignores.
+      '@carbon/utilities/date-picker': resolveModule('@carbon/utilities/es/date-picker/index.js'),
     },
     extensions: settings.extensions,
     modules: [],

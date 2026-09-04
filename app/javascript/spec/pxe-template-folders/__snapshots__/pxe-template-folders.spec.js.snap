@@ -18,6 +18,7 @@ exports[`PxeTemplateFolders Component should render with empty folders array 1`]
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Name"
                 scope="col"
               >
                 <div
@@ -95,6 +96,7 @@ exports[`PxeTemplateFolders Component should render with folders data 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-3__header-Name"
                 scope="col"
               >
                 <div

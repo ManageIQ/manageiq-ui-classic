@@ -51,6 +51,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
           <tr>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-resource_entity"
               scope="col"
             >
               <div
@@ -64,6 +65,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-resource_label"
               scope="col"
             >
               <div
@@ -77,6 +79,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-tag_category"
               scope="col"
             >
               <div
@@ -90,6 +93,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-actions"
               scope="col"
             >
               <div
@@ -152,18 +156,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_e_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_e_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -220,18 +217,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_f_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_f_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -288,18 +278,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_g_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_g_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -356,18 +339,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_h_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_h_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -422,6 +398,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
           <tr>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-resource_entity"
               scope="col"
             >
               <div
@@ -435,6 +412,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-resource_label"
               scope="col"
             >
               <div
@@ -448,6 +426,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-tag_category"
               scope="col"
             >
               <div
@@ -461,6 +440,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-actions"
               scope="col"
             >
               <div
@@ -523,18 +503,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_5_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_5_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -591,18 +564,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_6_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_6_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -659,18 +625,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_7_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_7_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"
@@ -727,18 +686,11 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 class="cell"
               >
                 <button
-                  aria-describedby="danger-description-_r_8_"
                   class="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
                   tabindex="0"
                   title="Click to delete this mapping"
                   type="button"
                 >
-                  <span
-                    class="cds--visually-hidden"
-                    id="danger-description-_r_8_"
-                  >
-                    danger
-                  </span>
                   <span
                     class="cds--front-line"
                     title="Click to delete this mapping"

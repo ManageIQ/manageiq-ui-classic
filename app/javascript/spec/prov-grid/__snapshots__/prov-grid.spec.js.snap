@@ -19,6 +19,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-3__header-Name"
                 scope="col"
               >
                 <div
@@ -82,6 +83,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-3__header-Free Space"
                 scope="col"
               >
                 <div
@@ -145,6 +147,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-3__header-Total Space"
                 scope="col"
               >
                 <div
@@ -208,6 +211,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-3__header-Storage Clusters"
                 scope="col"
               >
                 <div
@@ -840,6 +844,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-Name"
                 scope="col"
               >
                 <div
@@ -903,6 +908,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-Total VMs"
                 scope="col"
               >
                 <div
@@ -966,6 +972,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-Platform"
                 scope="col"
               >
                 <div
@@ -1029,6 +1036,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-Version"
                 scope="col"
               >
                 <div
@@ -1092,6 +1100,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-State"
                 scope="col"
               >
                 <div
@@ -1155,6 +1164,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-2__header-Maintenance"
                 scope="col"
               >
                 <div
@@ -2027,6 +2037,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-4__header-Name"
                 scope="col"
               >
                 <div
@@ -2299,6 +2310,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-5__header-Name"
                 scope="col"
               >
                 <div
@@ -2362,6 +2374,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-5__header-Description"
                 scope="col"
               >
                 <div
@@ -2754,6 +2767,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-6__header-Name"
                 scope="col"
               >
                 <div
@@ -2817,6 +2831,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-6__header-Description"
                 scope="col"
               >
                 <div
@@ -2880,6 +2895,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-6__header-Last Updated"
                 scope="col"
               >
                 <div
@@ -3392,6 +3408,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="descending"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Name"
                 scope="col"
               >
                 <div
@@ -3455,6 +3472,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Operating System"
                 scope="col"
               >
                 <div
@@ -3518,6 +3536,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Platform"
                 scope="col"
               >
                 <div
@@ -3581,6 +3600,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-CPUs"
                 scope="col"
               >
                 <div
@@ -3644,6 +3664,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Memory"
                 scope="col"
               >
                 <div
@@ -3707,6 +3728,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Disk Size"
                 scope="col"
               >
                 <div
@@ -3770,6 +3792,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Provider"
                 scope="col"
               >
                 <div
@@ -3833,6 +3856,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               <th
                 aria-sort="none"
                 class="miq-data-table-header cds--table-sort__header"
+                id="data-table-1__header-Snapshots"
                 scope="col"
               >
                 <div

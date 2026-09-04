@@ -18,6 +18,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Enforced"
                 scope="col"
               >
                 <div
@@ -31,6 +32,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Description"
                 scope="col"
               >
                 <div
@@ -44,6 +46,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Value"
                 scope="col"
               >
                 <div
@@ -57,6 +60,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-1__header-Units"
                 scope="col"
               >
                 <div
@@ -380,6 +384,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-2__header-Enforced"
                 scope="col"
               >
                 <div
@@ -393,6 +398,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-2__header-Description"
                 scope="col"
               >
                 <div
@@ -406,6 +412,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-2__header-Value"
                 scope="col"
               >
                 <div
@@ -419,6 +426,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-2__header-Units"
                 scope="col"
               >
                 <div

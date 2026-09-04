@@ -17,6 +17,7 @@ exports[`WindowsImagesTable component should render the table with data 1`] = `
           <tr>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-name"
               scope="col"
             >
               <div
@@ -30,6 +31,7 @@ exports[`WindowsImagesTable component should render the table with data 1`] = `
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-description"
               scope="col"
             >
               <div
@@ -43,6 +45,7 @@ exports[`WindowsImagesTable component should render the table with data 1`] = `
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-path"
               scope="col"
             >
               <div
@@ -56,6 +59,7 @@ exports[`WindowsImagesTable component should render the table with data 1`] = `
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-1__header-index"
               scope="col"
             >
               <div

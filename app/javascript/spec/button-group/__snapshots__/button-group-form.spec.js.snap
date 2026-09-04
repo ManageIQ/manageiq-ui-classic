@@ -216,8 +216,8 @@ exports[`Button Group form component should render the adding form 1`] = `
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_2_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -418,8 +418,8 @@ exports[`Button Group form component should render the adding form 1`] = `
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_c_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -784,8 +784,8 @@ exports[`Button Group form component should render the adding form for generic o
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_m_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -986,8 +986,8 @@ exports[`Button Group form component should render the adding form for generic o
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_10_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1356,8 +1356,8 @@ exports[`Button Group form component should render the editing form 1`] = `
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1a_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1558,8 +1558,8 @@ exports[`Button Group form component should render the editing form 1`] = `
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1k_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -1935,8 +1935,8 @@ exports[`Button Group form component should render the editing form for generic 
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_1v_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -2137,8 +2137,8 @@ exports[`Button Group form component should render the editing form for generic 
               class="toolbar-0-2-7"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_29_-search"
+                class="cds--search"
                 role="search"
               >
                 <div

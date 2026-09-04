@@ -505,17 +505,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_5_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-attributes[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_5_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -709,17 +702,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_a_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_a_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -867,17 +853,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_e_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[1]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_e_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -980,17 +959,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_g_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-methods[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_g_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -1392,17 +1364,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_p_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-attributes[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_p_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -1596,17 +1561,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_u_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_u_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -1754,17 +1712,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_12_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-associations[1]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_12_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"
@@ -1867,17 +1818,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
               </div>
             </div>
             <button
-              aria-describedby="danger-description-_r_14_"
               class="remove-0-2-8 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
               id="remove-methods[0]"
               type="button"
             >
-              <span
-                class="cds--visually-hidden"
-                id="danger-description-_r_14_"
-              >
-                danger
-              </span>
               Remove
               <svg
                 aria-hidden="true"

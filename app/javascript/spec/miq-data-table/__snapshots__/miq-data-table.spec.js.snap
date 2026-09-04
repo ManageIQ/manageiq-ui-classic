@@ -62,6 +62,7 @@ exports[`Data table component should render a simple data tabe with pagination a
             <th
               aria-sort="none"
               class="miq-data-table-header cds--table-sort__header"
+              id="data-table-4__header-name"
               scope="col"
             >
               <div
@@ -125,6 +126,7 @@ exports[`Data table component should render a simple data tabe with pagination a
             <th
               aria-sort="none"
               class="miq-data-table-header cds--table-sort__header"
+              id="data-table-4__header-status"
               scope="col"
             >
               <div
@@ -370,7 +372,7 @@ exports[`Data table component should render a simple data tabe with pagination a
         class="miq-fieldset-content"
       >
         <div
-          class="cds--pagination cds--pagination--md miq-pagination"
+          class="cds--pagination cds--pagination--md cds--layout--size-md miq-pagination"
         >
           <div
             class="cds--pagination__left"
@@ -650,6 +652,7 @@ exports[`Data table component should render a simple non-clickable data table 1`
           <tr>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-name"
               scope="col"
             >
               <div
@@ -663,6 +666,7 @@ exports[`Data table component should render a simple non-clickable data table 1`
             </th>
             <th
               class="miq-data-table-header"
+              id="data-table-2__header-title"
               scope="col"
             >
               <div
@@ -1034,7 +1038,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
         class="miq-fieldset-content"
       >
         <div
-          class="cds--pagination cds--pagination--md miq-pagination"
+          class="cds--pagination cds--pagination--md cds--layout--size-md miq-pagination"
         >
           <div
             class="cds--pagination__left"
@@ -1804,7 +1808,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
         class="miq-fieldset-content"
       >
         <div
-          class="cds--pagination cds--pagination--md miq-pagination"
+          class="cds--pagination cds--pagination--md cds--layout--size-md miq-pagination"
         >
           <div
             class="cds--pagination__left"
@@ -2441,7 +2445,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
         class="miq-fieldset-content"
       >
         <div
-          class="cds--pagination cds--pagination--md miq-pagination"
+          class="cds--pagination cds--pagination--md cds--layout--size-md miq-pagination"
         >
           <div
             class="cds--pagination__left"

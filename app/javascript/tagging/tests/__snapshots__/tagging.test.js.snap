@@ -140,11 +140,11 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                       1
                     </span>
                     <div
-                      aria-label="Clear all selected items"
+                      aria-label="Clear selected item"
                       class="cds--tag__close-icon"
                       role="button"
                       tabindex="-1"
-                      title="Clear all selected items"
+                      title="Clear selected item"
                     >
                       <svg
                         aria-hidden="true"
@@ -213,6 +213,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                 >
                   <li
                     aria-checked="false"
+                    aria-disabled="false"
                     aria-label="Franta"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
@@ -254,6 +255,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                   </li>
                   <li
                     aria-checked="true"
+                    aria-disabled="false"
                     aria-label="Pepa"
                     aria-selected="true"
                     class="cds--list-box__menu-item cds--list-box__menu-item--active"
@@ -585,6 +587,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                 >
                   <li
                     aria-checked="false"
+                    aria-disabled="false"
                     aria-label="Duck"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
@@ -626,6 +629,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                   </li>
                   <li
                     aria-checked="false"
+                    aria-disabled="false"
                     aria-label="Salad"
                     aria-selected="false"
                     class="cds--list-box__menu-item"
@@ -667,6 +671,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
                   </li>
                   <li
                     aria-checked="false"
+                    aria-disabled="false"
                     aria-label="Steak"
                     aria-selected="false"
                     class="cds--list-box__menu-item"

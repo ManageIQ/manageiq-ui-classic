@@ -19,10 +19,12 @@ exports[`VmRightSize matches snapshot 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-21__header-defaultKey_metric"
                 scope="col"
               />
               <th
                 class="miq-data-table-header"
+                id="data-table-21__header-max"
                 scope="col"
               >
                 <div
@@ -36,6 +38,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-21__header-high"
                 scope="col"
               >
                 <div
@@ -49,6 +52,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-21__header-average"
                 scope="col"
               >
                 <div
@@ -62,6 +66,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-21__header-low"
                 scope="col"
               >
                 <div
@@ -363,10 +368,12 @@ exports[`VmRightSize matches snapshot 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-22__header-defaultKey_category"
                 scope="col"
               />
               <th
                 class="miq-data-table-header"
+                id="data-table-22__header-current"
                 scope="col"
               >
                 <div
@@ -380,6 +387,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-22__header-recommended"
                 scope="col"
               >
                 <div
@@ -393,6 +401,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-22__header-savingsPct"
                 scope="col"
               >
                 <div
@@ -406,6 +415,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-22__header-savings"
                 scope="col"
               >
                 <div
@@ -575,10 +585,12 @@ exports[`VmRightSize matches snapshot 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-23__header-defaultKey_category"
                 scope="col"
               />
               <th
                 class="miq-data-table-header"
+                id="data-table-23__header-current"
                 scope="col"
               >
                 <div
@@ -592,6 +604,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-23__header-recommended"
                 scope="col"
               >
                 <div
@@ -605,6 +618,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-23__header-savingsPct"
                 scope="col"
               >
                 <div
@@ -618,6 +632,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-23__header-savings"
                 scope="col"
               >
                 <div
@@ -787,10 +802,12 @@ exports[`VmRightSize matches snapshot 1`] = `
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-24__header-defaultKey_category"
                 scope="col"
               />
               <th
                 class="miq-data-table-header"
+                id="data-table-24__header-current"
                 scope="col"
               >
                 <div
@@ -804,6 +821,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-24__header-recommended"
                 scope="col"
               >
                 <div
@@ -817,6 +835,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-24__header-savingsPct"
                 scope="col"
               >
                 <div
@@ -830,6 +849,7 @@ exports[`VmRightSize matches snapshot 1`] = `
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-24__header-savings"
                 scope="col"
               >
                 <div

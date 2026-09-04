@@ -106,8 +106,8 @@ exports[`Catalog form component should render add variant form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_0_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -341,8 +341,8 @@ exports[`Catalog form component should render add variant form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_b_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -598,8 +598,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter options"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_j_-search"
+                class="cds--search"
                 role="search"
               >
                 <div
@@ -832,8 +832,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
               class="toolbar-0-2-8"
             >
               <div
-                aria-label="Filter values"
-                class="cds--search cds--search--md"
+                aria-labelledby="search-input-_r_u_-search"
+                class="cds--search"
                 role="search"
               >
                 <div

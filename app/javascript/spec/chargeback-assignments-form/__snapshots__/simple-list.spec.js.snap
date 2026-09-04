@@ -24,6 +24,7 @@ exports[`SimpleList component should match snapshot with resources 1`] = `
       <thead>
         <tr>
           <th
+            id="data-table-6__header-name"
             scope="col"
           >
             <div
@@ -36,6 +37,7 @@ exports[`SimpleList component should match snapshot with resources 1`] = `
             </div>
           </th>
           <th
+            id="data-table-6__header-rate"
             scope="col"
           >
             <div
@@ -67,7 +69,7 @@ exports[`SimpleList component should match snapshot with resources 1`] = `
                 menuposition="fixed"
               >
                 <div
-                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm cds--layout--size-sm"
                   id="rate-1"
                 >
                   <button
@@ -138,7 +140,7 @@ exports[`SimpleList component should match snapshot with resources 1`] = `
                 menuposition="fixed"
               >
                 <div
-                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+                  class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm cds--layout--size-sm"
                   id="rate-2"
                 >
                   <button

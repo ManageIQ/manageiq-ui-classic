@@ -146,8 +146,8 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                 class="toolbar-0-2-9"
               >
                 <div
-                  aria-label="Filter options"
-                  class="cds--search cds--search--md"
+                  aria-labelledby="search-input-_r_0_-search"
+                  class="cds--search"
                   role="search"
                 >
                   <div
@@ -348,8 +348,8 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
                 class="toolbar-0-2-9"
               >
                 <div
-                  aria-label="Filter values"
-                  class="cds--search cds--search--md"
+                  aria-labelledby="search-input-_r_a_-search"
+                  class="cds--search"
                   role="search"
                 >
                   <div

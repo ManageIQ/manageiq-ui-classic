@@ -75,8 +75,8 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter options"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_0_-search"
+              class="cds--search"
               role="search"
             >
               <div
@@ -277,8 +277,8 @@ exports[`PolicyProfileForm form component should render adding form variant 1`] 
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter values"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_a_-search"
+              class="cds--search"
               role="search"
             >
               <div
@@ -537,8 +537,8 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter options"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_16_-search"
+              class="cds--search"
               role="search"
             >
               <div
@@ -739,8 +739,8 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter values"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_1g_-search"
+              class="cds--search"
               role="search"
             >
               <div
@@ -1006,8 +1006,8 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter options"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_j_-search"
+              class="cds--search"
               role="search"
             >
               <div
@@ -1208,8 +1208,8 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
             class="toolbar-0-2-8"
           >
             <div
-              aria-label="Filter values"
-              class="cds--search cds--search--md"
+              aria-labelledby="search-input-_r_t_-search"
+              class="cds--search"
               role="search"
             >
               <div
