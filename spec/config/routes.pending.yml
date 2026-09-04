@@ -72,7 +72,6 @@ AvailabilityZoneController:
 - wait_for_task
 CatalogController:
 - accordion_select
-- automate_button_field_changed
 - dialog_field_changed
 - dialog_form_button_pressed
 - download_data
@@ -751,7 +750,6 @@ MiqAeClassController:
 - x_history
 MiqAeCustomizationController:
 - accordion_select
-- automate_button_field_changed
 - reload
 - report_data
 - tree_autoload
