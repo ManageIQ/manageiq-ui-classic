@@ -48,21 +48,30 @@ const RbacGroupForm = ({
 }) => {
   const isNew = !groupId || groupId === 'new';
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [flashError, setFlashError] = useState(null);
-  const [resetNotice, setResetNotice] = useState(false);
+  const [state, setState] = useState({
+    isLoading: true,
+    isSubmitting: false,
+    flashError: null,
+    resetNotice: false,
+    initialValues: {},
+    roles: [],
+    tenants: [],
+    treeData: null,
+  });
 
-  // Group Information fields initial values for DDF
-  const [initialValues, setInitialValues] = useState({});
-  // Dropdowns
-  const [roles, setRoles] = useState([]);
-  const [tenants, setTenants] = useState([]);
-  // Tree + tag metadata from group_form_data endpoint
-  const [treeData, setTreeData] = useState(null);
+  const {
+    isLoading,
+    isSubmitting,
+    flashError,
+    resetNotice,
+    initialValues,
+    roles,
+    tenants,
+    treeData,
+  } = state;
 
   useEffect(() => {
-    setIsLoading(true);
+    setState((prev) => ({ ...prev, isLoading: true }));
     const groupUrl = isNew
       ? null
       : `/api/groups/${groupId}?attributes=entitlement,miq_user_role,tenant`;
@@ -102,10 +111,7 @@ const RbacGroupForm = ({
           value: String(t.id),
         }));
 
-        setRoles(roleOptions);
-        setTenants(tenantOptions);
-        setTreeData(formData);
-
+        let calculatedInitialValues = {};
         if (groupData) {
           const ent = groupData.entitlement || {};
           const filters = ent.filters || {};
@@ -135,7 +141,7 @@ const RbacGroupForm = ({
             ? String(groupData.tenant.id)
             : String(groupData.tenant_id || '');
 
-          setInitialValues({
+          calculatedInitialValues = {
             description: groupData.description || '',
             detailed_description: groupData.detailed_description || '',
             role_id: roleId,
@@ -148,9 +154,9 @@ const RbacGroupForm = ({
               hacChecked: hacKeys,
               vatChecked: vatKeys,
             },
-          });
+          };
         } else {
-          setInitialValues({
+          calculatedInitialValues = {
             description: '',
             detailed_description: '',
             filters: {
@@ -161,14 +167,24 @@ const RbacGroupForm = ({
               hacChecked: [],
               vatChecked: [],
             },
-          });
+          };
         }
 
-        setIsLoading(false);
+        setState((prev) => ({
+          ...prev,
+          roles: roleOptions,
+          tenants: tenantOptions,
+          treeData: formData,
+          initialValues: calculatedInitialValues,
+          isLoading: false,
+        }));
       })
       .catch((err) => {
-        setFlashError(String(err?.data?.message || err?.message || err));
-        setIsLoading(false);
+        setState((prev) => ({
+          ...prev,
+          flashError: String(err?.data?.message || err?.message || err),
+          isLoading: false,
+        }));
       });
   }, [groupId, readOnly]);
 
@@ -176,8 +192,7 @@ const RbacGroupForm = ({
     if (isSubmitting) {
       return;
     }
-    setIsSubmitting(true);
-    setFlashError(null);
+    setState((prev) => ({ ...prev, isSubmitting: true, flashError: null }));
 
     const {
       useFilterExpression,
@@ -227,14 +242,16 @@ const RbacGroupForm = ({
         miqRedirectBack(msg, 'success', '/ops/explorer');
       })
       .catch((err) => {
-        setIsSubmitting(false);
-        setFlashError(err?.data?.error?.message || err?.data?.message || String(err));
+        setState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          flashError: err?.data?.error?.message || err?.data?.message || String(err),
+        }));
       });
   };
 
   const onReset = () => {
-    setFlashError(null);
-    setResetNotice(true);
+    setState((prev) => ({ ...prev, flashError: null, resetNotice: true }));
   };
 
   const onCancel = () => {
@@ -268,7 +285,7 @@ const RbacGroupForm = ({
         <InlineNotification
           kind="warning"
           title={__('All changes have been reset')}
-          onCloseButtonClick={() => setResetNotice(false)}
+          onCloseButtonClick={() => setState((prev) => ({ ...prev, resetNotice: false }))}
           lowContrast
         />
       )}
@@ -276,7 +293,7 @@ const RbacGroupForm = ({
         <InlineNotification
           kind="error"
           title={flashError}
-          onCloseButtonClick={() => setFlashError(null)}
+          onCloseButtonClick={() => setState((prev) => ({ ...prev, flashError: null }))}
           lowContrast
         />
       )}

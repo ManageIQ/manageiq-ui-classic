@@ -1,9 +1,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import RbacGroupForm from '../../components/rbac-group-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { API, http } from '../../http_api';
 
 // TaggingWrapperConnected calls ManageIQ.redux.addReducer in its constructor,
 // which isn't available in the test environment. Mock it out.
@@ -13,17 +13,6 @@ jest.mock('../../components/taggingWrapper', () => {
 });
 
 jest.mock('../../helpers/miq-redirect-back');
-
-jest.mock('../../http_api', () => ({
-  API: {
-    get: jest.fn(),
-    post: jest.fn(),
-  },
-  http: {
-    get: jest.fn(),
-    post: jest.fn(),
-  },
-}));
 
 const mockGroupData = {
   description: 'Test Group',
@@ -71,37 +60,28 @@ const defaultProps = {
 };
 
 beforeEach(() => {
-  API.get.mockImplementation((url) => {
-    if (url.includes('/api/groups/')) {
-      return Promise.resolve(mockGroupData);
-    }
-    if (url.includes('/api/roles')) {
-      return Promise.resolve(mockRoles);
-    }
-    if (url.includes('/api/tenants')) {
-      return Promise.resolve(mockTenants);
-    }
-    return Promise.resolve({});
-  });
-  API.post.mockResolvedValue({ description: 'Test Group' });
-  http.get.mockImplementation((url) => {
-    if (url.includes('/ops/group_form_data/')) {
-      return Promise.resolve(mockExtra);
-    }
-    return Promise.resolve({});
-  });
-  http.post.mockResolvedValue({ groups: ['ldap-group-1', 'ldap-group-2'] });
+  fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+  fetchMock.get(/\/api\/roles/, mockRoles);
+  fetchMock.get(/\/api\/tenants/, mockTenants);
+  fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+  fetchMock.post(/\/api\/groups/, { description: 'Test Group' });
+  fetchMock.post(/\/ops\/rbac_group_user_lookup_json/, { groups: ['ldap-group-1', 'ldap-group-2'] });
   miqRedirectBack.mockClear();
 });
 
 afterEach(() => {
+  fetchMock.reset();
+  fetchMock.restore();
   jest.clearAllMocks();
 });
 
 describe('RbacGroupForm', () => {
-  it('renders loading state initially', () => {
+  it('renders loading state initially', async() => {
     renderWithRedux(<RbacGroupForm {...defaultProps} />);
     expect(document.querySelector('.cds--loading')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(document.getElementById('description')).toBeInTheDocument();
+    });
   });
 
   it('renders form fields in edit mode', async() => {
@@ -178,12 +158,11 @@ describe('RbacGroupForm', () => {
   });
 
   it('shows LDAP lookup field when canLookupLdap is true', async() => {
-    http.get.mockImplementation((url) => {
-      if (url.includes('/ops/group_form_data/')) {
-        return Promise.resolve({ ...mockExtra, can_lookup_ldap: true, auth_mode_name: 'LDAP' });
-      }
-      return Promise.resolve({});
-    });
+    fetchMock.restore();
+    fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+    fetchMock.get(/\/api\/roles/, mockRoles);
+    fetchMock.get(/\/api\/tenants/, mockTenants);
+    fetchMock.get(/\/ops\/group_form_data\//, { ...mockExtra, can_lookup_ldap: true, auth_mode_name: 'LDAP' });
 
     renderWithRedux(<RbacGroupForm {...defaultProps} />);
 
@@ -203,17 +182,12 @@ describe('RbacGroupForm', () => {
   });
 
   describe('for new group', () => {
-    // For new group, mock API.get to return null for group (new) and provide roles/tenants
     beforeEach(() => {
-      API.get.mockImplementation((url) => {
-        if (url.includes('/api/roles')) {
-          return Promise.resolve(mockRoles);
-        }
-        if (url.includes('/api/tenants')) {
-          return Promise.resolve(mockTenants);
-        }
-        return Promise.resolve({});
-      });
+      fetchMock.restore();
+      fetchMock.get(/\/api\/roles/, mockRoles);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
+      fetchMock.post('/api/groups', { description: 'New Group' });
     });
 
     it('renders with "Add" submit button', async() => {
@@ -241,8 +215,9 @@ describe('RbacGroupForm', () => {
       await user.click(submitBtn);
 
       await waitFor(() => {
-        expect(API.post).toHaveBeenCalledWith(
-          '/api/groups',
+        expect(fetchMock.called('/api/groups')).toBe(true);
+        const lastCall = fetchMock.lastCall('/api/groups');
+        expect(JSON.parse(lastCall[1].body)).toEqual(
           expect.objectContaining({ description: 'New Group' })
         );
       });
@@ -273,8 +248,9 @@ describe('RbacGroupForm', () => {
       await user.click(submitBtn);
 
       await waitFor(() => {
-        expect(API.post).toHaveBeenCalledWith(
-          '/api/groups/1',
+        expect(fetchMock.called('/api/groups/1')).toBe(true);
+        const lastCall = fetchMock.lastCall('/api/groups/1');
+        expect(JSON.parse(lastCall[1].body)).toEqual(
           expect.objectContaining({ action: 'edit' })
         );
       });

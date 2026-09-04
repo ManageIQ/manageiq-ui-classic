@@ -355,36 +355,6 @@ class OpsController < ApplicationController
     session[:changed] = @edit[:new] != current
   end
 
-  def rbac_and_user_make_subarrays
-    if @set_filter_values.present?
-      temp1arr = []
-      @set_filter_values = @set_filter_values.flatten
-      temp_categories = @set_filter_values.dup
-      temp_categories = temp_categories.sort
-      i = 0
-      temp_field = []
-      while i < temp_categories.length
-        a = temp_categories[i].rindex("/")
-        current = temp_categories[i].slice(0..a)
-        previous = current if previous.nil?
-
-        if current == previous
-          temp_field.push(temp_categories[i])
-        else
-          temp1arr.push(temp_field)
-          temp_field = []
-          temp_field.push(temp_categories[i])
-          previous = current
-        end
-        i += 1
-      end
-      unless temp_field.nil?
-        temp1arr.push(temp_field)
-      end
-      @set_filter_values.replace(temp1arr)
-    end
-  end
-
   def set_active_tab(nodetype)
     node = nodetype.downcase.split("-")
     case x_active_tree
