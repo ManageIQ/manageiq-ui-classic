@@ -1,0 +1,196 @@
+// Stylesheet for Report Editor custom React components
+
+// Carbon's .cds--tabs wrapper has overflow-x: hidden by default, which clips
+// tab buttons in narrower viewports and causes Cypress visibility failures.
+// Override to visible so all tabs in the report-editor are always reachable.
+.report-editor .cds--tabs {
+  overflow-x: visible;
+}
+
+.report-editor-formatting-table {
+  &__heading {
+    margin-bottom: 0.75rem;
+  }
+
+  // Ensure dropdowns and text inputs are vertically centered with column labels
+  .cds--data-table tbody td {
+    vertical-align: middle;
+
+    // Reset default margin-bottom on form item wrappers within table cells
+    .cds--form-item {
+      margin-bottom: 0;
+    }
+
+    // Keep TextInput and Select clean in tables
+    .cds--text-input-wrapper,
+    .cds--select__wrapper {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Common Form Layout Helpers
+.report-editor-section {
+  margin-bottom: 1.5rem;
+
+  &__heading {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.report-editor-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  &__label {
+    min-width: 220px;
+    padding-top: 0.625rem;
+    font-weight: 500;
+
+    &--styling {
+      min-width: 160px;
+    }
+  }
+
+  &__content {
+    flex: 1;
+
+    &--flex-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}
+
+.report-editor-inline-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+// Summary Tab specific styles
+.report-editor-summary {
+  &__group-title {
+    margin-top: 1rem;
+  }
+}
+
+// Styling Tab specific styles
+.report-editor-styling {
+  &__rule-container {
+    padding: 1rem 0;
+
+    &--bordered {
+      border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+    }
+  }
+
+  &__rule-heading {
+    margin-bottom: 1rem;
+  }
+
+  &__accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-count {
+      color: var(--cds-text-secondary, #525252);
+      font-size: 0.875rem;
+    }
+  }
+
+  &__footer-text {
+    margin-top: 1rem;
+  }
+}
+
+// Filter Tab specific styles
+.report-editor-filter {
+  &__text-muted {
+    color: var(--cds-text-secondary, #525252);
+  }
+
+  &__going-back {
+    white-space: nowrap;
+  }
+}
+
+// Charts Tab specific styles
+.report-editor-charts {
+  &__tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    &--disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+
+  &__tile {
+    &--selected {
+      border: 2px solid var(--cds-interactive, #0f62fe);
+    }
+
+    &--unselected {
+      border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+    }
+  }
+
+  &__preview-container {
+    margin-top: 2rem;
+  }
+}
+
+// Preview Tab specific styles
+.report-editor-preview {
+  &__toolbar {
+    margin-bottom: 1rem;
+  }
+}
+
+// Field Picker — selected-fields section header
+.report-editor-field-picker {
+  &__selected {
+    margin-top: 1.25rem;
+  }
+
+  &__selected-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  }
+
+  &__selected-heading {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cds-text-primary, #161616);
+  }
+
+  &__count {
+    font-size: 0.75rem;
+    color: var(--cds-text-secondary, #525252);
+
+    &--over {
+      color: var(--cds-support-error, #da1e28);
+      font-weight: 600;
+    }
+  }
+
+  &__empty {
+    font-size: 0.875rem;
+    color: var(--cds-text-secondary, #525252);
+    margin: 0;
+  }
+}
