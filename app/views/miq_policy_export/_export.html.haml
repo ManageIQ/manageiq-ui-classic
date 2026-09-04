@@ -4,34 +4,32 @@
   %h3
     = _("Import")
   - if @sb[:hide]
-    %table{:width => "100%"}
-      %tr
-        %td{:align => "right"}
-          #buttons
-            - if @sb[:conflict]
-              = button_tag(_("Commit"),
-                :class => "btn btn-primary disabled",
-                :title => (t = _("Resolve conflicts to import the file")),
-                :alt   => t)
-            - else
-              = link_to(_('Commit'),
-                {:action => "export", :button => "import", :commit => true},
-                :class                 => "btn btn-primary",
-                :alt                   => (t = _("Commit Import")),
-                "data-miq_sparkle_on"  => true,
-                "data-miq_sparkle_off" => true,
-                :remote                => true,
-                "data-method"          => :post,
-                :title                 => t)
-            = link_to(_('Cancel'),
-              {:action => "export", :button => "cancel_import"},
-              :class                 => "btn btn-default",
-              :alt                   => _("Cancel Changes"),
-              "data-miq_sparkle_on"  => true,
-              "data-miq_sparkle_off" => true,
-              :remote                => true,
-              "data-method"          => :post,
-              :title                 => _("Cancel Import"))
+    %div.text-right
+      #buttons
+        - if @sb[:conflict]
+          = button_tag(_("Commit"),
+            :class => "btn btn-primary disabled",
+            :title => (t = _("Resolve conflicts to import the file")),
+            :alt   => t)
+        - else
+          = link_to(_('Commit'),
+            {:action => "export", :button => "import", :commit => true},
+            :class                 => "btn btn-primary",
+            :alt                   => (t = _("Commit Import")),
+            "data-miq_sparkle_on"  => true,
+            "data-miq_sparkle_off" => true,
+            :remote                => true,
+            "data-method"          => :post,
+            :title                 => t)
+        = link_to(_('Cancel'),
+          {:action => "export", :button => "cancel_import"},
+          :class                 => "btn btn-default",
+          :alt                   => _("Cancel Changes"),
+          "data-miq_sparkle_on"  => true,
+          "data-miq_sparkle_off" => true,
+          :remote                => true,
+          "data-method"          => :post,
+          :title                 => _("Cancel Import"))
   - else
     #import_div
       = form_tag({:action => "upload",
@@ -95,20 +93,18 @@
                 :size  => 15,
                 :style => "width: 400px",
                 :multiple => true)
-    %table{:width => "100%"}
-      %tr
-        %td{:align => "right"}
-          #buttons
-            = link_to(_('Export'),
-              {:action => "export", :button => "export"},
-              :class                 => "btn btn-primary export-policies disabled",
-              :alt                   => t,
-              "data-miq_sparkle_on"  => true,
-              "data-miq_sparkle_off" => true,
-              "data-submit"          => "profile_export_div",
-              :remote                => true,
-              "data-method"          => :post,
-              :title                 => export_title)
+    %div.text-right
+      #buttons
+        = link_to(_('Export'),
+          {:action => "export", :button => "export"},
+          :class                 => "btn btn-primary export-policies disabled",
+          :alt                   => t,
+          "data-miq_sparkle_on"  => true,
+          "data-miq_sparkle_off" => true,
+          "data-submit"          => "profile_export_div",
+          :remote                => true,
+          "data-method"          => :post,
+          :title                 => export_title)
 :javascript
   $('.selected-policies').change(function() {
     if($(this).val()) {
