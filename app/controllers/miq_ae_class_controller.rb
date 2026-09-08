@@ -83,8 +83,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges('miq_ae_domain_view')
 
     unless MiqAeNamespace.exists?(:id => params[:id])
-      flash_to_session(_("Can't access selected records"), :error)
-      redirect_to(:controller => 'miq_ae_class', :action => 'explorer')
+      redirect_to_explorer_with_error
       return
     end
 

@@ -813,9 +813,7 @@ module VmCommon
     prefix = prefix_by_nodetype(@nodetype)
 
     if prefix.nil?
-      session.delete(:exp_parms)
-      flash_to_session(_("Can't access selected records"), :error)
-      redirect_to(:action => 'explorer', :id => nil)
+      redirect_to_explorer_with_error
       return nil
     end
 

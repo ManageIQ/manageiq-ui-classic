@@ -528,6 +528,124 @@ describe CatalogController do
         expect(response).to have_http_status 200
         expect(response).to render_template(:partial => 'catalog/_ot_tree_show')
       end
+
+    end
+
+    describe "#show" do
+      it "redirects to explorer with st- prefixed id for a ServiceTemplate" do
+        st = FactoryBot.create(:service_template)
+        get :show, :params => {:id => st.id}
+
+        expect(response).to redirect_to(:controller => "catalog", :action => "explorer", :id => "st-#{st.id}")
+      end
+
+      it "redirects to explorer with error flash when record does not exist" do
+        get :show, :params => {:id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+    end
+
+    describe "#explorer" do
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        session[:settings] = {:views => {}}
+      end
+
+      it "shows an existing orchestration template when ot prefixed id is passed" do
+        expect(controller).to receive(:assert_privileges).with("orchestration_templates_view")
+        ot = FactoryBot.create(:orchestration_template_amazon)
+        get :explorer, :params => {:id => "ot-#{ot.id}"}
+
+        expect(response).to have_http_status 200
+        expect(controller.send(:current_record)).to eq(ot)
+        expect(controller.send(:x_active_tree)).to eq(:ot_tree)
+      end
+
+      it "shows an existing service template when st prefixed id is passed" do
+        expect(controller).to receive(:assert_privileges).with("catalog_items_view")
+        st = FactoryBot.create(:service_template)
+        get :explorer, :params => {:id => "st-#{st.id}"}
+
+        expect(response).to have_http_status 200
+        expect(controller.send(:current_record)).to eq(st)
+        expect(controller.send(:x_active_tree)).to eq('sandt_tree')
+      end
+
+      it "redirects with error flash when a raw numeric id without a prefix is passed" do
+        get :explorer, :params => {:id => "123"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when an unrecognised nodetype prefix is passed" do
+        get :explorer, :params => {:id => "abc-123"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when non-existent st id is passed" do
+        get :explorer, :params => {:id => "st-999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when non-existent ot id is passed" do
+        get :explorer, :params => {:id => "ot-999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when non-existent raw numeric id is passed" do
+        get :explorer, :params => {:id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+    end
+
+    describe "#x_show" do
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        session[:settings] = {:views => {}}
+      end
+
+      it "redirects with error flash when record does not exist in stcat_tree" do
+        seed_session_trees('catalog', :stcat_tree, 'root')
+        post :x_show, :params => {:id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when rec_id does not exist in stcat_tree" do
+        seed_session_trees('catalog', :stcat_tree, 'root')
+        post :x_show, :params => {:rec_id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when record does not exist in sandt_tree" do
+        seed_session_trees('catalog', :sandt_tree, 'root')
+        post :x_show, :params => {:id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
+
+      it "redirects with error flash when record does not exist in ot_tree" do
+        seed_session_trees('catalog', :ot_tree, 'root')
+        post :x_show, :params => {:id => "999999"}
+
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      end
     end
 
     describe "#set_resource_action" do

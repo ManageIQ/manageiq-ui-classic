@@ -152,8 +152,7 @@ class MiqAeCustomizationController < ApplicationController
     end
 
     if @record.nil?
-      flash_to_session(_("Can't access selected records"), :error)
-      redirect_to(:controller => 'miq_ae_customization', :action => 'explorer')
+      redirect_to_explorer_with_error
       return
     end
 

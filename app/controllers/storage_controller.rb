@@ -287,8 +287,7 @@ class StorageController < ApplicationController
       node_id = normalize_storage_node_id(params[:id])
 
       if node_id.exclude?('-')
-        flash_to_session(_("Can't access selected records"), :error)
-        redirect_to(:action => 'explorer', :id => nil)
+        redirect_to_explorer_with_error
         return
       end
 

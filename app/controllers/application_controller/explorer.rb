@@ -26,6 +26,12 @@ module ApplicationController::Explorer
     end
   end
 
+  def redirect_to_explorer_with_error(message = _("Can't access selected records"), options = {})
+    session.delete(:exp_parms) if session.key?(:exp_parms)
+    flash_to_session(message, :error)
+    redirect_to({:action => 'explorer', :id => nil}.merge(options))
+  end
+
   def x_history
     self.x_node = x_tree[:active_node]
     params[:id] = parse_nodetype_and_id(x_node).last

@@ -78,5 +78,23 @@ describe ReportController do
                    :selectable => true}]
       expect(nodes).to eq(expected)
     end
+
+    describe "#redirect_to_explorer_with_error" do
+      it "sets default flash error and redirects to explorer" do
+        session[:exp_parms] = {:test => 1}
+        controller.send(:redirect_to_explorer_with_error)
+
+        expect(session[:exp_parms]).to be_nil
+        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+      end
+
+      it "accepts a custom error message and options" do
+        controller.send(:redirect_to_explorer_with_error, "Custom error", :controller => 'other')
+
+        expect(session[:flash_msgs]).to include({:message => "Custom error", :level => :error})
+        expect(response).to redirect_to(:controller => 'other', :action => 'explorer', :id => nil)
+      end
+    end
   end
 end
