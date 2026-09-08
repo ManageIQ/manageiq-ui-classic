@@ -95,7 +95,7 @@ export const CombinatorSelector = ({
   <Select
     id={`combinator-${(path || []).join('-') || 'root'}`}
     hideLabel
-    labelText={title || __('Combinator')}
+    labelText={title || 'Combinator'}
     size="sm"
     value={value}
     disabled={disabled}
@@ -144,7 +144,7 @@ const AliasRow = ({
         <TextInput
           id={`alias-text-${ruleId}`}
           hideLabel
-          labelText={__('Alias label')}
+          labelText="Alias label"
           placeholder={__('Display label')}
           size="sm"
           value={rule.alias || ''}
@@ -194,7 +194,7 @@ export const OperatorSelector = ({
     <Select
       id={`operator-${(path || []).join('-')}`}
       hideLabel
-      labelText={title || __('Operator')}
+      labelText={title || 'Operator'}
       size="sm"
       value={value}
       disabled={disabled}
