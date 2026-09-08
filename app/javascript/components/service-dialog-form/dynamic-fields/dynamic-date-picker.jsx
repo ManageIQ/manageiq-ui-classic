@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from '@carbon/react';
+import { isoToDatePickerValue } from '../helper';
 
 const DynamicDatePicker = ({ field }) => (
   <DatePicker
     datePickerType="single"
-    value={field.default_value || ''}
+    value={isoToDatePickerValue(field.default_value)}
     readOnly={field.read_only}
     onChange={() => {}} // display-only in the editor canvas
   >

@@ -144,15 +144,47 @@ export const fieldValuesToArray = (values) => {
   });
 };
 
-// ── Current time helper for DateTimePicker ────────────────────────────────────
-export const getCurrentTimeAndPeriod = () => {
-  const now = new Date();
-  const hours = now.getHours();
-  return {
-    hour: String(hours % 12 || 12).padStart(2, '0'),
-    minute: String(now.getMinutes()).padStart(2, '0'),
-    period: hours < 12 ? 'AM' : 'PM',
-  };
+// ── Date helpers for DatePicker / DateTimePicker canvas widgets ───────────────
+//
+// Carbon's DatePicker (flatpickr) expects value as [Date] — not a raw string.
+// Parse date parts directly to avoid UTC→local timezone shift (off-by-one bug).
+// Handles both formats:
+//   'YYYY-MM-DD' / 'YYYY-MM-DDT...' — React/API format
+//   'MM/dd/yyyy'                     — legacy format stored by Angular
+//
+// For DateTimeControl, default_value is stored as a combined string: 'YYYY-MM-DD HH:MM'
+// (React) or 'MM/dd/yyyy HH:MM' (Angular legacy). The date and time portions are
+// separated by a space. isoToDatePickerValue always operates on the date portion only.
+
+export const isoToDatePickerValue = (iso) => {
+  if (!iso) return [];
+  // Strip any time portion before parsing the date
+  const datePart = iso.split(' ')[0];
+  // Angular legacy format: 'MM/dd/yyyy'
+  if (datePart.includes('/')) {
+    const [mo, dy, yr] = datePart.split('/').map(Number);
+    if (mo && dy && yr) return [new Date(yr, mo - 1, dy)];
+    return [];
+  }
+  // ISO format: 'YYYY-MM-DD' or 'YYYY-MM-DDThh:mm:ssZ'
+  const [y, m, d] = datePart.split('T')[0].split('-').map(Number);
+  if (!y || !m || !d) return [];
+  return [new Date(y, m - 1, d)];
+};
+
+// Extract the time string ('HH:MM') from a DateTime default_value, or '' if absent.
+export const extractTimeFromDateTime = (value) => {
+  if (!value || typeof value !== 'string') return '';
+  const parts = value.split(' ');
+  return parts.length >= 2 ? parts[1] : '';
+};
+
+// Combine a 'YYYY-MM-DD' date string and 'HH:MM' time string into 'YYYY-MM-DD HH:MM'.
+// If no time is provided, returns the date string alone.
+export const combineDateAndTime = (dateStr, timeStr) => {
+  if (!dateStr) return '';
+  if (!timeStr) return dateStr;
+  return `${dateStr} ${timeStr}`;
 };
 
 // ── Properties edit (immutable update) ───────────────────────────────────────
@@ -225,13 +257,14 @@ export const defaultSection = (position = 0) => ({
 // action: 'create' | 'edit'
 // id: string (only for edit)
 export const buildDialogPayload = (dialogData, action) => {
+  const isCopy = action === 'copy';
   const tabs = (dialogData.dialog_tabs || []).map((tab, ti) => ({
-    ...(tab.id ? { id: tab.id } : {}),
+    ...(!isCopy && tab.id ? { id: tab.id } : {}),
     label: tab.label,
     description: tab.description || '',
     position: ti,
     dialog_groups: (tab.dialog_groups || []).map((group, gi) => ({
-      ...(group.id ? { id: group.id } : {}),
+      ...(!isCopy && group.id ? { id: group.id } : {}),
       label: group.label,
       description: group.description || '',
       position: gi,
@@ -282,11 +315,29 @@ const sanitiseField = (field, position, action) => {
     ...rest
   } = field;
 
-  // Strip workflow_name from resource_action (UI-only)
+  // Sanitise resource_action: keep only API-known keys, strip all tree-node
+  // and UI-only properties (isBranch, isSelected, element, children, parent,
+  // workflow_name, etc.) that come from the automate tree picker selection object.
   let resource_action = rest.resource_action;
   if (resource_action) {
-    const { workflow_name: _wn, ...cleanRa } = resource_action;
-    resource_action = cleanRa;
+    const {
+      resource_type,
+      ae_attributes,
+      ae_namespace,
+      ae_class,
+      ae_instance,
+      configuration_script_id,
+      id: ra_id,
+    } = resource_action;
+    resource_action = {
+      ...(resource_type !== undefined ? { resource_type } : {}),
+      ...(ae_attributes !== undefined ? { ae_attributes } : {}),
+      ...(ae_namespace !== undefined ? { ae_namespace } : {}),
+      ...(ae_class !== undefined ? { ae_class } : {}),
+      ...(ae_instance !== undefined ? { ae_instance } : {}),
+      ...(configuration_script_id !== undefined ? { configuration_script_id } : {}),
+      ...(ra_id !== undefined ? { id: ra_id } : {}),
+    };
   }
 
   // For copy action, strip database IDs

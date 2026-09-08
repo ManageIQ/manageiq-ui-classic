@@ -127,6 +127,30 @@ let fieldCounters = {};
 
 export const resetFieldCounters = () => { fieldCounters = {}; };
 
+/**
+ * Seed fieldCounters from existing dialog field names so that the next
+ * generated name for any type starts above the highest number already in use.
+ * Must be called after loading an existing dialog (edit / copy) so that newly
+ * dropped fields don't duplicate names already present in the loaded data.
+ */
+export const seedFieldCounters = (dialogData) => {
+  (dialogData.dialog_tabs || []).forEach((tab) => {
+    (tab.dialog_groups || []).forEach((group) => {
+      (group.dialog_fields || []).forEach((field) => {
+        const base = typeToNameBase(field.type);
+        // match names of the form "<base>_<number>"
+        const match = field.name && field.name.match(new RegExp(`^${base}_(\\d+)$`));
+        if (match) {
+          const n = parseInt(match[1], 10);
+          if (n > (fieldCounters[base] || 0)) {
+            fieldCounters[base] = n;
+          }
+        }
+      });
+    });
+  });
+};
+
 const generateFieldName = (type) => {
   const base = typeToNameBase(type);
   fieldCounters[base] = (fieldCounters[base] || 0) + 1;

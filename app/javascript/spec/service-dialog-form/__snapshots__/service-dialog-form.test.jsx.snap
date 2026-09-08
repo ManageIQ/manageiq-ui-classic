@@ -42,7 +42,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
                 type="text"
                 value=""
               />
-              
               <span
                 aria-atomic="true"
                 aria-live="assertive"
@@ -77,7 +76,6 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               rows="2"
               style="width: 100%;"
             />
-            
             <span
               aria-atomic="true"
               aria-live="assertive"
@@ -377,11 +375,11 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
             role="tablist"
           >
             <button
-              aria-controls="ccs-5-tabpanel-0"
+              aria-controls="ccs-_r_1_-tabpanel-0"
               aria-selected="true"
               class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
               draggable="true"
-              id="ccs-5-tab-0"
+              id="ccs-_r_1_-tab-0"
               role="tab"
               tabindex="0"
               type="button"
@@ -409,7 +407,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
                           <button
                             aria-expanded="false"
                             aria-haspopup="true"
-                            aria-labelledby="tooltip-9"
+                            aria-labelledby="tooltip-_r_9_"
                             class="cds--overflow-menu cds--overflow-menu--sm cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                             type="button"
                           >
@@ -446,7 +444,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
                         <span
                           aria-hidden="true"
                           class="cds--popover"
-                          id="tooltip-9"
+                          id="tooltip-_r_9_"
                           role="tooltip"
                         >
                           <span
@@ -499,7 +497,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
                 class="cds--tooltip-trigger__wrapper"
               >
                 <button
-                  aria-labelledby="tooltip-3"
+                  aria-labelledby="tooltip-_r_3_"
                   class="service-dialog-form__add-tab-btn cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                   type="button"
                 >
@@ -525,7 +523,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
               <span
                 aria-hidden="true"
                 class="cds--popover"
-                id="tooltip-3"
+                id="tooltip-_r_3_"
                 role="tooltip"
               >
                 <span
@@ -563,9 +561,9 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
           </button>
         </div>
         <div
-          aria-labelledby="ccs-5-tab-0"
+          aria-labelledby="ccs-_r_1_-tab-0"
           class="cds--tab-content"
-          id="ccs-5-tabpanel-0"
+          id="ccs-_r_1_-tabpanel-0"
           role="tabpanel"
         >
           <div
@@ -603,7 +601,8 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
       class="service-dialog-form__footer"
     >
       <button
-        class="cds--btn cds--btn--primary"
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
         type="button"
       >
         Save

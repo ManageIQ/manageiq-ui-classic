@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { Loading, Modal, ModalBody } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
@@ -78,19 +79,27 @@ const WorkflowEntryPoints = ({
   };
 
   useEffect(() => {
-    http.post(`/catalog/ae_tree_select_toggle?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
-      .then((_data) => {
-        const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name&'
-        + 'collection_class=ManageIQ::Providers::Workflows::AutomationManager::Workflow';
-        API.get(url)
-          .then((response) => {
-            setData({
-              ...data,
-              isLoading: false,
-              list: workflowsEntryPoints(response),
-            });
+    const fetchWorkflows = () => {
+      const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name&'
+      + 'collection_class=ManageIQ::Providers::Workflows::AutomationManager::Workflow';
+      API.get(url)
+        .then((response) => {
+          setData({
+            ...data,
+            isLoading: false,
+            list: workflowsEntryPoints(response),
           });
-      });
+        });
+    };
+
+    if (setShowModal) {
+      // React mode: fetch workflows directly, no session-based Rails toggle needed
+      fetchWorkflows();
+    } else {
+      // Legacy Angular mode: toggle Rails session state first, then fetch
+      http.post(`/catalog/ae_tree_select_toggle?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
+        .then(fetchWorkflows);
+    }
   }, []);
 
   /** Function to handle a row's click event. */
@@ -107,8 +116,10 @@ const WorkflowEntryPoints = ({
       ...data,
       selectedItemId: (data.selectedItemId === selectedItemId) ? undefined : selectedItemId,
     });
-    const params = `cfp-${encodeURIComponent(selectedItemId)}&tree=automate_catalog_tree&field=${field}`;
-    window.miqJqueryRequest(`/catalog/ae_tree_select/?id=${params}&typ=${type}`);
+    if (!setShowModal) {
+      const params = `cfp-${encodeURIComponent(selectedItemId)}&tree=automate_catalog_tree&field=${field}`;
+      window.miqJqueryRequest(`/catalog/ae_tree_select/?id=${params}&typ=${type}`);
+    }
   };
   if (data.isLoading) {
     return (<Loading active small withOverlay={false} className="loading" />);
@@ -154,7 +165,7 @@ const WorkflowEntryPoints = ({
       }
     }
   };
-  return (
+  return createPortal(
     <Modal
       open
       modalHeading={sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])}
@@ -180,7 +191,8 @@ const WorkflowEntryPoints = ({
           size="md"
         />
       </ModalBody>
-    </Modal>
+    </Modal>,
+    document.body
   );
 };
 
