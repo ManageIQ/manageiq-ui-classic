@@ -1,9 +1,22 @@
 import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from '@carbon/react';
+import { Modal, InlineNotification } from '@carbon/react';
 import MiqFormRenderer, { FormSpy } from '../../../forms/data-driven-form';
-import { getRefreshEnabledFields, fieldValuesToArray } from '../helper';
+import { getRefreshEnabledFields, fieldValuesToArray, isoToDatePickerValue, extractTimeFromDateTime, combineDateAndTime } from '../helper';
 import buildFieldSchema from './fields.schema';
+
+// Convert the [Date] / Date / 'm/d/yyyy' string that DDF submits back to 'YYYY-MM-DD'.
+const datePickerValueToIso = (value) => {
+  let date;
+  if (Array.isArray(value)) date = value[0];
+  else if (value instanceof Date) date = value;
+  else if (typeof value === 'string' && value) {
+    const [mo, dy, yr] = value.split('/').map(Number);
+    if (mo && dy && yr) date = new Date(yr, mo - 1, dy);
+  }
+  if (!date || Number.isNaN(date.getTime())) return '';
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};
 
 /**
  * Converts API field values [[v,d],...] / objects [{value,description},...] into
@@ -31,8 +44,15 @@ const toDefaultValueOptions = (values) => {
  *   - `values`: `[[v,d],...]` stored as-is; FIELD_ARRAY widget uses `{value, description}` objects.
  *     We convert to objects for DDF and back to arrays on save.
  */
-const buildInitialValues = (field) => {
-  // Flatten options sub-object into top-level DDF paths (DDF resolves `options.protected` etc.)
+export const buildInitialValues = (field) => {
+  // DDF resolves dot-notation field names (e.g. `options.sort_by`) using final-form's `getIn`,
+  // which does a nested lookup: initialValues.options.sort_by — NOT initialValues['options.sort_by'].
+  // So we must supply a nested `options` object, not flat string keys.
+  const opts = field.options || {};
+  // automation_type is UI-only and not persisted by the API. Detect it from the saved
+  // resource_action shape: presence of configuration_script_id means workflow.
+  const ra = field.resource_action || {};
+  const detectedAutomationType = ra.configuration_script_id ? 'embedded_workflow' : 'embedded_automate';
   const values = {
     // Tab 1
     label: field.label || '',
@@ -49,14 +69,18 @@ const buildInitialValues = (field) => {
     load_values_on_init: field.load_values_on_init !== false,
     dialog_field_responders: field.dialog_field_responders || [],
 
-    // Nested options (DDF resolves dot-notation paths)
-    'options.protected': (field.options && field.options.protected) || false,
-    'options.force_multi_value': (field.options && field.options.force_multi_value) || false,
-    'options.force_single_value': (field.options && field.options.force_single_value) || false,
-    'options.sort_by': (field.options && field.options.sort_by) || 'description',
-    'options.sort_order': (field.options && field.options.sort_order) || 'ascending',
-    'options.show_past_dates': (field.options && field.options.show_past_dates) || false,
-    'options.category_id': (field.options && String(field.options.category_id || '')) || '',
+    // Nested options object — must match the dot-notation DDF field names exactly.
+    options: {
+      protected: opts.protected || false,
+      force_multi_value: opts.force_multi_value || false,
+      force_single_value: opts.force_single_value || false,
+      sort_by: opts.sort_by || 'description',
+      sort_order: opts.sort_order || 'ascending',
+      show_past_dates: opts.show_past_dates || false,
+      category_id: String(opts.category_id || ''),
+      // D10: needed for Single Value switch conditional visibility
+      category_single_value: opts.category_single_value || false,
+    },
 
     // Validation
     validator_type: field.validator_type || false,
@@ -66,25 +90,41 @@ const buildInitialValues = (field) => {
     // Tab 3 advanced
     reconfigurable: field.reconfigurable || false,
 
-    // Entry point
+    // Entry point — resource_action_workflow mirrors resource_action for the workflow variant
+    // (avoids duplicate React key since both fields share the same DDF name otherwise)
     resource_action: field.resource_action || { resource_type: 'DialogField', ae_attributes: {} },
+    resource_action_workflow: field.resource_action || { resource_type: 'DialogField', ae_attributes: {} },
 
-    // automation_type UI-only helper (strip on save)
-    automation_type: field.automation_type || 'embedded_automate',
+    // automation_type UI-only helper (strip on save).
+    // Falls back to detection from resource_action when loading from the API.
+    automation_type: field.automation_type || detectedAutomationType,
   };
 
   // CheckBox: convert 't'/'f' to boolean for DDF switch
   if (field.type === 'DialogFieldCheckBox') {
     values.default_value = field.default_value === 't';
+  } else if (field.type === 'DialogFieldDateControl') {
+    // Carbon date-picker needs a [Date] array, not a raw ISO string
+    values.default_value = isoToDatePickerValue(field.default_value);
+  } else if (field.type === 'DialogFieldDateTimeControl') {
+    // Split combined 'YYYY-MM-DD HH:MM' into separate date and time fields for the modal
+    values.default_value = isoToDatePickerValue(field.default_value);
+    values.default_value_time = extractTimeFromDateTime(field.default_value);
+  } else if (Array.isArray(field.default_value)) {
+    // Multiselect Dropdown stores default_value as an array — preserve it as-is
+    values.default_value = field.default_value;
   } else {
     values.default_value = field.default_value || '';
   }
 
-  // Dropdown / RadioButton: convert values [[v,d],...] to [{value,description},...] for FIELD_ARRAY
+  // Dropdown / RadioButton: convert values [[v,d],...] to [{value,description},...] for FIELD_ARRAY.
+  // values_sorted mirrors values for the non-draggable conditional variant (avoids duplicate React keys).
   if (field.type === 'DialogFieldDropDownList' || field.type === 'DialogFieldRadioButton') {
-    values.values = (field.values || []).map((v) =>
+    const converted = (field.values || []).map((v) =>
       Array.isArray(v) ? { value: v[0], description: v[1] } : v
     );
+    values.values = converted;
+    values.values_sorted = converted;
   }
 
   return values;
@@ -94,20 +134,39 @@ const buildInitialValues = (field) => {
  * Map the DDF submitted values back to the canonical field shape for the store.
  * Reverses the conversions done in buildInitialValues.
  */
-const normaliseSubmitted = (submitted, fieldType) => {
+export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   const result = { ...submitted };
 
-  // Restore nested options object from DDF dot-notation
+  // final-form stores dot-notation field names as genuinely nested objects:
+  // e.g. field name 'options.sort_by' → submitted.options.sort_by (not submitted['options.sort_by']).
+  const opts = submitted.options || {};
+
+  // D10: resolve category side-effect fields from the selected category object
+  const selectedCategoryId = String(opts.category_id || '');
+  const selectedCategory = categories.find((c) => String(c.id) === selectedCategoryId);
+
+  // Rebuild the canonical options object from the nested values final-form provides.
   result.options = {
-    protected: submitted['options.protected'] || false,
-    force_multi_value: submitted['options.force_multi_value'] || false,
-    force_single_value: submitted['options.force_single_value'] || false,
-    sort_by: submitted['options.sort_by'] || 'description',
-    sort_order: submitted['options.sort_order'] || 'ascending',
-    show_past_dates: submitted['options.show_past_dates'] || false,
-    category_id: submitted['options.category_id'] || '',
+    protected: opts.protected || false,
+    force_multi_value: opts.force_multi_value || false,
+    force_single_value: opts.force_single_value || false,
+    sort_by: opts.sort_by || 'description',
+    sort_order: opts.sort_order || 'ascending',
+    show_past_dates: opts.show_past_dates || false,
+    category_id: selectedCategoryId,
+    // D10: Angular's setupCategoryOptions side-effects
+    ...(selectedCategory ? {
+      category_name: selectedCategory.name,
+      category_description: selectedCategory.description,
+      category_single_value: selectedCategory.single_value || false,
+    } : {}),
+    // Preserve existing category_single_value when no matching category found (e.g. initial load)
+    ...(!selectedCategory && opts.category_single_value
+      ? { category_single_value: opts.category_single_value }
+      : {}),
   };
-  // Remove flat dot-notation keys
+  // Remove the now-redundant flat dot-notation keys (belt-and-suspenders; final-form
+  // should not produce them, but guard in case of mixed initialValues shapes).
   Object.keys(result).forEach((k) => {
     if (k.startsWith('options.')) delete result[k];
   });
@@ -117,10 +176,82 @@ const normaliseSubmitted = (submitted, fieldType) => {
     result.default_value = result.default_value ? 't' : 'f';
   }
 
-  // Dropdown/RadioButton: convert [{value,description},...] back to [[v,d],...]
-  if (fieldType === 'DialogFieldDropDownList' || fieldType === 'DialogFieldRadioButton') {
-    result.values = fieldValuesToArray(result.values || []);
+  // DateControl: convert [Date] / Date / 'm/d/yyyy' back to 'YYYY-MM-DD'
+  if (fieldType === 'DialogFieldDateControl') {
+    result.default_value = datePickerValueToIso(result.default_value);
   }
+
+  // DateTimeControl: recombine date + time fields back into 'YYYY-MM-DD HH:MM'
+  if (fieldType === 'DialogFieldDateTimeControl') {
+    const dateStr = datePickerValueToIso(result.default_value);
+    const timeStr = result.default_value_time || '';
+    result.default_value = combineDateAndTime(dateStr, timeStr);
+    delete result.default_value_time;
+  }
+
+  // Dropdown/RadioButton: convert [{value,description},...] back to [[v,d],...]
+  // values_sorted is a UI alias for the non-draggable conditional variant — merge whichever is populated.
+  if (fieldType === 'DialogFieldDropDownList' || fieldType === 'DialogFieldRadioButton') {
+    const source = (result.values_sorted && result.values_sorted.length > 0 && result.options.sort_by !== 'none')
+      ? result.values_sorted
+      : result.values;
+    result.values = fieldValuesToArray(source || []);
+    delete result.values_sorted;
+  }
+
+  // Automate: if resource_action is still a tree-selection object (element.metadata.fqname),
+  // convert fqname → ae_namespace / ae_class / ae_instance so the API can persist it.
+  // The fqname is always the domain-prefixed form: /Domain/Namespace[/...]/ Class/Instance
+  // domain_fqname strips the leading domain segment: /Namespace[/...]/Class/Instance.
+  // Segments: [namespace_parts..., class, instance] — last = instance, second-last = class, rest = namespace.
+  // For nodes that are MiqAeClass (no instance), only namespace + class are set.
+  if (result.resource_action && result.resource_action.element && result.resource_action.element.metadata) {
+    const meta = result.resource_action.element.metadata;
+    // Prefer domain_fqname (strips domain prefix); fall back to full fqname.
+    const fqname = meta.domain_fqname || meta.fqname || '';
+    // Strip leading slash and split into path segments.
+    const parts = fqname.replace(/^\//, '').split('/').filter(Boolean);
+    const existingRa = result.resource_action;
+    if (parts.length >= 3) {
+      // At least namespace / class / instance
+      const ae_instance = parts[parts.length - 1];
+      const ae_class = parts[parts.length - 2];
+      const ae_namespace = parts.slice(0, parts.length - 2).join('/');
+      result.resource_action = {
+        ...(existingRa.resource_type !== undefined ? { resource_type: existingRa.resource_type } : {}),
+        ...(existingRa.ae_attributes !== undefined ? { ae_attributes: existingRa.ae_attributes } : {}),
+        ...(existingRa.id !== undefined ? { id: existingRa.id } : {}),
+        ae_namespace,
+        ae_class,
+        ae_instance,
+      };
+    } else if (parts.length === 2) {
+      // Class node without instance (e.g. /Namespace/Class)
+      result.resource_action = {
+        ...(existingRa.resource_type !== undefined ? { resource_type: existingRa.resource_type } : {}),
+        ...(existingRa.ae_attributes !== undefined ? { ae_attributes: existingRa.ae_attributes } : {}),
+        ...(existingRa.id !== undefined ? { id: existingRa.id } : {}),
+        ae_namespace: parts[0],
+        ae_class: parts[1],
+      };
+    }
+  }
+
+  // resource_action_workflow is a UI alias for the workflow entry point variant — merge back only
+  // when the user actually selected a workflow (automation_type === 'embedded_workflow').
+  // We cannot rely on resource_action_workflow.id alone because automate resource_action records
+  // also carry a DB id, which would cause a false-positive merge and corrupt the automate path.
+  if (result.automation_type === 'embedded_workflow' && result.resource_action_workflow) {
+    const wf = result.resource_action_workflow;
+    const existingRa = result.resource_action || {};
+    result.resource_action = {
+      resource_type: existingRa.resource_type,
+      ae_attributes: existingRa.ae_attributes,
+      id: existingRa.id,
+      configuration_script_id: wf.configuration_script_id || wf.id,
+    };
+  }
+  delete result.resource_action_workflow;
 
   // validator_type: DDF switch value will be a bool true/false; normalise to 'regex'/false
   if (result.validator_type === true) result.validator_type = 'regex';
@@ -155,6 +286,9 @@ const EditFieldModal = ({
   // react to the toggle without requiring a full remount.
   const [isDynamic, setIsDynamic] = useState(field.dynamic || false);
 
+  // D7: track first validation error to show the inline notification bar
+  const [validationError, setValidationError] = useState(null);
+
   // Build refresh-eligible field list (all dynamic fields except this one)
   const dynamicFields = useMemo(
     () => getRefreshEnabledFields(dialogData || { dialog_tabs: [] }, field.name),
@@ -183,13 +317,17 @@ const EditFieldModal = ({
   // Build initial values once — these don't change while the modal is open
   const initialValues = useMemo(() => buildInitialValues(field), [field]);
 
-  // FormSpy handler: watch the `dynamic` field for side-effects (tab 4 toggle).
-  // Must be read-only — never call setFormValues from here.
-  const handleFormChange = useCallback(({ values }) => {
+  // FormSpy handler: watch form state for side-effects.
+  const handleFormChange = useCallback(({ values, errors }) => {
+    // Dynamic toggle side-effect — triggers Tab 4 appear/disappear
     const newDynamic = Boolean(values && values.dynamic);
     if (newDynamic !== isDynamic) {
       setIsDynamic(newDynamic);
     }
+
+    // D7: surface first validation error as inline notification
+    const firstError = errors && Object.values(errors).find((e) => e);
+    setValidationError(firstError || null);
   }, [isDynamic]);
 
   if (!isOpen) return null;
@@ -199,8 +337,7 @@ const EditFieldModal = ({
     : __('Edit Field');
 
   const handleSave = (submitted) => {
-    const normalised = normaliseSubmitted(submitted, field.type);
-    onSave(normalised);
+    onSave(normaliseSubmitted(submitted, field.type, categories));
   };
 
   return (
@@ -208,9 +345,20 @@ const EditFieldModal = ({
       open={isOpen}
       modalHeading={heading}
       passiveModal
+      preventCloseOnClickOutside
       onRequestClose={onClose}
       size="lg"
     >
+      {/* D7: inline error notification — mirrors Angular's dialog-editor-tab-notification */}
+      {validationError && (
+        <InlineNotification
+          kind="error"
+          title={validationError}
+          lowContrast
+          hideCloseButton
+          className="edit-field-modal-notification"
+        />
+      )}
       <MiqFormRenderer
         schema={schema}
         initialValues={initialValues}
@@ -219,7 +367,7 @@ const EditFieldModal = ({
         buttonsLabels={{ submitLabel: __('Save') }}
         canReset
       >
-        <FormSpy subscription={{ values: true }} onChange={handleFormChange} />
+        <FormSpy subscription={{ values: true, errors: true }} onChange={handleFormChange} />
       </MiqFormRenderer>
     </Modal>
   );

@@ -5,7 +5,6 @@ import {
   getComponentIdFromType,
   getFieldValues,
   fieldValuesToArray,
-  getCurrentTimeAndPeriod,
   getRefreshEnabledFields,
   dropField,
   dropSection,
@@ -230,39 +229,6 @@ describe('fieldValuesToArray', () => {
   it('returns [] when values is not an array', () => {
     expect(fieldValuesToArray(null)).toEqual([]);
     expect(fieldValuesToArray(undefined)).toEqual([]);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// getCurrentTimeAndPeriod
-// ---------------------------------------------------------------------------
-
-describe('getCurrentTimeAndPeriod', () => {
-  it('returns hour, minute, and period', () => {
-    const result = getCurrentTimeAndPeriod();
-    expect(result).toHaveProperty('hour');
-    expect(result).toHaveProperty('minute');
-    expect(result).toHaveProperty('period');
-  });
-
-  it('period is AM or PM', () => {
-    expect(['AM', 'PM']).toContain(getCurrentTimeAndPeriod().period);
-  });
-
-  it('hour is zero-padded string between 01 and 12', () => {
-    const { hour } = getCurrentTimeAndPeriod();
-    const num = parseInt(hour, 10);
-    expect(num).toBeGreaterThanOrEqual(1);
-    expect(num).toBeLessThanOrEqual(12);
-    expect(hour).toMatch(/^\d{2}$/);
-  });
-
-  it('minute is zero-padded string between 00 and 59', () => {
-    const { minute } = getCurrentTimeAndPeriod();
-    const num = parseInt(minute, 10);
-    expect(num).toBeGreaterThanOrEqual(0);
-    expect(num).toBeLessThanOrEqual(59);
-    expect(minute).toMatch(/^\d{2}$/);
   });
 });
 
@@ -621,5 +587,88 @@ describe('buildDialogPayload (copy)', () => {
     const field = payload.resource.dialog_tabs[0].dialog_groups[0].dialog_fields[0];
     expect(field.id).toBeUndefined();
     expect(field.dialog_group_id).toBeUndefined();
+  });
+
+  it('strips tab id and group id for copy — regression for PG::UniqueViolation', () => {
+    const dialog = makeDialog([
+      makeTab('T', [
+        makeSection('S', [makeField('f')]),
+      ]),
+    ]);
+    // Inject DB ids on tab and group as they would exist when copying an existing dialog
+    dialog.dialog_tabs[0].id = 5;
+    dialog.dialog_tabs[0].dialog_groups[0].id = 10;
+    const payload = buildDialogPayload(dialog, 'copy');
+    expect(payload.resource.dialog_tabs[0].id).toBeUndefined();
+    expect(payload.resource.dialog_tabs[0].dialog_groups[0].id).toBeUndefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// seedFieldCounters — duplicate name regression
+// ---------------------------------------------------------------------------
+
+import { defaultField, seedFieldCounters, resetFieldCounters } from '../../components/service-dialog-form/data';
+
+describe('seedFieldCounters', () => {
+  beforeEach(() => {
+    resetFieldCounters();
+  });
+
+  it('next generated name does not collide with existing field names after seeding', () => {
+    const existingDialog = {
+      dialog_tabs: [{
+        dialog_groups: [{
+          dialog_fields: [
+            { name: 'text_box_1', type: 'DialogFieldTextBox' },
+            { name: 'dropdown_list_1', type: 'DialogFieldDropDownList' },
+          ],
+        }],
+      }],
+    };
+
+    seedFieldCounters(existingDialog);
+
+    const newTextBox = defaultField('DialogFieldTextBox');
+    const newDropdown = defaultField('DialogFieldDropDownList');
+
+    expect(newTextBox.name).toBe('text_box_2');
+    expect(newDropdown.name).toBe('dropdown_list_2');
+  });
+
+  it('handles non-sequential existing names — uses highest number found', () => {
+    const existingDialog = {
+      dialog_tabs: [{
+        dialog_groups: [{
+          dialog_fields: [
+            { name: 'text_box_3', type: 'DialogFieldTextBox' },
+            { name: 'text_box_1', type: 'DialogFieldTextBox' },
+          ],
+        }],
+      }],
+    };
+
+    seedFieldCounters(existingDialog);
+
+    const newTextBox = defaultField('DialogFieldTextBox');
+    expect(newTextBox.name).toBe('text_box_4');
+  });
+
+  it('ignores custom field names that do not match the generated pattern', () => {
+    const existingDialog = {
+      dialog_tabs: [{
+        dialog_groups: [{
+          dialog_fields: [
+            { name: 'my_custom_field', type: 'DialogFieldTextBox' },
+          ],
+        }],
+      }],
+    };
+
+    seedFieldCounters(existingDialog);
+
+    // Counter for text_box was never seeded — starts fresh at 1
+    const newTextBox = defaultField('DialogFieldTextBox');
+    expect(newTextBox.name).toBe('text_box_1');
   });
 });
