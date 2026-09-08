@@ -52,7 +52,7 @@ const DISPLAY_ONLY_UNIT_LABEL = {
   kbps_precision_2: () => __('KBps'),
   mhz: () => __('MHz'),
   mhz_avg: () => __('MHz'),
-  percent: () => __('%'),
+  percent: () => '%',
 };
 
 const unitInfoForSubType = (subType) => {

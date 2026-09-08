@@ -221,7 +221,9 @@ const SettingsCUCollectionTab = ({
       })
       .catch((error) => {
         setIsSubmitting(false);
-        setNotification({ kind: 'error', title: error.message || __('An error occurred') });
+        const status = error.status || error.statusCode;
+        const base = error.message || __('Failed to save C & U collection settings');
+        setNotification({ kind: 'error', title: status ? `${base} (${status})` : base });
       });
   };
 

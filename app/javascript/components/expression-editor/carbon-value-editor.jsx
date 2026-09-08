@@ -67,7 +67,7 @@ const TagValueSelect = ({
       disabled={disabled || loading}
       onChange={(e) => handleOnChange(e.target.value)}
     >
-      <SelectItem value="" text={loading ? __('Loading…') : __('<Choose>')} />
+      <SelectItem value="" text={loading ? __('Loading...') : __('<Choose>')} />
       {filterPlaceholderOptions(tagValues).map((tv) => (
         <SelectItem key={tv.name} value={tv.name} text={tv.label} />
       ))}

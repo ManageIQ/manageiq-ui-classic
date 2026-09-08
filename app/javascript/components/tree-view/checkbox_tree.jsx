@@ -125,7 +125,7 @@ const CheckboxTreeComponent = (props) => {
       />
       {showSelectionCount && (
         <div className="checkbox-tree-selection-count">
-          {`${treeState.checked.length} ${__('item(s) selected')}`}
+          {sprintf(n__('%s item selected', '%s items selected', treeState.checked.length), treeState.checked.length)}
         </div>
       )}
       {meta && meta.error && meta.touched && (
