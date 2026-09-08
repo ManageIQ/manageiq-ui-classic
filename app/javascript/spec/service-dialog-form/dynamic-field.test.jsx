@@ -75,7 +75,8 @@ describe('DynamicField — type routing', () => {
   it('routes DialogFieldDateTimeControl to a date+time picker', () => {
     render(makeField('DialogFieldDateTimeControl'));
     expect(document.querySelector('.cds--date-picker')).not.toBeNull();
-    expect(document.querySelector('.cds--time-picker')).not.toBeNull();
+    // Time is now rendered as a plain TextInput (no AM/PM, shows saved value)
+    expect(document.querySelector('.cds--text-input')).not.toBeNull();
   });
 
   it('routes DialogFieldTagControl to a select widget', () => {

@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import { DatePicker, DatePickerInput, TimePicker, TimePickerSelect, SelectItem } from '@carbon/react';
-import { getCurrentTimeAndPeriod } from '../helper';
+import { DatePicker, DatePickerInput, TextInput } from '@carbon/react';
+import { isoToDatePickerValue, extractTimeFromDateTime } from '../helper';
 
-// DialogFieldDateTimeControl: date picker + time picker combined.
-// default_value is stored as a date string; time defaults to current time on render.
+// DialogFieldDateTimeControl: date picker + time input combined.
+// default_value is stored as 'YYYY-MM-DD HH:MM'; both portions are read from the saved value.
 const DynamicTimePicker = ({ field }) => {
-  const { hour, minute, period } = getCurrentTimeAndPeriod();
+  const timeStr = extractTimeFromDateTime(field.default_value);
 
   return (
     <div className="dynamic-time-picker">
       <DatePicker
         datePickerType="single"
-        value={field.default_value || ''}
+        value={isoToDatePickerValue(field.default_value)}
         readOnly={field.read_only}
         onChange={() => {}} // display-only in the editor canvas
       >
@@ -21,23 +21,14 @@ const DynamicTimePicker = ({ field }) => {
           placeholder="mm/dd/yyyy"
         />
       </DatePicker>
-      <TimePicker
+      <TextInput
         id={`field-${field.name}-time`}
         labelText={__('Time')}
-        value={`${hour}:${minute}`}
-        readOnly={field.read_only}
-        onChange={() => {}} // display-only in the editor canvas
-      >
-        <TimePickerSelect
-          id={`field-${field.name}-period`}
-          labelText={__('AM/PM')}
-          value={period}
-          onChange={() => {}}
-        >
-          <SelectItem value="AM" text="AM" />
-          <SelectItem value="PM" text="PM" />
-        </TimePickerSelect>
-      </TimePicker>
+        value={timeStr}
+        placeholder="HH:MM"
+        readOnly
+        onChange={() => {}}
+      />
     </div>
   );
 };
