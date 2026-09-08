@@ -330,6 +330,8 @@ class CatalogController < ApplicationController
 
   # VM or Template show selected, redirect to proper controller
   def show
+    assert_privileges("catalog_items_view")
+
     @sb[:action] = nil
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
