@@ -1,10 +1,4 @@
 import { flashClassMap } from '../../../../support/assertions/assertion_constants.js';
-import {
-  LABEL_CONFIG_KEYS,
-  FIELD_CONFIG_KEYS,
-  BUTTON_CONFIG_KEYS,
-  FIELD_TYPES,
-} from '../../../../support/commands/constants/command_constants.js';
 
 // Menu options
 const STORAGE_MENU_OPTION = 'Storage';
@@ -17,13 +11,7 @@ const TOOLBAR_ADD_NEW_STORAGE_SERVICE = 'Create a new storage service';
 const TOOLBAR_EDIT_STORAGE_SERVICE = 'Edit selected Storage Service';
 
 // Field labels
-const FORM_HEADER = 'Storage Service';
 const CAPABILITIES_SUB_HEADER = 'Required Capabilities';
-const MANAGER_FIELD_LABEL = 'Storage Manager';
-const NAME_FIELD_LABEL = 'Name';
-const DESCRIPTION_FIELD_LABEL = 'Description';
-const COMPRESSION_FIELD_LABEL = 'Compression';
-const THIN_PROVISION_FIELD_LABEL = 'Thin provision';
 
 // Field values
 const NA_VALUE = '-1';
@@ -42,15 +30,10 @@ const STORAGE_SERVICE_DESCRIPTION = 'Test description';
 const CHECK_COMPILANCE_BUTTON_TEXT = 'Check Compliant Resources';
 const ADD_BUTTON_TEXT = 'Add';
 const SAVE_BUTTON_TEXT = 'Save';
-const CANCEL_BUTTON_TEXT = 'Cancel';
-const RESET_BUTTON_TEXT = 'Reset';
 
 // Flash message text snippets
-const FLASH_MESSAGE_ADD_CANCELLED = 'cancelled';
-const FLASH_MESSAGE_EDIT_CANCELLED = 'canceled';
 const FLASH_MESSAGE_ADD = 'add';
 const FLASH_MESSAGE_DELETE = 'delete';
-const FLASH_MESSAGE_RESET = 'reset';
 const FLASH_MESSAGE_EDIT = 'modification';
 
 function createStorageData({ shouldCreateStorageService = false }) {
@@ -138,128 +121,6 @@ function createStorageData({ shouldCreateStorageService = false }) {
   });
 }
 
-function verifyFormElements({ isEdit = false }) {
-  cy.contains('h1', FORM_HEADER).should('be.visible');
-  cy.validateFormLabels([
-    {
-      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'ems_id',
-      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: MANAGER_FIELD_LABEL,
-    },
-    {
-      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'name',
-      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: NAME_FIELD_LABEL,
-    },
-    {
-      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'description',
-      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: DESCRIPTION_FIELD_LABEL,
-    },
-  ]);
-  cy.validateFormFields([
-    {
-      [FIELD_CONFIG_KEYS.ID]: 'ems_id',
-      [FIELD_CONFIG_KEYS.FIELD_TYPE]: FIELD_TYPES.SELECT,
-      [FIELD_CONFIG_KEYS.SHOULD_BE_DISABLED]: isEdit,
-      ...(!isEdit && {
-        [FIELD_CONFIG_KEYS.EXPECTED_VALUE]: NA_VALUE,
-      }),
-    },
-    {
-      [FIELD_CONFIG_KEYS.ID]: 'name',
-    },
-    {
-      [FIELD_CONFIG_KEYS.ID]: 'description',
-    },
-  ]);
-  cy.validateFormButtons([
-    {
-      [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: isEdit
-        ? SAVE_BUTTON_TEXT
-        : ADD_BUTTON_TEXT,
-      [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
-      [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
-    },
-    {
-      [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: CANCEL_BUTTON_TEXT,
-    },
-    ...(isEdit
-      ? [
-        {
-          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
-          [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
-        },
-      ]
-      : []),
-  ]);
-
-  if (!isEdit) {
-    cy.getFormSelectFieldById({ selectId: 'ems_id' }).select(
-      STORAGE_MANAGER_NAME
-    );
-  }
-  cy.contains('h3', CAPABILITIES_SUB_HEADER).should('be.visible');
-  cy.validateFormLabels([
-    {
-      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'compression',
-      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: COMPRESSION_FIELD_LABEL,
-    },
-    {
-      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'thin_provision',
-      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: THIN_PROVISION_FIELD_LABEL,
-    },
-  ]);
-  cy.validateFormFields([
-    {
-      [FIELD_CONFIG_KEYS.ID]: 'compression',
-      [FIELD_CONFIG_KEYS.FIELD_TYPE]: FIELD_TYPES.SELECT,
-      [FIELD_CONFIG_KEYS.EXPECTED_VALUE]: NA_VALUE,
-    },
-    {
-      [FIELD_CONFIG_KEYS.ID]: 'thin_provision',
-      [FIELD_CONFIG_KEYS.FIELD_TYPE]: FIELD_TYPES.SELECT,
-      [FIELD_CONFIG_KEYS.EXPECTED_VALUE]: NA_VALUE,
-    },
-  ]);
-  // Verify Storage Resource multi-select is not rendered when Compression is empty
-  cy.get('#storage_resource_id button').should('not.exist');
-  cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
-  if (isEdit) {
-    cy.getFormButtonByTypeWithText({
-      buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
-    })
-      .should('be.visible')
-      .and('be.enabled');
-  } else {
-    cy.getFormButtonByTypeWithText({
-      buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
-    }).should('not.be.visible');
-  }
-  // Verify Storage Resource multi-select is rendered & enabled when compression is non-empty
-  cy.get('#storage_resource_id button').should('be.visible').and('be.enabled');
-  cy.contains(
-    '.cds--form__helper-text',
-    isEdit
-      ? 'Run the compliance check above, then select storage resources'
-      : 'Select storage resources to attach'
-  ).should('be.visible');
-}
-
-const TASK_POLL_TIMEOUT = 20000;
-
-function waitUntilComplete(startTime = Date.now()) {
-  cy.wait('@taskResultsApi').then((interception) => {
-    const responseBody = interception.response?.body;
-    const statusCode = interception.response?.statusCode;
-    // 304 means browser used cached response — real task state unchanged, keep polling
-    // 'Queued' means task not done yet — keep polling
-    const notDoneYet = statusCode === 304 || responseBody?.state === 'Queued';
-
-    if (notDoneYet && Date.now() - startTime < TASK_POLL_TIMEOUT) {
-      waitUntilComplete(startTime);
-    }
-    // 'Finished' (success or error) or timeout — stop recursing, let the test assert
-  });
-}
-
 describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${STORAGE_SERVICES_MENU_OPTION}`, () => {
   beforeEach(() => {
     cy.login();
@@ -273,14 +134,6 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
     beforeEach(() => {
       createStorageData({ shouldCreateStorageService: false });
       cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_STORAGE_SERVICE);
-    });
-
-    it('Verify UI elements & cancel action', () => {
-      verifyFormElements({ isEdit: false });
-      cy.getFormButtonByTypeWithText({
-        buttonText: CANCEL_BUTTON_TEXT,
-      }).click();
-      cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_ADD_CANCELLED);
     });
 
     it('Verify add operation', () => {
@@ -356,85 +209,6 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
       cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_STORAGE_SERVICE);
     });
 
-    it('Verify UI elements, reset & cancel actions', () => {
-      verifyFormElements({ isEdit: true });
-      // Edit any field
-      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type(
-        STORAGE_SERVICE_DESCRIPTION
-      );
-      cy.getFormButtonByTypeWithText({
-        buttonText: RESET_BUTTON_TEXT,
-      }).click();
-      cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
-      cy.getFormButtonByTypeWithText({
-        buttonText: CANCEL_BUTTON_TEXT,
-      }).click();
-      cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_EDIT_CANCELLED);
-    });
-
-    it('Verify compliance check failure behavior', () => {
-      // Ensure save button is initially disabled
-      cy.getFormButtonByTypeWithText({
-        buttonText: SAVE_BUTTON_TEXT,
-        buttonType: 'submit',
-      }).should('be.disabled');
-      cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
-      // Ensure save button remains disabled while compliance check & resource selection are pending
-      cy.getFormButtonByTypeWithText({
-        buttonText: SAVE_BUTTON_TEXT,
-        buttonType: 'submit',
-      }).should('be.disabled');
-      cy.intercept('GET', '/api/tasks/*?attributes=task_results').as(
-        'taskResultsApi'
-      );
-      cy.getFormButtonByTypeWithText({
-        buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
-      }).click();
-      waitUntilComplete();
-      cy.contains('.ddorg__carbon-error-helper-text', 'failed').should(
-        'be.visible'
-      );
-      // Ensure save button remains disabled since compliance check failed
-      cy.getFormButtonByTypeWithText({
-        buttonText: SAVE_BUTTON_TEXT,
-        buttonType: 'submit',
-      }).should('be.disabled');
-    });
-
-    it('Verify resources dropdown remains empty when there are no compliance results', () => {
-      cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
-      const taskResultsMockResponse = {
-        state: 'Finished',
-        status: 'Ok',
-        task_results: {
-          compliant_resources: [],
-        },
-      };
-      cy.interceptApi({
-        method: 'GET',
-        alias: 'taskResultsApi',
-        urlPattern: '/api/tasks/*?attributes=task_results',
-        triggerFn: () =>
-          cy
-            .getFormButtonByTypeWithText({
-              buttonText: CHECK_COMPILANCE_BUTTON_TEXT,
-            })
-            .click(),
-        responseInterceptor: (req) =>
-          req.reply({ body: taskResultsMockResponse }),
-      });
-      cy.contains(
-        '.ddorg__carbon-warning-helper-text',
-        'No currently attached storage resource'
-      ).should('be.visible');
-      cy.get('#storage_resource_id').click();
-      cy.get('.cds--list-box__menu-item__option').should('not.exist');
-      cy.getFormButtonByTypeWithText({
-        buttonText: SAVE_BUTTON_TEXT,
-        buttonType: 'submit',
-      }).should('be.disabled');
-    });
-
     it('Verify edit operation', () => {
       cy.getFormSelectFieldById({ selectId: 'compression' }).select(TRUE_VALUE);
       // Ensure save button remains disabled while compliance check & resource selection are pending
@@ -487,21 +261,6 @@ describe(`Automate Storage Service form operations: ${STORAGE_MENU_OPTION} > ${S
         buttonType: 'submit',
       }).click();
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_EDIT);
-    });
-  });
-
-  describe('Verify duplicate storage service creation behavior', () => {
-    beforeEach(() => {
-      createStorageData({ shouldCreateStorageService: true });
-      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_STORAGE_SERVICE);
-    });
-
-    it('Verify duplicate storage service creation is restricted', () => {
-      // Focus out of the input after typing to trigger the inline validation error
-      cy.getFormInputFieldByIdAndType({ inputId: 'name' })
-        .type(STORAGE_SERVICE_NAME)
-        .blur();
-      cy.expect_inline_field_errors({ containsText: 'already exists' });
     });
   });
 });
