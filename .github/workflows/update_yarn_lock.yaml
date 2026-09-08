@@ -17,8 +17,6 @@ permissions:
 jobs:
   update-yarn-lock:
     uses: manageiq/.github/.github/workflows/update_yarn_lock.yaml@master
-    with:
-      pr_repository: miq-bot/manageiq-ui-classic
     secrets:
       GHA_STATUS_SLACK_WEBHOOK_URL: "${{ secrets.GHA_STATUS_SLACK_WEBHOOK_URL }}"
       PR_TOKEN: "${{ secrets.PR_TOKEN }}"
