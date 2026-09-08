@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Checkbox, Loading, Modal, ModalBody,
 } from '@carbon/react';
@@ -48,8 +49,11 @@ const AutomateEntryPoints = ({
     if (selectedValue.element) {
       data.forEach((node) => {
         if (node.id === selectedValue.element.id) {
-          document.getElementById(node.id).classList.add('currently-selected');
-          document.getElementById(node.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+          const el = document.getElementById(node.id);
+          if (el) {
+            el.classList.add('currently-selected');
+            el.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+          }
         }
       });
     }
@@ -147,18 +151,21 @@ const AutomateEntryPoints = ({
     if (value.isBranch === false && value.isSelected) {
       data.forEach((node) => {
         if (selectedNode && (node.id === selectedNode.element.id)) {
-          document.getElementById(node.id).style.backgroundColor = 'transparent';
+          const el = document.getElementById(node.id);
+          if (el) el.style.backgroundColor = 'transparent';
         }
       });
-      document.getElementById(value.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      const selEl = document.getElementById(value.element.id);
+      if (selEl) selEl.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
       setSelectedNode(value);
       setDisableSubmit(false);
     }
   };
 
   const onExpand = (value) => {
-    if (value.isExpanded && selectedNode && document.getElementById(selectedNode.element.id)) {
-      document.getElementById(selectedNode.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+    if (value.isExpanded && selectedNode) {
+      const el = document.getElementById(selectedNode.element.id);
+      if (el) el.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
     }
   };
 
@@ -177,7 +184,9 @@ const AutomateEntryPoints = ({
 
   const FileIcon = () => <Document size={16} className="icon" />;
 
-  return (!isLoading && showModal) && (
+  if (isLoading || !showModal) return null;
+
+  return createPortal(
     <Modal
       modalHeading={__('Select Entry Point Instance')}
       open
@@ -251,7 +260,8 @@ const AutomateEntryPoints = ({
             ) : null}
         </div>
       </ModalBody>
-    </Modal>
+    </Modal>,
+    document.body
   );
 };
 

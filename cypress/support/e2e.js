@@ -56,6 +56,7 @@ import './commands/stub_notifications.js';
 import './commands/tabs.js';
 import './commands/throttle_response.js';
 import './commands/toolbar.js';
+import './commands/service_dialog_commands.js';
 
 // Assertions
 import './assertions/expect_alerts.js';

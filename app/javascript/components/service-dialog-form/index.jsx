@@ -35,7 +35,7 @@ import {
   buildDialogPayload,
   handlePropertiesEdit,
 } from './helper';
-import { defaultField } from './data';
+import { defaultField, resetFieldCounters, seedFieldCounters } from './data';
 import './style.scss';
 
 // ── Main component ────────────────────────────────────────────────────────────
@@ -61,6 +61,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
   // ── Load dialog data ────────────────────────────────────────────────────────
   useEffect(() => {
     if (action === 'new') {
+      resetFieldCounters();
       const draft = loadDraft();
       if (draft) {
         pendingDraft.current = draft;
@@ -103,6 +104,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) =>
           pendingDraft.current = draft;
           setShowDraftModal(true);
         }
+        seedFieldCounters(loaded);
         setData(loaded);
       })
       .catch(() => {
