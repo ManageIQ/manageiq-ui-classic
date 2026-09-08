@@ -43,6 +43,12 @@ describe('VmDisks Component', () => {
     expect(API.get).toHaveBeenCalledWith('/api/vms/3170/disks?expand=resources&attributes=partitions_aligned');
   });
 
+  it('should fetch disks from the templates API URL when isTemplate is true', async() => {
+    render(<VmDisks recordId={3170} isTemplate />);
+    await waitFor(() => screen.getByText('Hard Disk (SCSI 0:0)'));
+    expect(API.get).toHaveBeenCalledWith('/api/templates/3170/disks?expand=resources&attributes=partitions_aligned');
+  });
+
   it('should render correct number of rows', async() => {
     API.get = jest.fn(() => Promise.resolve({ resources: [mockDisks[0]] }));
     render(<VmDisks recordId={3170} />);
