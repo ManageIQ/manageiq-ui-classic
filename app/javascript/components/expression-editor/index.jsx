@@ -209,7 +209,7 @@ const ExpressionEditor = ({
   }, [fields, onQueryChange]);
 
   if (loading) {
-    return <Loading small withOverlay={false} description={__('Loading expression fields…')} />;
+    return <Loading small withOverlay={false} description={__('Loading expression fields...')} />;
   }
 
   if (error) {

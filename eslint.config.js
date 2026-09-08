@@ -14,6 +14,7 @@ const sharedManageIQGlobals = {
   // ManageIQ specific globals
   ManageIQ: 'readonly',
   __: 'readonly',
+  n__: 'readonly',
   API: 'readonly',
   add_flash: 'writable',
   miqSparkleOn: 'writable',

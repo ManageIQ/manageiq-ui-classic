@@ -230,7 +230,7 @@ const FindValueEditor = ({
             disabled={disabled || !checkFields}
             onChange={(e) => update({ cfield: e.target.value })}
           >
-            <SelectItem value="" text={checkFields === null ? __('Loading…') : __('<Choose>')} />
+            <SelectItem value="" text={checkFields === null ? __('Loading...') : __('<Choose>')} />
             {(checkFields || []).map((f) => (
               <SelectItem key={f.name} value={f.name} text={f.label} />
             ))}
