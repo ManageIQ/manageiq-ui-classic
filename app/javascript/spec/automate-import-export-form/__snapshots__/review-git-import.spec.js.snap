@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ReviewGitImport component should render the review section with git information 1`] = `
+<div
+  class="review-git-import"
+>
+  <h3>
+    Review Git Import
+  </h3>
+  <div
+    class="git-import-details"
+  >
+    <p>
+      <strong>
+        Git Repository
+      </strong>
+      : 
+      https://github.com/test/repo.git
+    </p>
+    <p>
+      <strong>
+        Branch
+      </strong>
+      : 
+      main
+    </p>
+  </div>
+  <div
+    class="form-buttons"
+  >
+    <button
+      class="cds--btn cds--btn--primary"
+      type="button"
+    >
+      Import
+    </button>
+    <button
+      class="cds--btn cds--btn--secondary"
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
+`;

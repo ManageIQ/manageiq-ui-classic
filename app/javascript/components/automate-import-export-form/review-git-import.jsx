@@ -1,0 +1,102 @@
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { InlineNotification, Button, InlineLoading } from '@carbon/react';
+import { http } from '../../http_api';
+
+const ReviewGitImport = ({
+  gitRepoId, gitBranchOrTag, gitUrl = null, refType, onClose, onImportComplete = null,
+}) => {
+  const [importing, setImporting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleImport = () => {
+    setImporting(true);
+    setError(null);
+
+    const data = {
+      git_repo_id: gitRepoId,
+      git_branch_or_tag: gitBranchOrTag,
+      button: 'submit',
+    };
+
+    http.post('/miq_ae_tools/import_via_git', data)
+      .then((response) => {
+        // Response is an array of flash messages
+        if (Array.isArray(response) && response.length > 0) {
+          miqFlashLater(response[0]); // eslint-disable-line no-undef
+        }
+        if (onImportComplete) {
+          onImportComplete();
+        }
+        onClose();
+      })
+      .catch((err) => {
+        setError(err.message || __('Failed to import from git'));
+        setImporting(false);
+      });
+  };
+
+  const handleCancel = () => {
+    onClose();
+  };
+
+  return (
+    <div className="review-git-import">
+      <h3>{__('Review Git Import')}</h3>
+
+      {error && (
+        <InlineNotification
+          kind="error"
+          title={__('Error')}
+          subtitle={error}
+          onCloseButtonClick={() => setError(null)}
+          lowContrast
+        />
+      )}
+
+      <div className="git-import-details">
+        <p>
+          <strong>{__('Git Repository')}</strong>
+          {': '}
+          {gitUrl || gitRepoId}
+        </p>
+        <p>
+          <strong>{refType === 'branch' ? __('Branch') : __('Tag')}</strong>
+          {': '}
+          {gitBranchOrTag}
+        </p>
+      </div>
+
+      <div className="form-buttons">
+        <Button
+          kind="primary"
+          onClick={handleImport}
+          disabled={importing}
+        >
+          {__('Import')}
+        </Button>
+        <Button
+          kind="secondary"
+          onClick={handleCancel}
+          disabled={importing}
+        >
+          {__('Cancel')}
+        </Button>
+        {importing && (
+          <InlineLoading description={__('Importing from git...')} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+ReviewGitImport.propTypes = {
+  gitRepoId: PropTypes.string.isRequired,
+  gitBranchOrTag: PropTypes.string.isRequired,
+  gitUrl: PropTypes.string,
+  refType: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onImportComplete: PropTypes.func,
+};
+
+export default ReviewGitImport;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ExportSection component should render the heading and button 1`] = `
+<div>
+  <div
+    class="export-section"
+  >
+    <h3>
+      Export
+    </h3>
+    <span
+      class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--right cds--tooltip cds--icon-tooltip"
+    >
+      <div
+        class="cds--tooltip-trigger__wrapper"
+      >
+        <button
+          aria-labelledby="tooltip-_r_1_"
+          class="cds--btn cds--btn--secondary cds--btn--icon-only"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13,12v2H3v-2H2v2l0,0c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1l0,0v-2H13z"
+            />
+            <path
+              d="M3 6 3.7 6.7 7.5 2.9 7.5 12 8.5 12 8.5 2.9 12.3 6.7 13 6 8 1z"
+            />
+          </svg>
+        </button>
+      </div>
+      <span
+        aria-hidden="true"
+        class="cds--popover"
+        id="tooltip-_r_1_"
+        role="tooltip"
+      >
+        <span
+          class="cds--popover-content cds--tooltip-content"
+        >
+          Export all classes and instances to a file
+        </span>
+        <span
+          class="cds--popover-caret"
+        />
+      </span>
+    </span>
+  </div>
+</div>
+`;
