@@ -114,50 +114,6 @@ module OpsController::Settings::Tags
     end
   end
 
-  # A new classificiation category was selected
-  def ce_new_cat
-    assert_privileges("region_edit")
-
-    ce_get_form_vars
-    if params[:classification_name]
-      @cat = Classification.lookup_by_name(params["classification_name"])
-      ce_build_screen # Build the Classification Edit screen
-      render :update do |page|
-        page << javascript_prologue
-        page.replace(:tab_div, :partial => "settings_co_tags_tab")
-      end
-    end
-  end
-
-  # AJAX driven routine to select a classification entry
-  def ce_select
-    assert_privileges("region_edit")
-
-    ce_get_form_vars
-    if params[:id] == "new"
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-        page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => "new", :edit => true})
-        page << javascript_focus('entry_name')
-        page << "$('#entry_name').select();"
-      end
-      session[:entry] = "new"
-    else
-      entry = Classification.find(params[:id])
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-        page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => entry, :edit => true})
-        page << javascript_focus("entry_#{j(params[:field])}")
-        page << "$('#entry_#{j(params[:field])}').select();"
-      end
-      session[:entry] = entry
-    end
-  end
-
   # Method to return all categories and their information required for the list.
   def all_categories
     categories = Classification.categories.sort_by(&:description)
@@ -229,13 +185,6 @@ module OpsController::Settings::Tags
     message
   end
 
-  def ce_get_form_vars
-    @edit = session[:edit]
-    @cats = session[:config_cats]
-    @cat = Classification.lookup_by_name(session[:config_cat])
-    nil
-  end
-
   private
 
   # Build the classification edit screen from the category record in @cat
@@ -245,39 +194,6 @@ module OpsController::Settings::Tags
     session[:entry] = nil
   end
 
-  # Build the audit object when a record is created, including all of the new fields
-  def ce_created_audit(entry)
-    msg = _("Category %{description} [%{name}] record created (") % {:description => @cat.description,
-                                                                     :name        => entry.name}
-    event = "classification_entry_add"
-    i = 0
-    params["entry"].each do |k, _v|
-      msg += ", " if i.positive?
-      i += 1
-      msg = msg + k.to_s + ":[" + params["entry"][k].to_s + "]"
-    end
-    msg += ")"
-    {:event => event, :target_id => entry.id, :target_class => entry.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
-  # Build the audit object when a record is saved, including all of the changed fields
-  def ce_saved_audit(entry)
-    msg = _("Category %{description} [%{name}] record updated (") % {:description => @cat.description,
-                                                                     :name        => entry.name}
-    event = "classification_entry_update"
-    i = 0
-    if entry.name != session[:entry].name
-      i += 1
-      msg += _("name:[%{session}] to [%{name}]") % {:session => session[:entry].name, :name => entry.name}
-    end
-    if entry.description != session[:entry].description
-      msg += ", " if i.positive?
-      msg += _("description:[%{session}] to [%{name}]") % {:session => session[:entry].description,
-                                                           :name    => entry.description}
-    end
-    msg += ")"
-    {:event => event, :target_id => entry.id, :target_class => entry.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
 
   # Get variables from category edit form
   def category_get_form_vars

@@ -2423,8 +2423,6 @@ Rails.application.routes.draw do
         category_field_changed
         ce_accept
         ce_delete
-        ce_new_cat
-        ce_select
         change_tab
         cu_collection_update
         cu_repair
