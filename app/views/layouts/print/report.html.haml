@@ -1,10 +1,1 @@
-%div{:class => "cds--data-table-content miq_table_pdf"}
-  %table.cds--data-table.cds--data-table--normal.cds--data-table--no-border.miq-data-table.miq_report
-    %thead
-      %tr
-        - report.headers.each_with_index do |header, i|
-          - unless report.column_is_hidden?(report.col_order[i])
-            %th
-              = h(_(header))
-    %tbody
-      = data.html_safe
+= react('ReportPrintView', :report => report_data, :data => table_data)
