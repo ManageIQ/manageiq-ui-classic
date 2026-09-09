@@ -20,7 +20,7 @@ describe('EmptyState component', () => {
       <EmptyState documentation="https://example.com/docs" />
     );
 
-    expect(screen.getByText('Learn more about this')).toBeInTheDocument();
+    expect(screen.getByText('Learn more about this in the documentation.')).toBeInTheDocument();
     const link = container.querySelector('.empty-state-carbon__link');
     expect(link).toHaveAttribute('href', 'https://example.com/docs');
     expect(container).toMatchSnapshot();

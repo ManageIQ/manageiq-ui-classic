@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
-import { AddAlt } from '@carbon/react/icons';
+import { AddAlt, Information } from '@carbon/react/icons';
 
 const EmptyState = ({
   addMessage,
@@ -26,15 +26,16 @@ const EmptyState = ({
       <p className="empty-state-carbon__description">{description}</p>
       {documentation && (
         <p className="empty-state-carbon__documentation">
-          {__('Learn more about this')}
+          {__('Learn more about this in the documentation.')}
           {' '}
           <a
             href={documentation}
             rel="noopener noreferrer"
             target="_blank"
+            aria-label={__('Open documentation')}
             className="empty-state-carbon__link"
           >
-            {__('in the documentation.')}
+            <Information size={16} />
           </a>
         </p>
       )}
