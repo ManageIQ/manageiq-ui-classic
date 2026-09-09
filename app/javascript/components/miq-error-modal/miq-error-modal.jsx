@@ -128,7 +128,7 @@ const MiqErrorModal = () => {
           )}
           {contentType && (
             <p className="miq-error-modal-row">
-              <strong className="miq-error-modal-label">{__('Content-Type')}</strong>
+              <strong className="miq-error-modal-label">Content-Type</strong>
               {contentType}
             </p>
           )}
