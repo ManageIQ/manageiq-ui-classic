@@ -27,7 +27,7 @@ module ApplicationController::Explorer
   end
 
   def redirect_to_explorer_with_error(message = _("Can't access selected records"), options = {})
-    session.delete(:exp_parms) if session.key?(:exp_parms)
+    session.delete(:exp_parms)
     flash_to_session(message, :error)
     redirect_to({:action => 'explorer', :id => nil}.merge(options))
   end

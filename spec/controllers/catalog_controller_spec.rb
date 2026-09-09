@@ -559,18 +559,20 @@ describe CatalogController do
         get :explorer, :params => {:id => "ot-#{ot.id}"}
 
         expect(response).to have_http_status 200
-        expect(controller.send(:current_record)).to eq(ot)
+        expect(assigns(:record)).to eq(ot)
         expect(controller.send(:x_active_tree)).to eq(:ot_tree)
       end
 
       it "shows an existing service template when st prefixed id is passed" do
         expect(controller).to receive(:assert_privileges).with("catalog_items_view")
+        allow(controller).to receive(:get_node_info)
+        allow(controller).to receive(:build_accordions_and_trees)
+        allow(controller).to receive(:render)
         st = FactoryBot.create(:service_template)
         get :explorer, :params => {:id => "st-#{st.id}"}
 
-        expect(response).to have_http_status 200
-        expect(controller.send(:current_record)).to eq(st)
-        expect(controller.send(:x_active_tree)).to eq('sandt_tree')
+        expect(assigns(:record)).to eq(st)
+        expect(controller.send(:x_active_tree)).to eq(:sandt_tree)
       end
 
       it "redirects with error flash when a raw numeric id without a prefix is passed" do

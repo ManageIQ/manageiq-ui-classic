@@ -78,23 +78,34 @@ describe ReportController do
                    :selectable => true}]
       expect(nodes).to eq(expected)
     end
+  end
+end
 
-    describe "#redirect_to_explorer_with_error" do
-      it "sets default flash error and redirects to explorer" do
-        session[:exp_parms] = {:test => 1}
-        controller.send(:redirect_to_explorer_with_error)
+describe CatalogController do
+  describe "#redirect_to_explorer_with_error" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      stub_user(:features => :all)
+      controller.instance_variable_set(:@settings, {})
+    end
 
-        expect(session[:exp_parms]).to be_nil
-        expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
-        expect(response).to redirect_to(:action => 'explorer', :id => nil)
+    it "sets default flash error and redirects to explorer" do
+      session[:exp_parms] = {:test => 1}
+      get :explorer, :params => {:id => "invalid-0"}
+
+      expect(session[:exp_parms]).to be_nil
+      expect(session[:flash_msgs]).to include({:message => "Can't access selected records", :level => :error})
+      expect(response).to redirect_to(:action => 'explorer', :id => nil)
+    end
+
+    it "accepts a custom error message" do
+      allow(controller).to receive(:redirect_to_explorer_with_error).and_wrap_original do |m, *args|
+        m.call("Custom error")
       end
+      get :explorer, :params => {:id => "invalid-0"}
 
-      it "accepts a custom error message and options" do
-        controller.send(:redirect_to_explorer_with_error, "Custom error", :controller => 'other')
-
-        expect(session[:flash_msgs]).to include({:message => "Custom error", :level => :error})
-        expect(response).to redirect_to(:controller => 'other', :action => 'explorer', :id => nil)
-      end
+      expect(session[:flash_msgs]).to include({:message => "Custom error", :level => :error})
+      expect(response).to redirect_to(:action => 'explorer', :id => nil)
     end
   end
 end

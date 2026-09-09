@@ -362,24 +362,24 @@ class CatalogController < ApplicationController
       case @nodetype
       when "ot"
         assert_privileges("orchestration_templates_view")
-        ot = OrchestrationTemplate.find_by(:id => id)
-        redirect_to_explorer_with_error and return if ot.nil?
+        @record = OrchestrationTemplate.find_by(:id => id)
+        redirect_to_explorer_with_error and return if @record.nil?
 
         self.x_active_tree   = :ot_tree
         self.x_active_accord = 'ot'
         x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
-        ot_type = template_to_node_name(ot)
+        ot_type = template_to_node_name(@record)
         x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
-        self.x_node = "ot-#{ot.id}"
+        self.x_node = "ot-#{@record.id}"
         x_tree[:open_nodes].push(x_node)
       when "st"
         assert_privileges("catalog_items_view")
-        st = ServiceTemplate.find_by(:id => id)
-        redirect_to_explorer_with_error and return if st.nil?
+        @record = ServiceTemplate.find_by(:id => id)
+        redirect_to_explorer_with_error and return if @record.nil?
 
         self.x_active_tree   = 'sandt_tree'
         self.x_active_accord = 'sandt'
-        prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
+        prefix = @record.service_template_catalog_id ? "stc-#{@record.service_template_catalog_id}_st-" : "-Unassigned_st-"
         self.x_node = "#{prefix}#{id}"
       else
         redirect_to_explorer_with_error
@@ -417,7 +417,7 @@ class CatalogController < ApplicationController
   def identify_catalog(id = nil)
     kls = TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate" ? VmOrTemplate : ServiceTemplate
     @record = identify_record(id || params[:id], kls)
-    @tenants_tree = build_tenants_tree if kls == ServiceTemplate # Build the tree with available tenants for the Catalog Item/Bundle
+    @tenants_tree = build_tenants_tree if kls == ServiceTemplate && @record # Build the tree with available tenants for the Catalog Item/Bundle
     add_flash(_("This item is invalid"), :warning) unless @flash_array || @record.try(:template_valid?)
   end
 
