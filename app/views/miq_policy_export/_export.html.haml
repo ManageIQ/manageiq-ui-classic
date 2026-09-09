@@ -3,56 +3,27 @@
   = render :partial => "layouts/flash_msg"
   %h3
     = _("Import")
-  - if @sb[:hide]
-    %div.text-right
-      #buttons
-        - if @sb[:conflict]
-          = button_tag(_("Commit"),
-            :class => "btn btn-primary disabled",
-            :title => (t = _("Resolve conflicts to import the file")),
-            :alt   => t)
-        - else
-          = link_to(_('Commit'),
-            {:action => "export", :button => "import", :commit => true},
-            :class                 => "btn btn-primary",
-            :alt                   => (t = _("Commit Import")),
-            "data-miq_sparkle_on"  => true,
-            "data-miq_sparkle_off" => true,
-            :remote                => true,
-            "data-method"          => :post,
-            :title                 => t)
-        = link_to(_('Cancel'),
-          {:action => "export", :button => "cancel_import"},
-          :class                 => "btn btn-default",
-          :alt                   => _("Cancel Changes"),
-          "data-miq_sparkle_on"  => true,
-          "data-miq_sparkle_off" => true,
-          :remote                => true,
-          "data-method"          => :post,
-          :title                 => _("Cancel Import"))
-  - else
-    #import_div
-      = form_tag({:action => "upload",
-                  :type   => "import",
-                  :dbtype => @sb[:dbtype]},
-                 :class     => "form-horizontal",
-                 :multipart => true,
-                 :method    => :post) do
-        .form-group
-          .col-md-4
-            = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
-            :javascript
-              $("#upload_file").on("change", function() {
-                ImportSetup.setUpUploadImportButton('#upload_tags')
-              });
+  #import_div
+    = form_tag({:action => "upload",
+                :type   => "import",
+                :dbtype => @sb[:dbtype]},
+               :class     => "form-horizontal",
+               :multipart => true,
+               :method    => :post) do
+      .form-group
+        .col-md-4
+          = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
+          :javascript
+            $("#upload_file").on("change", function() {
+              ImportSetup.setUpUploadImportButton('#upload_tags')
+            });
 
-          .col-md-6
-            = submit_tag(_("Upload"), :id => "upload_tags", :class => "btn btn-default", :disabled => true)
+        .col-md-6
+          = submit_tag(_("Upload"), :id => "upload_tags", :class => "btn btn-default", :disabled => true)
 
-  - if @sb[:hide] == false
-    %hr
-    %h3
-      = _("Export")
+  %hr
+  %h3
+    = _("Export")
     - case @sb[:dbtype]
     - when "pp"
       - available_title = _('Available Profiles:')
@@ -98,7 +69,7 @@
         = link_to(_('Export'),
           {:action => "export", :button => "export"},
           :class                 => "btn btn-primary export-policies disabled",
-          :alt                   => t,
+          :alt                   => export_title,
           "data-miq_sparkle_on"  => true,
           "data-miq_sparkle_off" => true,
           "data-submit"          => "profile_export_div",
