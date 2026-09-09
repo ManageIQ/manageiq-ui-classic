@@ -83,7 +83,7 @@ describe('ReviewImportForm component', () => {
     http.get.mockResolvedValueOnce(JSON.stringify(mockImportData));
     window.API.get.mockResolvedValueOnce(mockDomainsResponse);
 
-    renderWithRedux(
+    const { container } = renderWithRedux(
       <ReviewImportForm
         importFileUploadId="test-123"
         onClose={jest.fn()}
@@ -96,6 +96,7 @@ describe('ReviewImportForm component', () => {
 
     expect(screen.getByRole('combobox', { name: /Import to Existing Domain/i })).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: /Import from Domain/i })).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should show warning when no domains available', async() => {

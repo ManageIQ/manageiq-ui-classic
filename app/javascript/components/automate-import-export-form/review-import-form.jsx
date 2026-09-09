@@ -15,6 +15,7 @@ const ReviewImportForm = ({
   const [loading, setLoading] = useState(true);
   const [importData, setImportData] = useState(null);
   const [existingDomains, setExistingDomains] = useState([]);
+  const [initialValues, setInitialValues] = useState({});
   const [error, setError] = useState(null);
   const [importing, setImporting] = useState(false);
 
@@ -34,6 +35,18 @@ const ReviewImportForm = ({
           const domains = domainsResponse?.resources || [];
           const domainNames = domains.map((domain) => domain.name);
           setExistingDomains(domainNames);
+
+          if (Array.isArray(data) && data.length > 0) {
+            const firstDomain = data[0];
+            const allNamespaceKeys = firstDomain.nodes ? firstDomain.nodes.map((ns) => ns.key) : [];
+            const defaultImportToDomain = domainNames.length > 0 ? domainNames[0] : firstDomain.text;
+
+            setInitialValues({
+              selected_domain_to_import_from: firstDomain.text,
+              selected_domain_to_import_to: defaultImportToDomain,
+              selected_namespaces: allNamespaceKeys,
+            });
+          }
 
           setLoading(false);
         })
@@ -90,25 +103,6 @@ const ReviewImportForm = ({
     onClose();
   };
 
-  // Get initial values from import data
-  const getInitialValues = () => {
-    if (!importData || !Array.isArray(importData) || importData.length === 0) {
-      return {};
-    }
-
-    const firstDomain = importData[0];
-    const allNamespaceKeys = firstDomain.nodes ? firstDomain.nodes.map((ns) => ns.key) : [];
-
-    // Default "Import to Domain" to the first existing domain, not the file domain
-    const defaultImportToDomain = existingDomains && existingDomains.length > 0 ? existingDomains[0] : firstDomain.text;
-
-    return {
-      selected_domain_to_import_from: firstDomain.text,
-      selected_domain_to_import_to: defaultImportToDomain,
-      selected_namespaces: allNamespaceKeys, // Select all by default
-    };
-  };
-
   // Get namespaces for the selected domain
   const getNamespacesForDomain = (domainName) => {
     if (!importData || !Array.isArray(importData)) {
@@ -153,7 +147,7 @@ const ReviewImportForm = ({
 
       {!loading && !importing && importData && Array.isArray(importData) && importData.length > 0 && existingDomains.length > 0 && (
         <MiqFormRenderer
-          initialValues={getInitialValues()}
+          initialValues={initialValues}
           schema={schema}
           componentMapper={{
             ...defaultComponentMapper,

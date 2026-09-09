@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FileUploadSection component should render the heading and file uploader 1`] = `
+<div>
+  <div
+    class="file-upload-section"
+  >
+    <h3>
+      Import Datastore classes (*.zip)
+    </h3>
+    <div
+      class="cds--form-item"
+    >
+      <h3
+        class="cds--file--label"
+        dir="auto"
+      >
+        Upload file
+      </h3>
+      <p
+        class="cds--label-description"
+        dir="auto"
+        id="file-uploader-_r_0_"
+      />
+      <button
+        aria-describedby="file-uploader-_r_0_"
+        class="cds--btn cds--btn--primary cds--btn--md cds--layout--size-md"
+        type="button"
+      >
+        Choose file
+      </button>
+      <label
+        class="cds--visually-hidden"
+        for="id-_r_1_"
+      >
+        <span>
+          Choose file
+        </span>
+      </label>
+      <input
+        accept=".zip"
+        class="cds--visually-hidden"
+        id="id-_r_1_"
+        name="upload[file]"
+        tabindex="-1"
+        type="file"
+      />
+      <div
+        class="cds--file-container"
+      />
+    </div>
+    <div
+      class="upload-button-wrapper"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        id="upload-datastore-import"
+        type="button"
+      >
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+`;

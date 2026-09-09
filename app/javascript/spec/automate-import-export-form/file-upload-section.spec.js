@@ -28,10 +28,11 @@ describe('FileUploadSection component', () => {
   });
 
   it('should render the heading and file uploader', () => {
-    renderWithRedux(<FileUploadSection />);
+    const { container } = renderWithRedux(<FileUploadSection />);
 
     expect(screen.getByText(/Import Datastore classes/i)).toBeInTheDocument();
     expect(screen.getByText(/Upload file/i)).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should have upload button disabled initially', () => {

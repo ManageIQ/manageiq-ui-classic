@@ -61,12 +61,19 @@ describe('ImportDatastoreViaGitModal component', () => {
 
   describe('Stage 1: Git URL Form', () => {
     it('should render the git URL form initially', () => {
-      renderModal();
+      const { container } = renderWithRedux(
+        <ImportDatastoreViaGitModal
+          isOpen
+          onClose={jest.fn()}
+          onSelectGitRepo={jest.fn()}
+        />
+      );
 
       expect(screen.getByLabelText(/Git URL/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Verify Peer Certificate/i)).toBeInTheDocument();
+      expect(container).toMatchSnapshot();
     });
 
     it('should have submit button disabled when form is invalid', () => {
@@ -215,13 +222,20 @@ describe('ImportDatastoreViaGitModal component', () => {
       http.post.mockResolvedValueOnce(defaultPostResponse);
       http.get.mockResolvedValueOnce(defaultGetResponse);
 
-      renderModal();
+      const { container } = renderWithRedux(
+        <ImportDatastoreViaGitModal
+          isOpen
+          onClose={jest.fn()}
+          onSelectGitRepo={jest.fn()}
+        />
+      );
 
       await advanceToBranchTagStage(user);
 
       await waitFor(() => {
         expect(screen.getByLabelText(/Branches/i)).toBeInTheDocument();
       });
+      expect(container).toMatchSnapshot();
     });
 
     it('should switch to tags when tag option is selected', async() => {

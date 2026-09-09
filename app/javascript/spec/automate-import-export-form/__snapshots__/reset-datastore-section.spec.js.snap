@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ResetDatastoreSection component should render reset button after loading 1`] = `
+<div>
+  <div
+    class="reset-datastore-section"
+  >
+    <h3>
+      Reset all components in the following domains: TestDomain
+    </h3>
+    <div
+      class="reset-datastore-actions"
+    >
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--right cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-_r_d_"
+            class="cds--btn cds--btn--secondary cds--btn--icon-only"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18,28A12,12,0,1,0,6,16v6.2L2.4,18.6,1,20l6,6,6-6-1.4-1.4L8,22.2V16H8A10,10,0,1,1,18,26Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-_r_d_"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Reset
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
+    </div>
+    <div
+      class="cds--layer-one cds--modal cds--modal-tall cds--modal--danger"
+      role="presentation"
+    >
+      <span
+        class="cds--visually-hidden"
+        role="link"
+        tabindex="0"
+      >
+        Focus sentinel
+      </span>
+      <div
+        aria-label="Confirm Reset"
+        aria-modal="true"
+        class="cds--modal-container"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="cds--modal-header"
+        >
+          <h2
+            class="cds--modal-header__heading"
+            dir="auto"
+            id="cds--modal-header__heading--modal-id-_r_h_"
+          >
+            Confirm Reset
+          </h2>
+          <div
+            class="cds--modal-close-button"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-label="Close"
+                  aria-labelledby="tooltip-_r_j_"
+                  class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="cds--modal-close__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-_r_j_"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Close
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
+          id="cds--modal-body--modal-id-_r_h_"
+        >
+          <p>
+            All Datastore customizations will be lost. Are you sure you want to reset all classes and instances to default?
+          </p>
+        </div>
+        <div
+          aria-busy="false"
+          class="cds--modal-footer cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="cds--btn cds--btn--danger"
+            type="button"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+      <span
+        class="cds--visually-hidden"
+        role="link"
+        tabindex="0"
+      >
+        Focus sentinel
+      </span>
+    </div>
+  </div>
+</div>
+`;

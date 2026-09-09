@@ -10,10 +10,11 @@ jest.mock('../../helpers/window-location', () => ({
 
 describe('ExportSection component', () => {
   it('should render the heading and button', () => {
-    renderWithRedux(<ExportSection />);
+    const { container } = renderWithRedux(<ExportSection />);
 
     expect(screen.getByRole('heading', { name: /Export/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Export all classes and instances to a file/i })).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should navigate to export URL when button is clicked', async() => {

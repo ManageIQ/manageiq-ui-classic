@@ -56,12 +56,13 @@ describe('ResetDatastoreSection component', () => {
       ],
     });
 
-    renderWithRedux(<ResetDatastoreSection />);
+    const { container } = renderWithRedux(<ResetDatastoreSection />);
 
     await waitFor(() => {
       const buttons = screen.getAllByRole('button');
       expect(buttons.length).toBeGreaterThan(0);
     });
+    expect(container).toMatchSnapshot();
   });
 
   it('should call reset API and reload page when confirmed', async() => {
