@@ -33,41 +33,6 @@ describe 'ops/_rbac_group_details.html.haml' do
                                               :selected_nodes => {})
     end
 
-    it 'should not show "Look up groups" checkbox and label for auth mode amazon' do
-      stub_settings(:authentication => { :mode => 'amazon' }, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).not_to have_selector('input#lookup')
-      expect(rendered).not_to include('Look up Amazon Groups')
-    end
-
-    it 'should show "Look up groups" checkbox and label for auth mode httpd' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => false}, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).to have_selector('input#lookup')
-      expect(rendered).to include('Look up External Authentication Groups')
-    end
-
-    it 'should not show "Look up groups" checkbox and label for auth mode httpd with SAML enabled' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true, :oidc_enabled => false}, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).not_to have_selector('input#lookup')
-      expect(rendered).not_to include('Look up External Authentication Groups')
-    end
-
-    it 'should not show "Look up groups" checkbox and label for auth mode httpd with OIDC enabled' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => true}, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).not_to have_selector('input#lookup')
-      expect(rendered).not_to include('Look up External Authentication Groups')
-    end
-
-    it 'should not show "Look up groups" checkbox and label for auth mode database' do
-      stub_settings(:authentication => { :mode => 'database' }, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).not_to have_selector('input#lookup')
-      expect(rendered).not_to include('Look up External Authentication Groups')
-    end
-
     context 'choosing Role from the drop down while adding Group' do
       before { view.instance_variable_set(:@edit, :new => {}, :roles => {'<Choose a Role>' => nil}, :projects_tenants => []) }
 

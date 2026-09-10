@@ -1,7 +1,3 @@
-- mode = ::Settings.authentication.mode
-- oidc_enabled = ::Settings.authentication.oidc_enabled
-- saml_enabled = ::Settings.authentication.saml_enabled
-- can_lookup_groups = mode.downcase == "httpd" && !(saml_enabled || oidc_enabled)
 = render :partial => "layouts/flash_msg"
 
 %div{:id => "warn_div", :style => ""}
@@ -37,12 +33,6 @@
                            :class => "form-control",
                            "data-miq_observe" => {:interval => '.5',
                                                   :url      => url}.to_json)
-          - if can_lookup_groups
-            = check_box_tag("lookup",
-                            "1",
-                            false,
-                            "data-miq_observe_checkbox" => {:url => url}.to_json)
-            = _("(Look up %{authentication_mode_name} Groups)") % {:authentication_mode_name => auth_mode_name}
           = javascript_tag(javascript_focus('description'))
     .form-group
       %label.col-md-2.control-label

@@ -696,9 +696,6 @@ module OpsController::OpsRbac
         end
 
         page.replace("customer_tags_div", :partial => "ops/rbac_group/customer_tags") if params[:use_filter_expression].present?
-
-        # don't do anything to lookup box when checkboxes on the right side are checked
-        page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]
       end
       page << javascript_for_miq_button_visibility(changed)
     end
@@ -924,7 +921,6 @@ module OpsController::OpsRbac
         end
       end
 
-      @edit[:new][:lookup]           = (params[:lookup] == "1")   if params[:lookup]
       @edit[:new][:user_pwd]         = params[:password]          if params[:password]
     end
     if params[:check]                               # User checked/unchecked a tree node
