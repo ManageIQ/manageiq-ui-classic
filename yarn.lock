@@ -1612,22 +1612,22 @@ __metadata:
   linkType: hard
 
 "@carbon/charts-react@npm:~1.27.3":
-  version: 1.27.18
-  resolution: "@carbon/charts-react@npm:1.27.18"
+  version: 1.27.19
+  resolution: "@carbon/charts-react@npm:1.27.19"
   dependencies:
-    "@carbon/charts": "npm:1.27.18"
+    "@carbon/charts": "npm:1.27.19"
     "@carbon/icons-react": "npm:^11.64.0"
     "@ibm/telemetry-js": "npm:^1.9.1"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
-  checksum: 10/4b3cf7495a88ea203f4ae8264fc8273b554bc259a6fff3d8989f804ecff2cb5d38808dd4660d9c5a69115025a4d678fca6cdcf6c88a7ea0d15a6df11dddb359d
+  checksum: 10/c9300be497548a05722534cd3729c4a712428cb644451b729b5394c16c711456b16e7bf3d979afd32e8b1812cd106a27db84dc7cb0fdb4a6a62bb609aaefccfa
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:1.27.18":
-  version: 1.27.18
-  resolution: "@carbon/charts@npm:1.27.18"
+"@carbon/charts@npm:1.27.19":
+  version: 1.27.19
+  resolution: "@carbon/charts@npm:1.27.19"
   dependencies:
     "@carbon/colors": "npm:^11.37.0"
     "@carbon/utils-position": "npm:^1.3.0"
@@ -1638,12 +1638,12 @@ __metadata:
     d3-cloud: "npm:^1.2.7"
     d3-sankey: "npm:^0.12.3"
     date-fns: "npm:^4.1.0"
-    dompurify: "npm:^3.4.12"
+    dompurify: "npm:^3.4.14"
     html-to-image: "npm:1.11.11"
     lodash-es: "npm:^4.18.0"
     topojson-client: "npm:^3.1.0"
     tslib: "npm:^2.8.1"
-  checksum: 10/f446de6571b70681bd0afad6d7a47771f5a39bdf0d27c90665a4a770f4073c053c99a85472e8e79b5648b20e0a6b9b6003ba21cba26d564601a227752d8a4379
+  checksum: 10/19c409319bb3c68d4d388dbaded5e704c0910ae33108787882fe75a60e25118c30c64484cf1db1a9dcf45fe55faad03a7ff9ec4d56913b0dd09da737b47ef93e
   languageName: node
   linkType: hard
 
@@ -7465,7 +7465,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.3.2, dompurify@npm:^3.4.12":
+"dompurify@npm:^3.3.2, dompurify@npm:^3.4.14":
   version: 3.4.15
   resolution: "dompurify@npm:3.4.15"
   dependencies:
