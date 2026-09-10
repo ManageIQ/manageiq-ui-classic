@@ -48,6 +48,7 @@ function modal(title, Inner, closed, removeId) {
       <ComposedModal
         open
         id="provider-modal"
+        onClose={closed}
       >
         <ModalHeader>
           <button
