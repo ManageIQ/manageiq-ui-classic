@@ -62,7 +62,7 @@ function modal(title, Inner, closed, removeId) {
           {/* <Modal.Title>{title}</Modal.Title> */}
         </ModalHeader>
         <ModalBody>
-          <Inner />
+          <Inner onClose={closed} />
           <div id={/* see closeModal */ removeId} />
         </ModalBody>
         <ModalFooter>
