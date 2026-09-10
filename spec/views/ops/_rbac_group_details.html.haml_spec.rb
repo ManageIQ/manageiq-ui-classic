@@ -2,11 +2,10 @@ describe 'ops/_rbac_group_details.html.haml' do
   context 'add new group' do
     before do
       miq_server = FactoryBot.create(:miq_server)
-      edit = {:new                 => {:description => ''},
-              :key                 => "settings_authentication_edit__#{miq_server.id}",
-              :ldap_groups_by_user => [],
-              :roles               => %w(fred wilma),
-              :projects_tenants    => [["projects", %w(foo bar)]]}
+      edit = {:new              => {:description => ''},
+              :key              => "settings_authentication_edit__#{miq_server.id}",
+              :roles            => %w(fred wilma),
+              :projects_tenants => [["projects", %w(foo bar)]]}
       view.instance_variable_set(:@edit, edit)
       @group = FactoryBot.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
@@ -70,7 +69,7 @@ describe 'ops/_rbac_group_details.html.haml' do
     end
 
     context 'choosing Role from the drop down while adding Group' do
-      before { view.instance_variable_set(:@edit, :ldap_groups_by_user => [], :new => {}, :roles => {'<Choose a Role>' => nil}, :projects_tenants => []) }
+      before { view.instance_variable_set(:@edit, :new => {}, :roles => {'<Choose a Role>' => nil}, :projects_tenants => []) }
 
       it 'disables Choose a Role option' do
         render :partial => 'ops/rbac_group_details'

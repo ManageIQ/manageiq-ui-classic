@@ -442,45 +442,6 @@ module OpsController::OpsRbac
     [consecutime, first_idx, last_idx]
   end
 
-  def rbac_group_user_lookup_field_changed
-    return unless load_edit("rbac_group_edit__#{params[:id]}", "replace_cell__explorer")
-
-    @edit[:new][:user] = params[:user] if params[:user]
-  end
-
-  def rbac_group_user_lookup
-    assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_edit")
-    raise "rbac_group_user_lookup is only valid in httpd mode" unless ::Settings.authentication.mode == "httpd"
-
-    rbac_group_user_lookup_field_changed
-    add_flash(_("User must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user].blank?
-
-    unless @flash_array.nil?
-      javascript_flash
-      return
-    end
-
-    @record = MiqGroup.find_by(:id => @edit[:group_id])
-    @sb[:roles] = @edit[:roles]
-    begin
-      @edit[:ldap_groups_by_user] = MiqGroup.get_httpd_groups_by_user(@edit[:new][:user])
-    rescue => bang
-      @edit[:ldap_groups_by_user] = []
-      add_flash(_("Error during 'LDAP Group Look Up': %{message}") % {:message => bang.message}, :error)
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-        page.replace("ldap_user_div", :partial => "ldap_auth_users")
-      end
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("ldap_user_div", :partial => "ldap_auth_users")
-      end
-    end
-  end
-
   private ############################
 
   def tenant_type_title_string(divisible)
@@ -736,9 +697,6 @@ module OpsController::OpsRbac
 
         page.replace("customer_tags_div", :partial => "ops/rbac_group/customer_tags") if params[:use_filter_expression].present?
 
-        # Only update description field value if ldap group user field was selected
-        page << "$('#description').val('#{j(@edit[:new][:ldap_groups_user])}');" if params[:ldap_groups_user]
-
         # don't do anything to lookup box when checkboxes on the right side are checked
         page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]
       end
@@ -948,7 +906,7 @@ module OpsController::OpsRbac
       move_cols_up   if params[:button] == "up"
       move_cols_down if params[:button] == "down"
     else
-      copy_params_if_present(@edit[:new], params, %i[ldap_groups_user description detailed_description user user_id])
+      copy_params_if_present(@edit[:new], params, %i[description detailed_description user user_id])
 
       if params[:group_role]
         if valid_role?(new_role_id = params[:group_role].to_i)
@@ -1021,7 +979,6 @@ module OpsController::OpsRbac
         :description          => @group.description,
         :detailed_description => @group.detailed_description,
       },
-      :ldap_groups_by_user => [],
       :projects_tenants    => [],
       :roles               => {},
     }
