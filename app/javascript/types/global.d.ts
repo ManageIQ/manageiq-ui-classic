@@ -2,7 +2,7 @@
 
 import type { ComponentType } from 'react';
 import type { Store } from '@reduxjs/toolkit';
-import type { GenericDataType, DataType } from './common';
+import type { GenericDataType, DataType, MiqTaskResponse } from './common';
 import type { MenuItemType } from '../menu/menu-common-types';
 
 /**
@@ -50,7 +50,7 @@ type APIType = {
 
   ws_destroy: () => void;
   ws_init: () => Promise<{ auth_token: string }>;
-  wait_for_task: (taskId: string) => Promise<void>;
+  wait_for_task: <T = MiqTaskResponse>(taskId: string) => Promise<T>;
 };
 
 type HttpType = {
