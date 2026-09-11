@@ -5,7 +5,7 @@ const createSchema = ({
   currentTenantName, tags, hacTree, vatTree, superAdminUser,
 }) => ({
   fields: [
-    {
+    ...(!readOnly ? [{
       component: componentTypes.SUB_FORM,
       id: 'group-information',
       name: 'group-information',
@@ -17,10 +17,9 @@ const createSchema = ({
           name: 'description',
           label: __('Description'),
           maxLength: 50,
-          isRequired: !readOnly,
-          isReadOnly: readOnly,
-          validate: readOnly ? [] : [{ type: validatorTypes.REQUIRED }],
-          autoFocus: !readOnly,
+          isRequired: true,
+          validate: [{ type: validatorTypes.REQUIRED }],
+          autoFocus: true,
         },
         {
           component: componentTypes.TEXT_FIELD,
@@ -28,7 +27,6 @@ const createSchema = ({
           name: 'detailed_description',
           label: __('Detailed Description'),
           maxLength: 255,
-          isReadOnly: readOnly,
         },
         {
           component: componentTypes.SELECT,
@@ -36,11 +34,10 @@ const createSchema = ({
           name: 'role_id',
           label: __('Role'),
           placeholder: __('<Choose a Role>'),
-          isRequired: !readOnly,
-          isReadOnly: readOnly,
+          isRequired: true,
           options: roles,
           includeEmpty: true,
-          validate: readOnly ? [] : [{ type: validatorTypes.REQUIRED }],
+          validate: [{ type: validatorTypes.REQUIRED }],
         },
         {
           component: componentTypes.SELECT,
@@ -48,14 +45,13 @@ const createSchema = ({
           name: 'tenant_id',
           label: __('Project/Tenant'),
           placeholder: __('<Choose a Project/Tenant>'),
-          isRequired: !readOnly,
-          isReadOnly: readOnly,
+          isRequired: true,
           options: tenants,
           includeEmpty: true,
-          validate: readOnly ? [] : [{ type: validatorTypes.REQUIRED }],
+          validate: [{ type: validatorTypes.REQUIRED }],
         },
       ],
-    },
+    }] : []),
     {
       component: 'filter-tabs',
       name: 'filters',
@@ -65,6 +61,12 @@ const createSchema = ({
       vatTree,
       readOnly,
       superAdminUser,
+      validate: [(value) => {
+        if (value?.useFilterExpression && value?.expressionHasErrors) {
+          return __('Expression is incomplete or invalid.');
+        }
+        return undefined;
+      }],
     },
   ],
 });

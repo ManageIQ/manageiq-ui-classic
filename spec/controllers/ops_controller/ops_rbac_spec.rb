@@ -327,6 +327,71 @@ describe OpsController do
 
   end
 
+  describe "#group_form_data" do
+    let(:stub_tree) do
+      instance_double(TreeBuilderBelongsToHac,
+                      :bs_tree => '[{"key":"root","text":"My Cloud","nodes":[]}]')
+    end
+
+    before do
+      MiqUserRole.seed
+      MiqGroup.seed
+      MiqRegion.seed
+      Tenant.seed
+      stub_user(:features => :all)
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+
+      # TreeBuilderBelongsToHac/Vat walk VM infrastructure which is absent in
+      # unit tests. Stub them out so group_form_data can focus on its own logic.
+      allow(TreeBuilderBelongsToHac).to receive(:new).and_return(stub_tree)
+      allow(TreeBuilderBelongsToVat).to receive(:new).and_return(stub_tree)
+    end
+
+    context "for a new group" do
+      it "returns 200 with the expected JSON keys" do
+        get :group_form_data, :params => {:id => "new"}
+
+        expect(response.status).to eq(200)
+        body = response.parsed_body
+        expect(body).to include("hac_tree", "vat_tree", "hac_paths", "vat_paths",
+                                "tags", "deleted_belongsto_filters")
+      end
+
+      it "returns empty deleted_belongsto_filters for a new group" do
+        get :group_form_data, :params => {:id => "new"}
+
+        expect(response.parsed_body["deleted_belongsto_filters"]).to eq([])
+      end
+
+      it "returns tags structure with tags/assignedTags/affectedItems keys" do
+        get :group_form_data, :params => {:id => "new"}
+
+        tags_payload = response.parsed_body["tags"]
+        expect(tags_payload).to include("tags", "assignedTags", "affectedItems")
+      end
+    end
+
+    context "for an existing group" do
+      let!(:group) { FactoryBot.create(:miq_group) }
+
+      it "returns 200 with the expected JSON keys" do
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        expect(response.status).to eq(200)
+        body = response.parsed_body
+        expect(body).to include("hac_tree", "vat_tree", "hac_paths", "vat_paths",
+                                "tags", "deleted_belongsto_filters")
+      end
+
+      it "includes the group id in the affectedItems array" do
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        affected = response.parsed_body.dig("tags", "affectedItems")
+        expect(affected).to include(group.id.to_s)
+      end
+    end
+  end
+
   describe "#rbac_role_set_form_vars" do
     before do
       MiqUserRole.seed

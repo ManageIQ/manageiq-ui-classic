@@ -2441,6 +2441,7 @@ Rails.application.routes.draw do
         pglogical_save_subscriptions
         pglogical_validate_subscription
         rbac_group_edit
+        rbac_group_field_changed
         rbac_group_seq_edit
         rbac_groups_list
         rbac_role_edit

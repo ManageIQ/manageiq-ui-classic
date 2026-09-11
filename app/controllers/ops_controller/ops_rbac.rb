@@ -83,11 +83,8 @@ module OpsController::OpsRbac
 
   def rbac_group_add
     assert_privileges("rbac_group_add")
-    @record = MiqGroup.new
-    @edit = {:group_id => nil, :key => "rbac_group_edit__new", :current => {}}
-    @hide_bottom_bar = true
+    @edit = {}
     @in_a_form = true
-    session[:edit] = @edit
     @sb[:pre_edit_node] = x_node
     @right_cell_text = _('Adding a new Group')
     replace_right_cell(:nodetype => x_node)
@@ -96,29 +93,20 @@ module OpsController::OpsRbac
   def rbac_group_edit
     assert_privileges("rbac_group_edit")
 
-    case params[:button]
-    when 'cancel'
-      add_flash(_("Edit of Group was cancelled by the user"))
-      self.x_node = @sb[:pre_edit_node] if @sb[:pre_edit_node]
-      get_node_info(x_node)
-      @edit = nil
-      replace_right_cell(:nodetype => @nodetype || x_node)
-    when 'reset', nil
-      @record = find_record_with_rbac(MiqGroup, checked_or_params)
-      if @record.read_only
-        add_flash(_("Read Only EVM Group \"%{name}\" can not be edited") % {:name => @record.description}, :warning)
-        javascript_flash
-        return
-      end
-      @edit = {:group_id => @record.id, :key => "rbac_group_edit__#{@record.id}"}
-      @hide_bottom_bar = true
-      @in_a_form = true
-      session[:edit] = @edit
-      session[:changed] = false
-      @sb[:pre_edit_node] = x_node unless params[:button]
-      @right_cell_text = _("Editing Group \"%{name}\"") % {:name => @record.description}
-      replace_right_cell(:nodetype => x_node)
+    @record = find_record_with_rbac(MiqGroup, checked_or_params)
+    if @record.read_only
+      add_flash(_("Read Only EVM Group \"%{name}\" can not be edited") % {:name => @record.description}, :warning)
+      javascript_flash
+      return
     end
+    @edit = {:group_id => @record.id, :key => "rbac_group_edit__#{@record.id}", :current => {}}
+    @hide_bottom_bar = true
+    @in_a_form = true
+    session[:edit] = @edit
+    session[:changed] = false
+    @sb[:pre_edit_node] = x_node
+    @right_cell_text = _("Editing Group \"%{name}\"") % {:name => @record.description}
+    replace_right_cell(:nodetype => x_node)
   end
 
   def rbac_role_add
@@ -335,6 +323,24 @@ module OpsController::OpsRbac
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
+  end
+
+  def rbac_group_field_changed
+    assert_privileges("rbac_group_seq_edit")
+
+    case params[:button]
+    when "up"   then move_cols_up
+    when "down" then move_cols_down
+    end
+
+    render :update do |page|
+      page << javascript_prologue
+      if @refresh_div
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
+        page.replace(@refresh_div, :partial => @refresh_partial)
+      end
+    end
   end
 
   def rbac_group_seq_edit
@@ -911,8 +917,8 @@ module OpsController::OpsRbac
           if obj
             begin
               map[key] = MiqFilter.object2belongsto(obj)
-            rescue RuntimeError
-              # skip nodes whose root is not a Provider (e.g. standalone folder roots)
+            rescue RuntimeError => e
+              $log.debug("build_belongsto_path_map: skipping node #{key.inspect} — #{e.message}")
             end
           end
         end

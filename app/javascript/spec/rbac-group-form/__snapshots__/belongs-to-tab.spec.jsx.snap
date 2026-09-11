@@ -1,0 +1,779 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`BelongsToTab renders "No items available." when the tree is empty 1`] = `
+<div>
+  <p>
+    No items available.
+  </p>
+</div>
+`;
+
+exports[`BelongsToTab renders the checkbox tree in edit mode 1`] = `
+<div>
+  <div
+    class="belongs-to-tab"
+  >
+    <div
+      class="belongs-to-tab__actions"
+    >
+      <button
+        class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+        type="button"
+      >
+        Select All
+      </button>
+      <button
+        class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+        type="button"
+      >
+        Deselect All
+      </button>
+    </div>
+    <div
+      class="react-checkbox-tree rct-icons-fa5"
+    >
+      <ol>
+        <li
+          class="rct-node rct-node-parent rct-node-expanded"
+        >
+          <span
+            class="rct-text"
+          >
+            <button
+              aria-label="Collapse node"
+              class="rct-collapse rct-collapse-btn"
+              title="Collapse node"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </button>
+            <label>
+              <input
+                type="checkbox"
+              />
+              <span
+                aria-hidden="true"
+                class="rct-checkbox"
+                role="presentation"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                  />
+                  <path
+                    d="M14 21.5 9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-node-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.17,6l3.42,3.41.58.59H28V26H4V6h7.17m0-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4Z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-label"
+              >
+                My Cloud
+              </span>
+            </label>
+          </span>
+          <ol>
+            <li
+              class="rct-node rct-node-leaf"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                      />
+                      <path
+                        d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                        data-icon-path="inner-path"
+                        fill="none"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M28,10H23V6a2.0023,2.0023,0,0,0-2-2H11A2.0023,2.0023,0,0,0,9,6v4H4a2.0023,2.0023,0,0,0-2,2V28a2.0023,2.0023,0,0,0,2,2H28a2.0023,2.0023,0,0,0,2-2V12A2.0023,2.0023,0,0,0,28,10ZM4,28V12H9v2H7v2H9v2H7v2H9v2H7v2H9v4Zm17,0H11V6H21Zm7,0H23V24h2V22H23V20h2V18H23V16h2V14H23V12h5Z"
+                      />
+                      <path
+                        d="M14 8H18V10H14z"
+                      />
+                      <path
+                        d="M14 12H18V14H14z"
+                      />
+                      <path
+                        d="M14 16H18V18H14z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Region 1
+                  </span>
+                </label>
+              </span>
+            </li>
+            <li
+              class="rct-node rct-node-leaf"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 26H30V28H18z"
+                      />
+                      <path
+                        d="M18 21H30V23H18z"
+                      />
+                      <path
+                        d="M18 16H30V18H18z"
+                      />
+                      <path
+                        d="M14,25H9.5A7.4964,7.4964,0,0,1,8.1782,10.124,10,10,0,0,1,28,12H26a7.999,7.999,0,0,0-15.9507-.87l-.09.8335L9.123,12.02A5.4962,5.4962,0,0,0,9.5,23H14Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Host 1
+                  </span>
+                </label>
+              </span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`BelongsToTab renders the checkbox tree in read-only mode 1`] = `
+<div>
+  <div
+    class="belongs-to-tab"
+  >
+    <div
+      class="react-checkbox-tree rct-disabled rct-icons-fa5"
+    >
+      <ol>
+        <li
+          class="rct-node rct-node-parent rct-node-expanded rct-disabled"
+        >
+          <span
+            class="rct-text"
+          >
+            <button
+              aria-label="Collapse node"
+              class="rct-collapse rct-collapse-btn"
+              title="Collapse node"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </button>
+            <label>
+              <input
+                disabled=""
+                type="checkbox"
+              />
+              <span
+                aria-hidden="true"
+                class="rct-checkbox"
+                role="presentation"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                  />
+                  <path
+                    d="M14 21.5 9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-node-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.17,6l3.42,3.41.58.59H28V26H4V6h7.17m0-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4Z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-label"
+              >
+                My Cloud
+              </span>
+            </label>
+          </span>
+          <ol>
+            <li
+              class="rct-node rct-node-leaf rct-disabled"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    checked=""
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                      />
+                      <path
+                        d="M14,21.5,9,16.5427,10.5908,15,14,18.3456,21.4087,11l1.5918,1.5772Z"
+                        data-icon-path="inner-path"
+                        fill="none"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M28,10H23V6a2.0023,2.0023,0,0,0-2-2H11A2.0023,2.0023,0,0,0,9,6v4H4a2.0023,2.0023,0,0,0-2,2V28a2.0023,2.0023,0,0,0,2,2H28a2.0023,2.0023,0,0,0,2-2V12A2.0023,2.0023,0,0,0,28,10ZM4,28V12H9v2H7v2H9v2H7v2H9v2H7v2H9v4Zm17,0H11V6H21Zm7,0H23V24h2V22H23V20h2V18H23V16h2V14H23V12h5Z"
+                      />
+                      <path
+                        d="M14 8H18V10H14z"
+                      />
+                      <path
+                        d="M14 12H18V14H14z"
+                      />
+                      <path
+                        d="M14 16H18V18H14z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Region 1
+                  </span>
+                </label>
+              </span>
+            </li>
+            <li
+              class="rct-node rct-node-leaf rct-disabled"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 26H30V28H18z"
+                      />
+                      <path
+                        d="M18 21H30V23H18z"
+                      />
+                      <path
+                        d="M18 16H30V18H18z"
+                      />
+                      <path
+                        d="M14,25H9.5A7.4964,7.4964,0,0,1,8.1782,10.124,10,10,0,0,1,28,12H26a7.999,7.999,0,0,0-15.9507-.87l-.09.8335L9.123,12.02A5.4962,5.4962,0,0,0,9.5,23H14Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Host 1
+                  </span>
+                </label>
+              </span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`BelongsToTab renders the limited-access message for non-super-admin users 1`] = `
+<div>
+  <div
+    class="belongs-to-tab"
+  >
+    <p>
+      Access is limited to your current group.
+    </p>
+    <div
+      class="belongs-to-tab__actions"
+    >
+      <button
+        class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+        type="button"
+      >
+        Select All
+      </button>
+      <button
+        class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+        type="button"
+      >
+        Deselect All
+      </button>
+    </div>
+    <div
+      class="react-checkbox-tree rct-icons-fa5"
+    >
+      <ol>
+        <li
+          class="rct-node rct-node-parent rct-node-expanded"
+        >
+          <span
+            class="rct-text"
+          >
+            <button
+              aria-label="Collapse node"
+              class="rct-collapse rct-collapse-btn"
+              title="Collapse node"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </button>
+            <label>
+              <input
+                type="checkbox"
+              />
+              <span
+                aria-hidden="true"
+                class="rct-checkbox"
+                role="presentation"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-node-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.17,6l3.42,3.41.58.59H28V26H4V6h7.17m0-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4Z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="rct-label"
+              >
+                My Cloud
+              </span>
+            </label>
+          </span>
+          <ol>
+            <li
+              class="rct-node rct-node-leaf"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M28,10H23V6a2.0023,2.0023,0,0,0-2-2H11A2.0023,2.0023,0,0,0,9,6v4H4a2.0023,2.0023,0,0,0-2,2V28a2.0023,2.0023,0,0,0,2,2H28a2.0023,2.0023,0,0,0,2-2V12A2.0023,2.0023,0,0,0,28,10ZM4,28V12H9v2H7v2H9v2H7v2H9v2H7v2H9v4Zm17,0H11V6H21Zm7,0H23V24h2V22H23V20h2V18H23V16h2V14H23V12h5Z"
+                      />
+                      <path
+                        d="M14 8H18V10H14z"
+                      />
+                      <path
+                        d="M14 12H18V14H14z"
+                      />
+                      <path
+                        d="M14 16H18V18H14z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Region 1
+                  </span>
+                </label>
+              </span>
+            </li>
+            <li
+              class="rct-node rct-node-leaf"
+            >
+              <span
+                class="rct-text"
+              >
+                <span
+                  class="rct-collapse"
+                >
+                  <span
+                    class="rct-icon"
+                  />
+                </span>
+                <label>
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="rct-checkbox"
+                    role="presentation"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-node-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 26H30V28H18z"
+                      />
+                      <path
+                        d="M18 21H30V23H18z"
+                      />
+                      <path
+                        d="M18 16H30V18H18z"
+                      />
+                      <path
+                        d="M14,25H9.5A7.4964,7.4964,0,0,1,8.1782,10.124,10,10,0,0,1,28,12H26a7.999,7.999,0,0,0-15.9507-.87l-.09.8335L9.123,12.02A5.4962,5.4962,0,0,0,9.5,23H14Z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="rct-label"
+                  >
+                    Host 1
+                  </span>
+                </label>
+              </span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+`;
