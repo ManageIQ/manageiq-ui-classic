@@ -18,6 +18,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-18__header-name"
                 scope="col"
               >
                 <div
@@ -31,6 +32,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-18__header-value"
                 scope="col"
               >
                 <div
@@ -44,6 +46,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-18__header-collect"
                 scope="col"
               >
                 <div
@@ -57,6 +60,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-18__header-message"
                 scope="col"
               >
                 <div
@@ -70,6 +74,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-18__header-edit"
                 scope="col"
               >
                 <div
@@ -262,6 +267,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
             <tr>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-name"
                 scope="col"
               >
                 <div
@@ -275,6 +281,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-value"
                 scope="col"
               >
                 <div
@@ -288,6 +295,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-on_entry"
                 scope="col"
               >
                 <div
@@ -301,6 +309,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-on_exit"
                 scope="col"
               >
                 <div
@@ -314,6 +323,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-on_error"
                 scope="col"
               >
                 <div
@@ -327,6 +337,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-max_retries"
                 scope="col"
               >
                 <div
@@ -340,6 +351,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-max_time"
                 scope="col"
               >
                 <div
@@ -353,6 +365,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-collect"
                 scope="col"
               >
                 <div
@@ -366,6 +379,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-message"
                 scope="col"
               >
                 <div
@@ -379,6 +393,7 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
               </th>
               <th
                 class="miq-data-table-header"
+                id="data-table-19__header-edit"
                 scope="col"
               >
                 <div

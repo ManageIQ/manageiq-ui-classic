@@ -435,6 +435,7 @@ exports[`CopyObjectsForm Component Copy Class should render copy class form corr
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-1__header-name"
                     scope="col"
                   >
                     <div
@@ -1022,6 +1023,7 @@ exports[`CopyObjectsForm Component Copy Instance should render copy instance for
                 <tr>
                   <th
                     class="miq-data-table-header"
+                    id="data-table-7__header-name"
                     scope="col"
                   >
                     <div
