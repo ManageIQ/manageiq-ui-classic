@@ -325,13 +325,7 @@ class OpsController < ApplicationController
     end
 
     if x_active_tree == :rbac_tree
-      node = x_node(:rbac_tree)
-      if node
-        # no-op: tab state is managed by the React component
-      else
-        x_node_set("root", :rbac_tree)
-      end
-
+      x_node_set("root", :rbac_tree) unless x_node(:rbac_tree)
       @sb[:active_tab] ||= "rbac_details"
     end
 

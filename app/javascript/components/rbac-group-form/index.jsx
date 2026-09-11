@@ -44,7 +44,6 @@ const RbacGroupForm = ({
   readOnly,
   currentTenantName,
   superAdminUser,
-  deletedBelongstoFilters = [],
 }) => {
   const isNew = !groupId || groupId === 'new';
 
@@ -57,6 +56,7 @@ const RbacGroupForm = ({
     roles: [],
     tenants: [],
     treeData: null,
+    deletedBelongstoFilters: [],
   });
 
   const {
@@ -68,6 +68,7 @@ const RbacGroupForm = ({
     roles,
     tenants,
     treeData,
+    deletedBelongstoFilters,
   } = state;
 
   useEffect(() => {
@@ -176,6 +177,7 @@ const RbacGroupForm = ({
           tenants: tenantOptions,
           treeData: formData,
           initialValues: calculatedInitialValues,
+          deletedBelongstoFilters: formData.deleted_belongsto_filters || [],
           isLoading: false,
         }));
       })
@@ -186,6 +188,7 @@ const RbacGroupForm = ({
           isLoading: false,
         }));
       });
+  // readOnly is included so switching between view/edit mode (same groupId) re-fetches form data.
   }, [groupId, readOnly]);
 
   const onSubmit = (values) => {
@@ -197,11 +200,17 @@ const RbacGroupForm = ({
     const {
       useFilterExpression,
       filterExpression,
+      expressionHasErrors = false,
       managedFilters = [],
       assignedTags = [],
       hacChecked = [],
       vatChecked = [],
     } = values.filters || {};
+
+    if (expressionHasErrors) {
+      setState((prev) => ({ ...prev, isSubmitting: false }));
+      return;
+    }
 
     const allPaths = { ...(treeData?.hac_paths || {}), ...(treeData?.vat_paths || {}) };
     const belongsto = [...hacChecked, ...vatChecked]
@@ -276,6 +285,7 @@ const RbacGroupForm = ({
           )}
           subtitle={deletedBelongstoFilters.join(', ')}
           hideCloseButton
+          lowContrast
         />
       )}
       {resetNotice && (
@@ -325,7 +335,6 @@ RbacGroupForm.propTypes = {
   readOnly: PropTypes.bool,
   currentTenantName: PropTypes.string,
   superAdminUser: PropTypes.bool,
-  deletedBelongstoFilters: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default RbacGroupForm;

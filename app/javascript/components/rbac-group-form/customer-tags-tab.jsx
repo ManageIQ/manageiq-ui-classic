@@ -17,7 +17,7 @@ const CustomerTagsTab = ({
   onExpressionChange,
   readOnly,
 }) => {
-  const [expressionText, setExpressionText] = useState(() => '');
+  const [expressionText, setExpressionText] = useState('');
   const [validationErrors, setValidationErrors] = useState([]);
   const labelMapRef = useRef(new Map());
   const tagValuesCacheRef = useRef(null);
@@ -27,7 +27,10 @@ const CustomerTagsTab = ({
     tagValuesCacheRef.current = tagValuesCache;
     if (filterExpression) {
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
-      setExpressionText(miqExpressionToHuman(filterExpression, labelMap, tagMap));
+      const miqExp = (filterExpression.rules || filterExpression.combinator)
+        ? rqbToMiq(filterExpression)
+        : filterExpression;
+      setExpressionText(miqExp ? miqExpressionToHuman(miqExp, labelMap, tagMap) : '');
     }
   };
 
@@ -69,7 +72,7 @@ const CustomerTagsTab = ({
 
   return (
     <div className="customer-tags-tab">
-      <div className="cds--form-item" style={{ marginBottom: '1rem' }}>
+      <div className="cds--form-item customer-tags-tab__filter-mode">
         <Select
           id="use-filter-expression"
           labelText={__('This user is limited to')}
