@@ -1,12 +1,10 @@
 #class_instances_div
-  - unless @angular_form
-    - if !@in_a_form
-      %h3= _('Instances')
-      - if @record.ae_instances.present?
-        = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:instances], :data => @record.ae_instances.order(:name)}
-      - else
-        = render :partial => "layouts/info_msg",
-                 :locals  => {:message => _("No instances found")}
-    - elsif @edit[:new][:ae_inst]
-      #form_div
-        = render :partial => "instance_form", :locals => {:prefix => "cls_"}
+  - if !@in_a_form
+    %h3= _('Instances')
+    - if @record.ae_instances.present?
+      = render :partial => 'datastore_list',
+               :locals  => {:type => MiqAeClassHelper::DATASTORE_TYPES[:instances],
+                            :data => @record.ae_instances.order(:name)}
+    - else
+      = render :partial => "layouts/info_msg",
+               :locals  => {:message => _("No instances found")}

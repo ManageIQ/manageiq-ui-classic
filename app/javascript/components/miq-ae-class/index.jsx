@@ -7,7 +7,7 @@ import createSchema from './class-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import miqFlash from '../../helpers/miq-flash';
 
-const MiqAeClass = ({ classRecord, fqname }) => {
+const MiqAeClass = ({ classRecord = {}, fqname }) => {
   const formattedFqname = fqname.replace(/\s+/g, '');
   const [data, setData] = useState({
     isLoading: true,
@@ -20,17 +20,17 @@ const MiqAeClass = ({ classRecord, fqname }) => {
     if (isEdit) {
       http.get(`/miq_ae_class/edit_class_record/${classRecord.id}/`).then((recordValues) => {
         if (recordValues) {
-          setData({ ...data, isLoading: false, initialValues: recordValues });
+          setData((prev) => ({ ...prev, isLoading: false, initialValues: recordValues }));
         }
       });
     } else {
       const initialValues = {
         formattedFqname,
-        name: classRecord && classRecord.name,
-        display_name: classRecord && classRecord.display_name,
-        description: classRecord && classRecord.description,
+        name: classRecord.name,
+        display_name: classRecord.display_name,
+        description: classRecord.description,
       };
-      setData({ ...data, isLoading: false, initialValues });
+      setData((prev) => ({ ...prev, isLoading: false, initialValues }));
     }
   }, [classRecord]);
 
@@ -102,7 +102,7 @@ const MiqAeClass = ({ classRecord, fqname }) => {
 };
 
 const FormTemplate = ({
-  formFields, recId,
+  formFields = null, recId = undefined,
 }) => {
   const {
     handleSubmit, onReset, onCancel, getState,
