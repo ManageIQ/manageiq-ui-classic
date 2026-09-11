@@ -277,37 +277,6 @@ class OpsController < ApplicationController
     end
   end
 
-  def rbac_group_load_tab
-    assert_privileges(session&.fetch_path(:edit) ? "rbac_group_edit" : "rbac_group_view")
-
-    tab_id = params[:tab_id]
-    _, group_id = TreeBuilder.extract_node_model_and_id(x_node)
-    @sb[:active_rbac_group_tab] = tab_id
-    @edit = session[:edit]
-    explorer_opts = {}
-    explorer_opts[:show_miq_buttons] = session[:changed] if @edit
-
-    rbac_group_get_details(group_id)
-
-    presenter = ExplorerPresenter.new(explorer_opts)
-
-    # needed to make tooolbar Configuration > Edit still work after lazy-loading a tab
-    presenter[:record_id] = group_id
-
-    rendered = case tab_id
-               when 'rbac_customer_tags'
-                 r[:partial => 'ops/rbac_group/customer_tags']
-               when 'rbac_hosts_clusters'
-                 r[:partial => 'ops/rbac_group/hosts_clusters']
-               when 'rbac_vms_templates'
-                 r[:partial => 'ops/rbac_group/vms_templates']
-               end
-
-    presenter.update(tab_id, rendered)
-
-    render :json => presenter.for_render
-  end
-
   private ############################
 
   def features
@@ -358,10 +327,7 @@ class OpsController < ApplicationController
     if x_active_tree == :rbac_tree
       node = x_node(:rbac_tree)
       if node
-        kind = node.split('-').first
-
-        # default to the first tab in group detail
-        @sb[:active_rbac_group_tab] = "rbac_customer_tags" if kind == 'g'
+        # no-op: tab state is managed by the React component
       else
         x_node_set("root", :rbac_tree)
       end
@@ -389,36 +355,6 @@ class OpsController < ApplicationController
     session[:changed] = @edit[:new] != current
   end
 
-  def rbac_and_user_make_subarrays
-    if @set_filter_values.present?
-      temp1arr = []
-      @set_filter_values = @set_filter_values.flatten
-      temp_categories = @set_filter_values.dup
-      temp_categories = temp_categories.sort
-      i = 0
-      temp_field = []
-      while i < temp_categories.length
-        a = temp_categories[i].rindex("/")
-        current = temp_categories[i].slice(0..a)
-        previous = current if previous.nil?
-
-        if current == previous
-          temp_field.push(temp_categories[i])
-        else
-          temp1arr.push(temp_field)
-          temp_field = []
-          temp_field.push(temp_categories[i])
-          previous = current
-        end
-        i += 1
-      end
-      unless temp_field.nil?
-        temp1arr.push(temp_field)
-      end
-      @set_filter_values.replace(temp1arr)
-    end
-  end
-
   def set_active_tab(nodetype)
     node = nodetype.downcase.split("-")
     case x_active_tree
@@ -436,8 +372,6 @@ class OpsController < ApplicationController
       end
     when :rbac_tree
       @sb[:active_tab] = "rbac_details"
-      # default to the first tab in group detail
-      @sb[:active_rbac_group_tab] ||= "rbac_customer_tags" if node.last == 'g' || node.first == 'g'
     when :diagnostics_tree
       case node[0]
       when "root"

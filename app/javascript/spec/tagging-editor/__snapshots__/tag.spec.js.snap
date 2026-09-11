@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Tag component matches snapshot with close button 1`] = `
+<div>
+  <li
+    class="tag"
+  >
+    <label
+      class="cds--label cds--label--no-margin tagColor"
+      dir="auto"
+      for="tag_value_1"
+      title="duck"
+    >
+      <div
+        class="value-label"
+      >
+        <span
+          class="value-span"
+        >
+          duck
+        </span>
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-labelledby="tooltip-_r_1_"
+              class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 32 32"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-_r_1_"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Close Icon
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </div>
+    </label>
+  </li>
+</div>
+`;
+
+exports[`Tag component matches snapshot without close button 1`] = `
+<div>
+  <li
+    class="tag"
+  >
+    <label
+      class="cds--label cds--label--no-margin tagColor"
+      dir="auto"
+      for="tag_value_1"
+      title="duck"
+    >
+      <div
+        class="value-label"
+      >
+        duck
+      </div>
+    </label>
+  </li>
+</div>
+`;
