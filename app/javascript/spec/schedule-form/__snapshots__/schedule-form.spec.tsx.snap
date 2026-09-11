@@ -1608,7 +1608,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
               class="cds--select-input"
               id="instance_name"
               name="instance_name"
-              title="GenericObject"
+              title="<Choose>"
             >
               <option
                 class="cds--select-option"
@@ -2798,7 +2798,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
       class="cds--btn-set"
     >
       <button
-        class="cds--btn cds--btn--primary"
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
         type="submit"
         variant="primary"
       >
