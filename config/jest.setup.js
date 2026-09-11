@@ -67,6 +67,14 @@ window.listenToRx = listenToRx;
 
 // mock miq_application helpers
 window.add_flash = (x) => true;
+window.miqDeferred = () => {
+  const deferred = {};
+  deferred.promise = new Promise((resolve, reject) => {
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+  });
+  return deferred;
+};
 
 // mock document.body.createTextRange for code mirror
 document.body.createTextRange = () => ({
