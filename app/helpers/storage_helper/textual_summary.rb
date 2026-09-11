@@ -8,7 +8,11 @@ module StorageHelper::TextualSummary
   end
 
   def textual_group_registered_vms
-    TextualGroup.new(_("Information for Registered VMs"), %i[uncommitted_space used_uncommitted_space])
+    if !@record.respond_to?(:supports?) || @record.supports?(:uncommitted)
+      TextualGroup.new(_("Information for Registered VMs"), %i[uncommitted_space used_uncommitted_space])
+    else
+      TextualGroup.new(_("Information for Registered VMs"), %i[uncommitted_space])
+    end
   end
 
   def textual_group_relationships
@@ -36,6 +40,11 @@ module StorageHelper::TextualSummary
   end
 
   def textual_free_space
+    unless @record.supports?(:free_space)
+      return {:label => _("Free Space"),
+              :value => _("N/A"),
+              :title => @record.unsupported_reason(:free_space)}
+    end
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
     return nil if @record["free_space"].nil?
     {:label => _("Free Space"),
@@ -44,19 +53,30 @@ module StorageHelper::TextualSummary
   end
 
   def textual_used_space
+    return nil unless @record.supports?(:free_space)
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
     {:label => _("Used Space"),
      :value => "#{number_to_human_size(@record.used_space, :precision => 2)} (#{@record.used_space_percent_of_total}%)"}
   end
 
   def textual_total_space
-    return nil if @record["free_space"].nil? && @record["total_space"].nil?
-    return nil if @record["total_space"].nil?
-    {:label => _("Total Space"), :value => "#{number_to_human_size(@record["total_space"], :precision => 2)} (100%)"}
+    if @record.supports?(:free_space)
+      return nil if @record["free_space"].nil? && @record["total_space"].nil?
+      return nil if @record["total_space"].nil?
+      {:label => _("Total Space"), :value => "#{number_to_human_size(@record["total_space"], :precision => 2)} (100%)"}
+    else
+      return nil if @record["total_space"].nil?
+      {:label => _("Total Claimed Capacity"), :value => "#{number_to_human_size(@record["total_space"], :precision => 2)} (100%)"}
+    end
   end
 
   def textual_uncommitted_space
     return nil if @record["total_space"].nil?
+    unless @record.supports?(:uncommitted)
+      return {:label => _("Uncommitted Space"),
+              :value => _("N/A"),
+              :title => @record.unsupported_reason(:uncommitted)}
+    end
     space = if @record["uncommitted"].blank?
               _("None")
             else

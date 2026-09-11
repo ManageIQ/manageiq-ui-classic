@@ -156,6 +156,8 @@ class GtlFormatter
         item = {:title => text,
                 :image => ActionController::Base.helpers.image_path(image.to_s),
                 :text  => text}.compact
+      elsif view.db == 'Storage' && record.respond_to?(:supports?)
+        celltext = storage_gtl_cell(record, view, row, col)
       else
         celltext = format_col_for_display(view, row, col)
       end
@@ -308,5 +310,17 @@ class GtlFormatter
 
   def self.alert_severity_format(value)
     [_(MiqAlertController::SEVERITIES[value]), nil]
+  end
+
+  # Returns "—" for storage columns that require free_space support when the
+  # record does not support it; otherwise falls back to normal column formatting.
+  STORAGE_FREE_SPACE_COLS = %w[free_space v_free_space_percent_of_total].freeze
+  STORAGE_UNCOMMITTED_COLS = %w[uncommitted v_used_space_percent_of_total].freeze
+
+  def self.storage_gtl_cell(record, view, row, col)
+    return "—" if STORAGE_FREE_SPACE_COLS.include?(col) && !record.supports?(:free_space)
+    return "—" if STORAGE_UNCOMMITTED_COLS.include?(col) && !record.supports?(:uncommitted)
+
+    format_col_for_display(view, row, col)
   end
 end

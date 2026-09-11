@@ -332,7 +332,9 @@ module RequestInfoHelper
   def prov_ds_grid_cells(data, edit)
     cells = []
     edit[:ds_columns].each do |col|
-      cells << if %w[free_space total_space].include?(col)
+      cells << if col == 'free_space' && data.respond_to?(:supports?) && !data.supports?(:free_space)
+                 prov_cell_data(_("N/A"))
+               elsif %w[free_space total_space].include?(col)
                  prov_cell_data(number_to_human_size(data.send(col), :precision => 1))
                else
                  prov_cell_data(data.send(col))

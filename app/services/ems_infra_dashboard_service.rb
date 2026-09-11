@@ -100,10 +100,39 @@ class EmsInfraDashboardService < EmsDashboardService
     end
 
     {
-      :clusterCpuUsage    => cluster_cpu_usage.presence,
-      :clusterMemoryUsage => cluster_memory_usage.presence,
-      :title              => _('Cluster Utilization'),
+      :clusterCpuUsage     => cluster_cpu_usage.presence,
+      :clusterMemoryUsage  => cluster_memory_usage.presence,
+      :clusterStorageUsage => cluster_storage_usage.presence,
+      :title               => _('Cluster Utilization'),
     }
+  end
+
+  # Returns per-cluster storage utilization entries.  Datastores that do not
+  # support :free_space (e.g. KubeVirt CDI volumes) are excluded so that their
+  # 0-byte free_space values do not falsely inflate the utilisation percentage.
+  def cluster_storage_usage
+    clusters = @ems.present? ? @ems.ems_clusters.includes(:storages) : EmsCluster.includes(:storages)
+    provider_name = @ems.presence&.name
+
+    clusters.filter_map do |cluster|
+      eligible = cluster.storages.select { |s| s.respond_to?(:supports?) && s.supports?(:free_space) }
+      next if eligible.empty?
+
+      total_space = eligible.sum { |s| s.total_space.to_i }
+      next if total_space.zero?
+
+      used_space = eligible.sum { |s| s.used_space.to_i }
+      percent = (used_space.to_f / total_space).round(CPU_USAGE_PRECISION)
+
+      {
+        :id       => cluster.id,
+        :node     => cluster.name,
+        :provider => provider_name || cluster.ext_management_system&.name,
+        :unit     => "GB",
+        :total    => (total_space / 1.gigabyte.to_f).round,
+        :percent  => percent,
+      }
+    end
   end
 
   def ems_utilization

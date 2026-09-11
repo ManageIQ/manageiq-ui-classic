@@ -98,4 +98,99 @@ describe StorageHelper do
   include_examples "textual_group_smart_management"
 
   include_examples "textual_group", "Content", %i(files disk_files snapshot_files vm_ram_files vm_misc_files debris_files)
+
+  describe 'when free_space is not supported' do
+    before do
+      @record = FactoryBot.create(:storage, :total_space => 1.gigabyte)
+      stub_supports_not(@record, :free_space, "Free space is not available for this storage type")
+      stub_supports_not(@record, :uncommitted, "Uncommitted is not available for this storage type")
+    end
+
+    describe '#textual_free_space' do
+      it 'returns N/A with the unsupported reason as tooltip' do
+        result = textual_free_space
+        expect(result[:label]).to eq("Free Space")
+        expect(result[:value]).to eq("N/A")
+        expect(result[:title]).to eq("Free space is not available for this storage type")
+      end
+    end
+
+    describe '#textual_used_space' do
+      it 'returns nil to suppress the used space row' do
+        expect(textual_used_space).to be_nil
+      end
+    end
+
+    describe '#textual_total_space' do
+      it 'uses the "Total Claimed Capacity" label' do
+        result = textual_total_space
+        expect(result[:label]).to eq("Total Claimed Capacity")
+      end
+
+      it 'still shows the total_space value' do
+        result = textual_total_space
+        expect(result[:value]).to match(/GiB|GB|Bytes/)
+      end
+    end
+
+    describe '#textual_uncommitted_space' do
+      it 'returns N/A with the unsupported reason as tooltip' do
+        result = textual_uncommitted_space
+        expect(result[:label]).to eq("Uncommitted Space")
+        expect(result[:value]).to eq("N/A")
+        expect(result[:title]).to eq("Uncommitted is not available for this storage type")
+      end
+    end
+
+    describe '#textual_group_registered_vms' do
+      it 'omits used_uncommitted_space from the group' do
+        group = textual_group_registered_vms
+        expect(group.items).not_to include(:used_uncommitted_space)
+      end
+    end
+  end
+
+  describe 'when free_space is supported' do
+    before do
+      @record = FactoryBot.create(:storage, :total_space => 1.gigabyte, :free_space => 512.megabytes)
+      stub_supports(@record, :free_space)
+      stub_supports(@record, :uncommitted)
+    end
+
+    describe '#textual_free_space' do
+      it 'shows the free space value and percentage' do
+        result = textual_free_space
+        expect(result[:label]).to eq("Free Space")
+        expect(result[:value]).to match(/\d/)
+      end
+    end
+
+    describe '#textual_used_space' do
+      it 'returns the used space row' do
+        result = textual_used_space
+        expect(result[:label]).to eq("Used Space")
+      end
+    end
+
+    describe '#textual_total_space' do
+      it 'uses the standard "Total Space" label' do
+        result = textual_total_space
+        expect(result[:label]).to eq("Total Space")
+      end
+    end
+
+    describe '#textual_uncommitted_space' do
+      it 'returns the uncommitted space row' do
+        result = textual_uncommitted_space
+        expect(result[:label]).to eq("Uncommitted Space")
+      end
+    end
+
+    describe '#textual_group_registered_vms' do
+      it 'includes used_uncommitted_space in the group' do
+        group = textual_group_registered_vms
+        expect(group.items).to include(:used_uncommitted_space)
+      end
+    end
+  end
 end
