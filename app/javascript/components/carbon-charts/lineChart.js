@@ -4,6 +4,7 @@ import { LineChart } from '@carbon/charts-react';
 const LineChartGraph = ({
   data = null,
   title = '',
+  dualYAxis = null,
 }) => {
   const options = {
     title,
@@ -16,6 +17,14 @@ const LineChartGraph = ({
         mapsTo: 'value',
         scaleType: 'linear',
       },
+      ...(dualYAxis && {
+        right: {
+          mapsTo: dualYAxis.mapsTo,
+          scaleType: 'linear',
+          title: dualYAxis.title,
+          correspondingDatasets: dualYAxis.correspondingDatasets,
+        },
+      }),
     },
     height: '400px',
     tooltip: {
@@ -33,6 +42,11 @@ const LineChartGraph = ({
 LineChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
+  dualYAxis: PropTypes.shape({
+    mapsTo: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    correspondingDatasets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
 };
 
 export default LineChartGraph;
