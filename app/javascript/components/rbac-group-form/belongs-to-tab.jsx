@@ -3,27 +3,87 @@ import PropTypes from 'prop-types';
 import CheckboxTree from 'react-checkbox-tree';
 import { Button } from '@carbon/react';
 import {
+  AssemblyCluster,
+  Building,
   CheckboxChecked,
   Checkbox,
   CheckboxCheckedFilled,
   ChevronRight,
   ChevronDown,
+  DataBase,
+  DataCenter,
+  Document,
   Folder,
   FolderOpen,
+  InfrastructureClassic,
+  Template,
+  VirtualMachine,
 } from '@carbon/react/icons';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 const carbonIcons = {
-  check: <span><CheckboxCheckedFilled /></span>,
-  uncheck: <span><Checkbox /></span>,
-  halfCheck: <span><CheckboxChecked /></span>,
-  expandClose: <span><ChevronRight /></span>,
-  expandOpen: <span><ChevronDown /></span>,
-  parentClose: <span><Folder /></span>,
-  parentOpen: <span><FolderOpen /></span>,
+  check: <CheckboxCheckedFilled />,
+  uncheck: <Checkbox />,
+  halfCheck: <CheckboxChecked />,
+  expandClose: <ChevronRight />,
+  expandOpen: <ChevronDown />,
+  parentClose: <Folder />,
+  parentOpen: <FolderOpen />,
+  leaf: <Document />,
 };
 
-// Convert bs_tree node format {key, text, nodes} to react-checkbox-tree format {value, label, children}
+// Maps pficon/fa CSS class strings (from bs_tree node.icon) to Carbon icon elements.
+// Covers every icon used by TreeBuilderBelongsToHac and TreeBuilderBelongsToVat.
+const PFICON_TO_CARBON = {
+  'pficon pficon-folder-close': <Folder />,
+  'pficon pficon-folder-close-blue': <Folder style={{ fill: '#0099cc' }} />,
+  'pficon pficon-virtual-machine': <VirtualMachine />,
+  'pficon pficon-template': <Template />,
+  'pficon pficon-server': <InfrastructureClassic />,
+  'pficon pficon-cluster': <AssemblyCluster />,
+  'pficon pficon-container-node': <DataCenter />,
+  'fa fa-building-o': <Building />,
+  'fa fa-database': <DataBase />,
+};
+
+// Resolves the best icon for a bs_tree node.
+// 1. If the node has a vendor SVG image URL (providers), render it as an <img>.
+// 2. If the node has a pficon/fa icon class string, map it to a Carbon icon.
+// 3. Otherwise return null and let react-checkbox-tree use the default parent/leaf icon.
+const resolveNodeIcon = (node) => {
+  if (node.image) {
+    return <img src={node.image} alt="" className="belongs-to-tab__node-icon" />;
+  }
+  return PFICON_TO_CARBON[node.icon] || null;
+};
+
+// Returns all non-disabled node values in the tree (for Select All).
+const getAllValues = (nodeList) => {
+  let vals = [];
+  nodeList.forEach((n) => {
+    if (!n.disabled) {
+      vals.push(n.value);
+    }
+    if (n.children) {
+      vals = vals.concat(getAllValues(n.children));
+    }
+  });
+  return vals;
+};
+
+// Returns all parent (branch) node values in the tree (for expanding on Select All).
+const getAllParentValues = (nodeList) => {
+  let vals = [];
+  nodeList.forEach((n) => {
+    if (n.children) {
+      vals.push(n.value);
+      vals = vals.concat(getAllParentValues(n.children));
+    }
+  });
+  return vals;
+};
+
+// Convert bs_tree node format {key, text, icon, image, nodes} to react-checkbox-tree format
 const convertNodes = (nodes) => {
   if (!nodes) {
     return [];
@@ -31,6 +91,7 @@ const convertNodes = (nodes) => {
   return nodes.map((node) => ({
     value: node.key || node.value,
     label: node.text || node.label,
+    icon: resolveNodeIcon(node),
     children: node.nodes && node.nodes.length > 0 ? convertNodes(node.nodes) : undefined,
     showCheckbox: !node.hideCheckbox,
     disabled: node.checkable === false,
@@ -70,23 +131,12 @@ const BelongsToTab = ({
         <p>{limitedMessage}</p>
       )}
       {!readOnly && (
-        <div style={{ marginBottom: '0.5rem' }}>
+        <div className="belongs-to-tab__actions">
           <Button
             kind="ghost"
             size="sm"
             onClick={() => {
-              const getAllValues = (nodeList) => {
-                let vals = [];
-                nodeList.forEach((n) => {
-                  if (!n.disabled && n.showCheckbox !== false) {
-                    vals.push(n.value);
-                  }
-                  if (n.children) {
-                    vals = vals.concat(getAllValues(n.children));
-                  }
-                });
-                return vals;
-              };
+              setExpanded(getAllParentValues(nodes));
               onCheckedChange(getAllValues(nodes));
             }}
           >
@@ -102,6 +152,7 @@ const BelongsToTab = ({
         </div>
       )}
       <CheckboxTree
+        checkModel="all"
         icons={carbonIcons}
         nodes={nodes}
         checked={checked}

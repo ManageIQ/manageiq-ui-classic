@@ -54,7 +54,6 @@ const defaultProps = {
   readOnly: false,
   currentTenantName: 'My Tenant',
   superAdminUser: true,
-  deletedBelongstoFilters: [],
 };
 
 beforeEach(() => {
@@ -104,9 +103,10 @@ describe('RbacGroupForm', () => {
   it('renders read-only view when readOnly=true', async() => {
     renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
 
+    // Group Information fields are rendered by the HAML helper in read-only mode,
+    // not by the React form. The React form only shows the filter tabs.
     await waitFor(() => {
-      // Form fields should still be present (MiqFormRenderer renders them read-only)
-      expect(document.getElementById('description')).toBeInTheDocument();
+      expect(document.getElementById('description')).not.toBeInTheDocument();
     });
     // Should show "Assigned Filters (read only)" heading from FilterTabs
     await waitFor(() => {
@@ -122,13 +122,13 @@ describe('RbacGroupForm', () => {
     });
   });
 
-  it('shows deleted belongsto warning when deletedBelongstoFilters is non-empty', async() => {
-    renderWithRedux(
-      <RbacGroupForm
-        {...defaultProps}
-        deletedBelongstoFilters={['/ManageIQ/Providers/Amazon/...']}
-      />
+  it('shows deleted belongsto warning when deleted_belongsto_filters is non-empty in form data', async() => {
+    fetchMock.get(
+      /\/ops\/group_form_data\//,
+      { ...mockExtra, deleted_belongsto_filters: ['/ManageIQ/Providers/Amazon/...'] },
+      { overwriteRoutes: true }
     );
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByText(/outdated filters need review/i)).toBeInTheDocument();
@@ -228,6 +228,96 @@ describe('RbacGroupForm', () => {
           expect.objectContaining({ action: 'edit' })
         );
       });
+    });
+  });
+
+  describe('reset button', () => {
+    it('shows "All changes have been reset" notification after clicking Reset', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Dirty the form so the Reset button becomes enabled
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /reset/i }));
+
+      await waitFor(() => {
+        expect(screen.getByText('All changes have been reset')).toBeInTheDocument();
+      });
+    });
+
+    it('restores the original field values after clicking Reset', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toHaveValue('Test Group');
+      });
+
+      await user.clear(document.getElementById('description'));
+      await user.type(document.getElementById('description'), 'Changed Name');
+      expect(document.getElementById('description')).toHaveValue('Changed Name');
+
+      await user.click(screen.getByRole('button', { name: /reset/i }));
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toHaveValue('Test Group');
+      });
+    });
+  });
+
+  describe('submit error handling', () => {
+    beforeEach(() => {
+      fetchMock.restore();
+      fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+      fetchMock.get(/\/api\/roles/, mockRoles);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+    });
+
+    it('shows an error notification when the API call fails on submit', async() => {
+      fetchMock.post(/\/api\/groups\/1/, 400);
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Dirty the form so the pristine guard doesn't block submit
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+      expect(miqRedirectBack).not.toHaveBeenCalled();
+    });
+
+    it('does not navigate away when the API call fails on submit', async() => {
+      fetchMock.post(/\/api\/groups\/1/, { throws: new Error('Network error') });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+      expect(miqRedirectBack).not.toHaveBeenCalled();
     });
   });
 

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Dropdown } from '@carbon/react';
+import { Information } from '@carbon/react/icons';
 import TaggingPropTypes from './tagging-prop-types';
 
 const itemToElement = (item, infoText) => {
@@ -10,16 +11,11 @@ const itemToElement = (item, infoText) => {
   if (item.singleValue) {
     return (
       <div>
-        <span
-          style={{
-            display: 'inline-block',
-            width: 'calc(100% - 18px)',
-          }}
-        >
+        <span className="tag-selector-label">
           {item.label}
         </span>
-        <span
-          className="pull-right pficon pficon-info tag-icon"
+        <Information
+          className="pull-right tag-icon"
           title={infoText}
           aria-hidden="true"
         />

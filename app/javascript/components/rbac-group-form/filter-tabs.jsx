@@ -56,9 +56,10 @@ const FilterTabs = (props) => {
               }}
               filterExpression={filterExpression}
               onExpressionChange={(q, errors) => {
-                if (errors.length === 0) {
-                  update({ filterExpression: q });
-                }
+                update({
+                  filterExpression: errors.length === 0 ? q : filterExpression,
+                  expressionHasErrors: errors.length > 0,
+                });
               }}
               readOnly={readOnly}
             />

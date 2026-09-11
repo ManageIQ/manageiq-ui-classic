@@ -1,3 +1,5 @@
 = render :partial => "layouts/flash_msg"
-- react_props = {:groupId => (@group || @record)&.id, :readOnly => @edit.nil?, :currentTenantName => current_tenant.name, :superAdminUser => super_admin_user?, :deletedBelongstoFilters => @deleted_belongsto_filters || []}
+- if @edit.nil? && @group
+  = group_rbac_details_summary(@group)
+- react_props = {:groupId => (@group || @record)&.id, :readOnly => @edit.nil?, :currentTenantName => current_tenant.name, :superAdminUser => super_admin_user?}
 = react('RbacGroupForm', react_props)

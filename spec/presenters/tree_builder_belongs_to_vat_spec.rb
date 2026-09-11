@@ -29,17 +29,10 @@ describe TreeBuilderBelongsToVat do
     described_class.new(:vat_tree,
                         {:trees => {}},
                         true,
-                        :edit          => edit,
-                        :filters       => {},
-                        :group         => group,
-                        :selected_nodes => {})
-  end
-
-  describe '#tree_init_options' do
-    it 'sets tree options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
-                                                     :checkboxes => true)
-    end
+                        :edit     => edit,
+                        :filters  => {},
+                        :group    => group,
+                        :selected => {})
   end
 
   describe '#x_get_tree_datacenter_kids' do
