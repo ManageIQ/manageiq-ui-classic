@@ -12,10 +12,12 @@ const LineChartGraph = ({
     title,
     axes: {
       bottom: {
+        title: __('Date'),
         mapsTo: 'key',
         scaleType: 'time',
       },
       left: {
+        title: __('Value'),
         mapsTo: 'value',
         scaleType: 'linear',
         ticks: {
@@ -27,6 +29,17 @@ const LineChartGraph = ({
     tooltip: {
       truncation: {
         type: 'none',
+      },
+      valueFormatter(value, label) {
+        if (value instanceof Date || label === __('Date') || label === 'x-value') {
+          return value instanceof Date
+            ? value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            : value;
+        }
+        if (label === 'Group' || label === __('Group')) {
+          return value;
+        }
+        return getYAxisValue(format, value);
       },
     },
   };

@@ -12,12 +12,14 @@ const GroupBarChart = ({
     title,
     axes: {
       left: {
+        title: __('Value'),
         mapsTo: 'value',
         ticks: {
           formatter(n) { return getYAxisValue(format, n); },
         },
       },
       bottom: {
+        title: __('Date'),
         scaleType: 'labels',
         mapsTo: 'key',
       },
@@ -26,6 +28,17 @@ const GroupBarChart = ({
     tooltip: {
       truncation: {
         type: 'none',
+      },
+      valueFormatter(value, label) {
+        if (value instanceof Date || label === __('Date') || label === 'x-value') {
+          return value instanceof Date
+            ? value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            : value;
+        }
+        if (label === 'Group' || label === __('Group')) {
+          return value;
+        }
+        return getYAxisValue(format, value);
       },
     },
   };
