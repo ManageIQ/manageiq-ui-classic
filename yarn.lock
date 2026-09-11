@@ -7631,13 +7631,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:~5.21.0":
-  version: 5.21.6
-  resolution: "enhanced-resolve@npm:5.21.6"
+"enhanced-resolve@npm:~5.24.0":
+  version: 5.24.5
+  resolution: "enhanced-resolve@npm:5.24.5"
   dependencies:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.3.3"
-  checksum: 10/7599496622b1718727409bc1944e19ad72492add909a3f9d905bbc9d81bade42b8bece156bfbe30ee8d1bbc8b24abc9d8bf194f4d46173a6adc919e95766753a
+  checksum: 10/cf3f6f62bd52c1d564d7967e474892d5b43690aedaf7a4e87c831fa6b4b065617baf08eb940907968c711965cbc6ccd773bcc67b8d87a71523c0512372be2a06
   languageName: node
   linkType: hard
 
@@ -11629,7 +11629,7 @@ __metadata:
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.3.2"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
-    enhanced-resolve: "npm:~5.21.0"
+    enhanced-resolve: "npm:~5.24.0"
     eslint: "npm:~9.7.0"
     eslint-plugin-angular: "npm:~5.0.0"
     eslint-plugin-import: "npm:~2.32.0"
