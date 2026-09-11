@@ -7,6 +7,7 @@ describe 'routes for CatalogController' do
   it_behaves_like 'A controller that has explorer routes'
 
   %w(
+    ab_button_form_data
     download_data
     explorer
     ot_edit
@@ -27,9 +28,6 @@ describe 'routes for CatalogController' do
     ae_tree_select_toggle
     atomic_form_field_changed
     atomic_st_edit
-    automate_button_field_changed
-    button_create
-    button_update
     explorer
     group_create
     group_reorder_field_changed
