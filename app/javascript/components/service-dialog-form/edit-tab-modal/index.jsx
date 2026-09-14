@@ -5,7 +5,7 @@ import tabSchema from './tab.schema';
 
 const EditTabModal = ({
   tab,
-  isOpen,
+  isOpen = false,
   onSave,
   onClose,
 }) => {
@@ -39,11 +39,6 @@ EditTabModal.propTypes = {
   isOpen: PropTypes.bool,
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-};
-
-EditTabModal.defaultProps = {
-  tab: undefined,
-  isOpen: false,
 };
 
 export default EditTabModal;
