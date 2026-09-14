@@ -274,11 +274,11 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
  *   onClose()        — called on Cancel
  */
 const EditFieldModal = ({
-  isOpen,
+  isOpen = false,
   field,
   dialogData,
-  emsWorkflowsEnabled,
-  categories,
+  emsWorkflowsEnabled = false,
+  categories = [],
   onSave,
   onClose,
 }) => {
@@ -381,13 +381,6 @@ EditFieldModal.propTypes = {
   categories: PropTypes.array,
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-};
-
-EditFieldModal.defaultProps = {
-  isOpen: false,
-  dialogData: undefined,
-  emsWorkflowsEnabled: false,
-  categories: [],
 };
 
 export default EditFieldModal;

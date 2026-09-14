@@ -21,7 +21,7 @@ const DynamicSection = ({
   tabIndex,
   sectionIndex,
   onAction,
-  emsWorkflowsEnabled,
+  emsWorkflowsEnabled = false,
   dialogData,
 }) => {
   const [dragFieldIndex, setDragFieldIndex] = useState(null);
@@ -209,11 +209,6 @@ DynamicSection.propTypes = {
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
   dialogData: PropTypes.object,
-};
-
-DynamicSection.defaultProps = {
-  emsWorkflowsEnabled: false,
-  dialogData: undefined,
 };
 
 export default DynamicSection;
