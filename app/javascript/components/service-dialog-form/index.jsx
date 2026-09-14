@@ -481,7 +481,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = fal
                     kind="tertiary"
                     renderIcon={AddAlt}
                     onClick={() => openSectionEditModal(ti, null)}
-                    style={{ marginTop: '0.5rem' }}
+                    className="service-dialog-form__add-section-btn"
                   >
                     {__('Add Section')}
                   </Button>
