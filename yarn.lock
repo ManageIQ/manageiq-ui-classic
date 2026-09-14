@@ -1656,7 +1656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/feature-flags@npm:^1.8.0, @carbon/feature-flags@npm:^1.9.0":
+"@carbon/feature-flags@npm:^1.9.0":
   version: 1.9.0
   resolution: "@carbon/feature-flags@npm:1.9.0"
   dependencies:
@@ -1684,7 +1684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.87.0":
+"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.88.0":
   version: 11.88.0
   resolution: "@carbon/icons-react@npm:11.88.0"
   dependencies:
@@ -1697,7 +1697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/layout@npm:^11.58.0, @carbon/layout@npm:^11.59.0":
+"@carbon/layout@npm:^11.59.0":
   version: 11.59.0
   resolution: "@carbon/layout@npm:11.59.0"
   dependencies:
@@ -1706,7 +1706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:^11.51.0, @carbon/motion@npm:^11.52.0":
+"@carbon/motion@npm:^11.52.0":
   version: 11.52.0
   resolution: "@carbon/motion@npm:11.52.0"
   dependencies:
@@ -1715,16 +1715,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:~1.115.0":
-  version: 1.115.0
-  resolution: "@carbon/react@npm:1.115.0"
+"@carbon/react@npm:~1.116.0":
+  version: 1.116.0
+  resolution: "@carbon/react@npm:1.116.0"
   dependencies:
     "@babel/runtime": "npm:^8.0.0"
-    "@carbon/feature-flags": "npm:^1.8.0"
-    "@carbon/icons-react": "npm:^11.87.0"
-    "@carbon/layout": "npm:^11.58.0"
-    "@carbon/motion": "npm:^11.51.0"
-    "@carbon/styles": "npm:^1.114.0"
+    "@carbon/feature-flags": "npm:^1.9.0"
+    "@carbon/icons-react": "npm:^11.88.0"
+    "@carbon/layout": "npm:^11.59.0"
+    "@carbon/motion": "npm:^11.52.0"
+    "@carbon/styles": "npm:^1.115.0"
     "@carbon/utilities": "npm:^0.25.0"
     "@floating-ui/react": "npm:^0.27.4"
     "@ibm/telemetry-js": "npm:^1.5.0"
@@ -1743,11 +1743,11 @@ __metadata:
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-is: ^16.13.1 || ^17.0.2 || ^18.3.1 || ^19.0.0
     sass: ^1.33.0
-  checksum: 10/b3f3a7645279e38eaf4947da088e2493ece62a1bd46b2e8f37f762ccffc83c0fda5220a0695a563953c0d769d8dc83048497807c0a97b9add42f234ebbac3123
+  checksum: 10/45e6aa80a63a93d7bce9be5946a25fa830e0a0df4108a5cedefd22d668e6e662604a51085a9ddb05fda549f1890fd72929dfe24a297c8699f30919aa3837684e
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.114.0":
+"@carbon/styles@npm:^1.115.0":
   version: 1.115.0
   resolution: "@carbon/styles@npm:1.115.0"
   dependencies:
@@ -11582,7 +11582,7 @@ __metadata:
     "@babel/preset-react": "npm:~8.0.1"
     "@babel/preset-typescript": "npm:~8.0.1"
     "@carbon/charts-react": "npm:~1.27.3"
-    "@carbon/react": "npm:~1.115.0"
+    "@carbon/react": "npm:~1.116.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.2.0"
     "@data-driven-forms/react-form-renderer": "npm:~4.2.0"
     "@eslint/js": "npm:~9.7.0"

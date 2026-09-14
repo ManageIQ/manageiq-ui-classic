@@ -74,9 +74,6 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -138,9 +135,6 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -202,9 +196,6 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -266,9 +257,6 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -899,9 +887,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -963,9 +948,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -1027,9 +1009,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -1091,9 +1070,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -1155,9 +1131,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -1219,9 +1192,6 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2092,9 +2062,6 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2365,9 +2332,6 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2429,9 +2393,6 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2822,9 +2783,6 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2886,9 +2844,6 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -2950,9 +2905,6 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3463,9 +3415,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3527,9 +3476,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3591,9 +3537,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3655,9 +3598,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3719,9 +3659,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3783,9 +3720,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3847,9 +3781,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
@@ -3911,9 +3842,6 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                       />
                     </svg>
-                    <div
-                      class="cds--table-header-label--decorator-inner"
-                    />
                   </span>
                 </button>
               </th>
