@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import { tableData } from './helper';
 
-const VmDisks = ({ recordId, isTemplate }) => {
+const VmDisks = ({ recordId, isTemplate = false }) => {
   const [{ disks, isLoading }, setState] = useState({ disks: [], isLoading: true });
 
   useEffect(() => {
@@ -35,10 +35,6 @@ const VmDisks = ({ recordId, isTemplate }) => {
 VmDisks.propTypes = {
   recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isTemplate: PropTypes.bool,
-};
-
-VmDisks.defaultProps = {
-  isTemplate: false,
 };
 
 export default VmDisks;
