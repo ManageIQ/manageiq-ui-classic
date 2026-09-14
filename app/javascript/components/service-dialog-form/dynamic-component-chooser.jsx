@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { fieldComponents } from './data';
 
-const DynamicComponentChooser = ({ onDragStart }) => (
+const DynamicComponentChooser = ({ onDragStart = undefined }) => (
   <div className="dynamic-component-chooser">
     <div className="dynamic-component-chooser__title">
       {__('Fields')}
@@ -36,10 +36,6 @@ const DynamicComponentChooser = ({ onDragStart }) => (
 
 DynamicComponentChooser.propTypes = {
   onDragStart: PropTypes.func,
-};
-
-DynamicComponentChooser.defaultProps = {
-  onDragStart: undefined,
 };
 
 export default DynamicComponentChooser;

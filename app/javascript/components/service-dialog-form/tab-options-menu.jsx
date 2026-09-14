@@ -7,7 +7,6 @@ const TabOptionsMenu = ({ onEdit, onDelete }) => (
     flipped
     aria-label={__('Tab options')}
     iconDescription={__('Options')}
-    selectorPrimaryFocus=".bx--overflow-menu-options__btn"
   >
     <OverflowMenuItem
       itemText={__('Edit')}
