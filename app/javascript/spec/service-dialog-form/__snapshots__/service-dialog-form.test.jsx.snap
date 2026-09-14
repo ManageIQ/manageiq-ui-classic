@@ -570,8 +570,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
             data-testid="dynamic-section"
           />
           <button
-            class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary"
-            style="margin-top: 0.5rem;"
+            class="service-dialog-form__add-section-btn cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary"
             type="button"
           >
             Add Section
