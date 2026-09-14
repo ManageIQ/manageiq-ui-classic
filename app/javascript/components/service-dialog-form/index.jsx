@@ -39,7 +39,7 @@ import { defaultField, resetFieldCounters, seedFieldCounters } from './data';
 import './style.scss';
 
 // ── Main component ────────────────────────────────────────────────────────────
-const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled }) => {
+const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = false }) => {
   const { id: dialogId, action } = dialogAction || {};
 
   const [data, setData] = useState(null);
@@ -536,11 +536,6 @@ ServiceDialogForm.propTypes = {
     action: PropTypes.oneOf(['new', 'edit', 'copy']),
   }).isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
-};
-
-ServiceDialogForm.defaultProps = {
-  dialogData: undefined,
-  emsWorkflowsEnabled: false,
 };
 
 export default ServiceDialogForm;

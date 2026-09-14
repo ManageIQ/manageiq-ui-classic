@@ -408,7 +408,7 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
                             aria-expanded="false"
                             aria-haspopup="true"
                             aria-labelledby="tooltip-_r_9_"
-                            class="cds--overflow-menu cds--overflow-menu--sm cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
+                            class="cds--overflow-menu cds--overflow-menu--sm cds--layout--size-sm cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--icon-only"
                             type="button"
                           >
                             <svg

@@ -5,7 +5,7 @@ import sectionSchema from './section.schema';
 
 const EditSectionModal = ({
   section,
-  isOpen,
+  isOpen = false,
   onSave,
   onClose,
 }) => {
@@ -39,11 +39,6 @@ EditSectionModal.propTypes = {
   isOpen: PropTypes.bool,
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-};
-
-EditSectionModal.defaultProps = {
-  section: undefined,
-  isOpen: false,
 };
 
 export default EditSectionModal;
