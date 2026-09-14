@@ -256,7 +256,7 @@ class OrchestrationStackController < ApplicationController
 
   def orchestration_templates_view
     template = find_record_with_rbac(OrchestrationStack, params[:id]).orchestration_template
-    javascript_redirect(:controller => 'catalog', :action => 'ot_show', :id => template.id)
+    javascript_redirect(:controller => 'catalog', :action => 'explorer', :id => "ot-#{template.id}")
   end
 
   def title

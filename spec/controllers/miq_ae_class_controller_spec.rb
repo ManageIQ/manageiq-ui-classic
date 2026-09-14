@@ -1081,7 +1081,7 @@ describe MiqAeClassController do
     it 'calls build_accordions_and_trees, get_node_info and sets @explorer' do
       expect(controller).to receive(:get_node_info).with("aen-#{ae_domain.id}")
       expect(controller).to receive(:build_accordions_and_trees)
-      expect(controller).to receive(:render).with(:layout => 'application')
+      expect(controller).to receive(:render).with(:action => 'explorer', :layout => 'application')
       controller.send(:show)
       expect(controller.instance_variable_get(:@explorer)).to be(true)
     end

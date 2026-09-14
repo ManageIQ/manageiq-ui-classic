@@ -334,16 +334,14 @@ class CatalogController < ApplicationController
 
     @sb[:action] = nil
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
-    record = ServiceTemplate.find(params[:id])
-    if !@explorer
-      tree_node_id = TreeBuilder.build_node_id(record)
-      redirect_to(:controller => "catalog",
-                  :action     => "explorer",
-                  :id         => tree_node_id)
+
+    st = ServiceTemplate.find_by(:id => params[:id])
+    if st.nil?
+      redirect_to_explorer_with_error
       return
-    else
-      redirect_to(:action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id)
     end
+
+    redirect_to(:controller => "catalog", :action => "explorer", :id => "st-#{st.id}")
   end
 
   def explorer
@@ -360,11 +358,34 @@ class CatalogController < ApplicationController
 
     if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
-      self.x_active_tree   = 'sandt_tree'
-      self.x_active_accord = 'sandt'
-      st = ServiceTemplate.find(params[:id].split("-").last)
-      prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
-      self.x_node = "#{prefix}#{id}"
+
+      case @nodetype
+      when "ot"
+        assert_privileges("orchestration_templates_view")
+        @record = OrchestrationTemplate.find_by(:id => id)
+        redirect_to_explorer_with_error and return if @record.nil?
+
+        self.x_active_tree   = :ot_tree
+        self.x_active_accord = 'ot'
+        x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
+        ot_type = template_to_node_name(@record)
+        x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
+        self.x_node = "ot-#{@record.id}"
+        x_tree[:open_nodes].push(x_node)
+      when "st"
+        assert_privileges("catalog_items_view")
+        @record = ServiceTemplate.find_by(:id => id)
+        redirect_to_explorer_with_error and return if @record.nil?
+
+        self.x_active_tree   = 'sandt_tree'
+        self.x_active_accord = 'sandt'
+        prefix = @record.service_template_catalog_id ? "stc-#{@record.service_template_catalog_id}_st-" : "-Unassigned_st-"
+        self.x_node = "#{prefix}#{id}"
+      else
+        redirect_to_explorer_with_error
+        return
+      end
+
       get_node_info(x_node)
     else
       @in_a_form = false
@@ -396,7 +417,7 @@ class CatalogController < ApplicationController
   def identify_catalog(id = nil)
     kls = TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate" ? VmOrTemplate : ServiceTemplate
     @record = identify_record(id || params[:id], kls)
-    @tenants_tree = build_tenants_tree if kls == ServiceTemplate # Build the tree with available tenants for the Catalog Item/Bundle
+    @tenants_tree = build_tenants_tree if kls == ServiceTemplate && @record # Build the tree with available tenants for the Catalog Item/Bundle
     add_flash(_("This item is invalid"), :warning) unless @flash_array || @record.try(:template_valid?)
   end
 
@@ -411,25 +432,31 @@ class CatalogController < ApplicationController
         # link to Catalog Item clicked on catalog summary screen
         self.x_active_tree = :sandt_tree
         self.x_active_accord = 'sandt'
-        @record = ServiceTemplate.find(params[:rec_id])
+        @record = ServiceTemplate.find_by(:id => params[:rec_id])
       else
-        @record = ServiceTemplateCatalog.find(params[:id])
+        @record = ServiceTemplateCatalog.find_by(:id => params[:id])
       end
     elsif x_active_tree == :sandt_tree
       assert_privileges("catalog_items_view")
 
       identify_catalog(params[:id])
-      @record ||= ServiceTemplateCatalog.find(params[:id])
+      @record ||= ServiceTemplateCatalog.find_by(:id => params[:id])
     elsif x_active_tree == :ot_tree
       assert_privileges("orchestration_templates_view")
 
-      @record ||= OrchestrationTemplate.find(params[:id])
+      @record ||= OrchestrationTemplate.find_by(:id => params[:id])
     else
       assert_privileges("svc_catalog_provision", "svc_catalog_archive", "svc_catalog_unarchive")
 
       identify_catalog(params[:id])
-      @record ||= ServiceTemplateCatalog.find(params[:id])
+      @record ||= ServiceTemplateCatalog.find_by(:id => params[:id])
     end
+
+    if @record.nil?
+      redirect_to_explorer_with_error
+      return
+    end
+
     params[:id] = x_build_node_id(@record) # Get the tree node id
     tree_select
   end
@@ -866,17 +893,8 @@ class CatalogController < ApplicationController
 
   def ot_show
     assert_privileges("orchestration_templates_view")
-    id = params.delete(:id)
-    ot = OrchestrationTemplate.find(id)
-    self.x_active_tree = :ot_tree
-    self.x_active_accord = 'ot'
-    x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
-    ot_type = template_to_node_name(ot)
-    x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
-    self.x_node = "ot-#{ot.id}"
-    x_tree[:open_nodes].push(x_node)
     add_flash(params[:flash_message]) if params.key?(:flash_message)
-    explorer
+    redirect_to(:action => 'explorer', :id => "ot-#{params[:id]}")
   end
 
   private
