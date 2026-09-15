@@ -14,7 +14,7 @@ import KeyValueListComponent from '../../components/key-value-list';
 import EmbeddedAutomateEntryPoint from '../../components/embedded-automate-entry-point';
 import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry-point';
 import SelectedGroupsList from '../../components/selected-groups-list';
-import SortableList from '../../components/sortable-list';
+import { SortableListDDF } from '../../components/sortable-list';
 import ApCategoryTab from '../../components/ap-form/category-tab';
 import ApFileTab from '../../components/ap-form/file-tab';
 import ApRegistryTab from '../../components/ap-form/registry-tab';
@@ -32,7 +32,7 @@ const mapper = {
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'selected-groups-list': SelectedGroupsList,
-  'sortable-list': SortableList,
+  'sortable-list': SortableListDDF,
   'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,
   'font-icon-picker': FontIconPicker,
