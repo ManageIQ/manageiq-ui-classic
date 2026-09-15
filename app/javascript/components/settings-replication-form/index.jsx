@@ -36,7 +36,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const modalRef = useCallback((node) => {
     if (node) {
       const firstInput = node.querySelector('input, textarea, select');
-      if (firstInput) firstInput.focus();
+      if (firstInput) {
+        firstInput.focus();
+      }
     }
   }, []);
   const formApiRef = useRef(null);
@@ -168,7 +170,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       .filter((sub) => !sub.remove)
       .map((sub) => {
         // Remove newRecord flag using destructuring
-        // eslint-disable-next-line no-unused-vars
         const { newRecord, ...subscriptionWithoutNewRecordFlag } = sub;
         return subscriptionWithoutNewRecordFlag;
       });

@@ -104,7 +104,7 @@ describe('InstanceForm Component', () => {
       );
 
       await waitFor(() => {
-        expect(global.miqSparkleOff).toHaveBeenCalled();
+        expect(window.miqSparkleOff).toHaveBeenCalled();
       });
 
       expect(container).toMatchSnapshot();
@@ -170,7 +170,7 @@ describe('InstanceForm Component', () => {
   });
 
   describe('Edit Instance', () => {
-    it('should render edit instance form correctly', async () => {
+    it('should render edit instance form correctly', async() => {
       const recordId = '456';
       fetchMock.get(`/miq_ae_class/instance_form_data/${recordId}`, mockInstanceData);
 
@@ -179,13 +179,13 @@ describe('InstanceForm Component', () => {
       );
 
       await waitFor(() => {
-        expect(global.miqSparkleOff).toHaveBeenCalled();
+        expect(window.miqSparkleOff).toHaveBeenCalled();
       });
 
       expect(container).toMatchSnapshot();
     });
 
-    it('should load existing instance data', async () => {
+    it('should load existing instance data', async() => {
       const recordId = '456';
       fetchMock.get(`/miq_ae_class/instance_form_data/${recordId}`, mockInstanceData);
 
@@ -263,7 +263,6 @@ describe('InstanceForm Component', () => {
         );
       });
     });
-
   });
 
   describe('Form Actions', () => {

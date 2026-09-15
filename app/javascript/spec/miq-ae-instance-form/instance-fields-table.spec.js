@@ -140,7 +140,7 @@ describe('InstanceFieldsTable Component', () => {
       expect(editButtons).toHaveLength(2);
     });
 
-    it('should call onEditField when edit button is clicked', async () => {
+    it('should call onEditField when edit button is clicked', async() => {
       const user = userEvent.setup();
       renderWithRedux(
         <InstanceFieldsTable
@@ -162,7 +162,7 @@ describe('InstanceFieldsTable Component', () => {
       renderWithRedux(
         <InstanceFieldsTable
           fields={mockStateFields}
-          isStateClass={true}
+          isStateClass
           onEditField={mockOnEditField}
         />
       );
@@ -178,7 +178,7 @@ describe('InstanceFieldsTable Component', () => {
       renderWithRedux(
         <InstanceFieldsTable
           fields={mockStateFields}
-          isStateClass={true}
+          isStateClass
           onEditField={mockOnEditField}
         />
       );
@@ -194,7 +194,7 @@ describe('InstanceFieldsTable Component', () => {
       const { container } = renderWithRedux(
         <InstanceFieldsTable
           fields={mockStateFields}
-          isStateClass={true}
+          isStateClass
           onEditField={mockOnEditField}
         />
       );
@@ -310,7 +310,7 @@ describe('InstanceFieldsTable Component', () => {
       renderWithRedux(
         <InstanceFieldsTable
           fields={emptyStateFields}
-          isStateClass={true}
+          isStateClass
           onEditField={mockOnEditField}
         />
       );
@@ -371,7 +371,7 @@ describe('InstanceFieldsTable Component', () => {
       const { container } = renderWithRedux(
         <InstanceFieldsTable
           fields={mockStateFields}
-          isStateClass={true}
+          isStateClass
           onEditField={mockOnEditField}
         />
       );

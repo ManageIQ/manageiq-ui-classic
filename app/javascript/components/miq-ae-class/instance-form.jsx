@@ -37,7 +37,9 @@ const InstanceForm = ({ recordId = undefined, classId = undefined }) => {
   const modalRef = useCallback((node) => {
     if (node) {
       const firstInput = node.querySelector('input, textarea, select');
-      if (firstInput) firstInput.focus();
+      if (firstInput) {
+        firstInput.focus();
+      }
     }
   }, []);
 
