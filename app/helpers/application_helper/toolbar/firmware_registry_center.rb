@@ -7,8 +7,8 @@ class ApplicationHelper::Toolbar::FirmwareRegistryCenter < ApplicationHelper::To
         'fa fa-refresh fa-lg',
         N_('Refresh this page'),
         nil,
-        # needs the function because reload can't be called with different this
-        :data => { 'function' => 'function() { window.location.reload(); }' }
+        :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+        :data  => { 'function' => 'window.location.reload' }
       )
     ]
   )
