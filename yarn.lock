@@ -12423,11 +12423,11 @@ __metadata:
   linkType: hard
 
 "nan@npm:^2.12.1":
-  version: 2.28.0
-  resolution: "nan@npm:2.28.0"
+  version: 2.29.0
+  resolution: "nan@npm:2.29.0"
   dependencies:
     node-gyp: "npm:latest"
-  checksum: 10/299ffb18f43cc53b0728cb16ed15e868960168b84d4140b54c8e057c54e6714d0291eee63c02c3cae4bcf5d0d06b6a93fc8717d8d9ae72ad6d4e8eba5ddacc66
+  checksum: 10/feed70f1358b1c469745d27bfaa0e0d5d307471a8f929a2833822574fe944b3646fca09d36d90bb91eea0cc4a74e4a288e84847d945c8d77d5044378fed7f57e
   languageName: node
   linkType: hard
 
@@ -16944,8 +16944,8 @@ __metadata:
   linkType: hard
 
 "zod@npm:^3.25.0 || ^4.0.0":
-  version: 4.6.4
-  resolution: "zod@npm:4.6.4"
-  checksum: 10/634af87eedabcfcce94057ebde6808e0315d5040e59ba621252e5c99cb6fcb3293357ea1a76e214af62043da7d45277316918817ed6b9c90f77d08cbc100e9e7
+  version: 4.6.5
+  resolution: "zod@npm:4.6.5"
+  checksum: 10/db004952e4dc6eab38b70f0cdef9251a65da84f5d08c5a0ef85e2590cfa9c477544ce734161ff5c05f89a15f0967137607a7feb16716195e04965f030db47213
   languageName: node
   linkType: hard
