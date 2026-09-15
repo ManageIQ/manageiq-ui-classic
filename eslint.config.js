@@ -1074,6 +1074,7 @@ module.exports = [
         numeral: 'readonly',
         miq_bootstrap: 'writable',
         GitImport: 'writable',
+        ...globals.browser
       },
     },
     settings: {
