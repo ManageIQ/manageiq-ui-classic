@@ -1,6 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import MiqToolbar from '../../components/miq-toolbar';
+import { sendDataWithRx } from '../../miq_observable';
+
+jest.mock('../../miq_observable', () => ({
+  sendDataWithRx: jest.fn(),
+  listenToRx: jest.fn(() => ({ unsubscribe: jest.fn() })),
+}));
 
 const dashboardData = [
   [
@@ -37,9 +43,20 @@ const genericData = [
   ],
 ];
 
+const toolbarWithFunction = (fnString, fnData) => [[{
+  id: 'test_button',
+  type: 'button',
+  icon: 'fa fa-refresh fa-lg',
+  name: 'test_button',
+  title: 'Test',
+  enabled: true,
+  data: { function: fnString, 'function-data': fnData },
+}]];
+
 describe('<MiqToolbar />', () => {
   beforeEach(() => {
     window.matchMedia = jest.fn();
+    sendDataWithRx.mockClear();
   });
 
   it('renders DashboardToolbar', () => {
@@ -50,5 +67,42 @@ describe('<MiqToolbar />', () => {
   it('renders Toolbar', () => {
     render(<MiqToolbar kebabLimit={3} toolbars={genericData} />);
     expect(screen.getByTitle('Refresh this page')).toBeInTheDocument();
+  });
+
+  describe('onClick with data.function', () => {
+    it('calls a dot-path global function with the correct this and function-data', () => {
+      const mockFn = jest.fn();
+      window.myNamespace = { myAction: mockFn };
+
+      render(<MiqToolbar kebabLimit={3} toolbars={toolbarWithFunction('myNamespace.myAction', { foo: 'bar' })} />);
+      fireEvent.click(screen.getByTitle('Test'));
+
+      expect(mockFn).toHaveBeenCalledTimes(1);
+      expect(mockFn.mock.instances[0]).toBe(window.myNamespace);
+      expect(mockFn).toHaveBeenCalledWith({ foo: 'bar' });
+
+      delete window.myNamespace;
+    });
+
+    it('calls a nested function with the parent as this', () => {
+      const mockFn = jest.fn();
+      window.testNs = { nested: { action: mockFn } };
+
+      render(<MiqToolbar kebabLimit={3} toolbars={toolbarWithFunction('testNs.nested.action', undefined)} />);
+      fireEvent.click(screen.getByTitle('Test'));
+
+      expect(mockFn).toHaveBeenCalledTimes(1);
+      expect(mockFn.mock.instances[0]).toBe(window.testNs.nested);
+
+      delete window.testNs;
+    });
+
+    it('falls back to sendDataWithRx when function name does not resolve', () => {
+      const payload = { controller: 'someController' };
+      render(<MiqToolbar kebabLimit={3} toolbars={toolbarWithFunction('nonExistentFunction', payload)} />);
+      fireEvent.click(screen.getByTitle('Test'));
+
+      expect(sendDataWithRx).toHaveBeenCalledWith(payload);
+    });
   });
 });
