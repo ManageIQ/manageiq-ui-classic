@@ -1279,21 +1279,6 @@ window.add_expanding_icon = function(element) {
   element.find('.pull-right').append("<a onclick='toggle_expansion(this)'> <i class='fa fa-angle-right'></i>");
 };
 
-window.rbacGroupLoadTab = function(id) {
-  const lazy = $(`#${id}`).hasClass('lazy');
-  if (!lazy) {
-    // already loaded
-    return;
-  }
-
-  $(`#${id}`).removeClass('lazy');
-
-  miqJqueryRequest(`/ops/rbac_group_load_tab?tab_id=${id}`, {
-    beforeSend: true,
-    complete: true,
-  });
-};
-
 window.chartData = function(type, data, data2) {
   if (type === undefined) {
     return emptyChart();
