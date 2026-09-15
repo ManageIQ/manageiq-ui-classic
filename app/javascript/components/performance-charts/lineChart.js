@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { LineChart } from '@carbon/charts-react';
-import { getYAxisValue } from './helpers';
+import { getTickFormatter, getTooltipOptions } from './helpers';
 
 const LineChartGraph = ({
   data = null,
@@ -12,23 +12,21 @@ const LineChartGraph = ({
     title,
     axes: {
       bottom: {
+        title: __('Date'),
         mapsTo: 'key',
         scaleType: 'time',
       },
       left: {
+        title: __('Value'),
         mapsTo: 'value',
         scaleType: 'linear',
         ticks: {
-          formatter(n) { return getYAxisValue(format, n); },
+          formatter: getTickFormatter(format),
         },
       },
     },
     height: size,
-    tooltip: {
-      truncation: {
-        type: 'none',
-      },
-    },
+    tooltip: getTooltipOptions(format),
   };
 
   return (
