@@ -1,6 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import ScheduleForm from '../../components/schedule-form/index';
+import type { FilterOptionType } from '../../components/schedule-form/schedule-form-types';
 import {
   scheduleResponse1,
   scheduleResponse2,
@@ -25,8 +26,8 @@ describe('Schedule form component', () => {
     const { container } = renderWithRedux(
       <ScheduleForm
         recordId="new"
-        actionOptions={actionOptions}
-        filterOptions={filterOptions}
+        actionOptions={actionOptions as string[][]}
+        filterOptions={filterOptions as FilterOptionType[]}
       />
     );
     await waitFor(() => {
@@ -48,8 +49,8 @@ describe('Schedule form component', () => {
     const { container } = renderWithRedux(
       <ScheduleForm
         recordId="1"
-        actionOptions={actionOptions}
-        filterOptions={filterOptions}
+        actionOptions={actionOptions as string[][]}
+        filterOptions={filterOptions as FilterOptionType[]}
       />
     );
     await waitFor(() => {
@@ -78,8 +79,8 @@ describe('Schedule form component', () => {
     const { container } = renderWithRedux(
       <ScheduleForm
         recordId="1"
-        actionOptions={actionOptions}
-        filterOptions={filterOptions}
+        actionOptions={actionOptions as string[][]}
+        filterOptions={filterOptions as FilterOptionType[]}
       />
     );
     await waitFor(() => {
