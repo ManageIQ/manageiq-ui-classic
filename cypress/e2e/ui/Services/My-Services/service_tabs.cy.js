@@ -13,6 +13,18 @@ const TABS_WRAPPER  = '#services-tabs-wrapper';
 const TABS_PANEL    = '.miq_custom_tabs';
 const DETAILS_PANEL = '#details';
 
+function interceptTaskStdout(taskResults = 'Mock job stdout output') {
+  cy.intercept('GET', /\/api\/tasks\/[0-9]+/, {
+    statusCode: 200,
+    body: {
+      state: 'Finished',
+      status: 'Ok',
+      task_results: taskResults,
+    },
+  }).as('getTaskStdout');
+  cy.intercept('DELETE', /\/api\/tasks\/[0-9]+/, { statusCode: 200, body: {} }).as('deleteTaskStdout');
+}
+
 function visitMyServices() {
   cy.menu(SERVICES_MENU, MY_SERVICES_MENU);
 }
@@ -26,6 +38,7 @@ describe('My Services — Generic Service Tabs', () => {
   const SERVICE_NAME = 'cy-generic-service';
 
   beforeEach(() => {
+    interceptTaskStdout();
     cy.appFactories([
       ['create', 'service', { name: SERVICE_NAME, display: true }],
     ]);
@@ -57,6 +70,7 @@ describe('My Services — Ansible Playbook Service Tabs', () => {
   const SERVICE_NAME = 'cy-ansible-playbook-service';
 
   beforeEach(() => {
+    interceptTaskStdout('Mock Ansible playbook stdout output');
     // 1. Create the service
     cy.appFactories([
       ['create', 'service_ansible_playbook', { name: SERVICE_NAME, display: true }],
@@ -137,6 +151,7 @@ describe('My Services — Embedded Terraform Service Tabs', () => {
   const SERVICE_NAME = 'cy-terraform-service';
 
   beforeEach(() => {
+    interceptTaskStdout('Mock Terraform stdout output');
     cy.appFactories([
       ['create', 'service_embedded_terraform', { name: SERVICE_NAME, display: true }],
     ]).then(([service]) => {
@@ -187,6 +202,7 @@ describe('My Services — Ansible Tower Service Tabs', () => {
   const SERVICE_NAME = 'cy-ansible-tower-service';
 
   beforeEach(() => {
+    interceptTaskStdout('Mock Ansible Tower stdout output');
     cy.appFactories([
       ['create', 'service_ansible_tower', { name: SERVICE_NAME, display: true }],
     ]).then(([service]) => {

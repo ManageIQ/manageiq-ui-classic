@@ -116,6 +116,16 @@ jest.mock('../app/javascript/helpers/window-location', () => ({
   setLocationHref: jest.fn(),
 }));
 
+// Mock @floating-ui/dom autoUpdate to prevent async position-calculation loops
+// in JSDOM. The real implementation sets up ResizeObserver/scroll/RAF listeners
+// that keep computing positions indefinitely when getBoundingClientRect returns
+// zeros, making any test that renders a Carbon ComboBox/Dropdown with autoAlign
+// take 10-20 s each.
+jest.mock('@floating-ui/dom', () => ({
+  ...jest.requireActual('@floating-ui/dom'),
+  autoUpdate: () => () => {},
+}));
+
 // Mock ResizeObserver for Carbon v11 components
 Object.defineProperty(window, 'ResizeObserver', {
   writable: true,
