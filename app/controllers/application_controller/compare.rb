@@ -586,14 +586,11 @@ module ApplicationController::Compare
                        "(missing)"
                      end
               if idx.positive?
-                # Mark the ones that don't match the base
-                if mode == :compare && @compare.results[@compare.ids[1]][section[:name]][level2].present? && @compare.results[@compare.ids[0]][section[:name]][level2][attr[:name]][:_value_].to_s != rval.to_s
+                if mode == :compare && @compare.results[@compare.ids[0]][section[:name]][level2]&.dig(attr[:name], :_value_).to_s != rval.to_s
+                  # Mark values that differ from the base VM
                   rval = "* " + rval.to_s
-                # Mark the ones that don't match the base
-                elsif mode == :compare && @compare.results[@compare.ids[0]][section[:name]][level2].nil? && rval.to_s != "(missing)"
-                  rval = "* " + rval.to_s
-                elsif @compare.results[r][section[:name]][level2] && @compare.results[r][section[:name]][level2][attr[:name]] && !@compare.results[r][section[:name]][level2][attr[:name]][:_match_]
-                  # Mark the ones that don't match the prior VM
+                elsif @compare.results[r][section[:name]][level2]&.dig(attr[:name], :_match_) == false
+                  # Mark the ones that don't match the prior VM (drift mode)
                   rval = "* " + rval
                 end
               end

@@ -70,6 +70,69 @@ describe ApplicationController do
     end
   end
 
+  describe '#prepare_data_for_compare_or_drift_report' do
+    it 'does not raise when the base VM has fewer disks than the VM being compared' do
+      section_name     = :"hardware.disks"
+      disk_in_both     = "sda"
+      disk_only_in_vm2 = "sdb"
+      field            = {:name => :size, :header => "Size"}
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Disk"},
+          [disk_in_both, disk_only_in_vm2],
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          # Base VM only has sda; VM 2 has both sda and sdb
+          1 => {section_name => {disk_in_both => {:size => {:_value_ => "10 GB", :_match_ => true}}, :_match_ => "100"}},
+          2 => {section_name => {disk_in_both => {:size => {:_value_ => "10 GB", :_match_ => true}},
+                                 disk_only_in_vm2 => {:size => {:_value_ => "20 GB", :_match_ => false}}, :_match_ => "50"}}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      expect { controller.send(:prepare_data_for_compare_or_drift_report, :compare, false) }.not_to raise_error
+    end
+
+    it 'marks a differing value on ids[2] even when ids[1] is missing that disk' do
+      section_name = :"hardware.disks"
+      field        = {:name => :size, :header => "Size"}
+
+      # 3-VM compare: base=1, vm2=2, vm3=3
+      # vm2 is missing sda entirely; vm3 has sda with a different size than base.
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Disk"},
+          ["sda"],
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2, 3],
+        :records  => [{"id" => 1}],
+        :results  => {
+          1 => {section_name => {"sda" => {:size => {:_value_ => "10 GB", :_match_ => true}}, :_match_ => "100"}},
+          2 => {section_name => {                                                               :_match_ => "0"}},  # vm2 missing sda
+          3 => {section_name => {"sda" => {:size => {:_value_ => "20 GB", :_match_ => true}},  :_match_ => "50"}}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      controller.send(:prepare_data_for_compare_or_drift_report, :compare, false)
+      data = controller.instance_variable_get(:@data)
+
+      # data[1] is the attribute value row; col 5 is vm3's value (section, disk, attr, base, vm2, vm3)
+      expect(data[1][5].to_s).to start_with("* "), "expected vm3's size to be marked as different"
+    end
+  end
+
   describe "download_data" do
     before do
       stub_user(:features => :all)
