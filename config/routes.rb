@@ -1130,6 +1130,7 @@ Rails.application.routes.draw do
         listnav_search_selected
         protect
         quick_search
+        reload
         sections_field_changed
         show
         show_list

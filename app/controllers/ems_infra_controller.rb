@@ -32,6 +32,12 @@ class EmsInfraController < ApplicationController
     super
   end
 
+  def reload
+    assert_privileges('ems_infra_show')
+    @record = identify_record(params[:id])
+    javascript_redirect(polymorphic_path(@record, :display => @display))
+  end
+
   def show_list
     @showtype = nil
     super
