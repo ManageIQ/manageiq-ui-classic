@@ -71,6 +71,31 @@ describe ApplicationController do
   end
 
   describe '#prepare_data_for_compare_or_drift_report' do
+    it 'does not raise when the base VM is missing a section that another VM has (fields-only block)' do
+      section_name = :"config.hardware"
+      field        = {:name => :memory, :header => "Memory"}
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Hardware"},
+          nil,
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          1 => {section_name => nil},
+          2 => {section_name => {:memory => {:_value_ => "4 GB", :_match_ => false}}}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      expect { controller.send(:prepare_data_for_compare_or_drift_report, :compare, false) }.not_to raise_error
+    end
+
     it 'does not raise when the base VM has fewer disks than the VM being compared' do
       section_name     = :"hardware.disks"
       disk_in_both     = "sda"

@@ -562,11 +562,11 @@ module ApplicationController::Compare
                    else
                      "(missing)"
                    end
-            unless idx.zero? # If not generating CSV
-              if mode == :compare
-                rval = "* " + rval.to_s if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s # Mark the ones that don't match the base
-              else
-                rval = "* " + rval.to_s unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_] # Mark the ones that don't match the base
+            if idx.positive?
+              if mode == :compare && @compare.results[@compare.ids[0]][section[:name]]&.dig(attr[:name], :_value_).to_s != rval.to_s
+                rval = "* " + rval.to_s
+              elsif mode != :compare && @compare.results[@compare.ids[idx]][section[:name]]&.dig(attr[:name], :_match_) == false
+                rval = "* " + rval.to_s
               end
             end
             cols.push(rval)
