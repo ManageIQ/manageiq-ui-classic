@@ -3027,15 +3027,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-querybuilder/core@npm:^8.23.1":
-  version: 8.23.1
-  resolution: "@react-querybuilder/core@npm:8.23.1"
+"@react-querybuilder/core@npm:^8.24.0":
+  version: 8.24.0
+  resolution: "@react-querybuilder/core@npm:8.24.0"
   dependencies:
-    "@ts-jison/lexer": "npm:0.4.1-alpha.1"
-    "@ts-jison/parser": "npm:0.4.1-alpha.1"
+    "@ts-jison/lexer": "npm:0.4.1-alpha.4"
+    "@ts-jison/parser": "npm:0.4.1-alpha.4"
     "@types/json-logic-js": "npm:>=2"
-    immer: "npm:^11.1.16"
-    numeric-quantity: "npm:^3.2.2"
+    immer: "npm:^11.1.18"
+    numeric-quantity: "npm:^3.3.2"
   peerDependencies:
     "@tanstack/db": ">=0.6.9"
     "@traqula/parser-sparql-1-2": ">=0.1.0"
@@ -3062,7 +3062,7 @@ __metadata:
       optional: true
     spel2js:
       optional: true
-  checksum: 10/44d39f99dd1b97393c3de79ff5cbec11abcf6188d02fdb72f1d529d4999aca3a55172fbe601a2e53e0c467bd31c4115f036397cb3e72978817417088a19f3a3d
+  checksum: 10/afeaf24a408bcd0af210074c2ce5c7e73e61cb45f48863bc895d1004472c9c464a48101865cdd0b92341dd9048ef8e88ba1b92a40000bd3f2c590549b8614248
   languageName: node
   linkType: hard
 
@@ -3227,23 +3227,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-jison/common@npm:^0.4.1-alpha.1, @ts-jison/common@npm:^0.4.1-alpha.4":
+"@ts-jison/common@npm:^0.4.1-alpha.4":
   version: 0.4.1-alpha.4
   resolution: "@ts-jison/common@npm:0.4.1-alpha.4"
   checksum: 10/e9f601a7ab9e6acf75a61e24d0a43a882249eb36bd7a3dfb966e7d1d07ab046da526f05d535f2fe6843fe386d95a365ddec88abea3448e7a458e054e06c4fedc
   languageName: node
   linkType: hard
 
-"@ts-jison/lexer@npm:0.4.1-alpha.1":
-  version: 0.4.1-alpha.1
-  resolution: "@ts-jison/lexer@npm:0.4.1-alpha.1"
-  dependencies:
-    "@ts-jison/common": "npm:^0.4.1-alpha.1"
-  checksum: 10/967a54f11aea79216b508121a6d10cad6c487a88957d7719da2e20874a9db57e75efd148e526d990279d414d626169cce360fee267b1bcdab331712bd8f54859
-  languageName: node
-  linkType: hard
-
-"@ts-jison/lexer@npm:^0.4.1-alpha.1":
+"@ts-jison/lexer@npm:0.4.1-alpha.4, @ts-jison/lexer@npm:^0.4.1-alpha.4":
   version: 0.4.1-alpha.4
   resolution: "@ts-jison/lexer@npm:0.4.1-alpha.4"
   dependencies:
@@ -3252,13 +3243,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-jison/parser@npm:0.4.1-alpha.1":
-  version: 0.4.1-alpha.1
-  resolution: "@ts-jison/parser@npm:0.4.1-alpha.1"
+"@ts-jison/parser@npm:0.4.1-alpha.4":
+  version: 0.4.1-alpha.4
+  resolution: "@ts-jison/parser@npm:0.4.1-alpha.4"
   dependencies:
-    "@ts-jison/common": "npm:^0.4.1-alpha.1"
-    "@ts-jison/lexer": "npm:^0.4.1-alpha.1"
-  checksum: 10/5980bf6138c9c8ae53c82451087c8b5c4f3145c6061d5e3d6f96d7579d1c2842fd7732435315f45d28f53a9dda59e1073be59bfa004d56b04bb10f2248ff0cc0
+    "@ts-jison/common": "npm:^0.4.1-alpha.4"
+    "@ts-jison/lexer": "npm:^0.4.1-alpha.4"
+  checksum: 10/5f70bee53b86d5717dcf16d939e8760ced80c564be1ef1f205bb724cdb7e7706ec7f31787da32e4b3946a2961aacc8e66ed4fd553a9420d51f127a720c4930e2
   languageName: node
   linkType: hard
 
@@ -9637,7 +9628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^11.0.0, immer@npm:^11.1.16":
+"immer@npm:^11.0.0, immer@npm:^11.1.18":
   version: 11.1.18
   resolution: "immer@npm:11.1.18"
   checksum: 10/5693c081651aac9ed27dd004e825cfae6c1d0ff6c0e3e1ef15a9938a489e6099893c2e98e270cc30a7633a6cc84f4750a8d37ce73e93aefb104e8a26999e70de
@@ -12699,7 +12690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"numeric-quantity@npm:^3.2.2":
+"numeric-quantity@npm:^3.3.2":
   version: 3.3.2
   resolution: "numeric-quantity@npm:3.3.2"
   checksum: 10/a1ca3a26845dce2d8dddbaed787b699886a3c3da6083ccb7594d69531207ae630d06caf9a3d785559a7300e790e6acc9b693e247fb7e105d889ef74946deee03
@@ -13838,15 +13829,15 @@ __metadata:
   linkType: hard
 
 "react-querybuilder@npm:^8.0.0":
-  version: 8.23.1
-  resolution: "react-querybuilder@npm:8.23.1"
+  version: 8.24.0
+  resolution: "react-querybuilder@npm:8.24.0"
   dependencies:
-    "@react-querybuilder/core": "npm:^8.23.1"
+    "@react-querybuilder/core": "npm:^8.24.0"
     "@reduxjs/toolkit": "npm:^2.12.0"
     react-redux: "npm:^9.3.0"
   peerDependencies:
     react: ">=18"
-  checksum: 10/c2bc59ccf24a9dc898c204beeaa876c9dad47fbfcff4d098ba06d1849238c625e9f201c5254132e73ae48c5808b847dbb5a878a645092eb0e372ed4a8de8d971
+  checksum: 10/101961342e8b2b8633ff69671e24d53f9f3f0f8a4430606201db9d8e59615362e671daf376b19b3e70ed5e02f4882376af713d703e87a2c9b800fcb1d8261f00
   languageName: node
   linkType: hard
 
