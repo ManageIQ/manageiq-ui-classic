@@ -54,7 +54,9 @@ Cypress.Commands.add(
         ).to.be.false;
       })
       .then(() => {
-        return cy.wrap(targetToolbarButton).click();
+        if (!targetToolbarButton.classList.contains('cds--overflow-menu--open')) {
+          return cy.wrap(targetToolbarButton).click();
+        }
       });
 
     // If toolbarOption is provided, wait for toolbar to open,
