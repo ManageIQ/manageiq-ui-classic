@@ -111,8 +111,10 @@ const processorFormFields = (data, setData, options) => ({
   ],
 });
 
-// IBM Power HMC — "Processor" toggle sub-form: Processing Units (float)
-const ibmProcessorFormFields = () => ({
+// IBM Power HMC — "Processor" toggle sub-form
+// Shared mode: Processing Units is a decimal (e.g. 0.5, 1.25)
+// Dedicated mode: Processing Units is a whole integer (e.g. 1, 2, 4)
+const ibmProcessorFormFields = (isSharedProcessor) => ({
   component: componentTypes.SUB_FORM,
   id: 'ibm-processor-sub-form',
   name: 'ibm-processor-sub-form',
@@ -128,10 +130,10 @@ const ibmProcessorFormFields = () => ({
       name: 'processing_units',
       label: __('Processing Units'),
       type: 'number',
-      step: 0.01,
-      min: 0.01,
+      step: isSharedProcessor ? 0.01 : 1,
+      min: isSharedProcessor ? 0.01 : 1,
       isRequired: true,
-      helperText: __('Decimal value, e.g. 0.1, 0.2, 6.01'),
+      helperText: isSharedProcessor ? __('Decimal value, e.g. 0.5, 1.0, 1.25') : __('Integer value, e.g. 1, 2, 4'),
       validate: [{ type: 'required' }],
     },
   ],
@@ -226,7 +228,7 @@ export const reconfigureFormFields = (recordId, roles, memory, data, setData, op
     if (roles.isIbmPowerHmc) {
       // IBM: "Processor" toggle → Processing Units field
       formFields.push(processorField());
-      formFields.push(ibmProcessorFormFields());
+      formFields.push(ibmProcessorFormFields(roles.isSharedProcessor));
       if (roles.isSharedProcessor) {
         // IBM shared only: separate "Virtual Processors" toggle → vprocs count field
         formFields.push(vprocsToggleField());
