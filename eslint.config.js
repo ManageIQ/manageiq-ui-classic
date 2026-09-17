@@ -137,7 +137,6 @@ const sharedReactRules = {
   'react/jsx-pascal-case': ['error', { allowAllCaps: true, ignore: [] }],
   'react/jsx-props-no-multi-spaces': 'error',
   'react/jsx-sort-default-props': ['off', { ignoreCase: true }],
-  'react/require-default-props': ['warn', { functions: 'defaultArguments' }],
   'react/jsx-sort-props': [
     'off',
     {
@@ -1090,6 +1089,7 @@ module.exports = [
       // Shared rules from constants
       ...sharedJestRules,
       ...sharedReactRules,
+      'react/require-default-props': ['warn', { functions: 'defaultArguments' }],
 
       // JSX-specific PropTypes rules (not in TypeScript)
       'react/forbid-prop-types': [
