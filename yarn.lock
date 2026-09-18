@@ -1612,22 +1612,22 @@ __metadata:
   linkType: hard
 
 "@carbon/charts-react@npm:~1.27.3":
-  version: 1.27.19
-  resolution: "@carbon/charts-react@npm:1.27.19"
+  version: 1.27.20
+  resolution: "@carbon/charts-react@npm:1.27.20"
   dependencies:
-    "@carbon/charts": "npm:1.27.19"
+    "@carbon/charts": "npm:1.27.20"
     "@carbon/icons-react": "npm:^11.64.0"
     "@ibm/telemetry-js": "npm:^1.9.1"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
-  checksum: 10/c9300be497548a05722534cd3729c4a712428cb644451b729b5394c16c711456b16e7bf3d979afd32e8b1812cd106a27db84dc7cb0fdb4a6a62bb609aaefccfa
+  checksum: 10/b88da4cd8dd2d53eefb44930d18a84b9045f5cb7ee075112ae0644a926b072d307005e825aeb875ee281ccc11bce081d53c379bcdc1dd1656fc06a501d680c87
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:1.27.19":
-  version: 1.27.19
-  resolution: "@carbon/charts@npm:1.27.19"
+"@carbon/charts@npm:1.27.20":
+  version: 1.27.20
+  resolution: "@carbon/charts@npm:1.27.20"
   dependencies:
     "@carbon/colors": "npm:^11.37.0"
     "@carbon/utils-position": "npm:^1.3.0"
@@ -1643,7 +1643,7 @@ __metadata:
     lodash-es: "npm:^4.18.0"
     topojson-client: "npm:^3.1.0"
     tslib: "npm:^2.8.1"
-  checksum: 10/19c409319bb3c68d4d388dbaded5e704c0910ae33108787882fe75a60e25118c30c64484cf1db1a9dcf45fe55faad03a7ff9ec4d56913b0dd09da737b47ef93e
+  checksum: 10/9f7cf356ef3ce3727e29ac71a6089eed8a2f71d4d3bcaed8481cb86774aeb6976cb768149b50fd980cb4423b40f1d610850d128a31c19ea33ddd8077c1087bb3
   languageName: node
   linkType: hard
 
