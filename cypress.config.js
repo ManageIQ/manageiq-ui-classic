@@ -51,14 +51,28 @@ module.exports = defineConfig({
         throw new Error('Webpack was not built with CYPRESS=true. See console for details');
       }
 
-      // Capture DB state once before entire test run
-      on('before:run', async () => {
-        await fetch('http://localhost:3000/__e2e__/command', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'db_state', options: 'capture' })
-        });
-      });
+      // In CI, capture once before the whole run (no human interaction, cheap).
+      // In open mode (local dev), capture before each spec so that data created
+      // manually in the UI between spec runs is included in the snapshot and
+      // won't be wiped when a test calls cy.appDbState('restore').
+      const captureDbState = async (label) => {
+        try {
+          await fetch('http://localhost:3000/__e2e__/command', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'db_state', options: 'capture' }),
+          });
+          console.error(`[DB] captured DB state (${label}):`);
+        } catch (err) {
+          console.error(`[DB] Failed to capture DB state (${label}):`, err.message);
+        }
+      };
+
+      if (process.env.CI) {
+        on('before:run', () => captureDbState('CI before:run'));
+      } else {
+        on('before:spec', (spec) => captureDbState(spec.relative));
+      }
 
       on('after:spec', (spec, results) => {
         // Delete the video on CI if the spec passed and no tests retried
