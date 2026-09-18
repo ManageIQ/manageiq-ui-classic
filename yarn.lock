@@ -8877,9 +8877,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^13.3.0":
-  version: 13.3.0
-  resolution: "framer-motion@npm:13.3.0"
+"framer-motion@npm:^13.4.0":
+  version: 13.4.0
+  resolution: "framer-motion@npm:13.4.0"
   dependencies:
     motion-dom: "npm:^13.3.0"
     motion-utils: "npm:^13.3.0"
@@ -8892,7 +8892,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10/5901e5f1f523546a4b322520338b5148cd7e945779ec790a5a12c7f54c552277f86a888b9e25cf397f7b276aa19ef67bbfbb854ab6d77f1f2a82cfad1072484e
+  checksum: 10/42119aa7ccdd52e50fc25cff16bcad32a64f9cd757ce5e3d23cbb101ce990fb356875c2f3d15fc070ceae216d84b352a45d80aa8af41444a67d19654375f3389
   languageName: node
   linkType: hard
 
@@ -9046,9 +9046,9 @@ __metadata:
   linkType: hard
 
 "get-east-asian-width@npm:^1.0.0, get-east-asian-width@npm:^1.3.1, get-east-asian-width@npm:^1.5.0":
-  version: 1.6.0
-  resolution: "get-east-asian-width@npm:1.6.0"
-  checksum: 10/3e5370b5df1f0020db711d8a3f9ee2cbfc9c7542daa99a699e9d7b9acf66e7868b89084741565a45d30d80afedf6e1218e0fb8bef7a583924a449c2816777380
+  version: 1.7.0
+  resolution: "get-east-asian-width@npm:1.7.0"
+  checksum: 10/8d8d96b54d1cfb6510f1b6dce51c4a6000b4d122757780d519d0147d968a6f5401421dbeff2e6bd3dc742e9b502fbcdbb98a50bf7f62730a6a8d6749a632279c
   languageName: node
   linkType: hard
 
@@ -9931,11 +9931,11 @@ __metadata:
   linkType: hard
 
 "is-core-module@npm:^2.16.1, is-core-module@npm:^2.16.2":
-  version: 2.16.2
-  resolution: "is-core-module@npm:2.16.2"
+  version: 2.17.0
+  resolution: "is-core-module@npm:2.17.0"
   dependencies:
-    hasown: "npm:^2.0.3"
-  checksum: 10/6ee7535d82bbe457685799c5f145daf4b7c6be3afbd8e90788429d557f663d6dee72a8e4b9a45d0d756c243fcb5028095999243df090e5f04c02b153786bc8c6
+    hasown: "npm:^2.0.4"
+  checksum: 10/0020f71b7eb525ccd684012cd1cfba235e7596e0addbc993732f7d8faff7ccd3a399e16dac7eb317b63459ea23f97efd661d6bf32584f6bf1d0a607fd8e21a6b
   languageName: node
   linkType: hard
 
@@ -12439,10 +12439,10 @@ __metadata:
   linkType: hard
 
 "motion@npm:^13.0.0":
-  version: 13.3.0
-  resolution: "motion@npm:13.3.0"
+  version: 13.4.0
+  resolution: "motion@npm:13.4.0"
   dependencies:
-    framer-motion: "npm:^13.3.0"
+    framer-motion: "npm:^13.4.0"
     tslib: "npm:^2.4.0"
   peerDependencies:
     react: ^18.0.0 || ^19.0.0
@@ -12452,7 +12452,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10/b9c40701673410845a992084d0a1007004c3e604a791eefb8300aef19b89f5be0eace951d737026a9383be897073e6a7be3cf3311d47e095be2206526b42e468
+  checksum: 10/2cab0bfc8e94251c6469afc062874831ffb2cd926da0bec3dfdb86b9b9a6a9547cfb8bd2bf6301b14493d53fa04a0b3e0267980c5556c752e1e1d7cf7bd1f0a7
   languageName: node
   linkType: hard
 
@@ -12645,9 +12645,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.55":
-  version: 2.0.55
-  resolution: "node-releases@npm:2.0.55"
-  checksum: 10/1ca12c725eeaf9d4645a4ed159c19ae5ce8303a0063443c95fb5d97edc21c0d3c6d55ae7d96ae21724ca73800ea0149ea60af73f3ed0ddb10f0b05da84d36efc
+  version: 2.0.56
+  resolution: "node-releases@npm:2.0.56"
+  checksum: 10/5a67cf6b1277376a475d318fb0b821bbaf9609c375dd4f74656ca09c26e75e8ab745695a0f3db5703937f1550a8feedb8c05be44606cf3024b13de16a452e08e
   languageName: node
   linkType: hard
 
@@ -13965,7 +13965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect.getprototypeof@npm:^1.0.10, reflect.getprototypeof@npm:^1.0.9":
+"reflect.getprototypeof@npm:^1.0.10":
   version: 1.0.10
   resolution: "reflect.getprototypeof@npm:1.0.10"
   dependencies:
@@ -15450,11 +15450,11 @@ __metadata:
   linkType: hard
 
 "systeminformation@npm:^5.31.1":
-  version: 5.33.10
-  resolution: "systeminformation@npm:5.33.10"
+  version: 5.33.11
+  resolution: "systeminformation@npm:5.33.11"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/2c3d85d90da2410b362f444919f8e476d2cebfae4c6a371e34f127b7012f75c9d0b2204473cc4c59a1615b1ea415b8ec213a4d3c069bd992f9384a26a5e8aa30
+  checksum: 10/33fa0bac7d286037c4ab45a02eef34fcca45db47ee7a2a75487f600570ecd30cc350852f089f12547d67051c126c5b75d7e3b0068c289752325a1efe6acb3e82
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
@@ -15917,17 +15917,16 @@ __metadata:
   linkType: hard
 
 "typed-array-byte-offset@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "typed-array-byte-offset@npm:1.0.4"
+  version: 1.0.5
+  resolution: "typed-array-byte-offset@npm:1.0.5"
   dependencies:
     available-typed-arrays: "npm:^1.0.7"
-    call-bind: "npm:^1.0.8"
-    for-each: "npm:^0.3.3"
+    call-bind: "npm:^1.0.9"
+    for-each: "npm:^0.3.5"
     gopd: "npm:^1.2.0"
-    has-proto: "npm:^1.2.0"
     is-typed-array: "npm:^1.1.15"
-    reflect.getprototypeof: "npm:^1.0.9"
-  checksum: 10/c2869aa584cdae24ecfd282f20a0f556b13a49a9d5bca1713370bb3c89dff0ccbc5ceb45cb5b784c98f4579e5e3e2a07e438c3a5b8294583e2bd4abbd5104fb5
+    reflect.getprototypeof: "npm:^1.0.10"
+  checksum: 10/c7054706f6957a406c9546db88787ecd389f3e468182b1e05dd07175ca263fbf672c6f773074d38d1832a0cab20cdb2138a45f18960c828f4c9d46cac14a5696
   languageName: node
   linkType: hard
 
@@ -16676,8 +16675,8 @@ __metadata:
   linkType: hard
 
 "which-typed-array@npm:^1.1.16, which-typed-array@npm:^1.1.19":
-  version: 1.1.22
-  resolution: "which-typed-array@npm:1.1.22"
+  version: 1.1.23
+  resolution: "which-typed-array@npm:1.1.23"
   dependencies:
     available-typed-arrays: "npm:^1.0.7"
     call-bind: "npm:^1.0.9"
@@ -16686,7 +16685,7 @@ __metadata:
     get-proto: "npm:^1.0.1"
     gopd: "npm:^1.2.0"
     has-tostringtag: "npm:^1.0.2"
-  checksum: 10/59b0383347e2f3b0bc5be570c2dfae551b172a9c83e0a6b03c6e17401d6161dfa1d912c7657062fe9add254a0d3c25ef70593dbaec8fefa8714715ff69e0a3fc
+  checksum: 10/63c52c416857c9c42d51e8789cd39f123abc75eedc4bebb3f87e9300ac3bf8cf415686f283bb240f751c338e3ab67e53e4435ebc33a3ab43e9e3119059810e8e
   languageName: node
   linkType: hard
 
