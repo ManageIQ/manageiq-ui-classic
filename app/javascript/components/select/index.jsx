@@ -5,29 +5,27 @@ import { components } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi } from '@@ddf';
 
 const SelectWithOnChange = ({
-  includeEmpty,
-  loadOptions: _loadOptions,
-  options: _options,
-  onChange,
+  includeEmpty = false,
+  loadOptions: _loadOptions = null,
+  options: _options = [],
+  onChange = null,
   placeholder = `<${__('Choose')}>`,
   ...props
 }) => {
-  if (onChange) {
-    const { input: { value } } = useFieldApi(props);
+  const { input: { value } } = useFieldApi(props);
 
-    useEffect(() => {
-      if (!props.isDisabled && value) {
-        onChange(value);
-      }
-    }, [value]);
-  }
+  useEffect(() => {
+    if (onChange && !props.isDisabled && value) {
+      onChange(value);
+    }
+  }, [value]);
 
   // Add a dummy placeholder field to the list of the static options
   if (!_loadOptions) {
     const options = includeEmpty !== true ? _options : [
       {
         label: placeholder,
-        value: undefined,
+        value: '',
       },
       ..._options,
     ];
@@ -36,13 +34,13 @@ const SelectWithOnChange = ({
   }
 
   // Add a dummy placeholder field to the list of the dynamically loaded options
-  const loadOptions = includeEmpty !== true ? _loadOptions : ((...args) => _loadOptions(...args).then((items) => [
+  const loadOptions = includeEmpty !== true ? _loadOptions : (...args) => _loadOptions(...args).then((items) => [
     {
       label: placeholder,
-      value: undefined,
+      value: '',
     },
     ...items,
-  ]));
+  ]);
 
   return <components.Select placeholder={placeholder} loadOptions={loadOptions} {...props} />;
 };
