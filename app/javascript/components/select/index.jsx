@@ -5,22 +5,20 @@ import { components } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi } from '@@ddf';
 
 const SelectWithOnChange = ({
-  includeEmpty,
-  loadOptions: _loadOptions,
-  options: _options,
-  onChange,
+  includeEmpty = false,
+  loadOptions: _loadOptions = null,
+  options: _options = [],
+  onChange = null,
   placeholder = `<${__('Choose')}>`,
   ...props
 }) => {
-  if (onChange) {
-    const { input: { value } } = useFieldApi(props);
+  const { input: { value } } = useFieldApi(props);
 
-    useEffect(() => {
-      if (!props.isDisabled && value) {
-        onChange(value);
-      }
-    }, [value]);
-  }
+  useEffect(() => {
+    if (onChange && !props.isDisabled && value) {
+      onChange(value);
+    }
+  }, [value]);
 
   // Add a dummy placeholder field to the list of the static options
   if (!_loadOptions) {
