@@ -27,7 +27,7 @@ const SelectWithOnChange = ({
     const options = includeEmpty !== true ? _options : [
       {
         label: placeholder,
-        value: undefined,
+        value: '',
       },
       ..._options,
     ];
@@ -36,13 +36,13 @@ const SelectWithOnChange = ({
   }
 
   // Add a dummy placeholder field to the list of the dynamically loaded options
-  const loadOptions = includeEmpty !== true ? _loadOptions : ((...args) => _loadOptions(...args).then((items) => [
+  const loadOptions = includeEmpty !== true ? _loadOptions : (...args) => _loadOptions(...args).then((items) => [
     {
       label: placeholder,
-      value: undefined,
+      value: '',
     },
     ...items,
-  ]));
+  ]);
 
   return <components.Select placeholder={placeholder} loadOptions={loadOptions} {...props} />;
 };
