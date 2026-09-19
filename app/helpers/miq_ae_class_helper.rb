@@ -106,28 +106,24 @@ module MiqAeClassHelper
       'fa fa-clock-o'
     when 'array'
       'ff ff-array'
-    when 'password'
-      'pficon pficon-key'
-    when 'null coalescing', 'nil_class'
+    when 'password', 'key'
+      'carbon--Password'
+    when 'null coalescing', 'nil_class', 'request'
       'fa fa-question'
     when 'host'
-      'pficon pficon-container-node'
+      'carbon--Chip'
     when 'vm'
-      'pficon pficon-virtual-machine'
+      'carbon--VirtualMachine'
     when 'storage'
       'fa fa-database'
-    when 'ems'
-      'pficon pficon-server'
+    when 'ems', 'server'
+      'carbon--BareMetalServer'
     when 'policy'
       'fa fa-shield'
-    when 'server'
-      'pficon pficon-server'
-    when 'request'
-      'fa fa-question'
     when 'provision'
-      'pficon pficon-settings'
+      'carbon--Tuning'
     when 'user'
-      'pficon pficon-user'
+      'carbon--UserFilled'
     when 'assertion'
       'fa fa-comment-o'
     when 'attribute'
@@ -142,8 +138,6 @@ module MiqAeClassHelper
       'ff ff-element'
     when 'hash'
       'fa fa-hashtag'
-    when 'key'
-      'pficon pficon-key'
     else
       Rails.logger.warn("Missing fonticon for MiqAeField type \"#{field}\"")
       'fa fa-file-text-o'
@@ -253,7 +247,7 @@ module MiqAeClassHelper
     schema_items = ["name", "description", "default_value", "collect", "message", "on_entry", "on_exit", "on_error", "max_retries", "max_time"]
     schema_data.each_with_index do |ae_field, index|
       cells = []
-      icon = ae_field.substitute ? "pficon pficon-ok" : "pficon pficon-close"
+      icon = ae_field.substitute ? "carbon--CheckmarkOutline" : "carbon--Close"
       schema_items.each do |fname|
         case fname
         when 'name'
@@ -283,7 +277,7 @@ module MiqAeClassHelper
       unless field.datatype.blank? || field.datatype == 'string'
         multiple_icons.push(ae_field_fonticon(field.datatype))
       end
-      multiple_icons.push("pficon-ok#{field.substitute ? '' : '-closed'}")
+      multiple_icons.push(field.substitute ? "carbon--CheckmarkOutline" : "carbon--Close")
       cells.push({:icon => multiple_icons, :text => record_name(field)})
       cells.push({:text => field.datatype == 'password' ? '********' : nonblank(ae_value.value, field.default_value)})
       if has_options
