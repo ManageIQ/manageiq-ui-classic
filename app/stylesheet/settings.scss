@@ -49,3 +49,15 @@
 .cds--front-line {
   margin-left: 10px;
 }
+
+.cds--inline-notification {
+  margin-bottom: 0.5rem;
+}
+
+.settings-advanced-tab {
+  .miq-codemirror {
+    .CodeMirror {
+      height: 70vh;
+    }
+  }
+}
