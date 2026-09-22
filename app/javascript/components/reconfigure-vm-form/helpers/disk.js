@@ -305,7 +305,7 @@ export const setDiskFormSubmit = (data, setData, formData, roles, renderData) =>
       diskDatatableData.hdMode = formData.mode;
       diskDatatableData.new_controller_type = formData.controller;
       diskDatatableData.cb_dependent = formData.dependent || false;
-      submitDiskData.persistent = formData.hdMode;
+      submitDiskData.persistent = formData.mode === 'persistent';
       submitDiskData.new_controller_type = formData.controller;
       submitDiskData.dependent = formData.dependent || false;
     }
