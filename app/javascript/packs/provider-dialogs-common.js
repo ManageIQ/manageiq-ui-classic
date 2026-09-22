@@ -8,7 +8,7 @@ function reactModal(buttonData) {
   };
 
   const Component = ManageIQ.component.getReact(buttonData.component_name);
-  const inner = () => <Component {...props} />;
+  const inner = ({ onModalClose }) => <Component {...props} onModalClose={onModalClose} />;
   renderModal(__(buttonData.modal_title), inner);
 }
 
