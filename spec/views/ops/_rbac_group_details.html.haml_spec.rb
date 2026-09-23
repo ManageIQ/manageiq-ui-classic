@@ -4,8 +4,8 @@ describe 'ops/_rbac_group_details.html.haml' do
       miq_server = FactoryBot.create(:miq_server)
       edit = {:new              => {:description => ''},
               :key              => "settings_authentication_edit__#{miq_server.id}",
-              :roles            => %w(fred wilma),
-              :projects_tenants => [["projects", %w(foo bar)]]}
+              :roles            => %w[fred wilma],
+              :projects_tenants => [["projects", %w[foo bar]]]}
       view.instance_variable_set(:@edit, edit)
       @group = FactoryBot.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
