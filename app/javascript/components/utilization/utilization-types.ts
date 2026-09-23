@@ -1,15 +1,3 @@
-interface SummaryRow {
-  id: string;
-  item: string;
-  value: string;
-}
-
-export interface SummarySection {
-  key: string;
-  label: string;
-  rows: SummaryRow[];
-}
-
 export interface SummaryData {
   cpu?: string[][];
   memory?: string[][];

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@carbon/react';
-import type { SummaryData, SummaryProps, SummarySection } from './utilization-types';
+import type { SummaryData, SummaryProps } from './utilization-types';
 
 const SECTIONS = [
   { key: 'cpu', label: __('CPU') },
@@ -47,13 +47,8 @@ const UtilizationSummary = ({
 
   const parsedSummary: SummaryData = typeof summary === 'string' ? JSON.parse(summary) : (summary ?? {});
 
-  const sections = SECTIONS.map(({ key, label }): SummarySection | null => {
-    const rows = parsedSummary[key as keyof SummaryData];
-    if (!rows || !rows.length) {
-      return null;
-    }
-
-    const filtered = rows
+  const sections = SECTIONS.flatMap(({ key, label }) => {
+    const rows = (parsedSummary[key as keyof SummaryData] ?? [])
       .filter(([_item, _value, type]) => (
         type === 'trend_max'
         || type === 'total'
@@ -61,12 +56,8 @@ const UtilizationSummary = ({
       ))
       .map(([item, value], idx) => ({ id: String(idx), item, value }));
 
-    if (!filtered.length) {
-      return null;
-    }
-
-    return { key, label, rows: filtered };
-  }).filter((s): s is SummarySection => s !== null);
+    return rows.length ? [{ key, label, rows }] : [];
+  });
 
   return (
     <>

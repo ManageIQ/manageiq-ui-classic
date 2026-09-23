@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@carbon/react';
-import type { ReportData, ReportProps, SummarySection } from './utilization-types';
+import type { ReportData, ReportProps } from './utilization-types';
 
 const SECTIONS = [
   { key: 'cpu', label: __('CPU') },
@@ -52,18 +52,13 @@ const UtilizationReport = ({
 
   const infoRows = (parsedSummary.info ?? []).map(([term, description], idx) => ({ id: String(idx), term, description }));
 
-  const sections = SECTIONS.map(({ key, label }): SummarySection | null => {
-    const rows = parsedSummary[key as keyof ReportData] as string[][] | undefined;
-    if (!rows || !rows.length) {
-      return null;
-    }
+  const sections = SECTIONS.flatMap(({ key, label }) => {
+    const rows = (parsedSummary[key as keyof ReportData] ?? []).map(
+      ([item, value], idx) => ({ id: String(idx), item, value })
+    );
 
-    return {
-      key,
-      label,
-      rows: rows.map(([item, value], idx) => ({ id: String(idx), item, value })),
-    };
-  }).filter((s): s is SummarySection => s !== null);
+    return rows.length ? [{ key, label, rows }] : [];
+  });
 
   return (
     <>
