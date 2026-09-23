@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::FirmwareRegistriesCenter < ApplicationHelper::
         N_('Refresh this page'),
         nil,
         :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-        :data  => { 'function' => 'window.location.reload' }
+        :data  => {'function' => 'window.location.reload'}
       ),
     ]
   )

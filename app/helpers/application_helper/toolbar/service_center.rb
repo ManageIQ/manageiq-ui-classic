@@ -94,7 +94,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
                    'fa fa-refresh fa-lg',
                    N_('Refresh this page'),
                    N_('Refresh'),
-                   :data => { 'function' => 'window.location.reload' }
+                   :data => {'function' => 'window.location.reload'}
                  )
                ])
 end
