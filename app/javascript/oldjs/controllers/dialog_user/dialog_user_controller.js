@@ -88,7 +88,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
         if (vm.openUrl === 'true') {
           return API.wait_for_task(response.task_id)
             .then(function() {
-              console.log(API.wait_for_task(response.task_id));
               return $http.post('open_url_after_dialog', {targetId: vm.targetId, realTargetType: realTargetType});
             })
             .then(function(response) {

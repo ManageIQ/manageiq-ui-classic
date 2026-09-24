@@ -48,21 +48,6 @@ describe ServiceController do
     end
   end
 
-  describe "#service_reconfigure" do
-    let(:service) { instance_double("Service", :id => 321, :service_template => service_template, :name => "foo name") }
-    let(:service_template) { instance_double("ServiceTemplate", :name => "the name") }
-    let(:ar_association_dummy) { double }
-    let(:resource_action) { instance_double("ResourceAction", :id => 123) }
-
-    before do
-      allow(Service).to receive(:find_by).with(:id => 321).and_return(service)
-      allow(service_template).to receive(:resource_actions).and_return(ar_association_dummy)
-      allow(ar_association_dummy).to receive(:find_by).with(:action => 'Reconfigure').and_return(resource_action)
-      allow(controller).to receive(:replace_right_cell)
-      controller.params = {:id => 321}
-    end
-  end
-
   describe "#service_delete" do
     it "display flash message with description of deleted Service" do
       st  = FactoryBot.create(:service_template)
