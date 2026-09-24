@@ -8577,19 +8577,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fetch-mock@npm:^11.0.0":
-  version: 11.1.5
-  resolution: "fetch-mock@npm:11.1.5"
+"fetch-mock@npm:^12.0.0":
+  version: 12.6.0
+  resolution: "fetch-mock@npm:12.6.0"
   dependencies:
     "@types/glob-to-regexp": "npm:^0.4.4"
     dequal: "npm:^2.0.3"
     glob-to-regexp: "npm:^0.4.1"
-    is-subset: "npm:^0.1.1"
     regexparam: "npm:^3.0.0"
-  peerDependenciesMeta:
-    node-fetch:
-      optional: true
-  checksum: 10/06e3dc58a0ab1b13b0a71f3e76b70f5f500c448755c5d519d00ea482470e51de87505190714820c3d6e33ccf8d2e96ee34cbd768e05ccff562ff4cf4088f3801
+  checksum: 10/9724a0e3af5d897b990fcc5c636b51491269b21bbad2cb76a1551f16a4ec4d6646c68ed27ba2d03b823961bb7533bbeb7ab606c911e888f9c02cec71cfc9c5ab
   languageName: node
   linkType: hard
 
@@ -10243,13 +10239,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-subset@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "is-subset@npm:0.1.1"
-  checksum: 10/cce9aeb579b5676af9237e77a106d2721bfb34ec12b0e90d858b2585472ca223002b5a54da1203460749db8bb525ee5fa96ec8306c714f0170650a131f1be413
-  languageName: node
-  linkType: hard
-
 "is-symbol@npm:^1.1.1":
   version: 1.1.1
   resolution: "is-symbol@npm:1.1.1"
@@ -11730,7 +11719,7 @@ __metadata:
     eslint-plugin-jsx-a11y: "npm:~6.10.2"
     eslint-plugin-react: "npm:~7.37.5"
     eslint-plugin-react-hooks: "npm:~7.1.1"
-    fetch-mock: "npm:^11.0.0"
+    fetch-mock: "npm:^12.0.0"
     file-loader: "npm:~6.2.0"
     fork-ts-checker-webpack-plugin: "npm:^6.5.3"
     glob: "npm:~7.2.0"
