@@ -45,7 +45,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = fal
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(action !== 'new');
-  const [categories, setCategories] = useState([]);
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isDraggingTab, setIsDraggingTab] = useState(false);
   const [dragTabIndex, setDragTabIndex] = useState(null);
@@ -59,13 +58,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = fal
   // Modal states
   const [tabModal, setTabModal] = useState({ open: false, tabIndex: null });
   const [sectionModal, setSectionModal] = useState({ open: false, tabIndex: null, sectionIndex: null });
-
-  // Fetch category list once for TagControl edit modals.
-  useEffect(() => {
-    API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children')
-      .then((response) => setCategories(response.resources || []))
-      .catch(() => {});
-  }, []);
 
   // ── Load dialog data ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -469,7 +461,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = fal
                       onAction={handleAction}
                       emsWorkflowsEnabled={emsWorkflowsEnabled}
                       dialogData={data}
-                      categories={categories}
                     />
                   ))}
                   <Button

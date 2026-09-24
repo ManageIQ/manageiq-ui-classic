@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { API } from '../../http_api';
 import { getComponentIdFromType } from './helper';
 import DynamicFieldActions from './dynamic-field-actions';
 import EditFieldModal from './edit-field-modal';
@@ -37,9 +38,18 @@ const DynamicField = ({
   onAction,
   emsWorkflowsEnabled = false,
   dialogData,
-  categories = [],
 }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  // Fetch categories once when this field is a TagControl.
+  // Other field types never need this data.
+  useEffect(() => {
+    if (field.type !== 'DialogFieldTagControl') return;
+    API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children')
+      .then((response) => setCategories(response.resources || []))
+      .catch(() => {});
+  }, [field.type]);
 
   const componentId = getComponentIdFromType(field.type);
   const FieldComponent = FIELD_COMPONENTS[componentId] || DynamicTextInput;
@@ -95,7 +105,6 @@ DynamicField.propTypes = {
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
   dialogData: PropTypes.object,
-  categories: PropTypes.array,
 };
 
 export default DynamicField;
