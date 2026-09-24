@@ -54,12 +54,21 @@ describe('optionsFields — TextBox', () => {
 // TextArea — same shape as TextBox
 
 describe('optionsFields — TextArea', () => {
-  it('static: contains default_value, options.protected, validator_type, dialog_field_responders', () => {
+  it('static: contains default_value, validator_type, dialog_field_responders', () => {
     const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
     expect(names).toContain('default_value');
-    expect(names).toContain('options.protected');
     expect(names).toContain('validator_type');
     expect(names).toContain('dialog_field_responders');
+  });
+
+  it('static: does NOT contain options.protected (TextArea has no Protected field)', () => {
+    const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
+    expect(names).not.toContain('options.protected');
+  });
+
+  it('static: does NOT contain data_type (TextArea has no Value type field)', () => {
+    const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
+    expect(names).not.toContain('data_type');
   });
 
   it('static: does NOT contain resource_action', () => {
@@ -78,6 +87,12 @@ describe('optionsFields — TextArea', () => {
     const names = fieldNames(optionsFields('DialogFieldTextAreaBox', true));
     expect(names).not.toContain('default_value');
     expect(names).not.toContain('automation_type');
+  });
+
+  it('dynamic: does NOT contain options.protected or data_type', () => {
+    const names = fieldNames(optionsFields('DialogFieldTextAreaBox', true));
+    expect(names).not.toContain('options.protected');
+    expect(names).not.toContain('data_type');
   });
 });
 
@@ -429,5 +444,183 @@ describe('optionsFields — dynamic entry point validate function is wired', () 
     expect(raField).toBeDefined();
     expect(Array.isArray(raField.validate)).toBe(true);
     expect(raField.validate.some((v) => typeof v === 'function')).toBe(true);
+  });
+});
+
+describe('optionsFields — TextBox has Protected and Value type; TextArea does not', () => {
+  it('TextBox static has data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldTextBox', false))).toContain('data_type');
+  });
+
+  it('TextBox static has options.protected', () => {
+    expect(fieldNames(optionsFields('DialogFieldTextBox', false))).toContain('options.protected');
+  });
+
+  it('TextBox static default_value uses text-field component', () => {
+    const fields = optionsFields('DialogFieldTextBox', false);
+    const dvField = fields.find((f) => f && f.name === 'default_value');
+    expect(dvField).toBeDefined();
+    expect(dvField.component).toBe('text-field');
+  });
+
+  it('TextArea static default_value uses textarea component', () => {
+    const fields = optionsFields('DialogFieldTextAreaBox', false);
+    const dvField = fields.find((f) => f && f.name === 'default_value');
+    expect(dvField).toBeDefined();
+    expect(dvField.component).toBe('textarea');
+  });
+});
+
+describe('optionsFields — CheckBox structural constraints', () => {
+  it('static: does NOT contain data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldCheckBox', false))).not.toContain('data_type');
+  });
+
+  it('static: does NOT contain options.protected', () => {
+    expect(fieldNames(optionsFields('DialogFieldCheckBox', false))).not.toContain('options.protected');
+  });
+
+  it('static: does NOT contain validator_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldCheckBox', false))).not.toContain('validator_type');
+  });
+
+  it('dynamic: does NOT contain data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldCheckBox', true))).not.toContain('data_type');
+  });
+});
+
+describe('optionsFields — DateControl / DateTimeControl do not have automation_type', () => {
+  it('DateControl static does NOT contain automation_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldDateControl', false))).not.toContain('automation_type');
+  });
+
+  it('DateTimeControl static does NOT contain automation_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldDateTimeControl', false))).not.toContain('automation_type');
+  });
+
+  it('DateControl static does NOT contain validator_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldDateControl', false))).not.toContain('validator_type');
+  });
+
+  it('DateControl dynamic does NOT contain automation_type even when emsWorkflowsEnabled', () => {
+    expect(fieldNames(optionsFields('DialogFieldDateControl', true, { emsWorkflowsEnabled: true }))).not.toContain('automation_type');
+  });
+
+  it('DateControl dynamic does NOT contain resource_action_workflow even when emsWorkflowsEnabled', () => {
+    expect(fieldNames(optionsFields('DialogFieldDateControl', true, { emsWorkflowsEnabled: true }))).not.toContain('resource_action_workflow');
+  });
+});
+
+describe('optionsFields — Dropdown and RadioButton have data_type', () => {
+  it('Dropdown static has data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldDropDownList', false))).toContain('data_type');
+  });
+
+  it('RadioButton static has data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldRadioButton', false))).toContain('data_type');
+  });
+
+  it('Dropdown dynamic has data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldDropDownList', true))).toContain('data_type');
+  });
+
+  it('RadioButton dynamic has data_type', () => {
+    expect(fieldNames(optionsFields('DialogFieldRadioButton', true))).toContain('data_type');
+  });
+});
+
+// Dropdown and RadioButton — validate function on static values FIELD_ARRAY
+
+describe('optionsFields — Dropdown static values FIELD_ARRAY has validate', () => {
+  const getValuesField = (type) => {
+    const fields = optionsFields(type, false);
+    return fields.find((f) => f && f.name === 'values' && f.component === 'field-array');
+  };
+
+  it('DialogFieldDropDownList static: values field has a validate array with a function', () => {
+    const valuesField = getValuesField('DialogFieldDropDownList');
+    expect(valuesField).toBeDefined();
+    expect(Array.isArray(valuesField.validate)).toBe(true);
+    expect(valuesField.validate.some((v) => typeof v === 'function')).toBe(true);
+  });
+
+  it('DialogFieldDropDownList static: validate returns error string for empty array', () => {
+    const valuesField = getValuesField('DialogFieldDropDownList');
+    const fn = valuesField.validate.find((v) => typeof v === 'function');
+    expect(typeof fn([])).toBe('string');
+    expect(fn([])).not.toBe('');
+  });
+
+  it('DialogFieldDropDownList static: validate returns undefined for non-empty array', () => {
+    const valuesField = getValuesField('DialogFieldDropDownList');
+    const fn = valuesField.validate.find((v) => typeof v === 'function');
+    expect(fn([{ value: 'x', description: 'X' }])).toBeUndefined();
+  });
+
+  it('DialogFieldRadioButton static: values field has a validate array with a function', () => {
+    const valuesField = getValuesField('DialogFieldRadioButton');
+    expect(valuesField).toBeDefined();
+    expect(Array.isArray(valuesField.validate)).toBe(true);
+    expect(valuesField.validate.some((v) => typeof v === 'function')).toBe(true);
+  });
+
+  it('DialogFieldRadioButton static: validate returns error string for empty array', () => {
+    const valuesField = getValuesField('DialogFieldRadioButton');
+    const fn = valuesField.validate.find((v) => typeof v === 'function');
+    expect(typeof fn([])).toBe('string');
+    expect(fn([])).not.toBe('');
+  });
+
+  it('DialogFieldRadioButton static: validate returns undefined for non-empty array', () => {
+    const valuesField = getValuesField('DialogFieldRadioButton');
+    const fn = valuesField.validate.find((v) => typeof v === 'function');
+    expect(fn([{ value: 'x', description: 'X' }])).toBeUndefined();
+  });
+});
+
+// TagControl — category_id must have a validate function so save is blocked without a selection
+
+describe('optionsFields — TagControl options.category_id has validate', () => {
+  const getCategoryIdField = () => {
+    const fields = optionsFields('DialogFieldTagControl', false);
+    return fields.find((f) => f && f.name === 'options.category_id');
+  };
+
+  it('options.category_id field has a validate array with a function', () => {
+    const field = getCategoryIdField();
+    expect(field).toBeDefined();
+    expect(Array.isArray(field.validate)).toBe(true);
+    expect(field.validate.some((v) => typeof v === 'function')).toBe(true);
+  });
+
+  it('validate returns an error string when value is empty string', () => {
+    const field = getCategoryIdField();
+    const fn = field.validate.find((v) => typeof v === 'function');
+    expect(typeof fn('')).toBe('string');
+    expect(fn('')).not.toBe('');
+  });
+
+  it('validate returns undefined when a category id is provided', () => {
+    const field = getCategoryIdField();
+    const fn = field.validate.find((v) => typeof v === 'function');
+    expect(fn('7')).toBeUndefined();
+  });
+});
+
+// validator_rule is conditional on validator_type — only shown when validation is enabled
+
+describe('optionsFields — validator_rule condition is gated on validator_type', () => {
+  it('TextBox static: validator_rule field has a condition referencing validator_type', () => {
+    const fields = optionsFields('DialogFieldTextBox', false);
+    const allFields = [];
+    const walk = (arr) => arr.forEach((f) => {
+      if (f) allFields.push(f);
+      if (f && f.fields) walk(f.fields);
+    });
+    walk(fields);
+    const ruleField = allFields.find((f) => f.name === 'validator_rule');
+    expect(ruleField).toBeDefined();
+    expect(ruleField.condition).toBeDefined();
+    expect(ruleField.condition.when).toBe('validator_type');
   });
 });

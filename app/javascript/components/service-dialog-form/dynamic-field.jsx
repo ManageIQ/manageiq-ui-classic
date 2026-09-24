@@ -37,6 +37,7 @@ const DynamicField = ({
   onAction,
   emsWorkflowsEnabled = false,
   dialogData,
+  categories = [],
 }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
 
@@ -77,6 +78,7 @@ const DynamicField = ({
           field={field}
           dialogData={dialogData}
           emsWorkflowsEnabled={emsWorkflowsEnabled}
+          categories={categories}
           onSave={handleSaveField}
           onClose={handleCloseModal}
         />
@@ -93,6 +95,7 @@ DynamicField.propTypes = {
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
   dialogData: PropTypes.object,
+  categories: PropTypes.array,
 };
 
 export default DynamicField;

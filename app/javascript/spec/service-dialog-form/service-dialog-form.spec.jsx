@@ -7,6 +7,13 @@ import { renderWithRedux } from '../helpers/mountForm';
 jest.mock('../../components/service-dialog-form/dynamic-section', () => () => <div data-testid="dynamic-section" />, { virtual: true });
 
 describe('ServiceDialogForm', () => {
+  beforeEach(() => {
+    fetchMock.get(
+      '/api/categories?expand=resources&attributes=id,name,description,single_value,children',
+      { resources: [] },
+    );
+  });
+
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();

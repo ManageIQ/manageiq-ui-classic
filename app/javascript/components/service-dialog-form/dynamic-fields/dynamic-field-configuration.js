@@ -110,9 +110,9 @@ const sortFields = () => [
   },
 ];
 
-// R2: resetOnChange=true adds the resolveProps side-effect that resets default_value
-// when data_type changes (Angular: resetDefaultValue watch #3).
-// Used by Dropdown and RadioButton static tabs where default_value is user-editable.
+// resetOnChange=true adds the resolveProps side-effect that resets default_value
+// when data_type changes. Used by Dropdown and RadioButton static tabs where
+// default_value is user-editable.
 const dataTypeField = (resetOnChange = false) => ({
   component: 'select',
   name: 'data_type',
@@ -160,12 +160,11 @@ const validationFields = () => [
 // The React EmbeddedWorkflowEntryPoint stores the table row object:
 //   { id: <numeric_id>, name: { text: '...' }, ... }
 // An empty/cleared state is {} or undefined.
-// Legacy Angular wire format uses ae_class (kept as fallback for editing existing fields).
 export const validateEntryPoint = (value) => {
   const hasAutomateSelection = value && value.element && value.element.metadata && value.element.metadata.fqname;
   const hasWorkflowSelection = value && (value.configuration_script_id || value.id);
-  // API-loaded automate resource_action may have ae_namespace/ae_class/ae_instance without
-  // a tree-selection object — accept any of these as a valid persisted automate entry point.
+  // Fields loaded from the API carry ae_namespace/ae_class/ae_instance without a tree-selection
+  // object — accept any of these as a valid saved automate entry point.
   const hasLegacyAutomate = value && (value.ae_class || value.ae_namespace || value.ae_instance);
   if (!hasAutomateSelection && !hasWorkflowSelection && !hasLegacyAutomate) {
     return __('Entry Point needs to be set for Dynamic elements');
@@ -175,11 +174,11 @@ export const validateEntryPoint = (value) => {
 
 // automation_type selector (emsWorkflowsEnabled=true), automate entry point,
 // workflow entry point, show_refresh_button, load_values_on_init.
-// Per Angular source:
+// Builds the dynamic Options tab entry point block.
 //   - Only DropDownList has the automation_type selector (pass emsWorkflowsEnabled=true).
 //   - All other types use the automate-only variant (pass emsWorkflowsEnabled=false).
-//   - DateControl and DateTimeControl do NOT include dynamic-values.html, so they
-//     show show_refresh_button but NOT load_values_on_init (pass showLoadValuesOnInit=false).
+//   - DateControl and DateTimeControl show show_refresh_button but NOT load_values_on_init
+//     (pass showLoadValuesOnInit=false).
 const dynamicEntryFields = (emsWorkflowsEnabled = false, showLoadValuesOnInit = true) => [
   ...(emsWorkflowsEnabled
     ? [{
@@ -265,9 +264,9 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
 
   const refresh = fieldsToRefreshField(dynamicFields);
 
-  // TextBox and TextArea share the same dynamic tab; static tabs differ only
-  // in how default_value is rendered (text-input vs textarea).
-  if (type === 'DialogFieldTextBox' || type === 'DialogFieldTextAreaBox') {
+  // TextBox static: Default value → Protected → Required → Read only → Visible → Value type → Validation → Fields to refresh
+  // TextBox dynamic: Entry Point → dynamic-values → Required → Protected → Value type → Validation → Fields to refresh
+  if (type === 'DialogFieldTextBox') {
     if (isDynamic) {
       return [
         ...dynamicEntryFields(false),
@@ -284,11 +283,8 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         refresh,
       ];
     }
-    const defaultValueField = type === 'DialogFieldTextAreaBox'
-      ? { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 }
-      : { component: 'text-field', name: 'default_value', label: __('Default value') };
     return [
-      defaultValueField,
+      { component: 'text-field', name: 'default_value', label: __('Default value') },
       {
         component: 'switch',
         name: 'options.protected',
@@ -299,6 +295,27 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       requiredField(),
       ...visibilityFields(),
       dataTypeField(),
+      ...validationFields(),
+      refresh,
+    ];
+  }
+
+  // TextArea static: Default value → Required → Read only → Visible → Validation → Fields to refresh
+  // TextArea dynamic: Entry Point → dynamic-values → Required → Validation → Fields to refresh
+  // Note: TextArea has NO Protected and NO Value type (unlike TextBox).
+  if (type === 'DialogFieldTextAreaBox') {
+    if (isDynamic) {
+      return [
+        ...dynamicEntryFields(false),
+        requiredField(),
+        ...validationFields(),
+        refresh,
+      ];
+    }
+    return [
+      { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 },
+      requiredField(),
+      ...visibilityFields(),
       ...validationFields(),
       refresh,
     ];
@@ -358,7 +375,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       },
       dataTypeField(true),
       ...sortFields(),
-      // R1: Toggling force_multi_value resets default_value (Angular: resetDefaultValue watch)
+      // Toggling force_multi_value resets default_value
       {
         component: 'switch',
         name: 'options.force_multi_value',
@@ -373,8 +390,8 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
           return {};
         },
       },
-      // D3: Description column first, Value second — matches Angular DROPDOWN_ENTRY_DESCRIPTION/VALUE order
-      // D5: isDraggable only when sort_by === 'none'; when sorted automatically the handle is hidden
+      // Description column first, Value second.
+      // isDraggable only when sort_by === 'none'; when sorted automatically the handle is hidden.
       {
         component: componentTypes.FIELD_ARRAY,
         name: 'values',
@@ -385,6 +402,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         RemoveButtonProps: { size: 'sm' },
         isDraggable: true,
         condition: { when: 'options.sort_by', is: 'none' },
+        validate: [(v) => (!v || v.length === 0 ? __('Dropdown needs to have entries') : undefined)],
         fields: [
           { component: 'text-field', name: 'description', label: __('Description') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -417,10 +435,9 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         refresh,
       ];
     }
-    // Same as Dropdown static minus force_multi_value
-    // D3: Description first, Value second (matches Angular column order)
-    // D4: RadioButton labels the columns "Key" / "Value" (not "Description" / "Value")
-    // D5: isDraggable gated on sort_by === 'none'
+    // Same as Dropdown static minus force_multi_value.
+    // Description column first, Value second. RadioButton labels them "Key" / "Value".
+    // isDraggable gated on sort_by === 'none'.
     return [
       ...visibilityFields(),
       requiredField(),
@@ -443,6 +460,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         RemoveButtonProps: { size: 'sm' },
         isDraggable: true,
         condition: { when: 'options.sort_by', is: 'none' },
+        validate: [(v) => (!v || v.length === 0 ? __('Dropdown needs to have entries') : undefined)],
         fields: [
           { component: 'text-field', name: 'description', label: __('Key') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -525,11 +543,30 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         component: 'select',
         name: 'options.category_id',
         label: __('Category'),
-        options: categories.map((c) => ({ label: c.description || c.name, value: String(c.id) })),
+        initialValue: '',
+        options: [
+          { label: __('None'), value: '' },
+          ...categories.map((c) => ({ label: c.description || c.name, value: String(c.id) })),
+        ],
+        validate: [(v) => (!v ? __('A category must be selected') : undefined)],
+        resolveProps: (_props, _fieldState, formOptions) => {
+          const categoryId = formOptions.getState().values?.options?.category_id;
+          const selected = categories.find((c) => String(c.id) === String(categoryId || ''));
+          // Populate category_single_value so the Single Value toggle condition stays correct
+          if (selected && formOptions.getState().values?.options?.category_single_value !== selected.single_value) {
+            formOptions.change('options.category_single_value', selected.single_value || false);
+          }
+          return {};
+        },
       },
-      // D10: Single value switch is hidden when the selected category itself enforces single-value
-      // (Angular: ng-if="!vm.modalData.options.category_single_value")
-      // D9: Toggling force_single_value resets default_value (Angular: resetDefaultValue watch)
+      {
+        component: 'tag-entries',
+        name: 'options._category_entries',
+        label: __('Entries'),
+        categories,
+      },
+      // Single value switch is hidden when the selected category itself enforces single-value.
+      // Toggling force_single_value resets default_value.
       {
         component: 'switch',
         name: 'options.force_single_value',
