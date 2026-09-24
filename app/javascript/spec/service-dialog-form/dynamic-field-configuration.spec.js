@@ -54,13 +54,21 @@ describe('optionsFields — TextBox', () => {
 // TextArea — same shape as TextBox
 
 describe('optionsFields — TextArea', () => {
-  it('static: contains default_value, options.protected, data_type, validator_type, dialog_field_responders', () => {
+  it('static: contains default_value, validator_type, dialog_field_responders', () => {
     const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
     expect(names).toContain('default_value');
-    expect(names).toContain('options.protected');
-    expect(names).toContain('data_type');
     expect(names).toContain('validator_type');
     expect(names).toContain('dialog_field_responders');
+  });
+
+  it('static: does NOT contain options.protected (TextArea has no Protected field)', () => {
+    const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
+    expect(names).not.toContain('options.protected');
+  });
+
+  it('static: does NOT contain data_type (TextArea has no Value type field)', () => {
+    const names = fieldNames(optionsFields('DialogFieldTextAreaBox', false));
+    expect(names).not.toContain('data_type');
   });
 
   it('static: does NOT contain resource_action', () => {
@@ -81,10 +89,10 @@ describe('optionsFields — TextArea', () => {
     expect(names).not.toContain('automation_type');
   });
 
-  it('dynamic: contains options.protected and data_type', () => {
+  it('dynamic: does NOT contain options.protected or data_type', () => {
     const names = fieldNames(optionsFields('DialogFieldTextAreaBox', true));
-    expect(names).toContain('options.protected');
-    expect(names).toContain('data_type');
+    expect(names).not.toContain('options.protected');
+    expect(names).not.toContain('data_type');
   });
 });
 
@@ -439,21 +447,13 @@ describe('optionsFields — dynamic entry point validate function is wired', () 
   });
 });
 
-describe('optionsFields — TextBox vs TextArea structural differences', () => {
+describe('optionsFields — TextBox has Protected and Value type; TextArea does not', () => {
   it('TextBox static has data_type', () => {
     expect(fieldNames(optionsFields('DialogFieldTextBox', false))).toContain('data_type');
   });
 
-  it('TextArea static has data_type', () => {
-    expect(fieldNames(optionsFields('DialogFieldTextAreaBox', false))).toContain('data_type');
-  });
-
   it('TextBox static has options.protected', () => {
     expect(fieldNames(optionsFields('DialogFieldTextBox', false))).toContain('options.protected');
-  });
-
-  it('TextArea static has options.protected', () => {
-    expect(fieldNames(optionsFields('DialogFieldTextAreaBox', false))).toContain('options.protected');
   });
 
   it('TextBox static default_value uses text-field component', () => {
