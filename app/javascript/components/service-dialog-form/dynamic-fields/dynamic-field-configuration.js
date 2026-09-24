@@ -161,7 +161,7 @@ const validationFields = () => [
 //   { id: <numeric_id>, name: { text: '...' }, ... }
 // An empty/cleared state is {} or undefined.
 // Legacy Angular wire format uses ae_class (kept as fallback for editing existing fields).
-const validateEntryPoint = (value) => {
+export const validateEntryPoint = (value) => {
   const hasAutomateSelection = value && value.element && value.element.metadata && value.element.metadata.fqname;
   const hasWorkflowSelection = value && (value.configuration_script_id || value.id);
   // API-loaded automate resource_action may have ae_namespace/ae_class/ae_instance without
