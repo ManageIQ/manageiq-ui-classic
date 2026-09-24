@@ -2,8 +2,48 @@ import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, InlineNotification } from '@carbon/react';
 import MiqFormRenderer, { FormSpy } from '../../../forms/data-driven-form';
+import defaultComponentMapper from '../../../forms/mappers/componentMapper';
 import { getRefreshEnabledFields, fieldValuesToArray, isoToDatePickerValue, extractTimeFromDateTime, combineDateAndTime } from '../helper';
 import buildFieldSchema from './fields.schema';
+
+import { useFieldApi } from '../../../forms/data-driven-form';
+
+// Read-only list of tag entries for the currently selected category.
+// FormSpy subscribes this component to all form state changes so it re-renders
+// whenever options.category_id changes, without needing a field value mirror hack.
+const TagEntriesList = (props) => {
+  const { label, categories = [] } = useFieldApi(props);
+  const [categoryId, setCategoryId] = useState('');
+
+  const selected = categories.find((c) => String(c.id) === String(categoryId));
+
+  return (
+    <>
+      <FormSpy
+        subscription={{ values: true }}
+        onChange={({ values }) => {
+          const next = values?.options?.category_id || '';
+          setCategoryId((prev) => (prev !== next ? next : prev));
+        }}
+      />
+      {selected && (
+        <div className="tag-entries-list">
+          <p className="cds--label">{label}</p>
+          {selected.children?.map((e) => (
+            <div key={e.id || e.name} className="tag-entries-list__item">{e.description || e.name}</div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+};
+
+TagEntriesList.propTypes = {
+  categories: PropTypes.array,
+  label: PropTypes.string,
+};
+
+const editFieldModalMapper = { ...defaultComponentMapper, 'tag-entries': TagEntriesList };
 
 // Convert the [Date] / Date / 'm/d/yyyy' string that DDF submits back to 'YYYY-MM-DD'.
 const datePickerValueToIso = (value) => {
@@ -118,11 +158,16 @@ export const buildInitialValues = (field) => {
   }
 
   // Dropdown / RadioButton: convert values [[v,d],...] to [{value,description},...] for FIELD_ARRAY.
+  // Entries where both value and description are empty are filtered out on load.
   // values_sorted mirrors values for the non-draggable conditional variant (avoids duplicate React keys).
   if (field.type === 'DialogFieldDropDownList' || field.type === 'DialogFieldRadioButton') {
-    const converted = (field.values || []).map((v) =>
-      Array.isArray(v) ? { value: v[0], description: v[1] } : v
-    );
+    const converted = (field.values || [])
+      .filter((v) => {
+        const val = Array.isArray(v) ? v[0] : v.value;
+        const desc = Array.isArray(v) ? v[1] : v.description;
+        return val || desc;
+      })
+      .map((v) => Array.isArray(v) ? { value: v[0], description: v[1] } : v);
     values.values = converted;
     values.values_sorted = converted;
   }
@@ -154,7 +199,7 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
     sort_order: opts.sort_order || 'ascending',
     show_past_dates: opts.show_past_dates || false,
     category_id: selectedCategoryId,
-    // D10: Angular's setupCategoryOptions side-effects
+    // Resolve category side-effect fields from the selected category object.
     ...(selectedCategory ? {
       category_name: selectedCategory.name,
       category_description: selectedCategory.description,
@@ -325,9 +370,22 @@ const EditFieldModal = ({
       setIsDynamic(newDynamic);
     }
 
-    // D7: surface first validation error as inline notification
-    const firstError = errors && Object.values(errors).find((e) => e);
-    setValidationError(firstError || null);
+    // Recursively find the first leaf string in the errors tree.
+    // Errors from nested fields (e.g. options.category_id) arrive as nested objects,
+    // not flat strings, so a simple Object.values().find() would hand an object to
+    // InlineNotification and crash React.
+    const findFirstError = (obj) => {
+      if (!obj) return null;
+      for (const val of Object.values(obj)) {
+        if (typeof val === 'string') return val;
+        if (typeof val === 'object') {
+          const found = findFirstError(val);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+    setValidationError(errors ? findFirstError(errors) : null);
   }, [isDynamic]);
 
   if (!isOpen) return null;
@@ -349,7 +407,7 @@ const EditFieldModal = ({
       onRequestClose={onClose}
       size="lg"
     >
-      {/* D7: inline error notification — mirrors Angular's dialog-editor-tab-notification */}
+      {/* Inline validation error shown when DDF rejects a field on submit */}
       {validationError && (
         <InlineNotification
           kind="error"
@@ -365,6 +423,7 @@ const EditFieldModal = ({
         onSubmit={handleSave}
         onCancel={onClose}
         buttonsLabels={{ submitLabel: __('Save') }}
+        componentMapper={editFieldModalMapper}
         canReset
       >
         <FormSpy subscription={{ values: true, errors: true }} onChange={handleFormChange} />

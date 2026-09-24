@@ -485,3 +485,485 @@ describe('normaliseSubmitted', () => {
     });
   });
 });
+
+describe('buildInitialValues — blank-entry filtering', () => {
+  it('strips fully blank [[v,d]] entries from Dropdown values on load', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      values: [['opt1', 'Option 1'], ['', ''], ['opt2', 'Option 2']],
+    });
+    const result = buildInitialValues(field);
+    expect(result.values).toEqual([
+      { value: 'opt1', description: 'Option 1' },
+      { value: 'opt2', description: 'Option 2' },
+    ]);
+  });
+
+  it('strips blank entries from RadioButton values on load', () => {
+    const field = makeField('DialogFieldRadioButton', {
+      values: [['', ''], ['yes', 'Yes']],
+    });
+    const result = buildInitialValues(field);
+    expect(result.values).toEqual([{ value: 'yes', description: 'Yes' }]);
+  });
+
+  it('keeps entries where only the description is blank', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      values: [['opt1', '']],
+    });
+    const result = buildInitialValues(field);
+    expect(result.values).toEqual([{ value: 'opt1', description: '' }]);
+  });
+
+  it('keeps entries where only the value is blank', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      values: [['', 'Blank value']],
+    });
+    const result = buildInitialValues(field);
+    expect(result.values).toEqual([{ value: '', description: 'Blank value' }]);
+  });
+
+  it('applies the same filtering to values_sorted mirror', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      values: [['a', 'A'], ['', '']],
+    });
+    const result = buildInitialValues(field);
+    expect(result.values_sorted).toEqual(result.values);
+  });
+});
+
+describe('buildInitialValues — DateTimeControl', () => {
+  it('splits combined ISO datetime into default_value (date array) and default_value_time', () => {
+    const field = makeField('DialogFieldDateTimeControl', {
+      default_value: '2026-09-26 14:30',
+    });
+    const result = buildInitialValues(field);
+    expect(Array.isArray(result.default_value)).toBe(true);
+    expect(result.default_value.length).toBe(1);
+    expect(result.default_value[0]).toBeInstanceOf(Date);
+    expect(result.default_value[0].getFullYear()).toBe(2026);
+    expect(result.default_value[0].getMonth()).toBe(8); // 0-indexed September
+    expect(result.default_value[0].getDate()).toBe(26);
+    expect(result.default_value_time).toBe('14:30');
+  });
+
+  it('produces empty date array and empty time when default_value is absent', () => {
+    const field = makeField('DialogFieldDateTimeControl', { default_value: '' });
+    const result = buildInitialValues(field);
+    expect(result.default_value).toEqual([]);
+    expect(result.default_value_time).toBe('');
+  });
+
+  it('handles legacy MM/dd/yyyy date portion correctly', () => {
+    const field = makeField('DialogFieldDateTimeControl', {
+      default_value: '09/26/2026 12:50',
+    });
+    const result = buildInitialValues(field);
+    expect(Array.isArray(result.default_value)).toBe(true);
+    expect(result.default_value[0].getFullYear()).toBe(2026);
+    expect(result.default_value_time).toBe('12:50');
+  });
+});
+
+describe('buildInitialValues — DateControl', () => {
+  it('converts ISO date string to [Date] array for the date picker', () => {
+    const field = makeField('DialogFieldDateControl', { default_value: '2025-01-15' });
+    const result = buildInitialValues(field);
+    expect(Array.isArray(result.default_value)).toBe(true);
+    expect(result.default_value[0]).toBeInstanceOf(Date);
+    expect(result.default_value[0].getFullYear()).toBe(2025);
+    expect(result.default_value[0].getMonth()).toBe(0);
+    expect(result.default_value[0].getDate()).toBe(15);
+  });
+
+  it('produces empty array when default_value is absent', () => {
+    const field = makeField('DialogFieldDateControl', { default_value: '' });
+    const result = buildInitialValues(field);
+    expect(result.default_value).toEqual([]);
+  });
+
+  it('does NOT produce a default_value_time key', () => {
+    const field = makeField('DialogFieldDateControl', { default_value: '2025-01-15' });
+    const result = buildInitialValues(field);
+    expect(result.default_value_time).toBeUndefined();
+  });
+});
+
+describe('buildInitialValues — multiselect Dropdown default_value', () => {
+  it('preserves an array default_value as-is for multiselect Dropdown', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      default_value: ['opt1', 'opt2'],
+    });
+    const result = buildInitialValues(field);
+    expect(result.default_value).toEqual(['opt1', 'opt2']);
+  });
+
+  it('preserves an empty array default_value (no default selected)', () => {
+    const field = makeField('DialogFieldDropDownList', {
+      default_value: [],
+    });
+    const result = buildInitialValues(field);
+    expect(result.default_value).toEqual([]);
+  });
+});
+
+describe('normaliseSubmitted — DateTimeControl round-trip', () => {
+  const makeDTSubmitted = (overrides = {}) => ({
+    label: 'DT Field',
+    name: 'dt_field',
+    description: '',
+    dynamic: false,
+    required: false,
+    read_only: false,
+    visible: true,
+    data_type: 'string',
+    show_refresh_button: false,
+    load_values_on_init: true,
+    dialog_field_responders: [],
+    options: {
+      protected: false,
+      force_multi_value: false,
+      force_single_value: false,
+      sort_by: 'description',
+      sort_order: 'ascending',
+      show_past_dates: false,
+      category_id: '',
+    },
+    validator_type: false,
+    validator_rule: '',
+    validator_message: '',
+    reconfigurable: false,
+    resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+    resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+    automation_type: 'embedded_automate',
+    ...overrides,
+  });
+
+  it('recombines default_value date array + default_value_time into YYYY-MM-DD HH:MM', () => {
+    const submitted = makeDTSubmitted({
+      default_value: [new Date(2026, 8, 26)], // September 26 2026
+      default_value_time: '14:30',
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldDateTimeControl');
+    expect(result.default_value).toBe('2026-09-26 14:30');
+    expect(result.default_value_time).toBeUndefined();
+  });
+
+  it('recombines when date is given as m/d/yyyy string (DDF date picker submit format)', () => {
+    const submitted = makeDTSubmitted({
+      default_value: '9/26/2026',
+      default_value_time: '08:00',
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldDateTimeControl');
+    expect(result.default_value).toBe('2026-09-26 08:00');
+  });
+
+  it('produces empty string when both date and time are blank', () => {
+    const submitted = makeDTSubmitted({
+      default_value: [],
+      default_value_time: '',
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldDateTimeControl');
+    expect(result.default_value).toBe('');
+  });
+
+  it('returns just the date when time string is absent', () => {
+    const submitted = makeDTSubmitted({
+      default_value: [new Date(2026, 8, 26)],
+      default_value_time: '',
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldDateTimeControl');
+    expect(result.default_value).toBe('2026-09-26');
+  });
+
+  it('removes default_value_time from the result object', () => {
+    const submitted = makeDTSubmitted({
+      default_value: [new Date(2026, 0, 1)],
+      default_value_time: '09:00',
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldDateTimeControl');
+    expect(result.default_value_time).toBeUndefined();
+  });
+});
+
+describe('normaliseSubmitted — DateControl round-trip', () => {
+  const makeDateSubmitted = (defaultValue) => ({
+    label: 'Date Field',
+    name: 'date_field',
+    description: '',
+    dynamic: false,
+    required: false,
+    read_only: false,
+    visible: true,
+    data_type: 'string',
+    show_refresh_button: false,
+    load_values_on_init: true,
+    dialog_field_responders: [],
+    options: {
+      protected: false,
+      force_multi_value: false,
+      force_single_value: false,
+      sort_by: 'description',
+      sort_order: 'ascending',
+      show_past_dates: false,
+      category_id: '',
+    },
+    validator_type: false,
+    validator_rule: '',
+    validator_message: '',
+    reconfigurable: false,
+    resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+    resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+    automation_type: 'embedded_automate',
+    default_value: defaultValue,
+  });
+
+  it('converts [Date] array back to YYYY-MM-DD string', () => {
+    const result = normaliseSubmitted(
+      makeDateSubmitted([new Date(2025, 0, 15)]),
+      'DialogFieldDateControl'
+    );
+    expect(result.default_value).toBe('2025-01-15');
+  });
+
+  it('converts m/d/yyyy string (DDF submit format) back to YYYY-MM-DD', () => {
+    const result = normaliseSubmitted(
+      makeDateSubmitted('1/15/2025'),
+      'DialogFieldDateControl'
+    );
+    expect(result.default_value).toBe('2025-01-15');
+  });
+
+  it('produces empty string when default_value is an empty array', () => {
+    const result = normaliseSubmitted(
+      makeDateSubmitted([]),
+      'DialogFieldDateControl'
+    );
+    expect(result.default_value).toBe('');
+  });
+});
+
+describe('normaliseSubmitted — multiselect Dropdown default_value', () => {
+  const makeDropdownSubmitted = (defaultValue) => ({
+    label: 'Drop',
+    name: 'drop_field',
+    description: '',
+    dynamic: false,
+    required: false,
+    read_only: false,
+    visible: true,
+    data_type: 'string',
+    show_refresh_button: false,
+    load_values_on_init: true,
+    dialog_field_responders: [],
+    options: {
+      protected: false,
+      force_multi_value: true,
+      force_single_value: false,
+      sort_by: 'none',
+      sort_order: 'ascending',
+      show_past_dates: false,
+      category_id: '',
+    },
+    validator_type: false,
+    validator_rule: '',
+    validator_message: '',
+    reconfigurable: false,
+    resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+    resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+    automation_type: 'embedded_automate',
+    default_value: defaultValue,
+    values: [{ value: 'opt1', description: 'Option 1' }],
+    values_sorted: [],
+  });
+
+  it('preserves array default_value for multiselect Dropdown after normalise', () => {
+    const result = normaliseSubmitted(
+      makeDropdownSubmitted(['opt1', 'opt2']),
+      'DialogFieldDropDownList'
+    );
+    expect(result.default_value).toEqual(['opt1', 'opt2']);
+  });
+
+  it('preserves empty array default_value when no selection', () => {
+    const result = normaliseSubmitted(
+      makeDropdownSubmitted([]),
+      'DialogFieldDropDownList'
+    );
+    expect(result.default_value).toEqual([]);
+  });
+});
+
+// RadioButton shares the same sort_by / values_sorted source-selection logic as Dropdown
+
+describe('normaliseSubmitted — RadioButton values', () => {
+  const makeRBSubmitted = (overrides = {}) => ({
+    label: 'Radio Field',
+    name: 'radio_field',
+    description: '',
+    dynamic: false,
+    required: false,
+    read_only: false,
+    visible: true,
+    data_type: 'string',
+    show_refresh_button: false,
+    load_values_on_init: true,
+    dialog_field_responders: [],
+    options: {
+      protected: false,
+      force_multi_value: false,
+      force_single_value: false,
+      sort_by: 'description',
+      sort_order: 'ascending',
+      show_past_dates: false,
+      category_id: '',
+    },
+    validator_type: false,
+    validator_rule: '',
+    validator_message: '',
+    reconfigurable: false,
+    resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+    resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+    automation_type: 'embedded_automate',
+    ...overrides,
+  });
+
+  it('uses values (draggable list) when sort_by === "none"', () => {
+    const submitted = makeRBSubmitted({
+      values: [{ value: 'yes', description: 'Draggable' }],
+      values_sorted: [{ value: 'no', description: 'Sorted' }],
+      options: { sort_by: 'none', sort_order: 'ascending', protected: false,
+        force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
+    expect(result.values).toEqual([['yes', 'Draggable']]);
+  });
+
+  it('uses values_sorted when sort_by === "description" and values_sorted is populated', () => {
+    const submitted = makeRBSubmitted({
+      values: [{ value: 'yes', description: 'Yes' }],
+      values_sorted: [{ value: 'no', description: 'No' }],
+      options: { sort_by: 'description', sort_order: 'ascending', protected: false,
+        force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+    });
+    const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
+    expect(result.values).toEqual([['no', 'No']]);
+  });
+});
+
+// TagControl initial values
+
+describe('buildInitialValues — TagControl', () => {
+  it('coerces integer category_id to string (integer 7 → "7")', () => {
+    const field = makeField('DialogFieldTagControl', { options: { category_id: 7 } });
+    const result = buildInitialValues(field);
+    expect(result.options.category_id).toBe('7');
+  });
+
+  it('preserves force_single_value when true', () => {
+    const field = makeField('DialogFieldTagControl', {
+      options: { force_single_value: true },
+    });
+    const result = buildInitialValues(field);
+    expect(result.options.force_single_value).toBe(true);
+  });
+
+  it('defaults category_single_value to false when absent', () => {
+    const field = makeField('DialogFieldTagControl', { options: {} });
+    const result = buildInitialValues(field);
+    expect(result.options.category_single_value).toBe(false);
+  });
+});
+
+// automation_type is detected from resource_action shape when not set on the field itself
+
+describe('buildInitialValues — automation_type default', () => {
+  it('defaults automation_type to "embedded_automate" for a plain API-loaded TextBox (no automation_type, no configuration_script_id)', () => {
+    const field = makeField('DialogFieldTextBox', {
+      resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+    });
+    delete field.automation_type;
+    const result = buildInitialValues(field);
+    expect(result.automation_type).toBe('embedded_automate');
+  });
+});
+
+// validator_type normalisation must not affect types that don't use the validator toggle
+
+describe('normaliseSubmitted — CheckBox validator_type is not coerced', () => {
+  it('validator_type: false on CheckBox stays false (not converted to "regex")', () => {
+    const submitted = {
+      label: 'Check',
+      name: 'check_field',
+      description: '',
+      dynamic: false,
+      required: false,
+      read_only: false,
+      visible: true,
+      data_type: 'string',
+      show_refresh_button: false,
+      load_values_on_init: true,
+      dialog_field_responders: [],
+      options: {
+        protected: false,
+        force_multi_value: false,
+        force_single_value: false,
+        sort_by: 'description',
+        sort_order: 'ascending',
+        show_past_dates: false,
+        category_id: '',
+      },
+      default_value: false,
+      validator_type: false,
+      validator_rule: '',
+      validator_message: '',
+      reconfigurable: false,
+      resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+      resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+      automation_type: 'embedded_automate',
+    };
+    const result = normaliseSubmitted(submitted, 'DialogFieldCheckBox');
+    expect(result.validator_type).toBe(false);
+  });
+});
+
+// values entry[0] is never coerced by the UI layer regardless of data_type
+
+describe('normaliseSubmitted — Dropdown integer data_type values stay string', () => {
+  it('entry[0] is NOT coerced to number when data_type is "integer"', () => {
+    const submitted = {
+      label: 'Drop',
+      name: 'drop_field',
+      description: '',
+      dynamic: false,
+      required: false,
+      read_only: false,
+      visible: true,
+      data_type: 'integer',
+      show_refresh_button: false,
+      load_values_on_init: true,
+      dialog_field_responders: [],
+      options: {
+        protected: false,
+        force_multi_value: false,
+        force_single_value: false,
+        sort_by: 'none',
+        sort_order: 'ascending',
+        show_past_dates: false,
+        category_id: '',
+      },
+      validator_type: false,
+      validator_rule: '',
+      validator_message: '',
+      reconfigurable: false,
+      resource_action: { resource_type: 'DialogField', ae_attributes: {} },
+      resource_action_workflow: { resource_type: 'DialogField', ae_attributes: {} },
+      automation_type: 'embedded_automate',
+      values: [{ value: '1', description: 'One' }],
+      values_sorted: [],
+    };
+    const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
+    expect(result.values).toEqual([['1', 'One']]);
+    // entry[0] must stay a string, not be coerced to a number
+    expect(typeof result.values[0][0]).toBe('string');
+  });
+});
