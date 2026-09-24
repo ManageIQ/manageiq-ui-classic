@@ -266,6 +266,28 @@ describe('overridableOptionsFields — TextBox', () => {
     expect(dvField).toBeDefined();
     expect(dvField.component).toBe('text-field');
   });
+
+  it('resolves default_value type to password when options.protected is true, text otherwise', () => {
+    const fields = overridableOptionsFields('DialogFieldTextBox');
+    const dvField = fields.find((f) => f && f.name === 'default_value');
+    expect(dvField).toBeDefined();
+    expect(typeof dvField.resolveProps).toBe('function');
+
+    const formOptionsProtected = {
+      getState: () => ({ values: { 'options.protected': true } }),
+    };
+    expect(dvField.resolveProps({}, dvField, formOptionsProtected)).toEqual({ type: 'password' });
+
+    const formOptionsUnprotected = {
+      getState: () => ({ values: { 'options.protected': false } }),
+    };
+    expect(dvField.resolveProps({}, dvField, formOptionsUnprotected)).toEqual({ type: 'text' });
+
+    const formOptionsEmpty = {
+      getState: () => ({ values: {} }),
+    };
+    expect(dvField.resolveProps({}, dvField, formOptionsEmpty)).toEqual({ type: 'text' });
+  });
 });
 
 describe('overridableOptionsFields — TextArea', () => {
