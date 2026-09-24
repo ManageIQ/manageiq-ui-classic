@@ -17,11 +17,10 @@ import {
   defaultTab,
   defaultSection,
   buildDialogPayload,
+  isSaveDisabled,
 } from '../../components/service-dialog-form/helper';
 
-// ---------------------------------------------------------------------------
 // Fixtures
-// ---------------------------------------------------------------------------
 
 const makeField = (name, extra = {}) => ({
   name,
@@ -80,9 +79,7 @@ const sampleDialog = () =>
     ]),
   ]);
 
-// ---------------------------------------------------------------------------
 // SD_ACTIONS
-// ---------------------------------------------------------------------------
 
 describe('SD_ACTIONS', () => {
   it('has correct tab action keys', () => {
@@ -113,9 +110,7 @@ describe('SD_ACTIONS', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // sortItems
-// ---------------------------------------------------------------------------
 
 describe('sortItems', () => {
   it('sorts by position ascending', () => {
@@ -135,9 +130,7 @@ describe('sortItems', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // uniqueNameValidator
-// ---------------------------------------------------------------------------
 
 describe('uniqueNameValidator', () => {
   it('returns false when name is unique', () => {
@@ -161,9 +154,7 @@ describe('uniqueNameValidator', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // getComponentIdFromType
-// ---------------------------------------------------------------------------
 
 describe('getComponentIdFromType', () => {
   const cases = [
@@ -186,9 +177,7 @@ describe('getComponentIdFromType', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // getFieldValues
-// ---------------------------------------------------------------------------
 
 describe('getFieldValues', () => {
   it('converts [[value, description], ...] arrays to objects', () => {
@@ -211,9 +200,7 @@ describe('getFieldValues', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // fieldValuesToArray
-// ---------------------------------------------------------------------------
 
 describe('fieldValuesToArray', () => {
   it('converts objects to [[value, description], ...] arrays', () => {
@@ -232,9 +219,7 @@ describe('fieldValuesToArray', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // getRefreshEnabledFields
-// ---------------------------------------------------------------------------
 
 describe('getRefreshEnabledFields', () => {
   it('returns dynamic fields excluding the named field', () => {
@@ -254,9 +239,7 @@ describe('getRefreshEnabledFields', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // dropField (reorder field within section)
-// ---------------------------------------------------------------------------
 
 describe('dropField', () => {
   it('moves a field from index 0 to index 1 and reassigns positions', () => {
@@ -277,9 +260,7 @@ describe('dropField', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // dropSection (reorder section within tab)
-// ---------------------------------------------------------------------------
 
 describe('dropSection', () => {
   it('moves section from index 0 to index 1', () => {
@@ -298,9 +279,7 @@ describe('dropSection', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // dropTab (reorder tabs)
-// ---------------------------------------------------------------------------
 
 describe('dropTab', () => {
   it('moves tab from index 0 to index 1', () => {
@@ -316,9 +295,7 @@ describe('dropTab', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // dropComponent (add field from palette)
-// ---------------------------------------------------------------------------
 
 describe('dropComponent', () => {
   it('appends a new field to the target section', () => {
@@ -332,9 +309,7 @@ describe('dropComponent', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // handlePropertiesEdit
-// ---------------------------------------------------------------------------
 
 describe('handlePropertiesEdit', () => {
   it('merges updatedProps into the matching field', () => {
@@ -369,9 +344,7 @@ describe('handlePropertiesEdit', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // deleteField
-// ---------------------------------------------------------------------------
 
 describe('deleteField', () => {
   it('removes the field at the given index', () => {
@@ -399,9 +372,7 @@ describe('deleteField', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // deleteSection
-// ---------------------------------------------------------------------------
 
 describe('deleteSection', () => {
   it('removes the section at the given index', () => {
@@ -427,9 +398,7 @@ describe('deleteSection', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // deleteTab
-// ---------------------------------------------------------------------------
 
 describe('deleteTab', () => {
   it('removes the tab at the given index', () => {
@@ -447,9 +416,7 @@ describe('deleteTab', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // defaultTab / defaultSection
-// ---------------------------------------------------------------------------
 
 describe('defaultTab', () => {
   it('creates a tab with position and one default section', () => {
@@ -469,9 +436,7 @@ describe('defaultSection', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // buildDialogPayload — CREATE
-// ---------------------------------------------------------------------------
 
 describe('buildDialogPayload (create)', () => {
   it('produces action=create with resource.dialog_tabs at top level', () => {
@@ -534,9 +499,7 @@ describe('buildDialogPayload (create)', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // buildDialogPayload — EDIT
-// ---------------------------------------------------------------------------
 
 describe('buildDialogPayload (edit)', () => {
   it('produces action=edit with resource.content.dialog_tabs', () => {
@@ -564,9 +527,7 @@ describe('buildDialogPayload (edit)', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // buildDialogPayload — COPY (strips IDs)
-// ---------------------------------------------------------------------------
 
 describe('buildDialogPayload (copy)', () => {
   it('produces action=create (copy is create)', () => {
@@ -604,9 +565,7 @@ describe('buildDialogPayload (copy)', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // seedFieldCounters — duplicate name regression
-// ---------------------------------------------------------------------------
 
 import { defaultField, seedFieldCounters, resetFieldCounters } from '../../components/service-dialog-form/data';
 
@@ -670,5 +629,114 @@ describe('seedFieldCounters', () => {
     // Counter for text_box was never seeded — starts fresh at 1
     const newTextBox = defaultField('DialogFieldTextBox');
     expect(newTextBox.name).toBe('text_box_1');
+  });
+});
+
+// uniqueNameValidator — cross-tab / cross-section duplicate detection
+
+describe('uniqueNameValidator — cross-structure', () => {
+  it('detects a duplicate name across different tabs', () => {
+    const fieldA = makeField('shared_name');
+    const fieldB = makeField('shared_name');
+    const dialog = makeDialog([
+      makeTab('T1', [makeSection('S1', [fieldA])]),
+      makeTab('T2', [makeSection('S2', [fieldB])]),
+    ]);
+    expect(uniqueNameValidator(dialog, fieldA)).toBe(true);
+  });
+
+  it('detects a duplicate name across different sections in the same tab', () => {
+    const fieldA = makeField('shared_name');
+    const fieldB = makeField('shared_name');
+    const dialog = makeDialog([
+      makeTab('T', [makeSection('S1', [fieldA]), makeSection('S2', [fieldB])]),
+    ]);
+    expect(uniqueNameValidator(dialog, fieldA)).toBe(true);
+  });
+
+  it('returns false when names are unique across all tabs and sections', () => {
+    const fieldA = makeField('alpha');
+    const fieldB = makeField('beta');
+    const dialog = makeDialog([
+      makeTab('T1', [makeSection('S1', [fieldA])]),
+      makeTab('T2', [makeSection('S2', [fieldB])]),
+    ]);
+    expect(uniqueNameValidator(dialog, fieldA)).toBe(false);
+  });
+});
+
+// isSaveDisabled — all sub-conditions
+
+describe('isSaveDisabled', () => {
+  const field = makeField('f1');
+  const section = makeSection('Section', [field]);
+  const tab = makeTab('Tab', [section]);
+
+  it('is true when data is null', () => {
+    expect(isSaveDisabled(null)).toBe(true);
+  });
+
+  it('is true when data is undefined', () => {
+    expect(isSaveDisabled(undefined)).toBe(true);
+  });
+
+  it('is true when dialog label is empty', () => {
+    const dialog = { ...makeDialog([tab]), label: '' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when dialog label is whitespace only', () => {
+    const dialog = { ...makeDialog([tab]), label: '   ' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when there are no tabs', () => {
+    const dialog = { ...makeDialog([]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when a tab has an empty label', () => {
+    const emptyLabelTab = { ...tab, label: '' };
+    const dialog = { ...makeDialog([emptyLabelTab]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when a tab has no sections', () => {
+    const emptyTab = makeTab('Tab', []);
+    const dialog = { ...makeDialog([emptyTab]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when a section has an empty label', () => {
+    const emptyLabelSection = { ...section, label: '' };
+    const tabWithIt = makeTab('Tab', [emptyLabelSection]);
+    const dialog = { ...makeDialog([tabWithIt]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when a section has no fields', () => {
+    const emptySection = makeSection('Section', []);
+    const tabWithIt = makeTab('Tab', [emptySection]);
+    const dialog = { ...makeDialog([tabWithIt]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is false when label + at least one field per section', () => {
+    const dialog = { ...makeDialog([tab]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(false);
+  });
+
+  it('is false with multiple tabs and sections each having fields', () => {
+    const field2 = makeField('f2');
+    const section2 = makeSection('Section 2', [field2]);
+    const tab2 = makeTab('Tab 2', [section2]);
+    const dialog = { ...makeDialog([tab, tab2]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(false);
+  });
+
+  it('is true when only the second tab has an empty section', () => {
+    const tab2 = makeTab('Tab 2', [makeSection('S2', [])]);
+    const dialog = { ...makeDialog([tab, tab2]), label: 'My Dialog' };
+    expect(isSaveDisabled(dialog)).toBe(true);
   });
 });
