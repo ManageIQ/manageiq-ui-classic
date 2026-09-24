@@ -23,7 +23,6 @@ const DynamicSection = ({
   onAction,
   emsWorkflowsEnabled = false,
   dialogData,
-  categories = [],
 }) => {
   const [dragFieldIndex, setDragFieldIndex] = useState(null);
   // Index of the field-wrapper the cursor is currently hovering over during
@@ -191,7 +190,6 @@ const DynamicSection = ({
               onAction={onAction}
               emsWorkflowsEnabled={emsWorkflowsEnabled}
               dialogData={dialogData}
-              categories={categories}
             />
           </div>
         ))}
@@ -211,7 +209,6 @@ DynamicSection.propTypes = {
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
   dialogData: PropTypes.object,
-  categories: PropTypes.array,
 };
 
 export default DynamicSection;
