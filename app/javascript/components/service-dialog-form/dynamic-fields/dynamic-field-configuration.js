@@ -264,9 +264,10 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
 
   const refresh = fieldsToRefreshField(dynamicFields);
 
-  // TextBox static: Default value → Protected → Required → Read only → Visible → Value type → Validation → Fields to refresh
-  // TextBox dynamic: Entry Point → dynamic-values → Required → Protected → Value type → Validation → Fields to refresh
-  if (type === 'DialogFieldTextBox') {
+  if (type === 'DialogFieldTextBox' || type === 'DialogFieldTextAreaBox') {
+    const defaultValueField = type === 'DialogFieldTextAreaBox'
+      ? { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 }
+      : { component: 'text-field', name: 'default_value', label: __('Default value') };
     if (isDynamic) {
       return [
         ...dynamicEntryFields(false),
@@ -284,7 +285,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       ];
     }
     return [
-      { component: 'text-field', name: 'default_value', label: __('Default value') },
+      defaultValueField,
       {
         component: 'switch',
         name: 'options.protected',
@@ -295,27 +296,6 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       requiredField(),
       ...visibilityFields(),
       dataTypeField(),
-      ...validationFields(),
-      refresh,
-    ];
-  }
-
-  // TextArea static: Default value → Required → Read only → Visible → Validation → Fields to refresh
-  // TextArea dynamic: Entry Point → dynamic-values → Required → Validation → Fields to refresh
-  // Note: TextArea has NO Protected and NO Value type (unlike TextBox).
-  if (type === 'DialogFieldTextAreaBox') {
-    if (isDynamic) {
-      return [
-        ...dynamicEntryFields(false),
-        requiredField(),
-        ...validationFields(),
-        refresh,
-      ];
-    }
-    return [
-      { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 },
-      requiredField(),
-      ...visibilityFields(),
       ...validationFields(),
       refresh,
     ];
@@ -402,7 +382,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         RemoveButtonProps: { size: 'sm' },
         isDraggable: true,
         condition: { when: 'options.sort_by', is: 'none' },
-        validate: [(v) => (!v || v.length === 0 ? __('Dropdown needs to have entries') : undefined)],
+        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Description') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -417,6 +397,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         AddButtonProps: { size: 'sm' },
         RemoveButtonProps: { size: 'sm' },
         condition: { when: 'options.sort_by', pattern: /^(?!none$)/ },
+        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Description') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -460,7 +441,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         RemoveButtonProps: { size: 'sm' },
         isDraggable: true,
         condition: { when: 'options.sort_by', is: 'none' },
-        validate: [(v) => (!v || v.length === 0 ? __('Dropdown needs to have entries') : undefined)],
+        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Key') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -475,6 +456,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         AddButtonProps: { size: 'sm' },
         RemoveButtonProps: { size: 'sm' },
         condition: { when: 'options.sort_by', pattern: /^(?!none$)/ },
+        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Key') },
           { component: 'text-field', name: 'value', label: __('Value') },
@@ -548,7 +530,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
           { label: __('None'), value: '' },
           ...categories.map((c) => ({ label: c.description || c.name, value: String(c.id) })),
         ],
-        validate: [(v) => (!v ? __('A category must be selected') : undefined)],
+        validate: [{ type: 'required', message: __('A category must be selected') }],
         resolveProps: (_props, _fieldState, formOptions) => {
           const categoryId = formOptions.getState().values?.options?.category_id;
           const selected = categories.find((c) => String(c.id) === String(categoryId || ''));
