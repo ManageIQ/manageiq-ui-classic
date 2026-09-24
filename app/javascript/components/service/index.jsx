@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import classNames from 'classnames';
 import DialogTabs from './DialogTabs';
 import ServiceContext from './ServiceContext';

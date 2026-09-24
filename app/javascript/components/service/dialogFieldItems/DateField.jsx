@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { DatePicker, DatePickerInput } from 'carbon-components-react';
+import { DatePicker, DatePickerInput } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
 import { extractDate, dateString } from '../helper.dateTime';
 import ServiceContext from '../ServiceContext';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { TextInput, PasswordInput } from 'carbon-components-react';
+import { TextInput, PasswordInput } from '@carbon/react';
 import FieldLabel from './FieldLabel';
 import { fieldProperties } from '../helper.field';
 import ServiceContext from '../ServiceContext';

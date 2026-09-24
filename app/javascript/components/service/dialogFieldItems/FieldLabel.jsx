@@ -1,7 +1,7 @@
 import React, { useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { InformationFilled16 } from '@carbon/icons-react';
-import { TooltipIcon, Tag } from 'carbon-components-react';
+import { InformationFilled } from '@carbon/icons-react';
+import { Tooltip, Tag } from '@carbon/react';
 import ServiceContext from '../ServiceContext';
 
 /** Function to render a Tag when the field refresh is in progress. */
@@ -11,9 +11,11 @@ const refreshingLabel = (label) => <Tag className="field-label-refreshing" type=
 const getTooltip = (description) => (
   description ? (
     <div className="field-description">
-      <TooltipIcon direction="right" tooltipText={description}>
-        <InformationFilled16 />
-      </TooltipIcon>
+      <Tooltip label={description} align="right">
+        <button type="button" className="tooltip-trigger">
+          <InformationFilled />
+        </button>
+      </Tooltip>
     </div>
   ) : null
 );

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from '@carbon/react';
 import { fieldProperties } from '../../helper.field';
 import FieldLabel from '../FieldLabel';
 import ServiceContext from '../../ServiceContext';

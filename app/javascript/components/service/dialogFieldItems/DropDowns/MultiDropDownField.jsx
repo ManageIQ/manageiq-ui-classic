@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { FilterableMultiSelect } from 'carbon-components-react';
+import { FilterableMultiSelect } from '@carbon/react';
 import { fieldProperties } from '../../helper.field';
 import FieldLabel from '../FieldLabel';
 import ServiceValidator from '../../ServiceValidator';

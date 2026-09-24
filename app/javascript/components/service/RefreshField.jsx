@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Loading } from 'carbon-components-react';
-import { Renew16 } from '@carbon/icons-react';
+import { Button, Loading } from '@carbon/react';
+import { Renew } from '@carbon/icons-react';
 import ServiceContext from './ServiceContext';
 import ServiceValidator from './ServiceValidator';
 import { defaultFieldValue } from './helper';
@@ -38,7 +38,7 @@ const RefreshField = ({ field }) => {
             iconDescription={__(`Refresh ${field.label}`)}
             tooltipAlignment="start"
             tooltipPosition="left"
-            renderIcon={Renew16}
+            renderIcon={Renew}
           />
         )
       }

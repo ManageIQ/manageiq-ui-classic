@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox } from 'carbon-components-react';
+import { Checkbox } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
 import FieldLabel from './FieldLabel';
 import ServiceContext from '../ServiceContext';
@@ -14,7 +14,7 @@ const CheckboxField = ({ field }) => {
   } = fieldProperties(field, data);
 
   /** Checkbox onChange event handler */
-  const onChange = (checked) => {
+  const onChange = (_evt, { checked }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value } = ServiceValidator.validateField({ value: checked, field });
       data.dialogFields[field.name] = {
@@ -36,7 +36,7 @@ const CheckboxField = ({ field }) => {
         disabled={isDisabled}
         id={fieldId}
         labelText={<FieldLabel field={field} />}
-        onChange={(checked) => onChange(checked)}
+        onChange={onChange}
         readOnly={field.read_only}
       />
       {

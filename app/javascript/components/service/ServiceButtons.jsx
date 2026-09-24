@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import ServiceContext from './ServiceContext';
 import { omitValidation } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';

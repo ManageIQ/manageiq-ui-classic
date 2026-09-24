@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { TextArea } from 'carbon-components-react';
+import { TextArea } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
 import FieldLabel from './FieldLabel';
 import ServiceContext from '../ServiceContext';

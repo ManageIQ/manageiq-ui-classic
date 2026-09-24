@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TooltipIcon } from 'carbon-components-react';
+import { Tooltip } from '@carbon/react';
 import DialogFields from './DialogFields';
 
 /** Component to render the Groups in the Service/DialogTabs component */
 const DialogGroups = ({ dialogGroups }) => {
   const itemLabel = ({ label, description }) => (description
-    ? <TooltipIcon direction="right" tooltipText={description}>{label}</TooltipIcon>
+    ? (
+      <Tooltip label={description} align="right">
+        <button type="button" className="tooltip-trigger">{label}</button>
+      </Tooltip>
+    )
     : label);
 
   return (
