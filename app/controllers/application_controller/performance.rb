@@ -1305,7 +1305,8 @@ module ApplicationController::Performance
                 ts_rpt.format(col + '_tip', r[col + '_tip'])
               end
         val = ts_rpt.format(col, r[col], :format => {:function => {:name => "number_with_delimiter", :suffix => "%"}, :precision => "0"})
-        ss.push([_(ts_rpt.headers[col_idx]), "#{tip} (#{val})"])
+        type = col.include?("_reserve") ? "available" : "total"
+        ss.push([_(ts_rpt.headers[col_idx]), "#{tip} (#{val})", type])
         total_vals += r[col].to_f # Total up the values for this section
       end
     end
@@ -1318,11 +1319,13 @@ module ApplicationController::Performance
       next unless c[:trends]
 
       c[:trends].each do |t|
+        trend_type = t.split(":").first
         c[:columns].each do |trendcol|
           next unless trendcol.starts_with?("trend_")
 
           ss.push([Dictionary.gettext(trendcol, :type => :column, :notfound => :titleize) + ": " + t.split(":").last,
-                   @sb[:trend_rpt].extras[:trend][trendcol + "|" + t.split(":").first]])
+                   @sb[:trend_rpt].extras[:trend][trendcol + "|" + trend_type],
+                   "trend_#{trend_type}"])
         end
       end
     end
