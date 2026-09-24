@@ -43,7 +43,7 @@ jobs:
       TEST_SUITE: spec:cypress
       CYPRESS: true
       CYPRESS_BROWSER: "${{ matrix.cypress-browser }}"
-      RUN_CYPRESS: "${{ matrix.cypress-browser == 'chrome' || (matrix.cypress-browser != 'chrome' && github.event_name != 'pull_request') }}"
+      RUN_CYPRESS: "true"
       PGHOST: localhost
       PGPASSWORD: smartvm
     steps:
