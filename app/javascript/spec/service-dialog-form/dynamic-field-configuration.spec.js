@@ -1,12 +1,12 @@
 import {
   optionsFields,
   overridableOptionsFields,
+  fieldInfoFields,
+  validateEntryPoint,
 } from '../../components/service-dialog-form/dynamic-fields/dynamic-field-configuration';
 
-// ---------------------------------------------------------------------------
 // Helper — recursively collect all `name` values from a DDF field array.
 // Handles nested `fields` arrays (e.g. inside FIELD_ARRAY entries).
-// ---------------------------------------------------------------------------
 
 const fieldNames = (fields) => {
   const names = [];
@@ -21,9 +21,7 @@ const fieldNames = (fields) => {
   return names;
 };
 
-// ---------------------------------------------------------------------------
 // TextBox
-// ---------------------------------------------------------------------------
 
 describe('optionsFields — TextBox', () => {
   it('static: contains default_value, options.protected, validator_type, dialog_field_responders', () => {
@@ -53,9 +51,7 @@ describe('optionsFields — TextBox', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // TextArea — same shape as TextBox
-// ---------------------------------------------------------------------------
 
 describe('optionsFields — TextArea', () => {
   it('static: contains default_value, options.protected, validator_type, dialog_field_responders', () => {
@@ -85,9 +81,7 @@ describe('optionsFields — TextArea', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // CheckBox
-// ---------------------------------------------------------------------------
 
 describe('optionsFields — CheckBox', () => {
   it('static: contains default_value', () => {
@@ -111,9 +105,7 @@ describe('optionsFields — CheckBox', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // DropDownList
-// ---------------------------------------------------------------------------
 
 describe('optionsFields — DropDownList', () => {
   it('static: contains values, options.sort_by, options.sort_order, options.force_multi_value', () => {
@@ -148,9 +140,7 @@ describe('optionsFields — DropDownList', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// RadioButton — F12 regression: automation_type must NOT appear
-// ---------------------------------------------------------------------------
+// RadioButton — automation_type must NOT appear
 
 describe('optionsFields — RadioButton', () => {
   it('static: contains values, options.sort_by', () => {
@@ -164,8 +154,8 @@ describe('optionsFields — RadioButton', () => {
     expect(names).toContain('resource_action');
   });
 
-  it('dynamic: does NOT contain automation_type — F12 regression', () => {
-    // F12: automation_type selector should only appear for DropDownList, never RadioButton.
+  it('dynamic: does NOT contain automation_type', () => {
+    // automation_type selector should only appear for DropDownList, never RadioButton.
     const names = fieldNames(optionsFields('DialogFieldRadioButton', true));
     expect(names).not.toContain('automation_type');
   });
@@ -176,9 +166,7 @@ describe('optionsFields — RadioButton', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// DateControl — F18 regression: load_values_on_init must NOT appear
-// ---------------------------------------------------------------------------
+// DateControl : load_values_on_init must NOT appear
 
 describe('optionsFields — DateControl', () => {
   it('static: contains default_value, options.show_past_dates', () => {
@@ -187,21 +175,19 @@ describe('optionsFields — DateControl', () => {
     expect(names).toContain('options.show_past_dates');
   });
 
-  it('dynamic: contains show_refresh_button — F18 regression', () => {
+  it('dynamic: contains show_refresh_button', () => {
     const names = fieldNames(optionsFields('DialogFieldDateControl', true));
     expect(names).toContain('show_refresh_button');
   });
 
-  it('dynamic: does NOT contain load_values_on_init — F18 regression', () => {
-    // F18: DateControl does not include dynamic-values.html, so load_values_on_init is absent.
+  it('dynamic: does NOT contain load_values_on_init', () => {
+    // DateControl does not include dynamic-values.html, so load_values_on_init is absent.
     const names = fieldNames(optionsFields('DialogFieldDateControl', true));
     expect(names).not.toContain('load_values_on_init');
   });
 });
 
-// ---------------------------------------------------------------------------
-// DateTimeControl — same as DateControl for F18 regression
-// ---------------------------------------------------------------------------
+// DateTimeControl — same as DateControl
 
 describe('optionsFields — DateTimeControl', () => {
   it('dynamic: contains show_refresh_button', () => {
@@ -209,7 +195,7 @@ describe('optionsFields — DateTimeControl', () => {
     expect(names).toContain('show_refresh_button');
   });
 
-  it('dynamic: does NOT contain load_values_on_init — F18 regression', () => {
+  it('dynamic: does NOT contain load_values_on_init', () => {
     const names = fieldNames(optionsFields('DialogFieldDateTimeControl', true));
     expect(names).not.toContain('load_values_on_init');
   });
@@ -228,9 +214,7 @@ describe('optionsFields — DateTimeControl', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // TagControl — always static; no resource_action
-// ---------------------------------------------------------------------------
 
 describe('optionsFields — TagControl', () => {
   it('contains options.category_id and options.force_single_value', () => {
@@ -251,9 +235,7 @@ describe('optionsFields — TagControl', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // overridableOptionsFields
-// ---------------------------------------------------------------------------
 
 describe('overridableOptionsFields — TextBox', () => {
   it('contains default_value and read_only and visible', () => {
@@ -317,5 +299,135 @@ describe('overridableOptionsFields — default (CheckBox, DateControl, DateTimeC
 
   it('CheckBox does not contain default_value', () => {
     expect(fieldNames(overridableOptionsFields('DialogFieldCheckBox'))).not.toContain('default_value');
+  });
+});
+
+// validateEntryPoint — pure validator function used in DDF validate arrays
+
+describe('validateEntryPoint', () => {
+  it('returns an error string for undefined', () => {
+    expect(typeof validateEntryPoint(undefined)).toBe('string');
+  });
+
+  it('returns an error string for an empty object', () => {
+    expect(typeof validateEntryPoint({})).toBe('string');
+  });
+
+  it('returns undefined for a tree-selection object with fqname (automate new selection)', () => {
+    const value = { element: { metadata: { fqname: '/ManageIQ/Service/Lifecycle/refresh' } } };
+    expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns undefined for a legacy API-loaded automate entry (ae_class present)', () => {
+    // API-loaded fields carry ae_namespace/ae_class/ae_instance — no element wrapper
+    const value = { resource_type: 'DialogField', ae_namespace: 'Service', ae_class: 'Lifecycle', ae_instance: 'refresh', ae_attributes: {} };
+    expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns undefined when only ae_namespace is present (partial legacy automate)', () => {
+    const value = { ae_namespace: 'Service' };
+    expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns undefined for a workflow row with id (workflow new selection)', () => {
+    const value = { id: 42, name: { text: 'My Workflow' } };
+    expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns undefined for a workflow row with configuration_script_id (persisted workflow)', () => {
+    const value = { configuration_script_id: 99, resource_type: 'DialogField', ae_attributes: {} };
+    expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns an error string when value has element but no metadata', () => {
+    const value = { element: { id: 'node-1' } };
+    expect(typeof validateEntryPoint(value)).toBe('string');
+  });
+});
+
+// validate array presence — confirm required validators are wired into the schema
+
+describe('fieldInfoFields — validate arrays', () => {
+  it('label field has a required validator', () => {
+    const fields = fieldInfoFields(true);
+    const labelField = fields.find((f) => f.name === 'label');
+    expect(labelField).toBeDefined();
+    expect(labelField.validate).toBeDefined();
+    expect(labelField.validate.some((v) => v.type === 'required')).toBe(true);
+  });
+
+  it('name field has a required validator', () => {
+    const fields = fieldInfoFields(true);
+    const nameField = fields.find((f) => f.name === 'name');
+    expect(nameField).toBeDefined();
+    expect(nameField.validate).toBeDefined();
+    expect(nameField.validate.some((v) => v.type === 'required')).toBe(true);
+  });
+
+  it('dynamic toggle is absent for TagControl (showDynamic=false)', () => {
+    const names = fieldInfoFields(false).map((f) => f.name);
+    expect(names).not.toContain('dynamic');
+  });
+
+  it('dynamic toggle is present for all other types (showDynamic=true)', () => {
+    const names = fieldInfoFields(true).map((f) => f.name);
+    expect(names).toContain('dynamic');
+  });
+});
+
+describe('optionsFields — DateTimeControl time field validate array', () => {
+  it('default_value_time has a pattern validator for HH:MM format', () => {
+    const fields = optionsFields('DialogFieldDateTimeControl', false);
+    const timeField = fields.find((f) => f && f.name === 'default_value_time');
+    expect(timeField).toBeDefined();
+    expect(timeField.validate).toBeDefined();
+    const patternValidator = timeField.validate.find((v) => v.type === 'pattern');
+    expect(patternValidator).toBeDefined();
+    expect(patternValidator.pattern).toBeInstanceOf(RegExp);
+  });
+
+  it('HH:MM pattern accepts valid times', () => {
+    const fields = optionsFields('DialogFieldDateTimeControl', false);
+    const timeField = fields.find((f) => f && f.name === 'default_value_time');
+    const { pattern } = timeField.validate.find((v) => v.type === 'pattern');
+    expect(pattern.test('00:00')).toBe(true);
+    expect(pattern.test('14:30')).toBe(true);
+    expect(pattern.test('23:59')).toBe(true);
+  });
+
+  it('HH:MM pattern rejects invalid times', () => {
+    const fields = optionsFields('DialogFieldDateTimeControl', false);
+    const timeField = fields.find((f) => f && f.name === 'default_value_time');
+    const { pattern } = timeField.validate.find((v) => v.type === 'pattern');
+    expect(pattern.test('24:00')).toBe(false);
+    expect(pattern.test('9:5')).toBe(false);
+    expect(pattern.test('14:60')).toBe(false);
+    expect(pattern.test('')).toBe(false);
+  });
+});
+
+describe('optionsFields — dynamic entry point validate function is wired', () => {
+  const dynamicTypes = [
+    'DialogFieldTextBox',
+    'DialogFieldTextAreaBox',
+    'DialogFieldCheckBox',
+    'DialogFieldDropDownList',
+    'DialogFieldRadioButton',
+    'DialogFieldDateControl',
+    'DialogFieldDateTimeControl',
+  ];
+
+  test.each(dynamicTypes)('%s dynamic: resource_action carries validateEntryPoint', (type) => {
+    const fields = optionsFields(type, true, { emsWorkflowsEnabled: true });
+    // Walk all fields (including nested) to find resource_action
+    const allFields = [];
+    const walk = (arr) => arr.forEach((f) => {
+      if (f) allFields.push(f);
+    });
+    walk(fields);
+    const raField = allFields.find((f) => f.name === 'resource_action');
+    expect(raField).toBeDefined();
+    expect(Array.isArray(raField.validate)).toBe(true);
+    expect(raField.validate.some((v) => typeof v === 'function')).toBe(true);
   });
 });

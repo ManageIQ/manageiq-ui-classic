@@ -1,4 +1,4 @@
-// ── Action constants ────────────────────────────────────────────────────────
+// Action constants
 export const SD_ACTIONS = {
   tab: {
     add: 'tab.add',
@@ -20,11 +20,11 @@ export const SD_ACTIONS = {
   },
 };
 
-// ── Sort helper ─────────────────────────────────────────────────────────────
+// Sort helper
 export const sortItems = (items) =>
   [...items].sort((a, b) => a.position - b.position);
 
-// ── Unique field name validator ──────────────────────────────────────────────
+// Unique field name validator
 // Returns true if name is already used by another field in the dialog
 export const uniqueNameValidator = (dialogData, currentField) => {
   const allFields = getAllFields(dialogData);
@@ -43,7 +43,7 @@ const getAllFields = (dialogData) => {
   return fields;
 };
 
-// ── Reorder / immutable array helpers ────────────────────────────────────────
+// Reorder / immutable array helpers
 const moveItem = (arr, fromIndex, toIndex) => {
   const result = [...arr];
   const [removed] = result.splice(fromIndex, 1);
@@ -51,7 +51,7 @@ const moveItem = (arr, fromIndex, toIndex) => {
   return result.map((item, index) => ({ ...item, position: index }));
 };
 
-// ── Drop handlers ─────────────────────────────────────────────────────────────
+// Drop handlers
 
 // Drop a new component from the palette into a section
 export const dropComponent = (data, tabIndex, sectionIndex, fieldType, defaultField) => {
@@ -104,14 +104,14 @@ export const dropTab = (data, fromIndex, toIndex) => {
   return { ...data, dialog_tabs: tabs };
 };
 
-// ── Refresh-enabled fields ────────────────────────────────────────────────────
+// Refresh-enabled fields
 // Returns all dynamic fields excluding the one with name=excludeName
 export const getRefreshEnabledFields = (data, excludeName) => {
   const fields = getAllFields(data);
   return fields.filter((f) => f.dynamic && f.name !== excludeName);
 };
 
-// ── componentId → field type mapping ────────────────────────────────────────
+// componentId → field type mapping
 export const getComponentIdFromType = (type) => {
   const map = {
     DialogFieldTextBox: 'text-box',
@@ -126,7 +126,7 @@ export const getComponentIdFromType = (type) => {
   return map[type] || 'text-box';
 };
 
-// ── Field values normalisation ────────────────────────────────────────────────
+// Field values normalisation
 // Converts angular [[value, description], ...] wire format to/from objects
 export const getFieldValues = (field) => {
   if (!Array.isArray(field.values)) return [];
@@ -144,7 +144,7 @@ export const fieldValuesToArray = (values) => {
   });
 };
 
-// ── Date helpers for DatePicker / DateTimePicker canvas widgets ───────────────
+// Date helpers for DatePicker / DateTimePicker canvas widgets
 //
 // Carbon's DatePicker (flatpickr) expects value as [Date] — not a raw string.
 // Parse date parts directly to avoid UTC→local timezone shift (off-by-one bug).
@@ -187,7 +187,7 @@ export const combineDateAndTime = (dateStr, timeStr) => {
   return `${dateStr} ${timeStr}`;
 };
 
-// ── Properties edit (immutable update) ───────────────────────────────────────
+// Properties edit (immutable update)
 // Merges updatedProps into the target field identified by fieldName
 export const handlePropertiesEdit = (data, fieldName, updatedProps) => {
   const tabs = data.dialog_tabs.map((tab) => ({
@@ -203,7 +203,7 @@ export const handlePropertiesEdit = (data, fieldName, updatedProps) => {
   return { ...data, dialog_tabs: tabs };
 };
 
-// ── Delete helpers ────────────────────────────────────────────────────────────
+// Delete helpers
 export const deleteField = (data, tabIndex, sectionIndex, fieldIndex) => {
   const tabs = [...data.dialog_tabs];
   const tab = { ...tabs[tabIndex] };
@@ -238,7 +238,7 @@ export const deleteTab = (data, tabIndex) => {
   return { ...data, dialog_tabs: tabs.map((t, i) => ({ ...t, position: i })) };
 };
 
-// ── Default tab/section ───────────────────────────────────────────────────────
+// Default tab/section
 export const defaultTab = (position = 0) => ({
   label: __('New Tab'),
   description: '',
@@ -253,7 +253,25 @@ export const defaultSection = (position = 0) => ({
   dialog_fields: [],
 });
 
-// ── Build the API payload ─────────────────────────────────────────────────────
+// Dialog-level save guard
+// Save is disabled when:
+//   1. no label
+//   2. no tabs, or any tab has no label or no groups
+//   3. any group has no label or no fields
+export const isSaveDisabled = (data) =>
+  !data
+  || !data.label?.trim()
+  || (data.dialog_tabs || []).length === 0
+  || (data.dialog_tabs || []).some((tab) =>
+      !tab.label?.trim()
+      || (tab.dialog_groups || []).length === 0
+      || (tab.dialog_groups || []).some((group) =>
+          !group.label?.trim()
+          || (group.dialog_fields || []).length === 0
+        )
+    );
+
+// Build the API payload
 // action: 'create' | 'edit'
 // id: string (only for edit)
 export const buildDialogPayload = (dialogData, action) => {
@@ -349,7 +367,7 @@ const sanitiseField = (field, position, action) => {
   return { ...rest, position, resource_action };
 };
 
-// ── Empty dialog template ─────────────────────────────────────────────────────
+// Empty dialog template
 export const emptyDialog = () => ({
   label: '',
   description: '',
