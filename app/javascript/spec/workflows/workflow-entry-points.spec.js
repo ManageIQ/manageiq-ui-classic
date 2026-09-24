@@ -113,4 +113,29 @@ describe('WorkflowEntryPoints component', () => {
     expect(screen.queryByText('task test')).not.toBeInTheDocument();
     expect(screen.queryByText('github.com:manageiq/workflows-examples')).not.toBeInTheDocument();
   });
+
+  it('enables Apply button when a row is selected and disables it on deselect', async() => {
+    render(<WorkflowEntryPoints {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('provision-vm-service/provision-vm.asl')).toBeInTheDocument();
+    });
+
+    const applyButton = screen.getByRole('button', { name: 'Apply' });
+    expect(applyButton).toBeDisabled();
+
+    await act(async() => {
+      await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
+    });
+    expect(applyButton).not.toBeDisabled();
+    expect(window.miqJqueryRequest).toHaveBeenCalledWith(
+      '/catalog/ae_tree_select/?id=cfp-1&tree=automate_catalog_tree&field=workflow_entry_point&typ=provision'
+    );
+
+    // clicking the same row again deselects it
+    await act(async() => {
+      await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
+    });
+    expect(applyButton).toBeDisabled();
+  });
 });
