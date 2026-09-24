@@ -264,10 +264,9 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
 
   const refresh = fieldsToRefreshField(dynamicFields);
 
-  if (type === 'DialogFieldTextBox' || type === 'DialogFieldTextAreaBox') {
-    const defaultValueField = type === 'DialogFieldTextAreaBox'
-      ? { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 }
-      : { component: 'text-field', name: 'default_value', label: __('Default value') };
+  // TextBox static: Default value → Protected → Required → Read only → Visible → Value type → Validation → Fields to refresh
+  // TextBox dynamic: Entry Point → dynamic-values → Required → Protected → Value type → Validation → Fields to refresh
+  if (type === 'DialogFieldTextBox') {
     if (isDynamic) {
       return [
         ...dynamicEntryFields(false),
@@ -285,7 +284,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       ];
     }
     return [
-      defaultValueField,
+      { component: 'text-field', name: 'default_value', label: __('Default value') },
       {
         component: 'switch',
         name: 'options.protected',
@@ -296,6 +295,27 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       requiredField(),
       ...visibilityFields(),
       dataTypeField(),
+      ...validationFields(),
+      refresh,
+    ];
+  }
+
+  // TextArea static: Default value → Required → Read only → Visible → Validation → Fields to refresh
+  // TextArea dynamic: Entry Point → dynamic-values → Required → Validation → Fields to refresh
+  // TextArea has no Protected field and no Value type (unlike TextBox).
+  if (type === 'DialogFieldTextAreaBox') {
+    if (isDynamic) {
+      return [
+        ...dynamicEntryFields(false),
+        requiredField(),
+        ...validationFields(),
+        refresh,
+      ];
+    }
+    return [
+      { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 },
+      requiredField(),
+      ...visibilityFields(),
       ...validationFields(),
       refresh,
     ];
