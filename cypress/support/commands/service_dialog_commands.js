@@ -19,17 +19,3 @@ Cypress.Commands.add('dropFieldIntoSection', (fieldTypeId) => {
   });
 });
 
-/**
- * Click the Edit button on the first dynamic field in the section to open
- * its Edit Field modal.
- *
- * The action button is always present in the DOM but hidden via CSS, so
- * { force: true } is required.
- *
- * @example
- * cy.openFieldEditModal();
- * cy.get('.cds--modal-container').should('be.visible');
- */
-Cypress.Commands.add('openFieldEditModal', () => {
-  cy.get('.dynamic-field-actions button:first-child').first().click({ force: true });
-});
