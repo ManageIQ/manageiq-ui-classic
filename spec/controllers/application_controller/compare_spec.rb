@@ -156,6 +156,114 @@ describe ApplicationController do
       # data[1] is the attribute value row; col 5 is vm3's value (section, disk, attr, base, vm2, vm3)
       expect(data[1][5].to_s).to start_with("* "), "expected vm3's size to be marked as different"
     end
+
+    it 'does not mark (missing) when both base and non-base VMs are missing the same section (fields-only block)' do
+      section_name = :"config.hardware"
+      field        = {:name => :memory, :header => "Memory"}
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Hardware"},
+          nil,
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          1 => {section_name => nil},
+          2 => {section_name => nil}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      controller.send(:prepare_data_for_compare_or_drift_report, :compare, false)
+      data = controller.instance_variable_get(:@data)
+
+      # Both VMs are missing the section; the non-base value should not be marked as different
+      expect(data[0][3].to_s).not_to start_with("* ")
+      expect(data[0][4].to_s).not_to start_with("* ")
+    end
+
+    it 'does not raise for drift mode when a VM is missing a section (fields-only block)' do
+      section_name = :"config.hardware"
+      field        = {:name => :memory, :header => "Memory"}
+      ts1          = 2.days.ago.freeze
+      ts2          = 1.day.ago.freeze
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Hardware"},
+          nil,
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [ts1, ts2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          ts1 => {section_name => {:memory => {:_value_ => "4 GB", :_match_ => true}}},
+          ts2 => {section_name => nil}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_drift_params => 'all')
+
+      expect { controller.send(:prepare_data_for_compare_or_drift_report, :drift, false) }.not_to raise_error
+    end
+
+    it 'does not raise for csv=true when base VM is missing a section (fields-only block)' do
+      section_name = :"config.hardware"
+      field        = {:name => :memory, :header => "Memory"}
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Hardware"},
+          nil,
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          1 => {section_name => nil},
+          2 => {section_name => {:memory => {:_value_ => "4 GB", :_match_ => false}}}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      expect { controller.send(:prepare_data_for_compare_or_drift_report, :compare, true) }.not_to raise_error
+    end
+
+    it 'does not raise for csv=true when base VM has fewer disks than the VM being compared' do
+      section_name     = :"hardware.disks"
+      disk_only_in_vm2 = "sdb"
+      field            = {:name => :size, :header => "Size"}
+
+      compare = double(
+        :master_list => [
+          {:name => section_name, :header => "Disk"},
+          [disk_only_in_vm2],
+          [field]
+        ],
+        :include  => {section_name => {:checked => true}},
+        :ids      => [1, 2],
+        :records  => [{"id" => 1}],
+        :results  => {
+          1 => {section_name => {:_match_ => "0"}},
+          2 => {section_name => {disk_only_in_vm2 => {:size => {:_value_ => "20 GB", :_match_ => false}}, :_match_ => "50"}}
+        }
+      )
+
+      controller.instance_variable_set(:@compare, compare)
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
+
+      expect { controller.send(:prepare_data_for_compare_or_drift_report, :compare, true) }.not_to raise_error
+    end
   end
 
   describe "download_data" do
