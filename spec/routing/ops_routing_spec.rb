@@ -47,7 +47,6 @@ describe "routing for OpsController" do
     rbac_group_edit
     rbac_group_field_changed
     rbac_group_seq_edit
-    rbac_group_user_lookup
     rbac_groups_list
     rbac_role_edit
     rbac_roles_list
