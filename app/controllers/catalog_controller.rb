@@ -1297,7 +1297,7 @@ class CatalogController < ApplicationController
     @edit[:new][:long_description] = @record.long_description
     @edit[:new][:provision_cost] = @record.provision_cost
     @edit[:new][:display] = @record.display || false
-    @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
+    @edit[:new][:catalog_id] = @record.id.nil? ? catalog_id_from_tree_node : @record.service_template_catalog.try(:id)
     @edit[:new][:dialog_id] = nil # initialize
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
@@ -1351,6 +1351,20 @@ class CatalogController < ApplicationController
                        end
     build_automate_tree(:automate_catalog) # Build Catalog Items tree
     form_available_vars_ovf_template if @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate)
+  end
+
+  def catalog_id_from_tree_node
+    return nil if x_node.blank?
+
+    nodetype, id = parse_nodetype_and_id(x_node)
+    case nodetype
+    when "stc"
+      id.to_i
+    when "st"
+      # item node: x_node is "stc-<catalog_id>_st-<item_id>"
+      stc_part = x_node.split('_').first
+      stc_part.start_with?("stc-") ? stc_part.sub("stc-", "").to_i : nil
+    end
   end
 
   def fetch_zones
