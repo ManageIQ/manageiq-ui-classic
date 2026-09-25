@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`WorkflowEntryPoints component renders modal with table and search input 1`] = `
+<div>
+  <div
+    class="cds--layer-one cds--modal cds--modal-tall is-visible workflows-entry-point-modal"
+    role="presentation"
+  >
+    <span
+      class="cds--visually-hidden"
+      role="link"
+      tabindex="0"
+    >
+      Focus sentinel
+    </span>
+    <div
+      aria-label="Select Embedded Workflow - Provision Entry Point"
+      aria-modal="true"
+      class="cds--modal-container"
+      role="dialog"
+      tabindex="-1"
+    >
+      <div
+        class="cds--modal-header"
+      >
+        <h2
+          class="cds--modal-header__heading"
+          dir="auto"
+          id="cds--modal-header__heading--modal-id-_r_1_"
+        >
+          Select Embedded Workflow - Provision Entry Point
+        </h2>
+        <div
+          class="cds--modal-close-button"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-label="Close"
+                aria-labelledby="tooltip-_r_3_"
+                class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="cds--modal-close__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-_r_3_"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Close
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
+        id="cds--modal-body--modal-id-_r_1_"
+      >
+        <div
+          class="cds--layer-three cds--modal-content cds--modal-scroll-content--no-fade workflows-entry-point-modal-body"
+        >
+          <div
+            class="search-wrapper"
+          >
+            <div
+              aria-labelledby="search-workflow-entry-points-search"
+              class="cds--search"
+              role="search"
+            >
+              <div
+                class="cds--search-magnifier"
+                tabindex="-1"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="cds--search-magnifier-icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"
+                  />
+                </svg>
+              </div>
+              <label
+                class="cds--label"
+                for="search-workflow-entry-points"
+                id="search-workflow-entry-points-search"
+              >
+                Search
+              </label>
+              <input
+                autocomplete="off"
+                class="cds--search-input"
+                id="search-workflow-entry-points"
+                placeholder="Search"
+                type="search"
+                value=""
+              />
+              <button
+                aria-label="Clear search input"
+                class="cds--search-close cds--search-close--hidden"
+                title="Clear search input"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="miq-data-table automated-workflow-entry-points"
+          >
+            <div
+              class="cds--data-table-content"
+            >
+              <table
+                class="cds--data-table cds--data-table--md cds--data-table--sort cds--data-table--visible-overflow-menu"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      aria-sort="none"
+                      class="miq-data-table-header cds--table-sort__header"
+                      id="data-table-1__header-configuration_script_source.name"
+                      scope="col"
+                    >
+                      <div
+                        class="cds--table-sort__description"
+                        id="table-sort-_r_7_"
+                      >
+                        Click to sort rows by Repository header in ascending order
+                      </div>
+                      <button
+                        aria-describedby="table-sort-_r_7_"
+                        class="miq-data-table-header cds--table-sort"
+                        type="button"
+                      >
+                        <span
+                          class="cds--table-sort__flex"
+                        >
+                          <div
+                            class="cds--table-header-label"
+                          >
+                            Repository
+                          </div>
+                          <svg
+                            aria-hidden="true"
+                            class="cds--table-sort__icon"
+                            fill="currentColor"
+                            focusable="false"
+                            height="20"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                            />
+                          </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="cds--table-sort__icon-unsorted"
+                            fill="currentColor"
+                            focusable="false"
+                            height="20"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                            />
+                            <path
+                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </th>
+                    <th
+                      aria-sort="none"
+                      class="miq-data-table-header cds--table-sort__header"
+                      id="data-table-1__header-name"
+                      scope="col"
+                    >
+                      <div
+                        class="cds--table-sort__description"
+                        id="table-sort-_r_8_"
+                      >
+                        Click to sort rows by Workflow name header in ascending order
+                      </div>
+                      <button
+                        aria-describedby="table-sort-_r_8_"
+                        class="miq-data-table-header cds--table-sort"
+                        type="button"
+                      >
+                        <span
+                          class="cds--table-sort__flex"
+                        >
+                          <div
+                            class="cds--table-header-label"
+                          >
+                            Workflow name
+                          </div>
+                          <svg
+                            aria-hidden="true"
+                            class="cds--table-sort__icon"
+                            fill="currentColor"
+                            focusable="false"
+                            height="20"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                            />
+                          </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="cds--table-sort__icon-unsorted"
+                            fill="currentColor"
+                            focusable="false"
+                            height="20"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                            />
+                            <path
+                              d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  aria-live="polite"
+                >
+                  <tr
+                    class="clickable-row"
+                    tabindex="0"
+                    title="Click to view details"
+                  >
+                    <td>
+                      <div
+                        class="cell"
+                      >
+                        <span
+                          class="cds--front-line"
+                          title="task test"
+                        >
+                          task test
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="cell"
+                      >
+                        <span
+                          class="cds--front-line"
+                          title="provision-vm-service/provision-vm.asl"
+                        >
+                          provision-vm-service/provision-vm.asl
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="clickable-row"
+                    tabindex="1"
+                    title="Click to view details"
+                  >
+                    <td>
+                      <div
+                        class="cell"
+                      >
+                        <span
+                          class="cds--front-line"
+                          title="github.com:manageiq/workflows-examples"
+                        >
+                          github.com:manageiq/workflows-examples
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="cell"
+                      >
+                        <span
+                          class="cds--front-line"
+                          title="provision-vm-service/list-templates.asl"
+                        >
+                          provision-vm-service/list-templates.asl
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-busy="false"
+        class="cds--modal-footer cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+    <span
+      class="cds--visually-hidden"
+      role="link"
+      tabindex="0"
+    >
+      Focus sentinel
+    </span>
+  </div>
+</div>
+`;

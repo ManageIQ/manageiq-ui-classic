@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Loading, Modal, ModalBody } from '@carbon/react';
+import {
+  Loading,
+  Modal,
+  ModalBody,
+  Search,
+} from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
+import NoRecordsFound from '../no-records-found';
 import { workflowsEntryPoints } from './helper';
 import { http } from '../../http_api';
 
@@ -9,12 +15,13 @@ const WorkflowEntryPoints = ({
   field,
   selected = '',
   type,
-  setShowModal,
-  setSelectedValue,
+  setShowModal = undefined,
+  setSelectedValue = undefined,
 }) => {
   const [data, setData] = useState({
     isLoading: true, list: {}, selectedItemId: selected, key: 'workflow-entry-points',
   });
+  const [searchText, setSearchText] = useState('');
   const [prevSelectedHeader, setPrevSelectedHeader] = useState('');
   const [sortDirectionRepository, setSortDirectionRepository] = useState('DESC');
   const [sortDirectionName, setSortDirectionName] = useState('DESC');
@@ -38,7 +45,7 @@ const WorkflowEntryPoints = ({
       itemB['configuration_script_source.name'] = { text: '' };
     }
     return itemA['configuration_script_source.name'].text.localeCompare(
-      itemB['configuration_script_source.name'].text, undefined, { semsitivity: 'base' }
+      itemB['configuration_script_source.name'].text, undefined, { sensitivity: 'base' }
     );
   };
 
@@ -110,6 +117,21 @@ const WorkflowEntryPoints = ({
     const params = `cfp-${encodeURIComponent(selectedItemId)}&tree=automate_catalog_tree&field=${field}`;
     window.miqJqueryRequest(`/catalog/ae_tree_select/?id=${params}&typ=${type}`);
   };
+  const filteredRows = useMemo(() => {
+    if (!data.list.rows) {
+      return [];
+    }
+    if (!searchText.trim()) {
+      return data.list.rows;
+    }
+    const query = searchText.toLowerCase();
+    return data.list.rows.filter((row) => {
+      const repoName = row['configuration_script_source.name']?.text || '';
+      const workflowName = row.name?.text || '';
+      return repoName.toLowerCase().includes(query) || workflowName.toLowerCase().includes(query);
+    });
+  }, [data.list.rows, searchText]);
+
   if (data.isLoading) {
     return (<Loading active small withOverlay={false} className="loading" />);
   }
@@ -154,6 +176,7 @@ const WorkflowEntryPoints = ({
       }
     }
   };
+
   return (
     <Modal
       open
@@ -166,19 +189,33 @@ const WorkflowEntryPoints = ({
       className="workflows-entry-point-modal"
     >
       <ModalBody className="workflows-entry-point-modal-body">
-        <MiqDataTable
-          headers={data.list.headers}
-          rows={data.list.rows}
-          sortable
-          onSort={onSort}
-          key={data.key}
-          onCellClick={(selectedRow) => onSelect(selectedRow.id)}
-          showPagination={false}
-          truncateText={false}
-          mode="automated-workflow-entry-points"
-          gridChecks={[data.selectedItemId]}
-          size="md"
-        />
+        <div className="search-wrapper">
+          <Search
+            id="search-workflow-entry-points"
+            labelText={__('Search')}
+            placeholder={__('Search')}
+            value={searchText}
+            onClear={() => setSearchText('')}
+            onChange={(event) => setSearchText(event.target.value)}
+          />
+        </div>
+        {filteredRows.length > 0 ? (
+          <MiqDataTable
+            headers={data.list.headers}
+            rows={filteredRows}
+            sortable
+            onSort={onSort}
+            key={`${data.key}-${searchText}`}
+            onCellClick={(selectedRow) => onSelect(selectedRow.id)}
+            showPagination={false}
+            truncateText={false}
+            mode="automated-workflow-entry-points"
+            gridChecks={[data.selectedItemId]}
+            size="md"
+          />
+        ) : (
+          <NoRecordsFound />
+        )}
       </ModalBody>
     </Modal>
   );
