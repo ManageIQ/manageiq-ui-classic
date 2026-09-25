@@ -1,6 +1,10 @@
 module VmRemote
   extend ActiveSupport::Concern
 
+  def kubevirt_vnc_console
+    params[:task_id] ? console_after_task('kubevirt_vnc') : console_before_task('kubevirt_vnc')
+  end
+
   def vmrc_console
     params[:task_id] ? console_after_task('vmrc') : console_before_task('vmrc')
   end
@@ -35,7 +39,7 @@ module VmRemote
     %i[secret url proto].each { |p| params.require(p) }
 
     proto = j(params[:proto]).sub(/\-.*$/, '') # -suffix should be omitted from the protocol name
-    if %w[vnc spice webmks].include?(proto)
+    if %w[vnc spice webmks kubevirt_vnc].include?(proto)
       @console = {
         :url       => j(params[:url]),
         :secret    => j(params[:secret]),
