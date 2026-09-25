@@ -46,3 +46,32 @@
     margin-bottom: 2px;
   }
 }
+
+tfoot.report-print-group-count {
+  // Override table-footer-group so this tfoot is not repeated on every
+  // printed page when the table spans multiple pages.
+  display: table-row-group;
+}
+
+.report-print-group-count {
+  background-color: lightgray;
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: #000;
+
+  td {
+    padding-top: var(--cds-spacing-04);
+    padding-bottom: var(--cds-spacing-04);
+    padding-left: 1rem;
+    font-size: 0.875rem;
+    color: #000;
+  }
+}
+
+#report-print-all-rows-count {
+  background-color: lightgray;
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: #000;
+  padding: 1rem;
+}
