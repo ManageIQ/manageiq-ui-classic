@@ -18,7 +18,14 @@ export const initNotifications = (useLimit) => (dispatch) => {
         notifications,
         count: subcount,
       },
-    }));
+    }))
+    .catch((error) => {
+      console.error('Failed to load notifications:', error);
+      dispatch({
+        type: INIT_NOTIFICATIONS,
+        payload: { notifications: [], count: 0 },
+      });
+    });
 };
 
 export const addNotification = (notification) => (dispatch) => {
