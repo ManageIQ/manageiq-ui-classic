@@ -47,7 +47,9 @@
 // });
 
 // Use cy.appDbState('restore') in afterEach to clean up test data.
-// Note, db_state is automatically captured once before the suite via before:run.
+// In CI db_state is captured once via before:run (before the entire run).
+// In open mode (local dev) it is captured via before:spec (before each spec file),
+// so any data created manually in the UI between spec runs is preserved.
 Cypress.Commands.add('appDbState', function (options) {
   return cy.app('db_state', options);
 });
