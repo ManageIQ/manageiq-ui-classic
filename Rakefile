@@ -1,4 +1,6 @@
 require 'bundler/setup'
+require 'active_support/core_ext/module/delegation'
+
 require 'bundler/gem_tasks'
 require 'English'
 
