@@ -185,7 +185,12 @@ module VmCommon
         action               = url[4]
       end
 
-      redirect_to(:controller => redirect_controller, :action => action)
+      # Include the tree node id in the URL so each VM navigates to a unique URL.
+      # Without this, Firefox serves a stale cache page because every redirect
+      # lands on the same /explorer URL regardless of which VM was clicked.
+      redirect_params = {:controller => redirect_controller, :action => action}
+      redirect_params[:id] = tree_node_id if action == "explorer"
+      redirect_to(redirect_params)
       return
     end
 
