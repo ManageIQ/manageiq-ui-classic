@@ -2408,6 +2408,7 @@ Rails.application.routes.draw do
         fetch_production_log
         pglogical_subscriptions_form_fields
         schedule_form_fields
+        settings_advanced_tab_data
       ],
       :post => %w[
         accordion_select
@@ -2458,6 +2459,7 @@ Rails.application.routes.draw do
         schedule_edit
         schedule_form_filter_type_field_changed
         schedules_list
+        settings_advanced_save
         settings_form_field_changed
         settings_update
         show
