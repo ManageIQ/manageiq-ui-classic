@@ -39,7 +39,6 @@ exports[`Flavor form component matches the snapshot 1`] = `
                 autocomplete="off"
                 class="cds--text-input cds--text-input--empty"
                 id="emsId"
-                loadingmessage="Loading..."
                 name="emsId"
                 placeholder="<Choose>"
                 role="combobox"

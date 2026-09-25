@@ -84,7 +84,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
             <select
               class="cds--select-input"
               id="action_type"
-              loadingmessage="Loading..."
               name="action_type"
               title=""
             >
@@ -220,7 +219,6 @@ exports[`Action Form Component should render correctly 1`] = `
             <select
               class="cds--select-input"
               id="action_type"
-              loadingmessage="Loading..."
               name="action_type"
               title=""
             >
