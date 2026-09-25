@@ -1,5 +1,5 @@
 import {
-  act, render, screen, waitFor,
+  render, screen, waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
@@ -70,9 +70,7 @@ describe('WorkflowEntryPoints component', () => {
     });
 
     const searchInput = screen.getByPlaceholderText('Search');
-    await act(async() => {
-      await userEvent.type(searchInput, 'task test');
-    });
+    await userEvent.type(searchInput, 'task test');
 
     expect(screen.getByText('task test')).toBeInTheDocument();
     expect(screen.getByText('provision-vm-service/provision-vm.asl')).toBeInTheDocument();
@@ -88,9 +86,7 @@ describe('WorkflowEntryPoints component', () => {
     });
 
     const searchInput = screen.getByPlaceholderText('Search');
-    await act(async() => {
-      await userEvent.type(searchInput, 'list-templates');
-    });
+    await userEvent.type(searchInput, 'list-templates');
 
     expect(screen.queryByText('task test')).not.toBeInTheDocument();
     expect(screen.getByText('github.com:manageiq/workflows-examples')).toBeInTheDocument();
@@ -105,9 +101,7 @@ describe('WorkflowEntryPoints component', () => {
     });
 
     const searchInput = screen.getByPlaceholderText('Search');
-    await act(async() => {
-      await userEvent.type(searchInput, 'non-existent-workflow');
-    });
+    await userEvent.type(searchInput, 'non-existent-workflow');
 
     expect(screen.getByText('No records found')).toBeInTheDocument();
     expect(screen.queryByText('task test')).not.toBeInTheDocument();
@@ -124,18 +118,14 @@ describe('WorkflowEntryPoints component', () => {
     const applyButton = screen.getByRole('button', { name: 'Apply' });
     expect(applyButton).toBeDisabled();
 
-    await act(async() => {
-      await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
-    });
+    await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
     expect(applyButton).not.toBeDisabled();
     expect(window.miqJqueryRequest).toHaveBeenCalledWith(
       '/catalog/ae_tree_select/?id=cfp-1&tree=automate_catalog_tree&field=workflow_entry_point&typ=provision'
     );
 
     // clicking the same row again deselects it
-    await act(async() => {
-      await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
-    });
+    await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
     expect(applyButton).toBeDisabled();
   });
 });
