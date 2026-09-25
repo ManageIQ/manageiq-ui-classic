@@ -235,34 +235,6 @@ describe OpsController do
     end
   end
 
-  describe '#dialog_replace_right_cell' do
-    context 'for an User' do
-      before do
-        user = FactoryBot.create(:user)
-        allow(controller).to receive(:x_node).and_return("u-#{user.id}")
-      end
-
-      it 'calls #replace_right_cell with nodetype set to dialog_return' do
-        expect(controller).to receive(:replace_right_cell).with(:nodetype => 'dialog_return')
-        controller.send(:dialog_replace_right_cell)
-      end
-    end
-
-    context 'for a Group' do
-      let(:group) { FactoryBot.create(:miq_group) }
-
-      before do
-        allow(controller).to receive(:x_node).and_return("g-#{group.id}")
-      end
-
-      it 'calls #replace_right_cell with nodetype set to dialog_return and #rbac_group_get_details with group id' do
-        expect(controller).to receive(:rbac_group_get_details).with(group.id)
-        expect(controller).to receive(:replace_right_cell).with(:nodetype => 'dialog_return')
-        controller.send(:dialog_replace_right_cell)
-      end
-    end
-  end
-
   describe "#tree_selected_model" do
     it 'sets @tree_model_selected to User for user node' do
       allow(controller).to receive(:x_node).and_return('u-42')
