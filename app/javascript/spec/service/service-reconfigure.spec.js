@@ -89,8 +89,8 @@ describe('Service component - Service Reconfigure', () => {
 
     await waitFor(() => {
       expect(miqRedirectBack).toHaveBeenCalledWith(
-        __('Reconfigure Request was Submitted'),
-        'success',
+        __('Order Request was Submitted'),
+        'info',
         '/miq_request/show_list?typ=service/'
       );
     });

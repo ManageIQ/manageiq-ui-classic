@@ -14,7 +14,7 @@ const ServiceButtons = React.memo(() => {
   } = data.urls;
   
   const isReconfigure = data.serviceType === ServiceType.reconfigure;
-  const successMessage = isReconfigure ? __('Reconfigure Request was Submitted') : __('Order Request was Submitted');
+  const submitFlashLevel = isReconfigure ? 'info' : 'success';
 
   useEffect(() => {
     if (data.locked) {
@@ -42,13 +42,13 @@ const ServiceButtons = React.memo(() => {
 
             if (taskResponse.data.open_url) {
               window.open(taskResponse.data.open_url);
-              miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
+              miqRedirectBack(__('Order Request was Submitted'), submitFlashLevel, finishSubmitEndpoint);
             } else {
               miqSparkleOff();
               setError(__('Automate failed to obtain URL.'));
             }
           } else {
-            miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
+            miqRedirectBack(__('Order Request was Submitted'), submitFlashLevel, finishSubmitEndpoint);
           }
         } catch (_error) {
           miqSparkleOff();
