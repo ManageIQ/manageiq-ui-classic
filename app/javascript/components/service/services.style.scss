@@ -54,84 +54,85 @@
         padding-left: 10px;
       }
   
-      .section-fields {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-  
-        .section-field-row {
-          display: flex;
-          flex-direction: row;
-          flex-grow: 1;
-          gap: 10px;
-          padding: 10px;
-          border-left: 5px solid #FFF;
+      // Carbon Grid replaces the old flex-row layout for fields.
+      // .service-dialog-fields-grid is emitted by DialogFields as a <Grid narrow>.
+      .service-dialog-fields-grid {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
 
-          &.field-refresh-in-progress {
-            background: #f8f8bb;
-            border-left: 5px solid #ffdc00;
+      .service-dialog-field-col {
+        border-left: 5px solid transparent;
+        padding-bottom: 16px;
+
+        &.field-refresh-in-progress {
+          background: #f8f8bb;
+          border-left: 5px solid #ffdc00;
+        }
+
+        .field-item {
+          width: 100%;
+
+          // Carbon v11 uses cds-- prefix; suppress the default 32 px bottom margin
+          // that Dropdown/MultiSelect add when not inside a grid form layout.
+          .cds--list-box__wrapper,
+          .bx--list-box__wrapper {
+            margin-bottom: 0;
+            width: 100%;
           }
 
-          .field-item {
-            display: flex;
-            flex-grow: 1;
-            margin-bottom: 5px;
+          .bx--form__helper-text {
+            color: #da1e28;
+          }
 
-            .bx--label {
-              margin-bottom: 5px;
-            }
+          // FieldLabel renders as a <FormLabel> with class "field-label"
+          .field-label {
+            display: inline-flex;
+            flex-direction: row;
+            gap: 4px;
+            align-items: center;
 
-            .bx--list-box__wrapper {
-              margin-bottom: 0;
-              width: 100%;
-            }
-
-            .bx--form__helper-text {
+            .field-required {
               color: #da1e28;
             }
 
-            .field-label {
-              display: flex;
-              flex-direction: row;
-              gap: 5px;
-              align-items: center;
-              height:25px;
-
-              .field-required {
-                color: #da1e28;
-              }
-            }
-
-            .field-label-refreshing {
-              margin: 0;
-              margin-top: -5px;
-            }
-
-            .field-checkbox {
-              display: flex;
-              flex-direction: column;
-            }
-
-            .time-picker-container {
-              display: flex;
-              gap: 10px;
-
-              .time-picker {
-                width: 100px;
-                margin-top: -2px;
-              }
+            // Toggletip icon button: align vertically with the label text
+            // and use $icon-secondary (#525252) for visual hierarchy.
+            .field-description-tooltip .cds--toggletip-button {
+              vertical-align: middle;
+              color: #525252;
             }
           }
-          .refresh-field-item {
+
+          .field-label-refreshing {
+            margin: 0;
+          }
+
+          .field-checkbox {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 50px;
-            max-width: 50px;
-            margin-top: 21px;
-            max-height: 50px;
-            min-height: 50px;
+            flex-direction: column;
           }
+
+          .time-picker-container {
+            display: flex;
+            gap: 10px;
+
+            .time-picker {
+              width: 100px;
+              margin-top: -2px;
+            }
+          }
+        }
+
+        .refresh-field-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 50px;
+          max-width: 50px;
+          margin-top: 4px;
+          max-height: 50px;
+          min-height: 50px;
         }
       }
     }

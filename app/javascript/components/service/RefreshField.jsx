@@ -20,31 +20,31 @@ const RefreshField = ({ field }) => {
 
   const { fieldsToRefresh } = data;
   const inProgress = fieldsToRefresh.includes(field.name);
+  const showButton = !!(field.dynamic && field.show_refresh_button) && !inProgress;
+
+  if (!showButton && !inProgress) return null;
+
   return (
     <div className="refresh-field-item">
-      {
-        !!(field.dynamic && field.show_refresh_button) && !inProgress && (
-          <Button
-            hasIconOnly
-            disabled={isDisabled}
-            className="refresh-field-button"
-            onClick={() => {
-              setData({
-                ...data,
-                fieldsToRefresh: [field.name],
-                dialogFields: resetDialogField(data.dialogFields, field),
-              });
-            }}
-            iconDescription={__(`Refresh ${field.label}`)}
-            tooltipAlignment="start"
-            tooltipPosition="left"
-            renderIcon={Renew}
-          />
-        )
-      }
-      {
-        inProgress && <Loading active small withOverlay={false} className="loading" />
-      }
+      {showButton && (
+        <Button
+          hasIconOnly
+          disabled={isDisabled}
+          className="refresh-field-button"
+          onClick={() => {
+            setData({
+              ...data,
+              fieldsToRefresh: [field.name],
+              dialogFields: resetDialogField(data.dialogFields, field),
+            });
+          }}
+          iconDescription={__(`Refresh ${field.label}`)}
+          tooltipAlignment="start"
+          tooltipPosition="left"
+          renderIcon={Renew}
+        />
+      )}
+      {inProgress && <Loading active small withOverlay={false} className="loading" />}
     </div>
   );
 };

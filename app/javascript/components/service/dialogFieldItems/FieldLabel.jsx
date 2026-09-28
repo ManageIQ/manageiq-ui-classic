@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { InformationFilled } from '@carbon/icons-react';
-import { Tooltip, Tag, FormLabel } from '@carbon/react';
+import { Information } from '@carbon/icons-react';
+import {
+  Toggletip, ToggletipButton, ToggletipContent, Tag, FormLabel,
+} from '@carbon/react';
 import ServiceContext from '../ServiceContext';
 
 /** Returns a plain string label safe for Carbon's labelText / titleText props. */
@@ -28,19 +30,20 @@ const FieldLabel = React.memo(({ field }) => {
   }
 
   return (
-    <div className="field-label">
-      <FormLabel htmlFor={`${field.name}-${field.type}-${field.id}`}>
-        {data.isOrderServiceForm && field.required && <span className="field-required">*</span>}
-        {field.label}
-        {field.description && (
-          <Tooltip label={field.description} align="right">
-            <button type="button" className="tooltip-trigger" aria-label={field.description}>
-              <InformationFilled size={16} />
-            </button>
-          </Tooltip>
-        )}
-      </FormLabel>
-    </div>
+    <FormLabel className="field-label" htmlFor={`${field.name}-${field.type}-${field.id}`}>
+      {data.isOrderServiceForm && field.required && <span className="field-required">*</span>}
+      {field.label}
+      {field.description && (
+        <Toggletip align="bottom" className="field-description-tooltip">
+          <ToggletipButton label={__('Show information')}>
+            <Information size={16} />
+          </ToggletipButton>
+          <ToggletipContent>
+            <p>{field.description}</p>
+          </ToggletipContent>
+        </Toggletip>
+      )}
+    </FormLabel>
   );
 });
 

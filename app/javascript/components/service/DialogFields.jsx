@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Grid, Column } from '@carbon/react';
 import { DIALOG_FIELD_TYPES, ServiceType } from './constants';
 import CheckboxField from './dialogFieldItems/CheckboxField';
 import DateField from './dialogFieldItems/DateField';
@@ -37,22 +38,23 @@ const renderFieldContent = (field, dialogFields) => {
   }
 };
 
-/** Function to render a field. */
+/** Function to render a field row as a Carbon Column. */
 const renderFieldItem = (field, data) => {
   const isRefreshing = data.fieldsToRefresh.includes(field.name);
   return (
-    <div
-      className={classNames('section-field-row', isRefreshing && 'field-refresh-in-progress')}
+    <Column
+      sm={4}
+      md={4}
+      lg={8}
+      className={classNames('service-dialog-field-col', isRefreshing && 'field-refresh-in-progress')}
       key={field.id.toString()}
       id={`section-field-row-${field.name}`}
     >
       <div className="field-item">
-        {
-          renderFieldContent(field, data.dialogFields)
-        }
+        {renderFieldContent(field, data.dialogFields)}
       </div>
       <RefreshField field={field} />
-    </div>
+    </Column>
   );
 };
 
@@ -67,13 +69,13 @@ const DialogFields = ({ dialogFields }) => {
   };
 
   return (
-    <>
+    <Grid className="service-dialog-fields-grid" narrow>
       {
         dialogFields.map((field) => (
           visible(field) ? renderFieldItem(field, data) : <span key={field.id.toString()} />
         ))
       }
-    </>
+    </Grid>
   );
 };
 

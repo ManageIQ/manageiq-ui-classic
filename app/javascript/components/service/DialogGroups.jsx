@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@carbon/react';
+import { DefinitionTooltip } from '@carbon/react';
 import DialogFields from './DialogFields';
 
 /** Component to render the Groups in the Service/DialogTabs component */
 const DialogGroups = ({ dialogGroups }) => {
   const itemLabel = ({ label, description }) => (description
     ? (
-      <Tooltip label={description} align="right">
-        <button type="button" className="tooltip-trigger">{label}</button>
-      </Tooltip>
+      <DefinitionTooltip definition={description} align="bottom-start" openOnHover>
+        {label}
+      </DefinitionTooltip>
     )
     : label);
 
@@ -21,9 +21,7 @@ const DialogGroups = ({ dialogGroups }) => {
             <div className="section-label">
               {itemLabel(item)}
             </div>
-            <div className="section-fields">
-              <DialogFields dialogFields={item.dialog_fields} />
-            </div>
+            <DialogFields dialogFields={item.dialog_fields} />
           </div>
         ))
       }

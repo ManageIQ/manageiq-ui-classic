@@ -125,26 +125,22 @@ exports[`Service component - Service Request should render the Service component
             New section
           </div>
           <div
-            class="section-fields"
+            class="service-dialog-fields-grid cds--css-grid cds--css-grid--narrow"
           >
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-text_box_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="text_box_1-DialogFieldTextBox-7542"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="text_box_1-DialogFieldTextBox-7542"
-                  >
-                    Text Box
-                  </label>
-                </div>
+                  Text Box
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -182,28 +178,21 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-textarea_box_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="textarea_box_1-DialogFieldTextAreaBox-7543"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="textarea_box_1-DialogFieldTextAreaBox-7543"
-                  >
-                    Text Area
-                  </label>
-                </div>
+                  Text Area
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -241,12 +230,9 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-check_box_1"
             >
               <div
@@ -255,17 +241,13 @@ exports[`Service component - Service Request should render the Service component
                 <div
                   class="field-checkbox"
                 >
-                  <div
-                    class="field-label"
+                  <label
+                    class="cds--label cds--label--no-margin field-label"
+                    dir="auto"
+                    for="check_box_1-DialogFieldCheckBox-7544"
                   >
-                    <label
-                      class="cds--label cds--label--no-margin"
-                      dir="auto"
-                      for="check_box_1-DialogFieldCheckBox-7544"
-                    >
-                      Check Box
-                    </label>
-                  </div>
+                    Check Box
+                  </label>
                   <div
                     class="cds--form-item cds--checkbox-wrapper"
                   >
@@ -294,28 +276,21 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-dropdown_list_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_1-DialogFieldTextBox-7545"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="dropdown_list_1-DialogFieldTextBox-7545"
-                  >
-                    Dropdown
-                  </label>
-                </div>
+                  Dropdown
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -406,23 +381,19 @@ exports[`Service component - Service Request should render the Service component
               </div>
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-dropdown_list_2_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_2_1-DialogFieldTextBox-7546"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="dropdown_list_2_1-DialogFieldTextBox-7546"
-                  >
-                    VisibileCheck DDL
-                  </label>
-                </div>
+                  VisibileCheck DDL
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -460,28 +431,21 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-radio_button_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="radio_button_1-DialogFieldRadioButton-7547"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="radio_button_1-DialogFieldRadioButton-7547"
-                  >
-                    Radio Button
-                  </label>
-                </div>
+                  Radio Button
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -519,28 +483,21 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-date_control_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="date_control_1-DialogFieldTextBox-7548"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="date_control_1-DialogFieldTextBox-7548"
-                  >
-                    Datepicker
-                  </label>
-                </div>
+                  Datepicker
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -578,28 +535,21 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-tag_control_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="tag_control_1-DialogFieldTextBox-7550"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="tag_control_1-DialogFieldTextBox-7550"
-                  >
-                    Tag Control
-                  </label>
-                </div>
+                  Tag Control
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -637,9 +587,6 @@ exports[`Service component - Service Request should render the Service component
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
           </div>
         </div>

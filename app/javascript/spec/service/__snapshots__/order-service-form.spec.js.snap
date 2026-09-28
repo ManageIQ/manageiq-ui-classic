@@ -125,31 +125,27 @@ exports[`Service component - Order Service renders all field types and the Submi
             New section
           </div>
           <div
-            class="section-fields"
+            class="service-dialog-fields-grid cds--css-grid cds--css-grid--narrow"
           >
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-text_box_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="text_box_1-DialogFieldTextBox-7542"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="text_box_1-DialogFieldTextBox-7542"
+                  <span
+                    class="field-required"
                   >
-                    <span
-                      class="field-required"
-                    >
-                      *
-                    </span>
-                    Text Box
-                  </label>
-                </div>
+                    *
+                  </span>
+                  Text Box
+                </label>
                 <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
@@ -215,33 +211,26 @@ exports[`Service component - Order Service renders all field types and the Submi
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-textarea_box_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="textarea_box_1-DialogFieldTextAreaBox-7543"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="textarea_box_1-DialogFieldTextAreaBox-7543"
+                  <span
+                    class="field-required"
                   >
-                    <span
-                      class="field-required"
-                    >
-                      *
-                    </span>
-                    Text Area
-                  </label>
-                </div>
+                    *
+                  </span>
+                  Text Area
+                </label>
                 <div
                   class="cds--form-item"
                 >
@@ -305,12 +294,9 @@ exports[`Service component - Order Service renders all field types and the Submi
                   />
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-check_box_1"
             >
               <div
@@ -319,22 +305,18 @@ exports[`Service component - Order Service renders all field types and the Submi
                 <div
                   class="field-checkbox"
                 >
-                  <div
-                    class="field-label"
+                  <label
+                    class="cds--label cds--label--no-margin field-label"
+                    dir="auto"
+                    for="check_box_1-DialogFieldCheckBox-7544"
                   >
-                    <label
-                      class="cds--label cds--label--no-margin"
-                      dir="auto"
-                      for="check_box_1-DialogFieldCheckBox-7544"
+                    <span
+                      class="field-required"
                     >
-                      <span
-                        class="field-required"
-                      >
-                        *
-                      </span>
-                      Check Box
-                    </label>
-                  </div>
+                      *
+                    </span>
+                    Check Box
+                  </label>
                   <div
                     class="cds--form-item cds--checkbox-wrapper"
                   >
@@ -365,33 +347,26 @@ exports[`Service component - Order Service renders all field types and the Submi
                   />
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-dropdown_list_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_1-DialogFieldDropDownList-7545"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="dropdown_list_1-DialogFieldDropDownList-7545"
+                  <span
+                    class="field-required"
                   >
-                    <span
-                      class="field-required"
-                    >
-                      *
-                    </span>
-                    Dropdown
-                  </label>
-                </div>
+                    *
+                  </span>
+                  Dropdown
+                </label>
                 <div
                   class="cds--dropdown__wrapper cds--list-box__wrapper"
                 >
@@ -532,28 +507,24 @@ exports[`Service component - Order Service renders all field types and the Submi
               </div>
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-dropdown_list_2_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_2_1-DialogFieldDropDownList-7546"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="dropdown_list_2_1-DialogFieldDropDownList-7546"
+                  <span
+                    class="field-required"
                   >
-                    <span
-                      class="field-required"
-                    >
-                      *
-                    </span>
-                    VisibileCheck DDL
-                  </label>
-                </div>
+                    *
+                  </span>
+                  VisibileCheck DDL
+                </label>
                 <div
                   class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
                 >
@@ -650,12 +621,9 @@ exports[`Service component - Order Service renders all field types and the Submi
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-radio_button_1"
             >
               <div
@@ -676,22 +644,18 @@ exports[`Service component - Order Service renders all field types and the Submi
                         class="cds--label"
                         dir="auto"
                       >
-                        <div
-                          class="field-label"
+                        <label
+                          class="cds--label cds--label--no-margin field-label"
+                          dir="auto"
+                          for="radio_button_1-DialogFieldRadioButton-7547"
                         >
-                          <label
-                            class="cds--label cds--label--no-margin"
-                            dir="auto"
-                            for="radio_button_1-DialogFieldRadioButton-7547"
+                          <span
+                            class="field-required"
                           >
-                            <span
-                              class="field-required"
-                            >
-                              *
-                            </span>
-                            Radio Button
-                          </label>
-                        </div>
+                            *
+                          </span>
+                          Radio Button
+                        </label>
                       </legend>
                       <div
                         class="cds--radio-button-wrapper"
@@ -802,12 +766,9 @@ exports[`Service component - Order Service renders all field types and the Submi
                   />
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-date_control_1"
             >
               <div
@@ -866,33 +827,26 @@ exports[`Service component - Order Service renders all field types and the Submi
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
             <div
-              class="section-field-row"
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
               id="section-field-row-tag_control_1"
             >
               <div
                 class="field-item"
               >
-                <div
-                  class="field-label"
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="tag_control_1-DialogFieldTagControl-7550"
                 >
-                  <label
-                    class="cds--label cds--label--no-margin"
-                    dir="auto"
-                    for="tag_control_1-DialogFieldTagControl-7550"
+                  <span
+                    class="field-required"
                   >
-                    <span
-                      class="field-required"
-                    >
-                      *
-                    </span>
-                    Tag Control
-                  </label>
-                </div>
+                    *
+                  </span>
+                  Tag Control
+                </label>
                 <div
                   class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
                 >
@@ -989,9 +943,6 @@ exports[`Service component - Order Service renders all field types and the Submi
                   </div>
                 </div>
               </div>
-              <div
-                class="refresh-field-item"
-              />
             </div>
           </div>
         </div>
