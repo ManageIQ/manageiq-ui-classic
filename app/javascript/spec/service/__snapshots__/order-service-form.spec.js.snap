@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Service component - Order Service should render the Service component for orderServiceForm that renders all fields 1`] = `
+exports[`Service component - Order Service renders all field types and the Submit and Cancel buttons 1`] = `
 <div>
   <div
     class="service-container orderServiceForm"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Service component - Service Reconfigure should render the Service component for serviceReconfigure with all fields 1`] = `
+exports[`Service component - Service Reconfigure renders all fields and Submit and Cancel buttons 1`] = `
 <div>
   <div
     class="service-container serviceReconfigure"
