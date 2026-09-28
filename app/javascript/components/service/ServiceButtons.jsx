@@ -31,7 +31,7 @@ const ServiceButtons = React.memo(() => {
           const response = await API.post(apiSubmitEndpoint, submitData, { skipErrors: [400] });
           if (openUrl === 'true') {
             const { params } = data;
-            const taskResponse = await API.wait_for_task(response)
+            const taskResponse = await API.wait_for_task(response.task_id)
               .then(() =>
                 // eslint-disable-next-line no-undef
                 $http.post('open_url_after_dialog', {
@@ -40,7 +40,7 @@ const ServiceButtons = React.memo(() => {
                 }));
 
             if (taskResponse.data.open_url) {
-              window.open(response.data.open_url);
+              window.open(taskResponse.data.open_url);
               miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
             } else {
               add_flash(__('Automate failed to obtain URL.'), 'error');

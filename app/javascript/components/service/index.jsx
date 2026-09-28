@@ -46,6 +46,7 @@ const Service = ({
     fieldsToRefresh: [],
     dialogFields: undefined,
     urls,
+    params,
     isOrderServiceForm,
     isServiceReconfigure,
     locked: false,

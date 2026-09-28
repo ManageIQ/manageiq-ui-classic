@@ -38,6 +38,14 @@ describe('Service component - Order Service', () => {
     requestDialogOptions: undefined,
   };
 
+  const openUrlInitialData = {
+    ...initialData,
+    urls: {
+      ...initialData.urls,
+      openUrl: 'true',
+    },
+  };
+
   const mockDialogFetch = () => {
     API.get.mockResolvedValueOnce({ id: 118, content: serviceDialogResponse });
   };
@@ -51,6 +59,7 @@ describe('Service component - Order Service', () => {
   afterEach(() => {
     fetchMock.restore();
     jest.clearAllMocks();
+    delete global.$http;
   });
 
   it('renders all field types and the Submit and Cancel buttons', async() => {
@@ -180,5 +189,67 @@ describe('Service component - Order Service', () => {
         expect.objectContaining({ action: 'refresh_dialog_fields' })
       );
     });
+  });
+
+  it('opens the URL returned by Automate and redirects when openUrl is enabled', async() => {
+    const user = userEvent.setup();
+    mockDialogFetchAllOptional();
+
+    API.post.mockResolvedValueOnce({ task_id: 'task-abc' });
+    API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
+    global.$http = {
+      post: jest.fn().mockResolvedValueOnce({ data: { open_url: 'https://example.com/vm/1' } }),
+    };
+    window.open = jest.fn();
+
+    renderWithRedux(<Service initialData={openUrlInitialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      expect(API.wait_for_task).toHaveBeenCalledWith('task-abc');
+    });
+
+    await waitFor(() => {
+      expect(global.$http.post).toHaveBeenCalledWith(
+        'open_url_after_dialog',
+        { targetId: 170, realTargetType: 'ServiceTemplate' }
+      );
+    });
+
+    await waitFor(() => {
+      expect(window.open).toHaveBeenCalledWith('https://example.com/vm/1');
+      expect(miqRedirectBack).toHaveBeenCalledWith(
+        __('Order Request was Submitted'),
+        'success',
+        '/miq_request/show_list'
+      );
+    });
+  });
+
+  it('shows an Automate URL error flash when openUrl is enabled but no URL is returned', async() => {
+    const user = userEvent.setup();
+    mockDialogFetchAllOptional();
+
+    API.post.mockResolvedValueOnce({ task_id: 'task-xyz' });
+    API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
+    global.$http = {
+      post: jest.fn().mockResolvedValueOnce({ data: { open_url: null } }),
+    };
+    window.open = jest.fn();
+    window.add_flash = jest.fn();
+
+    renderWithRedux(<Service initialData={openUrlInitialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      expect(window.add_flash).toHaveBeenCalledWith(__('Automate failed to obtain URL.'), 'error');
+    });
+
+    expect(window.open).not.toHaveBeenCalled();
+    expect(miqRedirectBack).not.toHaveBeenCalled();
   });
 });
