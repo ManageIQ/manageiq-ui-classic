@@ -276,20 +276,24 @@ module Mixins
             end
           end
 
-          vm = @reconfigureitems.first
           proc_units   = nil
           vprocs       = nil
           vprocs_limit = nil
-          if vm.supports?(:reconfigure_proc_units)
-            proc_units = if vm.try(:processor_share_type) == 'dedicated'
-                           vm.try(:hardware).try(:cpu_total_cores).to_i
-                         else
-                           vm.try(:entitled_processors).to_f
-                         end
+          if @reconfigureitems.all? { |vm| vm.supports?(:reconfigure_proc_units) }
+            proc_unit_value = proc { |vm|
+              case vm.try(:processor_share_type)
+              when 'dedicated'                            then vm.try(:hardware).try(:cpu_total_cores).to_i
+              when 'shared', 'capped', 'uncapped'         then vm.try(:entitled_processors).to_f
+              end
+            }
+            proc_units = proc_unit_value.call(@reconfigureitems.first)
+            proc_units = nil unless @reconfigureitems.all? { |vm| proc_unit_value.call(vm) == proc_units }
           end
-          if vm.supports?(:reconfigure_vcpus)
-            vprocs       = vm.try(:current_vcpu_count)
-            vprocs_limit = vm.try(:reconfigure_vcpu_limits)
+          if @reconfigureitems.all? { |vm| vm.supports?(:reconfigure_vcpus) }
+            first_vm = @reconfigureitems.first
+            vprocs = first_vm.try(:current_vcpu_count)
+            vprocs = nil unless @reconfigureitems.all? { |vm| vm.try(:current_vcpu_count) == vprocs }
+            vprocs_limit = first_vm.try(:reconfigure_vcpu_limits)
           end
 
           {:objectIds              => reconfigure_ids,
@@ -416,8 +420,8 @@ module Mixins
           end
 
           if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
-            vm = Vm.find(Array.wrap(params[:objectIds]).first)
-            if vm.supports?(:reconfigure_proc_units) && params[:processing_units].present?
+            vms = Vm.find(Array.wrap(params[:objectIds]))
+            if vms.all? { |vm| vm.supports?(:reconfigure_proc_units) } && params[:processing_units].present?
               # Processing units is a float (dedicated partitions send an integer cast to float)
               options[:number_of_cpus] = params[:processing_units].to_f
             else
@@ -429,9 +433,7 @@ module Mixins
             end
           end
 
-          if params[:cb_vprocs] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
-            options[:number_of_vcpus] = params[:vprocs_count].to_i
-          end
+          options[:number_of_vcpus] = params[:vprocs_count].to_i if params[:cb_vprocs] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
 
           reconfigure_param_list.each do |params_key, options_key|
             next if params[params_key].blank?
