@@ -84,7 +84,7 @@ const ServiceButtons = React.memo(() => {
       <Button
         kind="secondary"
         disabled={data.locked || data.fieldsToRefresh.length > 0}
-        onClick={() => miqRedirectBack(__('Dialog Cancelled'), 'warning', cancelEndPoint)}
+        onClick={() => miqRedirectBack(__('Dialog Cancelled'), 'info', cancelEndPoint)}
       >
         {__('Cancel')}
       </Button>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FilterableMultiSelect } from '@carbon/react';
 import { fieldProperties } from '../../helper.field';
-import FieldLabel from '../FieldLabel';
+import FieldLabel, { fieldLabelText } from '../FieldLabel';
 import ServiceValidator from '../../ServiceValidator';
 import ServiceContext from '../../ServiceContext';
 
@@ -36,21 +36,25 @@ const MultiDropDownField = ({ field, options }) => {
   const noSort = (items) => items;
 
   return (
-    <FilterableMultiSelect
-      disabled={isDisabled}
-      invalid={!fieldData.valid}
-      id={fieldId}
-      titleText={<FieldLabel field={field} />}
-      initialSelectedItems={fieldData.value}
-      placeholder={fieldData.value.length <= 0 ? __('Nothing selected') : ''}
-      invalidText={requiredLabel}
-      items={options.map((item) => ({ ...item, label: item.text }))}
-      itemToString={(item) => (item ? item.text : '')}
-      onChange={onChange}
-      selectionFeedback="top-after-reopen"
-      readOnly={field.read_only}
-      sortItems={noSort}
-    />
+    <>
+      <FieldLabel field={field} />
+      <FilterableMultiSelect
+        disabled={isDisabled}
+        invalid={!fieldData.valid}
+        id={fieldId}
+        titleText={fieldLabelText(field)}
+        hideLabel
+        initialSelectedItems={fieldData.value}
+        placeholder={fieldData.value.length <= 0 ? __('Nothing selected') : ''}
+        invalidText={requiredLabel}
+        items={options.map((item) => ({ ...item, label: item.text }))}
+        itemToString={(item) => (item ? item.text : '')}
+        onChange={onChange}
+        selectionFeedback="top-after-reopen"
+        readOnly={field.read_only}
+        sortItems={noSort}
+      />
+    </>
   );
 };
 

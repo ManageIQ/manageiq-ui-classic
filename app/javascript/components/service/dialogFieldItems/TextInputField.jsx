@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { TextInput, PasswordInput } from '@carbon/react';
-import FieldLabel from './FieldLabel';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
 import { fieldProperties } from '../helper.field';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
@@ -40,14 +40,25 @@ const TextInputField = ({ field }) => {
     invalidText: requiredLabel,
     id: fieldId,
     onChange: (event) => onChange(event),
-    labelText: <FieldLabel field={field} />,
+    labelText: fieldLabelText(field),
+    hideLabel: true,
   });
 
   /** Function to render the PassportInput Component */
-  const passwordInput = () => (<PasswordInput {...getCommonProps()} type="password" />);
+  const passwordInput = () => (
+    <>
+      <FieldLabel field={field} />
+      <PasswordInput {...getCommonProps()} type="password" />
+    </>
+  );
 
   /** Function to render the TextInput Component */
-  const textInput = () => (<TextInput {...getCommonProps()} type={field.data_type === 'integer' ? 'number' : 'text'} />);
+  const textInput = () => (
+    <>
+      <FieldLabel field={field} />
+      <TextInput {...getCommonProps()} type={field.data_type === 'integer' ? 'number' : 'text'} />
+    </>
+  );
 
   return field.options && field.options.protected ? passwordInput() : textInput();
 };

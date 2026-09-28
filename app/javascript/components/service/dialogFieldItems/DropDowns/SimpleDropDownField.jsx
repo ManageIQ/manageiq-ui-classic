@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@carbon/react';
 import { fieldProperties } from '../../helper.field';
-import FieldLabel from '../FieldLabel';
+import FieldLabel, { fieldLabelText } from '../FieldLabel';
 import ServiceContext from '../../ServiceContext';
 import ServiceValidator from '../../ServiceValidator';
 
@@ -36,20 +36,24 @@ const SimpleDropDownField = ({ field, options }) => {
   };
 
   return (
-    <Dropdown
-      disabled={isDisabled}
-      invalid={!fieldData.valid}
-      id={fieldId}
-      titleText={<FieldLabel field={field} />}
-      initialSelectedItem={options[0]}
-      selectedItem={fieldData.value}
-      invalidText={requiredLabel}
-      label={__('Nothing selected')}
-      items={options}
-      itemToString={(item) => (item ? item.text : '')}
-      onChange={onChange}
-      readOnly={field.read_only}
-    />
+    <>
+      <FieldLabel field={field} />
+      <Dropdown
+        disabled={isDisabled}
+        invalid={!fieldData.valid}
+        id={fieldId}
+        titleText={fieldLabelText(field)}
+        hideLabel
+        initialSelectedItem={options[0]}
+        selectedItem={fieldData.value}
+        invalidText={requiredLabel}
+        label={__('Nothing selected')}
+        items={options}
+        itemToString={(item) => (item ? item.text : '')}
+        onChange={onChange}
+        readOnly={field.read_only}
+      />
+    </>
   );
 };
 

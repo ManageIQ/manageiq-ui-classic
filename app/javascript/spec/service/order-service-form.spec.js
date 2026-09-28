@@ -154,7 +154,7 @@ describe('Service component - Order Service', () => {
 
     expect(miqRedirectBack).toHaveBeenCalledWith(
       __('Dialog Cancelled'),
-      'warning',
+      'info',
       '/catalog/explorer'
     );
   });

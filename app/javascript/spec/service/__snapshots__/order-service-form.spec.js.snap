@@ -135,26 +135,33 @@ exports[`Service component - Order Service renders all field types and the Submi
                 class="field-item"
               >
                 <div
+                  class="field-label"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin"
+                    dir="auto"
+                    for="text_box_1-DialogFieldTextBox-7542"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    Text Box
+                  </label>
+                </div>
+                <div
                   class="cds--form-item cds--text-input-wrapper"
                 >
                   <div
                     class="cds--text-input__label-wrapper"
                   >
                     <label
-                      class="cds--label"
+                      class="cds--label cds--visually-hidden"
                       dir="auto"
                       for="text_box_1-DialogFieldTextBox-7542"
                     >
-                      <div
-                        class="field-label"
-                      >
-                        <span
-                          class="field-required"
-                        >
-                          *
-                        </span>
-                        Text Box
-                      </div>
+                      Text Box
                     </label>
                   </div>
                   <div
@@ -220,26 +227,33 @@ exports[`Service component - Order Service renders all field types and the Submi
                 class="field-item"
               >
                 <div
+                  class="field-label"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin"
+                    dir="auto"
+                    for="textarea_box_1-DialogFieldTextAreaBox-7543"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    Text Area
+                  </label>
+                </div>
+                <div
                   class="cds--form-item"
                 >
                   <div
                     class="cds--text-area__label-wrapper"
                   >
                     <label
-                      class="cds--label"
+                      class="cds--label cds--visually-hidden"
                       dir="auto"
                       for="textarea_box_1-DialogFieldTextAreaBox-7543"
                     >
-                      <div
-                        class="field-label"
-                      >
-                        <span
-                          class="field-required"
-                        >
-                          *
-                        </span>
-                        Text Area
-                      </div>
+                      Text Area
                     </label>
                   </div>
                   <div
@@ -306,6 +320,22 @@ exports[`Service component - Order Service renders all field types and the Submi
                   class="field-checkbox"
                 >
                   <div
+                    class="field-label"
+                  >
+                    <label
+                      class="cds--label cds--label--no-margin"
+                      dir="auto"
+                      for="check_box_1-DialogFieldCheckBox-7544"
+                    >
+                      <span
+                        class="field-required"
+                      >
+                        *
+                      </span>
+                      Check Box
+                    </label>
+                  </div>
+                  <div
                     class="cds--form-item cds--checkbox-wrapper"
                   >
                     <input
@@ -320,19 +350,10 @@ exports[`Service component - Order Service renders all field types and the Submi
                       title=""
                     >
                       <div
-                        class="cds--checkbox-label-text"
+                        class="cds--checkbox-label-text cds--visually-hidden"
                         dir="auto"
                       >
-                        <div
-                          class="field-label"
-                        >
-                          <span
-                            class="field-required"
-                          >
-                            *
-                          </span>
-                          Check Box
-                        </div>
+                        Check Box
                       </div>
                     </label>
                     <div
@@ -356,22 +377,30 @@ exports[`Service component - Order Service renders all field types and the Submi
                 class="field-item"
               >
                 <div
+                  class="field-label"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin"
+                    dir="auto"
+                    for="dropdown_list_1-DialogFieldDropDownList-7545"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    Dropdown
+                  </label>
+                </div>
+                <div
                   class="cds--dropdown__wrapper cds--list-box__wrapper"
                 >
                   <label
-                    class="cds--label"
+                    class="cds--label cds--visually-hidden"
+                    for="downshift-_r_4_-toggle-button"
                     id="downshift-_r_4_-label"
                   >
-                    <div
-                      class="field-label"
-                    >
-                      <span
-                        class="field-required"
-                      >
-                        *
-                      </span>
-                      Dropdown
-                    </div>
+                    Dropdown
                   </label>
                   <div
                     class="cds--dropdown cds--dropdown--invalid cds--list-box cds--list-box--invalid"
@@ -510,23 +539,30 @@ exports[`Service component - Order Service renders all field types and the Submi
                 class="field-item"
               >
                 <div
+                  class="field-label"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin"
+                    dir="auto"
+                    for="dropdown_list_2_1-DialogFieldDropDownList-7546"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    VisibileCheck DDL
+                  </label>
+                </div>
+                <div
                   class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
                 >
                   <label
-                    class="cds--label"
+                    class="cds--label cds--visually-hidden"
                     for="dropdown_list_2_1-DialogFieldDropDownList-7546-input"
                     id="dropdown_list_2_1-DialogFieldDropDownList-7546-label"
                   >
-                    <div
-                      class="field-label"
-                    >
-                      <span
-                        class="field-required"
-                      >
-                        *
-                      </span>
-                      VisibileCheck DDL
-                    </div>
+                    VisibileCheck DDL
                     <span
                       class="cds--visually-hidden"
                     >
@@ -643,12 +679,18 @@ exports[`Service component - Order Service renders all field types and the Submi
                         <div
                           class="field-label"
                         >
-                          <span
-                            class="field-required"
+                          <label
+                            class="cds--label cds--label--no-margin"
+                            dir="auto"
+                            for="radio_button_1-DialogFieldRadioButton-7547"
                           >
-                            *
-                          </span>
-                          Radio Button
+                            <span
+                              class="field-required"
+                            >
+                              *
+                            </span>
+                            Radio Button
+                          </label>
                         </div>
                       </legend>
                       <div
@@ -836,23 +878,30 @@ exports[`Service component - Order Service renders all field types and the Submi
                 class="field-item"
               >
                 <div
+                  class="field-label"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin"
+                    dir="auto"
+                    for="tag_control_1-DialogFieldTagControl-7550"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    Tag Control
+                  </label>
+                </div>
+                <div
                   class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
                 >
                   <label
-                    class="cds--label"
+                    class="cds--label cds--visually-hidden"
                     for="tag_control_1-DialogFieldTagControl-7550-input"
                     id="tag_control_1-DialogFieldTagControl-7550-label"
                   >
-                    <div
-                      class="field-label"
-                    >
-                      <span
-                        class="field-required"
-                      >
-                        *
-                      </span>
-                      Tag Control
-                    </div>
+                    Tag Control
                     <span
                       class="cds--visually-hidden"
                     >

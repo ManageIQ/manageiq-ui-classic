@@ -152,7 +152,7 @@ describe('Service component - Service Reconfigure', () => {
 
     expect(miqRedirectBack).toHaveBeenCalledWith(
       __('Dialog Cancelled'),
-      'warning',
+      'info',
       '/service/show_list'
     );
   });

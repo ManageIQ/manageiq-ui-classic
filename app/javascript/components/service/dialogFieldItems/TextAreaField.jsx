@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { TextArea } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
-import FieldLabel from './FieldLabel';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
 
@@ -32,17 +32,21 @@ const TextAreaField = ({ field }) => {
   };
 
   return (
-    <TextArea
-      disabled={isDisabled}
-      invalid={!fieldData.valid}
-      value={fieldData.value}
-      readOnly={field.read_only}
-      invalidText={requiredLabel}
-      rows={4}
-      id={fieldId}
-      onChange={(event) => onChange(event)}
-      labelText={<FieldLabel field={field} />}
-    />
+    <>
+      <FieldLabel field={field} />
+      <TextArea
+        disabled={isDisabled}
+        invalid={!fieldData.valid}
+        value={fieldData.value}
+        readOnly={field.read_only}
+        invalidText={requiredLabel}
+        rows={4}
+        id={fieldId}
+        onChange={(event) => onChange(event)}
+        labelText={fieldLabelText(field)}
+        hideLabel
+      />
+    </>
   );
 };
 

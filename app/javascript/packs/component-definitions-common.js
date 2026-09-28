@@ -324,7 +324,6 @@ ManageIQ.component.addReact('PxeCustomizationTemplateForm', PxeCustomizationTemp
 ManageIQ.component.addReact('PxeImageEditForm', PxeImageEditForm);
 ManageIQ.component.addReact('PxeImageForm', PxeImageForm);
 ManageIQ.component.addReact('PxeImagesTable', PxeImagesTable);
-ManageIQ.component.addReact('PxeCustomizationTemplateForm', PxeCustomizationTemplateForm);
 ManageIQ.component.addReact('PxeIsoDatastoreForm', PxeIsoDatastoreForm);
 ManageIQ.component.addReact('PxeIsoImageForm', PxeIsoImageForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);

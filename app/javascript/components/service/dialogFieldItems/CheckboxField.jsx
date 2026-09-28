@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
-import FieldLabel from './FieldLabel';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
 
@@ -32,10 +32,12 @@ const CheckboxField = ({ field }) => {
 
   return (
     <div className="field-checkbox">
+      <FieldLabel field={field} />
       <Checkbox
         disabled={isDisabled}
         id={fieldId}
-        labelText={<FieldLabel field={field} />}
+        labelText={fieldLabelText(field)}
+        hideLabel
         onChange={onChange}
         readOnly={field.read_only}
       />
