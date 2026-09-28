@@ -52,7 +52,9 @@ describe('Service component - Order Service', () => {
 
   const mockDialogFetchAllOptional = () => {
     const dialog = JSON.parse(JSON.stringify(serviceDialogResponse));
-    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => { f.required = false; });
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      f.required = false;
+    });
     API.get.mockResolvedValueOnce({ id: 118, content: dialog });
   };
 

@@ -67,7 +67,9 @@ describe('Service component - Service Reconfigure', () => {
   it('submits the form with the reconfigure payload shape and redirects on success', async() => {
     const user = userEvent.setup();
     const dialog = JSON.parse(JSON.stringify(serviceDialogResponse));
-    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => { f.required = false; });
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      f.required = false;
+    });
     mockDialogFetch(dialog);
     API.post.mockResolvedValueOnce({ success: true });
 
@@ -97,7 +99,9 @@ describe('Service component - Service Reconfigure', () => {
   it('shows an error flash and does not redirect when the API call fails', async() => {
     const user = userEvent.setup();
     const dialog = JSON.parse(JSON.stringify(serviceDialogResponse));
-    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => { f.required = false; });
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      f.required = false;
+    });
     mockDialogFetch(dialog);
     API.post.mockRejectedValueOnce(new Error('server error'));
     window.add_flash = jest.fn();
@@ -118,7 +122,9 @@ describe('Service component - Service Reconfigure', () => {
   it('disables the Submit button while the request is in-flight', async() => {
     const user = userEvent.setup();
     const dialog = JSON.parse(JSON.stringify(serviceDialogResponse));
-    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => { f.required = false; });
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      f.required = false;
+    });
     mockDialogFetch(dialog);
     API.post.mockReturnValueOnce(new Promise(() => {}));
 
