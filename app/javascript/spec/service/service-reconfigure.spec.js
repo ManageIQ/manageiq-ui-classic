@@ -104,7 +104,6 @@ describe('Service component - Service Reconfigure', () => {
     });
     mockDialogFetch(dialog);
     API.post.mockRejectedValueOnce(new Error('server error'));
-    window.add_flash = jest.fn();
 
     renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.reconfigure} />);
 
@@ -113,10 +112,12 @@ describe('Service component - Service Reconfigure', () => {
     await user.click(screen.getByText(__('Submit')));
 
     await waitFor(() => {
-      expect(window.add_flash).toHaveBeenCalledWith(__('Error submitting request'), 'error');
+      expect(screen.getByText(__('Error submitting request'))).toBeInTheDocument();
     });
 
     expect(miqRedirectBack).not.toHaveBeenCalled();
+    // Submit re-enables after error so the user can retry
+    expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
   });
 
   it('disables the Submit button while the request is in-flight', async() => {

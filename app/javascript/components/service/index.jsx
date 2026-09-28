@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from '@carbon/react';
+import { Loading, InlineNotification } from '@carbon/react';
 import classNames from 'classnames';
 import DialogTabs from './DialogTabs';
 import ServiceContext from './ServiceContext';
@@ -107,6 +107,14 @@ const Service = ({
   /** Function to render the form contents like Tabs, Section and Fields. */
   const renderContent = () => (
     <ServiceContext.Provider value={{ data, setData }}>
+      {data.submitError && (
+        <InlineNotification
+          kind="error"
+          title={data.submitError}
+          lowContrast
+          onCloseButtonClick={() => setData((prev) => ({ ...prev, submitError: null }))}
+        />
+      )}
       <DialogTabs />
       {showButtons && <ServiceButtons />}
     </ServiceContext.Provider>

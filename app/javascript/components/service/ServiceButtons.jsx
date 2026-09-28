@@ -8,6 +8,7 @@ import { ServiceType } from './constants';
 
 const ServiceButtons = React.memo(() => {
   const { data, setData } = useContext(ServiceContext);
+  const setError = (message) => setData((prev) => ({ ...prev, submitError: message, locked: false }));
   const {
     apiAction, apiSubmitEndpoint, openUrl, finishSubmitEndpoint, cancelEndPoint,
   } = data.urls;
@@ -43,16 +44,15 @@ const ServiceButtons = React.memo(() => {
               window.open(taskResponse.data.open_url);
               miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
             } else {
-              add_flash(__('Automate failed to obtain URL.'), 'error');
               miqSparkleOff();
+              setError(__('Automate failed to obtain URL.'));
             }
           } else {
             miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
           }
-        } catch (error) {
-          console.error('Error submitting form:', error);
+        } catch (_error) {
           miqSparkleOff();
-          add_flash(__('Error submitting request'), 'error');
+          setError(__('Error submitting request'));
         }
       };
 

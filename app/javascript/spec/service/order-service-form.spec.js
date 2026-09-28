@@ -109,7 +109,6 @@ describe('Service component - Order Service', () => {
     const user = userEvent.setup();
     mockDialogFetchAllOptional();
     API.post.mockRejectedValueOnce(new Error('server error'));
-    window.add_flash = jest.fn();
 
     renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
 
@@ -118,10 +117,12 @@ describe('Service component - Order Service', () => {
     await user.click(screen.getByText(__('Submit')));
 
     await waitFor(() => {
-      expect(window.add_flash).toHaveBeenCalledWith(__('Error submitting request'), 'error');
+      expect(screen.getByText(__('Error submitting request'))).toBeInTheDocument();
     });
 
     expect(miqRedirectBack).not.toHaveBeenCalled();
+    // Submit re-enables after error so the user can retry
+    expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
   });
 
   it('disables the Submit button while the request is in-flight', async() => {
@@ -240,7 +241,6 @@ describe('Service component - Order Service', () => {
       post: jest.fn().mockResolvedValueOnce({ data: { open_url: null } }),
     };
     window.open = jest.fn();
-    window.add_flash = jest.fn();
 
     renderWithRedux(<Service initialData={openUrlInitialData} serviceType={ServiceType.order} />);
 
@@ -248,7 +248,7 @@ describe('Service component - Order Service', () => {
     await user.click(screen.getByText(__('Submit')));
 
     await waitFor(() => {
-      expect(window.add_flash).toHaveBeenCalledWith(__('Automate failed to obtain URL.'), 'error');
+      expect(screen.getByText(__('Automate failed to obtain URL.'))).toBeInTheDocument();
     });
 
     expect(window.open).not.toHaveBeenCalled();
