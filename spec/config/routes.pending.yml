@@ -585,15 +585,10 @@ EmsStorageDashboardController:
 - report_data
 FirmwareBinaryController:
 - index
-- report_data
 FirmwareRegistryController:
 - index
-- report_data
-- show
-- show_list
 FirmwareTargetController:
 - index
-- report_data
 FlavorController:
 - compare_cancel
 - compare_choose_base
