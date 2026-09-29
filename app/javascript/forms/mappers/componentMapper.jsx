@@ -5,6 +5,7 @@ import EditPasswordField from '../../components/async-credentials/edit-password-
 import FileUploadComponent from '../../components/file-upload';
 import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
+import SelectWithIcons from '../../components/select-with-icons';
 import CodeEditor from '../../components/code-editor';
 import CheckboxTreeComponent from '../../components/tree-view/checkbox_tree';
 import FontIconPicker from '../../components/fonticon-picker';
@@ -33,6 +34,7 @@ const mapper = {
   'selected-groups-list': SelectedGroupsList,
   'sortable-list': SortableList,
   [componentTypes.SELECT]: Select,
+  'select-with-icons': SelectWithIcons,
   'font-icon-picker': FontIconPicker,
   'font-icon-picker-ddf': FontIconPickerDdf, // used for react form pages
   'checkbox-tree': CheckboxTreeComponent,
