@@ -1,10 +1,12 @@
-window.$ = window.jQuery = require('jquery');
-const RFB = require('@novnc/novnc').default;
+import $ from 'jquery';
+import RFB from '@novnc/novnc/lib/rfb';
+import '../oldjs/i18n';
+import '../oldjs/remote_console';
 
-require('../oldjs/i18n.js');
-require('../oldjs/remote_console.js');
+window.$ = $;
+window.jQuery = $;
 
-$(function() {
+$(() => {
   const host = window.location.hostname;
   const encrypt = window.location.protocol === 'https:';
   let port = encrypt ? 443 : 80;
@@ -27,7 +29,7 @@ $(function() {
     url,
     {
       shared: true,
-      credentials: {password: secret}
+      credentials: { password: secret },
     }
   );
 
