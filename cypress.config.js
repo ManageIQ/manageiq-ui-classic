@@ -4,13 +4,13 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = defineConfig({
+  forceHttp1: true,
   e2e: {
     baseUrl: 'http://localhost:3000',
     viewportHeight: 800,
     viewportWidth: 1800,
     numTestsKeptInMemory: 5,
     videoCompression: false,
-    allowCypressEnv: false,
     // Enable before:run event in open mode (cypress open) for local development.
     // Required for on('before:run'...) hook (see #10026) to capture DB state.
     // Note: after:run is only used in CI (run mode). Can be removed if Cypress defaults
