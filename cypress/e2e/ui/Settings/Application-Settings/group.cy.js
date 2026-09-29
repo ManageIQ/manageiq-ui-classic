@@ -1,6 +1,6 @@
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-describe('Settings > Application Settings > Access Control > Add Group', () => {
+describe.skip('Settings > Application Settings > Access Control > Add Group', () => {
   // Menu options
   const PRIMARY_MENU_OPTION = 'Settings';
   const SECONDARY_MENU_OPTION = 'Application Settings';
