@@ -557,16 +557,13 @@ module ApplicationController::Compare
         fields.each do |attr|
           cols = [section[:header].to_s, attr[:header].to_s, ""] # Start the row with section and attribute names
           @compare.ids.each_with_index do |r, idx| # Go thru each of the VMs
-            rval = if !@compare.results[r][section[:name]].nil?
-                     @compare.results[r][section[:name]][attr[:name]][:_value_]
-                   else
-                     "(missing)"
-                   end
-            unless idx.zero? # If not generating CSV
-              if mode == :compare
-                rval = "* " + rval.to_s if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s # Mark the ones that don't match the base
-              else
-                rval = "* " + rval.to_s unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_] # Mark the ones that don't match the base
+            rval = @compare.results[r][section[:name]]&.dig(attr[:name], :_value_) || "(missing)"
+            if idx.positive?
+              base_val = @compare.results[@compare.ids[0]][section[:name]]&.dig(attr[:name], :_value_) || "(missing)"
+              if mode == :compare && base_val.to_s != rval.to_s
+                rval = "* " + rval.to_s
+              elsif mode != :compare && @compare.results[@compare.ids[idx]][section[:name]]&.dig(attr[:name], :_match_) == false
+                rval = "* " + rval.to_s
               end
             end
             cols.push(rval)
@@ -580,20 +577,14 @@ module ApplicationController::Compare
           fields.each do |attr|
             cols = [section[:header].to_s, level2, attr[:header]] # Start the row with section and attribute names
             @compare.ids.each_with_index do |r, idx| # Go thru each of the VMs
-              rval = if !@compare.results[r][section[:name]][level2].nil?
-                       @compare.results[r][section[:name]][level2][attr[:name]][:_value_].to_s
-                     else
-                       "(missing)"
-                     end
+              rval = @compare.results[r][section[:name]]&.dig(level2, attr[:name], :_value_)&.to_s || "(missing)"
               if idx.positive?
-                # Mark the ones that don't match the base
-                if mode == :compare && @compare.results[@compare.ids[1]][section[:name]][level2].present? && @compare.results[@compare.ids[0]][section[:name]][level2][attr[:name]][:_value_].to_s != rval.to_s
+                base_val = @compare.results[@compare.ids[0]][section[:name]]&.dig(level2, attr[:name], :_value_) || "(missing)"
+                if mode == :compare && base_val.to_s != rval.to_s
+                  # Mark values that differ from the base VM
                   rval = "* " + rval.to_s
-                # Mark the ones that don't match the base
-                elsif mode == :compare && @compare.results[@compare.ids[0]][section[:name]][level2].nil? && rval.to_s != "(missing)"
-                  rval = "* " + rval.to_s
-                elsif @compare.results[r][section[:name]][level2] && @compare.results[r][section[:name]][level2][attr[:name]] && !@compare.results[r][section[:name]][level2][attr[:name]][:_match_]
-                  # Mark the ones that don't match the prior VM
+                elsif @compare.results[r][section[:name]]&.dig(level2, attr[:name], :_match_) == false
+                  # Mark the ones that don't match the prior VM (drift mode)
                   rval = "* " + rval
                 end
               end
@@ -616,8 +607,8 @@ module ApplicationController::Compare
         if mode == :compare
           next if r[0] == @compare.records[0]["id"] # Skip the base VM
 
-          cols.push(r[1][section[:name]][:_match_].to_s + "%") # Grab the % value for this attr for this VM
-        elsif r[1][section[:name]][:_match_] # Does it match?
+          cols.push(r[1][section[:name]]&.dig(:_match_).to_s + "%") # Grab the % value for this attr for this VM
+        elsif r[1][section[:name]]&.dig(:_match_) # Does it match?
           cols.push("") # Yes, push a blank string
         else
           cols.push("*") # No, mark it with an *
