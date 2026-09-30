@@ -7,7 +7,16 @@ namespace :update do
           next
         end
         puts "== #{engine.name} =="
-        system("which yarn >/dev/null") || abort("\n== You have to install yarn ==")
+
+        # Check if package.json has any dependencies
+        package_json = JSON.parse(File.read('package.json'))
+        has_deps = package_json.key?('dependencies') || package_json.key?('devDependencies')
+
+        unless has_deps
+          puts "   Skipping: No dependencies in package.json"
+          next
+        end
+
         system("yarn") || abort("\n== yarn failed in #{engine.path} ==") # Add --immutable once s390x doesn't change the checksums.
       end
     end
