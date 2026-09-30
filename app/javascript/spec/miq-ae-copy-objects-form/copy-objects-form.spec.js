@@ -178,7 +178,6 @@ describe('CopyObjectsForm Component', () => {
         expect(window.http.post).toHaveBeenCalledWith(
           '/miq_ae_class/copy_objects_save/123',
           expect.objectContaining({
-            typ: 'MiqAeClass',
             fqname: '/Domain1/Namespace/TestClass',
             old_name: 'TestClass',
             selected_ids: [123],

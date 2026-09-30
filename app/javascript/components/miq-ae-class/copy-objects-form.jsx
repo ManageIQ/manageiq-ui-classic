@@ -61,7 +61,6 @@ const CopyObjectsForm = ({ recordId, editData }) => {
       override_existing: values.override_existing ? '1' : '0',
       namespace: values.namespace,
       new_name: values.new_name,
-      typ: data.typeName,
       fqname: data.fqname,
       old_name: data.oldName,
       selected_ids: data.selectedIds,

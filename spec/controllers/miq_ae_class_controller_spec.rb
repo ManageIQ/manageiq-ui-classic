@@ -114,7 +114,6 @@ describe MiqAeClassController do
       def base_copy_params(opts = {})
         {
           :id                => @cls1.id.to_s,
-          :typ               => "MiqAeClass",
           :old_name          => @cls1.name,
           :fqname            => @cls1.fqname,
           :domain            => opts.fetch(:domain, @d2.id).to_s,
@@ -1421,7 +1420,6 @@ describe MiqAeClassController do
         it "successfully copies class to different namespace" do
           controller.params = {
             :id                => @ae_class.id.to_s,
-            :typ               => "MiqAeClass",
             :old_name          => @ae_class.name,
             :fqname            => @ae_class.fqname,
             :domain            => @domain2.id.to_s,
@@ -1444,7 +1442,6 @@ describe MiqAeClassController do
         it "copies class with new name" do
           controller.params = {
             :id                => @ae_class.id.to_s,
-            :typ               => "MiqAeClass",
             :old_name          => @ae_class.name,
             :fqname            => @ae_class.fqname,
             :domain            => @domain2.id.to_s,
@@ -1469,7 +1466,6 @@ describe MiqAeClassController do
 
           controller.params = {
             :id                => @ae_class.id.to_s,
-            :typ               => "MiqAeClass",
             :old_name          => @ae_class.name,
             :fqname            => @ae_class.fqname,
             :domain            => @domain2.id.to_s,
@@ -1494,7 +1490,6 @@ describe MiqAeClassController do
 
           controller.params = {
             :id                => @ae_instance.id.to_s,
-            :typ               => "MiqAeInstance",
             :old_name          => @ae_instance.name,
             :fqname            => @ae_instance.fqname,
             :domain            => @domain2.id.to_s,
@@ -1517,7 +1512,6 @@ describe MiqAeClassController do
         it "copies instance with new name" do
           controller.params = {
             :id                => @ae_instance.id.to_s,
-            :typ               => "MiqAeInstance",
             :old_name          => @ae_instance.name,
             :fqname            => @ae_instance.fqname,
             :domain            => @domain2.id.to_s,
@@ -1543,7 +1537,6 @@ describe MiqAeClassController do
 
           controller.params = {
             :id                => @ae_method.id.to_s,
-            :typ               => "MiqAeMethod",
             :old_name          => @ae_method.name,
             :fqname            => @ae_method.fqname,
             :domain            => @domain2.id.to_s,
@@ -1566,7 +1559,6 @@ describe MiqAeClassController do
         it "copies method with new name" do
           controller.params = {
             :id                => @ae_method.id.to_s,
-            :typ               => "MiqAeMethod",
             :old_name          => @ae_method.name,
             :fqname            => @ae_method.fqname,
             :domain            => @domain2.id.to_s,
@@ -1589,7 +1581,6 @@ describe MiqAeClassController do
       it "handles copy errors gracefully" do
         controller.params = {
           :id                => @ae_class.id.to_s,
-          :typ               => "MiqAeClass",
           :old_name          => @ae_class.name,
           :fqname            => @ae_class.fqname,
           :domain            => @domain2.id.to_s,
@@ -1611,7 +1602,6 @@ describe MiqAeClassController do
       it "clears session data after successful copy" do
         controller.params = {
           :id                => @ae_class.id.to_s,
-          :typ               => "MiqAeClass",
           :old_name          => @ae_class.name,
           :fqname            => @ae_class.fqname,
           :domain            => @domain2.id.to_s,

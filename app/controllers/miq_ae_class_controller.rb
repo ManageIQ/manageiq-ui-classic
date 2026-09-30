@@ -1844,7 +1844,7 @@ class MiqAeClassController < ApplicationController
   def copy_objects_save
     assert_privileges(feature_by_action)
 
-    typ        = params[:typ].constantize
+    typ        = {"miq_ae_class_copy" => MiqAeClass, "miq_ae_instance_copy" => MiqAeInstance, "miq_ae_method_copy" => MiqAeMethod}[@sb[:action]]
     old_name   = params[:old_name]
     fqname     = params[:fqname]
     new_name   = params[:new_name].presence
