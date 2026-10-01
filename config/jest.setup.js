@@ -10,6 +10,11 @@ window.sprintf = require('sprintf-js').sprintf;
 
 require('whatwg-fetch');
 
+// fetch-mock v12 references ReadableStream jsdom does not expose it as globals, but
+// Node 18+ provides them in `stream/web`. Polyfill them before any test runs
+const { ReadableStream } = require('stream/web');
+if (!globalThis.ReadableStream) globalThis.ReadableStream = ReadableStream;
+
 require('../app/javascript/oldjs/miq_global.js');
 
 /* ============== RTL test setup ============== */
