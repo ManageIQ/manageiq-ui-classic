@@ -23,21 +23,14 @@ describe('Cloud Object Store Container form component', () => {
       },
     ],
   };
-  const options = {
-    method: 'OPTIONS',
-    backendName: 'API',
-    headers: {},
-    credentials: 'include',
-    body: null,
-  };
+  beforeAll(() => fetchMock.mockGlobal());
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
-  it('should render add cloud object store container form', () => {
+  it('should render add cloud object store container form', async() => {
+    fetchMock.get(url, providerOptions);
     const { container } = renderWithRedux(<CloudObjectStoreContainerForm />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: /add/i })).toBeInTheDocument();
+    });
     expect(container).toMatchSnapshot();
   });
 
@@ -53,7 +46,7 @@ describe('Cloud Object Store Container form component', () => {
     };
 
     fetchMock.get(url, providerOptions);
-    fetchMock.mock('/api/cloud_object_store_containers?ems_id=6', { data: { form_schema: { fields: [] } } }, options);
+    fetchMock.once({ method: 'OPTIONS', url: '/api/cloud_object_store_containers?ems_id=6' }, { data: { form_schema: { fields: [] } } });
     fetchMock.getOnce('/api/providers/6?attributes=type,parent_manager.type', providerDetails);
     fetchMock.postOnce('/api/cloud_object_store_containers/', { body: submitData, status: 200 });
 
@@ -81,7 +74,7 @@ describe('Cloud Object Store Container form component', () => {
       '/api/providers?expand=resources&attributes=id,name,supports_cloud_object_store_container_create&filter[]=supports_cloud_object_store_container_create=true',
       providerOptions
     );
-    fetchMock.mock('/api/cloud_object_store_containers?ems_id=87', { data: { form_schema: { fields: [] } } }, options);
+    fetchMock.once({ method: 'OPTIONS', url: '/api/cloud_object_store_containers?ems_id=87' }, { data: { form_schema: { fields: [] } } });
     fetchMock.getOnce('/api/providers/6?attributes=type,parent_manager.type', providerDetails);
     fetchMock.postOnce('/api/cloud_object_store_containers/', submitData);
 

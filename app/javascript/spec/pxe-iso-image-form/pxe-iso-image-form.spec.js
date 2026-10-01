@@ -5,6 +5,8 @@ import PxeIsoImageForm from '../../components/pxe-iso-image-form/index';
 import '../helpers/miqSparkle';
 
 describe('Pxe Edit Iso Image Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const api = {
     resources: [
       {
@@ -17,11 +19,6 @@ describe('Pxe Edit Iso Image Form Component', () => {
       },
     ],
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render editing a iso image', async() => {
     fetchMock.get(
@@ -36,7 +33,7 @@ describe('Pxe Edit Iso Image Form Component', () => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(container).toMatchSnapshot();
   });
 });

@@ -1,14 +1,8 @@
-import fetchMock from 'fetch-mock';
 import { waitFor } from '@testing-library/react';
 import AutomateSimulationForm from '../../components/automate-simulation-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Automate Simulation Form', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   const resolveMockData = {
     ae_result: 'ok',
     button_class: '',

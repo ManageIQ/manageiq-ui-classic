@@ -27,14 +27,16 @@ const helpMenuSettings = {
 };
 
 const mockBothApis = () => {
-  fetchMock.getOnce(settingsUrl, helpMenuSettings);
-  fetchMock.getOnce(docsUrl, docsDefaults);
+  fetchMock.get(settingsUrl, helpMenuSettings);
+  fetchMock.get(docsUrl, docsDefaults);
 };
 
 describe('SettingsHelpMenuTab', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('renders the form after loading settings', async() => {
@@ -42,7 +44,7 @@ describe('SettingsHelpMenuTab', () => {
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
-    await waitFor(() => expect(fetchMock.called(settingsUrl)).toBe(true));
+    await waitFor(() => expect(fetchMock.callHistory.called(settingsUrl)).toBe(true));
     await waitFor(() => expect(container.querySelector('form')).toBeInTheDocument());
     expect(container).toMatchSnapshot();
   });
@@ -50,7 +52,7 @@ describe('SettingsHelpMenuTab', () => {
   it('shows a success notification after a successful save', async() => {
     const user = userEvent.setup();
     mockBothApis();
-    fetchMock.patchOnce(settingsUrl, { help_menu: helpMenuSettings.help_menu });
+    fetchMock.patch(settingsUrl, { help_menu: helpMenuSettings.help_menu });
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
@@ -59,14 +61,14 @@ describe('SettingsHelpMenuTab', () => {
     await user.type(container.querySelector('[name="documentation_title"]'), ' updated');
     await user.click(container.querySelector('button[type="submit"]'));
 
-    await waitFor(() => expect(fetchMock.calls()).toHaveLength(3));
+    await waitFor(() => expect(fetchMock.callHistory.calls()).toHaveLength(3));
     await waitFor(() => expect(container.querySelector('.cds--inline-notification--success')).toBeInTheDocument());
   });
 
   it('shows an error notification on a failed save', async() => {
     const user = userEvent.setup();
     mockBothApis();
-    fetchMock.patchOnce(settingsUrl, { status: 500, body: {} });
+    fetchMock.patch(settingsUrl, { status: 500, body: {} });
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
@@ -75,14 +77,14 @@ describe('SettingsHelpMenuTab', () => {
     await user.type(container.querySelector('[name="documentation_title"]'), ' updated');
     await user.click(container.querySelector('button[type="submit"]'));
 
-    await waitFor(() => expect(fetchMock.calls()).toHaveLength(3));
+    await waitFor(() => expect(fetchMock.callHistory.calls()).toHaveLength(3));
     await waitFor(() => expect(container.querySelector('.cds--inline-notification--error')).toBeInTheDocument());
   });
 
   it('submits the placeholder default when a title field is left blank', async() => {
     const user = userEvent.setup();
     mockBothApis();
-    fetchMock.patchOnce(settingsUrl, 200);
+    fetchMock.patch(settingsUrl, 200);
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
@@ -95,21 +97,21 @@ describe('SettingsHelpMenuTab', () => {
 
     await user.click(container.querySelector('button[type="submit"]'));
 
-    await waitFor(() => expect(fetchMock.calls()).toHaveLength(3));
-    const patchBody = JSON.parse(fetchMock.calls()[2][1].body);
+    await waitFor(() => expect(fetchMock.callHistory.calls()).toHaveLength(3));
+    const patchBody = JSON.parse(fetchMock.callHistory.calls()[2].options.body);
     // Blank field should fall back to the hardcoded placeholder, not null.
     expect(patchBody.help_menu.documentation.title).toBe('Documentation');
   });
 
   it('blocks submission when about_url is empty', async() => {
     const user = userEvent.setup();
-    fetchMock.getOnce(settingsUrl, {
+    fetchMock.get(settingsUrl, {
       help_menu: {
         ...helpMenuSettings.help_menu,
         about: { title: 'About', url: '/about', type: 'default' },
       },
     });
-    fetchMock.getOnce(docsUrl, docsDefaults);
+    fetchMock.get(docsUrl, docsDefaults);
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
@@ -127,14 +129,14 @@ describe('SettingsHelpMenuTab', () => {
 
   it('sends an empty string for about_url when about_type is About Modal', async() => {
     const user = userEvent.setup();
-    fetchMock.getOnce(settingsUrl, {
+    fetchMock.get(settingsUrl, {
       help_menu: {
         ...helpMenuSettings.help_menu,
         about: { title: 'About', url: '/about', type: 'default' },
       },
     });
-    fetchMock.getOnce(docsUrl, docsDefaults);
-    fetchMock.patchOnce(settingsUrl, 200);
+    fetchMock.get(docsUrl, docsDefaults);
+    fetchMock.patch(settingsUrl, 200);
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
 
@@ -149,22 +151,22 @@ describe('SettingsHelpMenuTab', () => {
 
     await user.click(container.querySelector('button[type="submit"]'));
 
-    await waitFor(() => expect(fetchMock.calls()).toHaveLength(3));
-    const patchBody = JSON.parse(fetchMock.calls()[2][1].body);
+    await waitFor(() => expect(fetchMock.callHistory.calls()).toHaveLength(3));
+    const patchBody = JSON.parse(fetchMock.callHistory.calls()[2].options.body);
     expect(patchBody.help_menu.about.url).toBe('');
     expect(patchBody.help_menu.about.type).toBe('modal');
   });
 
   it('clears the about_url validation error when switching back to About Modal', async() => {
     const user = userEvent.setup();
-    fetchMock.getOnce(settingsUrl, {
+    fetchMock.get(settingsUrl, {
       help_menu: {
         ...helpMenuSettings.help_menu,
         about: { title: 'About', url: '/about', type: 'default' },
       },
     });
-    fetchMock.getOnce(docsUrl, docsDefaults);
-    fetchMock.patchOnce(settingsUrl, 200);
+    fetchMock.get(docsUrl, docsDefaults);
+    fetchMock.patch(settingsUrl, 200);
 
     const { container } = renderWithRedux(<SettingsHelpMenuTab regionId={regionId} />);
     await waitFor(() => expect(container.querySelector('form')).toBeInTheDocument());
@@ -186,8 +188,8 @@ describe('SettingsHelpMenuTab', () => {
     await waitFor(() => expect(container.querySelector('button[type="submit"]')).not.toBeDisabled());
 
     await user.click(container.querySelector('button[type="submit"]'));
-    await waitFor(() => expect(fetchMock.calls()).toHaveLength(3));
-    const patchBody = JSON.parse(fetchMock.calls()[2][1].body);
+    await waitFor(() => expect(fetchMock.callHistory.calls()).toHaveLength(3));
+    const patchBody = JSON.parse(fetchMock.callHistory.calls()[2].options.body);
     expect(patchBody.help_menu.about.url).toBe('');
     expect(patchBody.help_menu.about.type).toBe('modal');
   });
