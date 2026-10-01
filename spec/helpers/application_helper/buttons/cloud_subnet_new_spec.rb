@@ -1,35 +1,41 @@
 describe ApplicationHelper::Button::CloudSubnetNew do
   include ApplicationHelper
 
-  describe '#disabled?' do
-    it "when at least one provider supports subnet create then the button is not disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      FactoryBot.create(:ems_openstack)
-      button = described_class.new(view_context, {}, {}, {})
-      expect(button.disabled?).to be false
-    end
+  let(:user)   { FactoryBot.create(:user, :miq_groups => [group]) }
+  let(:group)  { FactoryBot.create(:miq_group, :tenant => tenant, :entitlement => entitlement) }
+  let(:tenant) { FactoryBot.create(:tenant) }
+  let(:entitlement) { nil }
 
-    it "when no provider supports subnet create then the button is disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(view_context, {}, {}, {})
-      expect(button.disabled?).to be true
-    end
+  let!(:provider) { FactoryBot.create(:ems_openstack, :tenant => tenant) }
+
+  let(:view_context) { setup_view_context_with_sandbox({}) }
+  let(:button)       { described_class.new(view_context, {}, {}, {}) }
+
+  before do
+    EvmSpecHelper.local_miq_server
+    allow(User).to receive(:current_user).and_return(user)
   end
 
-  describe '#calculate_properties' do
-    it "when no provider supports subnet create the button has an error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(view_context, {}, {}, {})
-      button.calculate_properties
-      expect(button[:title]).to eq("No cloud providers support creating cloud subnets.")
+  describe '#disabled?' do
+    context 'no provider available' do
+      let(:provider) { nil }
+
+      it_behaves_like 'a disabled button', 'No cloud providers support creating cloud subnets.'
     end
 
-    it "when at least one provider supports subnet create, the button has no error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      FactoryBot.create(:ems_openstack)
-      button = described_class.new(view_context, {}, {}, {})
-      button.calculate_properties
-      expect(button[:title]).to be nil
+    context 'provider is not available due to RBAC rules' do
+      let(:entitlement) { FactoryBot.create(:entitlement) }
+
+      before do
+        entitlement.set_managed_filters([["/managed/environment/prod"]])
+        entitlement.set_belongsto_filters([])
+      end
+
+      it_behaves_like 'a disabled button', 'No cloud providers support creating cloud subnets.'
+    end
+
+    context 'a provider is available' do
+      it_behaves_like 'an enabled button'
     end
   end
 end
