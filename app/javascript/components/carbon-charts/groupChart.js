@@ -5,6 +5,7 @@ const GroupBarChart = ({
   data = null,
   title = '',
   showLegend = true,
+  dualYAxis = null,
 }) => {
   const options = {
     title,
@@ -17,6 +18,14 @@ const GroupBarChart = ({
         scaleType: 'labels',
         mapsTo: 'key',
       },
+      ...(dualYAxis && {
+        right: {
+          mapsTo: dualYAxis.mapsTo,
+          scaleType: 'linear',
+          title: dualYAxis.title,
+          correspondingDatasets: dualYAxis.correspondingDatasets,
+        },
+      }),
     },
     height: '400px',
     tooltip: {
@@ -35,6 +44,11 @@ GroupBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
   showLegend: PropTypes.bool,
+  dualYAxis: PropTypes.shape({
+    mapsTo: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    correspondingDatasets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
 };
 
 export default GroupBarChart;
