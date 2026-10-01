@@ -1,4 +1,3 @@
-import fetchMock from 'fetch-mock';
 import { render, waitFor } from '@testing-library/react';
 import SettingsDetailsTab from '../../components/settings-details-tab';
 
@@ -13,11 +12,6 @@ describe('SettingsDetailsTab Component', () => {
   const scanItemsCount = 3;
   const zonesCount = 1;
   const miqSchedulesCount = 0;
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render settings details tab', async() => {
     const { container } = render(

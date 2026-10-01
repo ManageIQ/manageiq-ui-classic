@@ -5,10 +5,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import SettingsCategoryForm from '../../components/settings-category-form';
 
 describe('SettingsCategoryForm Component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
+
   it('should render a new SettingsCategoryForm form', async() => {
     const { container } = renderWithRedux(
       <SettingsCategoryForm recordId="new" />
@@ -25,9 +23,9 @@ describe('SettingsCategoryForm Component', () => {
       <SettingsCategoryForm recordId="100" />
     );
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
-    expect(fetchMock.called('/api/categories/100')).toBe(true);
+    expect(fetchMock.callHistory.called('/api/categories/100')).toBe(true);
     expect(container).toMatchSnapshot();
   });
 });

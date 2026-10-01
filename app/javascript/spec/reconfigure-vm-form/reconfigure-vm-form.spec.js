@@ -13,9 +13,11 @@ import {
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Reconfigure VM form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render reconfigure form with datatables', async() => {
@@ -28,7 +30,7 @@ describe('Reconfigure VM form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelectorAll('div.disk-table-list')).toHaveLength(1);
     expect(container.querySelectorAll('div.network-table-list')).toHaveLength(
       1
@@ -38,7 +40,7 @@ describe('Reconfigure VM form component', () => {
 
   it('should render reconfigure form without datatables', async() => {
     fetchMock.get(
-      'vm_infra/reconfigure_form_fields/new,12,13',
+      '/vm_infra/reconfigure_form_fields/new,12,13',
       responseDataThree
     );
 
@@ -49,7 +51,7 @@ describe('Reconfigure VM form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelectorAll('div.disk-table-list')).toHaveLength(0);
     expect(container.querySelectorAll('div.network-table-list')).toHaveLength(
       0
@@ -59,7 +61,7 @@ describe('Reconfigure VM form component', () => {
 
   it('should render reconfigure form and show hidden fields', async() => {
     fetchMock.get(
-      'vm_infra/reconfigure_form_fields/new,12,13',
+      '/vm_infra/reconfigure_form_fields/new,12,13',
       responseDataThree
     );
 
@@ -70,7 +72,7 @@ describe('Reconfigure VM form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelector('[name="memory"]')).toBeInTheDocument();
     expect(container.querySelector('[name="mem_type"]')).toBeInTheDocument();
     expect(
@@ -83,7 +85,7 @@ describe('Reconfigure VM form component', () => {
   });
 
   it('should render reconfigure form and show disk add form', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataOne);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataOne);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -96,7 +98,7 @@ describe('Reconfigure VM form component', () => {
     const diskAddButton = container.querySelector('button.disk-add');
     await user.click(diskAddButton);
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelector('[name="type"]')).toBeInTheDocument();
     expect(container.querySelector('[name="size"]')).toBeInTheDocument();
     expect(container.querySelector('[name="unit"]')).toBeInTheDocument();
@@ -104,7 +106,7 @@ describe('Reconfigure VM form component', () => {
   });
 
   it('should render reconfigure form and show network add form', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataOne);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataOne);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -117,13 +119,13 @@ describe('Reconfigure VM form component', () => {
     const networkAddButton = container.querySelector('button.network-add');
     await user.click(networkAddButton);
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelector('[name="vlan"]')).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
   it('should render reconfigure form and show cd rom connect form', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -162,12 +164,12 @@ describe('Reconfigure VM form component', () => {
     await user.click(connectButton);
 
     expect(screen.getByText('Host File')).toBeInTheDocument();
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container).toMatchSnapshot();
   });
 
   it('should render reconfigure form and show disk resize form', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -182,14 +184,14 @@ describe('Reconfigure VM form component', () => {
       btn.classList.contains('miq-data-table-button'));
     await user.click(resizeButton);
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container.querySelector('[name="size"]')).toBeInTheDocument();
     expect(container.querySelector('[name="unit"]')).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
   it('should render reconfigure sub form and click delete button', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -204,7 +206,7 @@ describe('Reconfigure VM form component', () => {
       btn.classList.contains('miq-data-table-button'));
     await user.click(deleteButton);
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     const cancelDeleteButton = screen.getByRole('button', {
       name: /cancel delete/i,
     });
@@ -213,7 +215,7 @@ describe('Reconfigure VM form component', () => {
   });
 
   it('should render reconfigure form and click cd-rom disconnect button', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataTwo);
     const user = userEvent.setup();
 
     const { container } = renderWithRedux(
@@ -230,7 +232,7 @@ describe('Reconfigure VM form component', () => {
       btn.classList.contains('miq-data-table-button'));
     await user.click(disconnectButton);
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     const cancelDisconnectButtons = screen.getAllByRole('button', {
       name: /cancel disconnect/i,
     });
@@ -241,7 +243,7 @@ describe('Reconfigure VM form component', () => {
   });
 
   it('should render form with only fields it has permission for', async() => {
-    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataOne);
+    fetchMock.get('/vm_infra/reconfigure_form_fields/new,12', responseDataOne);
 
     const { container } = renderWithRedux(
       <ReconfigureVmForm {...valueFromHelpersThree} />
@@ -251,7 +253,7 @@ describe('Reconfigure VM form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(screen.getByText('Memory')).toBeInTheDocument();
     expect(screen.queryByText('Processor')).not.toBeInTheDocument();
     expect(screen.queryByText('Disks')).not.toBeInTheDocument();

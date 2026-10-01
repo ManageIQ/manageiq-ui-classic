@@ -7,12 +7,13 @@ import '../helpers/miqAjaxButton';
 
 describe('Add/remove security groups form component', () => {
   let submitSpy;
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
   beforeEach(() => {
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
   });
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     submitSpy.mockRestore();
   });
   it('should render add security group form', async() => {

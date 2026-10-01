@@ -22,6 +22,10 @@ describe('Ansible Repository form component', () => {
     verify_ssl: 0,
   };
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
@@ -39,8 +43,6 @@ describe('Ansible Repository form component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
   });

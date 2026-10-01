@@ -23,14 +23,6 @@ describe('Network Router form component', () => {
     },
   ];
 
-  const options = {
-    method: 'OPTIONS',
-    backendName: 'API',
-    headers: {},
-    credentials: 'include',
-    body: null,
-  };
-
   const networkMock = {
     href: 'http://localhost:3000/api/network_routers/3',
     id: '3',
@@ -65,6 +57,8 @@ describe('Network Router form component', () => {
     },
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_create_network_router,type&filter[]=supports_create_network_router=true',
@@ -76,8 +70,6 @@ describe('Network Router form component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
@@ -161,10 +153,9 @@ describe('Network Router form component', () => {
       '/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=50',
       { resources: [] }
     );
-    fetchMock.mock(
-      '/api/network_routers/3',
-      { data: { form_schema: { fields: mockFields } } },
-      options
+    fetchMock.once(
+      { method: 'OPTIONS', url: '/api/network_routers/3' },
+      { data: { form_schema: { fields: mockFields } } }
     );
     const { container } = renderWithRedux(<NetworkRouterForm routerId="3" />);
 

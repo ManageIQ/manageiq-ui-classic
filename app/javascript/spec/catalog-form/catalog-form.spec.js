@@ -50,6 +50,8 @@ describe('Catalog form component', () => {
     return addButtons.find((btn) => btn.getAttribute('type') === 'submit');
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
@@ -57,8 +59,8 @@ describe('Catalog form component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
@@ -67,7 +69,7 @@ describe('Catalog form component', () => {
   it('should render add variant form', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
     // Mock any additional API calls that might be triggered
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
 
     const { container } = renderWithRedux(<CatalogForm />);
 
@@ -82,7 +84,7 @@ describe('Catalog form component', () => {
     fetchMock
       .getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
 
     const { container } = renderWithRedux(<CatalogForm catalogId="1001" />);
 
@@ -97,7 +99,7 @@ describe('Catalog form component', () => {
     fetchMock
       .getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
 
     renderWithRedux(<CatalogForm catalogId="1001" />);
     const url = '/catalog/st_catalog_edit/1001?button=cancel';
@@ -117,12 +119,12 @@ describe('Catalog form component', () => {
 
   it('should request data after mount and stop loading when creating new catalog', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
 
     renderWithRedux(<CatalogForm />);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
-    expect(fetchMock.called(urlFreeTemplates)).toBe(true);
+    expect(fetchMock.callHistory.called(urlFreeTemplates)).toBe(true);
 
     await waitFor(() => {
       const addButtons = screen.getAllByRole('button', { name: /^add$/i });
@@ -142,8 +144,8 @@ describe('Catalog form component', () => {
     renderWithRedux(<CatalogForm catalogId="1001" />);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
-    expect(fetchMock.called(urlFreeTemplates)).toBe(true);
-    expect(fetchMock.called(urlTemplates)).toBe(true);
+    expect(fetchMock.callHistory.called(urlFreeTemplates)).toBe(true);
+    expect(fetchMock.callHistory.called(urlTemplates)).toBe(true);
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
@@ -154,7 +156,7 @@ describe('Catalog form component', () => {
 
   it('should not submit values when form is not valid', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
     const urlCreate = '/api/service_catalogs';
     fetchMock.postOnce(urlCreate, {});
 
@@ -168,13 +170,13 @@ describe('Catalog form component', () => {
     await user.click(getSubmitButton());
 
     // Form should not submit without required fields
-    expect(fetchMock.called(urlCreate)).toBe(false);
+    expect(fetchMock.callHistory.called(urlCreate)).toBe(false);
   });
 
   it('submit post data to API when adding new form', async() => {
     const urlCreate = '/api/service_catalogs';
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
     fetchMock.postOnce(urlCreate, {});
 
     renderWithRedux(<CatalogForm />);
@@ -195,7 +197,7 @@ describe('Catalog form component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called(urlCreate)).toBe(true);
+      expect(fetchMock.callHistory.called(urlCreate)).toBe(true);
     });
 
     expect(spyMiqAjaxButton).toHaveBeenCalledWith(
@@ -214,7 +216,7 @@ describe('Catalog form component', () => {
       },
     };
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
     fetchMock.postOnce(urlCreate, returnObject);
 
     renderWithRedux(<CatalogForm />);
@@ -235,7 +237,7 @@ describe('Catalog form component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called(urlCreate)).toBe(true);
+      expect(fetchMock.callHistory.called(urlCreate)).toBe(true);
     });
 
     // Verify error was handled
@@ -261,7 +263,7 @@ describe('Catalog form component', () => {
       '/api/service_catalogs/1001?expand=service_templates',
       assignedResources
     );
-    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
     fetchMock.postOnce(apiBase, returnObject);
 
     renderWithRedux(<CatalogForm catalogId="1001" />);
@@ -286,7 +288,7 @@ describe('Catalog form component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called(apiBase)).toBe(true);
+      expect(fetchMock.callHistory.called(apiBase)).toBe(true);
     });
 
     // Verify error was handled
@@ -302,7 +304,7 @@ describe('Catalog form component', () => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
     fetchMock.getOnce(urlTemplates, assignedResources);
     // Mock validation API to return the current catalog with matching ID (as string to match catalogId prop)
-    fetchMock.get('begin:/api/service_catalogs?expand=resources&filter', {
+    fetchMock.get('begin:http://localhost/api/service_catalogs?expand=resources&filter', {
       resources: [{ id: '1001', name: 'DROGO' }],
     });
     fetchMock.postOnce(apiBase, { id: '1001' });
@@ -336,7 +338,7 @@ describe('Catalog form component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called(apiBase)).toBe(true);
+      expect(fetchMock.callHistory.called(apiBase)).toBe(true);
     });
   });
 
@@ -345,7 +347,7 @@ describe('Catalog form component', () => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
     fetchMock.getOnce(urlTemplates, assignedResources);
     // Mock validation API to return the current catalog
-    fetchMock.get('begin:/api/service_catalogs?expand=resources&filter', {
+    fetchMock.get('begin:http://localhost/api/service_catalogs?expand=resources&filter', {
       resources: [{ id: '1001', name: 'DROGO' }],
     });
     fetchMock.postOnce(apiBase, { id: '1001' });
@@ -373,11 +375,11 @@ describe('Catalog form component', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called(apiBase)).toBe(true);
+      expect(fetchMock.callHistory.called(apiBase)).toBe(true);
     });
 
     // Verify service_templates endpoint was not called (no changes to service templates)
-    expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(false);
+    expect(fetchMock.callHistory.called(`${apiBase}/service_templates`)).toBe(false);
   });
 
   describe('#handleError', () => {
@@ -391,7 +393,7 @@ describe('Catalog form component', () => {
         },
       };
       fetchMock.getOnce(urlFreeTemplates, { resources });
-      fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+      fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
       fetchMock.postOnce(urlCreate, returnObject);
 
       renderWithRedux(<CatalogForm />);
@@ -430,7 +432,7 @@ describe('Catalog form component', () => {
         },
       };
       fetchMock.getOnce(urlFreeTemplates, { resources });
-      fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+      fetchMock.get('begin:http://localhost/api/service_catalogs', { resources: [] });
       fetchMock.postOnce(urlCreate, returnObject);
 
       renderWithRedux(<CatalogForm />);
@@ -502,7 +504,7 @@ describe('Catalog form component', () => {
 
     it('should properly encode all special characters in name parameter', async() => {
       const name = 'test &=%#?\'"/ name';
-      const encodedName = encodeURIComponent(name);
+      const encodedName = encodeURIComponent(name).replace(/'/g, '%27');
       const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${encodedName}%27`;
 
       fetchMock.getOnce(expectedUrl, { resources: [] });
@@ -529,17 +531,17 @@ describe('Catalog form component', () => {
 
     it('should reject empty name', async() => {
       await expect(asyncValidator('', null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls()).toHaveLength(0);
     });
 
     it('should reject undefined name', async() => {
       await expect(asyncValidator(undefined, null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls()).toHaveLength(0);
     });
 
     it('should reject null name', async() => {
       await expect(asyncValidator(null, null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls()).toHaveLength(0);
     });
   });
 });
