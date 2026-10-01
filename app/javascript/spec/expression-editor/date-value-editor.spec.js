@@ -4,10 +4,12 @@ import {
 import fetchMock from 'fetch-mock';
 import DateValueEditor from '../../components/expression-editor/date-value-editor';
 
+beforeAll(() => {
+  fetchMock.mockGlobal();
+});
 // Silence the fire-and-forget /api locale fetch for every test (English default).
-beforeEach(() => fetchMock.get('/api?attributes=settings', { settings: { display: { locale: 'en' } } }));
 afterEach(() => {
-  fetchMock.reset(); fetchMock.restore();
+  fetchMock.removeRoutes();
 });
 
 // Carbon DatePicker relies on flatpickr which uses DOM APIs; stub it out so
@@ -43,7 +45,9 @@ const renderEditor = async(props = {}) => {
   const result = render(<DateValueEditor {...defaults} {...props} />);
   // Wait for the async locale fetch (useEffect → API.get) to settle so that
   // setLocaleConfig is called inside act and does not trigger the warning.
-  await waitFor(() => fetchMock.called('/api?attributes=settings'));
+  await waitFor(() => {
+  expect(fetchMock.callHistory.called('/api?attributes=settings')).toBe(true);
+});
   return result;
 };
 
@@ -75,7 +79,6 @@ describe('DateValueEditor — specific mode (dateFormat "s")', () => {
     ['zh_CN', 'yyyy/mm/dd'],
     ['de', 'dd.mm.yyyy'],
   ])('shows %s locale placeholder', async(locale, placeholder) => {
-    fetchMock.reset();
     fetchMock.get('/api?attributes=settings', { settings: { display: { locale } } });
     renderEditor({ dateFormat: 's' });
     await waitFor(() => {

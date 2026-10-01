@@ -11,12 +11,17 @@ import '../helpers/miqSparkle';
 describe('PxeServersForm', () => {
   let initialProps;
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     initialProps = {};
   });
 
   afterEach(() => {
-    fetchMock.reset();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render correctly', async () => {
@@ -91,7 +96,7 @@ describe('PxeServersForm', () => {
      */
     await waitFor(() => {
       expect(
-        fetchMock.calls(
+        fetchMock.callHistory.calls(
           '/api/pxe_servers?expand=resources&filter[]=name==%27my%20name%27'
         ).length
       ).toBe(1);
@@ -104,11 +109,11 @@ describe('PxeServersForm', () => {
      * wait for submit response
      */
     await waitFor(() => {
-      expect(fetchMock.calls('/api/pxe_servers', 'POST').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/api/pxe_servers', 'POST').length).toBe(1);
     });
 
-    const [_url, payload] = fetchMock.lastCall();
-    expect(JSON.parse(payload.body)).toEqual({
+    const lastCall = fetchMock.callHistory.lastCall();
+    expect(JSON.parse(lastCall.options.body)).toEqual({
       name: 'my name',
       uri: 'nfs://foo/bar',
       authentication: {},
@@ -155,16 +160,16 @@ describe('PxeServersForm', () => {
     const validateButton = screen.getByRole('button', { name: /validate/i });
     await user.click(validateButton);
     await waitFor(() => {
-      expect(fetchMock.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
     });
     // Verify submit button is enabled after successful validation
     expect(submitButton).not.toBeDisabled();
     await user.click(submitButton);
     await waitFor(() => {
-      expect(fetchMock.calls('/api/pxe_servers', 'POST').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/api/pxe_servers', 'POST').length).toBe(1);
     });
-    const [_url, payload] = fetchMock.lastCall();
-    expect(JSON.parse(payload.body)).toEqual({
+    const lastCall = fetchMock.callHistory.lastCall();
+    expect(JSON.parse(lastCall.options.body)).toEqual({
       name: 'my name',
       uri: 'smb://foo/bar',
       authentication: {
@@ -213,7 +218,7 @@ describe('PxeServersForm', () => {
     const validateButton = screen.getByRole('button', { name: /validate/i });
     await user.click(validateButton);
     await waitFor(() => {
-      expect(fetchMock.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/pxe/pxe_server_async_cred_validation', 'POST').length).toBe(1);
     });
     await waitFor(() => {
       expect(screen.getByText(/invalid credentials/i)).toBeInTheDocument();
@@ -285,10 +290,6 @@ describe('PxeServersForm', () => {
   });
 
   describe('asyncValidator on name field', () => {
-    afterEach(() => {
-      fetchMock.reset();
-    });
-
     it('should allow a unique name', async () => {
       const name = 'foo';
       const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${name}%27`;
@@ -330,7 +331,10 @@ describe('PxeServersForm', () => {
 
     it('should properly encode all special characters in name parameter', async () => {
       const name = 'test &=%#?\'"/ name';
-      const encodedName = encodeURIComponent(name);
+      // encodeURIComponent leaves single-quotes unencoded, but new URL().href (used by
+      // fetch-mock v12 during route matching) encodes them as %27. Use %27 explicitly
+      // so the registered URL matches after URL normalization.
+      const encodedName = encodeURIComponent(name).replace(/'/g, '%27');
       const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${encodedName}%27`;
 
       fetchMock.getOnce(expectedUrl, { resources: [] });
@@ -357,17 +361,17 @@ describe('PxeServersForm', () => {
 
     it('should reject empty name', async () => {
       await expect(asyncValidator('', null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls().length).toBe(0);
     });
 
     it('should reject undefined name', async () => {
       await expect(asyncValidator(undefined, null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls().length).toBe(0);
     });
 
     it('should reject null name', async () => {
       await expect(asyncValidator(null, null)).rejects.toBe('Required');
-      expect(fetchMock.calls().length).toBe(0);
+      expect(fetchMock.callHistory.calls().length).toBe(0);
     });
   });
 });
