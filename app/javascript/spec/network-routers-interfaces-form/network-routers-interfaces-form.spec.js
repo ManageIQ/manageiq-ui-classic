@@ -44,6 +44,10 @@ describe('Network Router Interfaces Form Component', () => {
   const removeinterfaces = { 'admin-project-subnet': 57 };
   const routerId = '3';
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
@@ -51,8 +55,6 @@ describe('Network Router Interfaces Form Component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
@@ -101,6 +103,15 @@ describe('Network Router Interfaces Form Component', () => {
   });
 
   it('should add interface', async() => {
+    fetchMock.getOnce(
+      // eslint-disable-next-line max-len
+      `/api/network_routers/3?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes`,
+      networkRouter
+    );
+    fetchMock.getOnce(
+      '/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=1ca5cc3e-ffe1-44cf-94df-98a798489d06',
+      initialInterface
+    );
     const { container } = renderWithRedux(
       <InterfacesForm interfaces={interfaces} add={false} routerId={routerId} />
     );
@@ -142,6 +153,15 @@ describe('Network Router Interfaces Form Component', () => {
   });
 
   it('should remove interface', async() => {
+    fetchMock.getOnce(
+      // eslint-disable-next-line max-len
+      `/api/network_routers/3?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes`,
+      networkRouter
+    );
+    fetchMock.getOnce(
+      '/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=1ca5cc3e-ffe1-44cf-94df-98a798489d06',
+      initialInterface
+    );
     const { container } = renderWithRedux(
       <InterfacesForm
         interfaces={interfaces}
