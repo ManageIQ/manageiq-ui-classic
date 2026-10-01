@@ -14,20 +14,6 @@ describe 'routes for VmCloud' do
   it_behaves_like 'A controller that has timeline routes'
   it_behaves_like 'A controller that has vm_common routes'
 
-  describe '#dialog_form_button_pressed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/dialog_form_button_pressed")
-      ).to route_to("#{controller_name}#dialog_form_button_pressed")
-    end
-  end
-
-  describe '#dialog_field_changed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/dialog_field_changed")).to route_to("#{controller_name}#dialog_field_changed")
-    end
-  end
-
   describe '#pre_prov' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/pre_prov")).to route_to("#{controller_name}#pre_prov")

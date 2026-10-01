@@ -716,14 +716,6 @@ class OpsController < ApplicationController
     end
   end
 
-  # set all needed things before calling replace_right_cell with nodetype
-  def dialog_replace_right_cell
-    model, id = TreeBuilder.extract_node_model_and_id(x_node)
-    @record = model.constantize.find(id)
-    rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
-    replace_right_cell(:nodetype => 'dialog_return')
-  end
-
   def extra_js_commands(presenter)
     presenter[:right_cell_text] = @right_cell_text
     presenter[:osf_node] = x_node
