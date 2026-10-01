@@ -27,13 +27,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     {
       :full_ids   => true,
       :checkboxes => true,
-      :oncheck    => @edit ? "miqOnCheckGeneric" : nil,
-      :check_url  => "/ops/rbac_group_field_changed/#{group_id}___"
     }
-  end
-
-  def group_id
-    @group.present? && @group.id.present? ? @group.id : 'new'
   end
 
   def x_get_tree_roots
