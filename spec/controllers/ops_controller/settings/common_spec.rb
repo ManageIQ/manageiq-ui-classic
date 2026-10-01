@@ -191,10 +191,8 @@ describe OpsController do
       end
     end
 
-    describe '#settings_get_info' do
+    describe '#settings_advanced_tab_data' do
       before { MiqRegion.seed }
-
-      let(:edit) { controller.instance_variable_get(:@edit) }
 
       context 'get advanced config settings' do
         it 'for selected server' do
@@ -212,14 +210,15 @@ describe OpsController do
             }
           )
           miq_server.reload
-          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
-          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
-          controller.send(:settings_get_info, "svr-#{miq_server.id}")
-          config = assigns(:edit)[:current][:file_data]
-          expect(config).to include(":host: proxy.example.com")
-          expect(config).to include(":user: user")
-          expect(config).to include(":password: #{enc_pass}")
-          expect(config).to include(":port: 80")
+          controller.params = {:resource_type => 'server', :resource_id => miq_server.id.to_s}
+          expect(controller).to receive(:render) do |args|
+            config = args[:json][:file_data]
+            expect(config).to include(":host: proxy.example.com")
+            expect(config).to include(":user: user")
+            expect(config).to include(":password: #{enc_pass}")
+            expect(config).to include(":port: 80")
+          end
+          controller.send(:settings_advanced_tab_data)
         end
 
         it 'for selected zone' do
@@ -237,14 +236,15 @@ describe OpsController do
             }
           )
           zone.reload
-          allow(controller).to receive(:x_node).and_return("svr-#{zone.id}")
-          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
-          controller.send(:settings_get_info, "z-#{zone.id}")
-          config = assigns(:edit)[:current][:file_data]
-          expect(config).to include(":host: proxy.example.com")
-          expect(config).to include(":user: user")
-          expect(config).to include(":password: #{enc_pass}")
-          expect(config).to include(":port: 80")
+          controller.params = {:resource_type => 'zone', :resource_id => zone.id.to_s}
+          expect(controller).to receive(:render) do |args|
+            config = args[:json][:file_data]
+            expect(config).to include(":host: proxy.example.com")
+            expect(config).to include(":user: user")
+            expect(config).to include(":password: #{enc_pass}")
+            expect(config).to include(":port: 80")
+          end
+          controller.send(:settings_advanced_tab_data)
         end
       end
     end
@@ -289,47 +289,27 @@ describe OpsController do
       end
     end
 
-    describe '#settings_update_save' do
+    describe '#settings_advanced_save' do
       context "save config settings" do
         it 'for selected server' do
           miq_server = FactoryBot.create(:miq_server)
-          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
-          controller.instance_variable_set(:@sb,
-                                           :active_tab         => 'settings_advanced',
-                                           :selected_server_id => miq_server.id)
-          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
-          controller.instance_variable_set(:@edit,
-                                           :new     => {:file_data => data},
-                                           :current => {:file_data => data},
-                                           :key     => "settings_advanced_edit__#{miq_server.id}")
-          session[:edit] = assigns(:edit)
-          expect(controller).to receive(:render)
+          controller.params = {:resource_type => 'server', :resource_id => miq_server.id.to_s, :file_data => data}
+          expect(controller).to receive(:render).with(hash_including(:json => hash_including(:success => true)))
           expect(Vmdb::Settings).to receive(:reload!)
 
-          controller.send(:settings_update_save)
-          controller.send(:fetch_advanced_settings, miq_server)
+          controller.send(:settings_advanced_save)
           expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
         end
 
         it 'for selected zone' do
           zone = FactoryBot.create(:zone)
-          allow(controller).to receive(:x_node).and_return("z-#{zone.id}")
-          controller.instance_variable_set(:@sb,
-                                           :active_tab         => 'settings_advanced',
-                                           :selected_server_id => zone.id)
-          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
-          controller.instance_variable_set(:@edit,
-                                           :new     => {:file_data => data},
-                                           :current => {:file_data => data},
-                                           :key     => "settings_advanced_edit__#{zone.id}")
-          session[:edit] = assigns(:edit)
-          expect(controller).to receive(:render)
+          controller.params = {:resource_type => 'zone', :resource_id => zone.id.to_s, :file_data => data}
+          expect(controller).to receive(:render).with(hash_including(:json => hash_including(:success => true)))
           expect(Vmdb::Settings).to receive(:reload!)
 
-          controller.send(:settings_update_save)
-          controller.send(:fetch_advanced_settings, zone)
+          controller.send(:settings_advanced_save)
           expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
         end
       end
