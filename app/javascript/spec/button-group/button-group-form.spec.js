@@ -3,18 +3,8 @@ import { screen, waitFor } from '@testing-library/react';
 import { renderWithRedux } from '../helpers/mountForm';
 import GroupForm from '../../components/button-group';
 
-import '../helpers/miqAjaxButton';
-
 describe('Button Group form component', () => {
-  let submitSpy;
-  beforeEach(() => {
-    submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  });
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render the adding form', async() => {
     const { container } = renderWithRedux(<GroupForm availableFields={[]} fields={[]} />);
@@ -31,10 +21,10 @@ describe('Button Group form component', () => {
 
   it('should render the adding form for generic object button groups', async() => {
     // Mock the API calls that happen on mount for generic objects
-    fetchMock.getOnce('/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=6', {
+    fetchMock.get('/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=6', {
       resources: [],
     });
-    fetchMock.getOnce('/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=6', { resources: [] });
+    fetchMock.get('/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=6', { resources: [] });
 
     const { container } = renderWithRedux(
       <GroupForm url="/generic_object_definition/" appliesToId={6} appliesToClass="GenericObjectDefinition" isGenericObject />
@@ -67,8 +57,8 @@ describe('Button Group form component', () => {
         applies_to_class: '',
       },
     };
-    fetchMock.getOnce('/api/custom_button_sets/42', expectedResult);
-    fetchMock.postOnce('/api/custom_button_sets/42', expectedResult);
+    fetchMock.get('/api/custom_button_sets/42', expectedResult);
+    fetchMock.post('/api/custom_button_sets/42', expectedResult);
 
     const { container } = renderWithRedux(<GroupForm recId={42} availableFields={[]} fields={[]} url="" />);
 
@@ -76,7 +66,7 @@ describe('Button Group form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.called('/api/custom_button_sets/42')).toBe(true);
+    expect(fetchMock.callHistory.called('/api/custom_button_sets/42')).toBe(true);
     expect(container).toMatchSnapshot();
   });
 
@@ -97,12 +87,12 @@ describe('Button Group form component', () => {
       },
       set_type: 'CustomButtonSet',
     };
-    fetchMock.getOnce('/api/custom_button_sets/219', expectedResult);
-    fetchMock.getOnce('/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=6', {
+    fetchMock.get('/api/custom_button_sets/219', expectedResult);
+    fetchMock.get('/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=6', {
       resources: [],
     });
-    fetchMock.getOnce('/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=6', { resources: [] });
-    fetchMock.postOnce('/api/custom_button_sets/219', expectedResult);
+    fetchMock.get('/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=6', { resources: [] });
+    fetchMock.post('/api/custom_button_sets/219', expectedResult);
 
     const { container } = renderWithRedux(
       <GroupForm url="/generic_object_definition/" recId={219} appliesToId={6} appliesToClass="GenericObjectDefinition" isGenericObject />
@@ -112,7 +102,7 @@ describe('Button Group form component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.called('/api/custom_button_sets/219')).toBe(true);
+    expect(fetchMock.callHistory.called('/api/custom_button_sets/219')).toBe(true);
     expect(container).toMatchSnapshot();
   });
 });

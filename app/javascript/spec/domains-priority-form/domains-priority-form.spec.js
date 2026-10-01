@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'fetch-mock';
 
 import DomainsPriorityForm from '../../components/domains-priority-form';
 import { renderWithRedux } from '../helpers/mountForm';
@@ -9,31 +8,10 @@ import { http } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import '../helpers/miqSparkle';
 
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-jest.mock('../../http_api');
-
 describe('DomainsPriorityForm component', () => {
-  let initialProps;
-  let submitSpyMiqSparkleOn;
-
-  beforeEach(() => {
-    initialProps = {
-      domainOrder: [
-        'ManageIQ',
-        'RedHat',
-        'CustomDomain',
-        'TestDomain (Locked)',
-      ],
-    };
-
-    submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpyMiqSparkleOn.mockRestore();
-  });
+  const initialProps = {
+    domainOrder: ['ManageIQ', 'RedHat', 'CustomDomain', 'TestDomain (Locked)'],
+  };
 
   it('should render correctly', () => {
     const { container } = renderWithRedux(<DomainsPriorityForm {...initialProps} />);
@@ -94,6 +72,7 @@ describe('DomainsPriorityForm component', () => {
   });
 
   it('should call correct API endpoint on submit', async() => {
+    jest.spyOn(window, 'miqSparkleOn');
     const user = userEvent.setup();
 
     http.post = jest.fn().mockResolvedValue({

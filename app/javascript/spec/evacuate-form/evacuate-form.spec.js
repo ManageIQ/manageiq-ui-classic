@@ -5,18 +5,20 @@ import { hosts } from './data';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('evacuate form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render evacuate form with host options', async() => {
-    fetchMock.getOnce('/vm_cloud/evacuate_form_fields/40', { hosts });
+    fetchMock.get('/vm_cloud/evacuate_form_fields/40', { hosts });
 
     const { container } = renderWithRedux(<EvacuateForm recordId="40" />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
 
     const autoSelectHostInput = container.querySelector(
@@ -29,12 +31,12 @@ describe('evacuate form component', () => {
 
   it('should render evacuate form when hosts empty', async() => {
     const hosts = [];
-    fetchMock.getOnce('/vm_cloud/evacuate_form_fields/40', { hosts });
+    fetchMock.get('/vm_cloud/evacuate_form_fields/40', { hosts });
 
     const { container } = renderWithRedux(<EvacuateForm recordId="40" />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
 
     expect(
@@ -53,7 +55,7 @@ describe('evacuate form component', () => {
     const { container } = renderWithRedux(<EvacuateForm recordId="" />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(0);
+      expect(fetchMock.callHistory.calls()).toHaveLength(0);
     });
 
     expect(

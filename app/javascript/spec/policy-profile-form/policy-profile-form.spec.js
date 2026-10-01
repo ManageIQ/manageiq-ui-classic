@@ -4,10 +4,7 @@ import PolicyProfileForm from '../../components/policy-profile-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('PolicyProfileForm form component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render adding form variant', async() => {
     fetchMock.get(
@@ -25,20 +22,20 @@ describe('PolicyProfileForm form component', () => {
 
   it('should render new form variant', async() => {
     const url = '/api/policies?attributes=id,description,towhat&expand=resources';
-    fetchMock.getOnce(url, { resources: [] });
+    fetchMock.get(url, { resources: [] });
 
     const { container } = renderWithRedux(<PolicyProfileForm />);
 
     await waitFor(() => {
-      expect(fetchMock.called(url)).toBe(true);
+      expect(fetchMock.callHistory.called(url)).toBe(true);
     });
     expect(container).toMatchSnapshot();
   });
 
   it('should render editing form variant', async() => {
     const url = '/api/policy_profiles/1?attributes=name,description,set_data,miq_policies&expand=miq_policies';
-    fetchMock.getOnce(url, { name: 'foo', miq_policies: [] });
-    fetchMock.getOnce(
+    fetchMock.get(url, { name: 'foo', miq_policies: [] });
+    fetchMock.get(
       '/api/policies?attributes=id,description,towhat&expand=resources',
       { resources: [] }
     );
@@ -46,7 +43,7 @@ describe('PolicyProfileForm form component', () => {
     const { container } = renderWithRedux(<PolicyProfileForm recordId="1" />);
 
     await waitFor(() => {
-      expect(fetchMock.called(url)).toBe(true);
+      expect(fetchMock.callHistory.called(url)).toBe(true);
     });
     expect(container).toMatchSnapshot();
   });

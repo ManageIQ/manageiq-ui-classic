@@ -4,6 +4,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import WorkflowCredentialMappingForm from '../../components/workflow-credential-mapping-form/index';
 
 describe('Workflow Credential Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const authenticationsApi = {
     resources: [
       { name: 'Test Credential', ems_ref: 'test_credential' },
@@ -37,14 +39,11 @@ describe('Workflow Credential Form Component', () => {
     credentials: {},
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  afterEach(() => fetchMock.callHistory.clear());
 
   it('should render mapping credentials to the workflow', async() => {
     fetchMock.get(
-      `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`,
+      `/api/authentications?expand=resources&filter[]=type=%27ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential%27`,
       authenticationsApi
     );
     fetchMock.get(
@@ -57,7 +56,7 @@ describe('Workflow Credential Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
       expect(screen.getByText('Credentials Identifier')).toBeInTheDocument();
       expect(screen.getAllByText('api_password').length).toBeGreaterThan(0);
       expect(screen.getByText('Test Credential')).toBeInTheDocument();
@@ -70,7 +69,7 @@ describe('Workflow Credential Form Component', () => {
 
   it('should redirect back to show_list page if a workflow has no credentials to map', async() => {
     fetchMock.get(
-      `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`,
+      `/api/authentications?expand=resources&filter[]=type=%27ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential%27`,
       { resources: [] }
     );
     fetchMock.get(
@@ -83,7 +82,7 @@ describe('Workflow Credential Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
 
     expect(container).toMatchSnapshot();

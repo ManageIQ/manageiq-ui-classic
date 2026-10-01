@@ -4,6 +4,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import VmResizeForm from '../../components/vm-resize-form/vm-resize-form';
 
 describe('vm resize form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const response = {
     data: {
       form_schema: {
@@ -24,11 +26,6 @@ describe('vm resize form component', () => {
 
   beforeEach(() => {
     fetchMock.once('/api/vms/1?option_action=resize', response);
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
   });
 
   it('should render form', async() => {
@@ -57,7 +54,7 @@ describe('vm resize form component', () => {
       },
       resizeFormId: '53',
     };
-    fetchMock.postOnce('/api/vms/1', submitData);
+    fetchMock.post('/api/vms/1', submitData);
 
     const { container } = renderWithRedux(
       <VmResizeForm recordId="1" vmCloudResizeFormId="53" />

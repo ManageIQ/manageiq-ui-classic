@@ -85,6 +85,7 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
               >
                 <option
                   class="cds--select-option"
+                  label="<Choose>"
                   value=""
                 >
                   &lt;Choose&gt;

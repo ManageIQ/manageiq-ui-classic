@@ -87,13 +87,11 @@ describe('Physical storage form component', () => {
     ],
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render adding form variant', async() => {
-    fetchMock.mock(
+    fetchMock.get(
+      // eslint-disable-next-line max-len
       '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
       emsList
     );
@@ -108,20 +106,20 @@ describe('Physical storage form component', () => {
 
   it('should render editing form variant', async() => {
     fetchMock.get('/api/physical_storages/1', physicalStorageMock);
-    fetchMock.mock(
-      '/api/physical_storages?ems_id=2',
-      { data: { form_schema: { fields: [] } } },
-      { method: 'OPTIONS' }
+    fetchMock.once(
+      { method: 'OPTIONS', url: '/api/physical_storages?ems_id=2' },
+      { data: { form_schema: { fields: [] } } }
     );
-    fetchMock.mock(
+    fetchMock.get(
+      // eslint-disable-next-line max-len
       '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
       emsList
     );
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true',
       emsList
     );
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers/2?attributes=type,physical_storage_families',
       physicalStorageFamilyMock
     );
@@ -129,13 +127,14 @@ describe('Physical storage form component', () => {
     const { container } = renderWithRedux(<PhysicalStorageForm recordId="1" />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/physical_storages/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/physical_storages/1')).toBe(true);
     });
     expect(container).toMatchSnapshot();
   });
 
   it('should call miqRedirectBack when canceling create form', async() => {
-    fetchMock.mock(
+    fetchMock.get(
+      // eslint-disable-next-line max-len
       '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
       emsList
     );

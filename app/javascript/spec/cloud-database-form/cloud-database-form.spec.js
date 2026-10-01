@@ -6,6 +6,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 describe('Cloud Database form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const dropdownOptions = {
     resources: [
       { name: 'Blue', id: '1' },
@@ -36,13 +38,8 @@ describe('Cloud Database form component', () => {
     },
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   it('should render "Add New" form', async() => {
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_cloud_database_create,type&filter[]=supports_cloud_database_create=true',
       dropdownOptions
     );
@@ -59,8 +56,8 @@ describe('Cloud Database form component', () => {
 
   it('should render "Edit" form', async() => {
     fetchMock.getOnce('/api/cloud_databases/1', initialData);
-    fetchMock.mock('/api/cloud_databases/1?ems_id=1', response, { method: 'OPTIONS' });
-    fetchMock.mock(
+    fetchMock.once({ method: 'OPTIONS', url: '/api/cloud_databases/1?ems_id=1' }, response);
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_cloud_database_create,type&filter[]=supports_cloud_database_create=true',
       dropdownOptions
     );
@@ -77,7 +74,7 @@ describe('Cloud Database form component', () => {
 
   it('should call miqRedirectBack when canceling "Add New" form', async() => {
     const user = userEvent.setup();
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_cloud_database_create,type&filter[]=supports_cloud_database_create=true',
       dropdownOptions
     );

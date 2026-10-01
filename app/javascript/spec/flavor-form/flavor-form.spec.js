@@ -5,6 +5,8 @@ import FlavorForm from '../../components/flavor-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Flavor form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_create_flavor&filter[]=supports_create_flavor=true';
 
   const emsList = {
@@ -14,12 +16,8 @@ describe('Flavor form component', () => {
     ],
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   it('matches the snapshot', async() => {
+    fetchMock.get(emsUrl, emsList);
     const { container } = renderWithRedux(<FlavorForm redirect="" />);
 
     await waitFor(() => {
@@ -35,7 +33,7 @@ describe('Flavor form component', () => {
     renderWithRedux(<FlavorForm redirect="" />);
 
     await waitFor(() => {
-      expect(fetchMock.called(emsUrl)).toBe(true);
+      expect(fetchMock.callHistory.called(emsUrl)).toBe(true);
     });
   });
 });
