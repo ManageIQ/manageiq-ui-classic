@@ -1,9 +1,6 @@
-import fetchMock from 'fetch-mock';
 import { waitFor } from '@testing-library/react';
 import FilterDropDown from '../../components/filter-dropdown';
 
-import '../helpers/miqSparkle';
-import '../helpers/miqAjaxButton';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Filter Dropdown form', () => {
@@ -30,23 +27,6 @@ describe('Filter Dropdown form', () => {
       name: 'filter2',
     },
   ];
-  let submitSpyMiqSparkleOn;
-  let submitSpyMiqSparkleOff;
-  let spyMiqAjaxButton;
-
-  beforeEach(() => {
-    submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
-    submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
-    spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
-  });
-
-  afterEach(() => {
-    fetchMock.restore();
-
-    submitSpyMiqSparkleOn.mockRestore();
-    submitSpyMiqSparkleOff.mockRestore();
-    spyMiqAjaxButton.mockRestore();
-  });
 
   it('should handle cancel', async() => {
     const { container } = renderWithRedux(

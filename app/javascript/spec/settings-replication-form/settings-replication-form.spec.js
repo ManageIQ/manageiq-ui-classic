@@ -22,6 +22,10 @@ describe('SettingsReplicationForm', () => {
     await user.selectOptions(select, value);
   };
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     // Mock API call before component renders
     fetchMock.get(
@@ -31,8 +35,8 @@ describe('SettingsReplicationForm', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   describe('Initial Rendering', () => {
@@ -142,7 +146,6 @@ describe('SettingsReplicationForm', () => {
           },
         ],
       };
-      fetchMock.reset();
       fetchMock.get('/ops/pglogical_subscriptions_form_fields/123', mockData);
 
       renderWithRedux(
@@ -151,7 +154,7 @@ describe('SettingsReplicationForm', () => {
 
       await waitFor(() => {
         expect(
-          fetchMock.called('/ops/pglogical_subscriptions_form_fields/123')
+          fetchMock.callHistory.called('/ops/pglogical_subscriptions_form_fields/123')
         ).toBe(true);
       });
     });
@@ -274,7 +277,7 @@ describe('SettingsReplicationForm', () => {
       const saveButton = container.querySelector('button[type="submit"]');
       await user.click(saveButton);
       expect(
-        fetchMock.called('/ops/pglogical_save_subscriptions/new?button=save')
+        fetchMock.callHistory.called('/ops/pglogical_save_subscriptions/new?button=save')
       ).toBe(false);
     });
   });

@@ -6,7 +6,6 @@ import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqAjaxButton';
 
 describe('VM Edit form component', () => {
-  let submitSpy;
   const vmInitialValues = {
     ancestry: '4698',
     id: '4671',
@@ -61,14 +60,9 @@ describe('VM Edit form component', () => {
       },
     ],
   };
-  beforeEach(() => {
-    submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  });
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
+
+  afterEach(() => fetchMock.removeRoutes());
   it('should render vm edit form', async() => {
     const parentVMOptions = {
       resources: [
@@ -90,15 +84,15 @@ describe('VM Edit form component', () => {
       ],
     };
 
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/?filter[]=ems_id=56&expand=resources`,
       parentVMOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/templates/?filter[]=ems_id=56&expand=resources`,
       parentTemplateOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
       vmInitialValues
     );
@@ -165,19 +159,19 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/?filter[]=ems_id=56&expand=resources`,
       parentVMOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/templates/?filter[]=ems_id=56&expand=resources`,
       parentTemplateOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
       vmInitialValues
     );
-    fetchMock.postOnce('/api/vms/4671', data);
+    fetchMock.post('/api/vms/4671', data);
     const { container } = renderWithRedux(
       <VmEditForm
         recordId="4671"
@@ -236,19 +230,19 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/?filter[]=ems_id=56&expand=resources`,
       parentVMOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/templates/?filter[]=ems_id=56&expand=resources`,
       parentTemplateOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
       vmInitialValues
     );
-    fetchMock.postOnce('/api/vms/4671', data);
+    fetchMock.post('/api/vms/4671', data);
     const { container } = renderWithRedux(
       <VmEditForm
         recordId="4671"
@@ -310,19 +304,19 @@ describe('VM Edit form component', () => {
         ],
       },
     };
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/vms/?filter[]=ems_id=22&expand=resources',
       parentVMOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/templates/?filter[]=ems_id=22&expand=resources',
       parentTemplateOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes',
       templateInitialValues
     );
-    fetchMock.postOnce('/api/templates/2686', data);
+    fetchMock.post('/api/templates/2686', data);
     const { container } = renderWithRedux(
       <VmEditForm
         recordId="2686"
@@ -381,19 +375,19 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/vms/?filter[]=ems_id=22&expand=resources',
       parentVMOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/templates/?filter[]=ems_id=22&expand=resources',
       parentTemplateOptions
     );
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes',
       templateInitialValues
     );
-    fetchMock.postOnce('/api/templates/2686', data);
+    fetchMock.post('/api/templates/2686', data);
     const { container } = renderWithRedux(
       <VmEditForm
         recordId="2686"

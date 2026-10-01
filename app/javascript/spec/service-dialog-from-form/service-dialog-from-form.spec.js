@@ -7,28 +7,24 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import ServiceDialogFromOt from '../../components/service-dialog-from-form/service-dialog-from';
 
 describe('<ServiceDialogFromOt />', () => {
-  let initialProps;
+  beforeAll(() => fetchMock.mockGlobal());
 
-  beforeEach(() => {
-    initialProps = {
-      templateId: 123,
-      dialogClass: 'dialogClass',
-      templateClass: 'templateClass',
-      miqRedirectBackAdress: '/go/back',
-    };
-  });
+  afterEach(() => fetchMock.callHistory.clear());
 
-  afterEach(() => {
-    fetchMock.reset();
-  });
+  const initialProps = {
+    templateId: 123,
+    dialogClass: 'dialogClass',
+    templateClass: 'templateClass',
+    miqRedirectBackAdress: '/go/back',
+  };
 
   it('should submit data correctly', async() => {
     const user = userEvent.setup();
-    fetchMock.postOnce('/api/service_dialogs', {});
-    fetchMock.getOnce('/api/service_dialogs?filter[]=label=undefined', {
+    fetchMock.post('/api/service_dialogs', {});
+    fetchMock.get('/api/service_dialogs?filter[]=label=undefined', {
       subcount: 0,
     });
-    fetchMock.getOnce('/api/service_dialogs?filter[]=label=Foo', {
+    fetchMock.get('/api/service_dialogs?filter[]=label=Foo', {
       subcount: 0,
     });
     const { container } = renderWithRedux(
@@ -36,14 +32,14 @@ describe('<ServiceDialogFromOt />', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
 
     const labelInput = screen.getByLabelText(/Service Dialog Name/i);
     await user.type(labelInput, 'Foo');
     // Wait for debounced validation after typing
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
     let submitButton;
     await waitFor(() => {
@@ -52,9 +48,9 @@ describe('<ServiceDialogFromOt />', () => {
     });
     await user.click(submitButton);
     await waitFor(() => {
-      expect(fetchMock.called('/api/service_dialogs')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/service_dialogs')).toBe(true);
     });
-    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual({
+    expect(JSON.parse(fetchMock.callHistory.lastCall().options.body)).toEqual({
       action: 'template_service_dialog',
       resource: {
         label: 'Foo',
@@ -74,7 +70,7 @@ describe('<ServiceDialogFromOt />', () => {
 
   it('should fail async label validation', async() => {
     const user = userEvent.setup();
-    fetchMock.getOnce('/api/service_dialogs?filter[]=label=Bla', {
+    fetchMock.get('/api/service_dialogs?filter[]=label=Bla', {
       subcount: 1,
     });
     const { container } = renderWithRedux(
@@ -89,7 +85,7 @@ describe('<ServiceDialogFromOt />', () => {
     await user.type(labelInput, 'Bla');
     // Wait for debounced validation after typing
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
     await waitFor(() => {
       const submitButton = container.querySelector('button.cds--btn--primary');

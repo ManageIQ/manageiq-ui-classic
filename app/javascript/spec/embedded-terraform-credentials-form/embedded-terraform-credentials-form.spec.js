@@ -4,6 +4,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import EmbeddedTerraformCredentialsForm from '../../components/embedded-terraform-credentials-form';
 
 describe('Embedded Terraform Credential Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const api = {
     data: {
       credential_types: {
@@ -30,6 +32,7 @@ describe('Embedded Terraform Credential Form Component', () => {
   };
 
   beforeEach(() => {
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/authentications' }, api);
     fetchMock.get(
       '/api/providers?collection_class=ManageIQ::Providers::EmbeddedTerraform::AutomationManager',
       {
@@ -42,25 +45,19 @@ describe('Embedded Terraform Credential Form Component', () => {
     );
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  afterEach(() => fetchMock.callHistory.clear());
 
   it('should render adding a new credential', async() => {
-    fetchMock.once('/api/authentications', api);
-
     const { container } = renderWithRedux(<EmbeddedTerraformCredentialsForm />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render editing a credential', async() => {
-    fetchMock.once('/api/authentications', api);
     fetchMock.get('/api/authentications/1', { ems_ref: 'test', type: 'foo' });
 
     const { container } = renderWithRedux(
@@ -68,7 +65,7 @@ describe('Embedded Terraform Credential Form Component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(3);
+      expect(fetchMock.callHistory.calls()).toHaveLength(3);
     });
 
     expect(container).toMatchSnapshot();

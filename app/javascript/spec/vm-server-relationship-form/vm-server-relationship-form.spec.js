@@ -4,6 +4,8 @@ import VmServerRelationShipForm from '../../components/vm-server-relationship-fo
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Vm server relationship form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const servers = {
     resources: [
       { vm_id: '1', id: '1', name: 'foo' },
@@ -12,18 +14,14 @@ describe('Vm server relationship form component', () => {
     ],
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-  });
-
   const url = '/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc';
 
   it('should request data after mount and set to state', async() => {
-    fetchMock.getOnce(url, servers);
+    fetchMock.get(url, servers);
     renderWithRedux(<VmServerRelationShipForm recordId="2" redirect="" />);
 
     await waitFor(() => {
-      expect(fetchMock.called(url)).toBe(true);
+      expect(fetchMock.callHistory.called(url)).toBe(true);
       expect(
         screen.getByRole('combobox', { name: /Server/i })
       ).toBeInTheDocument();
@@ -32,7 +30,7 @@ describe('Vm server relationship form component', () => {
   });
 
   it('should request data after mount and set to state (with serverId)', async() => {
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc',
       servers
     );
@@ -40,7 +38,7 @@ describe('Vm server relationship form component', () => {
     renderWithRedux(<VmServerRelationShipForm recordId="1" redirect="" />);
 
     await waitFor(() => {
-      expect(fetchMock.called(url)).toBe(true);
+      expect(fetchMock.callHistory.called(url)).toBe(true);
       expect(
         screen.getByRole('combobox', { name: /Server/i })
       ).toBeInTheDocument();

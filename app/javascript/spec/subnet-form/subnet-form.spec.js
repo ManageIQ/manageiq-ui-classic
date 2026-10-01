@@ -6,6 +6,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
 
 describe('Subnet form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_cloud_subnet_create&filter[]=supports_cloud_subnet_create=true',
@@ -13,11 +15,6 @@ describe('Subnet form component', () => {
         resources: [{ id: 1, name: 'foo' }],
       }
     );
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
   });
 
   it('renders the adding form variant', async() => {
@@ -31,17 +28,16 @@ describe('Subnet form component', () => {
 
   it('renders the editing form variant', async() => {
     fetchMock.get('/api/cloud_subnets/1', { name: 'foo', ems_id: 1 });
-    fetchMock.mock(
-      '/api/cloud_subnets/1',
-      { data: { form_schema: { fields: [] } } },
-      { method: 'OPTIONS' }
+    fetchMock.route(
+      { method: 'OPTIONS', url: '/api/cloud_subnets/1' },
+      { data: { form_schema: { fields: [] } } }
     );
 
     const { container } = renderWithRedux(<SubnetForm recordId="1" />);
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    expect(fetchMock.called('/api/cloud_subnets/1')).toBe(true);
+    expect(fetchMock.callHistory.called('/api/cloud_subnets/1')).toBe(true);
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();

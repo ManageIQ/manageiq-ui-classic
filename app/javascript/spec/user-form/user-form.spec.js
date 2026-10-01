@@ -4,6 +4,10 @@ import { renderWithRedux } from '../helpers/mountForm';
 import UserForm from '../../components/user-form/index';
 
 describe('User Form Component', () => {
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   const groupsMockData = [
     {
       href: 'http://localhost:3000/api/groups/2',
@@ -44,11 +48,6 @@ describe('User Form Component', () => {
     name: 'test name',
     userid: 'testuser',
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render add User form correctly', async() => {
     fetchMock.get('/api/groups?&expand=resources', {

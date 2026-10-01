@@ -14,6 +14,10 @@ describe('RegionForm', () => {
   const flashSpy = jest.spyOn(window, 'add_flash');
   const flashLaterSpy = jest.spyOn(window, 'miqFlashLater');
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     initialProps = {
       id: '123',
@@ -22,7 +26,7 @@ describe('RegionForm', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
+    fetchMock.callHistory.clear();
     sparkleOnSpy.mockReset();
     sparkleOffSpy.mockReset();
     flashSpy.mockReset();
@@ -39,7 +43,7 @@ describe('RegionForm', () => {
       expect(screen.getByLabelText(/Description/i)).toBeInTheDocument();
     });
     expect(screen.getByLabelText(/Description/i)).toHaveValue('foo');
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(sparkleOnSpy).toHaveBeenCalled();
     expect(sparkleOffSpy).toHaveBeenCalled();
   });
@@ -107,9 +111,9 @@ describe('RegionForm', () => {
     });
     await user.click(submitButton);
     await waitFor(() => {
-      expect(fetchMock.called('/api/regions/123')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/regions/123')).toBe(true);
     });
-    expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
+    expect(JSON.parse(fetchMock.callHistory.calls()[1].options.body)).toEqual({
       action: 'edit',
       resource: {
         description: 'bar',

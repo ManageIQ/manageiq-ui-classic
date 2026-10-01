@@ -4,6 +4,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import ZoneForm from '../../components/zone-form/index';
 
 describe('zone Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const zone = {
     authentications: [],
     created_on: '2021-05-13T19:47:24Z',
@@ -12,11 +14,6 @@ describe('zone Form Component', () => {
     id: '68',
     name: 'test add zone name',
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render a new Zone form', () => {
     const { container } = renderWithRedux(<ZoneForm />);
@@ -28,7 +25,7 @@ describe('zone Form Component', () => {
     const { container } = renderWithRedux(<ZoneForm recordId="68" {...zone} />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/zones/68?attributes=authentications')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/zones/68?attributes=authentications')).toBe(true);
     });
 
     const nameInput = container.querySelector('input[name="name"]');

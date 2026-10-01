@@ -3,7 +3,6 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRedux } from '../helpers/mountForm';
 import InstanceForm from '../../components/miq-ae-class/instance-form';
-import '../helpers/miqSparkle';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
@@ -73,18 +72,15 @@ describe('InstanceForm Component', () => {
     namespace_path: 'Domain/Namespace/StateClass',
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
-    window.__ = (str) => str;
-    window.sprintf = (str, obj) => str.replace(/%{(\w+)}/g, (_, key) => obj[key]);
-    window.add_flash = jest.fn();
     flashSpy = jest.spyOn(window, 'add_flash');
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
     flashSpy.mockRestore();
-    jest.clearAllMocks();
   });
 
   describe('Add Instance', () => {
@@ -162,7 +158,7 @@ describe('InstanceForm Component', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        expect(fetchMock.called(`/miq_ae_class/create_instance?class_id=${classId}`)).toBe(true);
+        expect(fetchMock.callHistory.called(`/miq_ae_class/create_instance?class_id=${classId}`)).toBe(true);
       });
     });
   });
@@ -219,7 +215,7 @@ describe('InstanceForm Component', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        expect(fetchMock.called(`/miq_ae_class/update_instance/${recordId}`)).toBe(true);
+        expect(fetchMock.callHistory.called(`/miq_ae_class/update_instance/${recordId}`)).toBe(true);
       });
     });
   });

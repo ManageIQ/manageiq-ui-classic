@@ -5,10 +5,7 @@ import PxeImageForm from '../../components/pxe-image-type-form/index';
 import '../helpers/miqSparkle';
 
 describe('Pxe Image Type Form Component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render adding a new pxe image type', async() => {
     const { container } = renderWithRedux(<PxeImageForm />);
@@ -17,7 +14,7 @@ describe('Pxe Image Type Form Component', () => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(0);
+    expect(fetchMock.callHistory.calls()).toHaveLength(0);
     expect(container).toMatchSnapshot();
   });
 
@@ -33,7 +30,7 @@ describe('Pxe Image Type Form Component', () => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(1);
+    expect(fetchMock.callHistory.calls()).toHaveLength(1);
     expect(container).toMatchSnapshot();
   });
 });

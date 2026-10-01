@@ -7,8 +7,6 @@ import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 
 describe('Network Security Groups Form Component', () => {
-  let submitSpyMiqSparkleOn;
-  let submitSpyMiqSparkleOff;
   let spyMiqAjaxButton;
 
   const securityGroupId = '82';
@@ -108,19 +106,13 @@ describe('Network Security Groups Form Component', () => {
     name: 'asimonel-sg',
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
-    submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
-    submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpyMiqSparkleOn.mockRestore();
-    submitSpyMiqSparkleOff.mockRestore();
-    spyMiqAjaxButton.mockRestore();
-  });
+  afterEach(() => spyMiqAjaxButton.mockRestore());
 
   it('should render add security group form', async() => {
     fetchMock.get(
@@ -145,9 +137,10 @@ describe('Network Security Groups Form Component', () => {
       `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
       securityGroup
     );
-    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
-      method: 'OPTIONS',
-    });
+    fetchMock.route(
+      { method: 'OPTIONS', url: `/api/security_groups/${securityGroupId}` },
+      optionsResponse
+    );
 
     const { container } = renderWithRedux(
       <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />
@@ -200,9 +193,10 @@ describe('Network Security Groups Form Component', () => {
       `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
       securityGroup
     );
-    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
-      method: 'OPTIONS',
-    });
+    fetchMock.route(
+      { method: 'OPTIONS', url: `/api/security_groups/${securityGroupId}` },
+      optionsResponse
+    );
 
     const { container } = renderWithRedux(
       <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />
@@ -249,9 +243,10 @@ describe('Network Security Groups Form Component', () => {
       `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
       securityGroup
     );
-    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
-      method: 'OPTIONS',
-    });
+    fetchMock.route(
+      { method: 'OPTIONS', url: `/api/security_groups/${securityGroupId}` },
+      optionsResponse
+    );
 
     const { container } = renderWithRedux(
       <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />

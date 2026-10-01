@@ -20,13 +20,14 @@ describe('Add testcases for creating new auth key pair', () => {
     ems_id: 2,
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.callHistory.clear();
   });
 
   it('should render a auth key pair form', async() => {
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_auth_key_pair_create&filter[]=supports_auth_key_pair_create=true',
       emsList
     );
@@ -43,7 +44,7 @@ describe('Add testcases for creating new auth key pair', () => {
 
   it('should correctly add new key pair .', async() => {
     const user = userEvent.setup();
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_auth_key_pair_create&filter[]=supports_auth_key_pair_create=true',
       emsList
     );
@@ -65,13 +66,13 @@ describe('Add testcases for creating new auth key pair', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
   });
 
   it('should call miqRedirectBack when canceling form', async() => {
     const user = userEvent.setup();
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_auth_key_pair_create&filter[]=supports_auth_key_pair_create=true',
       emsList
     );

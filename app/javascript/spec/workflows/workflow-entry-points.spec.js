@@ -34,6 +34,10 @@ describe('WorkflowEntryPoints component', () => {
     selected: '',
   };
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     window.API = {
       get: jest.fn().mockImplementation(() => Promise.resolve(mockWorkflowsResponse)),
@@ -43,8 +47,6 @@ describe('WorkflowEntryPoints component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     jest.clearAllMocks();
   });
 

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'fetch-mock';
 import BelongsToTab from '../../components/group-form/belongs-to-tab';
 
 const noop = () => {};
@@ -73,11 +72,6 @@ const vatTree = JSON.stringify([
 ]);
 
 describe('BelongsToTab', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   it('renders "No items available." when the tree is empty', () => {
     const { container } = render(
       <BelongsToTab bsTree="[]" checked={[]} onCheckedChange={noop} />

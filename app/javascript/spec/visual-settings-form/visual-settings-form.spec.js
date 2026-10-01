@@ -7,6 +7,10 @@ describe('visual settings form', () => {
   const shortcuts = '/api/shortcuts?expand=resources&attributes=description,url';
   const users = '/api/users/1?attributes=settings';
 
+  window.locales = [];
+
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     fetchMock.get(shortcuts, {
       resources: [
@@ -20,11 +24,6 @@ describe('visual settings form', () => {
     fetchMock.get('/api', { timezones: [] });
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   it('calls the API endpoints to preseed the form', async() => {
     const { container } = renderWithRedux(<VisualSettingsForm recordId="1" />);
 
@@ -32,9 +31,9 @@ describe('visual settings form', () => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.called(shortcuts)).toBe(true);
-    expect(fetchMock.called(users)).toBe(true);
-    expect(fetchMock.called('/api')).toBe(true);
+    expect(fetchMock.callHistory.called(shortcuts)).toBe(true);
+    expect(fetchMock.callHistory.called(users)).toBe(true);
+    expect(fetchMock.callHistory.called('/api')).toBe(true);
   });
 
   it('renders available locales when passed', async() => {
