@@ -21,7 +21,8 @@
       = ae_class_tab_content(:schema, :active_tab => @sb[:active_tab]) do
         = render :partial => "class_fields"
   - when "aei"
-    = render :partial => "instance_fields"
+    = render :partial => "instance_fields",
+             :locals  => {:ae_class => @ae_class, :record => @record}
   - when "aem"
     = render :partial => "method_inputs"
   - when "aen"
