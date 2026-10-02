@@ -1,6 +1,6 @@
 describe "Login process" do
   let(:user) do
-    FactoryBot.create(:user_with_email, :password => "smartvm", :role => "super_administrator")
+    FactoryBot.create(:user_with_email, :role => "super_administrator")
   end
 
   before do
@@ -33,7 +33,7 @@ describe "Login process" do
     end
 
     it "allows login with correct password" do
-      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'smartvm' }
+      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'dummy' }
       expect(response.status).to eq(200)
       expect(response.body).not_to match(/password you entered is incorrect/)
     end
@@ -47,7 +47,7 @@ describe "Login process" do
 
   context 'w/ a valid session' do
     it "allows access" do
-      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'smartvm' }
+      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'dummy' }
       get '/ems_cloud/show_list'
       expect(response.status).to eq(200)
     end
