@@ -165,9 +165,9 @@ module MiqAeClassHelper
     when 'expression'
       _('Expression')
     when 'ansible_job_template'
-      _('Ansible Tower Job Template')
+      _('Ansible Job Template')
     when 'ansible_workflow_template'
-      _('Ansible Tower Workflow Template')
+      _('Ansible Workflow Template')
     else
       location
     end

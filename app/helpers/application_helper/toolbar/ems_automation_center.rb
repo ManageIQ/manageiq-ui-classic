@@ -30,8 +30,8 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
           t,
           :data  => {'function'      => 'sendDataWithRx',
                      'function-data' => {:controller     => 'provider_dialogs',
-                                         :modal_title    => N_('Delete Ansible Tower Provider'),
-                                         :modal_text     => N_('Are you sure you want to delete the following Ansible Tower Provider?'),
+                                         :modal_title    => N_('Delete Automation Manager Provider'),
+                                         :modal_text     => N_('Are you sure you want to delete the following Automation Manager Provider?'),
                                          :api_url        => 'providers',
                                          :async_delete   => true,
                                          :redirect_url   => '/ems_automation/show_list',
@@ -50,7 +50,7 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
         button(
           :ems_automation_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this Ansible Tower Provider'),
+          N_('Edit Tags for this Automation Manager Provider'),
           N_('Edit Tags')),
       ]
     ),
