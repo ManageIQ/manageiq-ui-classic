@@ -1,6 +1,6 @@
 describe DashboardController do
   let(:user) do
-    FactoryBot.create(:user_with_email, :password => "smartvm", :role => "super_administrator")
+    FactoryBot.create(:user_with_email, :role => "super_administrator")
   end
 
   before do
@@ -11,7 +11,7 @@ describe DashboardController do
   let(:valid_user) do
     {
       :name            => user.userid,
-      :password        => 'smartvm',
+      :password        => 'dummy',
       :new_password    => nil,
       :verify_password => nil,
     }

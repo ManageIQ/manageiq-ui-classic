@@ -1,12 +1,9 @@
 describe RestfulRedirectController do
-  let(:user) { FactoryBot.create(:user_with_email, :role => 'super_administrator', :password => 'x') }
+  let(:user) { FactoryBot.create(:user_with_email, :role => 'super_administrator') }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-  end
-
-  before do
-    post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => user.password }
+    post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'dummy' }
   end
 
   context 'for MiqRequest' do
