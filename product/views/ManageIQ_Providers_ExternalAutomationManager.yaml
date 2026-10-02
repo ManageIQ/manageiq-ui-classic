@@ -9,10 +9,10 @@
 #
 
 # Report title
-title: Ansible Tower Providers
+title: Automation Providers
 
 # Menu name
-name: Ansible Tower Providers
+name: Automation Providers
 
 # Main DB table report is based on
 db: ManageIQ::Providers::ExternalAutomationManager
