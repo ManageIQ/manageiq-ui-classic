@@ -9,10 +9,10 @@
 #
 
 # Report title
-title: Automation Manager Providers
+title: Automation Providers
 
 # Menu name
-name: Automation Manager Providers
+name: Automation Providers
 
 # Main DB table report is based on
 db: EmsAutomation
