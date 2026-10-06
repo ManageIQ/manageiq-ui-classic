@@ -4,7 +4,7 @@ const RFB = require('@novnc/novnc').default;
 require('../oldjs/i18n.js');
 require('../oldjs/remote_console.js');
 
-$(function() {
+$(() => {
   const host = window.location.hostname;
   const encrypt = window.location.protocol === 'https:';
   let port = encrypt ? 443 : 80;
@@ -27,7 +27,7 @@ $(function() {
     url,
     {
       shared: true,
-      credentials: {password: secret}
+      credentials: { password: secret },
     }
   );
 
@@ -44,6 +44,7 @@ $(function() {
       .addClass('label-danger')
       .text(__('Disconnected'));
 
+    // eslint-disable-next-line no-console
     console.error('Disconnect:', e.detail.clean ? 'Clean' : 'Unclean');
   });
 
