@@ -80,7 +80,6 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
               <select
                 class="cds--select-input"
                 id="ems_id"
-                loadingmessage="Loading..."
                 name="ems_id"
                 title=""
               >
