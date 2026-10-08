@@ -138,9 +138,6 @@ module ApplicationController::Buttons
     unless params[:target_class]
       @edit = session[:edit]
       @custom_button = @edit[:custom_button]
-      if params[:readonly]
-        @edit[:new][:readonly] = (params[:readonly] != "1")
-      end
       copy_params_if_set(@edit[:new], params, %i[instance_name other_name object_message object_request])
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         f = ("attribute_" + (i + 1).to_s)
