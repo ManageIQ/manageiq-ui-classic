@@ -26,7 +26,7 @@ TagField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
     type: PropTypes.string,
-    values: PropTypes.arrayOf(PropTypes.any),
+    values: PropTypes.arrayOf(PropTypes.shape({})),
     required: PropTypes.bool,
   }).isRequired,
 };

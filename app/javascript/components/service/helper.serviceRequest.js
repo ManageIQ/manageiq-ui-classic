@@ -91,6 +91,8 @@ export const serviceRequestValue = (field, requestDialogOptions) => {
       return { defaultValue: '', defaultType: DIALOG_FIELD_TYPES.textBox };
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log('Unexpected Error in assigning the data.', error);
+    return { defaultValue: '', defaultType: DIALOG_FIELD_TYPES.textBox };
   }
 };

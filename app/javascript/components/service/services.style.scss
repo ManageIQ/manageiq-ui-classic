@@ -8,25 +8,27 @@
   }
 
   &.orderServiceForm {
-    .bx--label--disabled {
+    .cds--label--disabled {
       color: #83838d;
     }
   }
 
   &.serviceRequest, &.serviceDialog {
-    .bx--label--disabled {
+    .cds--label--disabled {
       color: #525252;
     }
-    .bx--text-input:disabled,
-    .bx--checkbox:disabled,
-    .bx--date-picker__input:disabled,
-    .bx--list-box__field:disabled,
-    .bx--text-area:disabled,
-    .bx--radio-button-group {
+
+    .cds--text-input:disabled,
+    .cds--checkbox:disabled,
+    .cds--date-picker__input:disabled,
+    .cds--list-box__field:disabled,
+    .cds--text-area:disabled,
+    .cds--radio-button-group {
       border-bottom: 1px solid #c6c2c2;
       -webkit-text-fill-color: #161616;
     }
-    .bx--radio-button-group {
+
+    .cds--radio-button-group {
       border: 0;
     }
   }
@@ -75,13 +77,12 @@
 
           // Carbon v11 uses cds-- prefix; suppress the default 32 px bottom margin
           // that Dropdown/MultiSelect add when not inside a grid form layout.
-          .cds--list-box__wrapper,
-          .bx--list-box__wrapper {
+          .cds--list-box__wrapper {
             margin-bottom: 0;
             width: 100%;
           }
 
-          .bx--form__helper-text {
+          .cds--form__helper-text {
             color: #da1e28;
           }
 

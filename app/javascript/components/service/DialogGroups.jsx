@@ -30,7 +30,7 @@ const DialogGroups = ({ dialogGroups }) => {
 };
 
 DialogGroups.propTypes = {
-  dialogGroups: PropTypes.arrayOf(PropTypes.any).isRequired,
+  dialogGroups: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default DialogGroups;

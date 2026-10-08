@@ -2,11 +2,8 @@ import { DIALOG_FIELD_TYPES, ServiceType } from './constants';
 
 class ServiceValidator {
   constructor(serviceType) {
-    if (!ServiceValidator.instance) {
-      this.serviceType = serviceType;
-      ServiceValidator.instance = this;
-    }
-    return ServiceValidator.instance;
+    this.serviceType = serviceType;
+    ServiceValidator.instance = this;
   }
 
   static validateField(data) {
@@ -93,6 +90,7 @@ class ServiceValidator {
         return aaa ? { valid: true, value, message: undefined }
           : { valid: false, message: field.validator_message || __('Custom Validation failed'), value };
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Unexpected error occurred when the field was validated using regular expression.', error);
         throw error;
       }

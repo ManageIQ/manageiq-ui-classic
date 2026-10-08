@@ -12,7 +12,7 @@ const ServiceButtons = React.memo(() => {
   const {
     apiAction, apiSubmitEndpoint, openUrl, finishSubmitEndpoint, cancelEndPoint,
   } = data.urls;
-  
+
   const isReconfigure = data.serviceType === ServiceType.reconfigure;
   const submitFlashLevel = isReconfigure ? 'info' : 'success';
 
@@ -37,7 +37,7 @@ const ServiceButtons = React.memo(() => {
                 // eslint-disable-next-line no-undef
                 $http.post('open_url_after_dialog', {
                   targetId: params.targetId,
-                  realTargetType: params.realTargetType
+                  realTargetType: params.realTargetType,
                 }));
 
             if (taskResponse.data.open_url) {

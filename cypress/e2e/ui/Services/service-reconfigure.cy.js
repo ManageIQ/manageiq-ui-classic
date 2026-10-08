@@ -36,6 +36,6 @@ describe('Service Reconfigure', () => {
     cy.get('.service-action-buttons').contains('button', 'Submit').click();
 
     cy.url({ timeout: 10000 }).should('include', '/miq_request/show_list');
-    cy.contains('Reconfigure Request was Submitted').should('be.visible');
+    cy.contains('Order Request was Submitted').should('be.visible');
   });
 });

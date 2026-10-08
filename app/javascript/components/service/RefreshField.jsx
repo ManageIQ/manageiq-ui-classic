@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Loading } from '@carbon/react';
-import { Renew } from '@carbon/icons-react';
+import { Renew } from '@carbon/react/icons';
 import ServiceContext from './ServiceContext';
 import ServiceValidator from './ServiceValidator';
 import { defaultFieldValue } from './helper';
@@ -22,7 +22,9 @@ const RefreshField = ({ field }) => {
   const inProgress = fieldsToRefresh.includes(field.name);
   const showButton = !!(field.dynamic && field.show_refresh_button) && !inProgress;
 
-  if (!showButton && !inProgress) return null;
+  if (!showButton && !inProgress) {
+    return null;
+  }
 
   return (
     <div className="refresh-field-item">

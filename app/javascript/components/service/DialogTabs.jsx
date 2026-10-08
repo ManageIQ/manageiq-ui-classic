@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Loading } from '@carbon/react';
+import {
+  Tabs, TabList, Tab, TabPanels, TabPanel, Loading,
+} from '@carbon/react';
 import DialogGroups from './DialogGroups';
 import ServiceContext from './ServiceContext';
 import { extractDialogTabs } from './helper';

@@ -27,9 +27,9 @@ const Service = ({
   const isOrderServiceForm = serviceType === ServiceType.order;
   const isServiceReconfigure = serviceType === ServiceType.reconfigure;
   const showButtons = isOrderServiceForm || isServiceReconfigure;
-  
+
   ServiceValidator.instance = new ServiceValidator(serviceType);
-  
+
   let resource;
   if (isOrderServiceForm || isServiceReconfigure) {
     resource = {
@@ -66,6 +66,7 @@ const Service = ({
         fieldsToRefresh: [...remaining, ...responders],
       }));
     } catch {
+      // eslint-disable-next-line no-console
       console.log({ type: 'error', message: __('Unexpected error occurred when the field was refreshed.') });
     }
   };
@@ -73,12 +74,13 @@ const Service = ({
   /** Function to show a notification when the refresh field process is completed. */
   const afterRefreshField = () => {
     refreshStatus.current = RefreshStatus.completed;
+    // eslint-disable-next-line no-console
     console.log({ type: 'success', message: __('Refresh actions complete.') });
   };
 
   useEffect(() => {
     let url;
-    
+
     if (isServiceReconfigure) {
       url = `/api/services/${params.targetId}?attributes=reconfigure_dialog`;
     } else {
@@ -88,7 +90,7 @@ const Service = ({
         url = `/api/service_dialogs/${dialogId}${urlParams}`;
       }
     }
-    
+
     fetchInitialData(url, requestDialogOptions, serviceType)
       .then((response) => setData((prevData) => ({ ...prevData, ...response })))
       .catch(() => setData((prevData) => ({ ...prevData, isLoading: false })));

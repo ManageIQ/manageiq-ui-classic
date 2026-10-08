@@ -61,7 +61,7 @@ DateField.propTypes = {
     type: PropTypes.string,
     default_value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     dialog_field_responders: PropTypes.arrayOf(PropTypes.string),
-    values: PropTypes.arrayOf(PropTypes.any),
+    values: PropTypes.arrayOf(PropTypes.shape({})),
     label: PropTypes.string,
     name: PropTypes.string,
     required: PropTypes.bool,

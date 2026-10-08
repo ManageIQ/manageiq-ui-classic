@@ -80,7 +80,7 @@ const DialogFields = ({ dialogFields }) => {
 };
 
 DialogFields.propTypes = {
-  dialogFields: PropTypes.arrayOf(PropTypes.any).isRequired,
+  dialogFields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default DialogFields;

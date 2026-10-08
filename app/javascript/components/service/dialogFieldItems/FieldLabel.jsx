@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Information } from '@carbon/icons-react';
+import { Information } from '@carbon/react/icons';
 import {
   Toggletip, ToggletipButton, ToggletipContent, Tag, FormLabel,
 } from '@carbon/react';
