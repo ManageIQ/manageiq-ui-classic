@@ -28,7 +28,7 @@ module.exports = defineConfig({
       openMode: false,
       runMode: true,
     },
-    setupNodeEvents(on, _config) {
+    setupNodeEvents(on, config) {
       // Check for Cypress build marker
       const markerPath = path.resolve(__dirname, 'tmp/.cypress-build-marker');
       if (!fs.existsSync(markerPath)) {
@@ -51,14 +51,29 @@ module.exports = defineConfig({
         throw new Error('Webpack was not built with CYPRESS=true. See console for details');
       }
 
-      // Capture DB state once before entire test run
-      on('before:run', async () => {
-        await fetch('http://localhost:3000/__e2e__/command', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'db_state', options: 'capture' })
-        });
-      });
+      // In open mode (cypress open), the process stays alive between spec runs so
+      // manually-created UI data would be wiped when a test calls cy.appDbState('restore').
+      // Capture before each spec so the snapshot always reflects the current DB state.
+      // In run mode (both CI and local cypress:run), the process exits after the run so
+      // a single upfront capture via before:run is sufficient.
+      const captureDbState = async () => {
+        try {
+          await fetch('http://localhost:3000/__e2e__/command', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'db_state', options: 'capture' }),
+          });
+        } catch (err) {
+          console.error('[DB] Failed to capture DB state:', err.message);
+        }
+      };
+
+      if (config.isInteractive) {
+        // open mode (cypress open) — capture per-spec to pick up any manual UI changes
+        on('before:spec', () => captureDbState());
+      } else {
+        on('before:run', () => captureDbState());
+      }
 
       on('after:spec', (spec, results) => {
         // Delete the video on CI if the spec passed and no tests retried
