@@ -1097,7 +1097,7 @@ module ApplicationController::Buttons
     @resolve ||= {}
     @resolve[:new] ||= {}
     @resolve[:new][:starting_object] ||= "SYSTEM/PROCESS"
-    @resolve[:new][:readonly] = false unless @resolve[:new][:readonly]
+    @resolve[:new][:readonly] = true unless @resolve[:new].key?(:readonly)
     @resolve[:throw_ready] = false
 
     # Following commented out since all resolutions start at SYSTEM/PROCESS

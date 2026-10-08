@@ -61,29 +61,6 @@ class MiqAeToolsController < ApplicationController
                        :message => _("Automation log downloaded"))
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_field_changed
-    assert_privileges('miq_ae_class_simulation')
-    get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      if params.key?(:instance_name) || params.key?(:starting_object) ||
-         params.key?(:target_class) || params.key?(:target_id) ||
-         params.key?(:other_name) || params.key?(:target_attr_name)
-        unless params.key?(:other_name) || params.key?(:target_attr_name)
-          page.replace("resolve_form_div", :partial => "resolve_form")
-        end
-        if @resolve[:throw_ready]
-          page << javascript_hide("throw_off")
-          page << javascript_show("throw_on")
-        else
-          page << javascript_hide("throw_on")
-          page << javascript_show("throw_off")
-        end
-      end
-    end
-  end
-
   def import_export
     assert_privileges('miq_ae_class_import_export')
     @in_a_form = true
@@ -309,12 +286,10 @@ class MiqAeToolsController < ApplicationController
     copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
 
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-        f = ("attribute_" + (i + 1).to_s)
-        v = ("value_" + (i + 1).to_s)
-        @resolve[:new][:attrs][i][0] = params[f.to_sym] || nil
-        @resolve[:new][:attrs][i][1] = params[v.to_sym] || nil
-      end
+      f = ("attribute_" + (i + 1).to_s)
+      v = ("value_" + (i + 1).to_s)
+      @resolve[:new][:attrs][i][0] = params[f.to_sym] || nil
+      @resolve[:new][:attrs][i][1] = params[v.to_sym] || nil
     end
     @resolve[:new][:target_id] = nil if params[:target_class] == ""
     copy_params_if_present(@resolve, params, %i[button_text button_number])
@@ -430,35 +405,6 @@ class MiqAeToolsController < ApplicationController
       add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if @resolve[:new][:attrs][i][0].present? && @resolve[:new][:attrs][i][1].blank?
     end
     !flash_errors?
-  end
-
-  def get_form_vars
-    if params.key?(:starting_object)
-      @resolve[:new][:starting_object] = params[:starting_object]
-      @resolve[:new][:instance_name] = nil
-    end
-    if params.key?(:readonly)
-      @resolve[:new][:readonly] = !params[:readonly]
-    end
-
-    copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
-
-    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-      f = ("attribute_" + (i + 1).to_s)
-      v = ("value_" + (i + 1).to_s)
-      @resolve[:new][:attrs][i][0] = params[f] if params[f.to_sym]
-      @resolve[:new][:attrs][i][1] = params[v] if params[v.to_sym]
-    end
-    if params.key?(:target_class)
-      targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class])) if params[:target_class].present?
-      unless targets.nil?
-        @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-        @resolve[:new][:target_id] = nil
-      end
-    end
-    @resolve[:new][:target_id] = nil if params[:target_class] == ""
-    copy_params_if_present(@resolve, params, %i[button_text button_number])
-    @resolve[:throw_ready] = ready_to_throw
   end
 
   def get_session_data
