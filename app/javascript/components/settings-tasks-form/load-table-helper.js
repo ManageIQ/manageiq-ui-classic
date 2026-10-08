@@ -29,28 +29,12 @@ const loadTable = (values, tz, users) => {
       ],
     );
   }
-  if (user !== undefined && user !== 'all') {
-    filters.push(
-      [
-        'with_userid',
-        user,
-      ],
-    );
-  } else if (user === undefined) {
-    filters.push(
-      [
-        'with_userid',
-        users,
-      ],
-    );
+  const effectiveUser = user !== undefined ? user : users;
+  if (effectiveUser !== 'all') {
+    filters.push(['with_userid', effectiveUser]);
   }
-  if (typeof taskStatus !== 'string') {
-    filters.push(
-      [
-        'with_status_in',
-        ...taskStatus,
-      ],
-    );
+  if (Array.isArray(taskStatus) && taskStatus.length > 0) {
+    filters.push(['with_status_in', ...taskStatus]);
   }
   if (taskState !== 'all') {
     filters.push(

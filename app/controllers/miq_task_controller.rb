@@ -99,7 +99,6 @@ class MiqTaskController < ApplicationController
     when "tasks_1" then @layout = "my_tasks"
     when "tasks_2", "alltasks_2" then @layout = "all_tasks"
     end
-    tasks_set_default_options
     @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]))
     @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
   end
@@ -341,7 +340,7 @@ class MiqTaskController < ApplicationController
     end
 
     # Add status scope
-    status = (opts.compact.symbolize_keys.keys & %i[ok queued error warn running])
+    status = %i[ok queued error warn running].select { |s| opts[s] }
     if status.any?
       status_scope_mapping = { :ok => :completed_ok, :warn => :completed_warn, :error => :completed_error } # remap reserved names
       status.map! { |s| status_scope_mapping[s] || s }
