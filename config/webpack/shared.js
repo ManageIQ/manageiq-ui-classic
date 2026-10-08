@@ -3,7 +3,7 @@
 
 const webpack = require('webpack');
 const { basename, dirname, join, resolve } = require('path');
-const { sync } = require('glob');
+const { globSync } = require('glob');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
@@ -51,7 +51,7 @@ let packPaths = {};
 Object.keys(engines).forEach(function(k) {
   let root = engines[k].root;
   let glob = join(root, entryPath, extensionGlob);
-  packPaths[k] = sync(glob);
+  packPaths[k] = globSync(glob);
 });
 
 const nodeModulesNotShims = (module) => {
