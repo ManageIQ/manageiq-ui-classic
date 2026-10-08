@@ -1496,7 +1496,6 @@ class CatalogController < ApplicationController
     @edit[:new][:display] = params[:display] == "1" if params[:display] # @edit[:new][:display] should't be changed if params[:display] is not set
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type]
-    @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
     fetch_zones
     checked_tenants if params[:check] # Save checked Additional Tenants to @edit
 
