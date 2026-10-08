@@ -431,64 +431,15 @@ describe MiqAeClassController do
       @cls.save
       @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
         :language => "ruby", :class_id => @cls.id, :data => "exit MIQ_OK", :location => "inline")
-      expect(controller).to receive(:render)
       controller.instance_variable_set(:@sb, :trees       => {:ae_tree => {:active_node => "aec-#{@cls.id}"}},
                                              :active_tree => :ae_tree)
-      session[:edit] = {
-        :key         => "aefields_edit__#{@cls.id}",
-        :ae_class_id => @cls.id,
-        :new         => {
-          :datatypes => [],
-          :aetypes   => [],
-          :fields    => []
-        }
-      }
-    end
-
-    after(:each) do
-      expect(controller.send(:flash_errors?)).to be_truthy
-      expect(assigns(:edit)).not_to be_nil
-      expect(response.status).to eq(200)
-    end
-
-    it "Should not allow to accept schema field without name" do
-      field = {:aetype   => "attribute"}
-      controller.instance_variable_set(:@edit, session[:edit])
-      session[:field_data] = field
-      controller.params = {:button => "accept", :id => @cls.id}
-      controller.send(:field_accept)
-
-      expect(assigns(:flash_array).first[:message]).to include("Name is required")
-    end
-
-    it "Should not allow to accept schema field without type" do
-      field = {:name => "name"}
-      controller.instance_variable_set(:@edit, session[:edit])
-      session[:field_data] = field
-      controller.params = {:button => "accept", :id => @cls.id}
-      controller.send(:field_accept)
-
-      expect(assigns(:flash_array).first[:message]).to include("Type is required")
-    end
-
-    it "Should not allow to accept schema field without name and type" do
-      field = {}
-      controller.instance_variable_set(:@edit, session[:edit])
-      session[:field_data] = field
-      controller.params = {:button => "accept", :id => @cls.id}
-      controller.send(:field_accept)
-
-      expect(assigns(:flash_array).first[:message]).to include("Name and Type is required")
     end
 
     it "Should not allow to create two schema fields with identical name" do
-      field = {"aetype"   => "attribute",
-               "datatype" => "string",
-               "name"     => "name01"}
-      session[:edit][:new][:fields] = [field, field]
-      controller.params = {:button => "save", :id => @cls.id}
-      controller.send(:update_fields)
-      expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
+      dup = {:name => "name01", :aetype => "attribute", :datatype => "string"}
+      post :update_fields, :params => {:button => "save", :id => @cls.id, :fields => [dup, dup]}
+      expect(response.parsed_body["status"]).to eq(500)
+      expect(response.parsed_body["error"]).to include("Name has already been taken")
     end
 
     it "Should not allow to add two parameters with identical name to a method" do
@@ -505,6 +456,7 @@ describe MiqAeClassController do
           :fields => [field, field]
         }
       }
+      allow(controller).to receive(:javascript_flash)
       controller.params = {:button => "save", :id => @method.id}
       controller.send(:update_method)
       expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
@@ -528,6 +480,7 @@ describe MiqAeClassController do
           :language     => "ruby"
         }
       }
+      allow(controller).to receive(:javascript_flash)
       controller.params = {:button => "add"}
       controller.send(:create_method)
       expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
@@ -540,10 +493,10 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace)
       @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       @cls.ae_fields << FactoryBot.create(:miq_ae_field,
-                                           :name          => 'fred',
-                                           :class_id      => @cls.id,
-                                           :default_value => "Wilma",
-                                           :priority      => 1)
+                                          :name          => 'fred',
+                                          :class_id      => @cls.id,
+                                          :default_value => "Wilma",
+                                          :priority      => 1)
       @cls.save
       @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
         :language => "ruby", :class_id => @cls.id, :data => "exit MIQ_OK", :location => "inline")
@@ -578,80 +531,42 @@ describe MiqAeClassController do
     end
 
     it "update a class with fields" do
-      field = {"aetype"   => "attribute",
-               "datatype" => "string",
-               "name"     => "name01"}
-      session[:edit] = {
-        :key              => "aefields_edit__#{@cls.id}",
-        :ae_class_id      => @cls.id,
-        :fields_to_delete => [],
-        :new              => {
-          :datatypes => [],
-          :aetypes   => [],
-          :fields    => [field]
-        }
-      }
-      controller.params = {:button => "save", :id => @cls.id}
-      controller.send(:update_fields)
+      field = {:name => "name01", :aetype => "attribute", :datatype => "string"}
+      post :update_fields, :params => {:button => "save", :id => @cls.id, :fields => [field]}
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.status).to eq(200)
     end
 
     it "update a default value of existing class field" do
-      field = {"aetype"        => "attribute",
-               "default_value" => "Wilma",
-               "name"          => "name01"}
-      session[:field_data] = field
-      session[:edit] = {
-        :key              => "aefields_edit__#{@cls.id}",
-        :ae_class_id      => @cls.id,
-        :fields_to_delete => [],
-        :new_field        => {},
-        :new              => {
-          :datatypes => [],
-          :name      => 'freddie',
-          :aetypes   => [],
-          :fields    => [@cls.ae_fields.first]
-        }
+      existing_field = @cls.ae_fields.first
+      post :update_fields, :params => {
+        :button => "save",
+        :id     => @cls.id,
+        :fields => [{:id            => existing_field.id,
+                     :name          => "freddie",
+                     :aetype        => existing_field.aetype,
+                     :default_value => "Pebbles"}]
       }
-      controller.params = {"fields_default_value_0" => "Pebbles",
-                           "fields_name_0"          => "freddie",
-                           :id                      => @cls.id}
-      allow(controller).to receive(:render)
-      controller.send(:fields_form_field_changed)
-      expect(@cls.ae_fields.first.default_value).to eq("Wilma")
-      controller.params = {:button => "save", :id => @cls.id}
-      controller.send(:update_fields)
       @cls.reload
       expect(@cls.ae_fields.first.name).to eq("freddie")
       expect(@cls.ae_fields.first.default_value).to eq("Pebbles")
     end
 
     it "adds a new field to a class and saves the class with new field" do
-      field = {:aetype        => "attribute",
-               :default_value => "Wilma",
-               :name          => "name01"}
-      session[:field_data] = field
-      session[:edit] = {
-        :key              => "aefields_edit__#{@cls.id}",
-        :ae_class_id      => @cls.id,
-        :fields_to_delete => [],
-        :new_field        => {:name => "Bar", :default_value => "Foo"},
-        :new              => {
-          :datatypes => [],
-          :name      => 'fred',
-          :aetypes   => [],
-          :fields    => [@cls.ae_fields.first]
-        }
+      existing_field = @cls.ae_fields.first
+      post :update_fields, :params => {
+        :button => "save",
+        :id     => @cls.id,
+        :fields => [
+          {:id            => existing_field.id,
+           :name          => existing_field.name,
+           :aetype        => existing_field.aetype,
+           :default_value => existing_field.default_value},
+          {:name          => "Bar",
+           :aetype        => "attribute",
+           :default_value => "Foo"}
+        ]
       }
-      controller.params = {"fields_default_value" => "Foo",
-                           "fields_name"          => "Bar",
-                           :id                    => @cls.id,
-                           :button                => 'accept'}
-      allow(controller).to receive(:render)
-      controller.send(:fields_form_field_changed)
-      controller.params = {:button => "save", :id => @cls.id}
-      controller.send(:update_fields)
       @cls.reload
       expect(@cls.ae_fields.last.name).to eq("Bar")
       expect(@cls.ae_fields.last.default_value).to eq("Foo")
@@ -720,9 +635,9 @@ describe MiqAeClassController do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
       @namespace = FactoryBot.create(:miq_ae_namespace,
-                                      :name        => "foo_namespace",
-                                      :description => "foo_description",
-                                      :parent      => domain)
+                                     :name        => "foo_namespace",
+                                     :description => "foo_description",
+                                     :parent      => domain)
       session[:edit] = {
         :ae_ns_id => @namespace.id,
         :typ      => "MiqAeNamespace",
@@ -785,22 +700,27 @@ describe MiqAeClassController do
     it "sets priority of new schema fields" do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+
       field1 = FactoryBot.create(:miq_ae_field,
-                                  "aetype"   => "attribute",
-                                  "datatype" => "string",
-                                  "name"     => "name01",
-                                  "class_id" => cls.id,
-                                  "priority" => 1)
+                                 :aetype   => "attribute",
+                                 :datatype => "string",
+                                 :name     => "name01",
+                                 :class_id => cls.id,
+                                 :priority => 1)
       field2 = FactoryBot.create(:miq_ae_field,
-                                  "aetype"   => "attribute",
-                                  "datatype" => "string",
-                                  "name"     => "name02",
-                                  "class_id" => cls.id,
-                                  "priority" => 2)
-      field3 = {"aetype"   => "attribute",
-                "datatype" => "string",
-                "name"     => "name03"}
-      edit = {:fields_to_delete => [], :new => {:fields => [field2, field3, field1]}}
+                                 :aetype   => "attribute",
+                                 :datatype => "string",
+                                 :name     => "name02",
+                                 :class_id => cls.id,
+                                 :priority => 2)
+      attrs = %w[aetype class_id collect datatype default_value description
+                 display_name id max_retries max_time message name on_entry
+                 on_error on_exit priority substitute]
+      field1_hash = attrs.to_h { |a| [a, field1.send(a)] }
+      field2_hash = attrs.to_h { |a| [a, field2.send(a)] }
+      field3_hash = {"aetype" => "attribute", "datatype" => "string", "name" => "name03"}
+
+      edit = {:fields_to_delete => [], :new => {:fields => [field2_hash, field3_hash, field1_hash]}}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@ae_class, cls)
       fields = controller.send(:set_field_vars, cls)
@@ -809,41 +729,128 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#fields_seq_field_changed" do
+  describe "#fields_seq_data" do
+    it "returns class fields ordered by priority as json" do
+      stub_user(:features => :all)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      field1 = FactoryBot.create(:miq_ae_field,
+                                 :name         => "name01",
+                                 :display_name => "Field 1",
+                                 :class_id     => cls.id,
+                                 :priority     => 2)
+      field2 = FactoryBot.create(:miq_ae_field,
+                                 :name         => "name02",
+                                 :display_name => "Field 2",
+                                 :class_id     => cls.id,
+                                 :priority     => 1)
+
+      get :fields_seq_data, :params => {:id => cls.id}, :format => :json
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to eq(
+        "fields" => [
+          {
+            "id"           => field2.id,
+            "name"         => "name02",
+            "display_name" => "Field 2",
+            "priority"     => 1
+          },
+          {
+            "id"           => field1.id,
+            "name"         => "name01",
+            "display_name" => "Field 1",
+            "priority"     => 2
+          }
+        ]
+      )
+    end
+  end
+
+  describe "#fields_seq_save" do
     before do
-      ns = FactoryBot.create(:miq_ae_namespace, :name => 'foo')
+      stub_user(:features => :all)
+      ns = FactoryBot.create(:miq_ae_namespace)
       @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
-      FactoryBot.create(:miq_ae_field,
-                         :aetype   => "attribute",
-                         :datatype => "string",
-                         :name     => "name01",
-                         :class_id => @cls.id,
-                         :priority => 1)
-      FactoryBot.create(:miq_ae_field,
-                         :aetype   => "attribute",
-                         :datatype => "string",
-                         :name     => "name02",
-                         :class_id => @cls.id,
-                         :priority => 2)
-      stub_user(:features => %w[miq_ae_field_seq])
+      @field1 = FactoryBot.create(:miq_ae_field, :name => "name01", :class_id => @cls.id, :priority => 1)
+      @field2 = FactoryBot.create(:miq_ae_field, :name => "name02", :class_id => @cls.id, :priority => 2)
+      @field3 = FactoryBot.create(:miq_ae_field, :name => "name03", :class_id => @cls.id, :priority => 3)
     end
 
-    it "moves selected field down" do
-      controller.send(:fields_seq_edit_screen, @cls.id)
-      expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name01)", "(name02)"])
-      controller.params = {:button => 'down', :id => 'seq', :seq_fields => "['(name01)']"}
-      expect(controller).to receive(:render)
-      controller.fields_seq_field_changed
-      expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
+    let(:reorder_params) do
+      {
+        :id     => @cls.id,
+        :fields => [
+          {:id => @field3.id, :priority => 1},
+          {:id => @field1.id, :priority => 2},
+          {:id => @field2.id, :priority => 3}
+        ]
+      }
     end
 
-    it "moves selected field up" do
-      controller.send(:fields_seq_edit_screen, @cls.id)
-      expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name01)", "(name02)"])
-      controller.params = {:button => 'up', :id => 'seq', :seq_fields => "['(name02)']"}
-      expect(controller).to receive(:render)
-      controller.fields_seq_field_changed
-      expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
+    it "updates field priorities and returns success json" do
+      post :fields_seq_save, :params => reorder_params, :format => :json
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to include(
+        "success" => true,
+        "message" => "Class Schema Sequence was saved"
+      )
+      expect(@field1.reload.priority).to eq(2)
+      expect(@field2.reload.priority).to eq(3)
+      expect(@field3.reload.priority).to eq(1)
+    end
+
+    it "creates a success audit event with old and new priorities" do
+      expect(AuditEvent).to receive(:success).with(
+        hash_including(
+          :event  => "miqaeclass_record_update",
+          :userid => User.current_user.userid
+        )
+      )
+
+      post :fields_seq_save, :params => reorder_params, :format => :json
+    end
+  end
+
+  describe "#fields_seq_edit" do
+    it "sets sequence edit state and replaces the right cell" do
+      stub_user(:features => :all)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => ns.id)
+      controller.instance_variable_set(:@sb, {})
+
+      expect(controller).to receive(:replace_right_cell)
+      post :fields_seq_edit, :params => {:id => cls.id}
+
+      expect(assigns(:ae_class)).to eq(cls)
+      expect(assigns(:sb)[:action]).to eq("miq_ae_field_seq")
+    end
+  end
+
+  describe "#update_fields reset and cancel" do
+    before do
+      stub_user(:features => :all)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      FactoryBot.create(:miq_ae_field, :name => "field01", :aetype => "attribute",
+                         :class_id => @cls.id, :priority => 1)
+    end
+
+    it "reset returns DB fields and reset message" do
+      post :update_fields, :params => {:button => "reset", :id => @cls.id}
+
+      expect(response.status).to eq(200)
+      expect(response.parsed_body["status"]).to eq(200)
+      expect(response.parsed_body["message"]).to eq("All changes have been reset")
+      expect(response.parsed_body["fields"].first["name"]).to eq("field01")
+    end
+
+    it "cancel returns 200 with cancellation message" do
+      post :update_fields, :params => {:button => "cancel", :id => @cls.id}
+
+      expect(response.status).to eq(200)
+      expect(response.parsed_body["message"]).to include("cancelled by the user")
     end
   end
 
@@ -910,12 +917,12 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
       method = FactoryBot.create(:miq_ae_method,
-                                  :name     => "method01",
-                                  :scope    => "class",
-                                  :language => "ruby",
-                                  :class_id => cls.id,
-                                  :data     => "exit MIQ_OK",
-                                  :location => "inline")
+                                 :name     => "method01",
+                                 :scope    => "class",
+                                 :language => "ruby",
+                                 :class_id => cls.id,
+                                 :data     => "exit MIQ_OK",
+                                 :location => "inline")
       dom = cls.domain
       controller.instance_variable_set(:@record, cls)
       controller.instance_variable_set(

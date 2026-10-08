@@ -1,14 +1,17 @@
 describe "miq_ae_class/_fields_seq_form.html.haml" do
+  include Spec::Support::AutomationHelper
+
   before do
-    assign(:edit, :new => {
-             :fields_list => [],
-             :fields      => []
-           })
+    ae_fields = {'ae_var1' => {:aetype => 'relationship', :datatype => 'string'}}
+    create_ae_model(:ae_class     => "FRED",
+                    :ae_instances => [],
+                    :ae_fields    => ae_fields)
+    assign(:ae_class, MiqAeClass.where(:name => 'FRED').first)
   end
 
-  it "renders the schema sequencing form" do
+  it "renders the React SchemaSequenceEditor component" do
     render :template => "miq_ae_class/_fields_seq_form"
-    expect(rendered).to have_text("Class Schema Sequencing")
-    expect(rendered).to have_selector("select#seq_fields")
+    expect(rendered).to include("componentFactory('SchemaSequenceEditor'")
+    expect(rendered).to include("\"classId\":\"#{MiqAeClass.where(:name => 'FRED').first.id}\"")
   end
 end
