@@ -302,7 +302,7 @@ exports[`Service component - Service Reconfigure renders all fields and Submit a
                     />
                   </div>
                   <div
-                    class="bx--form__helper-text"
+                    class="cds--form__helper-text"
                   />
                 </div>
               </div>
@@ -661,7 +661,7 @@ exports[`Service component - Service Reconfigure renders all fields and Submit a
                     </div>
                   </div>
                   <div
-                    class="bx--form__helper-text"
+                    class="cds--form__helper-text"
                   />
                 </div>
               </div>
@@ -676,6 +676,13 @@ exports[`Service component - Service Reconfigure renders all fields and Submit a
                 <div
                   class="field-date"
                 >
+                  <label
+                    class="cds--label cds--label--no-margin field-label"
+                    dir="auto"
+                    for="date_control_1-DialogFieldDateControl-7548"
+                  >
+                    Datepicker
+                  </label>
                   <div
                     class="cds--form-item"
                     disabled=""
@@ -687,7 +694,7 @@ exports[`Service component - Service Reconfigure renders all fields and Submit a
                         class="cds--date-picker-container"
                       >
                         <label
-                          class="cds--label cds--label--disabled"
+                          class="cds--label cds--visually-hidden cds--label--disabled"
                           dir="auto"
                           for="date_control_1-DialogFieldDateControl-7548"
                         >

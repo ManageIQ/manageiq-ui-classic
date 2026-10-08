@@ -55,7 +55,7 @@ const RadioField = ({ field }) => {
         }
       </RadioButtonGroup>
       {!field.values && <div>{__('Radio button entries are not configured')}</div>}
-      {field.required && !fieldData.valid && <div className="bx--form__helper-text">{requiredLabel}</div>}
+      {field.required && !fieldData.valid && <div className="cds--form__helper-text">{requiredLabel}</div>}
     </div>
   );
 };

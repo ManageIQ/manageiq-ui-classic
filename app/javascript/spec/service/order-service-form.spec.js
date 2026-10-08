@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import Service from '../../components/service';
 import { ServiceType } from '../../components/service/constants';
-import { serviceDialogResponse } from './data';
+import { serviceDialogResponse, payloadTestDialogResponse, regexTestDialogResponse } from './data';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
@@ -61,7 +61,7 @@ describe('Service component - Order Service', () => {
   afterEach(() => {
     fetchMock.restore();
     jest.clearAllMocks();
-    delete global.$http;
+    delete window.$http;
   });
 
   it('renders all field types and the Submit and Cancel buttons', async() => {
@@ -200,7 +200,7 @@ describe('Service component - Order Service', () => {
 
     API.post.mockResolvedValueOnce({ task_id: 'task-abc' });
     API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
-    global.$http = {
+    window.$http = {
       post: jest.fn().mockResolvedValueOnce({ data: { open_url: 'https://example.com/vm/1' } }),
     };
     window.open = jest.fn();
@@ -215,7 +215,7 @@ describe('Service component - Order Service', () => {
     });
 
     await waitFor(() => {
-      expect(global.$http.post).toHaveBeenCalledWith(
+      expect(window.$http.post).toHaveBeenCalledWith(
         'open_url_after_dialog',
         { targetId: 170, realTargetType: 'ServiceTemplate' }
       );
@@ -237,7 +237,7 @@ describe('Service component - Order Service', () => {
 
     API.post.mockResolvedValueOnce({ task_id: 'task-xyz' });
     API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
-    global.$http = {
+    window.$http = {
       post: jest.fn().mockResolvedValueOnce({ data: { open_url: null } }),
     };
     window.open = jest.fn();
@@ -253,5 +253,119 @@ describe('Service component - Order Service', () => {
 
     expect(window.open).not.toHaveBeenCalled();
     expect(miqRedirectBack).not.toHaveBeenCalled();
+  });
+
+  // Payload shape
+
+  it('sends text field value, checkbox as t/f, and single-select id in the submit payload', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      const [, body] = API.post.mock.calls[0];
+      // TextBox default value passed through as-is
+      expect(body.my_text).toBe('hello');
+      // CheckBox: default_value 't' → initialised as true → reformatValue → 't'
+      expect(body.my_checkbox).toBe('t');
+      // Single dropdown: default_value '1' → item {id:'1', text:'One'} → processDropdownOrTag → '1'
+      expect(body.my_single_dd).toBe('1');
+    });
+  });
+
+  it('sends multi-select as an array of id strings in the submit payload', async() => {
+    const user = userEvent.setup();
+    const dialog = JSON.parse(JSON.stringify(payloadTestDialogResponse));
+    API.get.mockResolvedValueOnce({ id: 200, content: dialog });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    // Open the multi-select and choose Alpha and Beta
+    const multiSelectInput = document.querySelector('#section-field-row-my_multi_dd input');
+    await user.click(multiSelectInput);
+    await user.click(screen.getByText('Alpha'));
+    await user.click(screen.getByText('Beta'));
+
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      const [, body] = API.post.mock.calls[0];
+      expect(Array.isArray(body.my_multi_dd)).toBe(true);
+      expect(body.my_multi_dd).toEqual(['a', 'b']);
+    });
+  });
+
+  it('excludes invisible fields from the submit payload', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      const [, body] = API.post.mock.calls[0];
+      // visible:false field must not appear in the payload
+      expect(body).not.toHaveProperty('invisible_field');
+    });
+  });
+
+  // Validation UI
+
+  it('keeps Submit disabled when a required text field is empty and enables it after input', async() => {
+    const user = userEvent.setup();
+    const dialog = JSON.parse(JSON.stringify(payloadTestDialogResponse));
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields[0].required = true;
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields[0].default_value = '';
+    API.get.mockResolvedValueOnce({ id: 200, content: dialog });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    expect(screen.getByText(__('Submit')).closest('button')).toBeDisabled();
+
+    await user.type(document.querySelector('input[type="text"]'), 'filled');
+
+    await waitFor(() => {
+      expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
+    });
+  });
+
+  it('keeps Submit disabled when regex validation fails and enables it when input matches', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 400, content: regexTestDialogResponse });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    // Empty required field → invalid
+    expect(screen.getByText(__('Submit')).closest('button')).toBeDisabled();
+
+    // Non-matching input → still invalid
+    const input = document.querySelector('input[type="text"]');
+    await user.type(input, 'abc');
+    expect(screen.getByText(__('Submit')).closest('button')).toBeDisabled();
+
+    // Clear and type matching digits → valid
+    await user.clear(input);
+    await user.type(input, '42');
+
+    await waitFor(() => {
+      expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
+    });
   });
 });

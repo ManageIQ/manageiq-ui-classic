@@ -1,9 +1,9 @@
-/* eslint-disable camelcase */
+
 import ServiceValidator from './ServiceValidator';
 import { DIALOG_FIELD_TYPES, ServiceType } from './constants';
 import { API } from '../../http_api';
 import {
-  formatDate, formatDateTime, currentDate, currentDateTime, serviceRequestDate, serviceRequestDateTime,
+  formatDate, formatDateTime, currentDate, currentDateTime,
 } from './helper.dateTime';
 import { serviceRequestValue } from './helper.serviceRequest';
 import { isObject, isArrayOfObjects } from './helper.field';
@@ -24,8 +24,12 @@ export const defaultFieldOptions = (field, data) => {
     let options = field.values.map((item) => ({ id: item.id || item[0], text: item.description || item[1] }));
     if (field.options && field.options.sort_by) {
       options.sort((a, b) => {
-        if (a.text > b.text) return 1;
-        if (a.text < b.text) return -1;
+        if (a.text > b.text) {
+          return 1;
+        }
+        if (a.text < b.text) {
+          return -1;
+        }
         return 0;
       });
       if (field.options.sort_order === 'descending') {
@@ -44,11 +48,11 @@ export const extractDialogTabs = (apiResponse) => {
   if (apiResponse && apiResponse.content && apiResponse.content[0] && apiResponse.content[0].dialog_tabs) {
     return apiResponse.content[0].dialog_tabs;
   }
-  
+
   if (apiResponse && apiResponse.reconfigure_dialog && apiResponse.reconfigure_dialog[0] && apiResponse.reconfigure_dialog[0].dialog_tabs) {
     return apiResponse.reconfigure_dialog[0].dialog_tabs;
   }
-  
+
   return [];
 };
 
@@ -64,7 +68,7 @@ const otherServiceTypesValue = (field) => {
       return { defaultValue: {}, defaultType: field.type };
     }
     if (field.type === DIALOG_FIELD_TYPES.date) {
-      return  { defaultValue: currentDate(), defaultType: field.type };
+      return { defaultValue: currentDate(), defaultType: field.type };
     }
     if (field.type === DIALOG_FIELD_TYPES.dateTime) {
       return { defaultValue: currentDateTime(), defaultType: field.type };
@@ -99,7 +103,7 @@ const buildDialogFields = (apiResponse, requestDialogOptions, serviceType) => {
         const { defaultValue, defaultType } = defaultFieldValue(field, requestDialogOptions, serviceType);
         const { value, valid, message } = ServiceValidator.validateField({ field, value: defaultValue, requestDialogOptions });
         dialogFields[field.name] = {
-          value, valid, message, type: defaultType, tabIndex
+          value, valid, message, type: defaultType, tabIndex, visible: field.visible !== false,
         };
         groupFieldsByTab[tabIndex] = [...groupFieldsByTab[tabIndex] || [], field.name];
       });
@@ -152,12 +156,12 @@ const updateRefreshResponse = (apiResponse, currentRefreshField, result) => {
 export const fetchInitialData = async(url, requestDialogOptions, serviceType) => {
   try {
     const apiResponse = await API.get(url, { skipErrors: [500] });
-    
+
     // For service reconfigure, we need to extract the dialog ID from the response
     if (serviceType === ServiceType.reconfigure && apiResponse.reconfigure_dialog && apiResponse.reconfigure_dialog[0]) {
       apiResponse.id = apiResponse.reconfigure_dialog[0].id;
     }
-    
+
     const { dialogFields, groupFieldsByTab } = buildDialogFields(apiResponse, requestDialogOptions, serviceType);
     return {
       isLoading: false,
@@ -166,6 +170,7 @@ export const fetchInitialData = async(url, requestDialogOptions, serviceType) =>
       groupFieldsByTab,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Unexpected error occurred while fetching the data:', error);
     throw new Error('Fetch error');
   }
@@ -195,9 +200,12 @@ export const reformatValue = (type, value) => {
 };
 
 /** Function to omit the 'valid' key from the dialogFields during a field-refresh event and during form-submit event.
-  * This data is then used as a params for the refresh field action.  */
+  * Invisible fields are excluded — they should not be sent to the API.
+  * This data is then used as params for the refresh field action and form submit.  */
 export const omitValidation = (dialogFields) => {
-  const data = Object.entries(dialogFields).map(([key, { type, value }]) => [key, reformatValue(type, value)]);
+  const data = Object.entries(dialogFields)
+    .filter(([, { visible }]) => visible !== false)
+    .map(([key, { type, value }]) => [key, reformatValue(type, value)]);
   return Object.fromEntries(data);
 };
 
@@ -218,6 +226,7 @@ export const refreshFieldData = async(newData, resource) => {
     const { updatedApiResponse, responders } = updateRefreshResponse(newData.apiResponse, currentRefreshField, result);
     return { updatedApiResponse, remaining, responders };
   } catch (_error) {
+    // eslint-disable-next-line no-console
     console.error('Unexpected error occurred when the field was refreshed.');
     throw _error;
   }

@@ -42,7 +42,7 @@ const CheckboxField = ({ field }) => {
         readOnly={field.read_only}
       />
       {
-        !fieldData.valid && <div className="bx--form__helper-text">{requiredLabel}</div>
+        !fieldData.valid && <div className="cds--form__helper-text">{requiredLabel}</div>
       }
     </div>
   );

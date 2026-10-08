@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DatePicker, Dropdown, DatePickerInput } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
 import { currentDateTime, dateTimeString, extractDateTime } from '../helper.dateTime';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
 
@@ -58,60 +59,64 @@ const DateTimeField = ({ field }) => {
   };
 
   return (
-    <div className="time-picker-container">
-      <DatePicker
-        datePickerType="single"
-        value={selectedDateTime.date}
-        onChange={onDateChange}
-        disabled={isDisabled}
-      >
-        <DatePickerInput
-          placeholder="mm/dd/yyyy"
-          labelText={field.label}
-          id={fieldId}
-          size="md"
-          readOnly={field.read_only}
-          invalid={!fieldData.valid}
-          invalidText={requiredLabel}
+    <div>
+      <FieldLabel field={field} />
+      <div className="time-picker-container">
+        <DatePicker
+          datePickerType="single"
+          value={selectedDateTime.date}
+          onChange={onDateChange}
           disabled={isDisabled}
+        >
+          <DatePickerInput
+            placeholder="mm/dd/yyyy"
+            labelText={fieldLabelText(field)}
+            hideLabel
+            id={fieldId}
+            size="md"
+            readOnly={field.read_only}
+            invalid={!fieldData.valid}
+            invalidText={requiredLabel}
+            disabled={isDisabled}
+          />
+        </DatePicker>
+        <Dropdown
+          className="time-picker"
+          disabled={isDisabled}
+          id={`hours-${fieldId}`}
+          titleText={__('Hours')}
+          initialSelectedItem={selectedDateTime.hour}
+          label={__('Hrs')}
+          items={hours}
+          itemToString={(item) => (item ? item.text : '')}
+          onChange={onHourChange}
+          readOnly={field.read_only}
         />
-      </DatePicker>
-      <Dropdown
-        className="time-picker"
-        disabled={isDisabled}
-        id={`hours-${fieldId}`}
-        titleText={__('Hours')}
-        initialSelectedItem={selectedDateTime.hour}
-        label={__('Hrs')}
-        items={hours}
-        itemToString={(item) => (item ? item.text : '')}
-        onChange={onHourChange}
-        readOnly={field.read_only}
-      />
-      <Dropdown
-        className="time-picker"
-        disabled={isDisabled}
-        id={`minutes-${fieldId}`}
-        titleText={__('Minutes')}
-        initialSelectedItem={{ ...selectedDateTime.minute }}
-        label={__('Min')}
-        items={minutes}
-        itemToString={(item) => (item ? item.text : '')}
-        onChange={onMinuteChange}
-        readOnly={field.read_only}
-      />
-      <Dropdown
-        className="time-picker"
-        disabled={isDisabled}
-        id={`meridiem-${fieldId}`}
-        titleText={__('Meridiem')}
-        initialSelectedItem={selectedDateTime.meridiem}
-        label={__('meridiem')}
-        items={['AM', 'PM'].map((item) => ({ id: item, text: item }))}
-        itemToString={(item) => (item ? item.text : '')}
-        onChange={onMeridiemChange}
-        readOnly={field.read_only}
-      />
+        <Dropdown
+          className="time-picker"
+          disabled={isDisabled}
+          id={`minutes-${fieldId}`}
+          titleText={__('Minutes')}
+          initialSelectedItem={{ ...selectedDateTime.minute }}
+          label={__('Min')}
+          items={minutes}
+          itemToString={(item) => (item ? item.text : '')}
+          onChange={onMinuteChange}
+          readOnly={field.read_only}
+        />
+        <Dropdown
+          className="time-picker"
+          disabled={isDisabled}
+          id={`meridiem-${fieldId}`}
+          titleText={__('Meridiem')}
+          initialSelectedItem={selectedDateTime.meridiem}
+          label={__('meridiem')}
+          items={['AM', 'PM'].map((item) => ({ id: item, text: item }))}
+          itemToString={(item) => (item ? item.text : '')}
+          onChange={onMeridiemChange}
+          readOnly={field.read_only}
+        />
+      </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from '@carbon/react';
 import { fieldProperties } from '../helper.field';
 import { extractDate, dateString } from '../helper.dateTime';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
 
@@ -34,6 +35,7 @@ const DateField = ({ field }) => {
 
   return (
     <div className="field-date">
+      <FieldLabel field={field} />
       <DatePicker
         datePickerType="single"
         value={selectedDate}
@@ -42,7 +44,8 @@ const DateField = ({ field }) => {
       >
         <DatePickerInput
           placeholder="mm/dd/yyyy"
-          labelText={field.label}
+          labelText={fieldLabelText(field)}
+          hideLabel
           id={fieldId}
           size="md"
           readOnly={field.read_only}

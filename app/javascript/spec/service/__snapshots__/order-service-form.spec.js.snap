@@ -343,7 +343,7 @@ exports[`Service component - Order Service renders all field types and the Submi
                     />
                   </div>
                   <div
-                    class="bx--form__helper-text"
+                    class="cds--form__helper-text"
                   />
                 </div>
               </div>
@@ -762,7 +762,7 @@ exports[`Service component - Order Service renders all field types and the Submi
                     </div>
                   </div>
                   <div
-                    class="bx--form__helper-text"
+                    class="cds--form__helper-text"
                   />
                 </div>
               </div>
@@ -777,6 +777,18 @@ exports[`Service component - Order Service renders all field types and the Submi
                 <div
                   class="field-date"
                 >
+                  <label
+                    class="cds--label cds--label--no-margin field-label"
+                    dir="auto"
+                    for="date_control_1-DialogFieldDateControl-7548"
+                  >
+                    <span
+                      class="field-required"
+                    >
+                      *
+                    </span>
+                    Datepicker
+                  </label>
                   <div
                     class="cds--form-item"
                   >
@@ -787,7 +799,7 @@ exports[`Service component - Order Service renders all field types and the Submi
                         class="cds--date-picker-container"
                       >
                         <label
-                          class="cds--label"
+                          class="cds--label cds--visually-hidden"
                           dir="auto"
                           for="date_control_1-DialogFieldDateControl-7548"
                         >
