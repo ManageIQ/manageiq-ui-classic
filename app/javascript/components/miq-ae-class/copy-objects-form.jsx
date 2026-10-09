@@ -146,9 +146,9 @@ const FormTemplate = ({ formFields, isSubmitting }) => {
     <form onSubmit={handleSubmit}>
       <DomainWatcher />
       {formFields}
-      <FormSpy subscription={{ valid: true, pristine: true }}>
-        {({ valid, pristine }) => {
-          const canCopy = !pristine && valid;
+      <FormSpy subscription={{ values: true, valid: true, pristine: true }}>
+        {({ values, valid, pristine }) => {
+          const canCopy = !pristine && valid && (values.override_source || !!values.namespace);
           return (
             <div className="custom-button-wrapper">
               <Button

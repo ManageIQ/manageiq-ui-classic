@@ -2086,7 +2086,6 @@ class MiqAeClassController < ApplicationController
     }
     @edit[:new] = {
       :domain            => domains.first.first,
-      :override_source   => true,
       :namespace         => nil,
       :new_name          => nil,
       :override_existing => false
