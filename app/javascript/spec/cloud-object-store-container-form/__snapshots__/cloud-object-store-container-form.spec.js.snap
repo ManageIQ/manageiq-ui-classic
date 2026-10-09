@@ -228,9 +228,24 @@ exports[`Cloud Object Store Container form component should render add cloud obj
           >
             <option
               class="cds--select-option"
-              value=""
+              label="<Choose>"
+              value="-1"
             >
               &lt;Choose&gt;
+            </option>
+            <option
+              class="cds--select-option"
+              label="OpenStack Swift Manager"
+              value="6"
+            >
+              OpenStack Swift Manager
+            </option>
+            <option
+              class="cds--select-option"
+              label="dummy aws S3 Storage Manager"
+              value="87"
+            >
+              dummy aws S3 Storage Manager
             </option>
           </select>
           <svg

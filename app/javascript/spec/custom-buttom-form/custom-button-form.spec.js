@@ -6,6 +6,8 @@ import CustomButtonForm from '../../components/generic-objects-form/custom-butto
 import '../helpers/miqAjaxButton';
 
 describe('Custom Button form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   let submitSpy;
   const distinctInstances = [
     'Automation',
@@ -86,13 +88,13 @@ describe('Custom Button form component', () => {
 
   afterEach(() => {
     cleanup();
-    fetchMock.restore();
+    fetchMock.callHistory.clear();
     jest.clearAllMocks();
     submitSpy.mockRestore();
   });
 
   it('should render the adding form for generic obj buttons', async() => {
-    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
+    fetchMock.route({ method: 'OPTIONS', url: '/api/custom_buttons' }, buttonTypes);
     fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
     fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
 
@@ -107,15 +109,15 @@ describe('Custom Button form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls('/api/roles?expand=resources&attributes=name').length).toBe(1);
-      expect(fetchMock.calls('/api/service_dialogs?expand=resources&attributes=label').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/api/roles?expand=resources&attributes=name')).toHaveLength(1);
+      expect(fetchMock.callHistory.calls('/api/service_dialogs?expand=resources&attributes=label')).toHaveLength(1);
     });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render the editing form for generic object custom buttons', async() => {
-    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'OPTIONS' });
+    fetchMock.route({ method: 'OPTIONS', url: '/api/custom_buttons' }, buttonTypes);
     fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
     fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
     fetchMock.get('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);
@@ -164,7 +166,7 @@ describe('Custom Button form component', () => {
       visibility: { roles: ['_ALL_'] },
     };
 
-    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
+    fetchMock.route({ method: 'OPTIONS', url: '/api/custom_buttons' }, buttonTypes);
     fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
     fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
     fetchMock.postOnce('/api/custom_buttons/', submitValues);
@@ -180,8 +182,8 @@ describe('Custom Button form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls('/api/roles?expand=resources&attributes=name').length).toBe(1);
-      expect(fetchMock.calls('/api/service_dialogs?expand=resources&attributes=label').length).toBe(1);
+      expect(fetchMock.callHistory.calls('/api/roles?expand=resources&attributes=name')).toHaveLength(1);
+      expect(fetchMock.callHistory.calls('/api/service_dialogs?expand=resources&attributes=label')).toHaveLength(1);
     });
 
     expect(container).toMatchSnapshot();
@@ -213,7 +215,7 @@ describe('Custom Button form component', () => {
         roles: ['EvmRole-super_administrator', 'EvmRole-approver'],
       },
     };
-    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
+    fetchMock.route({ method: 'OPTIONS', url: '/api/custom_buttons' }, buttonTypes);
     fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
     fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
     fetchMock.get('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);

@@ -46,25 +46,26 @@ describe('Generic Object Form Component', () => {
     },
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.callHistory.clear();
   });
 
   it('should render adding a new generic object', async() => {
-    fetchMock.once('/api/generic_object_definitions/', api);
+    fetchMock.once({ method: 'OPTIONS', url: '/api/generic_object_definitions/' }, api);
 
     const { container } = renderWithRedux(<GenericObjectForm />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render editing a generic object with an existing image', async() => {
-    fetchMock.once('/api/generic_object_definitions/', api);
+    fetchMock.once({ method: 'OPTIONS', url: '/api/generic_object_definitions/' }, api);
     fetchMock.get(
       '/api/generic_object_definitions/1?attributes=picture.image_href',
       genericObject
@@ -73,14 +74,14 @@ describe('Generic Object Form Component', () => {
     const { container } = renderWithRedux(<GenericObjectForm recordId="1" />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render editing a generic object without an existing image', async() => {
-    fetchMock.once('/api/generic_object_definitions/', api);
+    fetchMock.once({ method: 'OPTIONS', url: '/api/generic_object_definitions/' }, api);
     fetchMock.get(
       '/api/generic_object_definitions/1?attributes=picture.image_href',
       genericObject2
@@ -89,7 +90,7 @@ describe('Generic Object Form Component', () => {
     const { container } = renderWithRedux(<GenericObjectForm recordId="1" />);
 
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(2);
+      expect(fetchMock.callHistory.calls()).toHaveLength(2);
     });
 
     expect(container).toMatchSnapshot();

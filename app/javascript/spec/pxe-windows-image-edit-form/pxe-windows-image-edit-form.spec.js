@@ -1,5 +1,4 @@
 import React from 'react';
-import fetchMock from 'fetch-mock';
 import { screen } from '@testing-library/react';
 import PxeWindowsImageEditForm from '../../components/pxe-windows-image-edit-form';
 import { renderWithRedux } from '../helpers/mountForm';
@@ -14,11 +13,6 @@ describe('PxeWindowsImageEditForm', () => {
       ['ESXi', 3],
     ],
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render the form when pxeImageTypes is valid', () => {
     const { container } = renderWithRedux(<PxeWindowsImageEditForm {...defaultProps} />);

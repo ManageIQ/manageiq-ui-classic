@@ -5,6 +5,8 @@ import '../helpers/miqSparkle';
 import RoleForm from '../../components/role-form';
 
 describe('Rbac Role Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const RbacRoleEditData = {
     id: 90,
     name: 'test',
@@ -52,11 +54,6 @@ describe('Rbac Role Form Component', () => {
       }],
     }]),
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('render add rbac role form', async() => {
     const { container } = renderWithRedux(

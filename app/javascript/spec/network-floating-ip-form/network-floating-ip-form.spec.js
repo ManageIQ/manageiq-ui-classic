@@ -4,29 +4,24 @@ import { renderWithRedux } from '../helpers/mountForm';
 import NetworkFloatingIPsForm from '../../components/network-floatingIPs-form/index';
 
 describe('Floating Ips Profile Form Component', () => {
-  let initialProps;
-  beforeEach(() => {
-    initialProps = {
-      ems: [
-        {
-          href: 'http://localhost:3000/api/providers/54',
-          id: '54',
-          name: 'RHV Network Manager',
-          type: 'ManageIQ::Providers::Redhat::NetworkManager',
-        },
-      ],
-    };
-  });
+  // eslint-disable-next-line max-len
+  const providersUrl = '/api/providers?expand=resources&attributes=id,name,supports_create_floating_ip&filter[]=supports_create_floating_ip=true&attributes=id,name,type';
+  const providersMock = {
+    resources: [
+      {
+        href: 'http://localhost:3000/api/providers/54',
+        id: '54',
+        name: 'RHV Network Manager',
+        type: 'ManageIQ::Providers::Redhat::NetworkManager',
+      },
+    ],
+  };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render correctly', async() => {
-    const { container } = renderWithRedux(
-      <NetworkFloatingIPsForm {...initialProps} />
-    );
+    fetchMock.get(providersUrl, providersMock);
+    const { container } = renderWithRedux(<NetworkFloatingIPsForm />);
     await waitFor(() => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });

@@ -48,6 +48,13 @@ exports[`Floating Ips Profile Form Component should render correctly 1`] = `
               >
                 &lt;Choose&gt;
               </option>
+              <option
+                class="cds--select-option"
+                label="RHV Network Manager"
+                value="54"
+              >
+                RHV Network Manager
+              </option>
             </select>
             <svg
               aria-hidden="true"

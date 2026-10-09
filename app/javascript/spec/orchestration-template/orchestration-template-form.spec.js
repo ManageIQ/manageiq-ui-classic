@@ -13,6 +13,10 @@ describe('OrcherstrationTemplate form', () => {
   let sparkleOffSpy;
   let addFlashSpy;
 
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   beforeEach(() => {
     initialProps = {
       managers: [['foo', 'bar']],
@@ -24,7 +28,6 @@ describe('OrcherstrationTemplate form', () => {
 
   afterEach(() => {
     cleanup();
-    fetchMock.restore();
     jest.clearAllMocks();
     sparkleOnSpy.mockRestore();
     sparkleOffSpy.mockRestore();
@@ -60,10 +63,10 @@ describe('OrcherstrationTemplate form', () => {
     await user.click(addButton);
 
     await waitFor(() => {
-      expect(fetchMock.lastCall()).toBeTruthy();
+      expect(fetchMock.callHistory.lastCall()).toBeTruthy();
     });
 
-    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(
+    expect(JSON.parse(fetchMock.callHistory.lastCall().options.body)).toEqual(
       expect.objectContaining({
         name: 'foo',
         content: 'Some random content',
@@ -113,10 +116,10 @@ describe('OrcherstrationTemplate form', () => {
     await user.click(saveButton);
 
     await waitFor(() => {
-      expect(fetchMock.lastCall()).toBeTruthy();
+      expect(fetchMock.callHistory.lastCall()).toBeTruthy();
     });
 
-    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(
+    expect(JSON.parse(fetchMock.callHistory.lastCall().options.body)).toEqual(
       expect.objectContaining({
         name: 'bar',
         content: 'content',
@@ -151,10 +154,10 @@ describe('OrcherstrationTemplate form', () => {
     await user.click(addButton);
 
     await waitFor(() => {
-      expect(fetchMock.lastCall()).toBeTruthy();
+      expect(fetchMock.callHistory.lastCall()).toBeTruthy();
     });
 
-    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(
+    expect(JSON.parse(fetchMock.callHistory.lastCall().options.body)).toEqual(
       expect.objectContaining({
         action: 'copy',
         resource: {
@@ -184,7 +187,6 @@ describe('Orcherstration Stack form', () => {
 
   afterEach(() => {
     cleanup();
-    fetchMock.restore();
     jest.clearAllMocks();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
@@ -219,7 +221,7 @@ describe('Orcherstration Stack form', () => {
     await user.click(addButton);
 
     await waitFor(() => {
-      expect(fetchMock.lastCall()).toBeTruthy();
+      expect(fetchMock.callHistory.lastCall()).toBeTruthy();
     });
 
     expect(sparkleOnSpy).toHaveBeenCalled();
