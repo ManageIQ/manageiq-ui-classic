@@ -302,8 +302,8 @@ class MiqAeToolsController < ApplicationController
       @resolve[:new][:starting_object] = params[:starting_object]
       @resolve[:new][:instance_name] = nil
     end
-    if params[:readonly]
-      @resolve[:new][:readonly] = (params[:readonly] != "1")
+    if params.key?(:readonly)
+      @resolve[:new][:readonly] = !params[:readonly]
     end
 
     copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
@@ -437,8 +437,8 @@ class MiqAeToolsController < ApplicationController
       @resolve[:new][:starting_object] = params[:starting_object]
       @resolve[:new][:instance_name] = nil
     end
-    if params[:readonly]
-      @resolve[:new][:readonly] = (params[:readonly] != "1")
+    if params.key?(:readonly)
+      @resolve[:new][:readonly] = !params[:readonly]
     end
 
     copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
