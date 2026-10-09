@@ -4,6 +4,7 @@ describe MiqAeCustomizationController do
   let(:controller_name) { 'miq_ae_customization' }
 
   %w(
+    ab_button_form_data
     explorer
     export_service_dialogs
   ).each do |path|
@@ -17,9 +18,6 @@ describe MiqAeCustomizationController do
   %w(
     ab_group_reorder
     accordion_select
-    automate_button_field_changed
-    button_create
-    button_update
     change_tab
     dialog_copy_editor
     dialog_list

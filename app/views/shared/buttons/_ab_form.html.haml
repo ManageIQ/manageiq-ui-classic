@@ -1,16 +1,7 @@
 = render :partial => "layouts/flash_msg"
-#ab_form
-  #custom_button_tabs
-    %ul.nav.nav-tabs{'role' => 'tablist'}
-      = miq_tab_header('ab_options_tab', @sb[:active_tab]) do
-        = _('Options')
-      = miq_tab_header('ab_advanced_tab', @sb[:active_tab]) do
-        = _('Advanced')
-    .tab-content
-      = miq_tab_content('ab_options_tab', @sb[:active_tab]) do
-        = render :partial => "shared/buttons/ab_options_form"
-      = miq_tab_content('ab_advanced_tab', @sb[:active_tab]) do
-        = render :partial => "shared/buttons/ab_advanced_form"
-      
-  :javascript
-    miq_tabs_init('#custom_button_tabs');
+= react('AbForm', :recId               => @custom_button.try(:id),
+                  :appliesToClass      => @sb[:applies_to_class].to_s,
+                  :appliesToId         => @sb[:applies_to_id].to_s,
+                  :customButtonGroupId => @sb[:button_group_id],
+                  :formDataUrl         => url_for_only_path(:action => 'ab_button_form_data'),
+                  :redirectUrl         => url_for_only_path(:action => 'explorer'))
