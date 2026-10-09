@@ -29,7 +29,6 @@ const CopyObjectsForm = ({ recordId, editData }) => {
         from_domain: editData.domain_name,
         domain: String(editData.new.domain),
         new_name: editData.new.new_name || '',
-        override_source: editData.new.override_source,
         override_existing: editData.new.override_existing || false,
         namespace: editData.new.namespace || '',
         is_single_item: selectedItemsArray.length === 1,
@@ -57,7 +56,6 @@ const CopyObjectsForm = ({ recordId, editData }) => {
 
     const params = {
       domain: values.domain,
-      override_source: values.override_source ? '1' : '0',
       override_existing: values.override_existing ? '1' : '0',
       namespace: values.namespace,
       new_name: values.new_name,
@@ -148,9 +146,9 @@ const FormTemplate = ({ formFields, isSubmitting }) => {
     <form onSubmit={handleSubmit}>
       <DomainWatcher />
       {formFields}
-      <FormSpy subscription={{ values: true, valid: true, pristine: true }}>
-        {({ values, valid, pristine }) => {
-          const canCopy = !pristine && valid && (values.override_source || !!values.namespace);
+      <FormSpy subscription={{ valid: true, pristine: true }}>
+        {({ valid, pristine }) => {
+          const canCopy = !pristine && valid;
           return (
             <div className="custom-button-wrapper">
               <Button
@@ -194,7 +192,6 @@ CopyObjectsForm.propTypes = {
     selected_ids: PropTypes.arrayOf(PropTypes.number),
     new: PropTypes.shape({
       domain: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      override_source: PropTypes.bool,
       override_existing: PropTypes.bool,
       namespace: PropTypes.string,
       new_name: PropTypes.string,
