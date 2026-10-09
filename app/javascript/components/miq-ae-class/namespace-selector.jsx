@@ -5,11 +5,12 @@ import { Close, TreeViewAlt } from '@carbon/react/icons';
 import { useFieldApi, useFormApi } from '@@ddf';
 import NamespaceTreeModal from './namespace-tree-modal';
 
-const NamespaceSelector = (props) => {
-  const {
+const NamespaceSelector = ({
+  label, id, name, isRequired = false,
+}) => {
+  const { input, meta } = useFieldApi({
     label, id, name, isRequired,
-  } = props;
-  const { input, meta } = useFieldApi(props);
+  });
   const { getState } = useFormApi();
   const { values } = getState();
   const selectedDomainId = values.domain;
@@ -89,7 +90,6 @@ const NamespaceSelector = (props) => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         onApply={handleModalApply}
-        entryPoint="Namespace"
         domainId={selectedDomainId}
       />
     </>
@@ -101,10 +101,6 @@ NamespaceSelector.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   isRequired: PropTypes.bool,
-};
-
-NamespaceSelector.defaultProps = {
-  isRequired: false,
 };
 
 export default NamespaceSelector;
