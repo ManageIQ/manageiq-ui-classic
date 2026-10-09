@@ -42,12 +42,6 @@ Rails.application.routes.draw do
   ]
 
   dialog_runner_post = %w[
-    dialog_field_changed
-    dialog_form_button_pressed
-    dynamic_checkbox_refresh
-    dynamic_date_refresh
-    dynamic_radio_button_refresh
-    dynamic_text_box_refresh
     open_url_after_dialog
   ]
 
@@ -140,7 +134,6 @@ Rails.application.routes.draw do
         compare_get,
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         ownership_update
         protect
@@ -438,7 +431,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         show
@@ -501,7 +493,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         show
@@ -532,7 +523,6 @@ Rails.application.routes.draw do
       :post => %w[
         button
         create
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         reload
@@ -561,7 +551,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         show
@@ -583,7 +572,6 @@ Rails.application.routes.draw do
       :post => %w[
         backup_restore
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         show
@@ -603,7 +591,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         show
@@ -683,7 +670,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -715,7 +701,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -747,7 +732,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -780,7 +764,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -804,7 +787,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -826,7 +808,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -854,7 +835,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -882,7 +862,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -904,7 +883,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -925,7 +903,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -949,7 +926,6 @@ Rails.application.routes.draw do
       :post => %w[
         button
         ct_form_field_changed
-        dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -1037,9 +1013,6 @@ Rails.application.routes.draw do
       :post => %w[
         new
         button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
         listnav_search_selected
         protect
         quick_search
@@ -1339,7 +1312,6 @@ Rails.application.routes.draw do
       :post => %w[
         new
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         protect
         quick_search
@@ -1371,9 +1343,6 @@ Rails.application.routes.draw do
       :post => %w[
         new
         button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
         listnav_search_selected
         protect
         quick_search
@@ -1513,7 +1482,6 @@ Rails.application.routes.draw do
         compare_get,
       :post => %w[
         button
-        dynamic_checkbox_refresh
         listnav_search_selected
         protect
         quick_search
@@ -1565,7 +1533,6 @@ Rails.application.routes.draw do
       :post => %w[
         button
         create
-        dynamic_checkbox_refresh
         listnav_search_selected
         protect
         quick_search
@@ -2274,9 +2241,6 @@ Rails.application.routes.draw do
       :post => %w[
         new
         button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
         listnav_search_selected
         protect
         quick_search

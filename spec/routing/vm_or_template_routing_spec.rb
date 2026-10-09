@@ -50,8 +50,6 @@ describe VmOrTemplateController do
     accordion_select
     advanced_settings
     button
-    dialog_field_changed
-    dialog_form_button_pressed
     drift_all
     drift_differences
     drift_history
