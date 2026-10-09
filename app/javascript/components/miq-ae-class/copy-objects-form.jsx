@@ -121,28 +121,28 @@ const CopyObjectsForm = ({ recordId, editData }) => {
   );
 };
 
-const DomainWatcherInner = ({ domain }) => {
-  const { change } = useDDFFormApi();
-  const domainRef = useRef(undefined);
-
-  useEffect(() => {
-    if (domainRef.current !== undefined && domainRef.current !== domain) {
-      change('namespace', '');
-    }
-    domainRef.current = domain;
-  }, [domain]);
-
-  return null;
-};
-
-const DomainWatcher = () => (
-  <FormSpy subscription={{ values: true }}>
-    {({ values }) => <DomainWatcherInner domain={values.domain} />}
-  </FormSpy>
-);
-
 const FormTemplate = ({ formFields, isSubmitting }) => {
   const { handleSubmit, onReset, onCancel } = useFormApi();
+
+  const DomainWatcherInner = ({ domain }) => {
+    const { change } = useDDFFormApi();
+    const domainRef = useRef(undefined);
+
+    useEffect(() => {
+      if (domainRef.current !== undefined && domainRef.current !== domain) {
+        change('namespace', '');
+      }
+      domainRef.current = domain;
+    }, [domain]);
+
+    return null;
+  };
+
+  const DomainWatcher = () => (
+    <FormSpy subscription={{ values: true }}>
+      {({ values }) => <DomainWatcherInner domain={values.domain} />}
+    </FormSpy>
+  );
 
   return (
     <form onSubmit={handleSubmit}>

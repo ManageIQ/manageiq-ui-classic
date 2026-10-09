@@ -43,7 +43,6 @@ const NamespaceTreeModal = ({
   isOpen,
   onClose,
   onApply,
-  entryPoint = 'Namespace',
   domainId = null,
 }) => {
   const [data, setData] = useState(INITIAL_DATA);
@@ -145,7 +144,7 @@ const NamespaceTreeModal = ({
   return (
     <Modal
       open={isOpen}
-      modalHeading={sprintf(__('Select Entry Point %s'), entryPoint)}
+      modalHeading={__('Select Entry Point Namespace')}
       primaryButtonText={__('Apply')}
       secondaryButtonText={__('Cancel')}
       onRequestClose={onClose}
@@ -240,7 +239,6 @@ NamespaceTreeModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onApply: PropTypes.func.isRequired,
-  entryPoint: PropTypes.string,
   domainId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
