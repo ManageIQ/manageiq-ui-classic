@@ -1,0 +1,1689 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`VmConfig devices display renders the Devices section 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r0:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Devices
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r0:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Hard Disk (SCSI 0:0)
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                    >
+                      <i
+                        class="carbon--storage-pool"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      40 GB
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CD-ROM (IDE 0:0)
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                    >
+                      <i
+                        class="carbon--software-resource"
+                      />
+                    </div>
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Floppy Drive (SIO 0:0)
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                    >
+                      <i
+                        class="carbon--save"
+                      />
+                    </div>
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`VmConfig hv_info display renders Basic Information and Devices sections 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:ru:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Basic Information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:ru:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Type
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      VMware ESXi
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Version
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      7.0.3
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r11:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Devices
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r11:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Hard Disk (SCSI 0:0)
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell icon"
+                    >
+                      <i
+                        class="carbon--storage-pool"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      100 GB
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`VmConfig networks display renders one section per network adapter 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r1d:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Network Adapter
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r1d:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  IP Address
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      192.168.1.50
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  IPv6 Address
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      vmxnet3
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="3"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DHCP Server
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="4"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DHCP Enabled
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      false
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="5"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Default Gateway
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      192.168.1.1
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="6"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Subnet Mask
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      255.255.255.0
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="7"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DNS Server
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      8.8.8.8
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r1m:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Network Adapter
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r1m:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  IP Address
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      10.0.0.5
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  IPv6 Address
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      fe80::1
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      e1000
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="3"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DHCP Server
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      10.0.0.1
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="4"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DHCP Enabled
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      true
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="5"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Default Gateway
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      10.0.0.1
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="6"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Subnet Mask
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      255.255.255.0
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="7"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  DNS Server
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      10.0.0.2
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`VmConfig os_info display renders Basic Information and Account Policies for a Windows VM 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r8:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Basic Information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r8:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  OS Type
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell image"
+                    >
+                      <img
+                        alt="/images/svg/os-windows.svg"
+                        src="/images/svg/os-windows.svg"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Windows Server 2019
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Version
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell image"
+                    >
+                      <img
+                        alt="/images/svg/os-windows.svg"
+                        src="/images/svg/os-windows.svg"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      10.0
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:rb:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Account Policies
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:rb:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Min Password Length
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      8
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Max Password Age
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      90
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`VmConfig os_info display renders only Basic Information for a Linux VM (no Account Policies) 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:rq:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Basic Information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:rq:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  OS Type
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="cell image"
+                    >
+                      <img
+                        alt="/images/svg/os-linux.svg"
+                        src="/images/svg/os-linux.svg"
+                      />
+                    </div>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Red Hat Enterprise Linux
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`VmConfig resources_info display renders the Resources section 1`] = `
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+  >
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
+    >
+      <button
+        aria-controls="accordion-item-:r33:"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Resources
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-:r33:"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Limit
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      2000
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Reserve
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      500
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Reserve Expand
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      false
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="3"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Shares
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      2000
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="4"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Shares Level
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      normal
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="5"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Memory Limit
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      4096
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="6"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Memory Reserve
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      1024
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="7"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Memory Reserve Expand
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      false
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="8"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Memory Shares
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      40960
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="9"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Memory Shares Level
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      normal
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

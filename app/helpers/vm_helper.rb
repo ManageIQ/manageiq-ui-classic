@@ -2,6 +2,7 @@ module VmHelper
   include RequestInfoHelper
   include TextualSummary
   include ComplianceSummaryHelper
+  include VmConfigHelper
 
   # TODO: These methods can be removed once the Summary and ListNav data layer is consolidated.
   def last_date(request_type)
