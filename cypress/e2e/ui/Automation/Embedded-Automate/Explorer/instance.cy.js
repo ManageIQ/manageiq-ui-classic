@@ -139,6 +139,11 @@ describe('Automation > Embedded Automate > Explorer > Instance', () => {
       cy.get('.miq-data-table table tbody').should('contain', 'Test Instance');
       cy.selectAccordionItem([DATASTORE, DOMAIN_NAME, NAMESPACE_NAME, CLASS_NAME, /Test Instance/]);
       cy.get('#main-content').should('contain', 'Test Instance');
+
+      // Navigate to the edit form to verify display name and description were persisted
+      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_INSTANCE);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DISPLAY_NAME }).should('have.value', 'Test Instance');
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DESCRIPTION }).should('have.value', 'Test instance description');
     });
 
     it('should handle cancel button', () => {
@@ -178,6 +183,11 @@ describe('Automation > Embedded Automate > Explorer > Instance', () => {
       cy.get('.miq-data-table table tbody').should('contain', 'Edited Instance').and('not.contain', 'Edit Test Instance');
       cy.selectAccordionItem([DATASTORE, DOMAIN_NAME, NAMESPACE_NAME, CLASS_NAME, /Edited Instance/]);
       cy.get('#main-content').should('contain', 'Edited Instance');
+
+      // Navigate to the edit form to verify updated display name and description were persisted
+      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_INSTANCE);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DISPLAY_NAME }).should('have.value', 'Edited Instance');
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DESCRIPTION }).should('have.value', 'Updated description');
     });
 
     it('should disable save button when no changes are made', () => {
@@ -268,6 +278,11 @@ describe('Automation > Embedded Automate > Explorer > Instance', () => {
       cy.tabs({ tabLabel: 'Instances' });
       cy.get('#instances .miq-data-table table tbody tr').should('have.length', 2);
       cy.selectAccordionItem([DATASTORE, DOMAIN_NAME, NAMESPACE_NAME, CLASS_NAME, /copied_instance/]);
+
+      // Verify the copy preserved display name and description from the source instance
+      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_INSTANCE);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DISPLAY_NAME }).should('have.value', SOURCE_INSTANCE_DISPLAY);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DESCRIPTION }).should('have.value', SOURCE_INSTANCE_DESC);
     });
 
     it('should copy instance to a different namespace', () => {
@@ -293,6 +308,11 @@ describe('Automation > Embedded Automate > Explorer > Instance', () => {
       cy.tabs({ tabLabel: 'Instances' });
       cy.get('#instances .miq-data-table table tbody').should('contain', SOURCE_INSTANCE_DISPLAY);
       cy.selectAccordionItem([DATASTORE, 'TargetDomain', 'TargetNamespace', CLASS_NAME, /Source Instance/]);
+
+      // Verify the copy preserved display name and description from the source instance
+      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_INSTANCE);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DISPLAY_NAME }).should('have.value', SOURCE_INSTANCE_DISPLAY);
+      cy.getFormInputFieldByIdAndType({ inputId: FIELD_DESCRIPTION }).should('have.value', SOURCE_INSTANCE_DESC);
     });
 
     it('should copy instance with override existing option', () => {
