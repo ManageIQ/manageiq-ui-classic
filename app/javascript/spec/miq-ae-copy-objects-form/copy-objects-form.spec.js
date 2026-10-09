@@ -24,7 +24,6 @@ describe('CopyObjectsForm Component', () => {
     new: {
       domain: '2',
       namespace: 'Domain2/Namespace',
-      override_source: false,
       override_existing: false,
       new_name: '',
     },
@@ -47,7 +46,6 @@ describe('CopyObjectsForm Component', () => {
     new: {
       domain: '2',
       namespace: 'Domain2/Namespace/Class',
-      override_source: false,
       override_existing: false,
       new_name: '',
     },
@@ -67,7 +65,6 @@ describe('CopyObjectsForm Component', () => {
     new: {
       domain: '2',
       namespace: 'Domain2/Namespace/Class',
-      override_source: false,
       override_existing: false,
       new_name: '',
     },
@@ -87,7 +84,6 @@ describe('CopyObjectsForm Component', () => {
     new: {
       domain: '2',
       namespace: 'Domain2/Namespace',
-      override_source: false,
       override_existing: false,
       new_name: '',
     },
@@ -120,143 +116,67 @@ describe('CopyObjectsForm Component', () => {
   });
 
   describe('Copy Class', () => {
-    it('should keep Copy button disabled on load when copy to same path is checked', async() => {
-      const dataWithOverrideSourceChecked = {
-        ...mockEditDataClass,
-        new: {
-          ...mockEditDataClass.new,
-          override_source: true,
-          namespace: '',
-        },
-      };
-
-      renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={dataWithOverrideSourceChecked} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
-      });
-    });
-
-    it('should show namespace required error when copy to same path is unchecked and namespace is empty', async() => {
-      const user = userEvent.setup();
-      const dataWithOverrideSourceChecked = {
-        ...mockEditDataClass,
-        new: {
-          ...mockEditDataClass.new,
-          override_source: true,
-          namespace: '',
-        },
-      };
-
-      renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={dataWithOverrideSourceChecked} />
-      );
-
-      // Namespace field is hidden while override_source is checked
-      await waitFor(() => {
-        expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
-      });
-
-      // Uncheck "Copy to same path" — namespace field appears
-      const overrideCheckbox = screen.getByLabelText(/Copy to same path/i);
-      await user.click(overrideCheckbox);
-
-      await waitFor(() => {
-        expect(screen.getByRole('textbox', { name: /Namespace/i })).toBeInTheDocument();
-      });
-
-      // Blur the namespace field to trigger validation
-      const namespaceInput = screen.getByRole('textbox', { name: /Namespace/i });
-      await user.click(namespaceInput);
-      await user.tab();
-
-      // Inline error should appear and Copy button should remain disabled
-      await waitFor(() => {
-        expect(namespaceInput).toHaveAttribute('aria-invalid', 'true');
-        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
-      });
-    });
-
-    it('should keep Copy disabled for multiple classes when copy to same path is checked', async() => {
-      const multiItemSamePathData = {
-        ...mockEditDataMultipleItems,
-        new: {
-          ...mockEditDataMultipleItems.new,
-          override_source: true,
-          namespace: '',
-        },
-      };
-
-      renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={multiItemSamePathData} />
-      );
-
-      await waitFor(() => {
-        // new_name field absent for multi-select
-        expect(screen.queryByLabelText(/New Name/i)).not.toBeInTheDocument();
-        // namespace field hidden while override_source checked
-        expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
-        // Copy button disabled — form is pristine with no valid action
-        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
-      });
-    });
-
-    it('should render copy class form correctly', async() => {
+    it('should render with copy to same path checked, namespace hidden, and Copy disabled', async() => {
       const { container } = renderWithRedux(
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
       await waitFor(() => {
-        expect(container.firstChild).toBeInTheDocument();
+        expect(screen.getByLabelText(/Copy to same path/i)).toBeChecked();
+        expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
       });
-
       expect(container).toMatchSnapshot();
     });
 
-    it('should display selected class name', async() => {
-      renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByText('TestClass')).toBeInTheDocument();
-      });
-    });
-
-    it('should show domain selector', async() => {
-      renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByLabelText(/To Domain/i)).toBeInTheDocument();
-      });
-    });
-
-    it('should submit copy class form', async() => {
+    it('should keep Copy disabled when copy to same path is unchecked and namespace is empty', async() => {
       const user = userEvent.setup();
-      window.http.post.mockResolvedValue({
-        message: 'Copy selected Automate Class was saved',
-        redirect_url: '/miq_ae_class/explorer',
+      const dataWithEmptyNamespace = {
+        ...mockEditDataClass,
+        new: { ...mockEditDataClass.new, namespace: '' },
+      };
+
+      renderWithRedux(
+        <CopyObjectsForm recordId="123" editData={dataWithEmptyNamespace} />
+      );
+
+      await user.click(screen.getByLabelText(/Copy to same path/i));
+
+      // Namespace field appears but is empty — Copy must stay disabled
+      await waitFor(() => {
+        expect(screen.getByRole('textbox', { name: /Namespace/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
       });
+    });
+
+    it('should keep Copy disabled for multiple classes when copy to same path is checked', async() => {
+      const dataWithEmptyNamespace = {
+        ...mockEditDataMultipleItems,
+        new: { ...mockEditDataMultipleItems.new, namespace: '' },
+      };
+
+      renderWithRedux(
+        <CopyObjectsForm recordId="123" editData={dataWithEmptyNamespace} />
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
+      });
+    });
+
+    it('should submit copy class form to a different namespace', async() => {
+      const user = userEvent.setup();
 
       renderWithRedux(
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
-      });
+      // Uncheck "Copy to same path" — field appears with namespace already set from initialValues, Copy enables
+      await user.click(screen.getByLabelText(/Copy to same path/i));
 
-      // Make the form dirty and ensure canCopy is true:
-      const overrideCheckbox = screen.getByLabelText(/Copy to same path/i);
-      await user.click(overrideCheckbox);
-
-      const submitButton = screen.getByRole('button', { name: /copy/i });
-      await waitFor(() => expect(submitButton).not.toBeDisabled());
-      await user.click(submitButton);
+      await waitFor(() => expect(screen.getByRole('button', { name: /^copy$/i })).not.toBeDisabled());
+      await user.click(screen.getByRole('button', { name: /^copy$/i }));
 
       await waitFor(() => {
         expect(window.http.post).toHaveBeenCalledWith(
@@ -271,15 +191,10 @@ describe('CopyObjectsForm Component', () => {
       });
     });
 
-    it('should allow copying with new name for single item', async() => {
-      // Create test data where domain matches domain_id (same domain)
+    it('should show new name field for single item copying to same domain', async() => {
       const singleItemSameDomain = {
         ...mockEditDataClass,
-        domain_id: 1,
-        new: {
-          ...mockEditDataClass.new,
-          domain: 1, // Same as domain_id - must be same type (number)
-        },
+        new: { ...mockEditDataClass.new, domain: 1 },
       };
 
       renderWithRedux(
@@ -288,80 +203,46 @@ describe('CopyObjectsForm Component', () => {
 
       await waitFor(() => {
         expect(screen.getByLabelText(/New Name/i)).toBeInTheDocument();
-      }, { timeout: 3000 });
-
-      const newNameInput = screen.getByLabelText(/New Name/i);
-      expect(newNameInput).not.toBeDisabled();
+        expect(screen.getByLabelText(/New Name/i)).not.toBeDisabled();
+      });
     });
 
-    it('should disable new name field for multiple items', async() => {
+    it('should not show new name field for multiple items', async() => {
       renderWithRedux(
         <CopyObjectsForm recordId="123" editData={mockEditDataMultipleItems} />
       );
 
       await waitFor(() => {
-        const newNameInput = screen.queryByLabelText(/New Name/i);
-        // New name field should not be shown for multiple items
-        expect(newNameInput).not.toBeInTheDocument();
+        expect(screen.queryByLabelText(/New Name/i)).not.toBeInTheDocument();
       });
     });
   });
 
   describe('Copy Instance', () => {
-    it('should render copy instance form correctly', async() => {
+    it('should render with instance name and override existing checkbox', async() => {
       const { container } = renderWithRedux(
         <CopyObjectsForm recordId="456" editData={mockEditDataInstance} />
       );
 
       await waitFor(() => {
-        expect(container.firstChild).toBeInTheDocument();
+        expect(screen.getByText('TestInstance')).toBeInTheDocument();
+        expect(screen.getByLabelText(/Replace items if they already exist/i)).toBeInTheDocument();
       });
-
       expect(container).toMatchSnapshot();
     });
 
-    it('should display selected instance name', async() => {
-      renderWithRedux(
-        <CopyObjectsForm recordId="456" editData={mockEditDataInstance} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByText('TestInstance')).toBeInTheDocument();
-      });
-    });
-
-    it('should show override existing checkbox for instances', async() => {
-      renderWithRedux(
-        <CopyObjectsForm recordId="456" editData={mockEditDataInstance} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByLabelText(/Replace items if they already exist/i)).toBeInTheDocument();
-      });
-    });
-
-    it('should submit copy instance form', async() => {
+    it('should submit copy instance form to a different namespace', async() => {
       const user = userEvent.setup();
-      window.http.post.mockResolvedValue({
-        message: 'Copy selected Automate Instance was saved',
-        redirect_url: '/miq_ae_class/explorer',
-      });
 
       renderWithRedux(
         <CopyObjectsForm recordId="456" editData={mockEditDataInstance} />
       );
 
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
-      });
+      // Uncheck "Copy to same path" — field appears with namespace already set from initialValues, Copy enables
+      await user.click(screen.getByLabelText(/Copy to same path/i));
 
-      // Make the form dirty and ensure canCopy is true:
-      const overrideCheckbox = screen.getByLabelText(/Copy to same path/i);
-      await user.click(overrideCheckbox);
-
-      const submitButton = screen.getByRole('button', { name: /copy/i });
-      await waitFor(() => expect(submitButton).not.toBeDisabled());
-      await user.click(submitButton);
+      await waitFor(() => expect(screen.getByRole('button', { name: /^copy$/i })).not.toBeDisabled());
+      await user.click(screen.getByRole('button', { name: /^copy$/i }));
 
       await waitFor(() => {
         expect(window.http.post).toHaveBeenCalledWith(
@@ -374,7 +255,9 @@ describe('CopyObjectsForm Component', () => {
   });
 
   describe('Copy Method', () => {
-    it('should display selected method name and show override existing checkbox', async() => {
+    it('should submit copy method form to a different namespace', async() => {
+      const user = userEvent.setup();
+
       renderWithRedux(
         <CopyObjectsForm recordId="789" editData={mockEditDataMethod} />
       );
@@ -383,30 +266,12 @@ describe('CopyObjectsForm Component', () => {
         expect(screen.getByText('TestMethod')).toBeInTheDocument();
         expect(screen.getByLabelText(/Replace items if they already exist/i)).toBeInTheDocument();
       });
-    });
 
-    it('should submit copy method form', async() => {
-      const user = userEvent.setup();
-      window.http.post.mockResolvedValue({
-        message: 'Copy selected Automate Method was saved',
-        redirect_url: '/miq_ae_class/explorer',
-      });
+      // Uncheck "Copy to same path" — field appears with namespace already set from initialValues, Copy enables
+      await user.click(screen.getByLabelText(/Copy to same path/i));
 
-      renderWithRedux(
-        <CopyObjectsForm recordId="789" editData={mockEditDataMethod} />
-      );
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
-      });
-
-      // Make the form dirty and ensure canCopy is true:
-      const overrideCheckbox = screen.getByLabelText(/Copy to same path/i);
-      await user.click(overrideCheckbox);
-
-      const submitButton = screen.getByRole('button', { name: /copy/i });
-      await waitFor(() => expect(submitButton).not.toBeDisabled());
-      await user.click(submitButton);
+      await waitFor(() => expect(screen.getByRole('button', { name: /^copy$/i })).not.toBeDisabled());
+      await user.click(screen.getByRole('button', { name: /^copy$/i }));
 
       await waitFor(() => {
         expect(window.http.post).toHaveBeenCalledWith(
@@ -420,16 +285,8 @@ describe('CopyObjectsForm Component', () => {
 
   describe('Namespace Selection', () => {
     it('should hide namespace selector when copy to same path is checked', async() => {
-      const dataWithOverrideSource = {
-        ...mockEditDataClass,
-        new: {
-          ...mockEditDataClass.new,
-          override_source: true,
-        },
-      };
-
       renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={dataWithOverrideSource} />
+        <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
       await waitFor(() => {
@@ -438,17 +295,12 @@ describe('CopyObjectsForm Component', () => {
     });
 
     it('should show namespace selector when copy to same path is unchecked', async() => {
-      const dataWithNamespace = {
-        ...mockEditDataClass,
-        new: {
-          ...mockEditDataClass.new,
-          override_source: false,
-        },
-      };
-
+      const user = userEvent.setup();
       renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={dataWithNamespace} />
+        <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
+
+      await user.click(screen.getByLabelText(/Copy to same path/i));
 
       await waitFor(() => {
         expect(screen.getByRole('textbox', { name: /Namespace/i })).toBeInTheDocument();
@@ -483,21 +335,15 @@ describe('CopyObjectsForm Component', () => {
 
     it('should clear namespace field when To Domain changes', async() => {
       const user = userEvent.setup();
-      const dataWithNamespace = {
-        ...mockEditDataClass,
-        new: {
-          ...mockEditDataClass.new,
-          override_source: false,
-          namespace: 'Domain2/MyNamespace',
-        },
-      };
-
       renderWithRedux(
-        <CopyObjectsForm recordId="123" editData={dataWithNamespace} />
+        <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
+      await user.click(screen.getByLabelText(/Copy to same path/i));
+
+      // Namespace field appears with its seeded value
       await waitFor(() => {
-        expect(screen.getByRole('textbox', { name: /Namespace/i })).toHaveValue('Domain2/MyNamespace');
+        expect(screen.getByRole('textbox', { name: /Namespace/i })).toHaveValue('Domain2/Namespace');
       });
 
       await user.selectOptions(screen.getByLabelText(/To Domain/i), '3');
@@ -515,20 +361,8 @@ describe('CopyObjectsForm Component', () => {
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
-      await waitFor(() => {
-        // Get all cancel buttons and use the last one (the main form cancel button)
-        const cancelButtons = screen.getAllByRole('button', { name: /cancel/i });
-        expect(cancelButtons.length).toBeGreaterThan(0);
-      });
+      await user.click(screen.getByRole('button', { name: /^cancel$/i }));
 
-      const cancelButtons = screen.getAllByRole('button', { name: /cancel/i });
-      const mainCancelButton = cancelButtons[cancelButtons.length - 1];
-      expect(mainCancelButton).toBeInTheDocument();
-
-      // Click cancel button
-      await user.click(mainCancelButton);
-
-      // Verify miqRedirectBack was called
       await waitFor(() => {
         expect(miqRedirectBack).toHaveBeenCalledWith(
           expect.any(String),
@@ -628,16 +462,12 @@ describe('CopyObjectsForm Component', () => {
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
-      await waitFor(() => {
-        expect(screen.getByLabelText(/Copy to same path/i)).toBeInTheDocument();
-      });
-
       const overrideCheckbox = screen.getByLabelText(/Copy to same path/i);
-      expect(overrideCheckbox).not.toBeChecked();
+      expect(overrideCheckbox).toBeChecked();
 
       await user.click(overrideCheckbox);
 
-      expect(overrideCheckbox).toBeChecked();
+      expect(overrideCheckbox).not.toBeChecked();
     });
 
     it('should show override existing for instances', async() => {
@@ -652,7 +482,7 @@ describe('CopyObjectsForm Component', () => {
   });
 
   describe('Domain Selection', () => {
-    it('should list available domains', async() => {
+    it('should list available domains in the To Domain selector', async() => {
       renderWithRedux(
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
@@ -660,16 +490,17 @@ describe('CopyObjectsForm Component', () => {
       await waitFor(() => {
         const domainSelect = screen.getByLabelText(/To Domain/i);
         expect(domainSelect).toBeInTheDocument();
+        expect(domainSelect).toHaveValue('2');
       });
     });
 
-    it('should show source domain information', async() => {
+    it('should show the source domain in the From Domain field', async() => {
       renderWithRedux(
         <CopyObjectsForm recordId="123" editData={mockEditDataClass} />
       );
 
       await waitFor(() => {
-        expect(screen.getByText(/Domain 1/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/From Domain/i)).toHaveValue('Domain 1');
       });
     });
   });
