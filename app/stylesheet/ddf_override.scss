@@ -344,6 +344,34 @@ form .miq-validation-button, .miq-async-action-button {
   }
 }
 
+.service-dialog-wrapper {
+  &.customization, &.request {
+    legend, .bx--radio-button__label, .bx--checkbox-label-text {
+      font-size: 0.75rem;
+      color: #525252;
+      font-weight: 400;
+      line-height: 1rem;
+      vertical-align: baseline;
+    }
+
+    fieldset {
+      margin-bottom: 10px;
+    }
+
+    .bx--text-input,
+    .bx--text-area,
+    .bx--checkbox,
+    .bx--date-picker__input {
+      background: #f4f4f4;
+
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+
+
 .ddorg__carbon-dual-list-body {
   .cds--structured-list-td {
     padding-top: 0.5rem;
@@ -366,7 +394,8 @@ form .miq-validation-button, .miq-async-action-button {
 }
 
 .loadingSpinner {
-  margin-left: 15rem;
+  display: flex;
+  justify-content: center;
 }
 
 #provider-modal {
@@ -459,6 +488,7 @@ form .miq-validation-button, .miq-async-action-button {
   min-width: 10rem;
   width: fit-content;
 }
+
 
 .miq-fieldset {
   border: 0;
@@ -633,4 +663,65 @@ form .miq-validation-button, .miq-async-action-button {
 
 .vm-right-size-back-button {
   margin-bottom: 1rem;
+}
+
+.order-service-form-container {
+  position: relative;
+}
+
+#order-service-form {
+  position: relative;
+  z-index: 1;
+
+  .bx--tab-content {
+    outline: 0;
+  }
+
+  .order-form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+
+    .bx--select-input:disabled {
+      color: #000;
+    }
+
+    div:first-child {
+      flex-grow: 1;
+    }
+
+    .refresh-button {
+      margin-top: 18px;
+      margin-right: 0;
+    }
+
+  }
+  .bx--btn--primary {
+    margin-right: 10px;
+  }
+
+  .refreshSpinner {
+    max-width: 48px;
+    height: 48px;
+    margin-top: 17px;
+    overflow: hidden;
+  }
+
+  .bx--list-box__wrapper {
+    margin-bottom: 0;
+  }
+}
+
+.order-service-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: lightgray;
+  opacity: 0.1;
+  z-index: 1;
+  cursor: not-allowed;
 }

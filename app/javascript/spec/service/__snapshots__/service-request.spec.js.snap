@@ -1,0 +1,597 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Service component - Service Request should render the Service component for serviceRequest that renders all fields 1`] = `
+<div>
+  <div
+    class="service-container serviceRequest"
+  >
+    <div
+      class="cds--tabs miq_custom_tabs"
+    >
+      <button
+        aria-hidden="true"
+        aria-label="Scroll left"
+        class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+        tabindex="-1"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+          />
+        </svg>
+      </button>
+      <div
+        aria-label="Dialog tabs"
+        class="cds--tab--list"
+        role="tablist"
+      >
+        <button
+          aria-controls="ccs-_r_0_-tabpanel-0"
+          aria-selected="true"
+          class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+          id="ccs-_r_0_-tab-0"
+          role="tab"
+          tabindex="0"
+          type="button"
+        >
+          <div
+            class="cds--tabs__nav-item-label-wrapper"
+          >
+            <span
+              class="cds--tabs__nav-item-label"
+              dir="auto"
+            >
+              New tab
+            </span>
+          </div>
+        </button>
+        <div
+          class="cds--tabs__nav-item--close--hidden"
+        >
+          <button
+            aria-hidden="true"
+            class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+            tabindex="-1"
+            title="Remove New tab tab"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="Press delete to remove New tab tab"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button
+        aria-hidden="true"
+        aria-label="Scroll right"
+        class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+        tabindex="-1"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      aria-labelledby="ccs-_r_0_-tab-0"
+      class="cds--tab-content"
+      id="ccs-_r_0_-tabpanel-0"
+      role="tabpanel"
+    >
+      <div
+        class="tabs"
+      >
+        <div
+          class="section"
+        >
+          <div
+            class="section-label"
+          >
+            New section
+          </div>
+          <div
+            class="service-dialog-fields-grid cds--css-grid cds--css-grid--narrow"
+          >
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-text_box_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="text_box_1-DialogFieldTextBox-7542"
+                >
+                  Text Box
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="text_box_1-DialogFieldTextBox-7542"
+                    >
+                      Text Box
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="text_box_1-DialogFieldTextBox-7542"
+                        type="text"
+                        value=""
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-textarea_box_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="textarea_box_1-DialogFieldTextAreaBox-7543"
+                >
+                  Text Area
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="textarea_box_1-DialogFieldTextAreaBox-7543"
+                    >
+                      Text Area
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="textarea_box_1-DialogFieldTextAreaBox-7543"
+                        type="text"
+                        value="AAA"
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-check_box_1"
+            >
+              <div
+                class="field-item"
+              >
+                <div
+                  class="field-checkbox"
+                >
+                  <label
+                    class="cds--label cds--label--no-margin field-label"
+                    dir="auto"
+                    for="check_box_1-DialogFieldCheckBox-7544"
+                  >
+                    Check Box
+                  </label>
+                  <div
+                    class="cds--form-item cds--checkbox-wrapper"
+                  >
+                    <input
+                      aria-readonly="false"
+                      class="cds--checkbox"
+                      disabled=""
+                      id="check_box_1-DialogFieldCheckBox-7544"
+                      type="checkbox"
+                    />
+                    <label
+                      class="cds--checkbox-label"
+                      for="check_box_1-DialogFieldCheckBox-7544"
+                      title=""
+                    >
+                      <div
+                        class="cds--checkbox-label-text cds--visually-hidden"
+                        dir="auto"
+                      >
+                        Check Box
+                      </div>
+                    </label>
+                    <div
+                      class="cds--checkbox__validation-msg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-dropdown_list_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_1-DialogFieldTextBox-7545"
+                >
+                  Dropdown
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="dropdown_list_1-DialogFieldTextBox-7545"
+                    >
+                      Dropdown
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="dropdown_list_1-DialogFieldTextBox-7545"
+                        type="text"
+                        value="16"
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="refresh-field-item"
+              >
+                <span
+                  class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+                >
+                  <div
+                    class="cds--tooltip-trigger__wrapper"
+                  >
+                    <button
+                      aria-labelledby="tooltip-_r_3_"
+                      class="refresh-field-button cds--btn cds--btn--primary cds--btn--disabled cds--btn--icon-only"
+                      disabled=""
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12,10H6.78A11,11,0,0,1,27,16h2A13,13,0,0,0,6,7.68V4H4v8h8Z"
+                        />
+                        <path
+                          d="M20,22h5.22A11,11,0,0,1,5,16H3a13,13,0,0,0,23,8.32V28h2V20H20Z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="cds--popover"
+                    id="tooltip-_r_3_"
+                    role="tooltip"
+                  >
+                    <span
+                      class="cds--popover-content cds--tooltip-content"
+                    >
+                      Refresh Dropdown
+                    </span>
+                    <span
+                      class="cds--popover-caret"
+                    />
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-dropdown_list_2_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="dropdown_list_2_1-DialogFieldTextBox-7546"
+                >
+                  VisibileCheck DDL
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="dropdown_list_2_1-DialogFieldTextBox-7546"
+                    >
+                      VisibileCheck DDL
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="dropdown_list_2_1-DialogFieldTextBox-7546"
+                        type="text"
+                        value="Three, Two"
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-radio_button_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="radio_button_1-DialogFieldRadioButton-7547"
+                >
+                  Radio Button
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="radio_button_1-DialogFieldRadioButton-7547"
+                    >
+                      Radio Button
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="radio_button_1-DialogFieldRadioButton-7547"
+                        type="text"
+                        value="2"
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-date_control_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="date_control_1-DialogFieldTextBox-7548"
+                >
+                  Datepicker
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="date_control_1-DialogFieldTextBox-7548"
+                    >
+                      Datepicker
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="date_control_1-DialogFieldTextBox-7548"
+                        type="text"
+                        value="07/11/2024"
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="service-dialog-field-col cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+              id="section-field-row-tag_control_1"
+            >
+              <div
+                class="field-item"
+              >
+                <label
+                  class="cds--label cds--label--no-margin field-label"
+                  dir="auto"
+                  for="tag_control_1-DialogFieldTextBox-7550"
+                >
+                  Tag Control
+                </label>
+                <div
+                  class="cds--form-item cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden cds--label--disabled"
+                      dir="auto"
+                      for="tag_control_1-DialogFieldTextBox-7550"
+                    >
+                      Tag Control
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input"
+                        disabled=""
+                        id="tag_control_1-DialogFieldTextBox-7550"
+                        type="text"
+                        value=""
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

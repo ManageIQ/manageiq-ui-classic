@@ -1,0 +1,64 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { Button, Loading } from '@carbon/react';
+import { Renew } from '@carbon/react/icons';
+import ServiceContext from './ServiceContext';
+import ServiceValidator from './ServiceValidator';
+import { defaultFieldValue } from './helper';
+import { fieldProperties } from './helper.field';
+
+/** Function to reset the dialogField data when the field refresh button is clicked. */
+const resetDialogField = (dialogFields, field) => {
+  const { value, valid } = ServiceValidator.validateField({ field, value: defaultFieldValue(field).defaultValue });
+  dialogFields[field.name] = { ...dialogFields[field.name], value, valid };
+  return { ...dialogFields };
+};
+
+const RefreshField = ({ field }) => {
+  const { data, setData } = useContext(ServiceContext);
+  const { isDisabled } = fieldProperties(field, data);
+
+  const { fieldsToRefresh } = data;
+  const inProgress = fieldsToRefresh.includes(field.name);
+  const showButton = !!(field.dynamic && field.show_refresh_button) && !inProgress;
+
+  if (!showButton && !inProgress) {
+    return null;
+  }
+
+  return (
+    <div className="refresh-field-item">
+      {showButton && (
+        <Button
+          hasIconOnly
+          disabled={isDisabled}
+          className="refresh-field-button"
+          onClick={() => {
+            setData({
+              ...data,
+              fieldsToRefresh: [field.name],
+              dialogFields: resetDialogField(data.dialogFields, field),
+            });
+          }}
+          iconDescription={__(`Refresh ${field.label}`)}
+          tooltipAlignment="start"
+          tooltipPosition="left"
+          renderIcon={Renew}
+        />
+      )}
+      {inProgress && <Loading active small withOverlay={false} className="loading" />}
+    </div>
+  );
+};
+
+RefreshField.propTypes = {
+  field: PropTypes.shape({
+    label: PropTypes.string,
+    dynamic: PropTypes.bool,
+    show_refresh_button: PropTypes.bool,
+    dialog_field_responders: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string,
+  }).isRequired,
+};
+
+export default RefreshField;

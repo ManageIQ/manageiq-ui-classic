@@ -49,17 +49,74 @@ describe ServiceController do
   end
 
   describe "#service_reconfigure" do
-    let(:service) { instance_double("Service", :id => 321, :service_template => service_template, :name => "foo name") }
-    let(:service_template) { instance_double("ServiceTemplate", :name => "the name") }
-    let(:ar_association_dummy) { double }
-    let(:resource_action) { instance_double("ResourceAction", :id => 123) }
+    let(:dialog)           { FactoryBot.create(:dialog) }
+    let(:resource_action)  { FactoryBot.create(:resource_action, :action => 'Reconfigure', :dialog => dialog) }
+    let(:service_template) { FactoryBot.create(:service_template, :name => "the template", :resource_actions => [resource_action]) }
+    let(:service)          { FactoryBot.create(:service, :name => "my service", :service_template => service_template) }
 
-    before do
-      allow(Service).to receive(:find_by).with(:id => 321).and_return(service)
-      allow(service_template).to receive(:resource_actions).and_return(ar_association_dummy)
-      allow(ar_association_dummy).to receive(:find_by).with(:action => 'Reconfigure').and_return(resource_action)
-      allow(controller).to receive(:replace_right_cell)
-      controller.params = {:id => 321}
+    before { controller.params = {:id => service.id} }
+
+    context "when the service has a Reconfigure resource action with a dialog" do
+      it "sets @dialog_locals with the correct dialog id, params, and urls" do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:drop_breadcrumb)
+
+        controller.send(:service_reconfigure)
+
+        expect(assigns(:dialog_locals)).to include(
+          :dialogId => dialog.id,
+          :params   => {
+            :resourceActionId => resource_action.id,
+            :targetId         => service.id,
+            :targetType       => 'service'
+          },
+          :urls => {
+            :apiSubmitEndpoint    => "/api/services/#{service.id}",
+            :apiAction            => 'reconfigure',
+            :cancelEndPoint       => '/service/show_list',
+            :finishSubmitEndpoint => '/miq_request/show_list?typ=service/',
+            :openUrl              => false
+          }
+        )
+      end
+
+      it "sets @in_a_form" do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:drop_breadcrumb)
+
+        controller.send(:service_reconfigure)
+
+        expect(assigns(:in_a_form)).to be_truthy
+      end
+
+      it "drops a breadcrumb with the service name" do
+        allow(controller).to receive(:assert_privileges)
+        expect(controller).to receive(:drop_breadcrumb).with(
+          hash_including(:name => "Reconfigure Service \"my service\"")
+        )
+
+        controller.send(:service_reconfigure)
+      end
+    end
+
+    context "when the service has no service template" do
+      let(:service) { FactoryBot.create(:service, :name => "bare service") }
+
+      it "raises an error" do
+        allow(controller).to receive(:assert_privileges)
+
+        expect { controller.send(:service_reconfigure) }.to raise_error(NoMethodError)
+      end
+    end
+
+    context "when the service template has no Reconfigure resource action" do
+      let(:service_template) { FactoryBot.create(:service_template, :name => "no reconfigure template") }
+
+      it "raises an error" do
+        allow(controller).to receive(:assert_privileges)
+
+        expect { controller.send(:service_reconfigure) }.to raise_error(NoMethodError)
+      end
     end
   end
 
