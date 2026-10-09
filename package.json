@@ -133,7 +133,7 @@
     "fetch-mock": "^11.0.0",
     "file-loader": "~6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.5.3",
-    "glob": "~7.2.0",
+    "glob": "~13.0.6",
     "identity-obj-proxy": "^3.0.0",
     "imports-loader": "~1.2.0",
     "jasmine-jquery": "~2.1.1",
