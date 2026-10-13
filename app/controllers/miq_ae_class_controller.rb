@@ -81,6 +81,12 @@ class MiqAeClassController < ApplicationController
   # Display any Automate Domain through Tenant's textual summary
   def show
     assert_privileges('miq_ae_domain_view')
+
+    unless MiqAeNamespace.exists?(:id => params[:id])
+      redirect_to_explorer_with_error
+      return
+    end
+
     @sb[:action] = nil
     @explorer = true
     build_accordions_and_trees
@@ -88,7 +94,7 @@ class MiqAeClassController < ApplicationController
     self.x_node = "aen-#{params[:id]}"
     get_node_info(x_node)
 
-    render :layout => 'application'
+    render :action => 'explorer', :layout => 'application'
   end
 
   def set_right_cell_text(id, rec = nil)
