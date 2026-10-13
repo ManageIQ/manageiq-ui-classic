@@ -40,7 +40,7 @@ import { defaultField, resetFieldCounters, seedFieldCounters } from './data';
 import './style.scss';
 
 // ── Main component ────────────────────────────────────────────────────────────
-const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = false }) => {
+const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const { id: dialogId, action } = dialogAction || {};
 
   const [data, setData] = useState(null);
@@ -513,11 +513,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction, emsWorkflowsEnabled = fal
 };
 
 ServiceDialogForm.propTypes = {
-  dialogData: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    label: PropTypes.string,
-    description: PropTypes.string,
-  }),
   dialogAction: PropTypes.shape({
     id: PropTypes.string,
     action: PropTypes.oneOf(['new', 'edit', 'copy']),
