@@ -1,31 +1,13 @@
 - options = @edit || @options
 - id = options.try(:[], :req_id) || "new"
+- headers_data = options[:configured_system_headers].map do |key, text|
+  - sort_data = options[:configured_system_sortcol] == text ? options[:configured_system_sortdir] : 'NONE'
+  - {:header_text => text, :text => text, :sort_choice => key, :sort_data => sort_data}
+- rows_data = @configured_systems.map do |system|
+  - cells = options[:configured_system_headers].keys.map do |key|
+    - {:text => system.send(key).to_s}
+  - {:id => system.id.to_s, :cells => cells, :clickable => false}
+- initial_data = {:headers => headers_data, :rows => rows_data, :recordId => id,
+  :fieldId => field_id}
 
-#prov_configured_system_div
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-      - options[:configured_system_headers].each do |header, name|
-        %th
-          -# Replaced to exclude non-view table fields from sorting
-          -# dont show sort on show screen, need @edit variables for sort to work
-          - if @edit
-            = link_to(h(name),
-              {:action => "sort_configured_system_grid", :sort_choice => header, :field_id => field_id, :id => id.to_s},
-              "data-miq_sparkle_on"  => true,
-              "data-miq_sparkle_off" => true,
-              "data-method"          => :post,
-              :remote                => true)
-            - if name == options[:configured_system_sortcol]
-              %i{:class => @edit[:configured_system_sortdir] == 'ASC' ? 'fa fa-angle-up' : 'fa fa-angle-down'}
-          - else
-            = h(header)
-    %tbody
-    - @configured_systems.each do |row|
-      - @id = row.id
-      %tr
-        - options[:configured_system_headers].each do |col, _|
-          %td
-            = h(row.send(col))
-:javascript
-  miqScrollToSelected('prov_configured_system_div')
+= react('ProvConfiguredSystemGrid', :initialData => initial_data)
