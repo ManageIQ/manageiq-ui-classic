@@ -8,13 +8,13 @@ beforeEach(() => {
 
 describe('useDraftRecovery — key generation', () => {
   it('uses "service_dialog-new" for action new', () => {
-    const { saveDraft, loadDraft } = useDraftRecovery('', 'new');
+    const { saveDraft, loadDraft: _loadDraft } = useDraftRecovery('', 'new');
     saveDraft({ label: 'test' });
     expect(sessionStorage.getItem('service_dialog-new')).not.toBeNull();
   });
 
   it('uses "service_dialog-new" for action copy', () => {
-    const { saveDraft, loadDraft } = useDraftRecovery('42', 'copy');
+    const { saveDraft, loadDraft: _loadDraft2 } = useDraftRecovery('42', 'copy');
     saveDraft({ label: 'test' });
     expect(sessionStorage.getItem('service_dialog-new')).not.toBeNull();
   });

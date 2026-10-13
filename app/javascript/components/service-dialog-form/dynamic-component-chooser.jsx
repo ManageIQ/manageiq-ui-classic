@@ -15,14 +15,18 @@ const DynamicComponentChooser = ({ onDragStart = undefined }) => (
           onDragStart={(e) => {
             e.dataTransfer.setData('text/plain', id);
             e.dataTransfer.effectAllowed = 'copy';
-            if (onDragStart) onDragStart(id);
+            if (onDragStart) {
+              onDragStart(id);
+            }
           }}
           role="button"
           tabIndex={0}
           aria-label={sprintf(__('Drag %s into dialog'), label)}
           onKeyPress={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-              if (onDragStart) onDragStart(id);
+              if (onDragStart) {
+                onDragStart(id);
+              }
             }
           }}
         >

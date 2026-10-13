@@ -11,10 +11,16 @@ import {
 const fieldNames = (fields) => {
   const names = [];
   const walk = (arr) => {
-    if (!Array.isArray(arr)) return;
+    if (!Array.isArray(arr)) {
+      return;
+    }
     arr.forEach((f) => {
-      if (f && f.name) names.push(f.name);
-      if (f && f.fields) walk(f.fields);
+      if (f && f.name) {
+        names.push(f.name);
+      }
+      if (f && f.fields) {
+        walk(f.fields);
+      }
     });
   };
   walk(fields);
@@ -357,7 +363,9 @@ describe('validateEntryPoint', () => {
 
   it('returns undefined for a legacy API-loaded automate entry (ae_class present)', () => {
     // API-loaded fields carry ae_namespace/ae_class/ae_instance — no element wrapper
-    const value = { resource_type: 'DialogField', ae_namespace: 'Service', ae_class: 'Lifecycle', ae_instance: 'refresh', ae_attributes: {} };
+    const value = {
+      resource_type: 'DialogField', ae_namespace: 'Service', ae_class: 'Lifecycle', ae_instance: 'refresh', ae_attributes: {},
+    };
     expect(validateEntryPoint(value)).toBeUndefined();
   });
 
@@ -459,7 +467,9 @@ describe('optionsFields — dynamic entry point validate function is wired', () 
     // Walk all fields (including nested) to find resource_action
     const allFields = [];
     const walk = (arr) => arr.forEach((f) => {
-      if (f) allFields.push(f);
+      if (f) {
+        allFields.push(f);
+      }
     });
     walk(fields);
     const raField = allFields.find((f) => f.name === 'resource_action');
@@ -617,8 +627,12 @@ describe('optionsFields — validator_rule condition is gated on validator_type'
     const fields = optionsFields('DialogFieldTextBox', false);
     const allFields = [];
     const walk = (arr) => arr.forEach((f) => {
-      if (f) allFields.push(f);
-      if (f && f.fields) walk(f.fields);
+      if (f) {
+        allFields.push(f);
+      }
+      if (f && f.fields) {
+        walk(f.fields);
+      }
     });
     walk(fields);
     const ruleField = allFields.find((f) => f.name === 'validator_rule');

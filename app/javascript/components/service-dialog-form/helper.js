@@ -24,13 +24,6 @@ export const SD_ACTIONS = {
 export const sortItems = (items) =>
   [...items].sort((a, b) => a.position - b.position);
 
-// Unique field name validator
-// Returns true if name is already used by another field in the dialog
-export const uniqueNameValidator = (dialogData, currentField) => {
-  const allFields = getAllFields(dialogData);
-  return allFields.some((f) => f.name === currentField.name && f !== currentField);
-};
-
 const getAllFields = (dialogData) => {
   const fields = [];
   (dialogData.dialog_tabs || []).forEach((tab) => {
@@ -41,6 +34,13 @@ const getAllFields = (dialogData) => {
     });
   });
   return fields;
+};
+
+// Unique field name validator
+// Returns true if name is already used by another field in the dialog
+export const uniqueNameValidator = (dialogData, currentField) => {
+  const allFields = getAllFields(dialogData);
+  return allFields.some((f) => f.name === currentField.name && f !== currentField);
 };
 
 // Reorder / immutable array helpers
@@ -129,17 +129,25 @@ export const getComponentIdFromType = (type) => {
 // Field values normalisation
 // Converts angular [[value, description], ...] wire format to/from objects
 export const getFieldValues = (field) => {
-  if (!Array.isArray(field.values)) return [];
+  if (!Array.isArray(field.values)) {
+    return [];
+  }
   return field.values.map((v) => {
-    if (Array.isArray(v)) return { value: v[0], description: v[1] };
+    if (Array.isArray(v)) {
+      return { value: v[0], description: v[1] };
+    }
     return v;
   });
 };
 
 export const fieldValuesToArray = (values) => {
-  if (!Array.isArray(values)) return [];
+  if (!Array.isArray(values)) {
+    return [];
+  }
   return values.map((v) => {
-    if (Array.isArray(v)) return v;
+    if (Array.isArray(v)) {
+      return v;
+    }
     return [v.value, v.description];
   });
 };
@@ -157,24 +165,32 @@ export const fieldValuesToArray = (values) => {
 // separated by a space. isoToDatePickerValue always operates on the date portion only.
 
 export const isoToDatePickerValue = (iso) => {
-  if (!iso) return [];
+  if (!iso) {
+    return [];
+  }
   // Strip any time portion before parsing the date
   const datePart = iso.split(' ')[0];
   // Angular legacy format: 'MM/dd/yyyy'
   if (datePart.includes('/')) {
     const [mo, dy, yr] = datePart.split('/').map(Number);
-    if (mo && dy && yr) return [new Date(yr, mo - 1, dy)];
+    if (mo && dy && yr) {
+      return [new Date(yr, mo - 1, dy)];
+    }
     return [];
   }
   // ISO format: 'YYYY-MM-DD' or 'YYYY-MM-DDThh:mm:ssZ'
   const [y, m, d] = datePart.split('T')[0].split('-').map(Number);
-  if (!y || !m || !d) return [];
+  if (!y || !m || !d) {
+    return [];
+  }
   return [new Date(y, m - 1, d)];
 };
 
 // Extract the time string ('HH:MM') from a DateTime default_value, or '' if absent.
 export const extractTimeFromDateTime = (value) => {
-  if (!value || typeof value !== 'string') return '';
+  if (!value || typeof value !== 'string') {
+    return '';
+  }
   const parts = value.split(' ');
   return parts.length >= 2 ? parts[1] : '';
 };
@@ -182,8 +198,12 @@ export const extractTimeFromDateTime = (value) => {
 // Combine a 'YYYY-MM-DD' date string and 'HH:MM' time string into 'YYYY-MM-DD HH:MM'.
 // If no time is provided, returns the date string alone.
 export const combineDateAndTime = (dateStr, timeStr) => {
-  if (!dateStr) return '';
-  if (!timeStr) return dateStr;
+  if (!dateStr) {
+    return '';
+  }
+  if (!timeStr) {
+    return dateStr;
+  }
   return `${dateStr} ${timeStr}`;
 };
 
@@ -195,7 +215,9 @@ export const handlePropertiesEdit = (data, fieldName, updatedProps) => {
     dialog_groups: (tab.dialog_groups || []).map((group) => ({
       ...group,
       dialog_fields: (group.dialog_fields || []).map((field) => {
-        if (field.name !== fieldName) return field;
+        if (field.name !== fieldName) {
+          return field;
+        }
         return { ...field, ...updatedProps, _version: (field._version || 1) + 1 };
       }),
     })),
@@ -239,18 +261,18 @@ export const deleteTab = (data, tabIndex) => {
 };
 
 // Default tab/section
-export const defaultTab = (position = 0) => ({
-  label: __('New Tab'),
-  description: '',
-  position,
-  dialog_groups: [defaultSection(0)],
-});
-
 export const defaultSection = (position = 0) => ({
   label: __('New Section'),
   description: '',
   position,
   dialog_fields: [],
+});
+
+export const defaultTab = (position = 0) => ({
+  label: __('New Tab'),
+  description: '',
+  position,
+  dialog_groups: [defaultSection(0)],
 });
 
 // Dialog-level save guard
@@ -263,13 +285,63 @@ export const isSaveDisabled = (data) =>
   || !data.label?.trim()
   || (data.dialog_tabs || []).length === 0
   || (data.dialog_tabs || []).some((tab) =>
-      !tab.label?.trim()
+    !tab.label?.trim()
       || (tab.dialog_groups || []).length === 0
       || (tab.dialog_groups || []).some((group) =>
-          !group.label?.trim()
-          || (group.dialog_fields || []).length === 0
-        )
-    );
+        !group.label?.trim()
+          || (group.dialog_fields || []).length === 0));
+
+// Strip UI-only fields and normalise data types to match Angular wire format
+const sanitiseField = (field, position, action) => {
+  const {
+    // UI-only — strip these
+    automation_type: _at,
+    dynamicFieldList: _dfl,
+    _version: _v,
+    // angular internals (strip if present)
+    active: _active,
+    $$hashKey: _hash,
+    href: _href,
+    // For copy: id, dialog_group_id are handled at payload level
+    ...rest
+  } = field;
+
+  // Sanitise resource_action: keep only API-known keys, strip all tree-node
+  // and UI-only properties (isBranch, isSelected, element, children, parent,
+  // workflow_name, etc.) that come from the automate tree picker selection object.
+  // These names are ManageIQ API wire-format keys and cannot be camelCased.
+  /* eslint-disable camelcase */
+  let { resource_action } = rest;
+  if (resource_action) {
+    const {
+      resource_type,
+      ae_attributes,
+      ae_namespace,
+      ae_class,
+      ae_instance,
+      configuration_script_id,
+      id: ra_id,
+    } = resource_action;
+    resource_action = {
+      ...(resource_type !== undefined ? { resource_type } : {}),
+      ...(ae_attributes !== undefined ? { ae_attributes } : {}),
+      ...(ae_namespace !== undefined ? { ae_namespace } : {}),
+      ...(ae_class !== undefined ? { ae_class } : {}),
+      ...(ae_instance !== undefined ? { ae_instance } : {}),
+      ...(configuration_script_id !== undefined ? { configuration_script_id } : {}),
+      ...(ra_id !== undefined ? { id: ra_id } : {}),
+    };
+  }
+  /* eslint-enable camelcase */
+
+  // For copy action, strip database IDs
+  if (action === 'copy') {
+    const { id: _id, dialog_group_id: _dgid, ...copyRest } = rest;
+    return { ...copyRest, position, resource_action }; // eslint-disable-line camelcase
+  }
+
+  return { ...rest, position, resource_action }; // eslint-disable-line camelcase
+};
 
 // Build the API payload
 // action: 'create' | 'edit'
@@ -287,8 +359,7 @@ export const buildDialogPayload = (dialogData, action) => {
       description: group.description || '',
       position: gi,
       dialog_fields: (group.dialog_fields || []).map((field, fi) =>
-        sanitiseField(field, fi, action)
-      ),
+        sanitiseField(field, fi, action)),
     })),
   }));
 
@@ -316,55 +387,6 @@ export const buildDialogPayload = (dialogData, action) => {
       dialog_tabs: tabs,
     },
   };
-};
-
-// Strip UI-only fields and normalise data types to match Angular wire format
-const sanitiseField = (field, position, action) => {
-  const {
-    // UI-only — strip these
-    automation_type: _at,
-    dynamicFieldList: _dfl,
-    _version: _v,
-    // angular internals (strip if present)
-    active: _active,
-    $$hashKey: _hash,
-    href: _href,
-    // For copy: id, dialog_group_id are handled at payload level
-    ...rest
-  } = field;
-
-  // Sanitise resource_action: keep only API-known keys, strip all tree-node
-  // and UI-only properties (isBranch, isSelected, element, children, parent,
-  // workflow_name, etc.) that come from the automate tree picker selection object.
-  let resource_action = rest.resource_action;
-  if (resource_action) {
-    const {
-      resource_type,
-      ae_attributes,
-      ae_namespace,
-      ae_class,
-      ae_instance,
-      configuration_script_id,
-      id: ra_id,
-    } = resource_action;
-    resource_action = {
-      ...(resource_type !== undefined ? { resource_type } : {}),
-      ...(ae_attributes !== undefined ? { ae_attributes } : {}),
-      ...(ae_namespace !== undefined ? { ae_namespace } : {}),
-      ...(ae_class !== undefined ? { ae_class } : {}),
-      ...(ae_instance !== undefined ? { ae_instance } : {}),
-      ...(configuration_script_id !== undefined ? { configuration_script_id } : {}),
-      ...(ra_id !== undefined ? { id: ra_id } : {}),
-    };
-  }
-
-  // For copy action, strip database IDs
-  if (action === 'copy') {
-    const { id: _id, dialog_group_id: _dgid, ...copyRest } = rest;
-    return { ...copyRest, position, resource_action };
-  }
-
-  return { ...rest, position, resource_action };
 };
 
 // Empty dialog template

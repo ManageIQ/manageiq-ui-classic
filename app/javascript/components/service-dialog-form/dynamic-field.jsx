@@ -45,7 +45,9 @@ const DynamicField = ({
   // Fetch categories once when this field is a TagControl.
   // Other field types never need this data.
   useEffect(() => {
-    if (field.type !== 'DialogFieldTagControl') return;
+    if (field.type !== 'DialogFieldTagControl') {
+      return;
+    }
     API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children')
       .then((response) => setCategories(response.resources || []))
       .catch(() => {});
@@ -98,13 +100,13 @@ const DynamicField = ({
 };
 
 DynamicField.propTypes = {
-  field: PropTypes.object.isRequired,
+  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fieldIndex: PropTypes.number.isRequired,
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
-  dialogData: PropTypes.object,
+  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 export default DynamicField;

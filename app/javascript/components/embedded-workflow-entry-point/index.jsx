@@ -50,7 +50,9 @@ const EmbeddedWorkflowEntryPoint = (props) => {
   useEffect(() => {
     // Skip the initial mount — the init effect already populated textValue from input.value.
     // Running here on the first render would see selectedValue={} and wipe the text.
-    if (isFirstRender.current) return;
+    if (isFirstRender.current) {
+      return;
+    }
 
     if (selectedValue && selectedValue.name && selectedValue.name.text) {
       setTextValue(selectedValue.name.text);

@@ -1,3 +1,4 @@
+/* global DataTransfer, DragEvent */
 /**
  * Simulate dropping a field type from the Service Dialog palette into the first
  * section body using synthetic DragEvents.

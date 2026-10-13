@@ -1,4 +1,6 @@
-import { TextAlignLeft, TextAlignCenter, Checkbox, ChevronDown, RadioButton, Calendar, Time, Tag } from '@carbon/react/icons';
+import {
+  TextAlignLeft, TextAlignCenter, Checkbox, ChevronDown, RadioButton, Calendar, Time, Tag,
+} from '@carbon/react/icons';
 
 // SD_ACTIONS keys – imported from helper.js (re-exported here for convenience)
 export { SD_ACTIONS } from './helper';
@@ -47,6 +49,37 @@ export const fieldComponents = [
   },
 ];
 
+const typeToNameBase = (type) => {
+  const map = {
+    DialogFieldTextBox: 'text_box',
+    DialogFieldTextAreaBox: 'text_area_box',
+    DialogFieldCheckBox: 'check_box',
+    DialogFieldDropDownList: 'dropdown_list',
+    DialogFieldRadioButton: 'radio_button',
+    DialogFieldDateControl: 'date_control',
+    DialogFieldDateTimeControl: 'date_time_control',
+    DialogFieldTagControl: 'tag_control',
+  };
+  return map[type] || 'field';
+};
+
+const fieldLabelForType = (type) => {
+  const comp = fieldComponents.find((c) => c.id === type);
+  return comp ? comp.label : __('Field');
+};
+
+let fieldCounters = {};
+
+export const resetFieldCounters = () => {
+  fieldCounters = {};
+};
+
+const generateFieldName = (type) => {
+  const base = typeToNameBase(type);
+  fieldCounters[base] = (fieldCounters[base] || 0) + 1;
+  return `${base}_${fieldCounters[base]}`;
+};
+
 // Default field shape matching Angular ground truth (toolboxComponent.ts)
 export const defaultField = (type, position = 0) => {
   const base = {
@@ -89,7 +122,9 @@ export const defaultField = (type, position = 0) => {
         ...base,
         data_type: 'string',
         values: [['1', 'One'], ['2', 'Two'], ['3', 'Three']],
-        options: { ...base.options, sort_by: 'description', sort_order: 'ascending', force_multi_value: false },
+        options: {
+          ...base.options, sort_by: 'description', sort_order: 'ascending', force_multi_value: false,
+        },
       };
 
     case 'DialogFieldRadioButton':
@@ -123,10 +158,6 @@ export const defaultField = (type, position = 0) => {
   }
 };
 
-let fieldCounters = {};
-
-export const resetFieldCounters = () => { fieldCounters = {}; };
-
 /**
  * Seed fieldCounters from existing dialog field names so that the next
  * generated name for any type starts above the highest number already in use.
@@ -149,29 +180,4 @@ export const seedFieldCounters = (dialogData) => {
       });
     });
   });
-};
-
-const generateFieldName = (type) => {
-  const base = typeToNameBase(type);
-  fieldCounters[base] = (fieldCounters[base] || 0) + 1;
-  return `${base}_${fieldCounters[base]}`;
-};
-
-const typeToNameBase = (type) => {
-  const map = {
-    DialogFieldTextBox: 'text_box',
-    DialogFieldTextAreaBox: 'text_area_box',
-    DialogFieldCheckBox: 'check_box',
-    DialogFieldDropDownList: 'dropdown_list',
-    DialogFieldRadioButton: 'radio_button',
-    DialogFieldDateControl: 'date_control',
-    DialogFieldDateTimeControl: 'date_time_control',
-    DialogFieldTagControl: 'tag_control',
-  };
-  return map[type] || 'field';
-};
-
-const fieldLabelForType = (type) => {
-  const comp = fieldComponents.find((c) => c.id === type);
-  return comp ? comp.label : __('Field');
 };

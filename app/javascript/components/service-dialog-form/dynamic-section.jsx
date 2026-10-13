@@ -35,14 +35,18 @@ const DynamicSection = ({
 
   // ── Section drag-and-drop (reordering sections) ─────────────────────────────
   const handleSectionDragStart = (e) => {
-    if (isModalOpen()) { e.preventDefault(); return; }
+    if (isModalOpen()) {
+      e.preventDefault(); return;
+    }
     e.dataTransfer.setData('application/sd-section', String(sectionIndex));
     e.dataTransfer.effectAllowed = 'move';
   };
 
   // ── Field drag-and-drop (reordering fields within this section) ─────────────
   const handleFieldDragStart = (e, fieldIndex) => {
-    if (isModalOpen()) { e.preventDefault(); return; }
+    if (isModalOpen()) {
+      e.preventDefault(); return;
+    }
     e.stopPropagation(); // don't trigger section drag
     setDragFieldIndex(fieldIndex);
     e.dataTransfer.setData('application/sd-field', String(fieldIndex));
@@ -63,7 +67,9 @@ const DynamicSection = ({
       e.preventDefault();
       e.stopPropagation(); // keep it away from the section-reorder handler
       e.dataTransfer.dropEffect = 'move';
-      if (reorderOverIndex !== fi) setReorderOverIndex(fi);
+      if (reorderOverIndex !== fi) {
+        setReorderOverIndex(fi);
+      }
     }
     // palette drags fall through — __body handles them
   };
@@ -76,7 +82,9 @@ const DynamicSection = ({
       e.stopPropagation();
       const fromIndex = parseInt(fromStr, 10);
       if (!Number.isNaN(fromIndex) && fromIndex !== fi) {
-        onAction(SD_ACTIONS.field.reorder, { tabIndex, sectionIndex, fromIndex, toIndex: fi });
+        onAction(SD_ACTIONS.field.reorder, {
+          tabIndex, sectionIndex, fromIndex, toIndex: fi,
+        });
       }
       setDragFieldIndex(null);
       setReorderOverIndex(null);
@@ -114,7 +122,9 @@ const DynamicSection = ({
     <div
       className="dynamic-section"
       onDragOver={(e) => {
-        if (e.dataTransfer.types.includes('application/sd-section')) e.preventDefault();
+        if (e.dataTransfer.types.includes('application/sd-section')) {
+          e.preventDefault();
+        }
       }}
       onDrop={(e) => {
         const fromStr = e.dataTransfer.getData('application/sd-section');
@@ -179,7 +189,11 @@ const DynamicSection = ({
             onDragStart={(e) => handleFieldDragStart(e, fi)}
             onDragEnd={handleFieldDragEnd}
             onDragOver={(e) => handleWrapperDragOver(e, fi)}
-            onDragLeave={() => { if (reorderOverIndex === fi) setReorderOverIndex(null); }}
+            onDragLeave={() => {
+              if (reorderOverIndex === fi) {
+                setReorderOverIndex(null);
+              }
+            }}
             onDrop={(e) => handleWrapperDrop(e, fi)}
           >
             <DynamicField
@@ -202,13 +216,13 @@ const DynamicSection = ({
 DynamicSection.propTypes = {
   section: PropTypes.shape({
     label: PropTypes.string,
-    dialog_fields: PropTypes.array,
+    dialog_fields: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   }).isRequired,
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
-  dialogData: PropTypes.object,
+  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 export default DynamicSection;

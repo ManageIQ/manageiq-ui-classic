@@ -152,11 +152,15 @@ const AutomateEntryPoints = ({
       data.forEach((node) => {
         if (selectedNode && (node.id === selectedNode.element.id)) {
           const el = document.getElementById(node.id);
-          if (el) el.style.backgroundColor = 'transparent';
+          if (el) {
+            el.style.backgroundColor = 'transparent';
+          }
         }
       });
       const selEl = document.getElementById(value.element.id);
-      if (selEl) selEl.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      if (selEl) {
+        selEl.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      }
       setSelectedNode(value);
       setDisableSubmit(false);
     }
@@ -165,7 +169,9 @@ const AutomateEntryPoints = ({
   const onExpand = (value) => {
     if (value.isExpanded && selectedNode) {
       const el = document.getElementById(selectedNode.element.id);
-      if (el) el.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      if (el) {
+        el.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      }
     }
   };
 
@@ -184,7 +190,9 @@ const AutomateEntryPoints = ({
 
   const FileIcon = () => <Document size={16} className="icon" />;
 
-  if (isLoading || !showModal) return null;
+  if (isLoading || !showModal) {
+    return null;
+  }
 
   return createPortal(
     <Modal
@@ -269,7 +277,7 @@ AutomateEntryPoints.propTypes = {
   field: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   selected: PropTypes.string,
-  selectedValue: PropTypes.objectOf(PropTypes.any),
+  selectedValue: PropTypes.objectOf(PropTypes.any), // eslint-disable-line react/forbid-prop-types
   showModal: PropTypes.bool,
   includeDomainPrefix: PropTypes.bool,
   setSelectedValue: PropTypes.func.isRequired,
