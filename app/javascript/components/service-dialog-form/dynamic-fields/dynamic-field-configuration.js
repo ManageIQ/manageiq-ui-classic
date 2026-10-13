@@ -629,7 +629,7 @@ export const overridableOptionsFields = (type) => {
           name: 'default_value',
           label: __('Default value'),
           resolveProps: (_props, _field, formOptions) => ({
-            type: formOptions.getState().values['options.protected'] ? 'password' : 'text',
+            type: formOptions.getState().values?.options?.protected ? 'password' : 'text',
           }),
         },
         ...visibilityFields(),

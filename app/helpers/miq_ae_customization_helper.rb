@@ -4,6 +4,7 @@ module MiqAeCustomizationHelper
   include SharedHelper::AbListHelper
 
   DIALOG_TAB_IDS = %w[sample_tab info_tab].freeze
+  CHECKBOX_TRUTHY_VALUES = ['t', true].freeze
 
   def dialog_tab_configuration
     DIALOG_TAB_IDS.map(&:to_sym)
@@ -76,7 +77,7 @@ module MiqAeCustomizationHelper
                 when 'DialogFieldTagControl'
                   field_data[:category_name] = field.options[:category_name]
                 when 'DialogFieldCheckBox'
-                  field_data[:checked] = field.default_value == 't' || field.default_value == true
+                  field_data[:checked] = CHECKBOX_TRUTHY_VALUES.include?(field.default_value)
                 end
 
                 field_data
