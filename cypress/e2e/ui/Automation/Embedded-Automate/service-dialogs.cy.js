@@ -37,8 +37,8 @@ const selectDialog = (label) => {
 //
 // These tests require a live Rails server and DB.
 // UI-level concerns (rendering, interactions, component logic) are covered in Jest:
-//   spec/service-dialog-form/interaction.test.jsx
-//   spec/service-dialog-form/use-draft-recovery.test.js
+//   spec/service-dialog-form/interaction.spec.jsx
+//   spec/service-dialog-form/use-draft-recovery.spec.js
 
 /**
  * Create a fully structured dialog (dialog → tab → section → text field) via
