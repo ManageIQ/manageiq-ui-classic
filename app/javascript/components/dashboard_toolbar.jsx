@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import PropTypes from 'prop-types';
 import {
   Button, OverflowMenu, OverflowMenuItem,

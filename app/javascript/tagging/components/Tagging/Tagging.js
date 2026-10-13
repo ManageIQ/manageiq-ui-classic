@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
@@ -9,7 +8,6 @@ import ValueModifier from '../InnerComponents/ValueModifier';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class Tagging extends React.Component {
-  // eslint-disable-next-line react/sort-comp
   onTagValueChange = (selectedTagValue) => {
     const {
       selectedTagCategory, options,

@@ -1,13 +1,11 @@
-const globals = require('globals');
-const js = require('@eslint/js');
-const jestPlugin = require('eslint-plugin-jest');
-const reactPlugin = require('eslint-plugin-react');
-const reactHooksPlugin = require('eslint-plugin-react-hooks');
-const angularPlugin = require('eslint-plugin-angular');
-const importPlugin = require('eslint-plugin-import');
-const jsxA11yPlugin = require('eslint-plugin-jsx-a11y');
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
+import globals from 'globals';
+import js from '@eslint/js';
+import jestPlugin from 'eslint-plugin-jest';
+import reactPlugin from '@eslint-react/eslint-plugin';
+import importPlugin from 'eslint-plugin-import-x';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
 // Shared ManageIQ globals used by both JSX and TypeScript configurations
 const sharedManageIQGlobals = {
@@ -34,148 +32,34 @@ const sharedManageIQGlobals = {
 };
 
 // Shared rules used by both JSX and TypeScript configurations
+// Uses @eslint-react/* rule names (ESLint 10-compatible replacement for eslint-plugin-react)
 const sharedReactRules = {
-  'react/boolean-prop-naming': [
-    'off',
-    {
-      propTypeNames: ['bool', 'mutuallyExclusiveTrueProps'],
-      rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
-    },
-  ],
-  'react/button-has-type': [
-    'error',
-    { button: true, submit: true, reset: false },
-  ],
-  'react/destructuring-assignment': ['error', 'always'],
-  'react/jsx-filename-extension': 'off',
-  'react/jsx-first-prop-new-line': ['error', 'multiline'],
-  'react/jsx-props-no-spreading': 'off',
-  'react/prop-types': 'off',
-  'react/display-name': ['off', { ignoreTranspilerName: false }],
-  'react/forbid-component-props': ['off', { forbid: [] }],
-  'react/forbid-dom-props': ['off', { forbid: [] }],
-  'react/forbid-elements': ['off', { forbid: [] }],
-  'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
-  'react/function-component-definition': 'off',
-  'react/no-access-state-in-setstate': 'error',
-  'react/no-array-index-key': 'error',
-  'react/no-children-prop': 'error',
-  'react/no-danger': 'warn',
-  'react/no-danger-with-children': 'error',
-  'react/no-deprecated': ['error'],
-  'react/no-did-mount-set-state': 'off',
-  'react/no-did-update-set-state': 'error',
-  'react/no-direct-mutation-state': 'off',
-  'react/no-find-dom-node': 'error',
-  'react/no-is-mounted': 'error',
-  'react/no-multi-comp': 'off',
-  'react/no-redundant-should-component-update': 'error',
-  'react/no-render-return-value': 'error',
-  'react/no-set-state': 'off',
-  'react/no-typos': 'error',
-  'react/no-string-refs': 'error',
-  'react/no-this-in-sfc': 'error',
-  'react/no-unescaped-entities': 'error',
-  'react/no-unknown-property': 'error',
-  'react/no-unsafe': 'off',
-  'react/no-unused-state': 'error',
-  'react/no-will-update-set-state': 'error',
-  'react/prefer-es6-class': ['error', 'always'],
-  'react/prefer-read-only-props': 'off',
-  'react/prefer-stateless-function': ['error', { ignorePureComponents: true }],
-  'react/react-in-jsx-scope': 'off',
-  'react/require-optimization': ['off', { allowDecorators: [] }],
-  'react/require-render-return': 'error',
-  'react/self-closing-comp': 'error',
-  'react/state-in-constructor': ['error', 'always'],
-  'react/static-property-placement': ['error', 'property assignment'],
-  'react/style-prop-object': 'error',
-  'react/void-dom-elements-no-children': 'error',
-  'react/jsx-boolean-value': ['error', 'never', { always: [] }],
-  'react/jsx-child-element-spacing': 'off',
-  'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
-  'react/jsx-closing-tag-location': 'error',
-  'react/jsx-curly-spacing': ['error', 'never', { allowMultiline: true }],
-  'react/jsx-curly-newline': [
-    'error',
-    { multiline: 'consistent', singleline: 'consistent' },
-  ],
-  'react/jsx-equals-spacing': ['error', 'never'],
-  'react/jsx-handler-names': [
-    'off',
-    { eventHandlerPrefix: 'handle', eventHandlerPropPrefix: 'on' },
-  ],
-  'react/jsx-indent': ['error', 2],
-  'react/jsx-indent-props': ['error', 2],
-  'react/jsx-key': 'off',
-  'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
-  'react/jsx-no-bind': [
-    'error',
-    {
-      ignoreRefs: true,
-      allowArrowFunctions: true,
-      allowFunctions: false,
-      allowBind: false,
-      ignoreDOMComponents: true,
-    },
-  ],
-  'react/jsx-no-comment-textnodes': 'error',
-  'react/jsx-no-duplicate-props': ['error', { ignoreCase: true }],
-  'react/jsx-no-literals': ['off', { noStrings: true }],
-  'react/jsx-no-target-blank': [
-    'error',
-    { enforceDynamicLinks: 'always', links: true, forms: false },
-  ],
-  'react/jsx-no-undef': 'error',
-  'react/jsx-no-useless-fragment': 'error',
-  'react/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
-  'react/jsx-curly-brace-presence': [
-    'error',
-    { props: 'never', children: 'never' },
-  ],
-  'react/jsx-fragments': ['error', 'syntax'],
-  'react/jsx-pascal-case': ['error', { allowAllCaps: true, ignore: [] }],
-  'react/jsx-props-no-multi-spaces': 'error',
-  'react/jsx-sort-default-props': ['off', { ignoreCase: true }],
-  'react/jsx-sort-props': [
-    'off',
-    {
-      ignoreCase: true,
-      callbacksLast: false,
-      shorthandFirst: false,
-      shorthandLast: false,
-      noSortAlphabetically: false,
-      reservedFirst: true,
-    },
-  ],
-  'react/jsx-tag-spacing': [
-    'error',
-    {
-      closingSlash: 'never',
-      beforeSelfClosing: 'always',
-      afterOpening: 'never',
-      beforeClosing: 'never',
-    },
-  ],
-  'react/jsx-uses-react': ['error'],
-  'react/jsx-uses-vars': 'error',
-  'react/jsx-wrap-multilines': [
-    'error',
-    {
-      declaration: 'parens-new-line',
-      assignment: 'parens-new-line',
-      return: 'parens-new-line',
-      arrow: 'parens-new-line',
-      condition: 'parens-new-line',
-      logical: 'parens-new-line',
-      prop: 'parens-new-line',
-    },
-  ],
+  '@eslint-react/no-access-state-in-setstate': 'error',
+  '@eslint-react/no-array-index-key': 'error',
+  '@eslint-react/jsx-no-children-prop': 'error',
+  '@eslint-react/dom-no-dangerously-set-innerhtml': 'warn',
+  '@eslint-react/dom-no-dangerously-set-innerhtml-with-children': 'error',
+  // Deprecated lifecycle methods (replaces react/no-deprecated)
+  '@eslint-react/no-component-will-mount': 'error',
+  '@eslint-react/no-component-will-receive-props': 'error',
+  '@eslint-react/no-component-will-update': 'error',
+  '@eslint-react/no-unsafe-component-will-mount': 'off',
+  '@eslint-react/no-set-state-in-component-did-update': 'error',
+  '@eslint-react/dom-no-find-dom-node': 'error',
+  '@eslint-react/dom-no-render-return-value': 'error',
+  '@eslint-react/dom-no-unknown-property': 'error',
+  '@eslint-react/no-unused-state': 'error',
+  '@eslint-react/no-set-state-in-component-will-update': 'error',
+  '@eslint-react/dom-no-void-elements-with-children': 'error',
+  '@eslint-react/jsx-no-comment-textnodes': 'error',
+  '@eslint-react/dom-no-unsafe-target-blank': 'error',
+  '@eslint-react/no-missing-key': 'off',
+  '@eslint-react/no-direct-mutation-state': 'off',
 };
 
 const sharedReactHooksRules = {
-  'react-hooks/rules-of-hooks': 'error',
-  'react-hooks/exhaustive-deps': 'off',
+  '@eslint-react/rules-of-hooks': 'error',
+  '@eslint-react/exhaustive-deps': 'off',
 };
 
 const sharedImportRules = {
@@ -876,7 +760,7 @@ const sharedAirbnbBaseRules = {
   ],
 };
 
-module.exports = [
+export default [
   // ESLint recommended rules (similar to airbnb base)
   js.configs.recommended,
   {
@@ -891,15 +775,16 @@ module.exports = [
       'coverage/',
       // Yarn release files
       '.yarn/',
+      // ESLint config itself (ESM, not subject to project lint rules)
+      'eslint.config.mjs',
     ],
   },
   {
-    // Config files (Node.js environment)
+    // Config files (Node.js CJS environment)
     files: [
       '.babelrc.js',
       'jest.config.js',
       'cypress.config.js',
-      'eslint.config.js',
       'config/webpack/**/*.js',
     ],
     plugins: {
@@ -928,6 +813,30 @@ module.exports = [
     rules: {
       'no-console': 0,
       'import/no-dynamic-require': 0,
+    },
+  },
+  {
+    // Jest setup file (ESM with Node.js globals)
+    files: ['config/jest.setup.js'],
+    plugins: {
+      import: importPlugin,
+    },
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        require: 'readonly',
+        module: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        window: 'writable',
+        document: 'readonly',
+        global: 'readonly',
+        ...sharedManageIQGlobals,
+      },
+    },
+    rules: {
+      'no-console': 0,
     },
   },
   {
@@ -1022,8 +931,7 @@ module.exports = [
     files: ['app/javascript/**/*.js', 'app/javascript/**/*.jsx'],
     plugins: {
       jest: jestPlugin,
-      react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
+      '@eslint-react': reactPlugin,
       import: importPlugin,
       'jsx-a11y': jsxA11yPlugin,
     },
@@ -1076,12 +984,10 @@ module.exports = [
       },
     },
     settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
+      'import-x/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+          tryExtensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         },
       },
     },
@@ -1089,78 +995,6 @@ module.exports = [
       // Shared rules from constants
       ...sharedJestRules,
       ...sharedReactRules,
-      'react/require-default-props': ['warn', { functions: 'defaultArguments' }],
-
-      // JSX-specific PropTypes rules (not in TypeScript)
-      'react/forbid-prop-types': [
-        'error',
-        {
-          forbid: ['any', 'array', 'object'],
-          checkContextTypes: true,
-          checkChildContextTypes: true,
-        },
-      ],
-      'react/no-unused-prop-types': [
-        'error',
-        { customValidators: [], skipShapeProps: true },
-      ],
-      'react/sort-comp': [
-        'error',
-        {
-          order: [
-            'static-variables',
-            'static-methods',
-            'instance-variables',
-            'lifecycle',
-            '/^handle.+$/',
-            '/^on.+$/',
-            'getters',
-            'setters',
-            '/^(get|set)(?!(InitialState$|ChildContext$)).+$/',
-            'instance-methods',
-            'everything-else',
-            'rendering',
-          ],
-          groups: {
-            lifecycle: [
-              'displayName',
-              'propTypes',
-              'contextTypes',
-              'childContextTypes',
-              'mixins',
-              'statics',
-              'constructor',
-              'getInitialState',
-              'state',
-              'getChildContext',
-              'getDerivedStateFromProps',
-              'componentWillMount',
-              'UNSAFE_componentWillMount',
-              'componentDidMount',
-              'componentWillReceiveProps',
-              'UNSAFE_componentWillReceiveProps',
-              'shouldComponentUpdate',
-              'componentWillUpdate',
-              'UNSAFE_componentWillUpdate',
-              'getSnapshotBeforeUpdate',
-              'componentDidUpdate',
-              'componentDidCatch',
-              'componentWillUnmount',
-            ],
-            rendering: ['/^render.+$/', 'render'],
-          },
-        },
-      ],
-      'react/sort-prop-types': [
-        'off',
-        {
-          ignoreCase: true,
-          callbacksLast: false,
-          requiredFirst: false,
-          sortShapeProp: true,
-        },
-      ],
-
       ...sharedReactHooksRules,
       ...sharedImportRules,
 
@@ -1231,23 +1065,20 @@ module.exports = [
     },
   },
   {
-    // Legacy JavaScript files (ES5) - everything else
+    // Legacy JavaScript files - everything else
     files: ['**/*.js'],
     ignores: [
       'app/javascript/**/*.js',
       '.babelrc.js',
       'jest.config.js',
+      'config/jest.setup.js',
       'cypress.config.js',
-      'eslint.config.js',
       'config/webpack/**/*.js',
       'cypress/**/*.js',
       '.yarn/**',
     ],
-    plugins: {
-      angular: angularPlugin,
-    },
     languageOptions: {
-      ecmaVersion: 5,
+      ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
         // Browser environment
@@ -1526,19 +1357,16 @@ module.exports = [
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
-      react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
+      '@eslint-react': reactPlugin,
       import: importPlugin,
       'jsx-a11y': jsxA11yPlugin,
       jest: jestPlugin,
     },
     settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
+      'import-x/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+          tryExtensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         },
       },
     },

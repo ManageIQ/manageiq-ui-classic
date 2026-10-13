@@ -154,7 +154,6 @@ class RemoveGenericItemModal extends React.Component {
       payload: {
         newRecord: true,
         pristine: true,
-        // eslint-disable-next-line react/destructuring-assignment
         addClicked: () => removeItems(this.state.data, this.state.force, {
           ajaxReload: ajax_reload,
           apiUrl: api_url,

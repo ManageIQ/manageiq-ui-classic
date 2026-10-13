@@ -135,7 +135,6 @@ export const conditionalCheckbox = (props) => {
 /** wrapper component to show the tenants tree structure */
 export const TreeViewReduxWrapper = (props) => {
   const propsData = useFieldApi(props);
-  // eslint-disable-next-line react/destructuring-assignment
   if (props.roleAllows) {
     return (
       <div>

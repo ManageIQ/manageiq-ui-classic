@@ -265,7 +265,6 @@ MiqTableCell.propTypes = {
   cell: PropTypes.shape({
     id: PropTypes.string,
     value: PropTypes.string,
-    // eslint-disable-next-line react/forbid-prop-types
     data: PropTypes.any,
     clickable: PropTypes.bool,
   }),

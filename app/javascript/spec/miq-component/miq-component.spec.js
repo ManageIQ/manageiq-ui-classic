@@ -449,7 +449,7 @@ describe('Component API', () => {
 
     testInstances.forEach((instance) => {
       expect(() => {
-        instance.id = 'second'; // eslint-disable-line no-param-reassign, param reassing this is expected to fail, therefore eslint rule here does not make sense
+        instance.id = 'second'; // eslint-disable-line no-param-reassign
       }).toThrow();
     });
   });
