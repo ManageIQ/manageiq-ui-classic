@@ -25,7 +25,6 @@ const renderQuad = (data) => (
 
 const isQuad = (data) => quadSet.some((quad) => data[quad]);
 
-// eslint-disable-next-line react/destructuring-assignment
 const Quadicon = (props) => (<div className="miq-quadicon">{isQuad(props.data) ? renderQuad(props.data) : renderSingle(props.data)}</div>);
 export default Quadicon;
 

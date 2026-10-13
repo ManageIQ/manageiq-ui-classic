@@ -30,7 +30,6 @@ const ReconfigureTemplate = ({
 };
 
 ReconfigureTemplate.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   formFields: PropTypes.node,
   canSubmit: PropTypes.bool,
   hideButtons: PropTypes.bool,

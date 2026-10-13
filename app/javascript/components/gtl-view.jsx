@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';

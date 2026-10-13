@@ -10,7 +10,7 @@ import {
   containerproviders,
 } from '../data/quadicons';
 
-/* eslint no-bitwise: ["error", { "allow": ["^", ">>>"] }], react/jsx-closing-tag-location: ["off"] */
+/* eslint no-bitwise: ["error", { "allow": ["^", ">>>"] }] */
 
 const hObj = (obj) => {
   const s = JSON.stringify(obj);

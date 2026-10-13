@@ -91,7 +91,7 @@ const OpsTenantForm = ({
 };
 
 OpsTenantForm.propTypes = {
-  recordId: (props, propName, componentName) => { // eslint-disable-line react/require-default-props
+  recordId: (props, propName, componentName) => {
     const value = props[propName];
     if (!(typeof value === 'string' || typeof value === 'number' || value === null)) {
       return new Error(`Invalida prop '${propName}' supplied to ${componentName}. Expected number, string or null.`);
