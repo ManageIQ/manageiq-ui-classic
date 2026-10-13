@@ -20,6 +20,10 @@ import {
   isSaveDisabled,
 } from '../../components/service-dialog-form/helper';
 
+// seedFieldCounters — duplicate name regression
+
+import { defaultField, seedFieldCounters, resetFieldCounters } from '../../components/service-dialog-form/data';
+
 // Fixtures
 
 const makeField = (name, extra = {}) => ({
@@ -564,10 +568,6 @@ describe('buildDialogPayload (copy)', () => {
     expect(payload.resource.dialog_tabs[0].dialog_groups[0].id).toBeUndefined();
   });
 });
-
-// seedFieldCounters — duplicate name regression
-
-import { defaultField, seedFieldCounters, resetFieldCounters } from '../../components/service-dialog-form/data';
 
 describe('seedFieldCounters', () => {
   beforeEach(() => {

@@ -57,12 +57,12 @@ export const fieldInfoFields = (showDynamic = true) => [
   },
   ...(showDynamic
     ? [{
-        component: 'switch',
-        name: 'dynamic',
-        label: __('Dynamic'),
-        onText: __('Yes'),
-        offText: __('No'),
-      }]
+      component: 'switch',
+      name: 'dynamic',
+      label: __('Dynamic'),
+      onText: __('Yes'),
+      offText: __('No'),
+    }]
     : []),
 ];
 
@@ -182,14 +182,14 @@ export const validateEntryPoint = (value) => {
 const dynamicEntryFields = (emsWorkflowsEnabled = false, showLoadValuesOnInit = true) => [
   ...(emsWorkflowsEnabled
     ? [{
-        component: 'select',
-        name: 'automation_type',
-        label: __('Automation Type'),
-        options: [
-          { label: __('Embedded Automate'), value: 'embedded_automate' },
-          { label: __('Embedded Workflows'), value: 'embedded_workflow' },
-        ],
-      }]
+      component: 'select',
+      name: 'automation_type',
+      label: __('Automation Type'),
+      options: [
+        { label: __('Embedded Automate'), value: 'embedded_automate' },
+        { label: __('Embedded Workflows'), value: 'embedded_workflow' },
+      ],
+    }]
     : []),
   {
     component: 'embedded-automate-entry-point',
@@ -205,15 +205,15 @@ const dynamicEntryFields = (emsWorkflowsEnabled = false, showLoadValuesOnInit = 
   },
   ...(emsWorkflowsEnabled
     ? [{
-        component: 'embedded-workflow-entry-point',
-        name: 'resource_action_workflow',
-        id: 'resource_action_workflow',
-        label: __('Workflow Entry Point'),
-        field: 'DialogField',
-        type: 'DialogField',
-        validate: [validateEntryPoint],
-        condition: { when: 'automation_type', is: 'embedded_workflow' },
-      }]
+      component: 'embedded-workflow-entry-point',
+      name: 'resource_action_workflow',
+      id: 'resource_action_workflow',
+      label: __('Workflow Entry Point'),
+      field: 'DialogField',
+      type: 'DialogField',
+      validate: [validateEntryPoint],
+      condition: { when: 'automation_type', is: 'embedded_workflow' },
+    }]
     : []),
   {
     component: 'switch',
@@ -224,12 +224,12 @@ const dynamicEntryFields = (emsWorkflowsEnabled = false, showLoadValuesOnInit = 
   },
   ...(showLoadValuesOnInit
     ? [{
-        component: 'switch',
-        name: 'load_values_on_init',
-        label: __('Load Values on Init'),
-        onText: __('Yes'),
-        offText: __('No'),
-      }]
+      component: 'switch',
+      name: 'load_values_on_init',
+      label: __('Load Values on Init'),
+      onText: __('Yes'),
+      offText: __('No'),
+    }]
     : []),
 ];
 
@@ -313,7 +313,9 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       ];
     }
     return [
-      { component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3 },
+      {
+        component: 'textarea', name: 'default_value', label: __('Default value'), rows: 3,
+      },
       requiredField(),
       ...visibilityFields(),
       ...validationFields(),
@@ -514,17 +516,17 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
     };
     const timeField = type === 'DialogFieldDateTimeControl'
       ? {
-          component: 'text-field',
-          name: 'default_value_time',
-          label: __('Time'),
-          placeholder: 'HH:MM',
-          helperText: __('24-hour format, e.g. 14:30'),
-          validate: [{
-            type: 'pattern',
-            pattern: /^([01]\d|2[0-3]):([0-5]\d)$/,
-            message: __('Enter time as HH:MM (00:00–23:59)'),
-          }],
-        }
+        component: 'text-field',
+        name: 'default_value_time',
+        label: __('Time'),
+        placeholder: 'HH:MM',
+        helperText: __('24-hour format, e.g. 14:30'),
+        validate: [{
+          type: 'pattern',
+          pattern: /^([01]\d|2[0-3]):([0-5]\d)$/,
+          message: __('Enter time as HH:MM (00:00–23:59)'),
+        }],
+      }
       : null;
     return [
       requiredField(),

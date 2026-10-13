@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  useState, useEffect, useCallback, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -46,13 +48,13 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(action !== 'new');
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [isDraggingTab, setIsDraggingTab] = useState(false);
+  const [_isDraggingTab, setIsDraggingTab] = useState(false);
   const [dragTabIndex, setDragTabIndex] = useState(null);
 
   // Draft recovery
   const { saveDraft, loadDraft, clearDraft } = useDraftRecovery(dialogId, action);
   const [showDraftModal, setShowDraftModal] = useState(false);
-  const pendingDraft = useRef(null);  // holds the draft captured at mount; cleared after modal decision
+  const pendingDraft = useRef(null); // holds the draft captured at mount; cleared after modal decision
   const debounceTimer = useRef(null);
 
   // Modal states
@@ -120,13 +122,19 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   // Suppressed while showDraftModal is true so the initial load can't overwrite
   // the captured draft before the user makes a Restore/Discard decision.
   useEffect(() => {
-    if (!data || showDraftModal) return;
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    if (!data || showDraftModal) {
+      return;
+    }
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
     debounceTimer.current = setTimeout(() => {
       saveDraft(data);
     }, 500);
     return () => {
-      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
     };
   }, [data, showDraftModal]);
 
@@ -139,7 +147,9 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     }
 
     setData((prev) => {
-      if (!prev) return prev;
+      if (!prev) {
+        return prev;
+      }
 
       switch (actionType) {
         case SD_ACTIONS.tab.delete: {
@@ -222,7 +232,9 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
 
   // ── Submit ──────────────────────────────────────────────────────────────────
   const handleSubmit = () => {
-    if (!data) return;
+    if (!data) {
+      return;
+    }
     miqSparkleOn();
 
     const isCopy = action === 'copy';
@@ -329,7 +341,9 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       primaryButtonText={__('Restore')}
       secondaryButtonText={__('Discard')}
       onRequestSubmit={() => {
-        if (pendingDraft.current) setData(pendingDraft.current);
+        if (pendingDraft.current) {
+          setData(pendingDraft.current);
+        }
         pendingDraft.current = null;
         clearDraft();
         setShowDraftModal(false);
@@ -361,7 +375,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
 
   const saveDisabled = isSaveDisabled(data);
 
-  const selectedTab = tabs[selectedTabIndex] || tabs[0];
   const currentTabIndex = Math.min(selectedTabIndex, Math.max(0, tabs.length - 1));
 
   return (

@@ -38,8 +38,10 @@ const EmbeddedAutomateEntryPoint = (props) => {
     } else if (input.value && (input.value.ae_namespace || input.value.ae_class || input.value.ae_instance)) {
       // Re-opening after loading from the API: resource_action has the AE path components.
       // Reconstruct a display path from them.
+      /* eslint-disable camelcase */
       const { ae_namespace, ae_class, ae_instance } = input.value;
       const parts = [ae_namespace, ae_class, ae_instance].filter(Boolean);
+      /* eslint-enable camelcase */
       setSelectedValue(input.value);
       setTextValue(parts.join('/'));
     }
@@ -48,7 +50,9 @@ const EmbeddedAutomateEntryPoint = (props) => {
   useEffect(() => {
     // Skip the initial mount — the init effect already populated textValue from input.value.
     // Running here on the first render would see selectedValue=undefined and wipe the text.
-    if (isFirstRender.current) return;
+    if (isFirstRender.current) {
+      return;
+    }
 
     if (selectedValue && selectedValue.element && selectedValue.element.name && selectedValue.element.metadata) {
       if (includeDomainPrefix) {

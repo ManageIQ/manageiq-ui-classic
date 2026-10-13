@@ -1,12 +1,13 @@
 import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, InlineNotification } from '@carbon/react';
-import MiqFormRenderer, { FormSpy } from '../../../forms/data-driven-form';
+import MiqFormRenderer, { FormSpy, useFieldApi } from '../../../forms/data-driven-form';
 import defaultComponentMapper from '../../../forms/mappers/componentMapper';
-import { getRefreshEnabledFields, fieldValuesToArray, isoToDatePickerValue, extractTimeFromDateTime, combineDateAndTime } from '../helper';
+import {
+  getRefreshEnabledFields, fieldValuesToArray, isoToDatePickerValue, extractTimeFromDateTime, combineDateAndTime,
+} from '../helper';
 import buildFieldSchema from './fields.schema';
 
-import { useFieldApi } from '../../../forms/data-driven-form';
 
 // Read-only list of tag entries for the currently selected category.
 // FormSpy subscribes this component to all form state changes so it re-renders
@@ -39,8 +40,8 @@ const TagEntriesList = (props) => {
 };
 
 TagEntriesList.propTypes = {
-  categories: PropTypes.array,
-  label: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/no-unused-prop-types, react/forbid-prop-types
+  label: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
 };
 
 const editFieldModalMapper = { ...defaultComponentMapper, 'tag-entries': TagEntriesList };
@@ -48,13 +49,19 @@ const editFieldModalMapper = { ...defaultComponentMapper, 'tag-entries': TagEntr
 // Convert the [Date] / Date / 'm/d/yyyy' string that DDF submits back to 'YYYY-MM-DD'.
 const datePickerValueToIso = (value) => {
   let date;
-  if (Array.isArray(value)) date = value[0];
-  else if (value instanceof Date) date = value;
-  else if (typeof value === 'string' && value) {
+  if (Array.isArray(value)) {
+    [date] = value;
+  } else if (value instanceof Date) {
+    date = value;
+  } else if (typeof value === 'string' && value) {
     const [mo, dy, yr] = value.split('/').map(Number);
-    if (mo && dy && yr) date = new Date(yr, mo - 1, dy);
+    if (mo && dy && yr) {
+      date = new Date(yr, mo - 1, dy);
+    }
   }
-  if (!date || Number.isNaN(date.getTime())) return '';
+  if (!date || Number.isNaN(date.getTime())) {
+    return '';
+  }
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 
@@ -63,7 +70,9 @@ const datePickerValueToIso = (value) => {
  * DDF-friendly select option arrays for the Default Value select in Dropdown/Radio.
  */
 const toDefaultValueOptions = (values) => {
-  if (!Array.isArray(values)) return [];
+  if (!Array.isArray(values)) {
+    return [];
+  }
   return values.map((v) => {
     const [val, desc] = Array.isArray(v) ? v : [v.value, v.description];
     return { label: desc || val, value: val };
@@ -167,7 +176,7 @@ export const buildInitialValues = (field) => {
         const desc = Array.isArray(v) ? v[1] : v.description;
         return val || desc;
       })
-      .map((v) => Array.isArray(v) ? { value: v[0], description: v[1] } : v);
+      .map((v) => (Array.isArray(v) ? { value: v[0], description: v[1] } : v));
     values.values = converted;
     values.values_sorted = converted;
   }
@@ -213,7 +222,9 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   // Remove the now-redundant flat dot-notation keys (belt-and-suspenders; final-form
   // should not produce them, but guard in case of mixed initialValues shapes).
   Object.keys(result).forEach((k) => {
-    if (k.startsWith('options.')) delete result[k];
+    if (k.startsWith('options.')) {
+      delete result[k];
+    }
   });
 
   // CheckBox: convert boolean back to 't'/'f'
@@ -259,6 +270,7 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
     const existingRa = result.resource_action;
     if (parts.length >= 3) {
       // At least namespace / class / instance
+      /* eslint-disable camelcase */
       const ae_instance = parts[parts.length - 1];
       const ae_class = parts[parts.length - 2];
       const ae_namespace = parts.slice(0, parts.length - 2).join('/');
@@ -280,6 +292,7 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
         ae_class: parts[1],
       };
     }
+    /* eslint-enable camelcase */
   }
 
   // resource_action_workflow is a UI alias for the workflow entry point variant — merge back only
@@ -299,8 +312,11 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   delete result.resource_action_workflow;
 
   // validator_type: DDF switch value will be a bool true/false; normalise to 'regex'/false
-  if (result.validator_type === true) result.validator_type = 'regex';
-  else if (!result.validator_type) result.validator_type = false;
+  if (result.validator_type === true) {
+    result.validator_type = 'regex';
+  } else if (!result.validator_type) {
+    result.validator_type = false;
+  }
 
   // automation_type is UI-only — keep on the field object in store (stripped on API save by sanitiseField)
   return result;
@@ -355,7 +371,7 @@ const EditFieldModal = ({
       defaultValueOptions,
       categories,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [field.type, isDynamic, emsWorkflowsEnabled, dynamicFields, defaultValueOptions, categories]
   );
 
@@ -374,21 +390,23 @@ const EditFieldModal = ({
     // Errors from nested fields (e.g. options.category_id) arrive as nested objects,
     // not flat strings, so a simple Object.values().find() would hand an object to
     // InlineNotification and crash React.
+    /* eslint-disable curly */
     const findFirstError = (obj) => {
       if (!obj) return null;
-      for (const val of Object.values(obj)) {
+      return Object.values(obj).reduce((acc, val) => {
+        if (acc) return acc;
         if (typeof val === 'string') return val;
-        if (typeof val === 'object') {
-          const found = findFirstError(val);
-          if (found) return found;
-        }
-      }
-      return null;
+        if (typeof val === 'object') return findFirstError(val);
+        return null;
+      }, null);
     };
+    /* eslint-enable curly */
     setValidationError(errors ? findFirstError(errors) : null);
   }, [isDynamic]);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   const heading = field.label
     ? sprintf(__('Edit Field "%s"'), field.label)
@@ -434,10 +452,10 @@ const EditFieldModal = ({
 
 EditFieldModal.propTypes = {
   isOpen: PropTypes.bool,
-  field: PropTypes.object.isRequired,
-  dialogData: PropTypes.object,
+  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   emsWorkflowsEnabled: PropTypes.bool,
-  categories: PropTypes.array,
+  categories: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/forbid-prop-types
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

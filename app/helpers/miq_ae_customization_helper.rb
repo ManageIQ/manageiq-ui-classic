@@ -11,10 +11,10 @@ module MiqAeCustomizationHelper
   end
 
   def dialog_tab_content(key_name, &)
-    if DIALOG_TAB_IDS.include?(key_name.to_s)
-      class_name = key_name == :sample_tab ? 'tab_content active' : 'tab_content'
-      tag.div(:id => key_name, :class => class_name, &)
-    end
+    return unless DIALOG_TAB_IDS.include?(key_name.to_s)
+
+    class_name = key_name == :sample_tab ? 'tab_content active' : 'tab_content'
+    tag.div(:id => key_name, :class => class_name, &)
   end
 
   def dialog_tab_index(active_tab)
@@ -47,7 +47,7 @@ module MiqAeCustomizationHelper
       :description => record.description,
       :created_at  => format_timezone(record.created_at, Time.zone, 'gtl'),
       :updated_at  => format_timezone(record.updated_at, Time.zone, 'gtl'),
-      :buttons     => record.buttons.to_s.split(',').map(&:strip).reject(&:blank?),
+      :buttons     => record.buttons.to_s.split(',').map(&:strip).compact_blank,
       :dialog_tabs => (record.dialog_tabs || []).map do |tab|
         {
           :id     => tab.id,

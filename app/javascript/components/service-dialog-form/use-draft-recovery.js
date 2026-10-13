@@ -19,7 +19,9 @@ const useDraftRecovery = (id, action) => {
   const loadDraft = () => {
     try {
       const raw = sessionStorage.getItem(key);
-      if (!raw) return null;
+      if (!raw) {
+        return null;
+      }
       return JSON.parse(raw);
     } catch (_e) {
       return null;

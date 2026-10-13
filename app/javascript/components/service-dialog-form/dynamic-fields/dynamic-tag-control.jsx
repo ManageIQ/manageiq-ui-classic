@@ -30,7 +30,7 @@ DynamicTagControl.propTypes = {
     label: PropTypes.string,
     default_value: PropTypes.string,
     read_only: PropTypes.bool,
-    values: PropTypes.array,
+    values: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   }).isRequired,
 };
 

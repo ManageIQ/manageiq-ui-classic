@@ -1,7 +1,7 @@
 import {
   buildInitialValues,
   normaliseSubmitted,
-} from '../../components/service-dialog-form/edit-field-modal/index.jsx';
+} from '../../components/service-dialog-form/edit-field-modal';
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -233,8 +233,15 @@ describe('normaliseSubmitted', () => {
   describe('TextBox — options reconstruction', () => {
     it('correctly rebuilds options from nested submitted.options', () => {
       const submitted = makeSubmitted({
-        options: { protected: true, sort_by: 'description', sort_order: 'ascending',
-          force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+        options: {
+          protected: true,
+          sort_by: 'description',
+          sort_order: 'ascending',
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldTextBox');
       expect(result.options.protected).toBe(true);
@@ -271,8 +278,15 @@ describe('normaliseSubmitted', () => {
       const submitted = makeSubmitted({
         values: [{ value: '1', description: 'One' }, { value: '2', description: 'Two' }],
         values_sorted: [],
-        options: { sort_by: 'none', sort_order: 'ascending', protected: false,
-          force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+        options: {
+          sort_by: 'none',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
       expect(result.values).toEqual([['1', 'One'], ['2', 'Two']]);
@@ -282,8 +296,15 @@ describe('normaliseSubmitted', () => {
       const submitted = makeSubmitted({
         values: [{ value: '1', description: 'One' }],
         values_sorted: [{ value: '2', description: 'Two' }],
-        options: { sort_by: 'description', sort_order: 'ascending', protected: false,
-          force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+        options: {
+          sort_by: 'description',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
       // values_sorted should be the source when sort_by !== 'none'
@@ -294,8 +315,15 @@ describe('normaliseSubmitted', () => {
       const submitted = makeSubmitted({
         values: [{ value: '1', description: 'Draggable' }],
         values_sorted: [{ value: '2', description: 'Sorted' }],
-        options: { sort_by: 'none', sort_order: 'ascending', protected: false,
-          force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+        options: {
+          sort_by: 'none',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
       expect(result.values).toEqual([['1', 'Draggable']]);
@@ -305,8 +333,15 @@ describe('normaliseSubmitted', () => {
       const submitted = makeSubmitted({
         values: [{ value: '1', description: 'One' }],
         values_sorted: [{ value: '1', description: 'One' }],
-        options: { sort_by: 'none', sort_order: 'ascending', protected: false,
-          force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+        options: {
+          sort_by: 'none',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
       expect(result.values_sorted).toBeUndefined();
@@ -366,7 +401,9 @@ describe('normaliseSubmitted', () => {
     });
 
     it('leaves resource_action unchanged when it is already an API-shaped object', () => {
-      const apiRa = { resource_type: 'DialogField', ae_namespace: 'ns', ae_class: 'cls', ae_instance: 'inst', ae_attributes: {} };
+      const apiRa = {
+        resource_type: 'DialogField', ae_namespace: 'ns', ae_class: 'cls', ae_instance: 'inst', ae_attributes: {},
+      };
       const submitted = makeSubmitted({ resource_action: apiRa });
       const result = normaliseSubmitted(submitted, 'DialogFieldTextBox');
       expect(result.resource_action).toEqual(apiRa);
@@ -375,7 +412,9 @@ describe('normaliseSubmitted', () => {
 
   describe('resource_action_workflow merge', () => {
     it('maps workflow row id to configuration_script_id when automation_type is embedded_workflow', () => {
-      const workflow = { id: 42, name: { text: 'My Workflow' }, resource_type: 'DialogField', ae_attributes: {} };
+      const workflow = {
+        id: 42, name: { text: 'My Workflow' }, resource_type: 'DialogField', ae_attributes: {},
+      };
       const submitted = makeSubmitted({
         automation_type: 'embedded_workflow',
         resource_action_workflow: workflow,
@@ -392,7 +431,9 @@ describe('normaliseSubmitted', () => {
     it('does NOT merge resource_action_workflow when automation_type is embedded_automate', () => {
       // Even if resource_action_workflow carries an id (e.g. it mirrors the automate resource_action
       // DB record id), the merge must be skipped to avoid corrupting the automate entry point.
-      const automateAction = { resource_type: 'DialogField', ae_attributes: {}, ae_namespace: 'ns', ae_class: 'cls', ae_instance: 'inst', id: 99 };
+      const automateAction = {
+        resource_type: 'DialogField', ae_attributes: {}, ae_namespace: 'ns', ae_class: 'cls', ae_instance: 'inst', id: 99,
+      };
       const submitted = makeSubmitted({
         automation_type: 'embedded_automate',
         resource_action: automateAction,
@@ -448,15 +489,26 @@ describe('normaliseSubmitted', () => {
 
   describe('category side-effects', () => {
     const categories = [
-      { id: 7, name: 'env', description: 'Environment', single_value: true },
-      { id: 8, name: 'dept', description: 'Department', single_value: false },
+      {
+        id: 7, name: 'env', description: 'Environment', single_value: true,
+      },
+      {
+        id: 8, name: 'dept', description: 'Department', single_value: false,
+      },
     ];
 
     it('sets category_name, category_description, category_single_value from matching category', () => {
       const submitted = makeSubmitted({
-        options: { category_id: '7', sort_by: 'description', sort_order: 'ascending',
-          protected: false, force_multi_value: false, force_single_value: false,
-          show_past_dates: false, category_single_value: false },
+        options: {
+          category_id: '7',
+          sort_by: 'description',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_single_value: false,
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldTagControl', categories);
       expect(result.options.category_name).toBe('env');
@@ -466,9 +518,15 @@ describe('normaliseSubmitted', () => {
 
     it('does not set category_name when no matching category is found', () => {
       const submitted = makeSubmitted({
-        options: { category_id: '99', sort_by: 'description', sort_order: 'ascending',
-          protected: false, force_multi_value: false, force_single_value: false,
-          show_past_dates: false },
+        options: {
+          category_id: '99',
+          sort_by: 'description',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldTagControl', categories);
       expect(result.options.category_name).toBeUndefined();
@@ -476,9 +534,16 @@ describe('normaliseSubmitted', () => {
 
     it('preserves existing category_single_value when no matching category is found', () => {
       const submitted = makeSubmitted({
-        options: { category_id: '99', sort_by: 'description', sort_order: 'ascending',
-          protected: false, force_multi_value: false, force_single_value: false,
-          show_past_dates: false, category_single_value: true },
+        options: {
+          category_id: '99',
+          sort_by: 'description',
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_single_value: true,
+        },
       });
       const result = normaliseSubmitted(submitted, 'DialogFieldTagControl', categories);
       expect(result.options.category_single_value).toBe(true);
@@ -538,7 +603,7 @@ describe('buildInitialValues — DateTimeControl', () => {
     });
     const result = buildInitialValues(field);
     expect(Array.isArray(result.default_value)).toBe(true);
-    expect(result.default_value.length).toBe(1);
+    expect(result.default_value).toHaveLength(1);
     expect(result.default_value[0]).toBeInstanceOf(Date);
     expect(result.default_value[0].getFullYear()).toBe(2026);
     expect(result.default_value[0].getMonth()).toBe(8); // 0-indexed September
@@ -831,8 +896,15 @@ describe('normaliseSubmitted — RadioButton values', () => {
     const submitted = makeRBSubmitted({
       values: [{ value: 'yes', description: 'Draggable' }],
       values_sorted: [{ value: 'no', description: 'Sorted' }],
-      options: { sort_by: 'none', sort_order: 'ascending', protected: false,
-        force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+      options: {
+        sort_by: 'none',
+        sort_order: 'ascending',
+        protected: false,
+        force_multi_value: false,
+        force_single_value: false,
+        show_past_dates: false,
+        category_id: '',
+      },
     });
     const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
     expect(result.values).toEqual([['yes', 'Draggable']]);
@@ -842,8 +914,15 @@ describe('normaliseSubmitted — RadioButton values', () => {
     const submitted = makeRBSubmitted({
       values: [{ value: 'yes', description: 'Yes' }],
       values_sorted: [{ value: 'no', description: 'No' }],
-      options: { sort_by: 'description', sort_order: 'ascending', protected: false,
-        force_multi_value: false, force_single_value: false, show_past_dates: false, category_id: '' },
+      options: {
+        sort_by: 'description',
+        sort_order: 'ascending',
+        protected: false,
+        force_multi_value: false,
+        force_single_value: false,
+        show_past_dates: false,
+        category_id: '',
+      },
     });
     const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
     expect(result.values).toEqual([['no', 'No']]);

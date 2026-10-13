@@ -9,7 +9,9 @@ const EditSectionModal = ({
   onSave,
   onClose,
 }) => {
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <Modal

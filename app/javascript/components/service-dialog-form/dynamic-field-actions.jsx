@@ -11,7 +11,9 @@ import { SD_ACTIONS } from './helper';
  * Deleting a field fires SD_ACTIONS.field.delete; opening the edit modal
  * is handled by the parent DynamicField via onEditField.
  */
-const DynamicFieldActions = ({ tabIndex, sectionIndex, fieldIndex, field, onAction, onEditField }) => (
+const DynamicFieldActions = ({
+  tabIndex, sectionIndex, fieldIndex, field, onAction, onEditField,
+}) => (
   <div className="dynamic-field-actions">
     <Button
       size="sm"
@@ -42,7 +44,7 @@ DynamicFieldActions.propTypes = {
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   fieldIndex: PropTypes.number.isRequired,
-  field: PropTypes.object.isRequired,
+  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onAction: PropTypes.func.isRequired,
   onEditField: PropTypes.func.isRequired,
 };
