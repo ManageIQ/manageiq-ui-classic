@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import {
+  useState, useEffect, useMemo, useRef,
+} from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import MiqMarkdown from '../MiqMarkdown';
 import { previewConfiguration } from './helper';
@@ -12,20 +15,27 @@ const MarkdownPreview = ({
   const miqCustomTabReducer = useSelector((state) => state.miqCustomTabReducer);
   const { title, mode, field } = previewConfiguration[type];
 
-  const [data, setData] = useState({
-    editorContent: content,
-    oneTrans: 0,
-  });
+  const [editorContent, setEditorContent] = useState(content);
+  const isMounted = useRef(false);
 
-  /** The textField present in the ruby form has to be updated when data in the CodeMirror is changed.  */
+  /** Debounced so that typing does not queue a server round trip per keystroke. */
+  const sendToServer = useMemo(() => debounce((value) => {
+    window.miqObserveRequest(url, { data: { [field]: value } });
+  }, 500), [url, field]);
+
+  /** Send any pending change before the component goes away. */
+  useEffect(() => () => sendToServer.flush(), [sendToServer]);
+
+  /** Sync the hidden textarea immediately and persist to server (debounced). */
   useEffect(() => {
     const textArea = document.getElementById(field);
-    textArea.value = data.editorContent;
-    if (data.oneTrans === 1) {
-      // To enable the form's save/cancel buttons (w.r.t pervious code-mirror implementation).
-      window.miqSendOneTrans(url);
+    textArea.value = editorContent;
+    if (isMounted.current) {
+      sendToServer(editorContent);
+    } else {
+      isMounted.current = true;
     }
-  }, [data.editorContent]);
+  }, [editorContent]);
 
   /** The code-mirror component needs to be refreshed when the tab selection is changed.
    * If this is not used, then the code mirror will not load its default value.
@@ -56,12 +66,8 @@ const MarkdownPreview = ({
             viewportMargin: Infinity,
             readOnly: false,
           }}
-          onBeforeChange={(_editor, _data, value) => setData({
-            ...data,
-            editorContent: value,
-            oneTrans: data.oneTrans + 1,
-          })}
-          value={data.editorContent}
+          onBeforeChange={(_editor, _data, value) => setEditorContent(value)}
+          value={editorContent}
         />
       </div>
     </div>
@@ -72,7 +78,7 @@ const MarkdownPreview = ({
     <div className="markdown-section" id="preview">
       {renderTitle(__('Preview'))}
       <div className="markdown-section-content">
-        <MiqMarkdown content={data.editorContent} />
+        <MiqMarkdown content={editorContent} />
       </div>
     </div>
   );
