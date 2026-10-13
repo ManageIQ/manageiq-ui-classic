@@ -80,7 +80,7 @@ const generateFieldName = (type) => {
   return `${base}_${fieldCounters[base]}`;
 };
 
-// Default field shape matching Angular ground truth (toolboxComponent.ts)
+// Default field shape for a newly created field
 export const defaultField = (type, position = 0) => {
   const base = {
     name: generateFieldName(type),

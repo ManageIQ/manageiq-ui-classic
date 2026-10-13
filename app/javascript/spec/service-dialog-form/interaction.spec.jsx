@@ -8,8 +8,6 @@ import ServiceDialogForm from '../../components/service-dialog-form';
 const newAction = { id: '', action: 'new' };
 const renderForm = () => renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
 
-// ── Initial render ────────────────────────────────────────────────────────────
-
 describe('ServiceDialogForm — initial render', () => {
   it('renders at least one tab', () => {
     renderForm();
@@ -37,11 +35,8 @@ describe('ServiceDialogForm — initial render', () => {
   });
 });
 
-// ── Save button disabled state ────────────────────────────────────────────────
-//
-// isSaveDisabled = !label || no tabs || any tab has no sections || any section has no fields.
-// The initial state (label empty, default tab+section present but no fields) should be disabled.
-
+// isSaveDisabled requires a label, at least one tab with a section, and at least one field.
+// The initial state (no label, no fields) should have Save disabled.
 describe('ServiceDialogForm — save guard', () => {
   it('Save is disabled on initial load (no label, no fields)', () => {
     renderForm();

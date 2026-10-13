@@ -1,8 +1,8 @@
 /**
  * useDraftRecovery — session-storage draft persistence for ServiceDialogForm.
  *
- * Key schema (matches Angular: `'service_dialog-' + id`):
- *   new / copy  →  'service_dialog-new'  // 'copy' shares the 'new' key — copies produce a new dialog with no id to key on.
+ * Key schema:
+ *   new / copy  →  'service_dialog-new'  // copy shares the 'new' key — copies produce a new dialog with no id to key on
  *   edit        →  'service_dialog-{dialogId}'
  */
 const useDraftRecovery = (id, action) => {

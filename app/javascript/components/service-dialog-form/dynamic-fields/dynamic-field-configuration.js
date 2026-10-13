@@ -13,7 +13,7 @@ import { componentTypes } from '@@ddf';
  *   overridableOptionsFields(type)           → Tab 4 field list (dynamic only)
  */
 
-// ── Shared option lists ───────────────────────────────────────────────────────
+// Shared option lists
 
 export const SORT_BY_OPTIONS = [
   { label: __('None'), value: 'none' },
@@ -31,8 +31,8 @@ export const DATA_TYPE_OPTIONS = [
   { label: __('Integer'), value: 'integer' },
 ];
 
-// ── Tab 1: Field Information ──────────────────────────────────────────────────
-// showDynamic=false for TagControl (no dynamic toggle per spec A6)
+// Tab 1: Field Information
+// showDynamic=false hides the Dynamic toggle (TagControl has no dynamic mode)
 
 export const fieldInfoFields = (showDynamic = true) => [
   {
@@ -66,9 +66,7 @@ export const fieldInfoFields = (showDynamic = true) => [
     : []),
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Atomic building blocks (internal helpers used by optionsFields below)
-// ─────────────────────────────────────────────────────────────────────────────
+// Internal helpers used by optionsFields below
 
 const requiredField = () => ({
   component: 'switch',
@@ -155,9 +153,9 @@ const validationFields = () => [
 // Inline validator for the entry-point field — used as a function directly in the
 // validate array so DDF's schema type-whitelist is bypassed entirely.
 //
-// The React EmbeddedAutomateEntryPoint stores a tree-selection object:
+// EmbeddedAutomateEntryPoint stores a tree-selection object:
 //   { element: { metadata: { fqname, domain_fqname }, ... }, ... }
-// The React EmbeddedWorkflowEntryPoint stores the table row object:
+// EmbeddedWorkflowEntryPoint stores the selected row object:
 //   { id: <numeric_id>, name: { text: '...' }, ... }
 // An empty/cleared state is {} or undefined.
 export const validateEntryPoint = (value) => {
@@ -172,13 +170,10 @@ export const validateEntryPoint = (value) => {
   return undefined;
 };
 
-// automation_type selector (emsWorkflowsEnabled=true), automate entry point,
-// workflow entry point, show_refresh_button, load_values_on_init.
-// Builds the dynamic Options tab entry point block.
-//   - Only DropDownList has the automation_type selector (pass emsWorkflowsEnabled=true).
-//   - All other types use the automate-only variant (pass emsWorkflowsEnabled=false).
-//   - DateControl and DateTimeControl show show_refresh_button but NOT load_values_on_init
-//     (pass showLoadValuesOnInit=false).
+// Entry point block for the dynamic Options tab.
+//   - Only DropDownList includes the automation_type selector (emsWorkflowsEnabled=true).
+//   - All other types use the automate-only variant (emsWorkflowsEnabled=false).
+//   - DateControl and DateTimeControl omit load_values_on_init (showLoadValuesOnInit=false).
 const dynamicEntryFields = (emsWorkflowsEnabled = false, showLoadValuesOnInit = true) => [
   ...(emsWorkflowsEnabled
     ? [{
@@ -241,7 +236,6 @@ const fieldsToRefreshField = (dynamicFields = []) => ({
   options: dynamicFields.map((f) => ({ label: f.label || f.name, value: f.name })),
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Tab 2: Options compositor
 //
 //   optionsFields(type, isDynamic, opts) → complete field list for Tab 2
@@ -252,7 +246,6 @@ const fieldsToRefreshField = (dynamicFields = []) => ({
 //     defaultValueOptions: [], ← for Dropdown/RadioButton default_value select
 //     categories: [],          ← for TagControl category select
 //   }
-// ─────────────────────────────────────────────────────────────────────────────
 
 export const optionsFields = (type, isDynamic, opts = {}) => {
   const {
@@ -265,7 +258,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
   const refresh = fieldsToRefreshField(dynamicFields);
 
   // TextBox static: Default value → Protected → Required → Read only → Visible → Value type → Validation → Fields to refresh
-  // TextBox dynamic: Entry Point → dynamic-values → Required → Protected → Value type → Validation → Fields to refresh
+  // TextBox dynamic: Entry Point → Required → Protected → Value type → Validation → Fields to refresh
   if (type === 'DialogFieldTextBox') {
     if (isDynamic) {
       return [
@@ -301,7 +294,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
   }
 
   // TextArea static: Default value → Required → Read only → Visible → Validation → Fields to refresh
-  // TextArea dynamic: Entry Point → dynamic-values → Required → Validation → Fields to refresh
+  // TextArea dynamic: Entry Point → Required → Validation → Fields to refresh
   // TextArea has no Protected field and no Value type (unlike TextBox).
   if (type === 'DialogFieldTextAreaBox') {
     if (isDynamic) {
@@ -369,7 +362,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         name: 'default_value',
         label: __('Default value'),
         options: defaultValueOptions,
-        // R3: isMulti tracks force_multi_value live via resolveProps
+        // isMulti tracks force_multi_value live via resolveProps
         resolveProps: (_props, _fieldState, formOptions) => {
           const isMulti = Boolean(formOptions.getState().values?.options?.force_multi_value);
           return { isMulti };
@@ -438,9 +431,8 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         refresh,
       ];
     }
-    // Same as Dropdown static minus force_multi_value.
-    // Description column first, Value second. RadioButton labels them "Key" / "Value".
-    // isDraggable gated on sort_by === 'none'.
+    // Same layout as Dropdown static but without force_multi_value.
+    // RadioButton labels entries as "Key" / "Value". isDraggable only when sort_by === 'none'.
     return [
       ...visibilityFields(),
       requiredField(),
@@ -497,8 +489,8 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       offText: __('No'),
     };
     if (isDynamic) {
-      // D8: Required is placed AFTER Fields to refresh (outside the entry-point tree guard)
-      // F18: Date/DateTime do not include dynamic-values.html so load_values_on_init is absent
+      // Required is placed after Fields to refresh
+      // Date/DateTime do not include load_values_on_init
       return [
         ...dynamicEntryFields(false, false),
         showPastDates,
@@ -539,7 +531,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
   }
 
   if (type === 'DialogFieldTagControl') {
-    // Always static (no dynamic mode for TagControl per spec)
+    // TagControl has no dynamic mode
     return [
       requiredField(),
       ...visibilityFields(),
@@ -597,8 +589,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
   return [refresh];
 };
 
-// ── Tab 3: Advanced ───────────────────────────────────────────────────────────
-// Identical for every type × mode — no args needed.
+// Tab 3: Advanced — identical for all field types
 
 export const advancedFields = () => [
   {
@@ -610,21 +601,16 @@ export const advancedFields = () => [
   },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Tab 4: Overridable Options compositor (only shown when dynamic === true)
-//
-//   overridableOptionsFields(type) → field list
-// ─────────────────────────────────────────────────────────────────────────────
+// Tab 4: Overridable Options — only shown when the field is dynamic
 
 export const overridableOptionsFields = (type) => {
   switch (type) {
     case 'DialogFieldDropDownList':
     case 'DialogFieldRadioButton':
-      // visibility + sort
       return [...visibilityFields(), ...sortFields()];
     case 'DialogFieldTextBox':
-      // D1: default_value text input — type switches to 'password' when Protected is on.
-      // Single field with resolveProps avoids the duplicate-name key collision.
+      // default_value switches to type='password' when Protected is on.
+      // resolveProps is used to avoid a duplicate-name key collision.
       return [
         {
           component: 'text-field',
@@ -637,7 +623,6 @@ export const overridableOptionsFields = (type) => {
         ...visibilityFields(),
       ];
     case 'DialogFieldTextAreaBox':
-      // D2: default_value textarea
       return [
         {
           component: 'textarea',
@@ -648,7 +633,6 @@ export const overridableOptionsFields = (type) => {
         ...visibilityFields(),
       ];
     default:
-      // CheckBox, DateControl, DateTimeControl
       return visibilityFields();
   }
 };

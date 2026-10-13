@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import { Dropdown, MultiSelect } from '@carbon/react';
 import { getFieldValues } from '../helper';
 
-// values are stored as [[value, description], ...] (wire format, A1).
-// getFieldValues normalises to [{value, description}] for the Carbon items list.
+// values are stored as [[value, description], ...]; getFieldValues normalises to [{value, description}].
 const DynamicDropdown = ({ field }) => {
   const items = getFieldValues(field);
   const isMulti = field.options && field.options.force_multi_value;

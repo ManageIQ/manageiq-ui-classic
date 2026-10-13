@@ -15,7 +15,7 @@ import {
  *   Tab 3 — Advanced           (all types)
  *   Tab 4 — Overridable Options (only when dynamic === true)
  *
- * @param {string}  type               — Angular type string, e.g. 'DialogFieldTextBox'
+ * @param {string}  type               — field type, e.g. 'DialogFieldTextBox'
  * @param {boolean} isDynamic          — current value of field.dynamic
  * @param {object}  opts               — forwarded to optionsFields()
  *   opts.emsWorkflowsEnabled          — bool

@@ -126,8 +126,7 @@ export const getComponentIdFromType = (type) => {
   return map[type] || 'text-box';
 };
 
-// Field values normalisation
-// Converts angular [[value, description], ...] wire format to/from objects
+// Field values normalisation — converts [[value, description], ...] arrays to/from objects
 export const getFieldValues = (field) => {
   if (!Array.isArray(field.values)) {
     return [];
@@ -155,14 +154,13 @@ export const fieldValuesToArray = (values) => {
 // Date helpers for DatePicker / DateTimePicker canvas widgets
 //
 // Carbon's DatePicker (flatpickr) expects value as [Date] — not a raw string.
-// Parse date parts directly to avoid UTC→local timezone shift (off-by-one bug).
+// Parse date parts directly to avoid UTC→local timezone shift.
 // Handles both formats:
-//   'YYYY-MM-DD' / 'YYYY-MM-DDT...' — React/API format
-//   'MM/dd/yyyy'                     — legacy format stored by Angular
+//   'YYYY-MM-DD' / 'YYYY-MM-DDT...' — ISO/API format
+//   'MM/dd/yyyy'                     — legacy stored format
 //
-// For DateTimeControl, default_value is stored as a combined string: 'YYYY-MM-DD HH:MM'
-// (React) or 'MM/dd/yyyy HH:MM' (Angular legacy). The date and time portions are
-// separated by a space. isoToDatePickerValue always operates on the date portion only.
+// For DateTimeControl, default_value is stored as 'YYYY-MM-DD HH:MM'.
+// isoToDatePickerValue always operates on the date portion only.
 
 export const isoToDatePickerValue = (iso) => {
   if (!iso) {
@@ -170,7 +168,7 @@ export const isoToDatePickerValue = (iso) => {
   }
   // Strip any time portion before parsing the date
   const datePart = iso.split(' ')[0];
-  // Angular legacy format: 'MM/dd/yyyy'
+  // Legacy stored format: 'MM/dd/yyyy'
   if (datePart.includes('/')) {
     const [mo, dy, yr] = datePart.split('/').map(Number);
     if (mo && dy && yr) {
@@ -291,14 +289,14 @@ export const isSaveDisabled = (data) =>
         !group.label?.trim()
           || (group.dialog_fields || []).length === 0));
 
-// Strip UI-only fields and normalise data types to match Angular wire format
+// Strip UI-only fields and normalise the field shape before sending to the API
 const sanitiseField = (field, position, action) => {
   const {
     // UI-only — strip these
     automation_type: _at,
     dynamicFieldList: _dfl,
     _version: _v,
-    // angular internals (strip if present)
+    // Stale keys that may appear on records loaded from older API responses
     active: _active,
     $$hashKey: _hash,
     href: _href,
