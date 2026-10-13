@@ -10,8 +10,7 @@ import buildFieldSchema from './fields.schema';
 
 
 // Read-only list of tag entries for the currently selected category.
-// FormSpy subscribes this component to all form state changes so it re-renders
-// whenever options.category_id changes, without needing a field value mirror hack.
+// FormSpy subscribes to all form values so this re-renders whenever options.category_id changes.
 const TagEntriesList = (props) => {
   const { label, categories = [] } = useFieldApi(props);
   const [categoryId, setCategoryId] = useState('');
@@ -127,7 +126,7 @@ export const buildInitialValues = (field) => {
       sort_order: opts.sort_order || 'ascending',
       show_past_dates: opts.show_past_dates || false,
       category_id: String(opts.category_id || ''),
-      // D10: needed for Single Value switch conditional visibility
+      // Needed for the Single Value switch conditional visibility
       category_single_value: opts.category_single_value || false,
     },
 
@@ -139,8 +138,8 @@ export const buildInitialValues = (field) => {
     // Tab 3 advanced
     reconfigurable: field.reconfigurable || false,
 
-    // Entry point — resource_action_workflow mirrors resource_action for the workflow variant
-    // (avoids duplicate React key since both fields share the same DDF name otherwise)
+    // resource_action_workflow is a separate DDF field name for the workflow variant
+    // to avoid a duplicate field name collision when both entry point types are present
     resource_action: field.resource_action || { resource_type: 'DialogField', ae_attributes: {} },
     resource_action_workflow: field.resource_action || { resource_type: 'DialogField', ae_attributes: {} },
 
@@ -195,7 +194,7 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   // e.g. field name 'options.sort_by' → submitted.options.sort_by (not submitted['options.sort_by']).
   const opts = submitted.options || {};
 
-  // D10: resolve category side-effect fields from the selected category object
+  // Resolve category side-effect fields from the selected category object
   const selectedCategoryId = String(opts.category_id || '');
   const selectedCategory = categories.find((c) => String(c.id) === selectedCategoryId);
 
@@ -347,7 +346,7 @@ const EditFieldModal = ({
   // react to the toggle without requiring a full remount.
   const [isDynamic, setIsDynamic] = useState(field.dynamic || false);
 
-  // D7: track first validation error to show the inline notification bar
+  // Track first validation error to show the inline notification bar
   const [validationError, setValidationError] = useState(null);
 
   // Build refresh-eligible field list (all dynamic fields except this one)
@@ -380,7 +379,7 @@ const EditFieldModal = ({
 
   // FormSpy handler: watch form state for side-effects.
   const handleFormChange = useCallback(({ values, errors }) => {
-    // Dynamic toggle side-effect — triggers Tab 4 appear/disappear
+    // Dynamic toggle — triggers the Overridable Options tab to appear/disappear
     const newDynamic = Boolean(values && values.dynamic);
     if (newDynamic !== isDynamic) {
       setIsDynamic(newDynamic);

@@ -1,7 +1,5 @@
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-// ── Constants ─────────────────────────────────────────────────────────────────
-
 const MENU_PATH = ['Automation', 'Embedded Automate', 'Customization'];
 const ACCORDION  = 'Service Dialogs';
 
@@ -15,8 +13,6 @@ const TEST_LABEL       = 'Cypress Test Dialog';
 const TEST_DESCRIPTION = 'Created by Cypress';
 const EDITED_LABEL     = 'Cypress Edited Dialog';
 const COPY_PREFIX      = 'Copy of ';
-
-// ── Shared navigation helpers ─────────────────────────────────────────────────
 
 /** Navigate to the Customization page and expand the Service Dialogs accordion. */
 const goToServiceDialogs = () => {
@@ -33,12 +29,8 @@ const selectDialog = (label) => {
   cy.selectAccordionItem(['All Dialogs', label]);
 };
 
-// ── CRUD flows ────────────────────────────────────────────────────────────────
-//
 // These tests require a live Rails server and DB.
-// UI-level concerns (rendering, interactions, component logic) are covered in Jest:
-//   spec/service-dialog-form/interaction.spec.jsx
-//   spec/service-dialog-form/use-draft-recovery.spec.js
+// UI-level concerns are covered in the Jest specs under spec/service-dialog-form/.
 
 /**
  * Create a fully structured dialog (dialog → tab → section → text field) via

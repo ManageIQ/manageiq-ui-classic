@@ -28,7 +28,7 @@ const FIELD_COMPONENTS = {
 /**
  * Routes a dialog_field to the correct display widget by type.
  * Wraps it with DynamicFieldActions (edit + remove buttons shown on hover).
- * When Edit is clicked, opens EditFieldModal (Sub-Task 4).
+ * When Edit is clicked, opens EditFieldModal.
  */
 const DynamicField = ({
   field,

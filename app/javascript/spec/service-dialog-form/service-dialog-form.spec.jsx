@@ -3,7 +3,7 @@ import fetchMock from 'fetch-mock';
 import ServiceDialogForm from '../../components/service-dialog-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
-// Mock subcomponents not yet implemented (Sub-Task 3+)
+// DynamicSection is mocked to isolate ServiceDialogForm behaviour
 jest.mock('../../components/service-dialog-form/dynamic-section', () => () => <div data-testid="dynamic-section" />, { virtual: true });
 
 describe('ServiceDialogForm', () => {

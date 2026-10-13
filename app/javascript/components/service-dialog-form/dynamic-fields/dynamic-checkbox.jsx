@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Checkbox } from '@carbon/react';
 
-// Carbon v11 Checkbox.onChange signature: (event, { checked, id })
-// default_value is stored as 't' / 'f' per Angular ground truth (A1).
+// Carbon Checkbox.onChange signature: (event, { checked, id })
+// default_value is stored as 't' / 'f'.
 const DynamicCheckBox = ({ field }) => (
   <Checkbox
     id={`field-${field.name}`}

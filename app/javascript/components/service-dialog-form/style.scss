@@ -238,8 +238,7 @@
     pointer-events: none;
   }
 
-  // Constrain textarea height in the editor canvas — fix for known vertical
-  // expansion bug (Sub-Task 3, item 3).
+  // Constrain textarea height in the editor canvas to prevent uncontrolled vertical expansion.
   .cds--text-area {
     max-height: 80px;
     resize: none;

@@ -41,7 +41,6 @@ import {
 import { defaultField, resetFieldCounters, seedFieldCounters } from './data';
 import './style.scss';
 
-// ── Main component ────────────────────────────────────────────────────────────
 const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const { id: dialogId, action } = dialogAction || {};
 
@@ -61,7 +60,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const [tabModal, setTabModal] = useState({ open: false, tabIndex: null });
   const [sectionModal, setSectionModal] = useState({ open: false, tabIndex: null, sectionIndex: null });
 
-  // ── Load dialog data ────────────────────────────────────────────────────────
+  // Load dialog data
   useEffect(() => {
     if (action === 'new') {
       resetFieldCounters();
@@ -118,8 +117,8 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       });
   }, [dialogId, action]);
 
-  // ── Debounced draft save on every data change ──────────────────────────────
-  // Suppressed while showDraftModal is true so the initial load can't overwrite
+  // Debounced draft save on every data change.
+  // Suppressed while showDraftModal is true so the initial load doesn't overwrite
   // the captured draft before the user makes a Restore/Discard decision.
   useEffect(() => {
     if (!data || showDraftModal) {
@@ -138,7 +137,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     };
   }, [data, showDraftModal]);
 
-  // ── Action dispatcher ───────────────────────────────────────────────────────
   const handleAction = useCallback((actionType, payload) => {
     // section.edit without values = request to open the edit modal
     if (actionType === SD_ACTIONS.section.edit && !payload.values) {
@@ -230,7 +228,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     });
   }, [selectedTabIndex]);
 
-  // ── Submit ──────────────────────────────────────────────────────────────────
   const handleSubmit = () => {
     if (!data) {
       return;
@@ -259,7 +256,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       });
   };
 
-  // ── Cancel ──────────────────────────────────────────────────────────────────
   const handleCancel = () => {
     clearDraft();
     const msg = action === 'edit'
@@ -268,7 +264,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     miqRedirectBack(msg, 'warning', '/miq_ae_customization/explorer');
   };
 
-  // ── Tab drag-and-drop ───────────────────────────────────────────────────────
+  // Tab drag-and-drop
   const handleTabDragStart = (e, tabIndex) => {
     if (document.querySelector('.cds--modal.is-visible')) {
       e.preventDefault();
@@ -295,7 +291,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     setIsDraggingTab(false);
   };
 
-  // ── Tab modal handlers ──────────────────────────────────────────────────────
   const openTabEditModal = (tabIndex) => {
     setTabModal({ open: true, tabIndex });
   };
@@ -311,7 +306,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     closeTabModal();
   };
 
-  // ── Section modal handlers ──────────────────────────────────────────────────
   const openSectionEditModal = (tabIndex, sectionIndex) => {
     setSectionModal({ open: true, tabIndex, sectionIndex });
   };
@@ -330,8 +324,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     }
     closeSectionModal();
   };
-
-  // ── Render ──────────────────────────────────────────────────────────────────
 
   // Draft recovery modal — shown before full UI so user can decide before interacting
   const draftModal = showDraftModal && (
@@ -380,7 +372,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   return (
     <div className="service-dialog-form">
       {draftModal}
-      {/* ── Header: General section — label + description ── */}
+      {/* Header: label + description */}
       <div className="service-dialog-form__header">
         <h4 className="service-dialog-form__general-heading">{__('General')}</h4>
         <div className="service-dialog-form__header-fields">
@@ -400,14 +392,14 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         </div>
       </div>
 
-      {/* ── Body: palette + canvas ── */}
+      {/* Body: palette + canvas */}
       <div className="service-dialog-form__body">
         {/* Palette */}
         <div className="service-dialog-form__palette">
           <DynamicComponentChooser />
         </div>
 
-        {/* Canvas: tabs */}
+        {/* Canvas */}
         <div className="service-dialog-form__canvas">
           <Tabs
             selectedIndex={currentTabIndex}
@@ -425,10 +417,9 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
                 >
                   <span className="service-dialog-form__tab-label">
                     {tab.label}
-                    {/* TabOptionsMenu is placed here — as a span child of the tab button label,
-                        not as renderIcon. The OverflowMenu button is a descendant of the Tab
-                        button, which causes a console warning but is unavoidable with Carbon v11
-                        Tabs API when needing per-tab options. */}
+                    {/* TabOptionsMenu is a child of the Tab label span, not renderIcon.
+                        Carbon renders a button-inside-button warning but there is no other
+                        way to attach per-tab overflow actions with the current Tabs API. */}
                     <TabOptionsMenu
                       onEdit={() => openTabEditModal(ti)}
                       onDelete={() => handleAction(SD_ACTIONS.tab.delete, { tabIndex: ti })}
@@ -492,7 +483,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         </div>
       </div>
 
-      {/* ── Footer: save + cancel ── */}
+      {/* Footer */}
       <div className="service-dialog-form__footer">
         <Button kind="primary" onClick={handleSubmit} disabled={saveDisabled}>
           {__('Save')}
@@ -502,7 +493,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         </Button>
       </div>
 
-      {/* ── Tab edit modal ── */}
+      {/* Tab edit modal */}
       <EditTabModal
         isOpen={tabModal.open}
         tab={tabModal.tabIndex !== null ? tabs[tabModal.tabIndex] : undefined}
@@ -510,7 +501,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         onClose={closeTabModal}
       />
 
-      {/* ── Section edit modal ── */}
+      {/* Section edit modal */}
       <EditSectionModal
         isOpen={sectionModal.open}
         section={

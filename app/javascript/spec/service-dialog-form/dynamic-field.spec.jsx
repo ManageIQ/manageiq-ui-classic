@@ -2,7 +2,7 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRedux } from '../helpers/mountForm';
 import DynamicField from '../../components/service-dialog-form/dynamic-field';
 
-// Mock EditFieldModal — not yet implemented (Sub-Task 4)
+// EditFieldModal is mocked to isolate DynamicField behaviour
 jest.mock('../../components/service-dialog-form/edit-field-modal', () => () => <div data-testid="edit-field-modal" />, { virtual: true });
 
 const onAction = jest.fn();

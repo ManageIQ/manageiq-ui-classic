@@ -33,7 +33,7 @@ const DynamicSection = ({
 
   const isModalOpen = () => !!document.querySelector('.cds--modal.is-visible');
 
-  // ── Section drag-and-drop (reordering sections) ─────────────────────────────
+  // Section drag-and-drop (reordering sections)
   const handleSectionDragStart = (e) => {
     if (isModalOpen()) {
       e.preventDefault(); return;
@@ -42,7 +42,7 @@ const DynamicSection = ({
     e.dataTransfer.effectAllowed = 'move';
   };
 
-  // ── Field drag-and-drop (reordering fields within this section) ─────────────
+  // Field drag-and-drop (reordering fields within this section)
   const handleFieldDragStart = (e, fieldIndex) => {
     if (isModalOpen()) {
       e.preventDefault(); return;
@@ -92,9 +92,8 @@ const DynamicSection = ({
     // palette drops (text/plain) fall through to __body — do NOT call stopPropagation
   };
 
-  // ── Section body: single handler for all palette add-drops ──────────────────
-  // This fires whether the cursor lands on bare padding OR on a field card,
-  // because field-wrappers no longer stop palette drop events.
+  // Section body drop handler — fires whether cursor is over padding or a field card
+  // because field-wrappers do not stop palette drop events.
   const handleBodyDragOver = (e) => {
     // Accept palette drags and field-reorder drags (field-reorder dragover on
     // __body means cursor is over the empty padding below all cards).
@@ -137,7 +136,7 @@ const DynamicSection = ({
         }
       }}
     >
-      {/* ── Section header — drag handle for section reordering ── */}
+      {/* Section header — drag handle for reordering */}
       <div
         className="dynamic-section__header"
         draggable
@@ -164,7 +163,7 @@ const DynamicSection = ({
         </div>
       </div>
 
-      {/* ── Section body — accepts palette drops from anywhere inside ── */}
+      {/* Section body */}
       <div
         className="dynamic-section__body"
         onDragOver={handleBodyDragOver}
