@@ -1,6 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useMemo, useRef,
+} from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import MiqMarkdown from '../MiqMarkdown';
 import { previewConfiguration } from './helper';
@@ -15,12 +18,20 @@ const MarkdownPreview = ({
   const [editorContent, setEditorContent] = useState(content);
   const isMounted = useRef(false);
 
-  /** Sync the hidden textarea and persist to server on every change. */
+  /** Debounced so that typing does not queue a server round trip per keystroke. */
+  const sendToServer = useMemo(() => debounce((value) => {
+    window.miqObserveRequest(url, { data: { [field]: value } });
+  }, 500), [url, field]);
+
+  /** Send any pending change before the component goes away. */
+  useEffect(() => () => sendToServer.flush(), [sendToServer]);
+
+  /** Sync the hidden textarea immediately and persist to server (debounced). */
   useEffect(() => {
     const textArea = document.getElementById(field);
     textArea.value = editorContent;
     if (isMounted.current) {
-      window.miqObserveRequest(url, { data: { [field]: editorContent } });
+      sendToServer(editorContent);
     } else {
       isMounted.current = true;
     }
