@@ -274,12 +274,12 @@ describe('overridableOptionsFields — TextBox', () => {
     expect(typeof dvField.resolveProps).toBe('function');
 
     const formOptionsProtected = {
-      getState: () => ({ values: { 'options.protected': true } }),
+      getState: () => ({ values: { options: { protected: true } } }),
     };
     expect(dvField.resolveProps({}, dvField, formOptionsProtected)).toEqual({ type: 'password' });
 
     const formOptionsUnprotected = {
-      getState: () => ({ values: { 'options.protected': false } }),
+      getState: () => ({ values: { options: { protected: false } } }),
     };
     expect(dvField.resolveProps({}, dvField, formOptionsUnprotected)).toEqual({ type: 'text' });
 
