@@ -223,7 +223,6 @@ exports[`Cloud Object Store Container form component should render add cloud obj
           <select
             class="cds--select-input"
             id="storage_manager_id"
-            loadingmessage="Loading..."
             name="storage_manager_id"
             title=""
           >
