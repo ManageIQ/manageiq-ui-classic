@@ -133,22 +133,22 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
       ]
     ),
   ])
-  button_group('ems_native_console', [
+  button_group('ems_management_console', [
     select(
-      :ems_native_console,
+      :ems_management_console,
       nil,
       N_('Remote Access'),
       N_('Access'),
       :items => [
         button(
-          :ems_native_console,
+          :ems_management_console,
           'pficon pficon-screen fa-lg',
-          N_('Open a native console for this infrastructure provider'),
-          N_('Native Console'),
+          N_('Open a management console for this infrastructure provider'),
+          N_('Management Console'),
           :keepSpinner => true,
           :url         => "launch_console",
-          :confirm     => N_("Open native console for this provider"),
-          :klass       => ApplicationHelper::Button::NativeConsole,
+          :confirm     => N_("Open management console for this provider"),
+          :klass       => ApplicationHelper::Button::ManagementConsole,
           :popup       => true
         )
       ]
