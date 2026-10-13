@@ -1,93 +1,74 @@
 describe PrivilegeCheckerService do
-  let(:privilege_checker) { described_class.new }
+  let(:service) { described_class.new }
+  let(:user) { double("User", :id => 123, :super_admin_user? => false) }
+  let(:session) { {} }
+  let(:server) { double("MiqServer", :logon_status => :ready) }
 
-  describe "#valid_session?" do
-    shared_examples_for "PrivilegeCheckerService#valid_session? that returns false" do
-      it "returns false" do
-        expect(privilege_checker.valid_session?(session, user)).to be_falsey
-      end
-    end
+  before do
+    allow(MiqServer).to receive(:my_server).and_return(server)
+  end
 
-    let(:session) do
-      {
-        :last_trans_time => last_trans_time
-      }
-    end
-
-    context "when the user is signed out" do
-      let(:user) { nil }
-      let(:last_trans_time) { nil }
-
-      it_behaves_like "PrivilegeCheckerService#valid_session? that returns false"
-    end
-
-    context "when the user is signed in" do
-      let(:user) { FactoryBot.create(:user) }
-
-      context "when the session is timed out" do
-        let(:last_trans_time) { 2.hours.ago }
-
-        it_behaves_like "PrivilegeCheckerService#valid_session? that returns false"
-      end
-
-      context "when the session has not timed out" do
-        let(:last_trans_time) { Time.current }
-        let(:server) { double("MiqServer", :logon_status => logon_status) }
-
+  describe '#valid_session?' do
+    context 'when user is signed in' do
+      context 'when session is active' do
         before do
-          allow(MiqServer).to receive(:my_server).and_return(server)
+          allow(SessionActivityService).to receive(:session_active?).with(user.id).and_return(true)
         end
 
-        context "when the server is not ready" do
-          let(:logon_status) { :not_ready }
-
-          it_behaves_like "PrivilegeCheckerService#valid_session? that returns false"
+        it 'returns true when server is ready' do
+          expect(service.valid_session?(session, user)).to be true
         end
 
-        context "when the server is ready" do
-          let(:logon_status) { :ready }
+        it 'returns true when user is super admin' do
+          allow(user).to receive(:super_admin_user?).and_return(true)
+          allow(server).to receive(:logon_status).and_return(:not_ready)
 
-          it "returns true" do
-            expect(privilege_checker.valid_session?(session, user)).to be_truthy
-          end
+          expect(service.valid_session?(session, user)).to be true
         end
+
+        it 'returns false when server is not ready' do
+          allow(server).to receive(:logon_status).and_return(:not_ready)
+
+          expect(service.valid_session?(session, user)).to be false
+        end
+      end
+
+      context 'when session is not active' do
+        before do
+          allow(SessionActivityService).to receive(:session_active?).with(user.id).and_return(false)
+        end
+
+        it 'returns false' do
+          expect(service.valid_session?(session, user)).to be false
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      it 'returns false' do
+        expect(service.valid_session?(session, nil)).to be false
       end
     end
   end
 
-  describe "#user_session_timed_out?" do
-    let(:session) do
-      {
-        :last_trans_time => last_trans_time
-      }
-    end
+  describe '#user_session_timed_out?' do
+    context 'when user is signed in' do
+      it 'returns true when session is not active' do
+        allow(SessionActivityService).to receive(:session_active?).with(user.id).and_return(false)
 
-    context "when a user exists" do
-      let(:user) { FactoryBot.create(:user) }
-
-      context "when the session is timed out" do
-        let(:last_trans_time) { 2.hours.ago }
-
-        it "returns true" do
-          expect(privilege_checker.user_session_timed_out?(session, user)).to be_truthy
-        end
+        expect(service.user_session_timed_out?(session, user)).to be true
       end
 
-      context "when the session has not timed out" do
-        let(:last_trans_time) { Time.current }
+      it 'returns false when session is active' do
+        allow(SessionActivityService).to receive(:session_active?).with(user.id).and_return(true)
 
-        it "returns false" do
-          expect(privilege_checker.user_session_timed_out?(session, user)).to be_falsey
-        end
+        expect(service.user_session_timed_out?(session, user)).to be false
       end
     end
 
-    context "when a user does not exist" do
-      let(:user) { nil }
-      let(:last_trans_time) { nil }
-
-      it "returns false" do
-        expect(privilege_checker.user_session_timed_out?(session, user)).to be_falsey
+    context 'when user is not signed in' do
+      it 'returns false' do
+        expect(service.user_session_timed_out?(session, nil)).to be false
       end
     end
   end

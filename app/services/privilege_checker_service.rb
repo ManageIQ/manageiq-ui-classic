@@ -1,10 +1,10 @@
 class PrivilegeCheckerService
   def valid_session?(session, current_user)
-    user_signed_in?(current_user) && session_active?(session) && server_ready?(current_user)
+    user_signed_in?(current_user) && session_active?(current_user.id) && server_ready?(current_user)
   end
 
   def user_session_timed_out?(session, current_user)
-    user_signed_in?(current_user) && !session_active?(session)
+    user_signed_in?(current_user) && !session_active?(current_user.id)
   end
 
   private
@@ -13,8 +13,9 @@ class PrivilegeCheckerService
     !!current_user
   end
 
-  def session_active?(session)
-    Time.current - (session[:last_trans_time] || Time.current) <= ::Settings.session.timeout
+  def session_active?(user_id)
+    return false unless user_id
+    SessionActivityService.session_active?(user_id)
   end
 
   def server_ready?(current_user)
