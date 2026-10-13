@@ -5,6 +5,9 @@
     - arr = %w[floating_ips network_ports cloud_tenants cloud_networks cloud_subnets network_routers network_services instances images]
     - arr.concat(%w[security_groups security_policies cloud_object_store_containers cloud_volumes cloud_volume_snapshots custom_button_events])
     - if arr.include?(@display) && @showtype != "compare"
+      .display-search-bar
+        = react('SearchBar', :searchText => @search_text, :action => 'show',
+          :advancedSearch => false)
       = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
     - elsif @showtype == "compare"
       = raise 'compare partial called through "show"'
