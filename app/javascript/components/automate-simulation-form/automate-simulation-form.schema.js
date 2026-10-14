@@ -16,7 +16,7 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
   });
 
 const createSchema = (
-  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions, formData, setFormData,
+  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions,
 ) => {
   const fields = [
     {
@@ -78,21 +78,23 @@ const createSchema = (
       isSearchable: true,
       simpleValue: true,
       isRequired: true,
-      onChange: (targetClass) => {
-        if (formData.targetClass !== targetClass) {
-          setFormData((prevData) => ({ ...prevData, targetClass }));
-        }
-      },
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
       component: componentTypes.SELECT,
       id: 'target_id',
-      name: `target_id_${formData.targetClass}`,
+      name: 'target_id',
       label: __('Selection'),
       className: 'automate-selection-target',
       isRequired: true,
-      loadOptions: () => (loadTargets(formData.targetClass)),
+      resolveProps: (_props, _field, formOptions) => {
+        const targetClass = formOptions.getState().values.target_class;
+        return {
+          name: `target_id_${targetClass}`,
+          loadOptions: () => loadTargets(targetClass),
+          key: targetClass,
+        };
+      },
       condition: {
         not: {
           when: 'target_class',

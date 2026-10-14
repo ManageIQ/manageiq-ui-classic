@@ -17,7 +17,7 @@ const AutomateSimulationForm = ({
   const [formData, setFormData] = useState({
     isLoading: false,
     tempData: undefined,
-    simulationTree: { notice: 'Enter Automation Simulation options on the left and press Submit' },
+    simulationTree: { notice: __('Enter Automation Simulation options on the left and press Submit') },
   });
 
   const [initialValues, setInitialValues] = useState(resolve.new);
@@ -32,9 +32,12 @@ const AutomateSimulationForm = ({
 
     // Handle attrs transformation
     if (resolve.new.attrs) {
-      newInitialValues.attrs = resolve.new.attrs
+      const attrs = resolve.new.attrs
         .filter((attr) => attr[0] != null && attr[1] != null)
         .map((attr) => ({ attribute: attr[0], value: attr[1] }));
+      if (attrs.length > 0) {
+        newInitialValues.attrs = attrs;
+      }
     }
     setInitialValues(newInitialValues);
   }, []);
@@ -107,7 +110,7 @@ const AutomateSimulationForm = ({
           initialValues={initialValues}
           schema={createSchema(
             resolve, maxNameLength, url, attrValuesPairs,
-            maxLength, typeClassesOptions, formData, setFormData
+            maxLength, typeClassesOptions
           )}
           onSubmit={handleSubmit}
           canReset
