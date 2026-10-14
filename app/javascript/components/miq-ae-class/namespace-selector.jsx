@@ -2,15 +2,32 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextInput } from '@carbon/react';
 import { Close, TreeViewAlt } from '@carbon/react/icons';
+import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@@ddf';
 import NamespaceTreeModal from './namespace-tree-modal';
 
 const NamespaceSelector = ({
-  label, id, name, isRequired = false,
+  id,
+  name,
+  label,
+  isRequired = false,
+  helperText = '',
+  validateOnMount = false,
+  ...props
 }) => {
-  const { input, meta } = useFieldApi({
-    label, id, name, isRequired,
-  });
+  const {
+    input,
+    meta,
+    labelText,
+  } = useFieldApi(prepareProps({
+    id,
+    name,
+    label,
+    isRequired,
+    helperText,
+    validateOnMount,
+    ...props,
+  }));
   const { getState } = useFormApi();
   const { values } = getState();
   const selectedDomainId = values.domain;
@@ -48,6 +65,8 @@ const NamespaceSelector = ({
     input.onChange(value);
   };
 
+  const invalid = (meta.touched || validateOnMount) && meta.error;
+
   return (
     <>
       <div className="namespace-selector-wrapper">
@@ -56,13 +75,13 @@ const NamespaceSelector = ({
             <TextInput
               id={id}
               name={name}
-              labelText={__(label)}
+              labelText={labelText}
+              helperText={helperText}
               value={textValue}
               onChange={handleChange}
               onBlur={input.onBlur}
-              required={isRequired}
-              invalid={!!(meta.touched && meta.error)}
-              invalidText={meta.touched && meta.error ? meta.error : ''}
+              invalid={Boolean(invalid)}
+              invalidText={invalid || ''}
             />
           </div>
           <div className="namespace-selector-buttons">
@@ -99,8 +118,10 @@ const NamespaceSelector = ({
 NamespaceSelector.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   isRequired: PropTypes.bool,
+  helperText: PropTypes.string,
+  validateOnMount: PropTypes.bool,
 };
 
 export default NamespaceSelector;

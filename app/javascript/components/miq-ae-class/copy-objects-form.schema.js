@@ -27,6 +27,7 @@ const createSchema = (domains, selectedItems, domainName, isSingleItem, showOver
       label: __('New Name'),
       maxLength: 255,
       validate: [{ type: 'required' }],
+      isRequired: true,
       clearOnUnmount: true,
       condition: {
         and: [

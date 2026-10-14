@@ -3,7 +3,7 @@
 .namespace-selector-wrapper {
   .namespace-selector-row {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: $spacing-03;
 
     .namespace-selector-input {
@@ -20,7 +20,7 @@
       display: flex;
       flex-shrink: 0;
       gap: $spacing-02;
-      padding-bottom: 1px;
+      margin-top: $spacing-06;
     }
   }
 }
