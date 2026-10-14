@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Button, Select, SelectItem } from '@carbon/react';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
@@ -48,7 +50,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     termRef.current = term;
 
     term.onData((data) => {
-      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      if (wsRef.current && wsRef.current.readyState === window.WebSocket.OPEN) {
         wsRef.current.send(data);
       }
     });
@@ -57,12 +59,11 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
       closeConsole();
       term.dispose();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const connect = (connectionParams, containerName) => {
     const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const ws = new WebSocket(
+    const ws = new window.WebSocket(
       `${proto}://${window.location.host}/${connectionParams.url}`
     );
 
@@ -80,7 +81,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     ws.onmessage = (evt) => {
       if (evt.data instanceof ArrayBuffer) {
         termRef.current.write(new Uint8Array(evt.data));
-      } else if (evt.data instanceof Blob) {
+      } else if (evt.data instanceof window.Blob) {
         evt.data.arrayBuffer().then((buf) => {
           termRef.current.write(new Uint8Array(buf));
         });
@@ -155,48 +156,41 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     if (containers.length === 1 && selectedContainer) {
       startConsole();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       {containers.length > 1 && (
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="container-select">
-            Container:&nbsp;
-            <select
+        <div className="container-group-console__toolbar">
+          <div className="container-group-console__select-wrapper">
+            <Select
               id="container-select"
+              labelText="Container"
               value={selectedContainer}
               onChange={(e) => setSelectedContainer(e.target.value)}
               disabled={connecting}
             >
-              <option value="">Select Container</option>
-
+              <SelectItem value="" text="Select Container" />
               {containers.map((container) => (
-                <option key={container.name} value={container.name}>
-                  {container.name}
-                </option>
+                <SelectItem key={container.name} value={container.name} text={container.name} />
               ))}
-            </select>
-          </label>
+            </Select>
+          </div>
 
-          <button
-            type="button"
-            style={{ marginLeft: '10px' }}
+          <Button
             onClick={startConsole}
             disabled={!selectedContainer || connecting}
           >
             {connected ? 'Reconnect' : 'Connect'}
-          </button>
+          </Button>
 
-          <button
-            type="button"
-            style={{ marginLeft: '10px' }}
+          <Button
+            kind="secondary"
             onClick={closeConsole}
             disabled={!connected && !connecting}
           >
             Close
-          </button>
+          </Button>
         </div>
       )}
 
@@ -205,7 +199,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
         role="textbox"
         tabIndex={0}
         aria-label="Container console"
-        style={{ height: '500px', border: '1px solid #ccc' }}
+        className="container-group-console__terminal"
         onClick={() => {
           if (termRef.current) {
             termRef.current.focus();
@@ -219,6 +213,11 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
       />
     </>
   );
+};
+
+ContainerGroupConsole.propTypes = {
+  podId: PropTypes.string.isRequired,
+  containers: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ContainerGroupConsole;

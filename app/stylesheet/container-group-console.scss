@@ -1,0 +1,17 @@
+.container-group-console {
+  &__toolbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__select-wrapper {
+    width: 50%;
+  }
+
+  &__terminal {
+    height: 500px;
+    border: 1px solid #ccc;
+  }
+}
