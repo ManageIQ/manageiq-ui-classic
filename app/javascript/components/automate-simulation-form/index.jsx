@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
@@ -32,12 +32,9 @@ const AutomateSimulationForm = ({
 
     // Handle attrs transformation
     if (resolve.new.attrs) {
-      const attrs = resolve.new.attrs
+      newInitialValues.attrs = resolve.new.attrs
         .filter((attr) => attr[0] != null && attr[1] != null)
         .map((attr) => ({ attribute: attr[0], value: attr[1] }));
-      if (attrs.length > 0) {
-        newInitialValues.attrs = attrs;
-      }
     }
     setInitialValues(newInitialValues);
   }, []);
@@ -102,16 +99,18 @@ const AutomateSimulationForm = ({
     add_flash(__('All changes have been reset'), 'warning');
   };
 
+  const schema = useMemo(
+    () => createSchema(resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions),
+    [],
+  );
+
   return (
     <div className="automate-simulation-page">
       <div className="automate-simulation-form-wrapper">
         <MiqFormRenderer
           className="automate-simulation-form"
           initialValues={initialValues}
-          schema={createSchema(
-            resolve, maxNameLength, url, attrValuesPairs,
-            maxLength, typeClassesOptions
-          )}
+          schema={schema}
           onSubmit={handleSubmit}
           canReset
           onReset={onFormReset}
