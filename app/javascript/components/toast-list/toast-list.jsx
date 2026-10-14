@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useSelector } from 'react-redux';
 import ToastItem from './toast-item';
 
