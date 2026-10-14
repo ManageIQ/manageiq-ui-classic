@@ -286,8 +286,8 @@ class MiqAeToolsController < ApplicationController
     copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
 
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-      f = ("attribute_" + (i + 1).to_s)
-      v = ("value_" + (i + 1).to_s)
+      f = "attribute_#{i + 1}"
+      v = "value_#{i + 1}"
       @resolve[:new][:attrs][i][0] = params[f.to_sym] || nil
       @resolve[:new][:attrs][i][1] = params[v.to_sym] || nil
     end
