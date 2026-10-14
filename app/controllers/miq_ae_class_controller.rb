@@ -310,7 +310,7 @@ class MiqAeClassController < ApplicationController
       presenter.update(:main_div, r[:partial => "copy_objects_form", :locals => {:edit => @edit}])
 
     elsif %w[miq_ae_instance_new miq_ae_instance_edit].include?(@sb[:action])
-      presenter.update(:main_div, r[:partial => "instance_form_react", :locals => {:record_id => @record_id, :class_id => @class_id}])
+      presenter.update(:main_div, r[:partial => "instance_form", :locals => {:record_id => @record_id, :class_id => @class_id}])
 
     else
       if @sb[:action] == "miq_ae_class_edit"

@@ -97,7 +97,14 @@ describe('CopyObjectsForm Component', () => {
 
   beforeEach(() => {
     window.__ = (str) => str;
-    window.sprintf = (str, obj) => str.replace(/%{(\w+)}/g, (_, key) => obj[key]);
+    window.n__ = (singular, plural, n) => (n === 1 ? singular : plural);
+    window.sprintf = (str, ...args) => {
+      if (typeof args[0] === 'object' && args[0] !== null) {
+        return str.replace(/%{(\w+)}/g, (_, key) => args[0][key]);
+      }
+      let i = 0;
+      return str.replace(/%[ds]/g, () => args[i++]);
+    };
     window.add_flash = jest.fn();
     flashSpy = jest.spyOn(window, 'add_flash');
 
@@ -124,6 +131,7 @@ describe('CopyObjectsForm Component', () => {
       await waitFor(() => {
         expect(screen.getByLabelText(/Copy to same path/i)).toBeChecked();
         expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
+        expect(screen.getByText('1 Item selected to copy')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
       });
       expect(container).toMatchSnapshot();
@@ -161,6 +169,7 @@ describe('CopyObjectsForm Component', () => {
 
       await waitFor(() => {
         expect(screen.queryByRole('textbox', { name: /Namespace/i })).not.toBeInTheDocument();
+        expect(screen.getByText('3 Items selected to copy')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^copy$/i })).toBeDisabled();
       });
     });

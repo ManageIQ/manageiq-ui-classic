@@ -149,7 +149,7 @@ const InstanceForm = ({ recordId = undefined, classId = undefined }) => {
       ? `/miq_ae_class/update_instance/${recordId}`
       : `/miq_ae_class/create_instance?class_id=${classId}`;
 
-    http.post(url, params)
+    http.post(url, params, { skipErrors: [400] })
       .then(() => {
         const message = isEdit
           ? sprintf(__('Automate Instance "%s" was saved'), formValues.name)
@@ -158,7 +158,7 @@ const InstanceForm = ({ recordId = undefined, classId = undefined }) => {
       })
       .catch((error) => {
         setIsSubmitting(false);
-        setErrorMessage(error.response?.data?.error || error.message || __('Error saving instance'));
+        setErrorMessage(error.data?.error || error.response?.data?.error || error.message || __('Error saving instance'));
       });
   };
 

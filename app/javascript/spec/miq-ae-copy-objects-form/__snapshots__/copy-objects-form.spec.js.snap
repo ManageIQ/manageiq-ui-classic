@@ -161,7 +161,7 @@ exports[`CopyObjectsForm Component Copy Class should render with copy to same pa
                     <div
                       class="cds--table-header-label"
                     >
-                      Selected Items
+                      1 Item selected to copy
                       <div
                         class="cds--table-header-label--decorator-inner"
                       />
@@ -469,7 +469,7 @@ exports[`CopyObjectsForm Component Copy Instance should render with instance nam
                     <div
                       class="cds--table-header-label"
                     >
-                      Selected Items
+                      1 Item selected to copy
                       <div
                         class="cds--table-header-label--decorator-inner"
                       />

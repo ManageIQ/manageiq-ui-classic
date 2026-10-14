@@ -247,7 +247,7 @@ describe('InstanceForm Component', () => {
   });
 
   describe('Error Handling', () => {
-    it('should handle API errors gracefully', async() => {
+    it('should handle API errors gracefully on load', async() => {
       const classId = '123';
       fetchMock.get(`/miq_ae_class/instance_form_data/new?class_id=${classId}`, {
         status: 500,
@@ -258,6 +258,38 @@ describe('InstanceForm Component', () => {
 
       await waitFor(() => {
         expect(screen.getByText(/Error loading instance data/i)).toBeInTheDocument();
+      });
+    });
+
+    it('should display error message on create failure with 400 response', async() => {
+      const user = userEvent.setup();
+      const classId = '123';
+      const errorMessage = "Error during 'add': Validation failed: MiqAeInstance: Name has already been taken";
+      fetchMock.get(`/miq_ae_class/instance_form_data/new?class_id=${classId}`, {
+        instance: { name: '', display_name: '', description: '' },
+        fields: [],
+        is_state_class: false,
+        namespace_path: 'Domain/Namespace/Class',
+      });
+      fetchMock.post(`/miq_ae_class/create_instance?class_id=${classId}`, {
+        status: 400,
+        body: { error: errorMessage },
+      });
+
+      const { container } = renderWithRedux(<InstanceForm recordId={null} classId={classId} />);
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
+      });
+
+      const nameInput = container.querySelector('#name');
+      await user.type(nameInput, 'ListNetworks');
+
+      const submitButton = screen.getByRole('button', { name: /add/i });
+      await user.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(errorMessage)).toBeInTheDocument();
       });
     });
   });

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { FormSpy, useFormApi as useDDFFormApi } from '@data-driven-forms/react-form-renderer';
 import { Button, InlineNotification } from '@carbon/react';
-import MiqFormRenderer, { useFormApi } from '@@ddf';
+import MiqFormRenderer, { useFormApi, FormSpy } from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './copy-objects-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -123,7 +122,7 @@ const FormTemplate = ({ formFields, isSubmitting }) => {
   const { handleSubmit, onReset, onCancel } = useFormApi();
 
   const DomainWatcherInner = ({ domain }) => {
-    const { change } = useDDFFormApi();
+    const { change } = useFormApi();
     const domainRef = useRef(undefined);
 
     useEffect(() => {

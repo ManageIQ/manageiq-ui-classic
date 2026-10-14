@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 
 const SelectedItemsTable = ({ selectedItems }) => {
+  const count = selectedItems.length;
   const headers = [
     {
       key: 'name',
-      header: __('Selected Items'),
+      header: sprintf(n__('%d Item selected to copy', '%d Items selected to copy', count), count),
     },
   ];
 

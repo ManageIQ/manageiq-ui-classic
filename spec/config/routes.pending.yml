@@ -739,7 +739,6 @@ MiqAeClassController:
 - field_method_delete
 - field_method_select
 - form_field_changed
-- form_instance_field_changed
 - form_method_field_changed
 - index
 - reload
