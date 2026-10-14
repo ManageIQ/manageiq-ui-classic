@@ -23,7 +23,7 @@ const AutomateSimulationForm = ({
   const [initialValues, setInitialValues] = useState(resolve.new);
 
   useEffect(() => {
-    const newInitialValues = { ...resolve.new };
+    const newInitialValues = { ...resolve.new, readonly: !resolve.new.readonly };
 
     // Handle target_class and target_id
     if (resolve.new.target_class) {

@@ -115,7 +115,6 @@ const createSchema = (
       name: 'readonly',
       className: 'automate-readonly',
       label: __('Execute Methods'),
-      initialValue: !resolve.new.readonly,
       title: 'Simulation parameters',
     },
     {
