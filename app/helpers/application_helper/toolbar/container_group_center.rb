@@ -73,7 +73,15 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
                        N_('Container Group Console'),
                        :url_parms    => "/console",
                        :send_checked => true
-                     )
+                     ),
+                     button(
+                       :container_group_logs,
+                       'fa fa-file-text-o fa-lg',
+                       N_('View Logs for this Container Group'),
+                       N_('Container Group Logs'),
+                       :url_parms    => "/logs",
+                       :send_checked => true
+                     ),
                    ]
                  ),
                ])

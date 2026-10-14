@@ -19,6 +19,11 @@ class ContainerGroupController < ApplicationController
         :action => "console",
         :id     => params[:id]
       )
+    when "container_group_logs"
+      javascript_redirect(
+        :action => "logs",
+        :id     => params[:id]
+      )
     else
       super
     end
@@ -30,6 +35,15 @@ class ContainerGroupController < ApplicationController
     drop_breadcrumb(
       :name => _("Container Group Console"),
       :url  => "/container_group/console/#{@record.id}"
+    )
+  end
+
+  def logs
+    assert_privileges("container_group_logs")
+    @record = identify_record(params[:id], ContainerGroup)
+    drop_breadcrumb(
+      :name => _("Logs"),
+      :url  => "/container_group/logs/#{@record.id}"
     )
   end
 
