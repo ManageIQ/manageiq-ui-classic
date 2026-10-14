@@ -5,14 +5,14 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
   .then((formVars) => {
     if (formVars && formVars.targets) {
       return [
-        { label: `<${__('None')}>`, value: undefined },
+        { label: `<${__('None')}>`, value: '' },
         ...formVars.targets.map(([key, value]) => ({
           label: String(key),
           value: String(value),
         })),
       ];
     }
-    return [{ label: `<${__('None')}>`, value: undefined }];
+    return [{ label: `<${__('None')}>`, value: '' }];
   });
 
 const createSchema = (

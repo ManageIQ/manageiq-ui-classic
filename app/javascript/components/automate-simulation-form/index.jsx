@@ -10,7 +10,7 @@ const AutomateSimulationForm = ({
   resolve, maxNameLength, url, attrValuesPairs, maxLength,
 }) => {
   const typeClassesOptions = [
-    { label: `<${__('None')}>` },
+    { label: `<${__('None')}>`, value: '' },
     ...Object.entries(resolve.target_classes).map(([key, value]) => ({ label: value, value: key })),
   ];
 
