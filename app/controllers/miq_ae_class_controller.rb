@@ -1755,46 +1755,8 @@ class MiqAeClassController < ApplicationController
             end
 
     assert_privileges(action)
-    @changed = session[:changed] = @in_a_form = true
     copy_objects_edit_screen(klass, ids, action)
-    build_automate_tree(:automate)
     replace_right_cell
-  end
-
-  def ae_tree_select_toggle
-    assert_privileges(feature_by_action)
-    @edit = session[:edit]
-    self.x_active_tree = :ae_tree
-    at_tree_select_toggle(:automate, :namespace)
-
-    if params[:button] == 'submit'
-      x_node_set(@edit[:active_id], :automate_tree)
-      @edit[:namespace] = @edit[:new][:namespace]
-    end
-
-    session[:edit] = @edit
-  end
-
-  def ae_tree_select_discard
-    @edit = session[:edit]
-    @edit[:new][:namespace] = @edit[:namespace] = nil
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_hide("ae_tree_select_div")
-      page << javascript_hide("blocker_div")
-      page << "$('#namespace').val('#{@edit[:new][:namespace]}');"
-      page << "$('#namespace_remove').attr('disabled', true);"
-      page << javascript_for_miq_button_visibility(@changed)
-    end
-    session[:edit] = @edit
-  end
-
-  def ae_tree_select
-    assert_privileges(feature_by_action)
-    @edit = session[:edit]
-    at_tree_select(:namespace)
-    session[:edit] = @edit
   end
 
   def x_show
@@ -2063,8 +2025,6 @@ class MiqAeClassController < ApplicationController
     end
     current_tenant.editable_domains.collect { |domain| domains[domain.id] = domain_display_name(domain) }
     initialize_copy_edit_vars(typ, button_pressed, domains, selected_items)
-    @sb[:domain_id] = domains.first.first
-    @edit[:current] = copy_hash(@edit[:new])
     model = @edit[:selected_items].many? ? :models : :model
     @right_cell_text = _("Copy %{model}") % {:model => ui_lookup(model => typ.to_s)}
     session[:edit] = @edit
@@ -2081,8 +2041,7 @@ class MiqAeClassController < ApplicationController
       :rec_id         => @record.id,
       :key            => "copy_objects__#{@record.id}",
       :domains        => domains,
-      :selected_items => selected_items,
-      :namespaces     => {}
+      :selected_items => selected_items
     }
     @edit[:new] = {
       :domain            => domains.first.first,

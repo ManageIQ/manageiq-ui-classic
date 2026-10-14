@@ -730,9 +730,6 @@ MiqAeClassController:
 - adv_search_load_choice
 - adv_search_name_typed
 - adv_search_toggle
-- ae_tree_select
-- ae_tree_select_discard
-- ae_tree_select_toggle
 - copy_objects
 - expand_toggle
 - field_method_accept

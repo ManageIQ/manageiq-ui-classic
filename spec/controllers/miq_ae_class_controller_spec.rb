@@ -125,8 +125,6 @@ describe MiqAeClassController do
       end
 
       it "copies class to a different namespace" do
-        allow(controller).to receive(:build_automate_tree)
-
         expect do
           post :copy_objects_save, :params => base_copy_params
         end.to change(MiqAeClass, :count).by(1)
@@ -140,7 +138,6 @@ describe MiqAeClassController do
 
       it "returns error when class already exists without overwrite flag" do
         FactoryBot.create(:miq_ae_class, :name => @cls1.name, :namespace_id => @ns2.id)
-        allow(controller).to receive(:build_automate_tree)
 
         post :copy_objects_save, :params => base_copy_params(:override_existing => false)
 
@@ -151,7 +148,6 @@ describe MiqAeClassController do
 
       it "overwrites existing class when override_existing is true" do
         FactoryBot.create(:miq_ae_class, :name => @cls1.name, :namespace_id => @ns2.id)
-        allow(controller).to receive(:build_automate_tree)
 
         post :copy_objects_save, :params => base_copy_params(:override_existing => true)
 
@@ -160,8 +156,6 @@ describe MiqAeClassController do
       end
 
       it "copies class with a new name under the same domain" do
-        allow(controller).to receive(:build_automate_tree)
-
         post :copy_objects_save, :params => base_copy_params(
           :domain => @d1.id, :namespace => @ns1.fqname,
           :override_existing => true, :new_name => "cls1_copy"
@@ -1429,7 +1423,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           expect do
@@ -1452,7 +1445,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           controller.send(:copy_objects_save)
@@ -1475,7 +1467,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           controller.send(:copy_objects_save)
@@ -1499,7 +1490,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_instance_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           expect do
@@ -1522,7 +1512,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_instance_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           controller.send(:copy_objects_save)
@@ -1546,7 +1535,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_method_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           expect do
@@ -1569,7 +1557,6 @@ describe MiqAeClassController do
           }
           controller.instance_variable_set(:@sb, :action => "miq_ae_method_copy")
 
-          allow(controller).to receive(:build_automate_tree)
           allow(controller).to receive(:render)
 
           controller.send(:copy_objects_save)
@@ -1590,7 +1577,6 @@ describe MiqAeClassController do
         }
         controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
 
-        allow(controller).to receive(:build_automate_tree)
         allow(MiqAeClass).to receive(:copy).and_raise(StandardError.new("Copy failed"))
         allow(controller).to receive(:render)
 
@@ -1611,7 +1597,6 @@ describe MiqAeClassController do
         }
         controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
 
-        allow(controller).to receive(:build_automate_tree)
         allow(controller).to receive(:render)
 
         controller.send(:copy_objects_save)
