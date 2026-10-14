@@ -5,7 +5,6 @@ import { sendDataWithRx } from '../../miq_observable';
 
 jest.mock('../../miq_observable', () => ({
   sendDataWithRx: jest.fn(),
-  listenToRx: jest.fn(() => ({ unsubscribe: jest.fn() })),
 }));
 
 const dashboardData = [
