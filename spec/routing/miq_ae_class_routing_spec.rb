@@ -105,12 +105,6 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#form_instance_field_changed" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/form_instance_field_changed")).to route_to("miq_ae_class#form_instance_field_changed")
-    end
-  end
-
   describe "#form_method_field_changed" do
     it "routes with POST" do
       expect(post("/miq_ae_class/form_method_field_changed")).to route_to("miq_ae_class#form_method_field_changed")
