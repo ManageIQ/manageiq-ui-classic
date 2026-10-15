@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Automate Simulation Form should render the simulation form correctly 1`] = `
+exports[`AutomateSimulationForm renders correctly 1`] = `
 <div>
   <div
     class="automate-simulation-page"
@@ -24,7 +24,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
             class="cds--label"
             dir="auto"
             for="instance_name"
-            id="downshift-_r_h_-label"
+            id="downshift-_r_c_-label"
           >
             System/Process
           </label>
@@ -37,10 +37,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-_r_h_-menu"
+                aria-controls="downshift-_r_c_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-_r_h_-label"
+                aria-labelledby="downshift-_r_c_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="instance_name"
@@ -50,6 +50,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 tabindex="0"
                 title="Request"
                 type="text"
+                url="/miq_ae_tools/resolve"
                 value="Request"
               />
               <button
@@ -75,11 +76,11 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
               <button
-                aria-controls="downshift-_r_h_-menu"
+                aria-controls="downshift-_r_c_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-_r_h_-toggle-button"
+                id="downshift-_r_c_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -101,9 +102,9 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-_r_h_-label"
+              aria-labelledby="downshift-_r_c_-label"
               class="cds--list-box__menu"
-              id="downshift-_r_h_-menu"
+              id="downshift-_r_c_-menu"
               role="listbox"
             />
           </div>
@@ -137,6 +138,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               <input
                 class="cds--text-input"
                 id="object_message"
+                maxlength="128"
                 name="object_message"
                 type="text"
                 value="create"
@@ -181,7 +183,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 id="object_request"
                 name="object_request"
                 type="text"
-                value=""
+                value="VM Provision"
               />
               <span
                 aria-atomic="true"
@@ -207,7 +209,7 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
             class="cds--label"
             dir="auto"
             for="target_class"
-            id="downshift-_r_k_-label"
+            id="downshift-_r_f_-label"
           >
             <span
               aria-hidden="true"
@@ -226,10 +228,10 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
-                aria-controls="downshift-_r_k_-menu"
+                aria-controls="downshift-_r_f_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-_r_k_-label"
+                aria-labelledby="downshift-_r_f_-label"
                 autocomplete="off"
                 class="cds--text-input"
                 id="target_class"
@@ -264,11 +266,11 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
                 </svg>
               </button>
               <button
-                aria-controls="downshift-_r_k_-menu"
+                aria-controls="downshift-_r_f_-menu"
                 aria-expanded="false"
                 aria-label="Open"
                 class="cds--list-box__menu-icon"
-                id="downshift-_r_k_-toggle-button"
+                id="downshift-_r_f_-toggle-button"
                 tabindex="-1"
                 title="Open"
                 type="button"
@@ -290,9 +292,9 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
               </button>
             </div>
             <ul
-              aria-labelledby="downshift-_r_k_-label"
+              aria-labelledby="downshift-_r_f_-label"
               class="cds--list-box__menu"
-              id="downshift-_r_k_-menu"
+              id="downshift-_r_f_-menu"
               role="listbox"
             />
           </div>
@@ -310,7 +312,6 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
             class="cds--form-item cds--checkbox-wrapper automate-readonly"
           >
             <input
-              checked=""
               class="cds--checkbox"
               id="readonly"
               name="readonly"
@@ -410,15 +411,8 @@ exports[`Automate Simulation Form should render the simulation form correctly 1`
         class="automate-simulation-summary"
       >
         <div
-          class="miq-notification-message-container alert alert-info"
-        >
-          <span
-            class="pficon pficon-info"
-          />
-          <strong>
-            Enter Automation Simulation options on the left and press Submit
-          </strong>
-        </div>
+          data-testid="automation-simulation"
+        />
       </div>
     </div>
   </div>
