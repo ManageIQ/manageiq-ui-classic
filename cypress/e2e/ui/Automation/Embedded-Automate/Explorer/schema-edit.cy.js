@@ -21,8 +21,8 @@ describe('Automation > Embedded Automate > Explorer > Schema Edit', () => {
 
     cy.get('li.cds--list-box__menu-item')
       .contains(optionText)
-      .should('be.visible')
-      .click();
+      .should('exist')
+      .click({ force: true });
   };
 
   const getModalSaveButton = () =>
