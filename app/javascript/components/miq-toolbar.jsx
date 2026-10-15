@@ -76,7 +76,16 @@ const onClick = (button) => {
     }
   } else if (button.data && button.data.function) {
     // Client-side buttons use 'function' and 'function-data'.
-    sendDataWithRx(button.data['function-data']);
+    const keys = button.data.function.split('.');
+    const { parent, fn } = keys.reduce(
+      (acc, key) => ({ parent: acc.fn, fn: acc.fn && acc.fn[key] }),
+      { parent: null, fn: window },
+    );
+    if (typeof fn === 'function') {
+      fn.call(parent, button.data['function-data']);
+    } else {
+      sendDataWithRx(button.data['function-data']);
+    }
     return;
   } else { // Most of (classic) buttons.
     // If no url was specified, run standard button ajax transaction.
