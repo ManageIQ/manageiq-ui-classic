@@ -1746,6 +1746,7 @@ class MiqAeClassController < ApplicationController
       return
     end
 
+    @in_a_form = true
     @hide_bottom_bar = true
     action = params[:pressed] || @sb[:action]
     klass = case action
@@ -1806,15 +1807,21 @@ class MiqAeClassController < ApplicationController
   def copy_objects_save
     assert_privileges(feature_by_action)
 
-    typ        = {"miq_ae_class_copy" => MiqAeClass, "miq_ae_instance_copy" => MiqAeInstance, "miq_ae_method_copy" => MiqAeMethod}[@sb[:action]]
-    old_name   = params[:old_name]
-    fqname     = params[:fqname]
-    new_name   = params[:new_name].presence
-    new_name   = nil if new_name == old_name
+    typ = {"miq_ae_class_copy" => MiqAeClass, "miq_ae_instance_copy" => MiqAeInstance, "miq_ae_method_copy" => MiqAeMethod}[@sb[:action]]
+    if typ.nil?
+      render :json => {:error => _("Invalid copy action")}, :status => 400
+      return
+    end
+
     selected_ids = Array(params[:selected_ids])
 
     begin
       @record = find_record_with_rbac(typ, params[:id])
+      selected_ids.each { |id| find_record_with_rbac(typ, id) }
+      old_name = @record.name
+      fqname   = @record.fqname
+      new_name = params[:new_name].presence
+      new_name = nil if new_name == old_name
       domain  = MiqAeDomain.find(params[:domain])
 
       options = {

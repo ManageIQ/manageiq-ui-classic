@@ -114,9 +114,15 @@ const NamespaceTreeModal = ({
 
       // Always update — even with empty children — so the spinner condition can resolve.
       // Mark this node as loaded in metadata so the renderer stops showing the spinner.
+      // If no children were returned, mark isBranch: false so the expand arrow disappears.
       setData((prev) => prev.map((node) => {
         if (node.id === element.id) {
-          return { ...node, children: children.map((c) => c.id), metadata: { ...node.metadata, loaded: true } };
+          return {
+            ...node,
+            isBranch: children.length > 0,
+            children: children.map((c) => c.id),
+            metadata: { ...node.metadata, loaded: true },
+          };
         }
         return node;
       }).concat(children.filter((c) => !prev.find((n) => n.id === c.id))));

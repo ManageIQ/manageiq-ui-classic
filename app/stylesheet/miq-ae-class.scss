@@ -76,28 +76,23 @@
   display: flex;
   align-items: center;
   padding: 4px 8px;
+  padding-left: calc((var(--ae-ns-level, 1) - 1) * 20px);
   cursor: pointer;
   border-radius: 2px;
 
-  padding-left: calc((var(--ae-ns-level, 1) - 1) * 20px);
-
-  &:hover {
+  &:hover:not(&-selected) {
     background-color: #e8e8e8;
   }
 
   &-selected {
-    background-color: #d0e2ff;
-  }
-
-  &--domain {
-    cursor: default;
-    font-weight: 600;
-    opacity: 0.75;
+    background-color: #0f62fe;
+    color: #ffffff;
 
     &:hover {
-      background-color: transparent;
+      background-color: #0f62fe;
     }
   }
+
 }
 
 .ae-ns-icon {

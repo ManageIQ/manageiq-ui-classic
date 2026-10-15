@@ -100,6 +100,46 @@ describe MiqAeClassController do
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
+    context "presenter state when the copy form loads" do
+      before do
+        stub_user(:features => :all)
+        d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+        ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
+        @cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+        node = "aec-#{@cls1.id}"
+        controller.instance_variable_set(:@sb,
+                                         :active_tree => :ae_tree,
+                                         :action      => "miq_ae_class_copy",
+                                         :trees       => {:ae_tree => {:active_node => node}})
+        controller.params = {:pressed => "miq_ae_class_copy", :id => @cls1.id}
+        allow(controller).to receive(:open_parent_nodes)
+        allow(controller).to receive(:render)
+      end
+
+      it "suppresses the toolbar while the copy form is open" do
+        controller.send(:copy_objects)
+        expect(controller.instance_variable_get(:@in_a_form)).to be_truthy
+      end
+
+      it "hides the legacy form buttons while the copy form is open" do
+        controller.send(:copy_objects)
+        expect(controller.instance_variable_get(:@hide_bottom_bar)).to be_truthy
+      end
+
+      it "shows 'Copy Class' as the right-cell title" do
+        controller.send(:copy_objects)
+        expect(controller.instance_variable_get(:@right_cell_text)).to include("Copy")
+      end
+
+      it "locks the sidebar via the presenter" do
+        presenter = double("ExplorerPresenter").as_null_object
+        allow(ExplorerPresenter).to receive(:new).and_return(presenter)
+        # lock_sidebar receives @in_a_form && @edit — truthy, not literally true
+        expect(presenter).to receive(:[]=).with(:lock_sidebar, a_truthy_value)
+        controller.send(:copy_objects)
+      end
+    end
+
     describe "#copy_objects_save" do
       before do
         stub_user(:features => :all)
@@ -1602,6 +1642,32 @@ describe MiqAeClassController do
         controller.send(:copy_objects_save)
 
         expect(controller).to have_received(:render).with(:json => hash_including(:message, :redirect_url))
+      end
+
+      it "raises an RBAC error when selected_ids contains an inaccessible record" do
+        other_domain = FactoryBot.create(:miq_ae_domain, :name => "other_domain")
+        other_ns = FactoryBot.create(:miq_ae_namespace, :name => "other_ns", :parent => other_domain)
+        other_class = FactoryBot.create(:miq_ae_class, :name => "other_class", :namespace_id => other_ns.id)
+
+        # Simulate RBAC denial for the other_class id
+        allow(controller).to receive(:find_record_with_rbac).and_call_original
+        allow(controller).to receive(:find_record_with_rbac)
+          .with(MiqAeClass, other_class.id.to_s)
+          .and_raise(StandardError.new("RBAC: access denied"))
+
+        controller.params = {
+          :id                => @ae_class.id.to_s,
+          :domain            => @domain2.id.to_s,
+          :namespace         => @namespace2.fqname,
+          :override_existing => "0",
+          :selected_ids      => [@ae_class.id.to_s, other_class.id.to_s]
+        }
+        controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
+        allow(controller).to receive(:render)
+
+        controller.send(:copy_objects_save)
+
+        expect(controller).to have_received(:render).with(:json => hash_including(:error), :status => 400)
       end
     end
   end
