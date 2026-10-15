@@ -389,6 +389,20 @@ describe OpsController do
         affected = response.parsed_body.dig("tags", "affectedItems")
         expect(affected).to include(group.id.to_s)
       end
+
+      it "returns one assignedTags entry per category with all of its values" do
+        FactoryBot.create(:classification_department_with_tags)
+        group.entitlement = Entitlement.new
+        group.entitlement.set_managed_filters([%w[/managed/department/accounting /managed/department/finance]])
+        group.save!
+
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        assigned = response.parsed_body.dig("tags", "assignedTags")
+        expect(assigned.size).to eq(1)
+        expect(assigned.first).to include("id" => "department", "label" => "Department")
+        expect(assigned.first["values"].pluck("id")).to match_array(%w[accounting finance])
+      end
     end
   end
 

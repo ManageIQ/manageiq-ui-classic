@@ -19,9 +19,8 @@ exports[`TaggingEditor component matches snapshot 1`] = `
           </h4>
         </div>
       </div>
-      <form
+      <div
         class="cds--form tag-modifier-form"
-        horizontal="true"
       >
         <fieldset
           class="cds--fieldset"
@@ -172,7 +171,7 @@ exports[`TaggingEditor component matches snapshot 1`] = `
             </div>
           </div>
         </fieldset>
-      </form>
+      </div>
     </div>
     <div
       class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
