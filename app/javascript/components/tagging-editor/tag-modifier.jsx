@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Form, Grid, Column } from '@carbon/react';
+import { Grid, Column } from '@carbon/react';
 
 const TagModifier = ({
   header = __('Add/Modify tag'),
@@ -15,7 +15,8 @@ const TagModifier = ({
           </Column>
         </Grid>
       ) }
-    <Form horizontal="true" className="tag-modifier-form">{children}</Form>
+    {/* div, not <Form>, to avoid nesting forms */}
+    <div className="cds--form tag-modifier-form">{children}</div>
   </>
 );
 

@@ -13,9 +13,8 @@ exports[`TagModifier component matches snapshot 1`] = `
       </h4>
     </div>
   </div>
-  <form
+  <div
     class="cds--form tag-modifier-form"
-    horizontal="true"
   >
     <fieldset
       class="cds--fieldset"
@@ -157,6 +156,6 @@ exports[`TagModifier component matches snapshot 1`] = `
         </div>
       </div>
     </fieldset>
-  </form>
+  </div>
 </div>
 `;

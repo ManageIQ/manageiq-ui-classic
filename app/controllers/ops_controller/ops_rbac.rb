@@ -83,8 +83,11 @@ module OpsController::OpsRbac
 
   def rbac_group_add
     assert_privileges("rbac_group_add")
-    @edit = {}
+    @edit = {:key => "rbac_group_edit__new", :current => {}}
+    @hide_bottom_bar = true
     @in_a_form = true
+    session[:edit] = @edit
+    session[:changed] = false
     @sb[:pre_edit_node] = x_node
     @right_cell_text = _('Adding a new Group')
     replace_right_cell(:nodetype => x_node)
@@ -507,13 +510,12 @@ module OpsController::OpsRbac
     end
 
     filters = group.id ? (group.entitlement&.get_managed_filters || []).flatten : []
-    assigned_tags = Tag.where(:name => filters).filter_map do |tag|
+    assigned_tags = Tag.where(:name => filters).each_with_object({}) do |tag, by_category|
       next unless tag.category && tag.classification
 
-      {:label  => tag.category.description,
-       :id     => tag.category.name,
-       :values => [{:id => tag.classification.name, :label => tag.classification.description}]}
-    end
+      entry = by_category[tag.category.name] ||= {:label => tag.category.description, :id => tag.category.name, :values => []}
+      entry[:values] << {:id => tag.classification.name, :label => tag.classification.description}
+    end.values
 
     render :json => {
       :hac_tree                  => hac.bs_tree,
