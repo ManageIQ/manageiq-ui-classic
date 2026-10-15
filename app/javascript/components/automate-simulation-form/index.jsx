@@ -20,13 +20,16 @@ const AutomateSimulationForm = ({
     simulationTree: { notice: __('Enter Automation Simulation options on the left and press Submit') },
   });
 
-  const [initialValues, setInitialValues] = useState(resolve.new);
+  const [targetClass, setTargetClass] = useState(resolve.new.target_class || '');
 
-  useEffect(() => {
+  const [initialValues] = useState(() => {
     const newInitialValues = { ...resolve.new, readonly: !resolve.new.readonly };
 
+    // Clean up generic target_id so it doesn't leak into other fields
+    delete newInitialValues.target_id;
+
     // Handle target_class and target_id
-    if (resolve.new.target_class) {
+    if (resolve.new.target_class && resolve.new.target_id) {
       newInitialValues[`target_id_${resolve.new.target_class}`] = resolve.new.target_id;
     }
 
@@ -36,8 +39,8 @@ const AutomateSimulationForm = ({
         .filter((attr) => attr[0] != null && attr[1] != null)
         .map((attr) => ({ attribute: attr[0], value: attr[1] }));
     }
-    setInitialValues(newInitialValues);
-  }, []);
+    return newInitialValues;
+  });
 
   useEffect(() => {
     if (formData.isLoading) {
@@ -67,16 +70,9 @@ const AutomateSimulationForm = ({
       object_request: values.object_request,
       target_class: values.target_class,
       readonly: values.readonly,
-      target_id: values.target_id,
+      target_id: values.target_class ? values[`target_id_${values.target_class}`] : undefined,
       button: 'throw',
     };
-
-    // Look for any keys that start with 'target_id_'
-    Object.keys(values).forEach((key) => {
-      if (key.startsWith('target_id_')) {
-        data.target_id = values[key];
-      }
-    });
 
     if (values.attrs && values.attrs.length > 0) {
       values.attrs.forEach((ae, index) => {
@@ -96,12 +92,13 @@ const AutomateSimulationForm = ({
     const buttons = document.querySelectorAll('.cds--list-box__selection');
     buttons.forEach((button) => button.click());
     document.getElementById('object_request').value = '';
+    setTargetClass(resolve.new.target_class || '');
     add_flash(__('All changes have been reset'), 'warning');
   };
 
   const schema = useMemo(
-    () => createSchema(resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions),
-    [],
+    () => createSchema(resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions, targetClass, setTargetClass),
+    [targetClass],
   );
 
   return (

@@ -16,7 +16,7 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
   });
 
 const createSchema = (
-  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions,
+  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions, targetClass, setTargetClass,
 ) => {
   const fields = [
     {
@@ -33,7 +33,7 @@ const createSchema = (
       name: 'instance_name',
       className: 'automate-instance-name',
       label: __('System/Process'),
-      initialValue: resolve.instance_names.sort((b, a) => a.toLowerCase().localeCompare(b.toLowerCase())),
+      initialValue: resolve.new.instance_name || (resolve.instance_names && resolve.instance_names[0]),
       validate: [{ type: validatorTypes.REQUIRED }],
       isSearchable: true,
       simpleValue: true,
@@ -78,23 +78,22 @@ const createSchema = (
       isSearchable: true,
       simpleValue: true,
       isRequired: true,
+      onChange: (value) => {
+        if (value !== targetClass) {
+          setTargetClass(value);
+        }
+      },
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
       component: componentTypes.SELECT,
-      id: 'target_id',
-      name: 'target_id',
+      id: `target_id_${targetClass}`,
+      name: `target_id_${targetClass}`,
+      key: `target_id-${targetClass}`,
       label: __('Selection'),
       className: 'automate-selection-target',
       isRequired: true,
-      resolveProps: (_props, _field, formOptions) => {
-        const targetClass = formOptions.getState().values.target_class;
-        return {
-          name: `target_id_${targetClass}`,
-          loadOptions: () => loadTargets(targetClass),
-          key: targetClass,
-        };
-      },
+      loadOptions: () => (targetClass ? loadTargets(targetClass) : Promise.resolve([{ label: `<${__('None')}>`, value: '' }])),
       condition: {
         not: {
           when: 'target_class',
