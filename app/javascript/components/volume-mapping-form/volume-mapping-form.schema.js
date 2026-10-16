@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { componentTypes, validatorTypes } from '@@ddf';
 
-export const portTypes = [
+export const portTypes = () => [
   { label: __('ISCSI'), value: 'ISCSI' },
   { label: __('FC'), value: 'FC' },
   { label: __('NVMe'), value: 'NVMeFC' },

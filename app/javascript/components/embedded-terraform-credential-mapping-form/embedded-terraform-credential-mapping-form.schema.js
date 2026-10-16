@@ -1,11 +1,11 @@
 import { componentTypes } from '@@ddf';
 
-const fieldLabels = {
+const fieldLabels = () => ({
   userid: __('Username'),
   password: __('Password'),
   auth_key: __('Private key'),
   auth_key_password: __('Private key passphrase'),
-};
+});
 
 const createSchema = (credentials, credentialReferences, payloadCredentials, workflowAuthentications, setState) => {
   // Saves a new credential mapping to 'credentials'
@@ -54,7 +54,7 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
         CredentialRecord: {
           text: credentials[value] ? workflowAuthentications.find((item) => item.value === credentials[value].credential_ref).label : '',
         },
-        CredentialField: { text: credentials[value] ? fieldLabels[credentials[value].credential_field] : '' },
+        CredentialField: { text: credentials[value] ? fieldLabels()[credentials[value].credential_field] : '' },
         Delete: {
           is_button: true,
           text: __('Delete'),

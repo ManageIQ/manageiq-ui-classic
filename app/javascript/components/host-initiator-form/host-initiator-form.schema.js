@@ -1,7 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import validateName from '../../helpers/storage_manager/validate-names';
 
-export const portTypes = [
+export const portTypes = () => [
   { label: __('ISCSI'), value: 'ISCSI' },
   { label: __('FC'), value: 'FC' },
   { label: __('NVMe'), value: 'NVMeFC' },
@@ -112,7 +112,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         name: 'port_type',
         label: __('Port type:'),
         placeholder: __('<Choose>'),
-        options: portTypes,
+        options: portTypes(),
         isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
         includeEmpty: true,

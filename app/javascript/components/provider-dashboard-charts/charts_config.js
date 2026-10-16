@@ -38,7 +38,7 @@ const hourlyTimeTooltip = (units = undefined) => (data) => {
   return htmlString;
 };
 
-export const chartConfig = {
+export const chartConfig = () => ({
   cpuUsageConfig: {
     chartId: 'cpuUsageChart',
     title: __('CPU'),
@@ -218,4 +218,4 @@ export const chartConfig = {
     setAreaChart: true,
     legendLeftText: __('Last 30 Days'),
   },
-};
+});

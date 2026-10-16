@@ -20,7 +20,7 @@ class TagView extends React.Component {
   );
 
   render() {
-    const { hideHeader, header } = this.props;
+    const { hideHeader, header = __('Assigned tags') } = this.props;
     const assignedTags = [...this.props.assignedTags];
     const view = (assignedTags.length > 0
       ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.label < b.label ? -1 : 1)).map(this.generateTagCategories) }</ul>
@@ -55,7 +55,7 @@ TagView.propTypes = {
 
 TagView.defaultProps = {
   assignedTags: [],
-  header: __('Assigned tags'),
+  header: undefined,
   onTagDeleteClick: undefined,
   hideHeader: false,
   showCloseButton: true,

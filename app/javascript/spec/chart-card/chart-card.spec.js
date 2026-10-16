@@ -154,7 +154,7 @@ describe('Chart Card component', () => {
         title="Pod Creation and Deletion Trends"
         chartData={chartData}
         isLoading={false}
-        config={chartConfig.hourlyPodUsageConfig}
+        config={chartConfig().hourlyPodUsageConfig}
       />
     );
 

@@ -64,7 +64,7 @@ const createSchema = (fields, tz, timeProfileId, timezones, showHoursError) => (
             when: 'DaysSelectAll',
             is: !true,
           },
-          options: days,
+          options: days(),
         },
         {
           component: componentTypes.CHECKBOX,
@@ -77,7 +77,7 @@ const createSchema = (fields, tz, timeProfileId, timezones, showHoursError) => (
             when: 'DaysSelectAll',
             is: true,
           },
-          options: days,
+          options: days(),
         },
       ],
     },

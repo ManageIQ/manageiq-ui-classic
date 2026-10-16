@@ -1,24 +1,24 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { getButtonTypes } from './helper';
 
-const inventoryOptions = [
+const inventoryOptions = () => [
   { value: 'localhost', label: __('Localhost') },
   { value: 'vmdb_object', label: __('Target Machine') },
   { value: 'manual', label: __('Specific Hosts') },
 ];
 
-const displayForOptions = [
+const displayForOptions = () => [
   { value: 'single', label: __('Single Entity') },
   { value: 'list', label: __('List') },
   { value: 'both', label: __('Single and List') },
 ];
 
-const submitHowOptions = [
+const submitHowOptions = () => [
   { value: 'all', label: __('Submit all') },
   { value: 'one', label: __('One by one') },
 ];
 
-const visibilities = [
+const visibilities = () => [
   { value: '_All_', label: `<${__('To All')}>` },
   { value: 'role', label: `<${__('By Role')}>` },
 ];
@@ -56,7 +56,7 @@ const createSchema = (distinctInstancesOptions, ansiblePlaybookOptions, roles, s
           id: 'inventory_type',
           name: 'inventory_type',
           label: __('Inventory'),
-          options: inventoryOptions,
+          options: inventoryOptions(),
         },
         {
           component: componentTypes.TEXT_FIELD,
@@ -136,14 +136,14 @@ const createSchema = (distinctInstancesOptions, ansiblePlaybookOptions, roles, s
       id: 'display_for',
       name: 'options.display_for',
       label: __('Display for'),
-      options: displayForOptions,
+      options: displayForOptions(),
     },
     {
       component: componentTypes.SELECT,
       id: 'submit_how',
       name: 'options.submit_how',
       label: __('Submit'),
-      options: submitHowOptions,
+      options: submitHowOptions(),
     },
     {
       component: componentTypes.SELECT,
@@ -188,7 +188,7 @@ const createSchema = (distinctInstancesOptions, ansiblePlaybookOptions, roles, s
           id: 'visibility',
           name: 'visibility.roles',
           label: __('Role Access'),
-          options: visibilities,
+          options: visibilities(),
         },
         {
           component: componentTypes.SELECT,

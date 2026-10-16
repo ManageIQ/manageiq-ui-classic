@@ -25,17 +25,18 @@ const UsageTrendChart = ({
 
   const resultData = data.vms;
   const configName = resultData[dataPoint].interval_name + config;
+  const charts = chartConfig();
   const getTitle = () => {
-    if (chartConfig[configName]) {
-      return chartConfig[configName].headTitle;
+    if (charts[configName]) {
+      return charts[configName].headTitle;
     }
     // When no data is available, the title can’t be fetched from the chart config,
     // so it is assigned based on configName(either network or image)
     if (configName === 'NetworkUsageConfig') {
-      return chartConfig.dailyNetworkUsageConfig.headTitle;
+      return charts.dailyNetworkUsageConfig.headTitle;
     }
 
-    return chartConfig.dailyImageUsageConfig.headTitle;
+    return charts.dailyImageUsageConfig.headTitle;
   };
   const title = getTitle();
 
@@ -45,7 +46,7 @@ const UsageTrendChart = ({
         <h2 className="card-pf-title">{title}</h2>
       </div>
       <div className="card-pf-body">
-        {resultData[dataPoint].dataAvailable ? <UsageAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} title={title} />
+        {resultData[dataPoint].dataAvailable ? <UsageAreaChart data={data.vms} config={charts[configName]} dataPoint={dataPoint} title={title} />
           : <EmptyChart /> }
       </div>
     </div>

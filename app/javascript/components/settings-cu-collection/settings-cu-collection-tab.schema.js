@@ -1,9 +1,9 @@
 import { componentTypes } from '@@ddf';
 
 // eslint-disable-next-line max-len
-const collectNoteLabel = __('Note: Collect for All Clusters must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2');
+const collectNoteLabel = () => __('Note: Collect for All Clusters must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2');
 // eslint-disable-next-line max-len
-const vmDataLabel = __('VM data will be collected for VMs under selected Hosts only. Data is collected for a Cluster and all of its Hosts when at least one Host is selected.');
+const vmDataLabel = () => __('VM data will be collected for VMs under selected Hosts only. Data is collected for a Cluster and all of its Hosts when at least one Host is selected.');
 
 const createSchema = (
   clustersTree, datastoresTree, clustersNodes, datastoresNodes, hostsChecked, datastoresChecked,
@@ -56,7 +56,7 @@ const createSchema = (
               id: 'collect-note',
               name: 'collect_note',
               className: 'collect-note',
-              label: collectNoteLabel,
+              label: collectNoteLabel(),
             },
             {
               component: 'checkbox-tree',
@@ -75,7 +75,7 @@ const createSchema = (
               name: 'vm_data',
               className: 'vm-data',
               condition: { and: [{ when: 'all_clusters', is: false }] },
-              label: vmDataLabel,
+              label: vmDataLabel(),
             },
             ...(clustersTree != null
               ? []

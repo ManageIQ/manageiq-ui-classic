@@ -15,7 +15,7 @@ const asyncValidator = (label) => API.get(`/api/service_dialogs?filter[]=label=$
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
-const serviceDialogFromOtSchema = ({
+const serviceDialogFromOtSchema = () => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
     id: 'label',

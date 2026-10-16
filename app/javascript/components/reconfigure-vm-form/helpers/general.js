@@ -20,7 +20,7 @@ export const TYPES = {
 };
 
 /** Function to set all forms data in the reconfigure vm feature  */
-export const formsData = {
+export const formsData = () => ({
   reconfigure: {
     title: __('Options'),
     className: 'reconfigure_form',
@@ -45,7 +45,7 @@ export const formsData = {
     title: __('Connect CD/DVD Drives'),
     className: 'drive_form',
   },
-};
+});
 
 /** Function to get the value in MB
  * converts the value to GB to MB based on the passed unit

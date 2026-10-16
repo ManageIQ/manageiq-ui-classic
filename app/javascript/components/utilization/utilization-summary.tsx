@@ -10,13 +10,13 @@ import {
 } from '@carbon/react';
 import type { SummaryData, SummaryProps } from './utilization-types';
 
-const SECTIONS = [
+const getSections = () => [
   { key: 'cpu', label: __('CPU') },
   { key: 'memory', label: __('Memory') },
   { key: 'storage', label: __('Disk') },
 ];
 
-const HEADERS = [
+const getHeaders = () => [
   { key: 'item', header: __('Item') },
   { key: 'value', header: __('Value') },
 ];
@@ -47,7 +47,7 @@ const UtilizationSummary = ({
 
   const parsedSummary: SummaryData = typeof summary === 'string' ? JSON.parse(summary) : (summary ?? {});
 
-  const sections = SECTIONS.flatMap(({ key, label }) => {
+  const sections = getSections().flatMap(({ key, label }) => {
     const rows = (parsedSummary[key as keyof SummaryData] ?? [])
       .filter(([_item, _value, type]) => (
         type === 'trend_max'
@@ -65,7 +65,7 @@ const UtilizationSummary = ({
       {sections.map(({ key, label, rows }, idx) => (
         <div key={key}>
           {idx > 0 && <hr />}
-          <DataTable rows={rows} headers={HEADERS}>
+          <DataTable rows={rows} headers={getHeaders()}>
             {({
               rows: tableRows,
               getRowProps,

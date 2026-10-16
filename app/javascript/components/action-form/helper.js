@@ -108,7 +108,7 @@ const constructAeHash = (aeHashPairs) => {
   return options;
 };
 
-const assignProfiles = [
+const assignProfiles = () => [
   { label: __('Copy of sample'), value: 'Copy of sample' },
   { label: __('default'), value: 'default' },
   { label: __('host default'), value: 'host default' },

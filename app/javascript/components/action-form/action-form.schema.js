@@ -24,7 +24,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           label: __('Analysis Profiles'),
           placeholder: __('<Choose>'),
           includeEmpty: true,
-          options: assignProfiles,
+          options: assignProfiles(),
         },
       ],
     },

@@ -26,7 +26,7 @@ const ServiceDialogFromOt = ({
     <Grid>
       <Column sm={4} md={8} lg={16}>
         <MiqFormRenderer
-          schema={serviceDialogFromOtSchema}
+          schema={serviceDialogFromOtSchema()}
           onSubmit={onSubmit}
           onCancel={() => miqRedirectBack(__('Creation of a new Service Dialog was cancelled by the user'), 'success', miqRedirectBackAdress)}
           buttonsLabels={{ submitLabel: __('Save') }}
