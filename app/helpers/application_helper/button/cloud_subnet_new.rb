@@ -1,17 +1,14 @@
 class ApplicationHelper::Button::CloudSubnetNew < ApplicationHelper::Button::ButtonNewDiscover
-  def calculate_properties
-    super
-    if disabled?
-      self[:title] = _("No cloud providers support creating cloud subnets.")
-    end
+  def supports_button_action?
+    Rbac::Filterer.filtered(CloudSubnet.providers_supporting(:create)).any?
   end
 
   def role_allows_feature?
     super && role_allows?(:feature => 'ems_network_show_list') && role_allows?(:feature => 'cloud_tenant_show_list') && role_allows?(:feature => 'cloud_network_show_list')
   end
 
-  # disable button if no active providers support create action
   def disabled?
-    ::EmsNetwork.all.none? { |ems| CloudSubnet.class_by_ems(ems)&.supports?(:create) }
+    @error_message = _("No cloud providers support creating cloud subnets.") unless supports_button_action?
+    super || @error_message.present?
   end
 end
