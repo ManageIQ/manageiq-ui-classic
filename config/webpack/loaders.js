@@ -28,7 +28,8 @@ module.exports = [
     // Also include react-checkbox-tree v2+ for transpilation because it ships untranspiled class fields
     // Also include temporal-polyfill because its chunk files use optional chaining
     // and are pulled in transitively by @carbon/utilities/date-picker
-    exclude: /node_modules\/(?!(@carbon|@tanstack|es-toolkit|react-checkbox-tree|temporal-polyfill))/,
+    // Also include @xterm packages because v6+ ships optional chaining in its .mjs builds
+    exclude: /node_modules\/(?!(@carbon|@tanstack|@xterm|es-toolkit|react-checkbox-tree|temporal-polyfill))/,
   },
   {
     // matches both the actual path and the aliased one

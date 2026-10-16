@@ -27,6 +27,7 @@ module.exports = {
       },
     ],
     require('@babel/plugin-transform-class-properties').default,
+    require('@babel/plugin-transform-logical-assignment-operators').default,
     require('@babel/plugin-transform-optional-chaining').default,
     require('@babel/plugin-transform-nullish-coalescing-operator').default,
     require('@babel/plugin-transform-numeric-separator').default,
