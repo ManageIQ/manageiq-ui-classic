@@ -4,10 +4,12 @@
 //               - matchedButtonIndex: Number (default: -1) - Index among buttons with matching text (0-based).
 //                                     Use -1 to automatically select the first enabled button.
 //                                     Use 0, 1, 2... to select a specific matched button by index.
+//               - assertOptionDisabled: Boolean (default: false) - When true, asserts that the toolbar option is
+//                                       disabled instead of enabled, and skips clicking it.
 Cypress.Commands.add(
   'toolbar',
   (toolbarButton, toolbarOption = '', otherOptions = {}) => {
-    const { matchedButtonIndex = -1 } = otherOptions;
+    const { matchedButtonIndex = -1, assertOptionDisabled = false } = otherOptions;
     let targetToolbarButton;
 
     const clickToolbarButton = cy
@@ -54,7 +56,9 @@ Cypress.Commands.add(
         ).to.be.false;
       })
       .then(() => {
-        return cy.wrap(targetToolbarButton).click();
+        if (!targetToolbarButton.classList.contains('cds--overflow-menu--open')) {
+          return cy.wrap(targetToolbarButton).click();
+        }
       });
 
     // If toolbarOption is provided, wait for toolbar to open,
@@ -74,13 +78,23 @@ Cypress.Commands.add(
               targetToolbarOption,
               `Expected to find toolbar option "${toolbarOption}" in the "${toolbarButton}" toolbar`
             ).to.not.be.undefined;
-            // Assert that the toolbar option is enabled (enables retry)
-            expect(
-              targetToolbarOption.disabled,
-              `Expected toolbar option "${toolbarOption}" to be enabled`
-            ).to.be.false;
+            if (assertOptionDisabled) {
+              // Assert that the toolbar option is disabled
+              expect(
+                targetToolbarOption.disabled,
+                `Expected toolbar option "${toolbarOption}" to be disabled`
+              ).to.be.true;
+            } else {
+              // Assert that the toolbar option is enabled (enables retry)
+              expect(
+                targetToolbarOption.disabled,
+                `Expected toolbar option "${toolbarOption}" to be enabled`
+              ).to.be.false;
+            }
           })
           .then(() => {
+            if (assertOptionDisabled) return;
+
             return cy.interceptApi({
               alias: 'toolbarOptionClick',
               urlPattern: /\/x_button(\/\d+)?\?pressed=.*/,
