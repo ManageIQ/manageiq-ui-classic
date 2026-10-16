@@ -372,7 +372,7 @@ const restructureInitialOptions = (
     filter_value,
     schedule_timer_type,
   } = scheduleResponse;
-  let options: Partial<FormState['options']> = {};
+  let options: Partial<FormState['options']>;
 
   if (isAutomation(action_type)) {
     options = {

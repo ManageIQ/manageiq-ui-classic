@@ -101,7 +101,6 @@ class ValueSelector extends React.Component {
           open
           label={label}
           initialSelectedItems={selectedOptions}
-          // eslint-disable-next-line react/destructuring-assignment
           key={this.props.selectedTagCategory.label}
           items={values}
           disabled={isDisabled}
@@ -117,7 +116,6 @@ class ValueSelector extends React.Component {
         label={label}
         titleText=""
         defaultValue="placeholder"
-        // eslint-disable-next-line react/destructuring-assignment
         key={selectedOption.length === 0 ? -1 : this.props.values[0].id}
         disabled={isDisabled}
         onChange={(val) => this.handleChange(val)}

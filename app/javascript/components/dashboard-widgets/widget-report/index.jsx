@@ -4,7 +4,6 @@ import DOMPurify from 'dompurify';
 const WidgetReport = ({ widgetModel }) => {
   let widget;
   if (widgetModel) {
-    // eslint-disable-next-line react/no-danger
     widget = (<div className="widget-report" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(widgetModel) }} />);
   } else {
     widget = (

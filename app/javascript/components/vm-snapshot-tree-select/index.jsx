@@ -12,7 +12,6 @@ const VMSnapshotTreeSelect = ({
 }) => {
   const [currentSnapshot, setCurrentSnapshot] = useState({ ...snapshot, size, time });
 
-  // eslint-disable-next-line react/prop-types
   return (
     <div>
       <div className="snapshot-details-div">

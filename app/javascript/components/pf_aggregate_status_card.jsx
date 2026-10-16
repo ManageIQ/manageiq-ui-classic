@@ -42,7 +42,6 @@ const PfAggregateStatusCard = ({
             </div>
           ) : (
             notifications.map((notification, i) => (
-              // eslint-disable-next-line react/no-array-index-key
               <span key={i} className="card-pf-aggregate-status-notification">
                 <a href={notification.href}>
                   { notification.iconImage && (

@@ -130,7 +130,6 @@ TenantTree.propTypes = {
   tenants: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
-    // eslint-disable-next-line react/forbid-prop-types
     children: PropTypes.array,
   })).isRequired,
   rates: PropTypes.arrayOf(PropTypes.shape({
