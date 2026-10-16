@@ -1,87 +1,77 @@
-import fetchMock from 'fetch-mock';
-import { waitFor } from '@testing-library/react';
-import AutomateSimulationForm from '../../components/automate-simulation-form';
+import { screen, waitFor } from '@testing-library/react';
 import { renderWithRedux } from '../helpers/mountForm';
+import AutomateSimulationForm from '../../components/automate-simulation-form/index';
+import createSchema from '../../components/automate-simulation-form/automate-simulation-form.schema';
 
-describe('Automate Simulation Form', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+// AutomationSimulation renders a complex tree/tab widget that is not under test here.
+jest.mock('../../components/AutomationSimulation', () => {
+  const MockAutomationSimulation = () => <div data-testid="automation-simulation" />;
+  MockAutomationSimulation.displayName = 'AutomationSimulation';
+  return MockAutomationSimulation;
+});
+
+const baseResolve = {
+  target_classes: { Vm: 'VM and Instance' },
+  instance_names: ['Request'],
+  new: {
+    object_message: 'create',
+    object_request: 'VM Provision',
+    readonly: false,
+    target_class: null,
+    target_id: null,
+    attrs: [],
+  },
+};
+
+const makeProps = (readonly = false) => ({
+  resolve: {
+    ...baseResolve,
+    new: { ...baseResolve.new, readonly },
+  },
+  maxNameLength: 128,
+  url: '/miq_ae_tools/resolve',
+  attrValuesPairs: [0, 1, 2, 3, 4],
+  maxLength: 128,
+});
+
+describe('AutomateSimulationForm', () => {
+  beforeEach(() => {
+    window.http = {
+      get: jest.fn(() => Promise.resolve({ targets: [] })),
+      post: jest.fn(() => Promise.resolve({ notice: 'Simulation complete' })),
+    };
   });
 
-  const resolveMockData = {
-    ae_result: 'ok',
-    button_class: '',
-    button_number: 1,
-    instance_names: [
-      'Request',
-      'parse_provider_category',
-      'parse_event_stream',
-      'parse_automation_request',
-      'MiqEvent',
-      'GenericObject',
-      'Event',
-      'Automation',
-    ],
-    lastaction: null,
-    new: {
-      attrs: [[], [], [], [], []],
-      instance_name: 'Request',
-      object_message: 'create',
-      object_request: '',
-      readonly: true,
-      starting_object: 'SYSTEM/PROCESS',
-      target_class: null,
-      target_id: null,
-    },
-    state_attributes: {},
-    targets: null,
-    target_classes: {
-      AvailabilityZone: 'Availability Zone',
-      CloudNetwork: 'Cloud Network',
-      CloudObjectStoreContainer: 'Cloud Object Store Container',
-      CloudSubnet: 'Cloud Subnet',
-      CloudTenant: 'Cloud Tenant',
-      CloudVolume: 'Cloud Volume',
-      ContainerGroup: 'Container Pod',
-      ContainerImage: 'Container Image',
-      ContainerNode: 'Container Node',
-      ContainerProject: 'Container Project',
-      ContainerTemplate: 'Container Template',
-      ContainerVolume: 'Container Volume',
-      EmsCluster: 'Cluster',
-      ExtManagementSystem: 'Provider',
-      GenericObject: 'Generic Object',
-      Host: 'Host',
-      MiqGroup: 'Group',
-      MiqTemplate: 'VM Template and Image',
-      NetworkRouter: 'Network Router',
-      NetworkService: 'Network Service',
-      OrchestrationStack: 'Orchestration Stack',
-      PhysicalChassis: 'Physical Chassis',
-      PhysicalRack: 'Physical Rack',
-      PhysicalServer: 'Physical Server',
-      PhysicalStorage: 'Physical Storage',
-      SecurityGroup: 'Security Group',
-      SecurityPolicy: 'Security Policy',
-      SecurityPolicyRule: 'Security Policy Rule',
-      Service: 'Service',
-      Storage: 'Datastore',
-      Switch: 'Virtual Infra Switch',
-      Tenant: 'Tenant',
-      User: 'User',
-      Vm: 'VM and Instance',
-    },
-  };
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-  it('should render the simulation form correctly', async() => {
-    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveMockData} attrValuesPairs={[0, 1, 2, 3, 4]} />);
-
-    // Wait for component to finish rendering
-    await waitFor(() => {
-      expect(container.querySelector('form')).toBeInTheDocument();
-    });
-
+  it('renders correctly', async() => {
+    const { container } = renderWithRedux(<AutomateSimulationForm {...makeProps()} />);
+    await waitFor(() => expect(screen.getByLabelText('Execute Methods')).toBeInTheDocument());
     expect(container).toMatchSnapshot();
+  });
+
+  it('renders the Execute Methods checkbox as unchecked when readonly is false', async() => {
+    renderWithRedux(<AutomateSimulationForm {...makeProps(false)} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText('Execute Methods')).not.toBeChecked();
+    });
+  });
+
+  it('renders the Execute Methods checkbox as checked when readonly is true', async() => {
+    renderWithRedux(<AutomateSimulationForm {...makeProps(true)} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText('Execute Methods')).toBeChecked();
+    });
+  });
+
+  it('uses a CHECKBOX component for the readonly field (always yields a boolean, never "1")', () => {
+    const { componentTypes } = jest.requireActual('@@ddf');
+    const schema = createSchema(
+      baseResolve, 128, '/miq_ae_tools/resolve', [0, 1, 2, 3, 4], 128, [], {}, jest.fn(),
+    );
+    const field = schema.fields.find((f) => f.name === 'readonly');
+    expect(field.component).toBe(componentTypes.CHECKBOX);
   });
 });
