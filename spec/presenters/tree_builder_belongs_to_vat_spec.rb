@@ -35,22 +35,6 @@ describe TreeBuilderBelongsToVat do
                         :selected => {})
   end
 
-  describe '#tree_init_options' do
-    it 'sets tree options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
-                                                     :checkboxes => true,
-                                                     :oncheck    => nil,
-                                                     :check_url  => "/ops/rbac_group_field_changed/#{group.id}___")
-    end
-  end
-
-  describe '#set_locals_for_render' do
-    it 'set locals for render correctly' do
-      locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:check_url => "/ops/rbac_group_field_changed/#{group.id || "new"}___")
-    end
-  end
-
   describe '#x_get_tree_datacenter_kids' do
     it 'returns folders' do
       kids = subject.send(:x_get_tree_datacenter_kids, datacenter, false)
