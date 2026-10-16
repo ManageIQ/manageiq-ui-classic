@@ -18,7 +18,7 @@ export const methodSelectorHeaders = [
   },
 ];
 
-export const methodListHeaders = [
+export const methodListHeaders = () => [
   ...methodSelectorHeaders,
   { key: 'remove', header: __('Remove'), actionCell: true },
 ];

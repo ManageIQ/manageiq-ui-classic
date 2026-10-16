@@ -226,7 +226,7 @@ export const subActionChange = (
 };
 
 /** Run options data needed for the run drop-down-list */
-const runTypes: Record<string, RunTypeConfig> = {
+const runTypes = (): Record<string, RunTypeConfig> => ({
   Once: {
     label: __('Once'),
     singular: __('Once'),
@@ -257,7 +257,7 @@ const runTypes: Record<string, RunTypeConfig> = {
     type: 'Monthly',
     options: [1, 2, 3, 4, 5, 6],
   },
-};
+});
 
 /** Function to pluralize the time option labels */
 const pluralizeTime = (
@@ -271,7 +271,7 @@ const pluralizeTime = (
 
 /** Function to load the `Run` Select field options */
 export const runOptions = (): OptionType[] =>
-  Object.values(runTypes).map((item) => ({
+  Object.values(runTypes()).map((item) => ({
     label: item.label,
     value: item.type,
   }));
@@ -289,7 +289,7 @@ const timerOptions = ({
 
 /** Function to handle the run drop-down-list on change event */
 export const runChange = (value: string): OptionType[] =>
-  timerOptions(runTypes[value]);
+  timerOptions(runTypes()[value]);
 
 /** Function to load the object items when the 'Object Type' drop-down-list selection is changed  */
 export const runOptionChange = (

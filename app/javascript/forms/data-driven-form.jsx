@@ -17,16 +17,19 @@ import { connect } from 'react-redux';
 import defaultComponentMapper from './mappers/componentMapper';
 import SpyField from './spy-field';
 
+// Use a getter so the string is translated when validation runs, not at module load.
 validators.messages = {
   ...validators.messages,
-  required: __('Required'),
+  get required() {
+    return __('Required');
+  },
 };
 
-const defaultLabels = {
+const defaultLabels = () => ({
   submitLabel: __('Save'),
   resetLabel: __('Reset'),
   cancelLabel: __('Cancel'),
-};
+});
 
 // This is a wrapper around the passed onSubmit function that filters out the values from the form
 // data that don't have corresponding fields in the declared form schema.
@@ -59,7 +62,7 @@ const MiqFormRenderer = ({
       canReset={canReset}
       showFormControls={showFormControls}
       formWrapperProps={{ className }}
-      {...defaultLabels}
+      {...defaultLabels()}
       {...buttonsLabels}
     />
   ));

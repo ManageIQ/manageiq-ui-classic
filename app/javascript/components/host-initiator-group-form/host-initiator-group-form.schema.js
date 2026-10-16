@@ -1,7 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import validateName from '../../helpers/storage_manager/validate-names';
 
-export const portTypes = [
+export const portTypes = () => [
   { label: __('ISCSI'), value: 'ISCSI' },
   { label: __('FC'), value: 'FC' },
   { label: __('NVMe'), value: 'NVMeFC' },

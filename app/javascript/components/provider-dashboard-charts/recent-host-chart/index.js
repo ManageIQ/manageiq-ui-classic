@@ -25,7 +25,7 @@ const RecentHostGraph = ({ providerId }) => {
         <h2 className="card-pf-title">{data.hosts.recentResources.config.title}</h2>
       </div>
       <div className="card-pf-body">
-        <HostLineChart data={data.hosts.recentResources} config={chartConfig.recentResourcesConfig} />
+        <HostLineChart data={data.hosts.recentResources} config={chartConfig().recentResourcesConfig} />
       </div>
     </div>
   );

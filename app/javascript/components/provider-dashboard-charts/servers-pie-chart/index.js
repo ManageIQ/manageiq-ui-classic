@@ -54,12 +54,12 @@ const ServersDataChart = ({
       <div className="row">
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 example-trend-container">
           {processData.availableServers.dataAvailable
-            ? <ServersAvailablePieChart data={processData.availableServers} config={chartConfig[serversAvailableConfig]} />
+            ? <ServersAvailablePieChart data={processData.availableServers} config={chartConfig()[serversAvailableConfig]} />
             : <EmptyChart />}
         </div>
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 example-trend-container">
           {processData.serversHealth.dataAvailable
-            ? <ServersHealthPieChart data={processData.serversHealth} config={chartConfig[serversHealthConfig]} /> : <EmptyChart />}
+            ? <ServersHealthPieChart data={processData.serversHealth} config={chartConfig()[serversHealthConfig]} /> : <EmptyChart />}
         </div>
       </div>
     </div>

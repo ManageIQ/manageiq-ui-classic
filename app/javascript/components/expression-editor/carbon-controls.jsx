@@ -45,10 +45,10 @@ const iconComponentForLabel = (label) => {
 };
 
 // Labels RQB passes for the add-rule / add-group action slots.
-const ADD_BUTTON_MAP = {
+const addButtonMap = () => ({
   '+ rule': { display: __('Add Rule'), kind: 'primary' },
   '+ group': { display: __('Add Sub-Group'), kind: 'secondary' },
-};
+});
 
 const AddIcon = (props) => <Add size={16} {...props} />;
 
@@ -64,7 +64,7 @@ export const ActionButton = ({
   const matchStr = `${labelStr} ${String(title ?? '')}`.toLowerCase();
   const icon = iconComponentForLabel(matchStr);
 
-  const addBtn = !icon && ADD_BUTTON_MAP[labelStr.toLowerCase()];
+  const addBtn = !icon && addButtonMap()[labelStr.toLowerCase()];
 
   return (
     <Button

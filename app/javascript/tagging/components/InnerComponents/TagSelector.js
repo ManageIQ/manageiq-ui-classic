@@ -20,7 +20,7 @@ class TagSelector extends React.Component {
     if (!item) return null;
 
     if (item.singleValue) {
-      const { infoText } = this.props;
+      const { infoText = __('Only a single value can be assigned from these categories') } = this.props;
       return (
         <div>
           <span
@@ -74,7 +74,7 @@ TagSelector.propTypes = {
 };
 
 TagSelector.defaultProps = {
-  infoText: __('Only a single value can be assigned from these categories'),
+  infoText: undefined,
   selectedOption: {},
   isDisabled: false,
 };

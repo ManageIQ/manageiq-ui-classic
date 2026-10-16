@@ -233,10 +233,10 @@ export const setNetworkOptions = (id, data, setData, type, action, row) => {
       networkOptions,
       editingRow: row,
       form: {
-        title: formsData[type].title,
+        title: formsData()[type].title,
         type,
         action,
-        className: formsData[type].className,
+        className: formsData()[type].className,
       },
     });
   });

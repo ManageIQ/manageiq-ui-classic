@@ -17,7 +17,7 @@ export const asyncValidator = (value, serverId) => {
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
-const basicInformationCommonFields = [{
+const basicInformationCommonFields = () => [{
   component: componentTypes.TEXT_FIELD,
   id: 'access_url',
   name: 'access_url',
@@ -39,7 +39,7 @@ const basicInformationCommonFields = [{
   label: __('Customization Directory'),
 }];
 
-const imageMenusSubForm = [{
+const imageMenusSubForm = () => [{
   component: componentTypes.SUB_FORM,
   title: __('PXE Image Menus'),
   id: 'pxe-image-menus-subform',
@@ -123,10 +123,10 @@ const createSchema = (isEditing) => ({
           }],
         }],
       },
-      ...basicInformationCommonFields,
+      ...basicInformationCommonFields(),
     ],
   },
-  ...imageMenusSubForm,
+  ...imageMenusSubForm(),
   ],
 });
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { API } from '../../http_api';
 import createSchema from './help-menu-form.schema';
 
-const OPEN_IN_OPTIONS = [
+const openInOptions = () => [
   { label: __('Current Window'), value: 'default' },
   { label: __('New Window'), value: 'new_window' },
   { label: __('About Modal'), value: 'modal' },
@@ -92,7 +92,7 @@ const HelpMenuTab = ({ regionId }) => {
       <div className="settings-help-menu-tab__form">
         <MiqFormRenderer
           key={formKey}
-          schema={createSchema(OPEN_IN_OPTIONS, initialValues, defaults)}
+          schema={createSchema(openInOptions(), initialValues, defaults)}
           initialValues={{
             documentation_title: initialValues.documentation && initialValues.documentation.title,
             documentation_url: initialValues.documentation && initialValues.documentation.url,

@@ -104,14 +104,14 @@ export const subFormSubmit = (data, setData, formData, roles) => {
   switch (data.form.type) {
     case TYPES.DISK:
     case TYPES.RESIZE:
-      setDiskFormSubmit(data, setData, formData, roles, formsData.reconfigure);
+      setDiskFormSubmit(data, setData, formData, roles, formsData().reconfigure);
       break;
     case TYPES.NETWORK:
     case TYPES.EDITNETWORK:
-      setNetworkFormSubmit(data, setData, formData, roles, formsData.reconfigure);
+      setNetworkFormSubmit(data, setData, formData, roles, formsData().reconfigure);
       break;
     case TYPES.DRIVE:
-      setDriveFormSubmit(data, setData, formData, formsData.reconfigure);
+      setDriveFormSubmit(data, setData, formData, formsData().reconfigure);
       break;
     default:
       break;

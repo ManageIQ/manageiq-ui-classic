@@ -352,7 +352,7 @@ export const getPodsTrendChart = (isLoading, dashboardData) => {
           title={__('Pod Creation and Deletion Trends')}
           chartData={dashboardData.data}
           isLoading={isLoading}
-          config={chartConfig[config]}
+          config={chartConfig()[config]}
         />
       );
     }

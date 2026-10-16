@@ -14,13 +14,13 @@ import {
 } from '@carbon/react';
 import type { ReportData, ReportProps } from './utilization-types';
 
-const SECTIONS = [
+const getSections = () => [
   { key: 'cpu', label: __('CPU') },
   { key: 'memory', label: __('Memory') },
   { key: 'storage', label: __('Disk') },
 ];
 
-const HEADERS = [
+const getHeaders = () => [
   { key: 'item', header: __('Item') },
   { key: 'value', header: __('Value') },
 ];
@@ -52,7 +52,7 @@ const UtilizationReport = ({
 
   const infoRows = (parsedSummary.info ?? []).map(([term, description], idx) => ({ id: String(idx), term, description }));
 
-  const sections = SECTIONS.flatMap(({ key, label }) => {
+  const sections = getSections().flatMap(({ key, label }) => {
     const rows = (parsedSummary[key as keyof ReportData] ?? []).map(
       ([item, value], idx) => ({ id: String(idx), item, value })
     );
@@ -82,7 +82,7 @@ const UtilizationReport = ({
       {sections.map(({ key, label, rows }) => (
         <div key={key}>
           <hr />
-          <DataTable rows={rows} headers={HEADERS}>
+          <DataTable rows={rows} headers={getHeaders()}>
             {({
               rows: tableRows,
               getRowProps,
