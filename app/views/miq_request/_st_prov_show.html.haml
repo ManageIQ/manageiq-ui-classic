@@ -8,28 +8,7 @@
     %fieldset
       %h3
         = _("Dialog Options")
-      .row
-        .col-md-12.col-lg-12
-          #dialog_tabs
-            %ul.nav.nav-tabs{'role' => 'tablist'}
-              - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = tab_index == 0 ? {:class => "active"} : {}
-                = miq_tab_header(tab.id, nil, options) do
-                  = _(tab.label)
-            .tab-content
-              - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = tab_index == 0 ? {:class => "active"} : {}
-                = miq_tab_content(tab.id, nil, options) do
-                  - tab.dialog_groups.each do |group|
-                    %div{:id => "group_#{group.id}_div"}
-                      %h3{:title => "#{group.description}"}
-                        = _(group.label)
-                      - unless group.dialog_fields.empty?
-                        .form-horizontal
-                          - group.dialog_fields.each do |field|
-                            = render :partial => "miq_request/request_dialog_details",
-                                     :locals => {:wf => wf, :field => field}
-                      %hr
+      = react('Service', :initialData => service_request_data(@miq_request.options, wf), :serviceType => "serviceRequest")
 
   - record_ids = request_task_configuration_script_ids(@miq_request)
   - if record_ids.any?
