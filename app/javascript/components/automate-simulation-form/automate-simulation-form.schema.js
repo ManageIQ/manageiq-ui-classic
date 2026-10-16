@@ -5,18 +5,18 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
   .then((formVars) => {
     if (formVars && formVars.targets) {
       return [
-        { label: `<${__('None')}>`, value: undefined },
+        { label: `<${__('None')}>`, value: '' },
         ...formVars.targets.map(([key, value]) => ({
           label: String(key),
           value: String(value),
         })),
       ];
     }
-    return [{ label: `<${__('None')}>`, value: undefined }];
+    return [{ label: `<${__('None')}>`, value: '' }];
   });
 
 const createSchema = (
-  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions, formData, setFormData,
+  resolve, maxNameLength, url, attrValuesPairs, maxLength, typeClassesOptions, targetClass, setTargetClass,
 ) => {
   const fields = [
     {
@@ -33,7 +33,7 @@ const createSchema = (
       name: 'instance_name',
       className: 'automate-instance-name',
       label: __('System/Process'),
-      initialValue: resolve.instance_names.sort((b, a) => a.toLowerCase().localeCompare(b.toLowerCase())),
+      initialValue: resolve.new.instance_name || (resolve.instance_names && resolve.instance_names[0]),
       validate: [{ type: validatorTypes.REQUIRED }],
       isSearchable: true,
       simpleValue: true,
@@ -78,21 +78,22 @@ const createSchema = (
       isSearchable: true,
       simpleValue: true,
       isRequired: true,
-      onChange: (targetClass) => {
-        if (formData.targetClass !== targetClass) {
-          setFormData((prevData) => ({ ...prevData, targetClass }));
+      onChange: (value) => {
+        if (value !== targetClass) {
+          setTargetClass(value);
         }
       },
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
       component: componentTypes.SELECT,
-      id: 'target_id',
-      name: `target_id_${formData.targetClass}`,
+      id: `target_id_${targetClass}`,
+      name: `target_id_${targetClass}`,
+      key: `target_id-${targetClass}`,
       label: __('Selection'),
       className: 'automate-selection-target',
       isRequired: true,
-      loadOptions: () => (loadTargets(formData.targetClass)),
+      loadOptions: () => (targetClass ? loadTargets(targetClass) : Promise.resolve([{ label: `<${__('None')}>`, value: '' }])),
       condition: {
         not: {
           when: 'target_class',
@@ -115,7 +116,6 @@ const createSchema = (
       name: 'readonly',
       className: 'automate-readonly',
       label: __('Execute Methods'),
-      initialValue: resolve.new.readonly,
       title: 'Simulation parameters',
     },
     {
