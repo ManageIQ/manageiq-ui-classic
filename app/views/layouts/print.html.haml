@@ -1,11 +1,8 @@
 = render :partial => 'layouts/doctype'
-%html
+%html{:lang => FastGettext.locale}
   %head
     %title= @options[:title]
     = miq_favicon_link_tag
-    -# Mock the gettext calls in javascript
-    :javascript
-      window.__ = function (data) { return data };
     = javascript_dependencies
     %style
       @media all { @page { size: #{pdf_page_size_style}; } }
