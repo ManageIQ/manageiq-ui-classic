@@ -6,13 +6,10 @@ import RetirementForm from '../../components/retirement-form/index';
 import '../helpers/miq_formatters_helper';
 
 describe('Retirement Form Component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render a new Retirement form', async() => {
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/services/180?attributes=retires_on,retirement_warn',
       {
         retires_on: null,
@@ -39,7 +36,7 @@ describe('Retirement Form Component', () => {
       retires_on: '2021-10-02T00:50:00Z',
       retirement_warn: null,
     };
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/services/42?attributes=retires_on,retirement_warn',
       retire
     );
@@ -58,14 +55,14 @@ describe('Retirement Form Component', () => {
       },
     ];
     const postData = { action: 'request_retire', resources };
-    fetchMock.postOnce('/api/services', postData);
+    fetchMock.post('/api/services', postData);
 
     const { container } = renderWithRedux(
       <RetirementForm retirementID='["42"]' url="/api/services" {...retire} />
     );
     await waitFor(() => {
       expect(
-        fetchMock.called(
+        fetchMock.callHistory.called(
           '/api/services/42?attributes=retires_on,retirement_warn'
         )
       ).toBe(true);

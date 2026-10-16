@@ -50,15 +50,17 @@ describe('Cloud Network form component', () => {
     ext_management_system: { name: 'OpenStack Network Manager' },
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
+    // eslint-disable-next-line max-len
     fetchMock.get('/api/providers?expand=resources&attributes=id,name,supports_cloud_network_create&filter[]=supports_cloud_network_create=true&attributes=id,name,type', { resources: providersMock });
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
   });
@@ -76,7 +78,7 @@ describe('Cloud Network form component', () => {
 
   it('should render edit variant', async() => {
     fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-    fetchMock.mock('/api/cloud_networks/1', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_networks/1' }, { data: { form_schema: { fields: [] } } });
 
     const { container } = renderWithRedux(<CloudNetworkForm cloudNetworkId="1" />);
 
@@ -90,7 +92,7 @@ describe('Cloud Network form component', () => {
 
   describe('componentDidMount', () => {
     it('should set add variant initialValues', async() => {
-      fetchMock.mock('/api/cloud_networks?ems_id=8', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
+      fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_networks?ems_id=8' }, { data: { form_schema: { fields: [] } } });
 
       renderWithRedux(<CloudNetworkForm />);
 
@@ -105,7 +107,7 @@ describe('Cloud Network form component', () => {
     it('should set edit variant initialValues', async() => {
       fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
       fetchMock.get('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
-      fetchMock.mock('/api/cloud_networks/1', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
+      fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_networks/1' }, { data: { form_schema: { fields: [] } } });
 
       renderWithRedux(<CloudNetworkForm cloudNetworkId="1" />);
 
@@ -138,7 +140,7 @@ describe('Cloud Network form component', () => {
   describe('save', () => {
     it('when adding a new', async() => {
       const user = userEvent.setup();
-      fetchMock.mock('/api/cloud_networks?ems_id=8', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
+      fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_networks?ems_id=8' }, { data: { form_schema: { fields: [] } } });
 
       renderWithRedux(<CloudNetworkForm />);
 
@@ -189,7 +191,7 @@ describe('Cloud Network form component', () => {
       };
 
       fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-      fetchMock.mock('/api/cloud_networks/1', schemaWithFields, { method: 'OPTIONS' });
+      fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_networks/1' }, schemaWithFields);
       fetchMock.get('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
 
       renderWithRedux(<CloudNetworkForm cloudNetworkId="1" />);

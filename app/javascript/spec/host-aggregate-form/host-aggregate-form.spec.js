@@ -16,17 +16,13 @@ describe('Host aggregate form component', () => {
     ],
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
-    fetchMock.mock(
+    fetchMock.get(
       '/api/providers?expand=resources&attributes=id,name,supports_create_host_aggregate&filter[]=supports_create_host_aggregate=true',
       emsList
     );
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    jest.clearAllMocks();
   });
 
   const values = {
@@ -51,7 +47,7 @@ describe('Host aggregate form component', () => {
     const { container } = renderWithRedux(<HostAggregateForm recordId="1" />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/host_aggregates/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/host_aggregates/1')).toBe(true);
     });
 
     expect(container).toMatchSnapshot();

@@ -5,6 +5,8 @@ import TenantQuotaForm from '../../components/tenant-quota-form/index';
 import '../helpers/miqSparkle';
 
 describe('Tenant Quota Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const quotaDefinitions = {
     data: {
       quota_definitions: {
@@ -43,12 +45,12 @@ describe('Tenant Quota Form Component', () => {
 
   beforeEach(() => {
     fetchMock.get('/api/tenants/1', { name: 'Test Tenant' });
-    fetchMock.once('/api/tenants/1/quotas', quotaDefinitions);
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/tenants/1/quotas' }, quotaDefinitions);
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render the manage quotas form for a tenant no quotas defined', async() => {
@@ -60,7 +62,7 @@ describe('Tenant Quota Form Component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
@@ -76,7 +78,7 @@ describe('Tenant Quota Form Component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();

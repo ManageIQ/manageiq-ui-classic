@@ -76,9 +76,8 @@ describe('Action Form Component', () => {
     };
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+  beforeEach(() => {
+    fetchMock.once({ method: 'OPTIONS', url: '/api/actions' }, api);
   });
 
   it('should render correctly', async() => {

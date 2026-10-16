@@ -4,6 +4,8 @@ import VmFloatingIPsForm from '../../components/vm-floating-ips/vm-floating-ips-
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Associate / Disassociate form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const samplerecordId = '1';
   const sampleCloudTennantId = {
     cloud_tenant_id: '2',
@@ -24,11 +26,6 @@ describe('Associate / Disassociate form component', () => {
       `/api/floating_ips?expand=resources&filter[]=cloud_tenant_id=${sampleCloudTennantId.cloud_tenant_id}`,
       sampleFloatingIpChoice
     );
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
   });
 
   it('should render form', async() => {
@@ -73,7 +70,7 @@ describe('Associate / Disassociate form component', () => {
         floating_ip: '1',
       },
     };
-    fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
+    fetchMock.post(`/api/vms/${samplerecordId}`, submitData);
 
     const { container } = renderWithRedux(
       <VmFloatingIPsForm recordId={samplerecordId} isAssociate />
@@ -92,7 +89,7 @@ describe('Associate / Disassociate form component', () => {
         floating_ip: '1',
       },
     };
-    fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
+    fetchMock.post(`/api/vms/${samplerecordId}`, submitData);
 
     const { container } = renderWithRedux(
       <VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />

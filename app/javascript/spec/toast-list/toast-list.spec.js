@@ -8,6 +8,8 @@ import { MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-ac
 import notifications from '../fixtures/notifications.json';
 
 describe('Toast list tests', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+  
   const initialState = {
     notificationReducer: {
       unreadCount: 1,
@@ -18,11 +20,6 @@ describe('Toast list tests', () => {
       maxNotifications: 100,
     },
   };
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render correctly with notifications', () => {
     const store = makeStore({ ...initialState });
