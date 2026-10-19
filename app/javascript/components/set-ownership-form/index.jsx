@@ -31,7 +31,7 @@ const addOptions = (ownershipIds, type, data, tenantGroupId = '') => {
 
   return [...ret, {
     label: (type === OwnershipTypes.users ? __('No Owner') : __('No User Group')),
-    id: (ownershipIds.length === 1 ? tenantGroupId : ''),
+    value: (ownershipIds.length === 1 ? tenantGroupId : ''),
   }, ...data];
 };
 
@@ -52,10 +52,10 @@ const getInitialValues = (ownershipItems) => new Promise((resolve) => {
     const item = ownershipItems[0];
     if (item.kind !== 'templates') {
       API.get(`/api/${item.kind}/${item.id}?expand=resources&attributes=evm_owner_id,miq_group_id`)
-        .then((results) => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+        .then((results) => resolve({ group: results.miq_group_id || undefined, user: results.evm_owner_id || undefined }));
     } else {
       API.get(`/api/${item.kind}/${item.id}?attributes=evm_owner_id,miq_group_id`)
-        .then((results) => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+        .then((results) => resolve({ group: results.miq_group_id || undefined, user: results.evm_owner_id || undefined }));
     }
   } else {
     resolve({ group: '', user: '' });
@@ -82,7 +82,7 @@ function SetOwnershipForm({ ownershipItems }) {
       const groupData = groupOptions.resources.map((group, index) => ({ label: group.description, value: group.id, key: `key_${index}` }));
       // Checking if the group is tenant group or not
       new Promise((resolve) => {
-        if (ownershipItems.length > 1) {
+        if (ownershipItems.length > 1 || !initialValues.group) {
           resolve('');
         } else {
           API.get(`/api/tenant_groups/${initialValues.group}`, { skipErrors: true })
@@ -111,7 +111,8 @@ function SetOwnershipForm({ ownershipItems }) {
     return Promise.all(Object.keys(kinds).map((key) =>
       API.post(`/api/${key}`, {
         action: 'set_ownership',
-        resources: kinds[key].map((item) => ({ id: item.id, owner: { id: values.user }, group: { id: values.group } })),
+        // An empty id tells the API to clear the owner/group; an undefined one would be dropped from the request.
+        resources: kinds[key].map((item) => ({ id: item.id, owner: { id: values.user || '' }, group: { id: values.group || '' } })),
       })))
       .then(() => miqAjaxButton(submitUrl, { objectIds: Array.from(ownershipItems, (item) => item.id) }))
       .catch(handleFailure);
@@ -133,7 +134,6 @@ function SetOwnershipForm({ ownershipItems }) {
 }
 
 SetOwnershipForm.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
   ownershipItems: PropTypes.arrayOf(PropTypes.exact({ id: PropTypes.string, kind: PropTypes.string })).isRequired,
 };
 

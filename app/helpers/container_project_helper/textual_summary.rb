@@ -18,6 +18,10 @@ module ContainerProjectHelper::TextualSummary
     )
   end
 
+  def textual_group_lifecycle
+    TextualGroup.new(_("Lifecycle"), %i[owner group])
+  end
+
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[tags])
   end
@@ -76,5 +80,13 @@ module ContainerProjectHelper::TextualSummary
 
   def textual_display_name
     @record.display_name
+  end
+
+  def textual_owner
+    @record.try(:evm_owner).try(:name)
+  end
+
+  def textual_group
+    {:label => _("Group"), :value => @record.try(:miq_group).try(:description)}
   end
 end

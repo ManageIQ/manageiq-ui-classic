@@ -1,3 +1,4 @@
 - no_flash_div ||= false
+- skip_flash_msg_div ||= false
 #gtl_div
-  = render :partial => "layouts/react/gtl", :locals => {:no_flash_div => no_flash_div}
+  = render :partial => "layouts/react/gtl", :locals => {:no_flash_div => no_flash_div, :skip_flash_msg_div => skip_flash_msg_div}
