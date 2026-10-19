@@ -1,5 +1,7 @@
 module Mixins
   module MoreShowActions
+    include Mixins::ComplianceHistoryMixin
+
     def show_timeline
       @showtype = "timeline"
       @layout = 'timeline'
@@ -23,18 +25,14 @@ module Mixins
 
     def show_compliance_history
       count = params[:count] ? params[:count].to_i : 10
-      update_session_for_compliance_history
+      @compliance_checks = serialize_compliance_history(@record, count)
       drop_breadcrumb_for_compliance_history(count)
       @showtype = @display
     end
 
-    def update_session_for_compliance_history
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, @sb, true, :root => @record)
-    end
-
     def drop_breadcrumb_for_compliance_history(count)
       if count == 1
-        drop_breadcrumb(:name => _("%{name} (Latest Compliance Check)") % {:name => @record.name},
+        drop_breadcrumb(:name => _("%{name} (Compliance Status)") % {:name => @record.name},
                         :url  => "/#{controller_name}/show/#{@record.id}?display=#{@display}&refresh=n")
       else
         drop_breadcrumb(
