@@ -1,6 +1,6 @@
 class ApplicationHelper::Button::CloudNetworkNew < ApplicationHelper::Button::ButtonNewDiscover
   def supports_button_action?
-    ::EmsNetwork.all.any? { |ems| CloudNetwork.class_by_ems(ems)&.supports?(:create) }
+    Rbac::Filterer.filtered(CloudNetwork.providers_supporting(:create)).any?
   end
 
   def role_allows_feature?
