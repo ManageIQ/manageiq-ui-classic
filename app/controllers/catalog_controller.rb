@@ -816,7 +816,7 @@ class CatalogController < ApplicationController
   def ot_copy
     assert_privileges("orchestration_template_copy")
     ot_edit_set_form_vars(_("Copying %{record_name}"))
-    @edit[:new][:name] = @edit[:current][:name] = _("Copy of %{name}") % {:name => @edit[:new][:name]}
+    @edit[:new][:name] = @edit[:current][:name] = _("Copy of %{field}") % {:field => @edit[:new][:name]}
     replace_right_cell(:action => "ot_copy")
   end
 
