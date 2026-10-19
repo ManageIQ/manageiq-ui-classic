@@ -51,7 +51,7 @@ module MiqAeClassHelper
     if domain_name == current_domain_name
       return _("%{domain_name} (Same Domain)") % {:domain_name => domain_name}, nil
     elsif !record.domain.enabled
-      return _("%{domain_name} (Disabled)") % {:domain_name => domain_name}, record.id
+      return _("%{node_string} (Disabled)") % {:node_string => domain_name}, record.id
     else
       return domain_name, record.id
     end

@@ -238,12 +238,12 @@ module Mixins
     def handle_selection_buttons_up_down(members, members_chosen, _choices, _choices_chosen, up)
       if params[members_chosen].nil? || params[members_chosen].length != 1
         message = if up
-                    _("Select only one or consecutive %{member} to move up")
+                    _("Select only one or consecutive %{name} to move up")
                   else
-                    _("Select only one or consecutive %{member} to move down")
+                    _("Select only one or consecutive %{name} to move down")
                   end
 
-        add_flash(message % {:member => members.to_s.split("_").first.singularize.titleize}, :error)
+        add_flash(message % {:name => members.to_s.split("_").first.singularize.titleize}, :error)
         return
       end
 

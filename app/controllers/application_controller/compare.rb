@@ -38,7 +38,7 @@ module ApplicationController::Compare
                          when 'MiqTemplate' then 'Templates'
                          else                    'VMs'
                          end
-    drop_breadcrumb(:name => _("Compare %{name}") % {:name => ui_lookup(:model => @sb[:compare_db])},
+    drop_breadcrumb(:name => _("Compare %{type}") % {:type => ui_lookup(:model => @sb[:compare_db])},
                     :url  => "/#{session[:db_title].singularize.downcase}/compare_miq")
     @lastaction = "compare_miq"
     if params[:ppsetting] # User selected new per page value
@@ -103,7 +103,7 @@ module ApplicationController::Compare
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     @compare.remove_id(params[:id].to_i) if @lastaction == "compare_remove"
-    drop_breadcrumb(:name => _("Compare %{name}") % {:name => session[:db_title]},
+    drop_breadcrumb(:name => _("Compare %{type}") % {:type => session[:db_title]},
                     :url  => "/#{session[:db_title].singularize.downcase}/compare_miq")
     @lastaction = "compare_miq"
     if params[:ppsetting]                                 # User selected new per page value

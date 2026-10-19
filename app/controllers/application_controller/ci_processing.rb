@@ -112,12 +112,12 @@ module ApplicationController::CiProcessing
           record.send(task.to_sym) if record.respond_to?(task) # Run the task
         rescue StandardError => bang
           add_flash(
-            _("%{model} \"%{name}\": Error during '%{task}': %{error_msg}") %
+            _("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
             {
-              :model     => ui_lookup(:model => klass.name),
-              :name      => get_record_display_name(record),
-              :task      => (display_name || task),
-              :error_msg => bang.message
+              :model         => ui_lookup(:model => klass.name),
+              :name          => get_record_display_name(record),
+              :task          => (display_name || task),
+              :error_message => bang.message
             },
             :error
           )
