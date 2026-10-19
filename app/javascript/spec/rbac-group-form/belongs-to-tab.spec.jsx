@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import fetchMock from 'fetch-mock';
 import BelongsToTab from '../../components/rbac-group-form/belongs-to-tab';
 
 const bsTree = JSON.stringify([
@@ -26,6 +27,11 @@ const bsTree = JSON.stringify([
 const noop = () => {};
 
 describe('BelongsToTab', () => {
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
+
   it('renders "No items available." when the tree is empty', () => {
     const { container } = render(
       <BelongsToTab bsTree="[]" checked={[]} onCheckedChange={noop} />

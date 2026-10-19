@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetchMock from 'fetch-mock';
 import CustomerTagsTab from '../../components/rbac-group-form/customer-tags-tab';
 
 jest.mock('../../components/expression-editor', () => {
@@ -27,6 +28,11 @@ const defaultProps = {
 };
 
 describe('CustomerTagsTab', () => {
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
+
   describe('edit mode — tags', () => {
     it('renders the filter mode select defaulting to Specific Tags', () => {
       render(<CustomerTagsTab {...defaultProps} />);

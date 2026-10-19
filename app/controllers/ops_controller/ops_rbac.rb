@@ -501,6 +501,8 @@ module OpsController::OpsRbac
   private ############################
 
   def group_form_tag_catalogue
+    # folder_path_blue and folder_path_yellow are internal virtual classifications used by the
+    # belongsto tree — they are not real tag categories and must never appear in the tag editor.
     cats = Classification.categories.select do |c|
       c.show || (%w[folder_path_blue folder_path_yellow].exclude?(c.name) &&
                  !(c.read_only? || c.entries.empty?))

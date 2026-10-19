@@ -1,0 +1,1822 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
+<div>
+  <div
+    class="rbac-group-form"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class=""
+        id="group-information"
+        name="group-information"
+      >
+        <div>
+          <h3>
+            Group Information
+          </h3>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="description"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Description
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="description"
+                maxlength="50"
+                name="description"
+                type="text"
+                value=""
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="detailed_description"
+            >
+              Detailed Description
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="detailed_description"
+                maxlength="255"
+                name="detailed_description"
+                type="text"
+                value=""
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="role_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Role
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="role_id"
+                name="role_id"
+                title="<Choose a Role>"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose a Role>"
+                  value=""
+                >
+                  &lt;Choose a Role&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="EvmRole-viewer"
+                  value="1"
+                >
+                  EvmRole-viewer
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="EvmRole-administrator"
+                  value="2"
+                >
+                  EvmRole-administrator
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="tenant_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Project/Tenant
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="tenant_id"
+                name="tenant_id"
+                title="<Choose a Project/Tenant>"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose a Project/Tenant>"
+                  value=""
+                >
+                  &lt;Choose a Project/Tenant&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="[T] My Tenant"
+                  value="2"
+                >
+                  [T] My Tenant
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="[P] My Project"
+                  value="3"
+                >
+                  [P] My Project
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rbac-group-filter-tabs"
+      >
+        <hr />
+        <h3>
+          Assign Filters
+        </h3>
+        <div
+          class="cds--tabs"
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+              />
+            </svg>
+          </button>
+          <div
+            aria-label="Filter tabs"
+            class="cds--tab--list"
+            role="tablist"
+          >
+            <button
+              aria-controls="ccs-_r_2a_-tabpanel-0"
+              aria-selected="true"
+              class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+              id="ccs-_r_2a_-tab-0"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  My Tenant Tags
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+                tabindex="-1"
+                title="Remove My Tenant Tags tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove My Tenant Tags tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_2a_-tabpanel-1"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_2a_-tab-1"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  Clusters, Datastores, Hosts, Managers & Providers
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_2a_-tabpanel-2"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_2a_-tab-2"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  VMs & Templates
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove VMs & Templates tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove VMs & Templates tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_2a_-tab-0"
+          class="cds--tab-content"
+          id="ccs-_r_2a_-tabpanel-0"
+          role="tabpanel"
+        >
+          <div
+            class="customer-tags-tab"
+          >
+            <div
+              class="cds--form-item customer-tags-tab__filter-mode"
+            >
+              <div
+                class="cds--form-item"
+              >
+                <div
+                  class="cds--select"
+                >
+                  <label
+                    class="cds--label"
+                    dir="auto"
+                    for="use-filter-expression"
+                  >
+                    This user is limited to
+                  </label>
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="use-filter-expression"
+                      title="Specific Tags"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="tags"
+                      >
+                        Specific Tags
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="expression"
+                      >
+                        Tags Based On Expression
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tagging-container"
+            >
+              <div
+                class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
+              >
+                <div
+                  class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+                >
+                  <div
+                    class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+                  >
+                    <div
+                      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                    >
+                      <h4>
+                        Add/Modify tag
+                      </h4>
+                    </div>
+                  </div>
+                  <div
+                    class="cds--form tag-modifier-form"
+                  >
+                    <fieldset
+                      class="cds--fieldset"
+                    >
+                      <legend
+                        class="cds--label"
+                      >
+                        Category
+                      </legend>
+                      <div
+                        class="tag-modifier-form-row category-modifier cds--css-grid-column"
+                      >
+                        <div
+                          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+                        >
+                          <div
+                            class="cds--dropdown cds--list-box"
+                            id="dropdown-tag-select"
+                          >
+                            <button
+                              aria-activedescendant=""
+                              aria-controls="downshift-_r_2c_-menu"
+                              aria-expanded="false"
+                              aria-haspopup="listbox"
+                              aria-labelledby="downshift-_r_2c_-label"
+                              class="cds--list-box__field"
+                              id="downshift-_r_2c_-toggle-button"
+                              role="combobox"
+                              tabindex="0"
+                              title="Select tag category"
+                              type="button"
+                            >
+                              <span
+                                class="cds--list-box__label"
+                              >
+                                Select tag category
+                              </span>
+                              <div
+                                class="cds--list-box__menu-icon"
+                              >
+                                <svg
+                                  aria-label="Open menu"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  name="chevron--down"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  role="img"
+                                  viewBox="0 0 16 16"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  />
+                                  <title>
+                                    Open menu
+                                  </title>
+                                </svg>
+                              </div>
+                            </button>
+                            <ul
+                              aria-labelledby="downshift-_r_2c_-label"
+                              class="cds--list-box__menu"
+                              id="downshift-_r_2c_-menu"
+                              role="listbox"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset
+                      class="cds--fieldset"
+                    >
+                      <legend
+                        class="cds--label"
+                      >
+                        Value
+                      </legend>
+                      <div
+                        class="tag-modifier-form-row value-modifier cds--css-grid-column"
+                      >
+                        <div
+                          class="cds--multi-select__wrapper cds--list-box__wrapper tag-select"
+                        >
+                          <label
+                            class="cds--label"
+                            for="downshift-_r_2f_-toggle-button"
+                            id="downshift-_r_2f_-label"
+                          />
+                          <div
+                            class="cds--multi-select cds--list-box"
+                            id="multiselect-tag-select"
+                          >
+                            <div
+                              class="cds--list-box__field--wrapper"
+                            >
+                              <button
+                                aria-activedescendant=""
+                                aria-controls="downshift-_r_2f_-menu"
+                                aria-expanded="false"
+                                aria-haspopup="listbox"
+                                aria-labelledby="downshift-_r_2f_-label"
+                                class="cds--list-box__field"
+                                id="downshift-_r_2f_-toggle-button"
+                                role="combobox"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <span
+                                  class="cds--list-box__label"
+                                  id="multiselect-field-label-id-_r_2d_"
+                                >
+                                  Select tag value
+                                </span>
+                                <div
+                                  class="cds--list-box__menu-icon"
+                                >
+                                  <svg
+                                    aria-label="Open menu"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    name="chevron--down"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    role="img"
+                                    viewBox="0 0 16 16"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                    <title>
+                                      Open menu
+                                    </title>
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
+                            <ul
+                              aria-labelledby="downshift-_r_2f_-label"
+                              class="cds--list-box__menu"
+                              hidden=""
+                              id="downshift-_r_2f_-menu"
+                              role="listbox"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+                >
+                  <div
+                    id="assignments_div"
+                  >
+                    <div
+                      class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+                    >
+                      <div
+                        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                      >
+                        <h4>
+                          Assigned tags
+                        </h4>
+                      </div>
+                    </div>
+                    <div
+                      class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+                    >
+                      <div
+                        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                      >
+                        <div
+                          class="miq-notification-message-container alert alert-info"
+                        >
+                          <span
+                            class="pficon pficon-info"
+                          />
+                          <strong>
+                            No Assigned Tags
+                          </strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_2a_-tab-1"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_2a_-tabpanel-1"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_2a_-tab-2"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_2a_-tabpanel-2"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+      </div>
+      <div
+        class="cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+          variant="primary"
+        >
+          Add
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`RbacGroupForm renders form fields in edit mode 1`] = `
+<div>
+  <div
+    class="rbac-group-form"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class=""
+        id="group-information"
+        name="group-information"
+      >
+        <div>
+          <h3>
+            Group Information
+          </h3>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="description"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Description
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="description"
+                maxlength="50"
+                name="description"
+                type="text"
+                value="Test Group"
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="detailed_description"
+            >
+              Detailed Description
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="detailed_description"
+                maxlength="255"
+                name="detailed_description"
+                type="text"
+                value="A test group"
+              />
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="role_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Role
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="role_id"
+                name="role_id"
+                title="EvmRole-viewer"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose a Role>"
+                  value=""
+                >
+                  &lt;Choose a Role&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="EvmRole-viewer"
+                  value="1"
+                >
+                  EvmRole-viewer
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="EvmRole-administrator"
+                  value="2"
+                >
+                  EvmRole-administrator
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="tenant_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+              >
+                *
+              </span>
+              Project/Tenant
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="tenant_id"
+                name="tenant_id"
+                title="[T] My Tenant"
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose a Project/Tenant>"
+                  value=""
+                >
+                  &lt;Choose a Project/Tenant&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="[T] My Tenant"
+                  value="2"
+                >
+                  [T] My Tenant
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="[P] My Project"
+                  value="3"
+                >
+                  [P] My Project
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rbac-group-filter-tabs"
+      >
+        <hr />
+        <h3>
+          Assign Filters
+        </h3>
+        <div
+          class="cds--tabs"
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+              />
+            </svg>
+          </button>
+          <div
+            aria-label="Filter tabs"
+            class="cds--tab--list"
+            role="tablist"
+          >
+            <button
+              aria-controls="ccs-_r_9_-tabpanel-0"
+              aria-selected="true"
+              class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+              id="ccs-_r_9_-tab-0"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  My Tenant Tags
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+                tabindex="-1"
+                title="Remove My Tenant Tags tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove My Tenant Tags tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_9_-tabpanel-1"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_9_-tab-1"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  Clusters, Datastores, Hosts, Managers & Providers
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_9_-tabpanel-2"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_9_-tab-2"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  VMs & Templates
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove VMs & Templates tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove VMs & Templates tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_9_-tab-0"
+          class="cds--tab-content"
+          id="ccs-_r_9_-tabpanel-0"
+          role="tabpanel"
+        >
+          <div
+            class="customer-tags-tab"
+          >
+            <div
+              class="cds--form-item customer-tags-tab__filter-mode"
+            >
+              <div
+                class="cds--form-item"
+              >
+                <div
+                  class="cds--select"
+                >
+                  <label
+                    class="cds--label"
+                    dir="auto"
+                    for="use-filter-expression"
+                  >
+                    This user is limited to
+                  </label>
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="use-filter-expression"
+                      title="Specific Tags"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="tags"
+                      >
+                        Specific Tags
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="expression"
+                      >
+                        Tags Based On Expression
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tagging-container"
+            >
+              <div
+                class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
+              >
+                <div
+                  class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+                >
+                  <div
+                    class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+                  >
+                    <div
+                      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                    >
+                      <h4>
+                        Add/Modify tag
+                      </h4>
+                    </div>
+                  </div>
+                  <div
+                    class="cds--form tag-modifier-form"
+                  >
+                    <fieldset
+                      class="cds--fieldset"
+                    >
+                      <legend
+                        class="cds--label"
+                      >
+                        Category
+                      </legend>
+                      <div
+                        class="tag-modifier-form-row category-modifier cds--css-grid-column"
+                      >
+                        <div
+                          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+                        >
+                          <div
+                            class="cds--dropdown cds--list-box"
+                            id="dropdown-tag-select"
+                          >
+                            <button
+                              aria-activedescendant=""
+                              aria-controls="downshift-_r_b_-menu"
+                              aria-expanded="false"
+                              aria-haspopup="listbox"
+                              aria-labelledby="downshift-_r_b_-label"
+                              class="cds--list-box__field"
+                              id="downshift-_r_b_-toggle-button"
+                              role="combobox"
+                              tabindex="0"
+                              title="Select tag category"
+                              type="button"
+                            >
+                              <span
+                                class="cds--list-box__label"
+                              >
+                                Select tag category
+                              </span>
+                              <div
+                                class="cds--list-box__menu-icon"
+                              >
+                                <svg
+                                  aria-label="Open menu"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  name="chevron--down"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  role="img"
+                                  viewBox="0 0 16 16"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  />
+                                  <title>
+                                    Open menu
+                                  </title>
+                                </svg>
+                              </div>
+                            </button>
+                            <ul
+                              aria-labelledby="downshift-_r_b_-label"
+                              class="cds--list-box__menu"
+                              id="downshift-_r_b_-menu"
+                              role="listbox"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset
+                      class="cds--fieldset"
+                    >
+                      <legend
+                        class="cds--label"
+                      >
+                        Value
+                      </legend>
+                      <div
+                        class="tag-modifier-form-row value-modifier cds--css-grid-column"
+                      >
+                        <div
+                          class="cds--multi-select__wrapper cds--list-box__wrapper tag-select"
+                        >
+                          <label
+                            class="cds--label"
+                            for="downshift-_r_e_-toggle-button"
+                            id="downshift-_r_e_-label"
+                          />
+                          <div
+                            class="cds--multi-select cds--list-box"
+                            id="multiselect-tag-select"
+                          >
+                            <div
+                              class="cds--list-box__field--wrapper"
+                            >
+                              <button
+                                aria-activedescendant=""
+                                aria-controls="downshift-_r_e_-menu"
+                                aria-expanded="false"
+                                aria-haspopup="listbox"
+                                aria-labelledby="downshift-_r_e_-label"
+                                class="cds--list-box__field"
+                                id="downshift-_r_e_-toggle-button"
+                                role="combobox"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <span
+                                  class="cds--list-box__label"
+                                  id="multiselect-field-label-id-_r_c_"
+                                >
+                                  Select tag value
+                                </span>
+                                <div
+                                  class="cds--list-box__menu-icon"
+                                >
+                                  <svg
+                                    aria-label="Open menu"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    name="chevron--down"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    role="img"
+                                    viewBox="0 0 16 16"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                    <title>
+                                      Open menu
+                                    </title>
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
+                            <ul
+                              aria-labelledby="downshift-_r_e_-label"
+                              class="cds--list-box__menu"
+                              hidden=""
+                              id="downshift-_r_e_-menu"
+                              role="listbox"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+                >
+                  <div
+                    id="assignments_div"
+                  >
+                    <div
+                      class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+                    >
+                      <div
+                        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                      >
+                        <h4>
+                          Assigned tags
+                        </h4>
+                      </div>
+                    </div>
+                    <div
+                      class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+                    >
+                      <div
+                        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                      >
+                        <div
+                          class="miq-notification-message-container alert alert-info"
+                        >
+                          <span
+                            class="pficon pficon-info"
+                          />
+                          <strong>
+                            No Assigned Tags
+                          </strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_9_-tab-1"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_9_-tabpanel-1"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_9_-tab-2"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_9_-tabpanel-2"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+      </div>
+      <div
+        class="cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+          variant="primary"
+        >
+          Save
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Reset
+        </button>
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`RbacGroupForm renders read-only view when readOnly=true 1`] = `
+<div>
+  <div
+    class="rbac-group-form"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class="rbac-group-filter-tabs"
+      >
+        <hr />
+        <h3>
+          Assigned Filters (read only)
+        </h3>
+        <div
+          class="cds--tabs"
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+              />
+            </svg>
+          </button>
+          <div
+            aria-label="Filter tabs"
+            class="cds--tab--list"
+            role="tablist"
+          >
+            <button
+              aria-controls="ccs-_r_r_-tabpanel-0"
+              aria-selected="true"
+              class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+              id="ccs-_r_r_-tab-0"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  My Tenant Tags
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+                tabindex="-1"
+                title="Remove My Tenant Tags tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove My Tenant Tags tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_r_-tabpanel-1"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_r_-tab-1"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  Clusters, Datastores, Hosts, Managers & Providers
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove Clusters, Datastores, Hosts, Managers & Providers tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              aria-controls="ccs-_r_r_-tabpanel-2"
+              aria-selected="false"
+              class="cds--tabs__nav-item cds--tabs__nav-link"
+              id="ccs-_r_r_-tab-2"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <div
+                class="cds--tabs__nav-item-label-wrapper"
+              >
+                <span
+                  class="cds--tabs__nav-item-label"
+                  dir="auto"
+                >
+                  VMs & Templates
+                </span>
+              </div>
+            </button>
+            <div
+              class="cds--tabs__nav-item--close--hidden"
+            >
+              <button
+                aria-hidden="true"
+                class="cds--visually-hidden"
+                tabindex="-1"
+                title="Remove VMs & Templates tab"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="Press delete to remove VMs & Templates tab"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_r_-tab-0"
+          class="cds--tab-content"
+          id="ccs-_r_r_-tabpanel-0"
+          role="tabpanel"
+        >
+          <div
+            class="customer-tags-tab"
+          >
+            <p>
+              This user is limited to items with the selected tags.
+            </p>
+            <div
+              id="assignments_div"
+            >
+              <div
+                class="tag-modifier-form assigned-tags cds--css-grid cds--css-grid--condensed"
+              >
+                <div
+                  class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                >
+                  <div
+                    class="miq-notification-message-container alert alert-info"
+                  >
+                    <span
+                      class="pficon pficon-info"
+                    />
+                    <strong>
+                      No Assigned Tags
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_r_-tab-1"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_r_-tabpanel-1"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+        <div
+          aria-labelledby="ccs-_r_r_-tab-2"
+          class="cds--tab-content"
+          hidden=""
+          id="ccs-_r_r_-tabpanel-2"
+          role="tabpanel"
+        >
+          <p>
+            No items available.
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;

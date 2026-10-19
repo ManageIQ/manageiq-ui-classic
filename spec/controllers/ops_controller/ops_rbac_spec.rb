@@ -516,8 +516,8 @@ describe OpsController do
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       session[:edit] = {
         :key     => "rbac_group_edit__seq",
-        :new     => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]},
-        :current => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]}
+        :new     => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]},
+        :current => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]}
       }
     end
 
@@ -525,14 +525,14 @@ describe OpsController do
       post :rbac_group_seq_field_changed, :params => {:button => "up", :seq_fields => ["Group 2"], :id => "seq"}, :xhr => true
       expect(response.status).to eq(200)
       expect(response.body).to include("miqButtons('show')")
-      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to eq(["Group 2", "Group 1"])
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to eq(["Group 2", "Group 1"])
     end
 
     it "reorders items and activates save/reset buttons when moved down" do
       post :rbac_group_seq_field_changed, :params => {:button => "down", :seq_fields => ["Group 1"], :id => "seq"}, :xhr => true
       expect(response.status).to eq(200)
       expect(response.body).to include("miqButtons('show')")
-      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to eq(["Group 2", "Group 1"])
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to eq(["Group 2", "Group 1"])
     end
   end
 
@@ -552,14 +552,14 @@ describe OpsController do
       post :rbac_group_seq_edit, :xhr => true
       expect(response.status).to eq(200)
       expect(controller.instance_variable_get(:@edit)[:key]).to eq("rbac_group_edit__seq")
-      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to include("Group 1", "Group 2")
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to include("Group 1", "Group 2")
     end
 
     it "saves the reordered sequence" do
       session[:edit] = {
         :key     => "rbac_group_edit__seq",
-        :new     => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 2", "Group 1"]},
-        :current => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]}
+        :new     => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 2", "Group 1"]},
+        :current => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]}
       }
       post :rbac_group_seq_edit, :params => {:button => "save"}, :xhr => true
       expect(response.status).to eq(200)

@@ -173,15 +173,7 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
     cy.get('.rbac-group-form #description').should('have.value', GROUP_DESCRIPTION_EDITED);
     cy.get('.rbac-group-filter-tabs h3').should('have.text', 'Assigned Filters (read only)');
     cy.contains('.rbac-group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
-    cy.get('.customer-tags-tab pre').should('exist').then(($pre) => {
-      const saved = JSON.parse($pre.text());
-      cy.get('@expressionTagPath').then((tagPath) => {
-        expect(saved).to.have.nested.property('CONTAINS.tag', tagPath);
-      });
-      cy.get('@expressionTagValue').then((tagValue) => {
-        expect(saved).to.have.nested.property('CONTAINS.value', tagValue);
-      });
-    });
+    cy.get('.customer-tags-tab__expression-text').should('exist').and('not.be.empty');
 
     // DELETE
     cy.toolbar(TOOLBAR_MENU, 'Delete this Group');

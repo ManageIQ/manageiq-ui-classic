@@ -42,6 +42,8 @@ const CustomerTagsTab = ({
       return;
     }
     const expression = rqbToMiq(q);
+    // tagValuesCacheRef stores the useRef object passed from ExpressionEditor, so .current.current
+    // first unwraps our own ref, then unwraps the ExpressionEditor ref to get its Map value.
     const tagMap = tagValuesCacheRef.current ? tagValuesCacheRef.current.current : new Map();
     setExpressionText(expression ? miqExpressionToHuman(expression, labelMapRef.current, tagMap) : '');
     onExpressionChange(q, errors);

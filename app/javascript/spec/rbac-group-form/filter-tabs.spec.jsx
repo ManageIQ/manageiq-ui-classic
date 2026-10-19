@@ -89,4 +89,25 @@ describe('FilterTabs', () => {
       expect.objectContaining({ useFilterExpression: false, filterExpression: null })
     );
   });
+
+  it('wires hacChecked updates from BelongsToTab through onChange', async() => {
+    const bsTree = JSON.stringify([{ key: 'node-1', text: 'Provider A', nodes: [] }]);
+    const user = userEvent.setup();
+    fieldState.value = { hacChecked: [] };
+
+    render(
+      <FilterTabs
+        {...defaultProps}
+        hacTree={bsTree}
+      />
+    );
+
+    await user.click(screen.getByRole('tab', { name: /clusters/i }));
+
+    await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.objectContaining({ hacChecked: ['node-1'] })
+    );
+  });
 });

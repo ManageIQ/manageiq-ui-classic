@@ -74,7 +74,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders form fields in edit mode', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('description')).toBeInTheDocument();
@@ -82,6 +82,7 @@ describe('RbacGroupForm', () => {
     expect(document.getElementById('detailed_description')).toBeInTheDocument();
     expect(document.getElementById('role_id')).toBeInTheDocument();
     expect(document.getElementById('tenant_id')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('pre-fills form fields from loaded group data', async() => {
@@ -94,7 +95,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders read-only view when readOnly=true', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
 
     // Group Information fields are rendered by the HAML helper in read-only mode,
     // not by the React form. The React form only shows the filter tabs.
@@ -105,6 +106,7 @@ describe('RbacGroupForm', () => {
     await waitFor(() => {
       expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
   it('requests the form data with read_only=true only in read-only mode', async() => {
@@ -175,11 +177,12 @@ describe('RbacGroupForm', () => {
     });
 
     it('renders with "Add" submit button', async() => {
-      renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+      const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
 
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /^Add$/i })).toBeInTheDocument();
       });
+      expect(container).toMatchSnapshot();
     });
 
     it('calls POST /api/groups on submit', async() => {
@@ -388,6 +391,28 @@ describe('RbacGroupForm', () => {
     });
   });
 
+  it('calls miqRedirectBack with the "Add was cancelled" message for a new group', async() => {
+    fetchMock.restore();
+    fetchMock.get(/\/api\/roles/, mockRoles);
+    fetchMock.get(/\/api\/tenants/, mockTenants);
+    fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
+
+    const user = userEvent.setup();
+    renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /cancel/i }));
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      expect.stringMatching(/cancelled/i),
+      'warning',
+      '/ops/explorer'
+    );
+  });
+
   describe('submit payload shape', () => {
     it('sends filters:{belongsto:[],managed:[]} when everything is cleared', async() => {
       const user = userEvent.setup();
@@ -424,6 +449,38 @@ describe('RbacGroupForm', () => {
       const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
       expect(body.resource.filter_expression).toBeNull();
       expect(body.resource).toHaveProperty('filters');
+    });
+
+    it('sends filter_expression and clears managed filters when useFilterExpression is true', async() => {
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: { exp: { '=': { field: 'MiqGroup-name', value: 'test' } } },
+            filters: { managed: [], belongsto: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+      fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource).toHaveProperty('filter_expression');
+      expect(body.resource.filters.managed).toEqual([]);
     });
   });
 });
