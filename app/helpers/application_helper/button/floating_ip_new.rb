@@ -1,13 +1,10 @@
 class ApplicationHelper::Button::FloatingIpNew < ApplicationHelper::Button::ButtonNewDiscover
-  def calculate_properties
-    super
-    if disabled?
-      self[:title] = _("No cloud providers support creating floating IPs.")
-    end
+  def supports_button_action?
+    Rbac::Filterer.filtered(FloatingIp.providers_supporting(:create)).any?
   end
 
-  # disable button if no active providers support create action
   def disabled?
-    ::EmsNetwork.all.none? { |ems| ::FloatingIp.class_by_ems(ems)&.supports?(:create) }
+    @error_message = _("No cloud providers support creating floating IPs.") unless supports_button_action?
+    super || @error_message.present?
   end
 end

@@ -1,6 +1,6 @@
 class ApplicationHelper::Button::NetworkServiceNew < ApplicationHelper::Button::ButtonNewDiscover
   def supports_button_action?
-    ::EmsNetwork.all.any? { |ems| NetworkService.class_by_ems(ems)&.supports?(:create) }
+    Rbac::Filterer.filtered(NetworkService.providers_supporting(:create)).any?
   end
 
   def role_allows_feature?
