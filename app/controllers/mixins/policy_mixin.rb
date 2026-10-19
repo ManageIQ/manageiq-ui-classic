@@ -185,8 +185,8 @@ module Mixins
 
     def handle_selection_buttons_right(members, _members_chosen, choices, choices_chosen)
       if params[choices_chosen].nil?
-        add_flash(_("No %{member} were selected to move right") %
-                    {:member => members.to_s.split("_").first.titleize}, :error)
+        add_flash(_("No %{members} were selected to move right") %
+                    {:members => members.to_s.split("_").first.titleize}, :error)
         return
       end
 
@@ -208,8 +208,8 @@ module Mixins
 
     def handle_selection_buttons_allleft(members, _members_chosen, choices, _choices_chosen)
       if @edit[:new][members].empty?
-        add_flash(_("No %{member} were selected to move left") %
-                    {:member => members.to_s.split("_").first.titleize}, :error)
+        add_flash(_("No %{members} were selected to move left") %
+                    {:members => members.to_s.split("_").first.titleize}, :error)
         return
       end
 

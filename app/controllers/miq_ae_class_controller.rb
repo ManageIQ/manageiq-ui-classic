@@ -584,7 +584,7 @@ class MiqAeClassController < ApplicationController
       AuditEvent.success(build_created_audit(add_aeinst, :new => instance_edit_hash(add_aeinst, ae_values, fields)))
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name}}
     rescue StandardError => e
-      render :json => {:error => _("Error during 'add': %{message}") % {:message => e.message}}, :status => 400
+      render :json => {:error => _("Error during 'add': %{error_message}") % {:error_message => e.message}}, :status => 400
     end
   end
 
@@ -639,7 +639,7 @@ class MiqAeClassController < ApplicationController
       AuditEvent.success(build_saved_audit(ae_inst, :new => instance_edit_hash(ae_inst, ae_inst.ae_values, fields), :current => audit_current))
       render :json => {:success => true, :message => _("Automate Instance \"%{name}\" was saved") % {:name => ae_inst.name}}
     rescue StandardError => e
-      render :json => {:error => _("Error during 'save': %{message}") % {:message => e.message}}, :status => 400
+      render :json => {:error => _("Error during 'save': %{error_message}") % {:error_message => e.message}}, :status => 400
     end
   end
 
@@ -1137,7 +1137,7 @@ class MiqAeClassController < ApplicationController
     begin
       ae_ns.save!
     rescue StandardError => bang
-      add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
+      add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash(:spinner_off => true)
     else
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
