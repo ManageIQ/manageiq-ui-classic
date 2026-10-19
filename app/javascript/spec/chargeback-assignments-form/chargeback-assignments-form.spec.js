@@ -46,9 +46,11 @@ describe('ChargebackAssignmentsForm component', () => {
     jest.clearAllMocks();
   });
 
-  it('should render loading state initially', () => {
+  it('should render loading state initially', async() => {
     renderWithRedux(<ChargebackAssignmentsForm rateType="Compute" />);
-    expect(screen.getByText(/loading chargeback data/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/loading chargeback data/i)).toBeInTheDocument();
+    });
   });
 
   it('should render form after loading', async() => {
