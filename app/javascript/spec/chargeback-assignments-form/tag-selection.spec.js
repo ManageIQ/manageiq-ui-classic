@@ -48,7 +48,7 @@ describe('TagSelection component', () => {
     jest.clearAllMocks();
   });
 
-  it('should render loading state initially', () => {
+  it('should render loading state initially', async() => {
     renderWithRedux(
       <TagSelection
         rates={mockRates}
@@ -60,7 +60,9 @@ describe('TagSelection component', () => {
       />
     );
 
-    expect(screen.getByText(/loading tag categories/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/loading tag categories/i)).toBeInTheDocument();
+    });
   });
 
   it('should render category dropdown after loading', async() => {

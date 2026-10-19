@@ -58,7 +58,7 @@ describe('LabelSelection component', () => {
     jest.clearAllMocks();
   });
 
-  it('should render loading state initially', () => {
+  it('should render loading state initially', async() => {
     renderWithRedux(
       <LabelSelection
         rates={mockRates}
@@ -69,7 +69,9 @@ describe('LabelSelection component', () => {
       />
     );
 
-    expect(screen.getByText(/loading image labels/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/loading image labels/i)).toBeInTheDocument();
+    });
   });
 
   it('should render label key dropdown after loading', async() => {

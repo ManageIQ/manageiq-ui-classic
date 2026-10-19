@@ -224,7 +224,7 @@ const LabelSelection = ({
             titleText={__('Image Labels')}
             label={__('Select options for image labels')}
             items={labelKeys}
-            selectedItem={labelKeys.find((lk) => lk.value === selectedLabelKey)}
+            selectedItem={labelKeys.find((lk) => lk.value === selectedLabelKey) ?? null}
             itemToString={(item) => item?.label || ''}
             onChange={handleLabelKeyChange}
           />
@@ -340,7 +340,6 @@ const LabelSelection = ({
                               )}
                               label={__('Select rate')}
                               size="sm"
-                              menuPosition="fixed"
                             />
                           </Layer>
                         </TableCell>

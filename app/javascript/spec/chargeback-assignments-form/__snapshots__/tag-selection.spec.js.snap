@@ -16,8 +16,8 @@ exports[`TagSelection component should match snapshot after loading 1`] = `
         >
           <label
             class="cds--label"
-            for="downshift-_r_1e_-toggle-button"
-            id="downshift-_r_1e_-label"
+            for="downshift-_r_1g_-toggle-button"
+            id="downshift-_r_1g_-label"
           >
             Tag Category
           </label>
@@ -27,12 +27,12 @@ exports[`TagSelection component should match snapshot after loading 1`] = `
           >
             <button
               aria-activedescendant=""
-              aria-controls="downshift-_r_1e_-menu"
+              aria-controls="downshift-_r_1g_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-_r_1e_-label"
+              aria-labelledby="downshift-_r_1g_-label"
               class="cds--list-box__field"
-              id="downshift-_r_1e_-toggle-button"
+              id="downshift-_r_1g_-toggle-button"
               role="combobox"
               tabindex="0"
               title="Choose a Category"
@@ -68,9 +68,9 @@ exports[`TagSelection component should match snapshot after loading 1`] = `
               </div>
             </button>
             <ul
-              aria-labelledby="downshift-_r_1e_-label"
+              aria-labelledby="downshift-_r_1g_-label"
               class="cds--list-box__menu"
-              id="downshift-_r_1e_-menu"
+              id="downshift-_r_1g_-menu"
               role="listbox"
             />
           </div>

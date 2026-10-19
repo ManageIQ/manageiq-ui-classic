@@ -20,29 +20,32 @@ describe('ChargebackAssignmentsTabs component', () => {
       }
       return Promise.resolve({ resources: [] });
     });
-    API.post = jest.fn().mockResolvedValue({ success: true });
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should render both Compute and Storage tabs', () => {
+  it('should render both Compute and Storage tabs', async() => {
     renderWithRedux(<ChargebackAssignmentsTabs />);
-    expect(screen.getByRole('tab', { name: /compute/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /storage/i })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: /compute/i })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /storage/i })).toBeInTheDocument();
+    });
   });
 
-  it('should show Compute tab as selected by default', () => {
+  it('should show Compute tab as selected by default', async() => {
     renderWithRedux(<ChargebackAssignmentsTabs />);
-    const computeTab = screen.getByRole('tab', { name: /compute/i });
-    expect(computeTab).toHaveAttribute('aria-selected', 'true');
+    await waitFor(() => {
+      const computeTab = screen.getByRole('tab', { name: /compute/i });
+      expect(computeTab).toBeInTheDocument();
+      expect(computeTab).toHaveAttribute('aria-selected', 'true');
+    });
   });
 
-  it('should show Storage tab as selected when initialTab=1', () => {
+  it('should show Storage tab as selected when initialTab=1', async() => {
     renderWithRedux(<ChargebackAssignmentsTabs initialTab={1} />);
-    const storageTab = screen.getByRole('tab', { name: /storage/i });
-    expect(storageTab).toHaveAttribute('aria-selected', 'true');
+    await waitFor(() => {
+      const storageTab = screen.getByRole('tab', { name: /storage/i });
+      expect(storageTab).toBeInTheDocument();
+      expect(storageTab).toHaveAttribute('aria-selected', 'true');
+    });
   });
 
   it('should switch to Storage tab on click', async() => {

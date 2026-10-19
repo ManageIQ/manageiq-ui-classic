@@ -17,8 +17,8 @@ exports[`ChargebackAssignmentsForm component should match snapshot after loading
           >
             <label
               class="cds--label"
-              for="downshift-_r_35_-toggle-button"
-              id="downshift-_r_35_-label"
+              for="downshift-_r_37_-toggle-button"
+              id="downshift-_r_37_-label"
             >
               Assign To
             </label>
@@ -28,12 +28,12 @@ exports[`ChargebackAssignmentsForm component should match snapshot after loading
             >
               <button
                 aria-activedescendant=""
-                aria-controls="downshift-_r_35_-menu"
+                aria-controls="downshift-_r_37_-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-_r_35_-label"
+                aria-labelledby="downshift-_r_37_-label"
                 class="cds--list-box__field"
-                id="downshift-_r_35_-toggle-button"
+                id="downshift-_r_37_-toggle-button"
                 role="combobox"
                 tabindex="0"
                 title="Choose Assignment Type"
@@ -69,9 +69,9 @@ exports[`ChargebackAssignmentsForm component should match snapshot after loading
                 </div>
               </button>
               <ul
-                aria-labelledby="downshift-_r_35_-label"
+                aria-labelledby="downshift-_r_37_-label"
                 class="cds--list-box__menu"
-                id="downshift-_r_35_-menu"
+                id="downshift-_r_37_-menu"
                 role="listbox"
               />
             </div>
