@@ -141,7 +141,7 @@ const TagSelection = ({
             titleText={__('Tag Category')}
             label={__('Choose a Category')}
             items={categories}
-            selectedItem={categories.find((c) => c.value === selectedCategory)}
+            selectedItem={categories.find((c) => c.value === selectedCategory) ?? null}
             itemToString={(item) => item?.label || ''}
             onChange={handleCategoryChange}
           />

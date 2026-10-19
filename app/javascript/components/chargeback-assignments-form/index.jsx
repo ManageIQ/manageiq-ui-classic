@@ -472,7 +472,7 @@ const ChargebackAssignmentsForm = ({ rateType }) => {
               titleText={__('Assign To')}
               label={__('Choose Assignment Type')}
               items={assignmentTypes}
-              selectedItem={assignmentTypes.find((t) => t.value === assignmentType)}
+              selectedItem={assignmentTypes.find((t) => t.value === assignmentType) ?? null}
               itemToString={(item) => item?.label || ''}
               onChange={({ selectedItem }) => setAssignmentType(selectedItem?.value || '')}
             />
