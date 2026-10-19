@@ -340,7 +340,6 @@ const LabelSelection = ({
                               )}
                               label={__('Select rate')}
                               size="sm"
-                              menuPosition="fixed"
                             />
                           </Layer>
                         </TableCell>

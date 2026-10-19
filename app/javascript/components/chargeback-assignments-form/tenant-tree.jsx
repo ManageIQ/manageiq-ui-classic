@@ -112,7 +112,6 @@ const TenantTree = ({
                         onChange={({ selectedItem }) => onRateChange(row.id, selectedItem?.value || 'nil')}
                         label={__('Select rate')}
                         size="sm"
-                        menuPosition="fixed"
                       />
                     </Layer>
                   </TableCell>

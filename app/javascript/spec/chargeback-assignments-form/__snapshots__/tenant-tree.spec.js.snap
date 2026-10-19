@@ -83,7 +83,6 @@ exports[`TenantTree component should match snapshot (collapsed) 1`] = `
             >
               <div
                 class="cds--dropdown__wrapper cds--list-box__wrapper cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
-                menuposition="fixed"
               >
                 <div
                   class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm cds--layout--size-sm"
