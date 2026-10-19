@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { GroupedBarChart } from '@carbon/charts-react';
-import { getYAxisValue } from './helpers';
+import { getTickFormatter, getTooltipOptions } from './helpers';
 
 const GroupBarChart = ({
   data = null,
@@ -12,22 +12,20 @@ const GroupBarChart = ({
     title,
     axes: {
       left: {
+        title: __('Value'),
         mapsTo: 'value',
         ticks: {
-          formatter(n) { return getYAxisValue(format, n); },
+          formatter: getTickFormatter(format),
         },
       },
       bottom: {
+        title: __('Date'),
         scaleType: 'labels',
         mapsTo: 'key',
       },
     },
     height: size,
-    tooltip: {
-      truncation: {
-        type: 'none',
-      },
-    },
+    tooltip: getTooltipOptions(format),
   };
 
   return (
