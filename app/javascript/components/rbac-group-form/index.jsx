@@ -40,10 +40,10 @@ const removeTagPathsFromManaged = (managedFilters) => {
 };
 
 const RbacGroupForm = ({
-  groupId,
-  readOnly,
-  currentTenantName,
-  superAdminUser,
+  groupId = undefined,
+  readOnly = false,
+  currentTenantName = undefined,
+  superAdminUser = false,
 }) => {
   const isNew = !groupId || groupId === 'new';
 
@@ -78,7 +78,7 @@ const RbacGroupForm = ({
       : `/api/groups/${groupId}?attributes=entitlement,miq_user_role,tenant`;
     const rolesUrl = '/api/roles?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending';
     const tenantsUrl = '/api/tenants?expand=resources&attributes=id,name,divisible&sort_by=name&sort_order=ascending';
-    const formDataUrl = `/ops/group_form_data/${groupId || 'new'}`;
+    const formDataUrl = `/ops/group_form_data/${groupId || 'new'}${readOnly ? '?read_only=true' : ''}`;
 
     const promises = [
       API.get(rolesUrl),
@@ -228,15 +228,13 @@ const RbacGroupForm = ({
       // filterExpression is stored as raw RQB query — convert to MIQ format now
       const miqExpression = filterExpression ? rqbToMiq(filterExpression) : null;
       resource.filter_expression = miqExpression ? { exp: miqExpression } : null;
-      resource.filters = belongsto.length > 0 ? { belongsto, managed: [] } : {};
+      resource.filters = { belongsto, managed: [] };
     } else {
       resource.filter_expression = null;
       const tagPaths = assignedTagsToPaths(assignedTags);
       const otherManaged = removeTagPathsFromManaged(managedFilters);
       const managed = buildManagedFilters([...otherManaged, ...tagPaths]);
-      if (belongsto.length > 0 || managed.length > 0) {
-        resource.filters = { belongsto, managed };
-      }
+      resource.filters = { belongsto, managed };
     }
 
     const apiCall = isNew
@@ -283,10 +281,20 @@ const RbacGroupForm = ({
             'These outdated filters need review as it affects their visibility.'
             + ' We suggest editing and saving the group to delete these outdated filters.'
           )}
-          subtitle={deletedBelongstoFilters.join(', ')}
           hideCloseButton
           lowContrast
-        />
+        >
+          <ul className="rbac-group-form__deleted-filters">
+            <li>
+              <strong>{__('Clusters, Datastores, Hosts, Managers & Providers')}</strong>
+              <ul>
+                {deletedBelongstoFilters.map((filter) => (
+                  <li key={filter}><strong>{filter}</strong></li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </InlineNotification>
       )}
       {resetNotice && (
         <InlineNotification

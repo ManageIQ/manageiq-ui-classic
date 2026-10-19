@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import TagModifier from './tag-modifier';
@@ -6,14 +6,10 @@ import CategoryModifier from './category-modifier';
 import ValueModifier from './value-modifier';
 import TagView from './tag-view';
 
-// Pure-React tagging editor — no Redux.
-// Props:
-//   tags         – available tag categories + values (read-only catalogue)
-//   assignedTags – initially assigned tags
-//   onChange     – called with the new assignedTags array on every change
-//   hideHeaders  – hide the "Add/Modify tag" / "Assigned tags" headers
-
-// ── pure state helpers (ported from tagging/reducers/reducers.js) ────────────
+// Pure-React tagging editor — a migration of app/javascript/tagging/ to functional
+// components without Redux. The legacy tagging/ uses Redux-connected class components
+// that cannot be embedded inside a DDF field; this replaces them and is the target
+// for any remaining consumers of the old directory.
 
 const addOrChangeTag = (assigned, tagCategory, tagValues) => {
   const rest = assigned.filter((t) => t.id !== tagCategory.id);
@@ -36,16 +32,18 @@ const deleteTag = (assigned, tagCategory, tagValue) => {
   return [...rest, { id: tagCategory.id, label: tagCategory.label, values: remaining }];
 };
 
-// ── component ────────────────────────────────────────────────────────────────
-
 const TaggingEditor = ({
   tags = [],
   assignedTags: initialAssignedTags = [],
-  onChange,
+  onChange = undefined,
   hideHeaders = false,
 }) => {
   const [assignedTags, setAssignedTags] = useState(initialAssignedTags);
   const [selectedTagCategory, setSelectedTagCategory] = useState({});
+
+  useEffect(() => {
+    setAssignedTags(initialAssignedTags);
+  }, [initialAssignedTags]);
 
   const tagCategories = tags.map(({ id, label, singleValue }) => ({ id, label, singleValue }));
 

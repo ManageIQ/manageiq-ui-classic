@@ -5,13 +5,6 @@ import { renderWithRedux } from '../helpers/mountForm';
 import RbacGroupForm from '../../components/rbac-group-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-// TaggingWrapperConnected calls ManageIQ.redux.addReducer in its constructor,
-// which isn't available in the test environment. Mock it out.
-jest.mock('../../components/taggingWrapper', () => {
-  const MockTaggingWrapper = () => <div data-testid="tagging-wrapper" />;
-  return MockTaggingWrapper;
-});
-
 jest.mock('../../helpers/miq-redirect-back');
 
 const mockGroupData = {
@@ -114,6 +107,22 @@ describe('RbacGroupForm', () => {
     });
   });
 
+  it('requests the form data with read_only=true only in read-only mode', async() => {
+    const { unmount } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+    await waitFor(() => {
+      expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
+    });
+    expect(fetchMock.called('begin:/ops/group_form_data/1?read_only=true')).toBe(true);
+    unmount();
+
+    fetchMock.resetHistory();
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    await waitFor(() => {
+      expect(screen.getByText('Assign Filters')).toBeInTheDocument();
+    });
+    expect(fetchMock.called(/\/ops\/group_form_data\/1$/)).toBe(true);
+  });
+
   it('renders "Assign Filters" heading in edit mode', async() => {
     renderWithRedux(<RbacGroupForm {...defaultProps} />);
 
@@ -133,6 +142,7 @@ describe('RbacGroupForm', () => {
     await waitFor(() => {
       expect(screen.getByText(/outdated filters need review/i)).toBeInTheDocument();
     });
+    expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers', { selector: 'strong' })).toBeInTheDocument();
     expect(screen.getByText('/ManageIQ/Providers/Amazon/...')).toBeInTheDocument();
   });
 
@@ -357,6 +367,63 @@ describe('RbacGroupForm', () => {
         'success',
         '/ops/explorer'
       );
+    });
+  });
+
+  describe('initial load failure', () => {
+    beforeEach(() => {
+      fetchMock.restore();
+      fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+      fetchMock.get(/\/api\/roles/, 500);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+    });
+
+    it('shows an error notification when the initial API load fails', async() => {
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('submit payload shape', () => {
+    it('sends filters:{belongsto:[],managed:[]} when everything is cleared', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filters).toEqual({ belongsto: [], managed: [] });
+    });
+
+    it('sends filter_expression:null and filters when in tags mode', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filter_expression).toBeNull();
+      expect(body.resource).toHaveProperty('filters');
     });
   });
 });

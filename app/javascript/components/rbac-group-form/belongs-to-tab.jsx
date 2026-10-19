@@ -36,7 +36,7 @@ const carbonIcons = {
 // Covers every icon used by TreeBuilderBelongsToHac and TreeBuilderBelongsToVat.
 const PFICON_TO_CARBON = {
   'pficon pficon-folder-close': <Folder />,
-  'pficon pficon-folder-close-blue': <Folder style={{ fill: '#0099cc' }} />,
+  'pficon pficon-folder-close-blue': <Folder className="belongs-to-tab__node-icon--blue" />,
   'pficon pficon-virtual-machine': <VirtualMachine />,
   'pficon pficon-template': <Template />,
   'pficon pficon-server': <InfrastructureClassic />,
@@ -99,12 +99,12 @@ const convertNodes = (nodes) => {
 };
 
 const BelongsToTab = ({
-  bsTree,
+  bsTree = undefined,
   checked,
   onCheckedChange,
-  readOnly,
-  superAdminUser,
-  limitedMessage,
+  readOnly = false,
+  superAdminUser = false,
+  limitedMessage = undefined,
 }) => {
   const nodes = useMemo(() => {
     if (!bsTree) {

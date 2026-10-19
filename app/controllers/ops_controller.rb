@@ -648,7 +648,7 @@ class OpsController < ApplicationController
   def dialog_replace_right_cell
     model, id = TreeBuilder.extract_node_model_and_id(x_node)
     @record = model.constantize.find(id)
-    rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
+    rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set @group for the group summary
     replace_right_cell(:nodetype => 'dialog_return')
   end
 
@@ -759,6 +759,5 @@ class OpsController < ApplicationController
   end
 
   menu_section :set
-  feature_for_actions %w[rbac_group_add rbac_group_edit], *EXP_EDITOR_ACTIONS
   has_custom_buttons
 end

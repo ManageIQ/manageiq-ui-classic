@@ -13,6 +13,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       prefix, id = s.split('_') # The prefix can be any subclass of EmsFolder
       prefix.safe_constantize < EmsFolder && id.to_i == object[:id].to_i
     end
+    record_path(node, object)
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)

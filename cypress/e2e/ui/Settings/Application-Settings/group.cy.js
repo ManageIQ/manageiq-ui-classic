@@ -1,5 +1,7 @@
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
+// skipping since there is a latent cypress issue causing an infinite loop
+// error that we were unable to reproduce locally while testing. 
 describe.skip('Settings > Application Settings > Access Control > Add Group', () => {
   // Menu options
   const PRIMARY_MENU_OPTION = 'Settings';

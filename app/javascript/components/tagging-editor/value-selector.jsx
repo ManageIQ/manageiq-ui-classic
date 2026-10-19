@@ -47,7 +47,7 @@ const ValueSelector = ({
       <MultiSelect
         className="tag-select"
         id="multiselect-tag-select"
-        open
+        open={!!selectedTagCategory.id}
         label={label}
         initialSelectedItems={selectedOptions}
         key={selectedTagCategory.label}

@@ -18,5 +18,5 @@
   = render :partial => "shared/views/seq_selector_buttons",
            :locals  => {:fields_count  => @edit[:new][:external_auth_groups].length,
                         :button_params => button_params,
-                        :button_action => 'rbac_group_field_changed',
+                        :button_action => 'rbac_group_seq_field_changed',
                         :id            => 'seq'}

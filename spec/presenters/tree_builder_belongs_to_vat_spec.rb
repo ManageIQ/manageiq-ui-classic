@@ -35,6 +35,15 @@ describe TreeBuilderBelongsToVat do
                         :selected => {})
   end
 
+  describe '#paths' do
+    before { allow(MiqFilter).to receive(:object2belongsto) { |obj| "/belongsto/#{obj.name}" } }
+
+    it 'records the belongsto path of each node as the tree is built' do
+      expect(subject.paths).not_to be_empty
+      expect(subject.paths.values).to all(start_with("/belongsto/"))
+    end
+  end
+
   describe '#x_get_tree_datacenter_kids' do
     it 'returns folders' do
       kids = subject.send(:x_get_tree_datacenter_kids, datacenter, false)

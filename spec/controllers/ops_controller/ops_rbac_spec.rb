@@ -262,75 +262,11 @@ describe OpsController do
     end
   end
 
-  describe "::MiqGroup" do
-    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-    let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
-
-    before do
-      MiqUserRole.seed
-      MiqGroup.seed
-      MiqRegion.seed
-      Tenant.seed
-
-      stub_user(:features => :all)
-      @group = FactoryBot.create(:miq_group)
-      @role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      FactoryBot.create(
-        :classification,
-        :name        => "env",
-        :description => "Environment",
-        :children    => [FactoryBot.create(:classification)]
-      )
-      @exp = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
-      allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-    end
-
-    render_views
-
-    it "uses tags field only when editing the group filter_expression" do
-      new = {:use_filter_expression => true,
-             :name                  => 'Name',
-             :description           => "Test",
-             :role                  => @role.id,
-             :filter_expression     => @exp.exp,
-             :exp_key               => 'foo',
-             :belongsto             => {},
-             :filters               => {'managed/env' => '/managed/env'}}
-      allow(controller).to receive(:replace_right_cell)
-      controller.params = {:use_filter_expression => "true", :id => "new"}
-
-      edit = {:key      => "rbac_group_edit__new",
-              :new      => new,
-              :current  => new,
-              :edit_exp => {:key => '???'}}
-      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
-      edit[:filter_expression][:expression] = {:test => "foo", :token => 1}
-      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
-      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
-      controller.instance_variable_set(:@edit, edit)
-      controller.instance_variable_set(:@expkey, :filter_expression)
-      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
-      edit[:filter_expression][:exp_model] = @group.class.to_s
-      session[:edit] = edit
-      session[:expkey] = :filter_expression
-      controller.instance_variable_set(:@edit, edit)
-      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-      allow(controller).to receive(:replace_right_cell)
-
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details)
-
-      post :exp_token_pressed, :params => {:id => 'new', :use_filter_expression => "true", :token => 1}
-      @edit = controller.instance_variable_get(:@edit)
-      expect(@edit[:filter_expression][:exp_typ]).to eq('tags')
-    end
-
-  end
-
   describe "#group_form_data" do
     let(:stub_tree) do
       instance_double(TreeBuilderBelongsToHac,
-                      :bs_tree => '[{"key":"root","text":"My Cloud","nodes":[]}]')
+                      :bs_tree => '[{"key":"root","text":"My Cloud","nodes":[]}]',
+                      :paths   => {"root" => "/belongsto/ExtManagementSystem|My Cloud"})
     end
 
     before do
@@ -368,6 +304,39 @@ describe OpsController do
 
         tags_payload = response.parsed_body["tags"]
         expect(tags_payload).to include("tags", "assignedTags", "affectedItems")
+      end
+    end
+
+    it "returns the tree builder paths" do
+      get :group_form_data, :params => {:id => "new"}
+
+      expect(response.parsed_body["hac_paths"]).to eq("root" => "/belongsto/ExtManagementSystem|My Cloud")
+      expect(response.parsed_body["vat_paths"]).to eq("root" => "/belongsto/ExtManagementSystem|My Cloud")
+    end
+
+    context "when read_only is not requested" do
+      before { FactoryBot.create(:classification_department_with_tags) }
+
+      it "builds editable trees and returns the tag catalogue" do
+        expect(TreeBuilderBelongsToHac).to receive(:new).with(anything, anything, anything, hash_including(:edit => true)).and_return(stub_tree)
+        expect(TreeBuilderBelongsToVat).to receive(:new).with(anything, anything, anything, hash_including(:edit => true)).and_return(stub_tree)
+
+        get :group_form_data, :params => {:id => "new"}
+
+        expect(response.parsed_body.dig("tags", "tags").pluck("id")).to include("department")
+      end
+    end
+
+    context "when read_only=true" do
+      before { FactoryBot.create(:classification_department_with_tags) }
+
+      it "builds non-editable trees and skips the tag catalogue" do
+        expect(TreeBuilderBelongsToHac).to receive(:new).with(anything, anything, anything, hash_including(:edit => false)).and_return(stub_tree)
+        expect(TreeBuilderBelongsToVat).to receive(:new).with(anything, anything, anything, hash_including(:edit => false)).and_return(stub_tree)
+
+        get :group_form_data, :params => {:id => "new", :read_only => "true"}
+
+        expect(response.parsed_body["tags"]).to include("tags" => [], "assignedTags" => [], "affectedItems" => [""])
       end
     end
 
@@ -536,4 +505,73 @@ describe OpsController do
     end
   end
 
+  describe "#rbac_group_seq_field_changed" do
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:group1) { FactoryBot.create(:miq_group, :description => "Group 1", :sequence => 1) }
+    let!(:group2) { FactoryBot.create(:miq_group, :description => "Group 2", :sequence => 2) }
+
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as admin_user
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+      session[:edit] = {
+        :key     => "rbac_group_edit__seq",
+        :new     => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]},
+        :current => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]}
+      }
+    end
+
+    it "reorders items and activates save/reset buttons when moved up" do
+      post :rbac_group_seq_field_changed, :params => {:button => "up", :seq_fields => ["Group 2"], :id => "seq"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(response.body).to include("miqButtons('show')")
+      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to eq(["Group 2", "Group 1"])
+    end
+
+    it "reorders items and activates save/reset buttons when moved down" do
+      post :rbac_group_seq_field_changed, :params => {:button => "down", :seq_fields => ["Group 1"], :id => "seq"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(response.body).to include("miqButtons('show')")
+      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to eq(["Group 2", "Group 1"])
+    end
+  end
+
+  describe "#rbac_group_seq_edit" do
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:group1) { FactoryBot.create(:miq_group, :description => "Group 1", :sequence => 1) }
+    let!(:group2) { FactoryBot.create(:miq_group, :description => "Group 2", :sequence => 2) }
+
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as admin_user
+      allow(controller).to receive(:x_node).and_return("root")
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+    end
+
+    it "initializes the sequence edit screen" do
+      post :rbac_group_seq_edit, :xhr => true
+      expect(response.status).to eq(200)
+      expect(controller.instance_variable_get(:@edit)[:key]).to eq("rbac_group_edit__seq")
+      expect(controller.instance_variable_get(:@edit)[:new][:ldap_groups_list]).to include("Group 1", "Group 2")
+    end
+
+    it "saves the reordered sequence" do
+      session[:edit] = {
+        :key     => "rbac_group_edit__seq",
+        :new     => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 2", "Group 1"]},
+        :current => {:ldap_groups => [group1, group2], :ldap_groups_list => ["Group 1", "Group 2"]}
+      }
+      post :rbac_group_seq_edit, :params => {:button => "save"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(group1.reload.sequence).to eq(2)
+      expect(group2.reload.sequence).to eq(1)
+    end
+
+    it "cancels the edit sequence" do
+      session[:edit] = {:key => "rbac_group_edit__seq"}
+      post :rbac_group_seq_edit, :params => {:button => "cancel"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(session[:edit]).to be_nil
+    end
+  end
 end

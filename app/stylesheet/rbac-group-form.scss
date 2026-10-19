@@ -1,7 +1,45 @@
 .rbac-group-form {
+  &__deleted-filters {
+    margin-top: 0.5rem;
+
+    ul {
+      margin-top: 0.25rem;
+    }
+
+    li {
+      list-style: disc inside;
+    }
+  }
+
   .customer-tags-tab {
     &__filter-mode {
       margin-bottom: 1rem;
+    }
+
+    &__expression-section {
+      padding: 0.5rem 0;
+    }
+
+    &__expression-heading {
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--cds-text-primary, #161616);
+    }
+
+    &__expression-box {
+      padding: 1rem 1.25rem;
+      background-color: var(--cds-layer-01, #f4f4f4);
+      border-left: 4px solid var(--cds-border-interactive, #0f62fe);
+      border-radius: 2px;
+      line-height: 1.6;
+      color: var(--cds-text-primary, #161616);
+      overflow-wrap: break-word;
+    }
+
+    &__expression-text {
+      font-size: 1.125rem;
+      font-weight: 500;
     }
   }
 
@@ -14,6 +52,10 @@
       width: 1rem;
       height: 1rem;
       vertical-align: middle;
+    }
+
+    &__node-icon--blue {
+      fill: #0099cc;
     }
   }
 }

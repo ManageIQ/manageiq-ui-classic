@@ -6,19 +6,18 @@ import {
 import CustomerTagsTab from './customer-tags-tab';
 import BelongsToTab from './belongs-to-tab';
 
-const FilterTabs = (props) => {
+const FilterTabs = ({
+  currentTenantName = undefined,
+  tags,
+  hacTree = undefined,
+  vatTree = undefined,
+  readOnly = false,
+  superAdminUser = false,
+  ...props
+}) => {
   const {
     input: { value, onChange },
   } = useFieldApi(props);
-
-  const {
-    currentTenantName,
-    tags,
-    hacTree,
-    vatTree,
-    readOnly,
-    superAdminUser,
-  } = props;
 
   const {
     assignedTags = [],

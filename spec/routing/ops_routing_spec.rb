@@ -45,8 +45,8 @@ describe "routing for OpsController" do
     label_tag_mapping_field_changed
     perf_chart_chooser
     rbac_group_edit
-    rbac_group_field_changed
     rbac_group_seq_edit
+    rbac_group_seq_field_changed
     rbac_groups_list
     rbac_role_edit
     rbac_roles_list

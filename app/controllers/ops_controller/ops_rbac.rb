@@ -83,33 +83,14 @@ module OpsController::OpsRbac
 
   def rbac_group_add
     assert_privileges("rbac_group_add")
-    @edit = {:key => "rbac_group_edit__new", :current => {}}
     @hide_bottom_bar = true
-    @in_a_form = true
-    session[:edit] = @edit
-    session[:changed] = false
-    @sb[:pre_edit_node] = x_node
-    @right_cell_text = _('Adding a new Group')
-    replace_right_cell(:nodetype => x_node)
+    rbac_edit_reset('new', 'group', MiqGroup)
   end
 
   def rbac_group_edit
     assert_privileges("rbac_group_edit")
-
-    @record = find_record_with_rbac(MiqGroup, checked_or_params)
-    if @record.read_only
-      add_flash(_("Read Only EVM Group \"%{name}\" can not be edited") % {:name => @record.description}, :warning)
-      javascript_flash
-      return
-    end
-    @edit = {:group_id => @record.id, :key => "rbac_group_edit__#{@record.id}", :current => {}}
     @hide_bottom_bar = true
-    @in_a_form = true
-    session[:edit] = @edit
-    session[:changed] = false
-    @sb[:pre_edit_node] = x_node
-    @right_cell_text = _("Editing Group \"%{name}\"") % {:name => @record.description}
-    replace_right_cell(:nodetype => x_node)
+    rbac_edit_reset('edit', 'group', MiqGroup)
   end
 
   def rbac_role_add
@@ -328,13 +309,15 @@ module OpsController::OpsRbac
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
   end
 
-  def rbac_group_field_changed
+  def rbac_group_seq_field_changed
     assert_privileges("rbac_group_seq_edit")
 
     case params[:button]
     when "up"   then move_cols_up
     when "down" then move_cols_down
     end
+
+    @changed = (@edit[:new] != @edit[:current]) if @edit
 
     render :update do |page|
       page << javascript_prologue
@@ -343,6 +326,7 @@ module OpsController::OpsRbac
         page << "miqScrollTop();" if @flash_array.present?
         page.replace(@refresh_div, :partial => @refresh_partial)
       end
+      page << javascript_for_miq_button_visibility_changed(@changed) if @edit
     end
   end
 
@@ -350,7 +334,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_group_seq_edit")
     case params[:button]
     when "cancel"
-      @edit = nil
+      @edit = session[:edit] = nil
       add_flash(_("Edit Sequence of User Groups was cancelled by the user"))
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
@@ -470,44 +454,27 @@ module OpsController::OpsRbac
     [consecutime, first_idx, last_idx]
   end
 
-  # GET /ops/group_form_data/:id
+  # GET /ops/group_form_data/:id[?read_only=true]
   def group_form_data
     assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_view")
 
+    read_only = params[:read_only] == "true"
     group = params[:id] == "new" ? MiqGroup.new : MiqGroup.non_tenant_groups.find(params.expect(:id))
 
     @sb[:trees] ||= {}
 
-    selected_nodes = group.get_belongsto_filters.filter_map do |b|
-      obj = MiqFilter.belongsto2object(b)
-      "#{obj.class.name}_#{obj.id}" if obj
-    end
+    belongsto_filters = group.get_belongsto_filters.index_with { |b| MiqFilter.belongsto2object(b) }
 
-    deleted_filters = group.get_belongsto_filters.filter_map do |b|
-      MiqFilter.belongsto2path_human(b) unless MiqFilter.belongsto2object(b)
-    end
+    selected_nodes = belongsto_filters.values.compact.map { |obj| "#{obj.class.name}_#{obj.id}" }
 
-    hac = TreeBuilderBelongsToHac.new(:hac_tree, @sb, true, :group => group, :selected_nodes => selected_nodes, :edit => true)
-    vat = TreeBuilderBelongsToVat.new(:vat_tree, @sb, true, :group => group, :selected_nodes => selected_nodes, :edit => true)
+    deleted_filters = belongsto_filters.filter_map { |b, obj| MiqFilter.belongsto2path_human(b) unless obj }
 
-    hac_paths = build_belongsto_path_map(JSON.parse(hac.bs_tree))
-    vat_paths = build_belongsto_path_map(JSON.parse(vat.bs_tree))
+    tree_options = {:group => group, :selected_nodes => selected_nodes, :edit => !read_only}
+    hac = TreeBuilderBelongsToHac.new(:hac_tree, @sb, true, **tree_options)
+    vat = TreeBuilderBelongsToVat.new(:vat_tree, @sb, true, **tree_options)
 
-    cats = Classification.categories.select do |c|
-      c.show || (%w[folder_path_blue folder_path_yellow].exclude?(c.name) &&
-                 !(c.read_only? || c.entries.empty?))
-    end
-    cats.sort_by! { |t| t.description.downcase }
-
-    tags = cats.map do |cat|
-      {
-        :id          => cat.name,
-        :label       => cat.description,
-        :singleValue => false,
-        :values      => cat.entries.sort_by { |e| e.description.downcase }
-                           .map { |e| {:id => e.name, :label => e.description} }
-      }
-    end
+    # The read-only summary only shows the assigned tags, so skip the full tag catalogue
+    tags = read_only ? [] : group_form_tag_catalogue
 
     filters = group.id ? (group.entitlement&.get_managed_filters || []).flatten : []
     assigned_tags = Tag.where(:name => filters).each_with_object({}) do |tag, by_category|
@@ -520,8 +487,8 @@ module OpsController::OpsRbac
     render :json => {
       :hac_tree                  => hac.bs_tree,
       :vat_tree                  => vat.bs_tree,
-      :hac_paths                 => hac_paths,
-      :vat_paths                 => vat_paths,
+      :hac_paths                 => hac.paths,
+      :vat_paths                 => vat.paths,
       :tags                      => {
         :tags          => tags,
         :assignedTags  => assigned_tags,
@@ -532,6 +499,24 @@ module OpsController::OpsRbac
   end
 
   private ############################
+
+  def group_form_tag_catalogue
+    cats = Classification.categories.select do |c|
+      c.show || (%w[folder_path_blue folder_path_yellow].exclude?(c.name) &&
+                 !(c.read_only? || c.entries.empty?))
+    end
+    cats.sort_by! { |t| t.description.downcase }
+
+    cats.map do |cat|
+      {
+        :id          => cat.name,
+        :label       => cat.description,
+        :singleValue => false,
+        :values      => cat.entries.sort_by { |e| e.description.downcase }
+                           .map { |e| {:id => e.name, :label => e.description} }
+      }
+    end
+  end
 
   def tenant_type_title_string(divisible)
     divisible ? _("Tenant") : _("Project")
@@ -597,43 +582,17 @@ module OpsController::OpsRbac
     tagging_edit_tags_save_and_replace_right_cell
   end
 
-  def rbac_edit_cancel(what)
-    key = what.to_sym
-    id = params[:id] || "new"
-    return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
-    case key
-    when :role
-      record_id = @edit[:role_id]
-    when :group
-      record_id = @edit[:group_id]
-    when :user
-      record_id = @edit[:user_id]
-    when :tenant
-      record_id = id
-    end
-    add_flash(if record_id
-                _("Edit of %{name} was cancelled by the user") % {:name => what.titleize}
-              else
-                _("Add of new %{name} was cancelled by the user") % {:name => what.titleize}
-              end)
-    self.x_node = @sb[:pre_edit_node]
-    get_node_info(x_node)
-    @edit = nil # clean out the saved info
-    replace_right_cell(:nodetype => @nodetype)
-  end
-
   def rbac_edit_reset(operation, what, klass)
     key = what.to_sym
     if operation != "new"
       record = find_record_with_rbac(klass, checked_or_params)
-      if %i[group role].include?(key) && record&.read_only && operation != 'copy'
+      if %i[group role].include?(key) && record && record.read_only && operation != 'copy'
         model, name = if key == :role
                         [_('Role'), record.name]
                       else
                         [_('EVM Group'), record.description]
                       end
-        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name}, :warning)
+        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name }, :warning)
         javascript_flash
         return
       end
@@ -652,8 +611,6 @@ module OpsController::OpsRbac
       case key
       when :user
         @record.current_group = record.current_group
-      when :group
-        @record.miq_user_role = record.miq_user_role
       when :role
         @record.miq_product_features = record.miq_product_features
         @record.read_only = false
@@ -666,8 +623,9 @@ module OpsController::OpsRbac
 
     # set form fields according to what is copied
     case key
-    when :user then rbac_user_set_form_vars
-    when :role then rbac_role_set_form_vars
+    when :user  then rbac_user_set_form_vars
+    when :group then rbac_group_set_form_vars
+    when :role  then rbac_role_set_form_vars
     end
 
     @in_a_form = true
@@ -676,41 +634,6 @@ module OpsController::OpsRbac
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
     replace_right_cell(:nodetype => x_node)
-  end
-
-  def rbac_edit_save_or_add(what, rbac_suffix = what)
-    key         = what.to_sym
-    id          = params[:id] || "new"
-    add_pressed = params[:button] == "add"
-
-    return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
-    if record.valid? && validated && record.save!
-      self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
-      AuditEvent.success(build_saved_audit(record, @edit))
-      subkey = key == :group ? :description : :name
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
-      add_flash(_("Outdated filters were removed from group \"%{name}\"") % {:name => @edit[:new][subkey]}) if what == "group" && @edit[:current][:deleted_belongsto_filters].present?
-      @edit = session[:edit] = nil # clean out the saved info
-      if add_pressed
-        suffix = case rbac_suffix
-                 when "group"         then "g"
-                 when "miq_user_role" then "ur"
-                 when "user"          then "u"
-                 end
-        self.x_node = "xx-#{suffix}" # reset node to show list
-        send("rbac_#{what.pluralize}_list")
-      end
-      # Get selected Node
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
-      return
-    end
-
-    @changed = session[:changed] = (@edit[:new] != @edit[:current])
-    record.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
-
-    render_flash
   end
 
   # Show the main Users/Gropus/Roles list views
@@ -820,6 +743,7 @@ module OpsController::OpsRbac
     get_tagdata(@tenant)
   end
 
+  # sets @group for the group summary partial
   def rbac_group_get_details(id)
     @record = @group = MiqGroup.find_by(:id => id)
   end
@@ -850,12 +774,15 @@ module OpsController::OpsRbac
                        end
   end
 
-  def valid_tenant?(tenant_id)
-    Rbac.filtered(Tenant.in_my_region.where(:id => tenant_id)).present?
-  end
-
-  def valid_role?(user_role_id)
-    Rbac::Filterer.filtered_object(user_role_id, :class => "MiqUserRole").present?
+  # Set form variables for group edit
+  def rbac_group_set_form_vars
+    @edit = {:new => {}, :current => {}}
+    @edit[:group_id] = @record.id
+    @right_cell_text = if @edit[:group_id]
+                         _("Editing Group \"%{name}\"") % {:name => @record.description}
+                       else
+                         _('Adding a new Group')
+                       end
   end
 
   # Set form variables for role edit
@@ -906,27 +833,5 @@ module OpsController::OpsRbac
     MiqProductFeature.feature_children(node, false).flat_map do |n|
       rbac_compact_features(selected, n)
     end
-  end
-
-  def build_belongsto_path_map(nodes, map = {})
-    Array(nodes).each do |node|
-      key = node["key"]
-      if key.present?
-        _model, rec_id, prefix = TreeBuilder.extract_node_model_and_id(key)
-        klass_name = TreeBuilder.get_model_for_prefix(prefix)
-        if klass_name && rec_id
-          obj = klass_name.safe_constantize&.find_by(:id => rec_id)
-          if obj
-            begin
-              map[key] = MiqFilter.object2belongsto(obj)
-            rescue RuntimeError => e
-              $log.debug("build_belongsto_path_map: skipping node #{key.inspect} — #{e.message}")
-            end
-          end
-        end
-      end
-      build_belongsto_path_map(node["nodes"], map) if node["nodes"].present?
-    end
-    map
   end
 end

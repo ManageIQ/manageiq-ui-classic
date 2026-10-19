@@ -4,18 +4,17 @@ import FilterTabs from '../../components/rbac-group-form/filter-tabs';
 
 const mockOnChange = jest.fn();
 
+const fieldState = { value: {} };
 jest.mock('@@ddf', () => ({
   useFieldApi: (props) => ({
     meta: {},
     input: {
-      value: props.initialValue || {},
+      value: props.initialValue !== undefined ? props.initialValue : fieldState.value,
       onChange: mockOnChange,
     },
   }),
 }));
 
-// BelongsToTab uses react-checkbox-tree which is fine in jsdom,
-// but ExpressionEditor (inside CustomerTagsTab) makes API calls — mock it.
 jest.mock('../../components/expression-editor', () => {
   const MockExpressionEditor = ({ onQueryChange }) => (
     <div data-testid="expression-editor">
@@ -27,7 +26,6 @@ jest.mock('../../components/expression-editor', () => {
 });
 
 const emptyTags = { tags: [], assignedTags: [], affectedItems: [] };
-const noop = () => {};
 
 const defaultProps = {
   tags: emptyTags,
@@ -41,6 +39,7 @@ const defaultProps = {
 describe('FilterTabs', () => {
   beforeEach(() => {
     mockOnChange.mockClear();
+    fieldState.value = {};
   });
 
   it('renders "Assign Filters" heading in edit mode', () => {
@@ -69,7 +68,6 @@ describe('FilterTabs', () => {
     const user = userEvent.setup();
     render(<FilterTabs {...defaultProps} />);
 
-    // The mode select is rendered by CustomerTagsTab on the first tab (active by default)
     const select = screen.getByRole('combobox', { name: /this user is limited to/i });
     await user.selectOptions(select, 'expression');
 
@@ -80,11 +78,7 @@ describe('FilterTabs', () => {
 
   it('calls onChange with useFilterExpression:false when toggling back to tags mode', async() => {
     const user = userEvent.setup();
-    // Start in expression mode by seeding the field value
-    jest.spyOn(require('@@ddf'), 'useFieldApi').mockReturnValueOnce({
-      meta: {},
-      input: { value: { useFilterExpression: true }, onChange: mockOnChange },
-    });
+    fieldState.value = { useFilterExpression: true };
 
     render(<FilterTabs {...defaultProps} />);
 

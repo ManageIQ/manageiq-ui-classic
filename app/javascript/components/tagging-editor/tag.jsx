@@ -5,8 +5,8 @@ import TaggingPropTypes from './tagging-prop-types';
 
 const Tag = ({
   onTagDeleteClick,
-  tagCategory,
-  tagValue,
+  tagCategory = undefined,
+  tagValue = undefined,
   truncate,
   showCloseButton = false,
 }) => {

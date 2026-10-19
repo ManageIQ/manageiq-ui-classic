@@ -6,7 +6,7 @@ const defaultTruncate = (str) => (str.length > 18 ? `${str.substring(0, 18)}...`
 
 const TagCategory = ({
   onTagDeleteClick,
-  tagCategory,
+  tagCategory = undefined,
   values,
   categoryTruncate = defaultTruncate,
   valueTruncate = defaultTruncate,

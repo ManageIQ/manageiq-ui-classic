@@ -13,9 +13,9 @@ const CustomerTagsTab = ({
   onAssignedTagsChange,
   useFilterExpression,
   onToggle,
-  filterExpression,
+  filterExpression = null,
   onExpressionChange,
-  readOnly,
+  readOnly = false,
 }) => {
   const [expressionText, setExpressionText] = useState('');
   const [validationErrors, setValidationErrors] = useState([]);
@@ -49,12 +49,25 @@ const CustomerTagsTab = ({
 
   if (readOnly) {
     if (useFilterExpression) {
+      let miqExp = null;
+      if (filterExpression) {
+        miqExp = (filterExpression.rules || filterExpression.combinator)
+          ? rqbToMiq(filterExpression)
+          : filterExpression;
+      }
+      const humanText = miqExp ? miqExpressionToHuman(miqExp, new Map(), new Map()) : null;
       return (
         <div className="customer-tags-tab">
-          <p>{__('Filter Expression:')}</p>
-          {filterExpression
-            ? <pre>{JSON.stringify(filterExpression, null, 2)}</pre>
-            : <p className="miq-no-record">{__('No Filter Expression defined')}</p>}
+          <div className="customer-tags-tab__expression-section">
+            <h4 className="customer-tags-tab__expression-heading">{__('Filter Expression:')}</h4>
+            {humanText ? (
+              <div className="customer-tags-tab__expression-box">
+                <span className="customer-tags-tab__expression-text">{humanText}</span>
+              </div>
+            ) : (
+              <p className="miq-no-record">{__('No Filter Expression defined')}</p>
+            )}
+          </div>
         </div>
       );
     }

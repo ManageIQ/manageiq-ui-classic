@@ -112,16 +112,16 @@ exports[`TaggingEditor component matches snapshot 1`] = `
                 id="downshift-_r_4_-label"
               />
               <div
-                class="cds--multi-select cds--list-box cds--list-box--expanded"
+                class="cds--multi-select cds--list-box"
                 id="multiselect-tag-select"
               >
                 <div
-                  class="cds--list-box__field--wrapper cds--list-box__field--wrapper--input-focused"
+                  class="cds--list-box__field--wrapper"
                 >
                   <button
                     aria-activedescendant=""
                     aria-controls="downshift-_r_4_-menu"
-                    aria-expanded="true"
+                    aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="downshift-_r_4_-label"
                     class="cds--list-box__field"
@@ -137,10 +137,10 @@ exports[`TaggingEditor component matches snapshot 1`] = `
                       Select tag value
                     </span>
                     <div
-                      class="cds--list-box__menu-icon cds--list-box__menu-icon--open"
+                      class="cds--list-box__menu-icon"
                     >
                       <svg
-                        aria-label="Close menu"
+                        aria-label="Open menu"
                         fill="currentColor"
                         focusable="false"
                         height="16"
@@ -155,7 +155,7 @@ exports[`TaggingEditor component matches snapshot 1`] = `
                           d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                         />
                         <title>
-                          Close menu
+                          Open menu
                         </title>
                       </svg>
                     </div>
@@ -164,6 +164,7 @@ exports[`TaggingEditor component matches snapshot 1`] = `
                 <ul
                   aria-labelledby="downshift-_r_4_-label"
                   class="cds--list-box__menu"
+                  hidden=""
                   id="downshift-_r_4_-menu"
                   role="listbox"
                 />

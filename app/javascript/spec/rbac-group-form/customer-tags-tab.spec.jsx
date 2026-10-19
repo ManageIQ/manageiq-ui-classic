@@ -123,9 +123,9 @@ describe('CustomerTagsTab', () => {
     it('renders the expression when filterExpression is provided', () => {
       const expr = { tag: { type: 'tag', tag: '/managed/env/prod' } };
       render(<CustomerTagsTab {...defaultProps} readOnly useFilterExpression filterExpression={expr} />);
-      const pre = document.querySelector('pre');
-      expect(pre).toBeInTheDocument();
-      expect(pre.textContent).toBe(JSON.stringify(expr, null, 2));
+      expect(document.querySelector('pre')).not.toBeInTheDocument();
+      expect(screen.getByText(/\/managed\/env\/prod/)).toBeInTheDocument();
+      expect(document.querySelector('.customer-tags-tab__expression-box')).toBeInTheDocument();
     });
   });
 });

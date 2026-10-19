@@ -2439,8 +2439,8 @@ Rails.application.routes.draw do
         pglogical_save_subscriptions
         pglogical_validate_subscription
         rbac_group_edit
-        rbac_group_field_changed
         rbac_group_seq_edit
+        rbac_group_seq_field_changed
         rbac_groups_list
         rbac_role_edit
         rbac_roles_list
@@ -2471,7 +2471,7 @@ Rails.application.routes.draw do
         wait_for_task
         x_button
         zone_edit
-      ] + exp_post + dialog_runner_post
+      ] + dialog_runner_post
     },
 
     :optimization => {

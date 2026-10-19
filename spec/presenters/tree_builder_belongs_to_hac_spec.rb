@@ -64,6 +64,22 @@ describe TreeBuilderBelongsToHac do
                         :selected_nodes => {})
   end
 
+  describe '#paths' do
+    before { allow(MiqFilter).to receive(:object2belongsto) { |obj| "/belongsto/#{obj.name}" } }
+
+    it 'maps each node key to its belongsto path as the tree is built' do
+      tree_keys = JSON.parse(subject.bs_tree).flat_map { |n| [n] + Array(n["nodes"]) }.pluck("key")
+      expect(subject.paths.keys).to include(*tree_keys)
+      expect(subject.paths.values).to include(*ExtManagementSystem.assignable.map { |ems| "/belongsto/#{ems.name}" })
+    end
+
+    it 'skips nodes that are not under a provider' do
+      allow(MiqFilter).to receive(:object2belongsto).and_raise(RuntimeError, "Folder Root is not a Provider")
+
+      expect(subject.paths).to eq({})
+    end
+  end
+
   describe '#x_get_tree_roots' do
     it 'returns all ExtManagementSystems except the Embedded Ansible' do
       expect(subject.send(:x_get_tree_roots)).to eq(ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
