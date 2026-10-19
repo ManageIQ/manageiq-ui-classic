@@ -313,7 +313,7 @@ module ApplicationController::CiProcessing
     kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
   rescue StandardError => err
-    add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
+    add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
                  "%{task} initiated for %{count} providers", manager_ids.length) %
