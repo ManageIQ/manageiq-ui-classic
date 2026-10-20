@@ -330,7 +330,7 @@ module OpsController::OpsRbac
       return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
 
       err = false
-      @edit[:new][:ldap_groups_list].each_with_index do |grp, i|
+      @edit[:new][:external_auth_groups_list].each_with_index do |grp, i|
         group = MiqGroup.find_by(:description => grp)
         group.sequence = i + 1
         if group.save
@@ -349,7 +349,7 @@ module OpsController::OpsRbac
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node)
       else
-        drop_breadcrumb(:name => _("Edit User Group Sequence"), :url => "/configuration/ldap_seq_edit")
+        drop_breadcrumb(:name => _("Edit User Group Sequence"), :url => "/configuration/external_auth_seq_edit")
         @in_a_form = true
         replace_right_cell(:nodetype => "group_seq")
       end
@@ -367,10 +367,10 @@ module OpsController::OpsRbac
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @edit[:new][:ldap_groups] = MiqGroup.non_tenant_groups.sort_by(&:sequence) # Get the non-tenant groups from the DB
-    @edit[:new][:ldap_groups_list] = []
-    @edit[:new][:ldap_groups].each do |g|
-      @edit[:new][:ldap_groups_list].push(g.description)
+    @edit[:new][:external_auth_groups] = MiqGroup.non_tenant_groups.sort_by(&:sequence) # Get the non-tenant groups from the DB
+    @edit[:new][:external_auth_groups_list] = []
+    @edit[:new][:external_auth_groups].each do |g|
+      @edit[:new][:external_auth_groups_list].push(g.description)
     end
     @edit[:key] = "rbac_group_edit__seq"
     @edit[:current] = copy_hash(@edit[:new])
@@ -393,13 +393,13 @@ module OpsController::OpsRbac
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
       if first_idx.positive?
-        @edit[:new][:ldap_groups_list][first_idx..last_idx].reverse_each do |field|
-          pulled = @edit[:new][:ldap_groups_list].delete(field)
-          @edit[:new][:ldap_groups_list].insert(first_idx - 1, pulled)
+        @edit[:new][:external_auth_groups_list][first_idx..last_idx].reverse_each do |field|
+          pulled = @edit[:new][:external_auth_groups_list].delete(field)
+          @edit[:new][:external_auth_groups_list].insert(first_idx - 1, pulled)
         end
       end
       @refresh_div = "column_lists"
-      @refresh_partial = "ldap_seq_form"
+      @refresh_partial = "external_auth_seq_form"
     end
     @selected = params[:seq_fields]
   end
@@ -415,23 +415,23 @@ module OpsController::OpsRbac
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move down"), :error)
     else
-      if last_idx < @edit[:new][:ldap_groups_list].length - 1
+      if last_idx < @edit[:new][:external_auth_groups_list].length - 1
         insert_idx = last_idx + 1 # Insert before the element after the last one
-        insert_idx = -1 if last_idx == @edit[:new][:ldap_groups_list].length - 2 # Insert at end if 1 away from end
-        @edit[:new][:ldap_groups_list][first_idx..last_idx].each do |field|
-          pulled = @edit[:new][:ldap_groups_list].delete(field)
-          @edit[:new][:ldap_groups_list].insert(insert_idx, pulled)
+        insert_idx = -1 if last_idx == @edit[:new][:external_auth_groups_list].length - 2 # Insert at end if 1 away from end
+        @edit[:new][:external_auth_groups_list][first_idx..last_idx].each do |field|
+          pulled = @edit[:new][:external_auth_groups_list].delete(field)
+          @edit[:new][:external_auth_groups_list].insert(insert_idx, pulled)
         end
       end
       @refresh_div = "column_lists"
-      @refresh_partial = "ldap_seq_form"
+      @refresh_partial = "external_auth_seq_form"
     end
     @selected = params[:seq_fields]
   end
 
   def selected_consecutive?
     first_idx = last_idx = 0
-    @edit[:new][:ldap_groups_list].each_with_index do |nf, idx|
+    @edit[:new][:external_auth_groups_list].each_with_index do |nf, idx|
       first_idx = idx if nf == params[:seq_fields].first
       if nf == params[:seq_fields].last
         last_idx = idx

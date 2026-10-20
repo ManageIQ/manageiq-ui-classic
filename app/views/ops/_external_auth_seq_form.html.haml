@@ -1,9 +1,9 @@
 = render :partial => "layouts/flash_msg"
 #column_lists
   .col-md-7.col-sm-10.col-xs-10
-    = _("User Group Sequencing for LDAP Look Up:")
+    = _("User Group Sequencing for External Authentication:")
     = select_tag('seq_fields[]',
-                 options_for_select(@edit[:new][:ldap_groups_list],
+                 options_for_select(@edit[:new][:external_auth_groups_list],
                                     @selected),
                  :multiple => true,
                  :class    => "form-control",
@@ -13,10 +13,10 @@
 
     %small= _("* Select one or more consecutive groups to move up or down.")
 
-  - button_params = @edit[:new][:ldap_groups].length >= 2 ? [[_("Move selected fields up"),   'column_lists', 'up',    'fa-angle-up'],
+  - button_params = @edit[:new][:external_auth_groups].length >= 2 ? [[_("Move selected fields up"),   'column_lists', 'up',    'fa-angle-up'],
                                                              [_("Move selected fields down"), 'column_lists', 'down',  'fa-angle-down']] : []
   = render :partial => "shared/views/seq_selector_buttons",
-           :locals  => {:fields_count  => @edit[:new][:ldap_groups].length,
+           :locals  => {:fields_count  => @edit[:new][:external_auth_groups].length,
                         :button_params => button_params,
                         :button_action => 'rbac_group_field_changed',
                         :id            => 'seq'}
