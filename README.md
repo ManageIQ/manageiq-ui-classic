@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/manageiq-ui-classic.svg)](http://badge.fury.io/rb/manageiq-ui-classic)
 [![CI](https://github.com/ManageIQ/manageiq-ui-classic/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/ManageIQ/manageiq-ui-classic/actions/workflows/ci.yaml)
 
-[![Chat](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#ManageIQ_manageiq/ui:gitter.im)
+[![Chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#ManageIQ_manageiq/ui:gitter.im)
 
 ManageIQ UI Classic is the UI that has been split out of the main [manageiq repo](https://github.com/ManageIQ/manageiq).
 
