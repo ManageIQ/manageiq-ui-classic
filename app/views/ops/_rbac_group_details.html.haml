@@ -78,7 +78,7 @@
 #rbac_group_tabs
   %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('rbac_customer_tags', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_customer_tags')"}) do
-      = _("%{current_tenant} Tags") % {:current_tenant => current_tenant.name}
+      = _("%{name} Tags") % {:name => current_tenant.name}
     = miq_tab_header('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_hosts_clusters')"}) do
       = _("Clusters, Datastores, Hosts, Managers & Providers")
     = miq_tab_header('rbac_vms_templates', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_vms_templates')"}) do

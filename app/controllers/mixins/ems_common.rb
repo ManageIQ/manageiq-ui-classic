@@ -550,7 +550,7 @@ module Mixins
         end
       else # showing 1 ems, scan it
         if params[:id].nil? || model.find_by_id(params[:id]).nil?
-          add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
+          add_flash(_("%{object} no longer exists") % {:object => ui_lookup(:table => table_name)}, :error)
         else
           emss.push(params[:id])
         end
