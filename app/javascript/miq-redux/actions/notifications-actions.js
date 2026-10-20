@@ -18,7 +18,11 @@ export const initNotifications = (useLimit) => (dispatch) => {
         notifications,
         count: subcount,
       },
-    }));
+    }))
+    .catch((error) => {
+      // Keep the notifications already in the store; a failed refresh shouldn't empty the drawer.
+      console.error('Failed to load notifications:', error);
+    });
 };
 
 export const addNotification = (notification) => (dispatch) => {
