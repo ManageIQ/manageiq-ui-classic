@@ -55,6 +55,16 @@ describe('Notifications actions tests', () => {
     });
   });
 
+  it('should not dispatch anything when initNotifications fails', async() => {
+    const store = makeStore(initialState);
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', 500);
+    await store.dispatch(initNotifications(false));
+    expect(store.getActions()).toEqual([]);
+    expect(consoleErrorSpy).toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
   it('should dispatch addNotification correctly', () => {
     const store = makeStore(initialState);
     const expectedPayload = expect.objectContaining({
