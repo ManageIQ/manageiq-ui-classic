@@ -686,7 +686,7 @@ class OpsController < ApplicationController
     if %w[accordion_select change_tab tree_select].include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
-      presenter.update(:rbac_details, r[:partial => "ldap_seq_form"])
+      presenter.update(:rbac_details, r[:partial => "external_auth_seq_form"])
     elsif nodetype == "tenant_edit" # schedule edit
       # when editing/adding schedule in settings tree
       presenter.update(:rbac_details, r[:partial => "tenant_form"])
