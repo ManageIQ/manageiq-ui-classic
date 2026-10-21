@@ -37,14 +37,29 @@ newenv  = {
   "NODE_OPTIONS" => node_options
 }
 
-# TODO: Replace this with eslint-webpack-plugin once webpack is upgraded to v5
+# TODO: Once webpack is upgraded to v5, replace the app/javascript lint below
+#       with eslint-webpack-plugin so linting runs as part of the webpack pipeline.
+#
+# TODO: Move spec file linting (app/javascript/**/*spec.{ts,tsx}) to a preprocess
+#       step of the Jest command rather than the webpack build.
+#
+# TODO: Move Cypress file linting (cypress/**/*.ts) to a preprocess step of
+#       the Cypress command rather than the webpack build.
+#
 # Run ESLint on TypeScript files before webpack build (skip in watch mode)
+# Covers:
+#   app/javascript/**/*.{ts,tsx} — source files and Jest spec files
+#   cypress/**/*.ts              — Cypress e2e test files
 if ARGV.include?("--watch") || ARGV.include?("-w")
   puts "[SKIP] Skipping ESLint check in watch mode.\n"
 else
   puts "Running ESLint on TypeScript files..."
   Dir.chdir(APP_PATH) do
-    eslint_result = system("yarn", "eslint", "app/javascript/**/*.{ts,tsx}")
+    eslint_result = system(
+      "yarn", "eslint",
+      "app/javascript/**/*.{ts,tsx}",
+      "cypress/**/*.ts"
+    )
     unless eslint_result
       puts "\n[ERROR] ESLint found errors in TypeScript files."
       exit 1
