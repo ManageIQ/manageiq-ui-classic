@@ -3,7 +3,7 @@
   - when 'ui_1'
     %div{:id => @labels[0], 'role' => 'tabpanel', 'aria-labelledby' => '1'}
       = render :partial => "layouts/flash_msg"
-      = react 'VisualSettingsForm', :recordId => current_user.id.to_s
+      = react 'VisualSettingsForm', :recordId => current_user.id.to_s, :locales => FastGettext.human_available_locales
   - when 'ui_3'
     = render :partial => 'ui_3'
   - when 'ui_4'

@@ -3,6 +3,7 @@ module ApplicationHelper
     # the bare minimum needed anywhere using webpack
     def javascript_essential_dependencies
       capture do
+        concat(javascript_locale_tag)
         concat(javascript_pack_tag('runtime'))
         concat "\n"
         concat(javascript_pack_tag('shims'))
@@ -42,6 +43,19 @@ module ApplicationHelper
     end
 
     private
+
+    def javascript_locale_tag
+      locale = FastGettext.locale
+      return if locale.blank? || locale == 'en'
+
+      # app/assets/locale is a Sprockets root, so the logical path is just "<locale>.js"
+      return unless resolve_asset_path("#{locale}.js")
+
+      capture do
+        concat(javascript_include_tag(locale))
+        concat "\n"
+      end
+    end
 
     # application-common contains all the global bits and needs to go first (after vendor)
     def priority_packs
