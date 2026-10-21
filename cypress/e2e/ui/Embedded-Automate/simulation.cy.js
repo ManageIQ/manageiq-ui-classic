@@ -17,7 +17,7 @@ describe('Automation > Embedded Automate > Simulation', () => {
 
       // Make sure values get reset to initial values
       cy.getFormInputFieldByIdAndType({ inputId: 'object_request' }).should('not.contain', 'Test Request');
-      cy.getFormInputFieldByIdAndType({ inputId: 'target_class' }).should('have.value', '');
+      cy.getFormInputFieldByIdAndType({ inputId: 'target_class' }).should('have.value', '<None>');
       cy.getFormSelectFieldById({ selectId: 'target_id_undefined' }).should('not.exist');
     });
 

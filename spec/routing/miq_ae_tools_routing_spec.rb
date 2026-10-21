@@ -27,7 +27,6 @@ describe MiqAeToolsController do
   %w(
     button
     cancel_import
-    form_field_changed
     import_automate_datastore
     reset_datastore
     resolve
