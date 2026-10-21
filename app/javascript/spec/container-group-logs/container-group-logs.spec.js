@@ -72,6 +72,18 @@ describe('ContainerGroupLogs', () => {
     });
   });
 
+  it('displays placeholder text when fetched log is empty', async() => {
+    API.post.mockResolvedValue({ logs: '' });
+
+    render(<ContainerGroupLogs {...props} />);
+
+    fireEvent.click(screen.getByText('View Logs'));
+
+    await waitFor(() => {
+      expect(screen.getByText('(Log is empty)')).toBeInTheDocument();
+    });
+  });
+
   it('displays error notification when API returns an error message', async() => {
     API.post.mockRejectedValue({
       data: { error: { message: 'Container not found' } },

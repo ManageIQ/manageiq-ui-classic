@@ -79,7 +79,7 @@ const ContainerGroupLogs = ({ podId, podName, containers = [] }) => {
 
       {loading && <Loading active small withOverlay={false} className="loading" />}
 
-      {logs && <pre className="container-group-logs__output">{logs}</pre>}
+      {logs !== null && <pre className="container-group-logs__output">{logs || __('(Log is empty)')}</pre>}
     </div>
   );
 };

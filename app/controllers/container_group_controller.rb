@@ -42,7 +42,7 @@ class ContainerGroupController < ApplicationController
     assert_privileges("container_group_logs")
     @record = identify_record(params[:id], ContainerGroup)
     drop_breadcrumb(
-      :name => _("Logs"),
+      :name => _("Container Group Logs"),
       :url  => "/container_group/logs/#{@record.id}"
     )
   end
