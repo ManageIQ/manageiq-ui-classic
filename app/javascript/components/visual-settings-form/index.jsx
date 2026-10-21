@@ -5,7 +5,7 @@ import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 import { locationReload } from '../../helpers/window-location';
 
-const VisualSettingsForm = ({ recordId }) => {
+const VisualSettingsForm = ({ recordId, locales = [] }) => {
   const [{
     initialValues, shortcuts, timezoneOptions, isLoading,
   }, setState] = useState({ isLoading: true });
@@ -58,7 +58,7 @@ const VisualSettingsForm = ({ recordId }) => {
   }
   return (
     <MiqFormRenderer
-      schema={createSchema(shortcuts, timezoneOptions)}
+      schema={createSchema(shortcuts, timezoneOptions, locales)}
       initialValues={initialValues}
       onSubmit={onSubmit}
       canReset
@@ -68,6 +68,8 @@ const VisualSettingsForm = ({ recordId }) => {
 
 VisualSettingsForm.propTypes = {
   recordId: PropTypes.string.isRequired,
+  // Array of [label, value] pairs, as in FastGettext.human_available_locales
+  locales: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
 };
 
 export default VisualSettingsForm;
