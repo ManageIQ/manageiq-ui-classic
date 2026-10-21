@@ -1,13 +1,13 @@
 import { useFieldApi } from '@@ddf';
 import { Checkbox } from '@carbon/react';
 
-const CATEGORY_CHOICES = {
+const categoryChoices = () => ({
   system: __('System'),
   services: __('Services'),
   software: __('Software'),
   accounts: __('User Accounts'),
   vmconfig: __('VM Configuration'),
-};
+});
 
 const CategoryTab = (props) => {
   const {
@@ -31,7 +31,7 @@ const CategoryTab = (props) => {
         <div className="form-group">
           <div className="col-md-8">
             <div className="row">
-              {Object.entries(CATEGORY_CHOICES).map(([key, label]) => (
+              {Object.entries(categoryChoices()).map(([key, label]) => (
                 <div key={key} className="col-md-4 ap-form-category__item">
                   <Checkbox
                     id={`check_${key}`}

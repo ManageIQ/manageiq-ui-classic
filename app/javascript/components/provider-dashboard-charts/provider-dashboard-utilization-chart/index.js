@@ -60,7 +60,7 @@ const UtilizationChartGraph = ({
               ? (
                 <UtilizationDonutChart
                   data={data.metricsData}
-                  config={chartConfig[cpuConfig]}
+                  config={chartConfig()[cpuConfig]}
                   title={title}
                 />
               )
@@ -71,7 +71,7 @@ const UtilizationChartGraph = ({
               ? (
                 <UtilizationMemoryDonutChart
                   data={data.metricsData}
-                  config={chartConfig[memoryConfig]}
+                  config={chartConfig()[memoryConfig]}
                   title={title}
                 />
               )

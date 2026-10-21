@@ -13,7 +13,7 @@ const MarkdownPreview = ({
   content, url, type,
 }) => {
   const miqCustomTabReducer = useSelector((state) => state.miqCustomTabReducer);
-  const { title, mode, field } = previewConfiguration[type];
+  const { title, mode, field } = previewConfiguration()[type];
 
   const [editorContent, setEditorContent] = useState(content);
   const isMounted = useRef(false);

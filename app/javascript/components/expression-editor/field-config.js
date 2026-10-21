@@ -1,6 +1,6 @@
 const op = (name) => ({ name, label: __(name) });
 
-const FALLBACK_OPERATORS = {
+const fallbackOperators = () => ({
   count: ['=', '!=', '<', '<=', '>=', '>'].map(op),
   tag: [op('CONTAINS')],
   regkey: [
@@ -8,9 +8,9 @@ const FALLBACK_OPERATORS = {
     'REGULAR EXPRESSION DOES NOT MATCH', 'IS NULL', 'IS NOT NULL', 'IS EMPTY',
     'IS NOT EMPTY', 'KEY EXISTS', 'VALUE EXISTS',
   ].map(op),
-};
+});
 
-const BOOLEAN_VALUES = [
+const booleanValues = () => [
   { name: 'true', label: __('True') },
   { name: 'false', label: __('False') },
 ];
@@ -34,7 +34,7 @@ const inputTypeForColType = (colType) => {
 
 // :bytes stores the unit in the value as "42.megabytes".
 // All other sub_types show a display-only label; the value is a plain number string.
-const BYTES_UNITS = [
+const bytesUnits = () => [
   [__('Bytes'), 'bytes'],
   [__('KB'), 'kilobytes'],
   [__('MB'), 'megabytes'],
@@ -60,7 +60,7 @@ const unitInfoForSubType = (subType) => {
     return { units: null, unitLabel: null };
   }
   if (subType === 'bytes') {
-    return { units: BYTES_UNITS, unitLabel: null };
+    return { units: bytesUnits(), unitLabel: null };
   }
   const labelFn = DISPLAY_ONLY_UNIT_LABEL[subType];
   return labelFn ? { units: null, unitLabel: labelFn() } : { units: null, unitLabel: null };
@@ -73,6 +73,7 @@ const PLACEHOLDER_BY_COL_TYPE = {
 
 export const buildFieldConfig = (metadata, opts = {}) => {
   const config = [];
+  const fallbackOps = fallbackOperators();
 
   // Find field names are excluded from the Field group — they belong in the
   // Find group with the FIND compound editor.
@@ -88,7 +89,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
     const { units, unitLabel } = unitInfoForSubType(subType);
     const operators = (colMeta && colMeta.operators && colMeta.operators.length)
       ? colMeta.operators.map(op)
-      : FALLBACK_OPERATORS.count;
+      : fallbackOps.count;
     const placeholderFn = PLACEHOLDER_BY_COL_TYPE[colType];
     config.push({
       name,
@@ -99,7 +100,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
       operators,
       colType,
       ...(subType ? { subType } : {}),
-      ...(colType === 'boolean' ? { values: BOOLEAN_VALUES } : {}),
+      ...(colType === 'boolean' ? { values: booleanValues() } : {}),
       ...(units ? { units } : {}),
       ...(unitLabel ? { unitLabel } : {}),
       ...(placeholderFn ? { placeholder: placeholderFn() } : {}),
@@ -113,7 +114,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
       group: __('Count of'),
       valueEditorType: 'text',
       inputType: 'number',
-      operators: FALLBACK_OPERATORS.count,
+      operators: fallbackOps.count,
       colType: 'integer',
     });
   });
@@ -124,7 +125,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
       label,
       group: __('Tag'),
       valueEditorType: 'select', // tag values loaded dynamically via custom ValueEditor
-      operators: FALLBACK_OPERATORS.tag,
+      operators: fallbackOps.tag,
       colType: 'tag',
     });
   });
@@ -146,7 +147,7 @@ export const buildFieldConfig = (metadata, opts = {}) => {
       label: __('Registry'),
       group: __('Registry'),
       valueEditorType: 'text', // custom ValueEditor renders key/value/data inputs
-      operators: FALLBACK_OPERATORS.regkey,
+      operators: fallbackOps.regkey,
       colType: 'regkey',
     });
   }

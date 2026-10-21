@@ -7,10 +7,10 @@ const ReportIcons = {
 };
 
 /** Headers used on all report list. */
-const defaultHeaders = [{ key: 'name', header: __('Name') }];
+const defaultHeaders = () => [{ key: 'name', header: __('Name') }];
 
 /** Additional headers used in levelFour report list. */
-const additionalHeaders = [
+const additionalHeaders = () => [
   { key: 'filters', header: __('Primary (Record) Filter') },
   { key: 'display_filters', header: __('Secondary (Display) Filter') },
   { key: 'sortby', header: __('Sort By') },
@@ -27,7 +27,7 @@ const cellIcon = (type, name, reportTitle) => {
 
 /** Function to generate data needed for the level one folder list with 2 columns. */
 const levelOne = (reportMenu, reportTitle) => {
-  const headers = defaultHeaders;
+  const headers = defaultHeaders();
   const rows = [];
   reportMenu.forEach((item, index) => {
     const nodeKey = `xx-${index}`;
@@ -43,7 +43,7 @@ const levelOne = (reportMenu, reportTitle) => {
 
 /** Function to generate data needed for level two list with 2 columns. */
 const levelTwo = (nodes, reportMenu, reportTitle) => {
-  const headers = defaultHeaders;
+  const headers = defaultHeaders();
   const rows = [];
   const nodeOne = parseInt(nodes[1]);
   reportMenu[nodeOne][1].forEach((item, index) => {
@@ -61,7 +61,7 @@ const levelTwo = (nodes, reportMenu, reportTitle) => {
 
 /** Function to generate data needed for the reports list with 8 columns. */
 const levelFour = (nodes, reportMenu, reportDetails) => {
-  const headers = [...defaultHeaders, ...additionalHeaders];
+  const headers = [...defaultHeaders(), ...additionalHeaders()];
   const rows = [];
   const nodeOne = parseInt(nodes[1]);
   const nodeTwo = parseInt(nodes[2]);

@@ -60,7 +60,7 @@ const dataHelper = (values, timeProfileId, action, userid) => {
   return data;
 };
 
-const days = [
+const days = () => [
   {
     value: 0,
     label: __('Sunday'),

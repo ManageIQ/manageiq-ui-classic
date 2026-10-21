@@ -31,10 +31,10 @@ const PodsTrendChart = ({
   return (
     <div className="card-pf card-pf-utilization">
       <div className="card-pf-heading">
-        <h2 className="card-pf-title">{chartConfig[configName].headTitle}</h2>
+        <h2 className="card-pf-title">{chartConfig()[configName].headTitle}</h2>
       </div>
       <div className="card-pf-body">
-        <PodsAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} toolbarEnabled={toolbarEnabled} />
+        <PodsAreaChart data={data.vms} config={chartConfig()[configName]} dataPoint={dataPoint} toolbarEnabled={toolbarEnabled} />
       </div>
     </div>
   );

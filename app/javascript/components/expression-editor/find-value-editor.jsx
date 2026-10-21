@@ -5,7 +5,7 @@ import DateValueEditor from './date-value-editor';
 const toOp = (name) => ({ name, label: __(name) });
 
 // Fallback operator lists when the server call fails.
-const FIND_FALLBACK_OPS = {
+const findFallbackOps = () => ({
   string: ['=', '!=', 'STARTS WITH', 'ENDS WITH', 'INCLUDES', 'IS NULL', 'IS NOT NULL'].map(toOp),
   integer: ['=', '!=', '<', '<=', '>=', '>', 'IS NULL', 'IS NOT NULL'].map(toOp),
   float: ['=', '!=', '<', '<=', '>=', '>', 'IS NULL', 'IS NOT NULL'].map(toOp),
@@ -13,15 +13,14 @@ const FIND_FALLBACK_OPS = {
   date: ['IS', 'BEFORE', 'AFTER', 'IS EMPTY', 'IS NOT EMPTY'].map(toOp),
   datetime: ['IS', 'BEFORE', 'AFTER', 'IS EMPTY', 'IS NOT EMPTY'].map(toOp),
   count: ['=', '!=', '<', '<=', '>=', '>'].map(toOp),
-};
-const FIND_FALLBACK_DEFAULT = FIND_FALLBACK_OPS.string;
+});
 
 const NO_VALUE_OPS = new Set([
   'IS NULL', 'IS NOT NULL', 'IS EMPTY', 'IS NOT EMPTY',
   'KEY EXISTS', 'VALUE EXISTS',
 ]);
 
-const CHECK_MODES = [
+const checkModes = () => [
   { name: 'checkall', label: __('Check All') },
   { name: 'checkany', label: __('Check Any') },
   { name: 'checkcount', label: __('Check Count') },
@@ -32,8 +31,9 @@ const useOperators = (fieldPath) => {
   const [result, setResult] = useState({ ops: null, colType: null });
 
   useEffect(() => {
+    const fallbackOps = findFallbackOps();
     if (!fieldPath) {
-      setResult({ ops: FIND_FALLBACK_DEFAULT, colType: 'string' });
+      setResult({ ops: fallbackOps.string, colType: 'string' });
       return;
     }
     http.get(`/expression_editor/operators?field=${encodeURIComponent(fieldPath)}`, { skipErrors: true })
@@ -41,11 +41,11 @@ const useOperators = (fieldPath) => {
         const raw = Array.isArray(data.operators) ? data.operators : [];
         const colType = data.col_type || 'string';
         setResult({
-          ops: raw.length ? raw.map(toOp) : (FIND_FALLBACK_OPS[colType] || FIND_FALLBACK_DEFAULT),
+          ops: raw.length ? raw.map(toOp) : (fallbackOps[colType] || fallbackOps.string),
           colType,
         });
       })
-      .catch(() => setResult({ ops: FIND_FALLBACK_DEFAULT, colType: 'string' }));
+      .catch(() => setResult({ ops: fallbackOps.string, colType: 'string' }));
   }, [fieldPath]);
 
   return result;
@@ -215,7 +215,7 @@ const FindValueEditor = ({
           disabled={disabled}
           onChange={(e) => update({ check: e.target.value })}
         >
-          {CHECK_MODES.map((m) => (
+          {checkModes().map((m) => (
             <SelectItem key={m.name} value={m.name} text={m.label} />
           ))}
         </Select>

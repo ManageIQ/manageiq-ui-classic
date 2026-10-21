@@ -128,7 +128,7 @@ const AeInlineMethod = ({ selected }) => {
     ? (
       <div className="miq-inline-method-list-container">
         <MiqDataTable
-          headers={methodListHeaders}
+          headers={methodListHeaders()}
           stickyHeader
           rows={data.rows}
           mode="miq-inline-method-list"

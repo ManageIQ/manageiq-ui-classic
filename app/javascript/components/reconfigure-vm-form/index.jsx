@@ -28,9 +28,9 @@ const ReconfigureVmForm = ({
     initialValues: {},
     isLoading: true,
     form: {
-      title: formsData.reconfigure.title,
+      title: formsData().reconfigure.title,
       type: TYPES.RECONFIGURE,
-      className: formsData.reconfigure.className,
+      className: formsData().reconfigure.className,
       action: 'edit',
     },
     orchestration_stack_id: '',
@@ -151,10 +151,10 @@ const ReconfigureVmForm = ({
       isLoading: false,
       editingRow: row,
       form: {
-        title: formsData[type].title,
+        title: formsData()[type].title,
         type,
         action,
-        className: formsData[type].className,
+        className: formsData()[type].className,
       },
     });
   };
