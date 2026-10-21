@@ -64,24 +64,19 @@ describe TreeBuilderBelongsToHac do
                         :selected_nodes => {})
   end
 
-  describe '#tree_init_options' do
-    it 'sets init options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
-                                                     :checkboxes => true,
-                                                     :oncheck    => nil,
-                                                     :check_url  => "/ops/rbac_group_field_changed/new___")
-    end
-  end
+  describe '#paths' do
+    before { allow(MiqFilter).to receive(:object2belongsto) { |obj| "/belongsto/#{obj.name}" } }
 
-  describe '#set_locals_for_render' do
-    it 'sets locals correctly' do
-      expect(subject.send(:set_locals_for_render)).to include(:check_url => "/ops/rbac_group_field_changed/new___")
+    it 'maps each node key to its belongsto path as the tree is built' do
+      tree_keys = JSON.parse(subject.bs_tree).flat_map { |n| [n] + Array(n["nodes"]) }.pluck("key")
+      expect(subject.paths.keys).to include(*tree_keys)
+      expect(subject.paths.values).to include(*ExtManagementSystem.assignable.map { |ems| "/belongsto/#{ems.name}" })
     end
-  end
 
-  describe '#root_options' do
-    it 'sets root to empty one' do
-      expect { subject.send(:root_options) }.to raise_error(NoMethodError)
+    it 'skips nodes that are not under a provider' do
+      allow(MiqFilter).to receive(:object2belongsto).and_raise(RuntimeError, "Folder Root is not a Provider")
+
+      expect(subject.paths).to eq({})
     end
   end
 

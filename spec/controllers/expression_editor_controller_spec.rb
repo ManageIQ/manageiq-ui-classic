@@ -98,6 +98,16 @@ describe ExpressionEditorController do
         _, _, meta = body["fields"].first
         expect(meta["operators"]).to eq(["CONTAINS"])
       end
+
+      it "includes the model in tag labels by default" do
+        expect(MiqExpression).to receive(:model_details).with("Vm", hash_including(:typ => "tag", :include_model => true)).and_return(tags)
+        get :metadata, :params => {:model => "Vm"}
+      end
+
+      it "excludes the model from tag labels when include_model is false" do
+        expect(MiqExpression).to receive(:model_details).with("Vm", hash_including(:typ => "tag", :include_model => false)).and_return(tags)
+        get :metadata, :params => {:model => "Vm", :include_model => "false"}
+      end
     end
   end
 

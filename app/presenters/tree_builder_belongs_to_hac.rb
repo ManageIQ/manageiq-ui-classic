@@ -1,4 +1,7 @@
 class TreeBuilderBelongsToHac < TreeBuilder
+  # Maps each node key to its belongsto filter path, e.g. {"xx-1_e-2" => "/belongsto/ExtManagementSystem|name/..."}
+  attr_reader :paths
+
   has_kids_for Datacenter, [:x_get_tree_datacenter_kids]
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
   has_kids_for EmsFolder, [:x_get_tree_folder_kids]
@@ -10,9 +13,11 @@ class TreeBuilderBelongsToHac < TreeBuilder
     node.hide_checkbox = true if object.kind_of?(Host) && object.ems_cluster_id.present?
     node.selectable = false
     node.checkable = @edit.present?
+    record_path(node, object)
   end
 
   def initialize(name, sandbox, build, **params)
+    @paths = {}
     @edit = params[:edit]
     @group = params[:group]
     @selected_nodes = params[:selected_nodes]
@@ -23,17 +28,17 @@ class TreeBuilderBelongsToHac < TreeBuilder
 
   private
 
+  def record_path(node, object)
+    @paths[node.key] = MiqFilter.object2belongsto(object)
+  rescue RuntimeError => e
+    $log.debug("#{self.class.name}: no belongsto path for node #{node.key.inspect} - #{e.message}")
+  end
+
   def tree_init_options
     {
       :full_ids   => true,
       :checkboxes => true,
-      :oncheck    => @edit ? "miqOnCheckGeneric" : nil,
-      :check_url  => "/ops/rbac_group_field_changed/#{group_id}___"
     }
-  end
-
-  def group_id
-    @group.present? && @group.id.present? ? @group.id : 'new'
   end
 
   def x_get_tree_roots
