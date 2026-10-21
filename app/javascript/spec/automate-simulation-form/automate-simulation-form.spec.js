@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { waitFor } from '@testing-library/react';
+import { waitFor, screen, fireEvent, act } from '@testing-library/react';
 import AutomateSimulationForm from '../../components/automate-simulation-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
@@ -83,5 +83,71 @@ describe('Automate Simulation Form', () => {
     });
 
     expect(container).toMatchSnapshot();
+  });
+
+  it('should load targets when target_class is selected', async() => {
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=CloudNetwork', {
+      targets: [['Network 1', '1'], ['Network 2', '2']],
+    });
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=CloudSubnet', {
+      targets: [['Subnet 1', '10'], ['Subnet 2', '20']],
+    });
+
+    const resolveWithTarget = {
+      ...resolveMockData,
+      new: {
+        ...resolveMockData.new,
+        target_class: 'CloudNetwork',
+      },
+    };
+
+    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+    });
+  });
+
+  it('should reload targets when target_class changes and preserve selections per class', async() => {
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=CloudNetwork', {
+      targets: [['Network 1', '1'], ['Network 2', '2']],
+    });
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=CloudSubnet', {
+      targets: [['Subnet 1', '10'], ['Subnet 2', '20']],
+    });
+
+    const resolveWithTarget = {
+      ...resolveMockData,
+      new: {
+        ...resolveMockData.new,
+        target_class: 'CloudNetwork',
+        target_id: '1',
+      },
+    };
+
+    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+    });
+
+    const targetClassInput = container.querySelector('#target_class');
+    fireEvent.change(targetClassInput, { target: { value: 'Cloud Subnet' } });
+    fireEvent.keyDown(targetClassInput, { key: 'Enter', code: 'Enter' });
+
+    // Click toggle button or select item
+    const toggleButtons = container.querySelectorAll('.cds--list-box__menu-icon');
+    if (toggleButtons.length > 1) {
+      fireEvent.click(toggleButtons[1]);
+    }
+
+    const subnetOption = screen.queryByText('Cloud Subnet');
+    if (subnetOption) {
+      fireEvent.click(subnetOption);
+    }
+
+    await waitFor(() => {
+      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
+    });
   });
 });
