@@ -9,6 +9,8 @@ class ExpressionEditorController < ApplicationController
     model = params[:model].to_s.strip
     return render_bad_request("model parameter is required") if model.blank?
 
+    include_model = params[:include_model] != "false"
+
     begin
       raw_finds  = MiqExpression.miq_adv_search_lists(model, :exp_available_finds)
       find_names = raw_finds.to_set(&:last)
@@ -46,7 +48,7 @@ class ExpressionEditorController < ApplicationController
         :tags             => MiqExpression.model_details(
           model,
           :typ             => 'tag',
-          :include_model   => true,
+          :include_model   => include_model,
           :include_my_tags => false,
           :userid          => current_user.userid
         ),

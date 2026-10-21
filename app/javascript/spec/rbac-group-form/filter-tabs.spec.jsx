@@ -90,10 +90,10 @@ describe('FilterTabs', () => {
     );
   });
 
-  it('wires hacChecked updates from BelongsToTab through onChange', async() => {
+  it('wires belongstoChecked updates from BelongsToTab through onChange', async() => {
     const bsTree = JSON.stringify([{ key: 'node-1', text: 'Provider A', nodes: [] }]);
     const user = userEvent.setup();
-    fieldState.value = { hacChecked: [] };
+    fieldState.value = { belongstoChecked: [] };
 
     render(
       <FilterTabs
@@ -107,7 +107,7 @@ describe('FilterTabs', () => {
     await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
 
     expect(mockOnChange).toHaveBeenCalledWith(
-      expect.objectContaining({ hacChecked: ['node-1'] })
+      expect.objectContaining({ belongstoChecked: ['node-1'] })
     );
   });
 });

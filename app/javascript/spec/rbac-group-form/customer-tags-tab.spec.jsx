@@ -103,6 +103,32 @@ describe('CustomerTagsTab', () => {
     });
   });
 
+  describe('parent reset (props restored)', () => {
+    it('returns to tags mode without calling onToggle when the parent restores useFilterExpression=false', () => {
+      const onToggle = jest.fn();
+      const { rerender } = render(<CustomerTagsTab {...defaultProps} onToggle={onToggle} useFilterExpression />);
+      expect(screen.getByTestId('expression-editor')).toBeInTheDocument();
+
+      rerender(<CustomerTagsTab {...defaultProps} onToggle={onToggle} useFilterExpression={false} />);
+
+      expect(screen.getByRole('combobox', { name: /this user is limited to/i })).toHaveValue('tags');
+      expect(screen.queryByTestId('expression-editor')).not.toBeInTheDocument();
+      expect(document.querySelector('.tagging-container')).toBeInTheDocument();
+      expect(onToggle).not.toHaveBeenCalled();
+    });
+
+    it('returns to expression mode without calling onToggle when the parent restores useFilterExpression=true', () => {
+      const onToggle = jest.fn();
+      const { rerender } = render(<CustomerTagsTab {...defaultProps} onToggle={onToggle} />);
+
+      rerender(<CustomerTagsTab {...defaultProps} onToggle={onToggle} useFilterExpression />);
+
+      expect(screen.getByRole('combobox', { name: /this user is limited to/i })).toHaveValue('expression');
+      expect(screen.getByTestId('expression-editor')).toBeInTheDocument();
+      expect(onToggle).not.toHaveBeenCalled();
+    });
+  });
+
   describe('read-only mode — tags', () => {
     it('renders the limited-to-tags message', () => {
       render(<CustomerTagsTab {...defaultProps} readOnly />);
@@ -126,12 +152,12 @@ describe('CustomerTagsTab', () => {
       expect(screen.getByText('No Filter Expression defined')).toBeInTheDocument();
     });
 
-    it('renders the expression when filterExpression is provided', () => {
-      const expr = { tag: { type: 'tag', tag: '/managed/env/prod' } };
+    it('renders the expression as formatted JSON when filterExpression is provided', () => {
+      const expr = { CONTAINS: { tag: 'managed/env', value: 'prod' } };
       render(<CustomerTagsTab {...defaultProps} readOnly useFilterExpression filterExpression={expr} />);
-      expect(document.querySelector('pre')).not.toBeInTheDocument();
-      expect(screen.getByText(/\/managed\/env\/prod/)).toBeInTheDocument();
-      expect(document.querySelector('.customer-tags-tab__expression-box')).toBeInTheDocument();
+      const pre = document.querySelector('.customer-tags-tab__expression-box pre');
+      expect(pre).toBeInTheDocument();
+      expect(pre.textContent).toBe(JSON.stringify(expr, null, 2));
     });
   });
 });

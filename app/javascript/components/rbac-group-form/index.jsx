@@ -77,7 +77,7 @@ const RbacGroupForm = ({
       ? null
       : `/api/groups/${groupId}?attributes=entitlement,miq_user_role,tenant`;
     const rolesUrl = '/api/roles?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending';
-    const tenantsUrl = '/api/tenants?expand=resources&attributes=id,name,divisible&sort_by=name&sort_order=ascending';
+    const tenantsUrl = '/api/tenants?expand=resources&attributes=id,name,divisible,ancestry&sort_by=name&sort_order=ascending';
     const formDataUrl = `/ops/group_form_data/${groupId || 'new'}${readOnly ? '?read_only=true' : ''}`;
 
     const promises = [
@@ -107,10 +107,26 @@ const RbacGroupForm = ({
           value: String(r.id),
         }));
 
-        const tenantOptions = (tenantsData.resources || []).map((t) => ({
-          label: `${t.divisible ? '[T]' : '[P]'} ${t.name}`,
+        // Build the full ancestry path (e.g. "My Company/Tenant/Project") and group into Projects and Tenants
+        const tenantResources = tenantsData.resources || [];
+        const tenantNamesById = tenantResources.reduce((acc, t) => ({ ...acc, [t.id]: t.name }), {});
+        const toOption = (t) => ({
+          label: [...(t.ancestry ? t.ancestry.split('/') : []), t.id]
+            .map((id) => tenantNamesById[id])
+            .filter(Boolean)
+            .join('/'),
           value: String(t.id),
-        }));
+        });
+        const sortedOptions = (divisible) => tenantResources
+          .filter((t) => !!t.divisible === divisible)
+          .map(toOption)
+          .sort((a, b) => a.label.localeCompare(b.label));
+        const projectOptions = sortedOptions(false);
+        const divisibleTenantOptions = sortedOptions(true);
+        const tenantOptions = [
+          ...(projectOptions.length ? [{ label: __('Projects'), options: projectOptions }] : []),
+          ...(divisibleTenantOptions.length ? [{ label: __('Tenants'), options: divisibleTenantOptions }] : []),
+        ];
 
         let calculatedInitialValues = {};
         if (groupData) {
@@ -123,17 +139,22 @@ const RbacGroupForm = ({
             ? ent.filter_expression.exp || ent.filter_expression
             : null;
 
-          // Pre-populate checked trees from belongsto paths via pathMap
-          const allPaths = formData.hac_paths || {};
-          const vatPaths = formData.vat_paths || {};
+          const hacPathMap = formData.hac_paths || {};
+          const vatPathMap = formData.vat_paths || {};
           const currentBelongsto = filters.belongsto || [];
 
-          const hacKeys = Object.entries(allPaths)
-            .filter(([, path]) => currentBelongsto.includes(path))
-            .map(([key]) => key);
-          const vatKeys = Object.entries(vatPaths)
-            .filter(([, path]) => currentBelongsto.includes(path))
-            .map(([key]) => key);
+          const matchesAnyBelongsto = (path) => currentBelongsto.some(
+            (saved) => path === saved || path.startsWith(`${saved}/`)
+          );
+
+          const belongstoChecked = [...new Set([
+            ...Object.entries(hacPathMap)
+              .filter(([, path]) => matchesAnyBelongsto(path))
+              .map(([key]) => key),
+            ...Object.entries(vatPathMap)
+              .filter(([, path]) => matchesAnyBelongsto(path))
+              .map(([key]) => key),
+          ])];
 
           const roleId = groupData.miq_user_role
             ? String(groupData.miq_user_role.id)
@@ -152,8 +173,7 @@ const RbacGroupForm = ({
               filterExpression: resolvedExpression,
               managedFilters: flatManaged,
               assignedTags: formData.tags?.assignedTags || [],
-              hacChecked: hacKeys,
-              vatChecked: vatKeys,
+              belongstoChecked,
             },
           };
         } else {
@@ -165,8 +185,7 @@ const RbacGroupForm = ({
               filterExpression: null,
               managedFilters: [],
               assignedTags: [],
-              hacChecked: [],
-              vatChecked: [],
+              belongstoChecked: [],
             },
           };
         }
@@ -203,8 +222,7 @@ const RbacGroupForm = ({
       expressionHasErrors = false,
       managedFilters = [],
       assignedTags = [],
-      hacChecked = [],
-      vatChecked = [],
+      belongstoChecked = [],
     } = values.filters || {};
 
     if (expressionHasErrors) {
@@ -212,10 +230,12 @@ const RbacGroupForm = ({
       return;
     }
 
-    const allPaths = { ...(treeData?.hac_paths || {}), ...(treeData?.vat_paths || {}) };
-    const belongsto = [...hacChecked, ...vatChecked]
-      .map((k) => allPaths[k])
-      .filter(Boolean);
+    const hacPaths = treeData?.hac_paths || {};
+    const vatPaths = treeData?.vat_paths || {};
+    // Map each checked key through its own path map.
+    const belongsto = [...new Set([
+      ...belongstoChecked.map((k) => hacPaths[k] || vatPaths[k]),
+    ].filter(Boolean))];
 
     const resource = {
       description: values.description,
@@ -228,13 +248,15 @@ const RbacGroupForm = ({
       // filterExpression is stored as raw RQB query — convert to MIQ format now
       const miqExpression = filterExpression ? rqbToMiq(filterExpression) : null;
       resource.filter_expression = miqExpression ? { exp: miqExpression } : null;
-      resource.filters = { belongsto, managed: [] };
+      resource.filters = belongsto.length > 0 ? { belongsto, managed: [] } : {};
     } else {
       resource.filter_expression = null;
       const tagPaths = assignedTagsToPaths(assignedTags);
       const otherManaged = removeTagPathsFromManaged(managedFilters);
       const managed = buildManagedFilters([...otherManaged, ...tagPaths]);
-      resource.filters = { belongsto, managed };
+      resource.filters = (belongsto.length > 0 || managed.length > 0)
+        ? { belongsto, managed }
+        : {};
     }
 
     const apiCall = isNew
@@ -323,6 +345,8 @@ const RbacGroupForm = ({
           tags: treeData?.tags || { tags: [], assignedTags: [], affectedItems: [] },
           hacTree: treeData?.hac_tree,
           vatTree: treeData?.vat_tree,
+          hacPaths: treeData?.hac_paths,
+          vatPaths: treeData?.vat_paths,
           superAdminUser,
         })}
         initialValues={initialValues}

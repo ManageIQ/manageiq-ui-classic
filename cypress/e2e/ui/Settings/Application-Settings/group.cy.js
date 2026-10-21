@@ -14,7 +14,7 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
   const GROUP_DESCRIPTION_EDITED = '0Test Group Edited';
   const GROUP_DETAILED_DESCRIPTION = 'Test group detailed description';
   const GROUP_ROLE = 'EvmRole-super_administrator';
-  const GROUP_TENANT = '[T] My Company';
+  const GROUP_TENANT = 'My Company';
 
   const MANAGEIQ_REGION_ACCORDION_LABEL = /^ManageIQ Region:/;
 

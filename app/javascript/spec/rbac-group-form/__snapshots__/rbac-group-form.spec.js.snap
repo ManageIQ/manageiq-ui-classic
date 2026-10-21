@@ -193,7 +193,7 @@ exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
                 class="cds--select-input"
                 id="tenant_id"
                 name="tenant_id"
-                title="<Choose a Project/Tenant>"
+                title="Projects"
               >
                 <option
                   class="cds--select-option"
@@ -202,20 +202,32 @@ exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
                 >
                   &lt;Choose a Project/Tenant&gt;
                 </option>
-                <option
-                  class="cds--select-option"
-                  label="[T] My Tenant"
-                  value="2"
+                <optgroup
+                  class="cds--select-optgroup"
+                  label="Projects"
+                  text="Projects"
                 >
-                  [T] My Tenant
-                </option>
-                <option
-                  class="cds--select-option"
-                  label="[P] My Project"
-                  value="3"
+                  <option
+                    class="cds--select-option"
+                    label="My Project"
+                    value="3"
+                  >
+                    My Project
+                  </option>
+                </optgroup>
+                <optgroup
+                  class="cds--select-optgroup"
+                  label="Tenants"
+                  text="Tenants"
                 >
-                  [P] My Project
-                </option>
+                  <option
+                    class="cds--select-option"
+                    label="My Tenant"
+                    value="2"
+                  >
+                    My Tenant
+                  </option>
+                </optgroup>
               </select>
               <svg
                 aria-hidden="true"
@@ -961,7 +973,7 @@ exports[`RbacGroupForm renders form fields in edit mode 1`] = `
                 class="cds--select-input"
                 id="tenant_id"
                 name="tenant_id"
-                title="[T] My Tenant"
+                title="<Choose a Project/Tenant>"
               >
                 <option
                   class="cds--select-option"
@@ -970,20 +982,32 @@ exports[`RbacGroupForm renders form fields in edit mode 1`] = `
                 >
                   &lt;Choose a Project/Tenant&gt;
                 </option>
-                <option
-                  class="cds--select-option"
-                  label="[T] My Tenant"
-                  value="2"
+                <optgroup
+                  class="cds--select-optgroup"
+                  label="Projects"
+                  text="Projects"
                 >
-                  [T] My Tenant
-                </option>
-                <option
-                  class="cds--select-option"
-                  label="[P] My Project"
-                  value="3"
+                  <option
+                    class="cds--select-option"
+                    label="My Project"
+                    value="3"
+                  >
+                    My Project
+                  </option>
+                </optgroup>
+                <optgroup
+                  class="cds--select-optgroup"
+                  label="Tenants"
+                  text="Tenants"
                 >
-                  [P] My Project
-                </option>
+                  <option
+                    class="cds--select-option"
+                    label="My Tenant"
+                    value="2"
+                  >
+                    My Tenant
+                  </option>
+                </optgroup>
               </select>
               <svg
                 aria-hidden="true"

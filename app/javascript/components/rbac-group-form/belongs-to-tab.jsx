@@ -152,7 +152,7 @@ const BelongsToTab = ({
         </div>
       )}
       <CheckboxTree
-        checkModel="all"
+        checkModel="leaf"
         icons={carbonIcons}
         nodes={nodes}
         checked={checked}

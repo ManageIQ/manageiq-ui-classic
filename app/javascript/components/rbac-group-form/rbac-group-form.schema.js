@@ -2,7 +2,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 
 const createSchema = ({
   roles, tenants, readOnly,
-  currentTenantName, tags, hacTree, vatTree, superAdminUser,
+  currentTenantName, tags, hacTree, vatTree, hacPaths, vatPaths, superAdminUser,
 }) => ({
   fields: [
     ...(!readOnly ? [{
@@ -59,6 +59,8 @@ const createSchema = ({
       tags: tags || { tags: [], assignedTags: [], affectedItems: [] },
       hacTree,
       vatTree,
+      hacPaths: hacPaths || {},
+      vatPaths: vatPaths || {},
       readOnly,
       superAdminUser,
       validate: [(value) => {

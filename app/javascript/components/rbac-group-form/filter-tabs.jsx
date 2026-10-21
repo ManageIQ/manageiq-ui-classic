@@ -11,6 +11,8 @@ const FilterTabs = ({
   tags,
   hacTree = undefined,
   vatTree = undefined,
+  hacPaths = {},
+  vatPaths = {},
   readOnly = false,
   superAdminUser = false,
   ...props
@@ -21,13 +23,32 @@ const FilterTabs = ({
 
   const {
     assignedTags = [],
-    hacChecked = [],
-    vatChecked = [],
+    belongstoChecked = [],
     useFilterExpression = false,
     filterExpression = null,
   } = value || {};
 
   const update = (patch) => onChange({ ...value, ...patch });
+
+  // Keys owned exclusively by each tree (by path map membership).
+  // When a tree fires onCheckedChange, replace only its own keys in the shared array.
+  const hacKeys = new Set(Object.keys(hacPaths));
+  const vatKeys = new Set(Object.keys(vatPaths));
+
+  const hacChecked = belongstoChecked.filter((k) => hacKeys.has(k));
+  const vatChecked = belongstoChecked.filter((k) => vatKeys.has(k));
+
+  const onHacChange = (newHacChecked) => {
+    // Replace HAC-owned keys, keep VAT-owned keys untouched
+    const vatOnly = belongstoChecked.filter((k) => vatKeys.has(k) && !hacKeys.has(k));
+    update({ belongstoChecked: [...newHacChecked, ...vatOnly] });
+  };
+
+  const onVatChange = (newVatChecked) => {
+    // Replace VAT-owned keys, keep HAC-owned keys untouched
+    const hacOnly = belongstoChecked.filter((k) => hacKeys.has(k) && !vatKeys.has(k));
+    update({ belongstoChecked: [...hacOnly, ...newVatChecked] });
+  };
 
   return (
     <div className="rbac-group-filter-tabs">
@@ -67,7 +88,7 @@ const FilterTabs = ({
             <BelongsToTab
               bsTree={hacTree}
               checked={hacChecked}
-              onCheckedChange={(v) => update({ hacChecked: v })}
+              onCheckedChange={onHacChange}
               readOnly={readOnly}
               superAdminUser={superAdminUser}
               limitedMessage={__('This user is limited to the selected items and their children.')}
@@ -77,7 +98,7 @@ const FilterTabs = ({
             <BelongsToTab
               bsTree={vatTree}
               checked={vatChecked}
-              onCheckedChange={(v) => update({ vatChecked: v })}
+              onCheckedChange={onVatChange}
               readOnly={readOnly}
               superAdminUser={superAdminUser}
               limitedMessage={__('This user is limited to the selected folders and their children.')}
@@ -98,6 +119,8 @@ FilterTabs.propTypes = {
   }).isRequired,
   hacTree: PropTypes.string,
   vatTree: PropTypes.string,
+  hacPaths: PropTypes.objectOf(PropTypes.string),
+  vatPaths: PropTypes.objectOf(PropTypes.string),
   readOnly: PropTypes.bool,
   superAdminUser: PropTypes.bool,
 };

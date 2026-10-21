@@ -42,8 +42,10 @@
     }
 
     &__expression-text {
-      font-size: 1.125rem;
-      font-weight: 500;
+      margin: 0;
+      font-family: var(--cds-code-01-font-family, monospace);
+      font-size: 0.875rem;
+      white-space: pre-wrap;
     }
   }
 

@@ -57,14 +57,13 @@ const CustomerTagsTab = ({
           ? rqbToMiq(filterExpression)
           : filterExpression;
       }
-      const humanText = miqExp ? miqExpressionToHuman(miqExp, new Map(), new Map()) : null;
       return (
         <div className="customer-tags-tab">
           <div className="customer-tags-tab__expression-section">
             <h4 className="customer-tags-tab__expression-heading">{__('Filter Expression:')}</h4>
-            {humanText ? (
+            {miqExp ? (
               <div className="customer-tags-tab__expression-box">
-                <span className="customer-tags-tab__expression-text">{humanText}</span>
+                <pre className="customer-tags-tab__expression-text">{JSON.stringify(miqExp, null, 2)}</pre>
               </div>
             ) : (
               <p className="miq-no-record">{__('No Filter Expression defined')}</p>
@@ -104,6 +103,7 @@ const CustomerTagsTab = ({
           <ExpressionEditor
             model="MiqGroup"
             onlyTags
+            includeModel={false}
             value={filterExpression}
             onQueryChange={handleQueryChange}
             onContextReady={handleContextReady}

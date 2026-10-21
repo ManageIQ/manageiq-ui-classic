@@ -414,7 +414,7 @@ describe('RbacGroupForm', () => {
   });
 
   describe('submit payload shape', () => {
-    it('sends filters:{belongsto:[],managed:[]} when everything is cleared', async() => {
+    it('sends an empty filters object when everything is cleared', async() => {
       const user = userEvent.setup();
       renderWithRedux(<RbacGroupForm {...defaultProps} />);
 
@@ -429,7 +429,7 @@ describe('RbacGroupForm', () => {
         expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
       });
       const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
-      expect(body.resource.filters).toEqual({ belongsto: [], managed: [] });
+      expect(body.resource.filters).toEqual({});
     });
 
     it('sends filter_expression:null and filters when in tags mode', async() => {
@@ -451,7 +451,7 @@ describe('RbacGroupForm', () => {
       expect(body.resource).toHaveProperty('filters');
     });
 
-    it('sends filter_expression and clears managed filters when useFilterExpression is true', async() => {
+    it('sends filter_expression and no managed filters when useFilterExpression is true', async() => {
       fetchMock.get(
         /\/api\/groups\/1/,
         {
@@ -480,7 +480,7 @@ describe('RbacGroupForm', () => {
       });
       const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
       expect(body.resource).toHaveProperty('filter_expression');
-      expect(body.resource.filters.managed).toEqual([]);
+      expect(body.resource.filters).toEqual({});
     });
   });
 });
