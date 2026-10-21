@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ToastNotification, ActionableNotification, Link } from '@carbon/react';

@@ -13,7 +13,6 @@ const FormApiComponent = () => {
   return <DummyComponent {...formOptions} />;
 };
 
-// eslint-disable-next-line react/prop-types
 const RendererWrapper = ({ onChange }) => (
   <FormRenderer
     onSubmit={() => {}}

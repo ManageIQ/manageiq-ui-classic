@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 /* eslint-disable camelcase */
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';

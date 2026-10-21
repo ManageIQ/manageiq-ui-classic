@@ -4,7 +4,6 @@ import { Dropdown } from '@carbon/react';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagSelector extends React.Component {
-  // eslint-disable-next-line react/sort-comp
   handleChange = (val) => {
     const { onTagCategoryChange, tagCategories } = this.props;
     const selectedOption = val.selectedItem;

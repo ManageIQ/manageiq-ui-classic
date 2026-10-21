@@ -16,10 +16,9 @@ export default (ReactElement, mapPropsToInteract = () => undefined) => {
     // This validates PropTypes for our own ManageIQ components before rendering
     // (Global validation in application-common.js handles library components)
     // This is a temporary workaround until all components are converted to TypeScript
-    // eslint-disable-next-line no-undef, react/forbid-foreign-prop-types
+    // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'development' && ReactElement.propTypes) {
       checkPropTypes(
-        // eslint-disable-next-line react/forbid-foreign-prop-types
         ReactElement.propTypes,
         props,
         'prop',

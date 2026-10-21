@@ -133,7 +133,6 @@ function SetOwnershipForm({ ownershipItems }) {
 }
 
 SetOwnershipForm.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
   ownershipItems: PropTypes.arrayOf(PropTypes.exact({ id: PropTypes.string, kind: PropTypes.string })).isRequired,
 };
 
