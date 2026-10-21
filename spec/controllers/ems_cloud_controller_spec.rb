@@ -222,7 +222,7 @@ describe EmsCloudController do
                        :search_key  => session[:userid])
       get :show_list
       expect(response.status).to eq(200)
-      expect(response.body).to have_link("Add a Provider")
+      expect(response.body).to include("EmptyState")
     end
 
     it "does not render set default button when a user defined search does not exist" do
