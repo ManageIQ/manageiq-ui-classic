@@ -11,7 +11,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
 const fs = require('fs');
 
-const { env, settings, i18n, output, engines } = require('./configuration.js');
+const { env, settings, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
 const RailsEnginesPlugin = require('./RailsEnginesPlugin');
 const { generateTsConfigWebpack, needsRegeneration } = require('./generate-tsconfig.js');
@@ -34,8 +34,6 @@ if (needsRegeneration(tsconfigWebpackPath, pathsJsonPath)) {
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const moduleDir = engines['manageiq-ui-classic'].node_modules;
-
-const gettextDir = i18n;
 
 const sharedPackages = [
   '@carbon/react',
@@ -204,7 +202,6 @@ module.exports = {
       '@@miq-menu': resolve(dirname(__filename), '../../app/javascript/menu'),
       '@@miq-redux': resolve(dirname(__filename), '../../app/javascript/redux'),
       '@@miq-types': resolve(dirname(__filename), '../../app/javascript/types'),
-      'gettext_i18n_rails_js': gettextDir,
       // TODO: remove once webpack is upgraded to v5
       // Webpack 4 does not support the package.json "exports" field; alias packages
       // that rely on it to the correct build directly.

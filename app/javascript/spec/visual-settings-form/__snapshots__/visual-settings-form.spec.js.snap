@@ -511,7 +511,7 @@ exports[`visual settings form matches the snapshot 1`] = `
           class="cds--label"
           dir="auto"
           for="display.startpage"
-          id="downshift-_r_a_-label"
+          id="downshift-_r_i_-label"
         >
           Start Page
         </label>
@@ -524,10 +524,10 @@ exports[`visual settings form matches the snapshot 1`] = `
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-_r_a_-menu"
+              aria-controls="downshift-_r_i_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-_r_a_-label"
+              aria-labelledby="downshift-_r_i_-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="display.startpage"
@@ -540,11 +540,11 @@ exports[`visual settings form matches the snapshot 1`] = `
               value=""
             />
             <button
-              aria-controls="downshift-_r_a_-menu"
+              aria-controls="downshift-_r_i_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-_r_a_-toggle-button"
+              id="downshift-_r_i_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -566,9 +566,9 @@ exports[`visual settings form matches the snapshot 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-_r_a_-label"
+            aria-labelledby="downshift-_r_i_-label"
             class="cds--list-box__menu"
-            id="downshift-_r_a_-menu"
+            id="downshift-_r_i_-menu"
             role="listbox"
           />
         </div>
@@ -580,7 +580,7 @@ exports[`visual settings form matches the snapshot 1`] = `
           class="cds--label"
           dir="auto"
           for="display.timezone"
-          id="downshift-_r_d_-label"
+          id="downshift-_r_l_-label"
         >
           Timezone
         </label>
@@ -593,10 +593,10 @@ exports[`visual settings form matches the snapshot 1`] = `
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
-              aria-controls="downshift-_r_d_-menu"
+              aria-controls="downshift-_r_l_-menu"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="downshift-_r_d_-label"
+              aria-labelledby="downshift-_r_l_-label"
               autocomplete="off"
               class="cds--text-input cds--text-input--empty"
               id="display.timezone"
@@ -609,11 +609,11 @@ exports[`visual settings form matches the snapshot 1`] = `
               value=""
             />
             <button
-              aria-controls="downshift-_r_d_-menu"
+              aria-controls="downshift-_r_l_-menu"
               aria-expanded="false"
               aria-label="Open"
               class="cds--list-box__menu-icon"
-              id="downshift-_r_d_-toggle-button"
+              id="downshift-_r_l_-toggle-button"
               tabindex="-1"
               title="Open"
               type="button"
@@ -635,9 +635,9 @@ exports[`visual settings form matches the snapshot 1`] = `
             </button>
           </div>
           <ul
-            aria-labelledby="downshift-_r_d_-label"
+            aria-labelledby="downshift-_r_l_-label"
             class="cds--list-box__menu"
-            id="downshift-_r_d_-menu"
+            id="downshift-_r_l_-menu"
             role="listbox"
           />
         </div>

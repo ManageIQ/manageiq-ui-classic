@@ -1,10 +1,1 @@
 .yarn/releases/yarn-*.cjs binary
-
-# To use gron for human readable json differences:
-#   1) brew/apt install gron
-#   2) Add this to ~/.gitconfig:
-#     [diff "gron"]
-#          textconv=gron
-#          cachetextconv=true
-# Now, git log -p, show, and friends will use gron for json differences.
-app/javascript/oldjs/locale/*.json diff=gron

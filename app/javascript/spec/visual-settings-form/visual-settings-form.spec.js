@@ -7,8 +7,6 @@ describe('visual settings form', () => {
   const shortcuts = '/api/shortcuts?expand=resources&attributes=description,url';
   const users = '/api/users/1?attributes=settings';
 
-  window.locales = [];
-
   beforeEach(() => {
     fetchMock.get(shortcuts, {
       resources: [
@@ -37,6 +35,24 @@ describe('visual settings form', () => {
     expect(fetchMock.called(shortcuts)).toBe(true);
     expect(fetchMock.called(users)).toBe(true);
     expect(fetchMock.called('/api')).toBe(true);
+  });
+
+  it('renders available locales when passed', async() => {
+    const locales = [['Deutsch', 'de'], ['English', 'en']];
+    const { container } = renderWithRedux(<VisualSettingsForm recordId="1" locales={locales} />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
+    const select = container.querySelector('select[name="display.locale"]');
+    expect(select).toBeInTheDocument();
+    expect(select.children).toHaveLength(3);
+    expect(select.children[0]).toHaveValue('default');
+    expect(select.children[1]).toHaveValue('de');
+    expect(select.children[1]).toHaveTextContent('Deutsch');
+    expect(select.children[2]).toHaveValue('en');
+    expect(select.children[2]).toHaveTextContent('English');
   });
 
   it('matches the snapshot', async() => {
