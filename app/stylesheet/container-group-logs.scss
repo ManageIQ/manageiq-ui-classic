@@ -1,0 +1,16 @@
+.container-group-logs {
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .loading {
+    margin-top: 1rem;
+  }
+
+  &__output {
+    margin-top: 1rem;
+  }
+}
