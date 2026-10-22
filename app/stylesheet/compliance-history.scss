@@ -1,0 +1,42 @@
+@use '@carbon/react/scss/theme' as *;
+
+.compliance-history {
+  .cds--tree-node,
+  .cds--tree-node__label {
+    background-color: transparent;
+  }
+
+  &__toolbar {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    .cds--btn--ghost {
+      color: inherit;
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  &__check-label,
+  &__policy-label,
+  &__condition-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+}
+
+.compliance-icon {
+  flex-shrink: 0;
+
+  &--ok {
+    color: $support-success;
+  }
+
+  &--error {
+    color: $support-error;
+  }
+}
