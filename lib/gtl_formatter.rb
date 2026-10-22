@@ -39,6 +39,7 @@ class GtlFormatter
     'orphaned'                  => 'carbon--Unlink',
     'retired'                   => 'carbon--Time',
     'non_operational'           => 'carbon--WarningSquare',
+    'error'                     => 'carbon--ErrorFilled',
     'suspended'                 => 'carbon--Asleep',
     'standby'                   => 'carbon--Asleep',
     'paused'                    => 'carbon--Asleep',
