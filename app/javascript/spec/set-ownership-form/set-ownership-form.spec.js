@@ -113,6 +113,31 @@ describe('Set ownership form component', () => {
     });
   });
 
+  it('should not request a tenant group when the item has no group', async() => {
+    fetchMock
+      .getOnce(
+        '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
+        { evm_owner_id: null, miq_group_id: null }
+      )
+      .getOnce(
+        '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
+        { resources: [{ name: 'f', id: 'a' }] }
+      )
+      .getOnce(
+        '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
+        { resources: [{ description: 'f2', id: 'a2' }] }
+      );
+    const { container } = renderWithRedux(
+      <SetOwnershipForm {...initialProps} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('#set-ownership-form form')).toBeInTheDocument();
+      expect(fetchMock.calls()).toHaveLength(3);
+    });
+    expect(fetchMock.calls().some(([url]) => url.includes('tenant_groups'))).toBe(false);
+  });
+
   it('should send correct data on save', async() => {
     const user = userEvent.setup();
     fetchMock
@@ -161,6 +186,77 @@ describe('Set ownership form component', () => {
         '/vms/ownership_update/?button=save',
         { objectIds: ['123456'] }
       );
+    });
+  });
+
+  it('should keep the buttons disabled when the values are set back to the defaults', async() => {
+    const user = userEvent.setup();
+    fetchMock
+      .getOnce(
+        '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
+        { evm_owner_id: null, miq_group_id: null }
+      )
+      .getOnce(
+        '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
+        { resources: [{ name: 'f', id: 'a' }] }
+      )
+      .getOnce(
+        '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
+        { resources: [{ description: 'f2', id: 'a2' }] }
+      );
+    const { container } = renderWithRedux(<SetOwnershipForm {...initialProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: /Select an Owner/i })).toBeInTheDocument();
+    });
+    const submitButton = container.querySelector('button.cds--btn--primary');
+    const resetButton = screen.getByRole('button', { name: /Reset/i });
+    const ownerSelect = screen.getByRole('combobox', { name: /Select an Owner/i });
+    expect(submitButton).toBeDisabled();
+    expect(resetButton).toBeDisabled();
+
+    await user.selectOptions(ownerSelect, 'a');
+    expect(submitButton).toBeEnabled();
+    expect(resetButton).toBeEnabled();
+
+    await user.selectOptions(ownerSelect, 'No Owner');
+    expect(submitButton).toBeDisabled();
+    expect(resetButton).toBeDisabled();
+  });
+
+  it('should send empty ids to clear the owner and group', async() => {
+    const user = userEvent.setup();
+    fetchMock
+      .getOnce(
+        '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
+        { evm_owner_id: 'a', miq_group_id: 'a2' }
+      )
+      .getOnce(
+        '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
+        { resources: [{ name: 'f', id: 'a' }] }
+      )
+      .getOnce(
+        '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
+        { resources: [{ description: 'f2', id: 'a2' }] }
+      )
+      .getOnce('/api/tenant_groups/a2', {})
+      .postOnce('/api/vms', {});
+    const { container } = renderWithRedux(<SetOwnershipForm {...initialProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: /Select an Owner/i })).toBeInTheDocument();
+    });
+    await user.selectOptions(screen.getByRole('combobox', { name: /Select an Owner/i }), 'No Owner');
+    await user.selectOptions(screen.getByRole('combobox', { name: /Select a Group/i }), 'No User Group');
+    await user.click(container.querySelector('button.cds--btn--primary'));
+
+    await waitFor(() => {
+      expect(submitSpy).toHaveBeenCalled();
+    });
+    const [, request] = fetchMock.calls().find(([url]) => url === '/api/vms');
+    expect(JSON.parse(request.body)).toEqual({
+      action: 'set_ownership',
+      resources: [{ id: '123456', owner: { id: '' }, group: { id: '' } }],
     });
   });
 
