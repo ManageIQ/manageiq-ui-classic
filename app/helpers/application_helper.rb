@@ -1029,7 +1029,7 @@ module ApplicationHelper
       # FIXME: a refactoring of identify_record and related is needed
       add_flash(
         if model.present?
-          _("%{model} no longer exists") % {:model => ui_lookup(:model => model)}
+          _("%{object} no longer exists") % {:object => ui_lookup(:model => model)}
         else
           _("Error: Record no longer exists in the database")
         end,

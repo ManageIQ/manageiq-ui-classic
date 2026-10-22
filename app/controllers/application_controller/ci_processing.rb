@@ -112,12 +112,12 @@ module ApplicationController::CiProcessing
           record.send(task.to_sym) if record.respond_to?(task) # Run the task
         rescue StandardError => bang
           add_flash(
-            _("%{model} \"%{name}\": Error during '%{task}': %{error_msg}") %
+            _("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
             {
-              :model     => ui_lookup(:model => klass.name),
-              :name      => get_record_display_name(record),
-              :task      => (display_name || task),
-              :error_msg => bang.message
+              :model         => ui_lookup(:model => klass.name),
+              :name          => get_record_display_name(record),
+              :task          => (display_name || task),
+              :error_message => bang.message
             },
             :error
           )
@@ -313,7 +313,7 @@ module ApplicationController::CiProcessing
     kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
   rescue StandardError => err
-    add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
+    add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
                  "%{task} initiated for %{count} providers", manager_ids.length) %

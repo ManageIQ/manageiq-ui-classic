@@ -279,7 +279,7 @@ module OpsController::Settings::LabelTagMapping
                                    :tag                   => category.tag)
       end
     rescue StandardError => bang
-      add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
+      add_flash(_("Error during 'add': %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
       add_flash(_("Provider Tag Mapping \"%{name}\" was added") % {:name => label_name})
@@ -314,7 +314,7 @@ module OpsController::Settings::LabelTagMapping
         update_category.save!
       end
     rescue StandardError => bang
-      add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
+      add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
       add_flash(_("Provider Tag Mapping \"%{name}\" was saved") % {:name => mapping.label_name})

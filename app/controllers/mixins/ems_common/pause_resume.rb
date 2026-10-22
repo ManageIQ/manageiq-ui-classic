@@ -33,7 +33,7 @@ module Mixins
           @refresh_partial = "layouts/gtl"
         else # Single provider screen, no checkboxes
           if params[:id].nil? || model.find_by_id(params[:id]).nil?
-            add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
+            add_flash(_("%{object} no longer exists") % {:object => ui_lookup(:table => table_name)}, :error)
           else
             call_ems_pause_resume([params[:id]], options)
           end

@@ -64,7 +64,7 @@ module ReportController::Dashboards
         MiqWidgetSet.copy_dashboard(dashboard, params[:name], params[:description], params[:group_id])
         render :json => { :name => dashboard.name }, :status => :ok
       rescue => bang
-        render :json => { :error => { :message => _("Error during 'Validate': %{message}") % {:message => bang.to_s} } }, :status => :bad_request
+        render :json => { :error => { :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.to_s} } }, :status => :bad_request
       end
     else
       checked_id = find_checked_items.first || params[:id]

@@ -400,8 +400,8 @@ module VmCommon
   alias_method :vm_snapshot_add, :snap
 
   def render_missing_field(session, missing_field_name)
-    add_flash(_("%{missing_field_name} is required") %
-              {:missing_field_name => missing_field_name}, :error)
+    add_flash(_("%{field} is required") %
+              {:field => missing_field_name}, :error)
     @in_a_form = true
     drop_breadcrumb(:name => _("Snapshot VM '%{name}'") % {:name => @record.name},
                     :url  => "/vm_common/snap")
@@ -638,7 +638,7 @@ module VmCommon
     @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
     @explorer = true if @edit[:explorer]
     @in_a_form = true
-    @title = _("Editing %{vm_or_template} \"%{name}\"") % {:name => @record.name, :vm_or_template => model_for_vm(@record).display_name}
+    @title = _("Editing %{model} \"%{name}\"") % {:name => @record.name, :model => model_for_vm(@record).display_name}
     @right_cell_text = @title
     drop_breadcrumb(:name => @title, :url => "/vm/edit") unless @explorer
     @lastaction = "show_list"
@@ -1218,7 +1218,7 @@ module VmCommon
     when "compare", "drift"
       partial = "layouts/compare"
       header = if @sb[:action] == "compare"
-                 _("Compare %{vm_or_template}") % {:vm_or_template => ui_lookup(:model => @sb[:compare_db])}
+                 _("Compare %{type}") % {:type => ui_lookup(:model => @sb[:compare_db])}
                else
                  _("Drift for %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => ui_lookup(:model => @sb[:compare_db])}
                end
@@ -1269,7 +1269,7 @@ module VmCommon
       locals = options[:dialog_locals]
     when "edit"
       partial = "vm_common/form"
-      header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => model_for_vm(@record).display_name}
+      header = _("Editing %{model} \"%{name}\"") % {:name => name, :model => model_for_vm(@record).display_name}
     when 'chargeback'
       partial = @refresh_partial
       header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
@@ -1343,7 +1343,7 @@ module VmCommon
       action = "snap_vm"
     when "timeline"
       partial = "layouts/tl_show"
-      header = _("Timelines for %{virtual_machine} \"%{name}\"") % {:virtual_machine => ui_lookup(:table => table), :name => name}
+      header = _("Timelines for %{table} \"%{name}\"") % {:table => ui_lookup(:table => table), :name => name}
       action = nil
     else
       # now take care of links on summary screen

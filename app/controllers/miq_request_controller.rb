@@ -228,7 +228,7 @@ class MiqRequestController < ApplicationController
       prov_set_form_vars(req) # Set vars from existing request
       # forcing submit button to stay on for copy request, setting a key in current hash so new and current are different,
       # couldn't set this in new hash becasue that's being set by model
-      @edit[:current][:description] = _("Copy of %{description}") % {:description => org_req.description}
+      @edit[:current][:description] = _("Copy of %{field}") % {:field => org_req.description}
       session[:changed] = true # Turn on the submit button
       drop_breadcrumb(:name => _("Copy of %{typ} Request") % {:typ => org_req.request_type_display})
       @in_a_form = true

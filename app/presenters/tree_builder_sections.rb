@@ -29,7 +29,7 @@ class TreeBuilderSections < TreeBuilder
       if group.blank? || section[:group] != group
         group = section[:group]
         nodes.push(:id         => "group_#{section[:group]}",
-                   :text       => section[:group] == "Categories" ? _("%{current_tenant} Tags") % {:current_tenant => @current_tenant} : _(section[:group]),
+                   :text       => section[:group] == "Categories" ? _("%{name} Tags") % {:name => @current_tenant} : _(section[:group]),
                    :tip        => _(section[:group]),
                    :image      => false,
                    :selectable => false,
