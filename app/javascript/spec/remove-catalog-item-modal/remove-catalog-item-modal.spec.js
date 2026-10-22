@@ -1,7 +1,8 @@
 import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { makeStore } from '../helpers/mountForm';
 import fetchMock from 'fetch-mock';
+
+import { makeStore } from '../helpers/mountForm';
 import RemoveCatalogItemModal, {
   removeCatalogItems,
 } from '../../components/remove-catalog-item-modal';
@@ -28,44 +29,45 @@ describe('RemoveCatalogItemModal', () => {
   const store = makeStore({});
   const dispatchMock = jest.spyOn(store, 'dispatch');
 
-  afterEach(() => {
-    fetchMock.reset();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
+
+  afterEach(() => fetchMock.callHistory.clear());
 
   it('should correctly set component state for single catalog item', async() => {
-    fetchMock.getOnce(url1, apiResponse1);
+    fetchMock.get(url1, apiResponse1);
     render(
       <Provider store={store}>
         <RemoveCatalogItemModal recordId={item1} />
       </Provider>
     );
 
-    expect(fetchMock.called(url1)).toBe(true);
+    expect(fetchMock.callHistory.called(url1)).toBe(true);
 
     await waitFor(() => {
-      expect(fetchMock.calls(url1).length).toBe(1);
+      expect(fetchMock.callHistory.calls(url1)).toHaveLength(1);
     });
   });
 
   it('should correctly set component state for multiple catalog items', async() => {
-    fetchMock.getOnce(url1, apiResponse1).getOnce(url2, apiResponse2);
+    fetchMock.get(url1, apiResponse1);
+    fetchMock.get(url2, apiResponse2);
     render(
       <Provider store={store}>
         <RemoveCatalogItemModal gridChecks={[item1, item2]} />
       </Provider>
     );
 
-    expect(fetchMock.called(url1)).toBe(true);
-    expect(fetchMock.called(url2)).toBe(true);
+    expect(fetchMock.callHistory.called(url1)).toBe(true);
+    expect(fetchMock.callHistory.called(url2)).toBe(true);
 
     await waitFor(() => {
-      expect(fetchMock.calls(url1).length).toBe(1);
-      expect(fetchMock.calls(url2).length).toBe(1);
+      expect(fetchMock.callHistory.calls(url1)).toHaveLength(1);
+      expect(fetchMock.callHistory.calls(url2)).toHaveLength(1);
     });
   });
 
   it('should correctly render modal for single catalog item', async() => {
-    fetchMock.getOnce(url1, apiResponse1);
+    fetchMock.get(url1, apiResponse1);
     const { container } = render(
       <Provider store={store}>
         <RemoveCatalogItemModal recordId={item1} />
@@ -82,7 +84,8 @@ describe('RemoveCatalogItemModal', () => {
   });
 
   it('should correctly render modal for multiple catalog items', async() => {
-    fetchMock.getOnce(url1, apiResponse1).getOnce(url2, apiResponse2);
+    fetchMock.get(url1, apiResponse1);
+    fetchMock.get(url2, apiResponse2);
     const { container } = render(
       <Provider store={store}>
         <RemoveCatalogItemModal gridChecks={[item1, item2]} />
@@ -98,7 +101,8 @@ describe('RemoveCatalogItemModal', () => {
   });
 
   it('should correctly render modal for duplicate catalog items', async() => {
-    fetchMock.getOnce(url1, apiResponse1).getOnce(url2, apiResponse2);
+    fetchMock.get(url1, apiResponse1);
+    fetchMock.get(url2, apiResponse2);
     const { container } = render(
       <Provider store={store}>
         <RemoveCatalogItemModal gridChecks={[item1, item1]} />
@@ -114,7 +118,7 @@ describe('RemoveCatalogItemModal', () => {
   });
 
   it('correctly initializes buttons', async() => {
-    fetchMock.getOnce(url1, apiResponse1);
+    fetchMock.get(url1, apiResponse1);
     render(
       <Provider store={store}>
         <RemoveCatalogItemModal recordId={item1} />
@@ -143,8 +147,8 @@ describe('RemoveCatalogItemModal', () => {
 
   it('removeCatalogItems() works correctly', async() => {
     const postUrl = `/api/service_templates/${item1}`;
-    fetchMock.getOnce(url1, apiResponse1);
-    fetchMock.postOnce(postUrl, { action: 'delete' });
+    fetchMock.get(url1, apiResponse1);
+    fetchMock.post(postUrl, { action: 'delete' });
     render(
       <Provider store={store}>
         <RemoveCatalogItemModal recordId={item1} />
@@ -152,13 +156,13 @@ describe('RemoveCatalogItemModal', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.called(url1)).toBe(true);
+      expect(fetchMock.callHistory.called(url1)).toBe(true);
     });
 
     removeCatalogItems([apiResponse1]);
 
     await waitFor(() => {
-      expect(fetchMock.called(postUrl)).toBe(true);
+      expect(fetchMock.callHistory.called(postUrl)).toBe(true);
     });
   });
 });

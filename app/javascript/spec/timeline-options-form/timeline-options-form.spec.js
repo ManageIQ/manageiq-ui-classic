@@ -10,16 +10,14 @@ describe('Show Timeline Options form component', () => {
   let submitSpy;
   const dummySubmitChosenFormOptions = () => {};
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
-    fetchMock.once('/api/event_streams', sampleReponse);
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/event_streams' }, sampleReponse);
     submitSpy = jest.spyOn(window, 'miqJqueryRequest');
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
+  afterEach(() => submitSpy.mockRestore());
 
   /*
    * Render Form

@@ -6,32 +6,21 @@ import EditServiceForm from '../../components/edit-service-form';
 import '../helpers/miqAjaxButton';
 
 describe('Service form component', () => {
-  let initialProps;
-  let submitSpy;
+  beforeAll(() => fetchMock.mockGlobal());
 
-  beforeEach(() => {
-    initialProps = {
+  it('should request data after mount and set to state', async() => {
+    const initialProps = {
       maxNameLen: 10,
       maxDescLen: 20,
       recordId: 3,
     };
-    submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
-
-  it('should request data after mount and set to state', async() => {
     fetchMock.getOnce('/api/services/3', {
       foo: 'bar',
     });
 
     renderWithRedux(<EditServiceForm {...initialProps} />);
     await waitFor(() => {
-      expect(fetchMock.lastUrl()).toEqual('/api/services/3');
+      expect(fetchMock.callHistory.lastCall().url).toEqual('http://localhost/api/services/3');
     });
   });
 });

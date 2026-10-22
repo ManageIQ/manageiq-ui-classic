@@ -37,10 +37,7 @@ describe('VM Snaspthot Tree Select', () => {
     },
   ];
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render snapshot tree', async() => {
     const { container } = renderWithRedux(
@@ -57,7 +54,7 @@ describe('VM Snaspthot Tree Select', () => {
   });
 
   it('should submit select API call', async() => {
-    fetchMock.postOnce(url, {});
+    fetchMock.post(url, {});
     const { container } = renderWithRedux(
       <VmSnapshotTree
         nodes={nodes}
