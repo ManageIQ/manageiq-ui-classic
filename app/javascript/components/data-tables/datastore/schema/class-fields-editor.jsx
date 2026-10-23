@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from '@carbon/react';
+import { InlineNotification, Modal } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
 import { schemaHeaders, createEditableRows } from '../helper';
 import createClassFieldsSchema from './modal-form.schema';
@@ -8,7 +8,6 @@ import createSchemaEditSchema from './class-fields-schema';
 import mapper from '../../../../forms/mappers/componentMapper';
 import { SchemaTableComponent } from './schema-table';
 import miqRedirectBack from '../../../../helpers/miq-redirect-back';
-import miqFlash from '../../../../helpers/miq-flash';
 import { http } from '../../../../http_api';
 
 // The server renders stored passwords as this mask; it must never be sent back as a value.
@@ -28,11 +27,8 @@ export const ClassFieldsEditor = ({
     const rowItems = [];
     const headers = schemaHeaders(true);
     fieldData.forEach(({
-      // eslint-disable-next-line camelcase
-      id, field_id, cells, clickable, aetype, datatype, display_name, substitute,
+      id, field_id: fieldId, cells, clickable, aetype, datatype, display_name: displayName, substitute,
     }) => {
-      // eslint-disable-next-line camelcase
-      const fieldId = field_id;
       const reducedItems = cells.reduce((result, item, index) => {
         result[headers[index].name] = item;
         result.id = fieldId ? fieldId.toString() : id.toString();
@@ -42,13 +38,16 @@ export const ClassFieldsEditor = ({
       }, {});
       reducedItems.aetype = { text: aetype };
       reducedItems.datatype = { text: datatype };
-      reducedItems.display_name = { text: display_name }; // eslint-disable-line camelcase
+      reducedItems.display_name = { text: displayName };
       reducedItems.substitute = { text: substitute };
       rowItems.push(reducedItems);
     });
 
     return rowItems;
   };
+
+  const [notification, setNotification] = useState(null);
+  const [modalNotification, setModalNotification] = useState(null);
 
   const [state, setState] = useState({
     isModalOpen: false,
@@ -58,7 +57,11 @@ export const ClassFieldsEditor = ({
     isSchemaModified: false,
   });
 
+  // The saved rows. Save and Reset stay disabled until the table differs from these.
+  const [baselineRows, setBaselineRows] = useState(state.rows);
+
   const handleModalClose = () => {
+    setModalNotification(null);
     setState((s) => ({ ...s, isModalOpen: false, selectedRowId: undefined }));
   };
 
@@ -225,13 +228,16 @@ export const ClassFieldsEditor = ({
   };
 
   const onRequestError = (error) => {
-    miqSparkleOff();
-    miqFlash('error', (error.data && error.data.error) || error.message || __('Error saving schema'));
+    setNotification({
+      kind: 'error',
+      message: (error.data && error.data.error) || error.message || __('Error saving schema'),
+    });
   };
 
   const updateFieldsUrl = (button) => `/miq_ae_class/update_fields/${aeClassId}?button=${button}`;
 
   const onSchemaSave = () => {
+    setNotification(null);
     const payload = buildSavePayload(state.rows, deletedFieldIds);
     http.post(updateFieldsUrl('save'), payload, { skipErrors: [422] })
       .then((response) => miqRedirectBack(response.message, 'success', '/miq_ae_class/explorer'))
@@ -239,20 +245,24 @@ export const ClassFieldsEditor = ({
   };
 
   const onSchemaReset = () => {
+    setNotification(null);
     http.post(updateFieldsUrl('reset'), {}, { skipErrors: [422] })
       .then((response) => {
+        const savedRows = (response.fields || []).map((f, i) => formatFieldValues(f, i));
         setDeletedFieldIds([]);
+        setBaselineRows(savedRows);
         setState((prev) => ({
           ...prev,
           isSchemaModified: !prev.isSchemaModified,
-          rows: (response.fields || []).map((f, i) => formatFieldValues(f, i)),
+          rows: savedRows,
         }));
-        miqFlash('warning', response.message);
+        add_flash(response.message, 'warning');
       })
       .catch(onRequestError);
   };
 
   const onCancel = () => {
+    setNotification(null);
     http.post(updateFieldsUrl('cancel'), {}, { skipErrors: [422] })
       .then((response) => miqRedirectBack(response.message, 'success', '/miq_ae_class/explorer'))
       .catch(onRequestError);
@@ -260,8 +270,17 @@ export const ClassFieldsEditor = ({
 
   return (
     <>
+      {notification && (
+        <InlineNotification
+          kind={notification.kind}
+          title={notification.message}
+          lowContrast
+          onCloseButtonClick={() => setNotification(null)}
+        />
+      )}
       <MiqFormRenderer
         schema={createSchemaEditSchema(state.rows, setState, state.isSchemaModified, onFieldDelete)}
+        initialValues={{ 'schema-table': baselineRows }}
         componentMapper={componentMapper}
         onSubmit={onSchemaSave}
         onCancel={onCancel}
@@ -277,6 +296,14 @@ export const ClassFieldsEditor = ({
         size="md"
         passiveModal
       >
+        {modalNotification && (
+          <InlineNotification
+            kind={modalNotification.kind}
+            title={modalNotification.message}
+            lowContrast
+            onCloseButtonClick={() => setModalNotification(null)}
+          />
+        )}
         <MiqFormRenderer
           key={state.formKey}
           schema={createClassFieldsSchema(
@@ -288,6 +315,7 @@ export const ClassFieldsEditor = ({
           onSubmit={onModalSubmit}
           onCancel={handleModalClose}
           canReset
+          onReset={() => setModalNotification({ kind: 'warning', message: __('All changes have been reset') })}
           disableSubmit={['invalid']}
           buttonsLabels={{ submitLabel: __('Save') }}
         />

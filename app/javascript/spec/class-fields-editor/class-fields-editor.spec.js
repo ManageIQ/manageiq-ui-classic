@@ -8,10 +8,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
 
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import miqFlash from '../../helpers/miq-flash';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-jest.mock('../../helpers/miq-flash', () => jest.fn());
 
 const AE_TYPE_OPTIONS = [
   ['Attribute', 'attribute', { 'data-icon': 'ff ff-attribute' }],
@@ -59,11 +57,23 @@ const makeInitialRow = ({
   ],
 });
 
+// Adds a field through the modal, which makes the schema form dirty (enables Save and Reset).
+const addField = async(user, name) => {
+  const modal = () => document.querySelector('.cds--modal-container');
+  await user.click(screen.getByText('Add a Field'));
+  await user.type(modal().querySelector('input[id="name"]'), name);
+  await user.click(modal().querySelector('#aetype button.cds--list-box__field'));
+  await user.click(within(modal().querySelector('#aetype')).getByText('Attribute'));
+  await user.click(within(modal()).getByRole('button', { name: /^save$/i }));
+  await waitFor(() => expect(screen.getByText(name)).toBeInTheDocument());
+};
+
 describe('ClassFieldsEditor', () => {
   let httpPostSpy;
 
   beforeEach(() => {
     httpPostSpy = jest.spyOn(window.http, 'post').mockResolvedValue({});
+    window.add_flash = jest.fn();
   });
 
   afterEach(() => {
@@ -92,6 +102,7 @@ describe('ClassFieldsEditor', () => {
     httpPostSpy.mockResolvedValue({ message: 'Schema for Automate Class "TestClass" was saved' });
 
     const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} />);
+    await addField(user, 'new_field');
 
     // Two Save buttons exist (outer form + hidden modal); click the enabled outer one
     const saveBtn = within(container).getAllByRole('button', { name: /^save$/i })
@@ -117,18 +128,18 @@ describe('ClassFieldsEditor', () => {
     httpPostSpy.mockRejectedValue({ status: 422, data: { error: 'Something went wrong' } });
 
     const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} />);
+    await addField(user, 'new_field');
 
     const saveBtn = within(container).getAllByRole('button', { name: /^save$/i })
       .find((btn) => !btn.disabled);
     await user.click(saveBtn);
 
-    await waitFor(() => {
-      expect(miqFlash).toHaveBeenCalledWith('error', 'Something went wrong');
-    });
+    expect(await screen.findByText('Something went wrong')).toBeInTheDocument();
     expect(miqRedirectBack).not.toHaveBeenCalled();
   });
 
   it('POSTs to update_fields with button=reset, reloads rows and shows a flash warning', async() => {
+    const user = userEvent.setup();
     httpPostSpy.mockResolvedValue({
       message: 'All changes have been reset',
       fields: [{
@@ -137,6 +148,7 @@ describe('ClassFieldsEditor', () => {
     });
 
     const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} />);
+    await addField(user, 'new_field');
 
     const resetBtn = within(container).getAllByRole('button', { name: /^reset$/i })[0];
     fireEvent.click(resetBtn);
@@ -148,7 +160,7 @@ describe('ClassFieldsEditor', () => {
         { skipErrors: [422] }
       );
     });
-    expect(miqFlash).toHaveBeenCalledWith('warning', 'All changes have been reset');
+    await waitFor(() => expect(window.add_flash).toHaveBeenCalledWith('All changes have been reset', 'warning'));
     expect(miqRedirectBack).not.toHaveBeenCalled();
   });
 
@@ -196,12 +208,14 @@ describe('ClassFieldsEditor', () => {
   });
 
   it('does not send the masked password value when an untouched password field is saved', async() => {
+    const user = userEvent.setup();
     httpPostSpy.mockResolvedValue({ message: 'Schema saved' });
     const row = makeInitialRow({ id: 7, name: 'secret', display_name: 'Secret' });
     row.datatype = 'password';
     row.cells[2] = { text: '********' }; // server renders stored passwords masked
 
     const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[row]} />);
+    await addField(user, 'other_field');
 
     const saveBtn = within(container).getAllByRole('button', { name: /^save$/i })
       .find((btn) => !btn.disabled);
@@ -355,7 +369,7 @@ describe('ClassFieldsEditor', () => {
       expect(screen.queryByText('test_field')).not.toBeInTheDocument();
     });
 
-    it('clears the add modal when Reset is clicked', async() => {
+    it('clears the add modal and shows a flash message when Reset is clicked', async() => {
       const user = userEvent.setup();
       renderWithRedux(<ClassFieldsEditor {...defaultProps} />);
 
@@ -366,6 +380,7 @@ describe('ClassFieldsEditor', () => {
 
       await waitFor(() => expect(modalInput('name')).toHaveValue(''));
       expect(modalInput('display_name')).toHaveValue('');
+      expect(within(modal()).getByText('All changes have been reset')).toBeInTheDocument();
     });
 
     it('prefills the edit modal from the row and updates the row on Save', async() => {
@@ -482,16 +497,70 @@ describe('ClassFieldsEditor', () => {
     });
   });
 
+  describe('Save and Reset buttons', () => {
+    const modal = () => document.querySelector('.cds--modal-container');
+    const pageButton = (container, name) => (
+      within(container).getAllByRole('button', { name }).find((btn) => !modal() || !modal().contains(btn))
+    );
+
+    it('starts with Save and Reset disabled and Cancel enabled', () => {
+      const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[makeInitialRow()]} />);
+
+      expect(pageButton(container, /^save$/i)).toBeDisabled();
+      expect(pageButton(container, /^reset$/i)).toBeDisabled();
+      expect(pageButton(container, /^cancel$/i)).toBeEnabled();
+    });
+
+    it('starts with Save and Reset disabled when the class has no fields yet', () => {
+      const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[]} />);
+
+      expect(pageButton(container, /^save$/i)).toBeDisabled();
+      expect(pageButton(container, /^reset$/i)).toBeDisabled();
+    });
+
+    it('enables Save and Reset after a field is added', async() => {
+      const user = userEvent.setup();
+      const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[makeInitialRow()]} />);
+
+      await addField(user, 'another_field');
+
+      await waitFor(() => expect(pageButton(container, /^save$/i)).toBeEnabled());
+      expect(pageButton(container, /^reset$/i)).toBeEnabled();
+    });
+
+    it('enables Save and Reset after a field is deleted', async() => {
+      const user = userEvent.setup();
+      const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[makeInitialRow()]} />);
+
+      const row = within(container).getByText('My Field (my_field)').closest('tr');
+      await user.click(within(row).getByRole('button', { name: /^delete$/i }));
+
+      await waitFor(() => expect(pageButton(container, /^save$/i)).toBeEnabled());
+      expect(pageButton(container, /^reset$/i)).toBeEnabled();
+    });
+
+    it('disables Save and Reset again once Reset has restored the saved fields', async() => {
+      const user = userEvent.setup();
+      httpPostSpy.mockResolvedValue({
+        message: 'All changes have been reset',
+        fields: [{
+          id: 1, name: 'my_field', display_name: 'My Field', aetype: 'attribute', datatype: 'string', substitute: true,
+        }],
+      });
+      const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[makeInitialRow()]} />);
+
+      await addField(user, 'another_field');
+      await waitFor(() => expect(pageButton(container, /^reset$/i)).toBeEnabled());
+      await user.click(pageButton(container, /^reset$/i));
+
+      await waitFor(() => expect(screen.queryByText('another_field')).not.toBeInTheDocument());
+      await waitFor(() => expect(pageButton(container, /^save$/i)).toBeDisabled());
+      expect(pageButton(container, /^reset$/i)).toBeDisabled();
+    });
+  });
+
   describe('row identity', () => {
     const modal = () => document.querySelector('.cds--modal-container');
-    const addField = async(user, name) => {
-      await user.click(screen.getByText('Add a Field'));
-      await user.type(modal().querySelector('input[id="name"]'), name);
-      await user.click(modal().querySelector('#aetype button.cds--list-box__field'));
-      await user.click(within(modal().querySelector('#aetype')).getByText('Attribute'));
-      await user.click(within(modal()).getByRole('button', { name: /^save$/i }));
-      await waitFor(() => expect(screen.getByText(name)).toBeInTheDocument());
-    };
     const rowFor = (container, text) => within(container).getByText(text).closest('tr');
     const clickInRow = (user, container, text, buttonName) => (
       user.click(within(rowFor(container, text)).getByRole('button', { name: buttonName }))

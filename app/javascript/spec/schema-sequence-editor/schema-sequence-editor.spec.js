@@ -6,10 +6,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
 
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import miqFlash from '../../helpers/miq-flash';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-jest.mock('../../helpers/miq-flash', () => jest.fn());
 
 const CLASS_ID = '99';
 const SAVE_URL = `/miq_ae_class/fields_seq_save?id=${CLASS_ID}`;
@@ -191,7 +189,7 @@ describe('SchemaSequenceEditor', () => {
       await waitFor(() => expect(itemNames()).toEqual(['field_b', 'field_a', 'field_c']));
       await user.click(screen.getByRole('button', { name: /^save$/i }));
 
-      await waitFor(() => expect(miqFlash).toHaveBeenCalledWith('error', 'Save failed'));
+      expect(await screen.findByText('Save failed')).toBeInTheDocument();
       expect(miqRedirectBack).not.toHaveBeenCalled();
     });
 

@@ -1,5 +1,9 @@
+import isEqual from 'lodash/isEqual';
 import { componentTypes } from '@@ddf';
 import { schemaHeaders } from '../helper';
+
+// Compares rows by content. An empty list and no value count as equal.
+const sameRows = (a, b) => isEqual(a || [], b || []);
 
 const createSchemaEditSchema = (rows, setState, isSchemaModified, onFieldDelete) => {
   const handleAddField = () => {
@@ -23,6 +27,8 @@ const createSchemaEditSchema = (rows, setState, isSchemaModified, onFieldDelete)
             component: 'schema-table',
             name: 'schema-table',
             id: 'schema-table',
+            // Keeps Save and Reset disabled until the rows change.
+            FieldProps: { isEqual: sameRows },
             rows,
             headers: schemaHeaders(true),
             onCellClick: (selectedRow) => {
