@@ -30,12 +30,12 @@ class FirmwareRegistryController < ApplicationController
   end
 
   def download_data
-    assert_privileges('firmware_show_list')
+    assert_privileges('firmware_registry_show_list')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('firmware_show')
+    assert_privileges('firmware_registry_show')
     super
   end
 
