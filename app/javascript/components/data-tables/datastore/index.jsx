@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   tableData, addSelected, removeSelected,
 } from './helper';
+import { ClassFieldsEditor } from './schema/class-fields-editor';
 import MiqDataTable from '../../miq-data-table';
 import { CellAction } from '../../miq-data-table/helper';
 
@@ -12,10 +13,12 @@ const Datastore = ({
   initialData,
   hasOptions = false,
   datastoreTypes,
+  isEdit = false,
+  editProps = {},
 }) => {
   const {
     miqHeaders, miqRows, hasCheckbox, nodeTree,
-  } = tableData(type, hasOptions, initialData, datastoreTypes);
+  } = tableData(type, hasOptions, initialData, datastoreTypes, isEdit);
 
   if (miqRows.merged) {
     miqHeaders.splice(0, 1);
@@ -95,7 +98,22 @@ const Datastore = ({
     }
   };
 
-  return (
+  const renderEditView = () => {
+    switch (type) {
+      case 'class_fields':
+        return (
+          <ClassFieldsEditor
+            initialData={initialData}
+            {...editProps}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return isEdit ? renderEditView() : (
     <MiqDataTable
       rows={miqRows.rowItems}
       headers={miqHeaders}
@@ -111,7 +129,9 @@ export default Datastore;
 
 Datastore.propTypes = {
   type: PropTypes.string.isRequired,
-  initialData: PropTypes.arrayOf(PropTypes.any).isRequired,
+  initialData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   hasOptions: PropTypes.bool,
   datastoreTypes: PropTypes.shape({}).isRequired,
+  isEdit: PropTypes.bool,
+  editProps: PropTypes.shape({}),
 };
