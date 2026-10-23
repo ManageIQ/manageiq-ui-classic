@@ -101,9 +101,31 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
                   class="cell"
                   title=""
                 >
-                  <i
-                    class="fa-lg icon ff ff-attribute"
-                  />
+                  <svg
+                    aria-label="carbon--Grid"
+                    class="icon carbon-icons-style carbon--Grid"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
+                    />
+                    <path
+                      d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                    />
+                    <path
+                      d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                    />
+                    <path
+                      d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                    />
+                  </svg>
                   <svg
                     aria-label="carbon--CheckmarkOutline"
                     class="icon carbon-icons-style carbon--CheckmarkOutline"
@@ -193,12 +215,53 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
                   class="cell"
                   title=""
                 >
-                  <i
-                    class="fa-lg icon ff ff-attribute"
-                  />
-                  <i
-                    class="fa-lg icon ff ff-integer"
-                  />
+                  <svg
+                    aria-label="carbon--Grid"
+                    class="icon carbon-icons-style carbon--Grid"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
+                    />
+                    <path
+                      d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                    />
+                    <path
+                      d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                    />
+                    <path
+                      d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                    />
+                  </svg>
+                  <svg
+                    aria-label="carbon--StringInteger"
+                    class="icon carbon-icons-style carbon--StringInteger"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M26,12H22v2h4v2H23v2h3v2H22v2h4a2.0027,2.0027,0,0,0,2-2V14A2.0023,2.0023,0,0,0,26,12Z"
+                    />
+                    <path
+                      d="M19,22H13V18a2.002,2.002,0,0,1,2-2h2V14H13V12h4a2.0023,2.0023,0,0,1,2,2v2a2.0023,2.0023,0,0,1-2,2H15v2h4Z"
+                    />
+                    <path
+                      d="M8 20 8 12 6 12 6 13 4 13 4 15 6 15 6 20 4 20 4 22 10 22 10 20 8 20z"
+                    />
+                  </svg>
                   <svg
                     aria-label="carbon--CheckmarkOutline"
                     class="icon carbon-icons-style carbon--CheckmarkOutline"
@@ -461,9 +524,25 @@ exports[`InstanceFieldsTable Component Snapshot Testing should match snapshot fo
                   class="cell"
                   title=""
                 >
-                  <i
-                    class="fa-lg icon ff ff-state"
-                  />
+                  <svg
+                    aria-label="carbon--Renew"
+                    class="icon carbon-icons-style carbon--Renew"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12,10H6.78A11,11,0,0,1,27,16h2A13,13,0,0,0,6,7.68V4H4v8h8Z"
+                    />
+                    <path
+                      d="M20,22h5.22A11,11,0,0,1,5,16H3a13,13,0,0,0,23,8.32V28h2V20H20Z"
+                    />
+                  </svg>
                   <svg
                     aria-label="carbon--CheckmarkOutline"
                     class="icon carbon-icons-style carbon--CheckmarkOutline"

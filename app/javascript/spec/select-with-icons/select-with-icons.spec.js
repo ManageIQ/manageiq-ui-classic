@@ -1,12 +1,14 @@
+import { renderToStaticMarkup } from 'react-dom/server';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MiqFormRenderer from '@@ddf';
 
+import { carbonizeIcon } from '../../menu/icon';
 import { renderWithRedux } from '../helpers/mountForm';
 
 const OPTIONS = [
-  { label: 'String', value: 'string', 'data-icon': 'ff ff-string' },
-  { label: 'Integer', value: 'integer', 'data-icon': 'ff ff-integer' },
+  { label: 'String', value: 'string', 'data-icon': 'carbon--StringText' },
+  { label: 'Integer', value: 'integer', 'data-icon': 'carbon--StringInteger' },
   { label: 'Plain', value: 'plain' },
 ];
 
@@ -60,16 +62,24 @@ describe('SelectWithIcons', () => {
     expect(document.querySelector('label.cds--label').textContent).not.toMatch(/\*/);
   });
 
-  it('renders an icon for options that define one and none for the others', async() => {
+  it('shows the icon named in data-icon for each option, and no icon when data-icon is missing', async() => {
     const user = userEvent.setup();
     renderField();
 
     await openList(user);
     const list = within(document.querySelector('#datatype'));
+    const iconOf = (label) => list.getByText(label).parentElement.querySelector('svg');
+    const expectedIcon = (name) => {
+      const Icon = carbonizeIcon(name, { size: 16 });
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = renderToStaticMarkup(<Icon />);
+      return wrapper.querySelector('svg').innerHTML;
+    };
 
-    expect(list.getByText('String').parentElement.querySelector('i.ff.ff-string')).not.toBeNull();
-    expect(list.getByText('Integer').parentElement.querySelector('i.ff.ff-integer')).not.toBeNull();
-    expect(list.getByText('Plain').parentElement.querySelector('i')).toBeNull();
+    expect(iconOf('String').innerHTML).toBe(expectedIcon('carbon--StringText'));
+    expect(iconOf('Integer').innerHTML).toBe(expectedIcon('carbon--StringInteger'));
+    expect(iconOf('String').innerHTML).not.toBe(iconOf('Integer').innerHTML);
+    expect(iconOf('Plain')).toBeNull();
   });
 
   it('shows the selected option from the initial value', () => {

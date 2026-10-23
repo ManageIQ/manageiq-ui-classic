@@ -12,14 +12,14 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
 const AE_TYPE_OPTIONS = [
-  ['Attribute', 'attribute', { 'data-icon': 'ff ff-attribute' }],
-  ['Method', 'method', { 'data-icon': 'ff ff-ae-method' }],
-  ['State', 'state', { 'data-icon': 'ff ff-ae-state' }],
+  ['Attribute', 'attribute', { 'data-icon': 'carbon--Grid' }],
+  ['Method', 'method', { 'data-icon': 'carbon--Function_2' }],
+  ['State', 'state', { 'data-icon': 'carbon--Renew' }],
 ];
 
 const D_TYPE_OPTIONS = [
-  ['String', 'string', { 'data-icon': 'ff ff-string' }],
-  ['Integer', 'integer', { 'data-icon': 'ff ff-integer' }],
+  ['String', 'string', { 'data-icon': 'carbon--StringText' }],
+  ['Integer', 'integer', { 'data-icon': 'carbon--StringInteger' }],
 ];
 
 const defaultProps = {
@@ -44,7 +44,7 @@ const makeInitialRow = ({
   substitute,
   cells: [
     // eslint-disable-next-line camelcase
-    { text: display_name ? `${display_name} (${name})` : name, icon: ['ff ff-attribute', 'ff ff-string', 'pficon pficon-ok'] },
+    { text: display_name ? `${display_name} (${name})` : name, icon: ['carbon--Grid', 'carbon--StringText', 'carbon--CheckmarkOutline'] },
     { text: '' }, // description
     { text: '' }, // default_value
     { text: '' }, // collect
@@ -232,7 +232,7 @@ describe('ClassFieldsEditor', () => {
     const user = userEvent.setup();
     const props = {
       ...defaultProps,
-      dTypeOptions: [...D_TYPE_OPTIONS, ['Password', 'password', { 'data-icon': 'ff ff-password' }]],
+      dTypeOptions: [...D_TYPE_OPTIONS, ['Password', 'password', { 'data-icon': 'carbon--Password' }]],
     };
     renderWithRedux(<ClassFieldsEditor {...props} />);
 
@@ -459,11 +459,11 @@ describe('ClassFieldsEditor', () => {
       const row = makeInitialRow({
         id: 7, name: 'secret', display_name: 'Secret', datatype: 'password',
       });
-      row.cells[0].icon = ['ff ff-attribute', 'ff ff-password', 'pficon pficon-ok'];
+      row.cells[0].icon = ['carbon--Grid', 'carbon--Password', 'carbon--CheckmarkOutline'];
       row.cells[2] = { text: '********' };
       const props = {
         ...defaultProps,
-        dTypeOptions: [...D_TYPE_OPTIONS, ['Password', 'password', { 'data-icon': 'ff ff-password' }]],
+        dTypeOptions: [...D_TYPE_OPTIONS, ['Password', 'password', { 'data-icon': 'carbon--Password' }]],
         initialData: [row],
       };
       const { container } = renderWithRedux(<ClassFieldsEditor {...props} />);

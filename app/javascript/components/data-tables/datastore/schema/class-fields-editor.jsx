@@ -2,7 +2,9 @@ import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { InlineNotification, Modal } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
-import { schemaHeaders, createEditableRows } from '../helper';
+import {
+  schemaHeaders, createEditableRows, SUBSTITUTE_ICON_ON, SUBSTITUTE_ICON_OFF,
+} from '../helper';
 import createClassFieldsSchema from './modal-form.schema';
 import createSchemaEditSchema from './class-fields-schema';
 import mapper from '../../../../forms/mappers/componentMapper';
@@ -90,7 +92,7 @@ export const ClassFieldsEditor = ({
       const dtypeMatch = dTypeOptions.find((option) => option[1] === field.datatype);
       const dTypeIcon = (dtypeMatch && dtypeMatch[2] && dtypeMatch[2]['data-icon']) || '';
 
-      const subIcon = (field.substitute) ? 'pficon pficon-ok' : 'pficon pficon-close';
+      const subIcon = (field.substitute) ? SUBSTITUTE_ICON_ON : SUBSTITUTE_ICON_OFF;
 
       return [aeTypeIcon, dTypeIcon, subIcon];
     };

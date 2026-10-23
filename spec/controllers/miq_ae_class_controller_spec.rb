@@ -947,8 +947,8 @@ describe MiqAeClassController do
     it "builds the type and data type options with their icons for the editor" do
       post :x_button, :params => {:pressed => "miq_ae_field_edit", :id => @cls.id}
 
-      expect(assigns(:combo_xml)).to include(["Attribute", "attribute", {"data-icon" => anything}])
-      expect(assigns(:dtype_combo_xml)).to include(["String", "string", {"data-icon" => anything}])
+      expect(assigns(:combo_xml)).to include(["Attribute", "attribute", {"data-icon" => "carbon--Grid"}])
+      expect(assigns(:dtype_combo_xml)).to include(["String", "string", {"data-icon" => "carbon--StringText"}])
     end
   end
 
@@ -1320,7 +1320,7 @@ describe MiqAeClassController do
 
           json_response = response.parsed_body
           field = json_response["fields"][0]
-          expect(field["icons"]).to be_an(Array)
+          expect(field["icons"]).to eq(%w[carbon--Grid carbon--CheckmarkOutline])
           expect(field["aetype"]).to eq("attribute")
           expect(field["datatype"]).to eq("string")
         end

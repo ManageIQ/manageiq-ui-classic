@@ -369,11 +369,11 @@ class MiqAeClassController < ApplicationController
   end
 
   def build_type_options
-    MiqAeField.available_aetypes.collect { |t| [t.titleize, t, {"data-icon" => ae_field_fonticon(t)}] }
+    MiqAeField.available_aetypes.collect { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
   end
 
   def build_dtype_options
-    MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => ae_field_fonticon(t)}] }
+    MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
   end
 
   def class_and_glyph(cls)
@@ -1242,9 +1242,9 @@ class MiqAeClassController < ApplicationController
     fields_with_values = fields.each_with_index.map do |field, index|
       ae_value = ae_values[index]
 
-      multiple_icons = [ae_field_fonticon(field.aetype)]
-      multiple_icons.push(ae_field_fonticon(field.datatype)) unless field.datatype.blank? || field.datatype == 'string'
-      multiple_icons.push(field.substitute ? "carbon--CheckmarkOutline" : "carbon--Close")
+      multiple_icons = [ae_field_icon(field.aetype)]
+      multiple_icons.push(ae_field_icon(field.datatype)) unless field.datatype.blank? || field.datatype == 'string'
+      multiple_icons.push(ae_field_substitute_icon(field.substitute))
 
       field_name = field.display_name.presence || field.name
 
