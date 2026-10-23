@@ -369,11 +369,11 @@ class MiqAeClassController < ApplicationController
   end
 
   def build_type_options
-    MiqAeField.available_aetypes.collect { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
+    MiqAeField.available_aetypes.map { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
   end
 
   def build_dtype_options
-    MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
+    MiqAeField.available_datatypes_for_ui.map { |t| [t.titleize, t, {"data-icon" => ae_field_icon(t)}] }
   end
 
   def class_and_glyph(cls)
