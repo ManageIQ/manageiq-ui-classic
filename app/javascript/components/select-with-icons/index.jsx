@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Dropdown } from '@carbon/react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@@ddf';
+import { carbonizeIcon } from '../../menu/icon';
 
 /**
  * SelectWithIcons - A dropdown component that displays icons alongside option labels
@@ -17,9 +18,9 @@ import { useFieldApi, useFormApi } from '@@ddf';
  *   name: 'datatype',
  *   label: 'Data Type',
  *   options: [
- *     { label: 'String', value: 'string', 'data-icon': 'fa fa-font' },
- *     { label: 'Integer', value: 'integer', 'data-icon': 'fa fa-hashtag' },
- *     { label: 'Boolean', value: 'boolean', 'data-icon': 'fa fa-check-square' }
+ *     { label: 'String', value: 'string', 'data-icon': 'carbon--StringText' },
+ *     { label: 'Integer', value: 'integer', 'data-icon': 'carbon--StringInteger' },
+ *     { label: 'Boolean', value: 'boolean', 'data-icon': 'carbon--ToggleOn' }
  *   ],
  *   placeholder: '<Choose>',
  *   includeEmpty: true,
@@ -28,7 +29,7 @@ import { useFieldApi, useFormApi } from '@@ddf';
  *
  * @example
  * // Options can also be provided in array format (from backend):
- * // [['Display Text', 'value', { 'data-icon': 'fa fa-icon' }], ...]
+ * // [['Display Text', 'value', { 'data-icon': 'carbon--IconName' }], ...]
  * // These are transformed to the object format by transformSelectOptions helper
  *
  * @param {Object} props - Component props
@@ -36,7 +37,8 @@ import { useFieldApi, useFormApi } from '@@ddf';
  * @param {Array<Object>} [props.options=[]] - Array of option objects
  * @param {string} props.options[].label - Display text for the option
  * @param {string|number} props.options[].value - Value for the option
- * @param {string} [props.options[].'data-icon'] - CSS class for the icon (e.g., 'fa fa-icon')
+ * @param {string} [props.options[].'data-icon'] - Carbon icon name prefixed with 'carbon--' (e.g., 'carbon--Time'),
+ *   or a CSS class string for a legacy font icon
  * @param {string} [props.placeholder='<Choose>'] - Placeholder text shown when no selection
  * @param {boolean} [props.includeEmpty=false] - Whether to include a placeholder option
  * @param {boolean} [props.isRequired=false] - Whether the field is required
@@ -69,10 +71,10 @@ const SelectWithIcons = ({
       return '';
     }
 
-    const icon = item['data-icon'];
+    const IconElement = carbonizeIcon(item['data-icon'], { size: 16 });
     return (
       <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        {icon && <i className={icon} />}
+        {IconElement && <IconElement />}
         <span>{item.label}</span>
       </span>
     );
@@ -87,6 +89,7 @@ const SelectWithIcons = ({
 
   return (
     <Dropdown
+      className="select-with-icons"
       id={props.id || props.name}
       titleText={labelText}
       label={placeholder}

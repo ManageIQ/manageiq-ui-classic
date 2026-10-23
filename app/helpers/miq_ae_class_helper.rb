@@ -6,6 +6,37 @@ module MiqAeClassHelper
     :domain => 'domain_overrides', :schema => 'class_fields', :fields => 'instant_fields'
   }.freeze
 
+  # Carbon icons for the Automate class schema field types (aetype) and data types.
+  AE_FIELD_ICONS = {
+    'attribute'       => 'carbon--Grid',
+    'method'          => 'carbon--Function_2',
+    'relationship'    => 'carbon--ContainerServices',
+    'state'           => 'carbon--Renew',
+    'assertion'       => 'carbon--Chat',
+    'string'          => 'carbon--StringText',
+    'symbol'          => 'carbon--HexagonVerticalOutline',
+    'integer'         => 'carbon--StringInteger',
+    'fixnum'          => 'carbon--StringInteger',
+    'float'           => 'carbon--Percentage',
+    'boolean'         => 'carbon--ToggleOn',
+    'time'            => 'carbon--Time',
+    'array'           => 'carbon--Array',
+    'password'        => 'carbon--Password',
+    'null coalescing' => 'carbon--Help',
+    'nil_class'       => 'carbon--Help',
+    'host'            => 'carbon--BareMetalServer',
+    'vm'              => 'carbon--VirtualMachine',
+    'storage'         => 'carbon--Db2Database',
+    'ems'             => 'carbon--CloudServices',
+    'server'          => 'carbon--ServerDns',
+    'policy'          => 'carbon--ManageProtection',
+    'request'         => 'carbon--Help',
+    'provision'       => 'carbon--GlobalFilters',
+    'user'            => 'carbon--User'
+  }.freeze
+
+  AE_FIELD_SUBSTITUTE_ICONS = {true => 'carbon--CheckmarkOutline', false => 'carbon--Close'}.freeze
+
   def ae_class_tab_configuration
     [:instances, :methods, :props, :schema]
   end
@@ -150,6 +181,18 @@ module MiqAeClassHelper
     end
   end
 
+  # Icon name for an aetype or datatype
+  def ae_field_icon(field)
+    AE_FIELD_ICONS.fetch(field.to_s) do
+      Rails.logger.warn("Missing icon for MiqAeField type \"#{field}\"")
+      'carbon--DocumentUnknown'
+    end
+  end
+
+  def ae_field_substitute_icon(substitute)
+    AE_FIELD_SUBSTITUTE_ICONS[!!substitute]
+  end
+
   def state_class?(cls_id)
     MiqAeClass.find_by(:id => cls_id).state_machine?
   end
@@ -253,13 +296,13 @@ module MiqAeClassHelper
     schema_items = ["name", "description", "default_value", "collect", "message", "on_entry", "on_exit", "on_error", "max_retries", "max_time"]
     schema_data.each_with_index do |ae_field, index|
       cells = []
-      icon = ae_field.substitute ? "pficon pficon-ok" : "pficon pficon-close"
+      icon = ae_field_substitute_icon(ae_field.substitute)
       schema_items.each do |fname|
         case fname
         when 'name'
-          multiple_icons = [ae_field_fonticon(ae_field.aetype)]
+          multiple_icons = [ae_field_icon(ae_field.aetype)]
           if ae_field.datatype.present? && ae_field.datatype != "string"
-            multiple_icons.push(ae_field_fonticon(ae_field.datatype))
+            multiple_icons.push(ae_field_icon(ae_field.datatype))
           end
           multiple_icons.push(icon)
           cells.push({:icon => multiple_icons, :text => "#{ae_field.display_name} (#{ae_field.name})"})
@@ -288,11 +331,11 @@ module MiqAeClassHelper
     field_data[:fields].each_with_index do |field, index|
       cells = []
       ae_value = field.ae_values.find_or_initialize_by(:instance_id => field_data[:record].id, :field_id => field.id)
-      multiple_icons = [ae_field_fonticon(field.aetype)]
+      multiple_icons = [ae_field_icon(field.aetype)]
       unless field.datatype.blank? || field.datatype == 'string'
-        multiple_icons.push(ae_field_fonticon(field.datatype))
+        multiple_icons.push(ae_field_icon(field.datatype))
       end
-      multiple_icons.push("pficon-ok#{field.substitute ? '' : '-closed'}")
+      multiple_icons.push(ae_field_substitute_icon(field.substitute))
       cells.push({:icon => multiple_icons, :text => record_name(field)})
       cells.push({:text => field.datatype == 'password' ? '********' : nonblank(ae_value.value, field.default_value)})
       if has_options

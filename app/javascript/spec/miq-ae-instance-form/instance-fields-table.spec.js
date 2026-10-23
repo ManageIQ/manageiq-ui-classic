@@ -13,7 +13,7 @@ describe('InstanceFieldsTable Component', () => {
       datatype: 'string',
       value: 'test_value',
       value_collect: '',
-      icons: ['ff ff-attribute', 'carbon--CheckmarkOutline'],
+      icons: ['carbon--Grid', 'carbon--CheckmarkOutline'],
       message: '',
     },
     {
@@ -24,7 +24,7 @@ describe('InstanceFieldsTable Component', () => {
       datatype: 'integer',
       value: '42',
       value_collect: '/collect/path',
-      icons: ['ff ff-attribute', 'ff ff-integer', 'carbon--CheckmarkOutline'],
+      icons: ['carbon--Grid', 'carbon--StringInteger', 'carbon--CheckmarkOutline'],
       message: 'Warning message',
     },
   ];
@@ -43,7 +43,7 @@ describe('InstanceFieldsTable Component', () => {
       value_on_error: 'on_error_method',
       value_max_retries: '3',
       value_max_time: '60',
-      icons: ['ff ff-state', 'carbon--CheckmarkOutline'],
+      icons: ['carbon--Renew', 'carbon--CheckmarkOutline'],
       message: '',
     },
   ];
@@ -231,7 +231,7 @@ describe('InstanceFieldsTable Component', () => {
       const fieldsWithMultipleIcons = [
         {
           ...mockFields[0],
-          icons: ['ff ff-attribute', 'carbon--CheckmarkOutline'],
+          icons: ['carbon--Grid', 'carbon--CheckmarkOutline'],
         },
       ];
 

@@ -1,5 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import { transformSelectOptions } from '../helper';
+import { transformSelectOptions, SUBSTITUTE_ICON_ON } from '../helper';
 
 const createClassFieldsSchema = (selectedRowId, aeTypeOptions,
   dTypeOptions, schemaField = {}) => {
@@ -58,7 +58,7 @@ const createClassFieldsSchema = (selectedRowId, aeTypeOptions,
               : defaultVal;
           }
           const icon = getIcons(2);
-          return icon === 'pficon pficon-ok';
+          return icon === SUBSTITUTE_ICON_ON;
         }
         if (field === 'message') {
           return classField[field].text;

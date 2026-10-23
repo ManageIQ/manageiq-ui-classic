@@ -147,6 +147,10 @@ export const removeSelected = (array, item) => {
   return array;
 };
 
+// Substitute icons; keep in sync with AE_FIELD_SUBSTITUTE_ICONS in miq_ae_class_helper.rb.
+export const SUBSTITUTE_ICON_ON = 'carbon--CheckmarkOutline';
+export const SUBSTITUTE_ICON_OFF = 'carbon--Close';
+
 export const transformSelectOptions = (array) =>
   array.map(([label, value, extraProps]) => ({
     label,

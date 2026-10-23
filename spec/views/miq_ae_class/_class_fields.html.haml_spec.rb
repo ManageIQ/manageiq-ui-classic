@@ -37,8 +37,8 @@ describe "miq_ae_class/_class_fields.html.haml" do
       assign(:in_a_form, true)
       assign(:in_a_form_fields, true)
       assign(:ae_class, @ae_class)
-      assign(:combo_xml, [['Attribute', 'attribute', {'data-icon' => 'ff ff-attribute'}]])
-      assign(:dtype_combo_xml, [['String', 'string', {'data-icon' => 'ff ff-string'}]])
+      assign(:combo_xml, [['Attribute', 'attribute', {'data-icon' => 'carbon--Grid'}]])
+      assign(:dtype_combo_xml, [['String', 'string', {'data-icon' => 'carbon--StringText'}]])
     end
 
     it "renders the schema editor with the class id and the type options" do
