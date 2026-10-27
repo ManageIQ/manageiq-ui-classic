@@ -57,15 +57,15 @@ const resolveNodeIcon = (node) => {
   return PFICON_TO_CARBON[node.icon] || null;
 };
 
-// Returns all non-disabled node values in the tree (for Select All).
+// Returns all non-disabled leaf node values in the tree (for Select All).
+// Only leaves are collected because checkModel="leaf" only tracks leaf values.
 const getAllValues = (nodeList) => {
   let vals = [];
   nodeList.forEach((n) => {
-    if (!n.disabled) {
-      vals.push(n.value);
-    }
     if (n.children) {
       vals = vals.concat(getAllValues(n.children));
+    } else if (!n.disabled) {
+      vals.push(n.value);
     }
   });
   return vals;
@@ -83,19 +83,25 @@ const getAllParentValues = (nodeList) => {
   return vals;
 };
 
-// Convert bs_tree node format {key, text, icon, image, nodes} to react-checkbox-tree format
+const hasVisibleCheckbox = (node) => !node.hideCheckbox
+  || (node.nodes || []).some(hasVisibleCheckbox);
+
+// Convert bs_tree node format {key, text, icon, image, nodes} to react-checkbox-tree format.
 const convertNodes = (nodes) => {
   if (!nodes) {
     return [];
   }
-  return nodes.map((node) => ({
-    value: node.key || node.value,
-    label: node.text || node.label,
-    icon: resolveNodeIcon(node),
-    children: node.nodes && node.nodes.length > 0 ? convertNodes(node.nodes) : undefined,
-    showCheckbox: !node.hideCheckbox,
-    disabled: node.checkable === false,
-  }));
+  return nodes.map((node) => {
+    const checkboxChildren = (node.nodes || []).filter(hasVisibleCheckbox);
+    return {
+      value: node.key || node.value,
+      label: node.text || node.label,
+      icon: resolveNodeIcon(node),
+      children: checkboxChildren.length > 0 ? convertNodes(checkboxChildren) : undefined,
+      showCheckbox: !node.hideCheckbox,
+      disabled: node.checkable === false,
+    };
+  });
 };
 
 const BelongsToTab = ({

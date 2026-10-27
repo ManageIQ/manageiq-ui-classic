@@ -45,13 +45,17 @@ class ExpressionEditorController < ApplicationController
         :fields           => fields_with_type,
         :counts           => MiqExpression.miq_adv_search_lists(model, :exp_available_counts),
         :finds            => raw_finds,
-        :tags             => MiqExpression.model_details(
-          model,
-          :typ             => 'tag',
-          :include_model   => include_model,
-          :include_my_tags => false,
-          :userid          => current_user.userid
-        ),
+        :tags             => if include_model
+                               MiqExpression.model_details(
+                                 model,
+                                 :typ             => 'tag',
+                                 :include_model   => include_model,
+                                 :include_my_tags => false,
+                                 :userid          => current_user.userid
+                               )
+                             else
+                               MiqExpression.tag_details(nil, :include_model => false)
+                             end,
         :expression_types => ExpAtomHelper.expression_types_for_primary_filter(model)
       }
     rescue ArgumentError, NameError => e

@@ -35,18 +35,18 @@ const FilterTabs = ({
   const hacKeys = new Set(Object.keys(hacPaths));
   const vatKeys = new Set(Object.keys(vatPaths));
 
+  // Shared keys (e.g. provider root nodes) are owned by HAC; VAT only
+  // gets keys that are exclusively in vatPaths.
   const hacChecked = belongstoChecked.filter((k) => hacKeys.has(k));
-  const vatChecked = belongstoChecked.filter((k) => vatKeys.has(k));
+  const vatChecked = belongstoChecked.filter((k) => vatKeys.has(k) && !hacKeys.has(k));
 
   const onHacChange = (newHacChecked) => {
-    // Replace HAC-owned keys, keep VAT-owned keys untouched
     const vatOnly = belongstoChecked.filter((k) => vatKeys.has(k) && !hacKeys.has(k));
     update({ belongstoChecked: [...newHacChecked, ...vatOnly] });
   };
 
   const onVatChange = (newVatChecked) => {
-    // Replace VAT-owned keys, keep HAC-owned keys untouched
-    const hacOnly = belongstoChecked.filter((k) => hacKeys.has(k) && !vatKeys.has(k));
+    const hacOnly = belongstoChecked.filter((k) => hacKeys.has(k));
     update({ belongstoChecked: [...hacOnly, ...newVatChecked] });
   };
 

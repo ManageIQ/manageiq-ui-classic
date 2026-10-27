@@ -27,6 +27,36 @@ jest.mock('../../components/expression-editor', () => {
 
 const emptyTags = { tags: [], assignedTags: [], affectedItems: [] };
 
+// A provider key that appears in both path maps (shared root node).
+const SHARED_KEY = 'e-1';
+// A key that is only in hacPaths.
+const HAC_ONLY_KEY = 'cluster-a';
+// A key that is only in vatPaths.
+const VAT_ONLY_KEY = 'web-tier';
+
+const hacTree = JSON.stringify([{
+  key: SHARED_KEY,
+  text: 'Seed Provider',
+  nodes: [{ key: HAC_ONLY_KEY, text: 'Cluster A', nodes: [] }],
+}]);
+
+const vatTree = JSON.stringify([{
+  key: SHARED_KEY,
+  text: 'Seed Provider',
+  hideCheckbox: true,
+  nodes: [{ key: VAT_ONLY_KEY, text: 'Web Tier', nodes: [] }],
+}]);
+
+const hacPaths = {
+  [SHARED_KEY]: '/belongsto/ExtManagementSystem|Seed Provider',
+  [HAC_ONLY_KEY]: '/belongsto/ExtManagementSystem|Seed Provider/EmsCluster|Cluster A',
+};
+
+const vatPaths = {
+  [SHARED_KEY]: '/belongsto/ExtManagementSystem|Seed Provider',
+  [VAT_ONLY_KEY]: '/belongsto/ExtManagementSystem|Seed Provider/EmsFolder|vm/EmsFolder|Web Tier',
+};
+
 const defaultProps = {
   tags: emptyTags,
   hacTree: '[]',
@@ -109,5 +139,116 @@ describe('FilterTabs', () => {
     expect(mockOnChange).toHaveBeenCalledWith(
       expect.objectContaining({ belongstoChecked: ['node-1'] })
     );
+  });
+  describe('HAC / VAT tab isolation', () => {
+    it('Select All on HAC does not add VAT-exclusive keys to belongstoChecked', async() => {
+      const user = userEvent.setup();
+      fieldState.value = { belongstoChecked: [] };
+
+      render(
+        <FilterTabs
+          {...defaultProps}
+          hacTree={hacTree}
+          vatTree={vatTree}
+          hacPaths={hacPaths}
+          vatPaths={vatPaths}
+        />
+      );
+
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      const called = mockOnChange.mock.calls[0][0].belongstoChecked;
+      expect(called).not.toContain(VAT_ONLY_KEY);
+    });
+
+    it('Select All on VAT does not add HAC-exclusive keys to belongstoChecked', async() => {
+      const user = userEvent.setup();
+      fieldState.value = { belongstoChecked: [] };
+
+      render(
+        <FilterTabs
+          {...defaultProps}
+          hacTree={hacTree}
+          vatTree={vatTree}
+          hacPaths={hacPaths}
+          vatPaths={vatPaths}
+        />
+      );
+
+      await user.click(screen.getByRole('tab', { name: /vms/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      const called = mockOnChange.mock.calls[0][0].belongstoChecked;
+      expect(called).not.toContain(HAC_ONLY_KEY);
+    });
+
+    it('checking a node on HAC preserves existing VAT-exclusive checked keys', async() => {
+      const user = userEvent.setup();
+      // VAT-only key already checked
+      fieldState.value = { belongstoChecked: [VAT_ONLY_KEY] };
+
+      render(
+        <FilterTabs
+          {...defaultProps}
+          hacTree={hacTree}
+          vatTree={vatTree}
+          hacPaths={hacPaths}
+          vatPaths={vatPaths}
+        />
+      );
+
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      const called = mockOnChange.mock.calls[0][0].belongstoChecked;
+      expect(called).toContain(VAT_ONLY_KEY);
+    });
+
+    it('checking a node on VAT preserves existing HAC-exclusive checked keys', async() => {
+      const user = userEvent.setup();
+      // HAC-only key already checked
+      fieldState.value = { belongstoChecked: [HAC_ONLY_KEY] };
+
+      render(
+        <FilterTabs
+          {...defaultProps}
+          hacTree={hacTree}
+          vatTree={vatTree}
+          hacPaths={hacPaths}
+          vatPaths={vatPaths}
+        />
+      );
+
+      await user.click(screen.getByRole('tab', { name: /vms/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      const called = mockOnChange.mock.calls[0][0].belongstoChecked;
+      expect(called).toContain(HAC_ONLY_KEY);
+    });
+
+    it('shared keys (provider root) are owned by HAC and not shown as checked in VAT', () => {
+      // A shared key checked via HAC should not appear in VAT's checked prop
+      fieldState.value = { belongstoChecked: [SHARED_KEY, HAC_ONLY_KEY] };
+
+      render(
+        <FilterTabs
+          {...defaultProps}
+          hacTree={hacTree}
+          vatTree={vatTree}
+          hacPaths={hacPaths}
+          vatPaths={vatPaths}
+        />
+      );
+
+      // The VAT BelongsToTab should receive only VAT-exclusive keys as checked,
+      // not the shared provider key
+      const vatCheckboxes = screen.queryAllByRole('checkbox');
+      // Web Tier should not be checked (SHARED_KEY is not VAT_ONLY_KEY)
+      const webTierCheckbox = vatCheckboxes.find(
+        (cb) => cb.closest('li')?.textContent?.includes('Web Tier')
+      );
+      expect(webTierCheckbox?.checked).toBeFalsy();
+    });
   });
 });
