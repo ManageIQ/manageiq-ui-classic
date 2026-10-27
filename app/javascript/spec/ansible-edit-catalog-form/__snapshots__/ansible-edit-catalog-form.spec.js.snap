@@ -560,91 +560,181 @@ exports[`Ansible playbook edit catalog Form Component should not render some fie
           <div
             class="react-tree-view"
           >
-            <ul>
-              <li
-                class="indent-0 selectable"
-                data-id="0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-down icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
+            <div
+              class="react-checkbox-tree rct-icons-fa5"
+            >
+              <ol>
+                <li
+                  class="rct-node rct-node-parent rct-node-expanded partial-checked"
                 >
-                  All Tenants
-                </span>
-              </li>
-              <li
-                class="indent-1 selectable"
-                data-id="0.0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-right icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="fa fa-fw fa-check-square icon checkbox-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
-                >
-                  My Company
-                </span>
-              </li>
-            </ul>
-            <style>
-              
-            .react-tree-view .indent-0 {
-                padding-left: calc((1em) * 0);
-            }
-            .react-tree-view .indent-0.no-open-button {
-                padding-left: calc((1em) * 0 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-1 {
-                padding-left: calc((1em) * 1);
-            }
-            .react-tree-view .indent-1.no-open-button {
-                padding-left: calc((1em) * 1 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-2 {
-                padding-left: calc((1em) * 2);
-            }
-            .react-tree-view .indent-2.no-open-button {
-                padding-left: calc((1em) * 2 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-3 {
-                padding-left: calc((1em) * 3);
-            }
-            .react-tree-view .indent-3.no-open-button {
-                padding-left: calc((1em) * 3 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-4 {
-                padding-left: calc((1em) * 4);
-            }
-            .react-tree-view .indent-4.no-open-button {
-                padding-left: calc((1em) * 4 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-5 {
-                padding-left: calc((1em) * 5);
-            }
-            .react-tree-view .indent-5.no-open-button {
-                padding-left: calc((1em) * 5 + (1em + 4px));
-            }
-            
-            </style>
+                  <span
+                    class="rct-text"
+                  >
+                    <button
+                      aria-label="Collapse node"
+                      class="rct-collapse rct-collapse-btn"
+                      title="Collapse node"
+                      type="button"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                    <span
+                      class="rct-bare-label"
+                      title="All Tenants"
+                    >
+                      <span
+                        class="rct-node-clickable"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <i
+                            class="icon pficon pficon-tenant"
+                          />
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          <span
+                            data-id="0"
+                          >
+                            All Tenants
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                  <ol>
+                    <li
+                      class="rct-node rct-node-parent rct-node-collapsed partial-checked"
+                    >
+                      <span
+                        class="rct-text"
+                      >
+                        <button
+                          aria-label="Expand node"
+                          class="rct-collapse rct-collapse-btn"
+                          title="Expand node"
+                          type="button"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                        <label>
+                          <input
+                            type="checkbox"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="rct-checkbox"
+                            role="presentation"
+                          >
+                            <span>
+                              <span
+                                class="unchecked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                              <span
+                                class="partial-checked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                    <path
+                                      d="M14 21.5 9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </label>
+                        <span
+                          class="rct-node-clickable"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <span
+                            class="rct-node-icon"
+                          >
+                            <i
+                              class="icon pficon pficon-tenant"
+                            />
+                          </span>
+                          <span
+                            class="rct-label"
+                          >
+                            <span
+                              data-id="0.0"
+                            >
+                              My Company
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         <div
@@ -5104,91 +5194,181 @@ exports[`Ansible playbook edit catalog Form Component should render correct form
           <div
             class="react-tree-view"
           >
-            <ul>
-              <li
-                class="indent-0 selectable"
-                data-id="0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-down icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
+            <div
+              class="react-checkbox-tree rct-icons-fa5"
+            >
+              <ol>
+                <li
+                  class="rct-node rct-node-parent rct-node-expanded partial-checked"
                 >
-                  All Tenants
-                </span>
-              </li>
-              <li
-                class="indent-1 selectable"
-                data-id="0.0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-right icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="fa fa-fw fa-check-square icon checkbox-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
-                >
-                  My Company
-                </span>
-              </li>
-            </ul>
-            <style>
-              
-            .react-tree-view .indent-0 {
-                padding-left: calc((1em) * 0);
-            }
-            .react-tree-view .indent-0.no-open-button {
-                padding-left: calc((1em) * 0 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-1 {
-                padding-left: calc((1em) * 1);
-            }
-            .react-tree-view .indent-1.no-open-button {
-                padding-left: calc((1em) * 1 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-2 {
-                padding-left: calc((1em) * 2);
-            }
-            .react-tree-view .indent-2.no-open-button {
-                padding-left: calc((1em) * 2 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-3 {
-                padding-left: calc((1em) * 3);
-            }
-            .react-tree-view .indent-3.no-open-button {
-                padding-left: calc((1em) * 3 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-4 {
-                padding-left: calc((1em) * 4);
-            }
-            .react-tree-view .indent-4.no-open-button {
-                padding-left: calc((1em) * 4 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-5 {
-                padding-left: calc((1em) * 5);
-            }
-            .react-tree-view .indent-5.no-open-button {
-                padding-left: calc((1em) * 5 + (1em + 4px));
-            }
-            
-            </style>
+                  <span
+                    class="rct-text"
+                  >
+                    <button
+                      aria-label="Collapse node"
+                      class="rct-collapse rct-collapse-btn"
+                      title="Collapse node"
+                      type="button"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                    <span
+                      class="rct-bare-label"
+                      title="All Tenants"
+                    >
+                      <span
+                        class="rct-node-clickable"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <i
+                            class="icon pficon pficon-tenant"
+                          />
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          <span
+                            data-id="0"
+                          >
+                            All Tenants
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                  <ol>
+                    <li
+                      class="rct-node rct-node-parent rct-node-collapsed partial-checked"
+                    >
+                      <span
+                        class="rct-text"
+                      >
+                        <button
+                          aria-label="Expand node"
+                          class="rct-collapse rct-collapse-btn"
+                          title="Expand node"
+                          type="button"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                        <label>
+                          <input
+                            type="checkbox"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="rct-checkbox"
+                            role="presentation"
+                          >
+                            <span>
+                              <span
+                                class="unchecked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                              <span
+                                class="partial-checked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                    <path
+                                      d="M14 21.5 9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </label>
+                        <span
+                          class="rct-node-clickable"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <span
+                            class="rct-node-icon"
+                          >
+                            <i
+                              class="icon pficon pficon-tenant"
+                            />
+                          </span>
+                          <span
+                            class="rct-label"
+                          >
+                            <span
+                              data-id="0.0"
+                            >
+                              My Company
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         <div
@@ -10462,91 +10642,181 @@ exports[`Ansible playbook edit catalog Form Component should render retirement p
           <div
             class="react-tree-view"
           >
-            <ul>
-              <li
-                class="indent-0 selectable"
-                data-id="0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-down icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
+            <div
+              class="react-checkbox-tree rct-icons-fa5"
+            >
+              <ol>
+                <li
+                  class="rct-node rct-node-parent rct-node-expanded partial-checked"
                 >
-                  All Tenants
-                </span>
-              </li>
-              <li
-                class="indent-1 selectable"
-                data-id="0.0"
-              >
-                <i
-                  class="fa fa-fw fa-angle-right icon expand-button"
-                  tabindex="0"
-                />
-                <i
-                  class="fa fa-fw fa-check-square icon checkbox-button"
-                  tabindex="0"
-                />
-                <i
-                  class="icon pficon pficon-tenant"
-                />
-                <span
-                  tabindex="0"
-                >
-                  My Company
-                </span>
-              </li>
-            </ul>
-            <style>
-              
-            .react-tree-view .indent-0 {
-                padding-left: calc((1em) * 0);
-            }
-            .react-tree-view .indent-0.no-open-button {
-                padding-left: calc((1em) * 0 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-1 {
-                padding-left: calc((1em) * 1);
-            }
-            .react-tree-view .indent-1.no-open-button {
-                padding-left: calc((1em) * 1 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-2 {
-                padding-left: calc((1em) * 2);
-            }
-            .react-tree-view .indent-2.no-open-button {
-                padding-left: calc((1em) * 2 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-3 {
-                padding-left: calc((1em) * 3);
-            }
-            .react-tree-view .indent-3.no-open-button {
-                padding-left: calc((1em) * 3 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-4 {
-                padding-left: calc((1em) * 4);
-            }
-            .react-tree-view .indent-4.no-open-button {
-                padding-left: calc((1em) * 4 + (1em + 4px));
-            }
-            
-            .react-tree-view .indent-5 {
-                padding-left: calc((1em) * 5);
-            }
-            .react-tree-view .indent-5.no-open-button {
-                padding-left: calc((1em) * 5 + (1em + 4px));
-            }
-            
-            </style>
+                  <span
+                    class="rct-text"
+                  >
+                    <button
+                      aria-label="Collapse node"
+                      class="rct-collapse rct-collapse-btn"
+                      title="Collapse node"
+                      type="button"
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                    <span
+                      class="rct-bare-label"
+                      title="All Tenants"
+                    >
+                      <span
+                        class="rct-node-clickable"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="rct-node-icon"
+                        >
+                          <i
+                            class="icon pficon pficon-tenant"
+                          />
+                        </span>
+                        <span
+                          class="rct-label"
+                        >
+                          <span
+                            data-id="0"
+                          >
+                            All Tenants
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                  <ol>
+                    <li
+                      class="rct-node rct-node-parent rct-node-collapsed partial-checked"
+                    >
+                      <span
+                        class="rct-text"
+                      >
+                        <button
+                          aria-label="Expand node"
+                          class="rct-collapse rct-collapse-btn"
+                          title="Expand node"
+                          type="button"
+                        >
+                          <span>
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                        <label>
+                          <input
+                            type="checkbox"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="rct-checkbox"
+                            role="presentation"
+                          >
+                            <span>
+                              <span
+                                class="unchecked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                              <span
+                                class="partial-checked-icon"
+                              >
+                                <span>
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"
+                                    />
+                                    <path
+                                      d="M14 21.5 9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </label>
+                        <span
+                          class="rct-node-clickable"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <span
+                            class="rct-node-icon"
+                          >
+                            <i
+                              class="icon pficon pficon-tenant"
+                            />
+                          </span>
+                          <span
+                            class="rct-label"
+                          >
+                            <span
+                              data-id="0.0"
+                            >
+                              My Company
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         <div
