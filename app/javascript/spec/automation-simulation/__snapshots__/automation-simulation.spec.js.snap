@@ -271,17 +271,11 @@ exports[`AutomationSimulation Component renders tabs and tab contents correctly 
                     <div
                       class="react-tree-view"
                     >
-                      <ul />
-                      <style>
-                        
-            .react-tree-view .indent-0 {
-                padding-left: calc((1em) * 0);
-            }
-            .react-tree-view .indent-0.no-open-button {
-                padding-left: calc((1em) * 0 + (1em + 4px));
-            }
-            
-                      </style>
+                      <div
+                        class="react-checkbox-tree rct-icons-fa5"
+                      >
+                        <ol />
+                      </div>
                     </div>
                   </div>
                 </div>
