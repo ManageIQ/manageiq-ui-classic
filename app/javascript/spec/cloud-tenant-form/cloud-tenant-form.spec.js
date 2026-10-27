@@ -6,19 +6,17 @@ import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqAjaxButton';
 
 describe('Cloud tenant form component', () => {
-  let submitSpy;
-  beforeEach(() => {
-    submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
+  it('should render adding form variant', async() => {
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/providers?expand=resources&attributes=id,name,supports_cloud_tenants&filter[]=supports_cloud_tenants=true', { resources: [] });
 
-  it('should render adding form variant', () => {
     const { container } = renderWithRedux(<CloudTenantForm />);
+    await waitFor(() => {
+      // eslint-disable-next-line max-len
+      expect(fetchMock.callHistory.called('/api/providers?expand=resources&attributes=id,name,supports_cloud_tenants&filter[]=supports_cloud_tenants=true')).toBe(true);
+    });
     expect(container).toMatchSnapshot();
   });
 
@@ -29,7 +27,7 @@ describe('Cloud tenant form component', () => {
 
     // Wait for the API call to complete
     await waitFor(() => {
-      expect(fetchMock.called('/api/cloud_tenants/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/cloud_tenants/1')).toBe(true);
     });
 
     // Wait for form to be fully rendered

@@ -6,10 +6,7 @@ import DiagnosticsCURepairForm from '../../components/c-and-u-collections-form';
 import { formatDate } from '../../components/c-and-u-collections-form/helper';
 
 describe('DiagnosticsCURepairForm Component', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('Should render a new DiagnosticsCURepair form', async() => {
     const timezones = [

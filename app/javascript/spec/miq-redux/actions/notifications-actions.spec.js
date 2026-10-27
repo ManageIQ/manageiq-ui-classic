@@ -24,9 +24,11 @@ import {
 } from '../../../miq-redux/actions/notifications-actions';
 import notifications from '../../fixtures/notifications.json';
 import initResources from '../../fixtures/resources.json';
-import { maxNotifications } from '../../../notifications/backend.js';
+import { maxNotifications } from '../../../notifications/backend';
 
 describe('Notifications actions tests', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const initialState = {
     notificationReducer: {
       unreadCount: 0,
@@ -40,7 +42,6 @@ describe('Notifications actions tests', () => {
   const miqFormatNotificationSpy = jest.spyOn(window, 'miqFormatNotification');
 
   afterEach(() => {
-    fetchMock.reset();
     miqFormatNotificationSpy.mockReset();
   });
 
@@ -85,7 +86,7 @@ describe('Notifications actions tests', () => {
     return expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch markNotificationRead correctly', async () => {
+  it('should dispatch markNotificationRead correctly', async() => {
     const store = makeStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
@@ -110,7 +111,7 @@ describe('Notifications actions tests', () => {
     return expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch markAllRead correctly', async () => {
+  it('should dispatch markAllRead correctly', async() => {
     const store = makeStore(initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.postOnce('/api/notifications/', { action: 'mark_as_seen', resources });
@@ -121,7 +122,7 @@ describe('Notifications actions tests', () => {
     expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch clearNotification correctly', async () => {
+  it('should dispatch clearNotification correctly', async() => {
     const store = makeStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
     fetchMock.postOnce('/api/notifications/', {
@@ -137,7 +138,7 @@ describe('Notifications actions tests', () => {
     expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch clearAll correctly', async () => {
+  it('should dispatch clearAll correctly', async() => {
     const store = makeStore(initialState);
     const resources = [{ id: '10000000003625' }, { id: '10000000003624' }];
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
@@ -149,7 +150,7 @@ describe('Notifications actions tests', () => {
     expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should dispatch toggleMaxNotifications correctly', async () => {
+  it('should dispatch toggleMaxNotifications correctly', async() => {
     const store = makeStore(initialState);
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', initResources);
     const expectedPayload = [

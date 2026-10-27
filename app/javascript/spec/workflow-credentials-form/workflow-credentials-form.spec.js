@@ -29,6 +29,8 @@ describe('Workflow Credential Form Component', () => {
     },
   };
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     fetchMock.get(
       '/api/providers?collection_class=ManageIQ::Providers::Workflows::AutomationManager',
@@ -40,28 +42,23 @@ describe('Workflow Credential Form Component', () => {
         ],
       }
     );
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/authentications' }, api);
   });
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  afterEach(() => fetchMock.callHistory.clear());
 
   it('should render adding a new credential', async() => {
-    fetchMock.once('/api/authentications', api);
-
     const { container } = renderWithRedux(<WorkflowCredentialsForm />);
 
     await waitFor(() => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(2);
+    expect(fetchMock.callHistory.calls()).toHaveLength(2);
     expect(container).toMatchSnapshot();
   });
 
   it('should render editing a credential', async() => {
-    fetchMock.once('/api/authentications', api);
     fetchMock.get('/api/authentications/1', { ems_ref: 'test', type: 'foo' });
 
     const { container } = renderWithRedux(
@@ -72,7 +69,7 @@ describe('Workflow Credential Form Component', () => {
       expect(container.querySelector('form')).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(container).toMatchSnapshot();
   });
 });

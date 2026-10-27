@@ -8,22 +8,20 @@ import '../helpers/miqSparkle';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Set ownership form component', () => {
-  let initialProps;
+  const initialProps = {
+    ownershipItems: [{ id: '123456', kind: 'vms' }],
+  };
   const submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  const flashSpy = jest.spyOn(window, 'add_flash');
+
+  beforeAll(() => fetchMock.mockGlobal());
 
   beforeEach(() => {
-    initialProps = {
-      ownershipItems: [{ id: '123456', kind: 'vms' }],
-    };
-    global.ManageIQ.controller = 'vms';
+    ManageIQ.controller = 'vms';
   });
 
   afterEach(() => {
-    fetchMock.restore();
     submitSpy.mockReset();
-    flashSpy.mockReset();
-    global.ManageIQ.controller = null;
+    ManageIQ.controller = null;
   });
 
   it('should correctly map group and owner options', () => {
@@ -72,11 +70,11 @@ describe('Set ownership form component', () => {
 
   it('should request initialForm values after mount', async() => {
     fetchMock
-      .getOnce(
+      .get(
         '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
         { evm_owner_id: 'a', miq_group_id: 'z2' }
       )
-      .getOnce(
+      .get(
         '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
         {
           resources: [
@@ -85,7 +83,7 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce(
+      .get(
         '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
         {
           resources: [
@@ -94,13 +92,13 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce('/api/tenant_groups/z2', {});
+      .get('/api/tenant_groups/z2', {});
     const { container } = renderWithRedux(
       <SetOwnershipForm {...initialProps} />
     );
 
     await waitFor(() => {
-      expect(fetchMock.calls().length).toBe(4);
+      expect(fetchMock.callHistory.calls()).toHaveLength(4);
       const wrapper = container.querySelector('#set-ownership-form');
       expect(wrapper).toBeInTheDocument();
       expect(wrapper.querySelector('form')).toBeInTheDocument();
@@ -116,11 +114,11 @@ describe('Set ownership form component', () => {
   it('should send correct data on save', async() => {
     const user = userEvent.setup();
     fetchMock
-      .getOnce(
+      .get(
         '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
         { evm_owner_id: 'a', miq_group_id: 'z2' }
       )
-      .getOnce(
+      .get(
         '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
         {
           resources: [
@@ -129,7 +127,7 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce(
+      .get(
         '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
         {
           resources: [
@@ -138,8 +136,8 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce('/api/tenant_groups/z2', {})
-      .postOnce('/api/vms', {});
+      .get('/api/tenant_groups/z2', {})
+      .post('/api/vms', {});
     const { container } = renderWithRedux(
       <SetOwnershipForm {...initialProps} />
     );
@@ -167,11 +165,11 @@ describe('Set ownership form component', () => {
   it('should send correct data on cancel', async() => {
     const user = userEvent.setup();
     fetchMock
-      .getOnce(
+      .get(
         '/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
         { evm_owner_id: 'a', miq_group_id: 'z2' }
       )
-      .getOnce(
+      .get(
         '/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
         {
           resources: [
@@ -180,7 +178,7 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce(
+      .get(
         '/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
         {
           resources: [
@@ -189,7 +187,7 @@ describe('Set ownership form component', () => {
           ],
         }
       )
-      .getOnce('/api/tenant_groups/z2', {});
+      .get('/api/tenant_groups/z2', {});
     renderWithRedux(<SetOwnershipForm {...initialProps} />);
 
     await waitFor(() => {

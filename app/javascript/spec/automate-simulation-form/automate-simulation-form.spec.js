@@ -1,13 +1,10 @@
 import fetchMock from 'fetch-mock';
-import { waitFor, screen, fireEvent, act } from '@testing-library/react';
+import { waitFor, screen, fireEvent } from '@testing-library/react';
 import AutomateSimulationForm from '../../components/automate-simulation-form';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Automate Simulation Form', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   const resolveMockData = {
     ae_result: 'ok',
@@ -101,10 +98,10 @@ describe('Automate Simulation Form', () => {
       },
     };
 
-    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+    renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
     });
   });
 
@@ -128,7 +125,7 @@ describe('Automate Simulation Form', () => {
     const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
     });
 
     const targetClassInput = container.querySelector('#target_class');
@@ -147,7 +144,7 @@ describe('Automate Simulation Form', () => {
     }
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
     });
   });
 });

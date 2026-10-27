@@ -10,6 +10,10 @@ import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
 
 describe('RemoveGenericItemModal', () => {
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   const item1 = 123;
   const item2 = 456;
   const url1 = `/api/authentications/${item1}`;
@@ -33,10 +37,6 @@ describe('RemoveGenericItemModal', () => {
     modal_text: 'TEXT',
   };
 
-  afterEach(() => {
-    fetchMock.reset();
-  });
-
   it('should correctly render modal for single item', async() => {
     fetchMock.getOnce(url1, apiResponse1);
     const { container } = renderWithRedux(
@@ -47,7 +47,7 @@ describe('RemoveGenericItemModal', () => {
       />
     );
 
-    expect(fetchMock.called(url1)).toBe(true);
+    expect(fetchMock.callHistory.called(url1)).toBe(true);
 
     await waitFor(() => {
       expect(screen.getByText(modalData.modal_text)).toBeInTheDocument();
@@ -67,8 +67,8 @@ describe('RemoveGenericItemModal', () => {
       />
     );
 
-    expect(fetchMock.called(url1)).toBe(true);
-    expect(fetchMock.called(url2)).toBe(true);
+    expect(fetchMock.callHistory.called(url1)).toBe(true);
+    expect(fetchMock.callHistory.called(url2)).toBe(true);
 
     await waitFor(() => {
       expect(screen.getByText(modalData.modal_text)).toBeInTheDocument();
@@ -169,7 +169,7 @@ describe('RemoveGenericItemModal', () => {
     });
 
     await waitFor(() => {
-      expect(fetchMock.called(postUrl)).toBe(true);
+      expect(fetchMock.callHistory.called(postUrl)).toBe(true);
     });
   });
 });

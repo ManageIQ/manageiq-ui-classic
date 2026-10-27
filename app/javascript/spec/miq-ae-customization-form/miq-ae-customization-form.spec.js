@@ -34,10 +34,7 @@ describe('MiqAeCustomization Form Component', () => {
     ['VM Provision', 'MiqProvisionWorkflow'],
   ];
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render add dialog form correctly', async() => {
     fetchMock.get(`/miq_ae_customization/old_dialogs_new?&expand=resources/`, customizationMockData);

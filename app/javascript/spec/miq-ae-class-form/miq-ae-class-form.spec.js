@@ -4,6 +4,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import MiqAeClass from '../../components/miq-ae-class';
 
 describe('MiqAeClass Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const classMockData = [
     {
       href: `/miq_ae_class/edit_class/2/`,
@@ -20,11 +22,6 @@ describe('MiqAeClass Form Component', () => {
   };
 
   const fqName = 'Sample FQ Name';
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
 
   it('should render add class form correctly', async() => {
     fetchMock.get(`/miq_ae_class/new?&expand=resources/`, classMockData);

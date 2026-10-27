@@ -1874,46 +1874,81 @@ exports[`Generic Object Form Component should render editing a generic object wi
     </div>
     <div
       class=""
-      id="file_section"
-      name="file_section"
+      id="edit_section"
+      name="edit_section"
     >
-      <div
-        class="file-upload"
-      >
+      <div>
         <label
           class="cds--label"
+          for="file_edit"
         >
-          Custom Image File
+          Current Custom Image File
         </label>
         <br />
-        <label
-          class="file-upload-label"
-          disabled=""
+        <div
+          class="edit-div"
         >
-          No File Chosen
-        </label>
-        <span
-          class="file-button"
-          tabindex="0"
-        >
-          <label
-            class="file-button-label"
-            for="file_upload"
+          <img
+            alt="Uploaded Image"
+            class="edit-image"
+            id="imageDisplay"
+            src="http://localhost:3000/pictures/52.png"
+          />
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
           >
-            <span
-              class="buttonText"
+            <div
+              class="cds--tooltip-trigger__wrapper"
             >
-              Choose File
+              <button
+                aria-labelledby="tooltip-_r_17_"
+                class="edit-button cds--btn cds--btn--primary cds--btn--icon-only"
+                name="file_edit"
+                type="button"
+                value=""
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 12H14V24H12z"
+                  />
+                  <path
+                    d="M18 12H20V24H18z"
+                  />
+                  <path
+                    d="M4,6V8H6V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V8h2V6ZM8,28V8H24V28Z"
+                  />
+                  <path
+                    d="M12 2H20V4H12z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-_r_17_"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Delete File
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
             </span>
-            <input
-              class="file-upload-input"
-              id="file_upload"
-              name="file_upload"
-              type="file"
-              value=""
-            />
-          </label>
-        </span>
+          </span>
+        </div>
       </div>
     </div>
     <div
@@ -1924,7 +1959,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
           class="cds--toggle"
         >
           <button
-            aria-checked="true"
+            aria-checked="false"
             class="cds--toggle__button"
             id="image_update"
             role="switch"
@@ -1939,14 +1974,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
               class="cds--toggle__appearance"
             >
               <div
-                class="cds--toggle__switch cds--toggle__switch--checked"
+                class="cds--toggle__switch"
               />
               <span
                 aria-hidden="true"
                 class="cds--toggle__text"
                 dir="auto"
               >
-                On
+                Off
               </span>
             </div>
           </div>
