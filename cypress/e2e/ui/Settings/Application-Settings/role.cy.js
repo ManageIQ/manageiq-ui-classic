@@ -85,12 +85,14 @@ function assertRoleSummary({
   cy.contains(getRoleInfoElementSelector(4, 'content_value'), serviceTemplateRestriction);
 
   // Check product features if provided
+  // A node is either fully checked (input.checked) or partially checked (`partial-checked` class on its li).
   checkedFeatureIds.forEach((featureId) => {
-    cy.get(`li[data-id="${featureId}"]`)
-      .find('i.checkbox-button')
-      .should('satisfy', ($el) => {
-        // Check for either fa-check-square-o or fa-check-square (different FontAwesome versions)
-        return $el.hasClass('fa-check-square-o') || $el.hasClass('fa-check-square');
+    cy.get(`span[data-id="${featureId}"]`)
+      .closest('li.rct-node')
+      .should(($li) => {
+        const fullyChecked = $li.find('> span.rct-text input[type="checkbox"]').prop('checked');
+        const partiallyChecked = $li.hasClass('partial-checked');
+        expect(fullyChecked || partiallyChecked, `feature ${featureId} is checked or partially checked`).to.equal(true);
       });
   });
 }
