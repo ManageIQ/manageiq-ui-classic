@@ -152,12 +152,15 @@ describe('CustomerTagsTab', () => {
       expect(screen.getByText('No Filter Expression defined')).toBeInTheDocument();
     });
 
-    it('renders the expression as formatted JSON when filterExpression is provided', () => {
+    it('renders a human-readable expression summary when filterExpression is provided', async() => {
       const expr = { CONTAINS: { tag: 'managed/env', value: 'prod' } };
+      fetchMock.get(
+        /\/expression_editor\/tag_values/,
+        { tag_values: [['Production', 'prod']] }
+      );
       render(<CustomerTagsTab {...defaultProps} readOnly useFilterExpression filterExpression={expr} />);
-      const pre = document.querySelector('.customer-tags-tab__expression-box pre');
-      expect(pre).toBeInTheDocument();
-      expect(pre.textContent).toBe(JSON.stringify(expr, null, 2));
+      // The expression text is rendered in a <p>, not a <pre>
+      await screen.findByText(/managed\/env contains 'Production'/i);
     });
   });
 });

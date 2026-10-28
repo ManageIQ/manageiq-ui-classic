@@ -57,14 +57,13 @@ const resolveNodeIcon = (node) => {
   return PFICON_TO_CARBON[node.icon] || null;
 };
 
-// Returns all non-disabled leaf node values in the tree (for Select All).
-// Only leaves are collected because checkModel="leaf" only tracks leaf values.
+// Returns all non-disabled, visible-checkbox leaf node values (for Select All).
 const getAllValues = (nodeList) => {
   let vals = [];
   nodeList.forEach((n) => {
     if (n.children) {
       vals = vals.concat(getAllValues(n.children));
-    } else if (!n.disabled) {
+    } else if (n.showCheckbox && !n.disabled) {
       vals.push(n.value);
     }
   });

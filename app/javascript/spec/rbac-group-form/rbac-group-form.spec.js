@@ -42,6 +42,26 @@ const mockExtra = {
   deleted_belongsto_filters: [],
 };
 
+// A minimal HAC tree with one provider containing one cluster (no children
+// with hideCheckbox, so the cluster is a leaf under checkModel="leaf").
+const CLUSTER_KEY = 'cluster-a';
+const CLUSTER_PATH = '/belongsto/ExtManagementSystem|Seed Provider/EmsCluster|Cluster A';
+const PROVIDER_KEY = 'e-1';
+const PROVIDER_PATH = '/belongsto/ExtManagementSystem|Seed Provider';
+
+const mockExtraWithHacTree = {
+  ...mockExtra,
+  hac_tree: JSON.stringify([{
+    key: PROVIDER_KEY,
+    text: 'Seed Provider',
+    nodes: [{ key: CLUSTER_KEY, text: 'Cluster A', nodes: [] }],
+  }]),
+  hac_paths: {
+    [PROVIDER_KEY]: PROVIDER_PATH,
+    [CLUSTER_KEY]: CLUSTER_PATH,
+  },
+};
+
 const defaultProps = {
   groupId: 1,
   readOnly: false,
@@ -411,6 +431,70 @@ describe('RbacGroupForm', () => {
       'warning',
       '/ops/explorer'
     );
+  });
+
+  describe('belongsto filter trees', () => {
+    it('selecting a HAC node and submitting sends the correct belongsto path', async() => {
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      // Navigate to the HAC tab and click Select All
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      // Dirty description so the form isn't pristine
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filters.belongsto).toContain(CLUSTER_PATH);
+      // The provider key is shared — it should NOT appear as an independent
+      // belongsto path since it was not a leaf selection
+      expect(body.resource.filters.belongsto).not.toContain(PROVIDER_PATH);
+    });
+
+    it('loads a group with a saved folder-level belongsto path and shows the node as checked', async() => {
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: null,
+            filters: { belongsto: [CLUSTER_PATH], managed: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      await userEvent.click(screen.getByRole('tab', { name: /clusters/i }));
+
+      // Provider is expanded by default (it's nodes[0]); Cluster A is a direct child
+      await waitFor(() => {
+        expect(screen.getByText('Cluster A')).toBeInTheDocument();
+      });
+
+      // The cluster checkbox should be checked
+      const checkbox = screen.getByText('Cluster A')
+        .closest('li')
+        ?.querySelector('input[type="checkbox"]');
+      expect(checkbox).toBeTruthy();
+      expect(checkbox.checked).toBe(true);
+    });
   });
 
   describe('submit payload shape', () => {

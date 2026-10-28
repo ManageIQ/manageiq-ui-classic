@@ -12,8 +12,12 @@ const flatTree = JSON.stringify([
     text: 'My Cloud',
     icon: 'pficon pficon-folder-close',
     nodes: [
-      { key: 'child-1', text: 'Region 1', icon: 'pficon pficon-container-node', nodes: [] },
-      { key: 'child-2', text: 'Host 1',   icon: 'pficon pficon-server',         nodes: [] },
+      {
+        key: 'child-1', text: 'Region 1', icon: 'pficon pficon-container-node', nodes: [],
+      },
+      {
+        key: 'child-2', text: 'Host 1', icon: 'pficon pficon-server', nodes: [],
+      },
     ],
   },
 ]);
@@ -33,8 +37,12 @@ const hacTree = JSON.stringify([
             key: 'cluster-a',
             text: 'Cluster A',
             nodes: [
-              { key: 'host-1', text: 'host-a1.example.com', hideCheckbox: true, nodes: [] },
-              { key: 'host-2', text: 'host-a2.example.com', hideCheckbox: true, nodes: [] },
+              {
+                key: 'host-1', text: 'host-a1.example.com', hideCheckbox: true, nodes: [],
+              },
+              {
+                key: 'host-2', text: 'host-a2.example.com', hideCheckbox: true, nodes: [],
+              },
             ],
           },
           { key: 'standalone', text: 'standalone.example.com', nodes: [] },

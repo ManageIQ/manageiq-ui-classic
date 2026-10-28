@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { InlineNotification, Select, SelectItem } from '@carbon/react';
 import TagView from '../tagging-editor/tag-view';
@@ -6,6 +6,24 @@ import TaggingEditor from '../tagging-editor';
 import ExpressionEditor from '../expression-editor';
 import { rqbToMiq } from '../expression-editor/expression-adapter';
 import { miqExpressionToHuman } from '../expression-editor/expression-human';
+
+// Collects all unique tag paths referenced in a MiqExpression tree.
+const collectTagPaths = (miqExp) => {
+  if (!miqExp || typeof miqExp !== 'object') {
+    return [];
+  }
+  if (miqExp.and) {
+    return miqExp.and.flatMap(collectTagPaths);
+  }
+  if (miqExp.or) {
+    return miqExp.or.flatMap(collectTagPaths);
+  }
+  if (miqExp.not) {
+    return collectTagPaths(miqExp.not);
+  }
+  const body = Object.values(miqExp)[0] || {};
+  return body.tag ? [body.tag] : [];
+};
 
 const CustomerTagsTab = ({
   tags,
@@ -34,6 +52,45 @@ const CustomerTagsTab = ({
     }
   };
 
+  // In read-only mode, proactively fetch tag values for every tag path in
+  // the expression so the human summary shows labels (e.g. "2 GB") not raw
+  // stored values (e.g. "2048").
+  useEffect(() => {
+    if (!readOnly || !useFilterExpression || !filterExpression) {
+      return;
+    }
+
+    const miqExp = (filterExpression.rules || filterExpression.combinator)
+      ? rqbToMiq(filterExpression)
+      : filterExpression;
+    if (!miqExp) {
+      return;
+    }
+
+    const tagPaths = [...new Set(collectTagPaths(miqExp))];
+    if (tagPaths.length === 0) {
+      return;
+    }
+
+    Promise.all(
+      tagPaths.map((tagPath) => http
+        .get(`/expression_editor/tag_values?tag=${encodeURIComponent(tagPath)}`, { skipErrors: true })
+        .then((data) => {
+          const raw = Array.isArray(data) ? data : (data?.tag_values || []);
+          const items = raw.map((entry) => (Array.isArray(entry)
+            ? { label: entry[0], name: String(entry[1]) }
+            : { label: entry.label, name: String(entry.value ?? entry.name) }));
+          return [tagPath, items];
+        })
+        .catch(() => [tagPath, []]))
+    ).then((results) => {
+      const tagMap = new Map(results);
+      setExpressionText(
+        miqExpressionToHuman(miqExp, labelMapRef.current, tagMap)
+      );
+    });
+  }, [readOnly, useFilterExpression, filterExpression]);
+
   const handleQueryChange = (q, errors = []) => {
     setValidationErrors(errors);
     if (errors.length > 0) {
@@ -51,19 +108,24 @@ const CustomerTagsTab = ({
 
   if (readOnly) {
     if (useFilterExpression) {
-      let miqExp = null;
-      if (filterExpression) {
-        miqExp = (filterExpression.rules || filterExpression.combinator)
-          ? rqbToMiq(filterExpression)
-          : filterExpression;
-      }
       return (
         <div className="customer-tags-tab">
           <div className="customer-tags-tab__expression-section">
             <h4 className="customer-tags-tab__expression-heading">{__('Filter Expression:')}</h4>
-            {miqExp ? (
+            {filterExpression ? (
               <div className="customer-tags-tab__expression-box">
-                <pre className="customer-tags-tab__expression-text">{JSON.stringify(miqExp, null, 2)}</pre>
+                <div style={{ display: 'none' }}>
+                  <ExpressionEditor
+                    model="MiqGroup"
+                    onlyTags
+                    includeModel={false}
+                    value={filterExpression}
+                    onContextReady={handleContextReady}
+                  />
+                </div>
+                {expressionText
+                  ? <p className="customer-tags-tab__expression-text">{expressionText}</p>
+                  : <p className="miq-no-record">{__('No Filter Expression defined')}</p>}
               </div>
             ) : (
               <p className="miq-no-record">{__('No Filter Expression defined')}</p>
