@@ -19,6 +19,16 @@ describe('AeMethodDataEditor component', () => {
     window.focus = jest.fn();
   });
 
+  it('should render correctly', () => {
+    const { container } = render(<AeMethodDataEditor {...props} />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with the validate button', () => {
+    const { container } = render(<AeMethodDataEditor {...props} validateUrl={validateUrl} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('renders the hidden textarea with the provided value so the haml form can serialize it', () => {
     const { container } = render(<AeMethodDataEditor {...props} />);
     const textarea = container.querySelector('textarea#method_data');

@@ -1,0 +1,342 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AeMethodDataEditor component should render correctly 1`] = `
+<div>
+  <div
+    class="ae-method-data-editor"
+  >
+    <textarea
+      id="method_data"
+      name="method_data"
+      readonly=""
+      style="display: none;"
+    >
+      $evm.log(:info, $evm.root)
+    </textarea>
+    <div
+      class="react-codemirror2 miq-codemirror"
+    >
+      <div
+        class="CodeMirror cm-s-eclipse CodeMirror-focused"
+        translate="no"
+      >
+        <div
+          class="CodeMirror-vscrollbar"
+          cm-not-content="true"
+          tabindex="-1"
+        >
+          <div
+            style="min-width: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-hscrollbar"
+          cm-not-content="true"
+          tabindex="-1"
+        >
+          <div
+            style="height: 100%; min-height: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-scrollbar-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-gutter-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-scroll"
+          tabindex="-1"
+        >
+          <div
+            class="CodeMirror-sizer"
+            style="margin-left: 0px; min-width: 3px;"
+          >
+            <div
+              style="position: relative;"
+            >
+              <div
+                class="CodeMirror-lines"
+                role="presentation"
+              >
+                <div
+                  role="presentation"
+                  style="position: relative; outline: none;"
+                >
+                  <div
+                    class="CodeMirror-measure"
+                  />
+                  <div
+                    class="CodeMirror-measure"
+                  >
+                    <pre
+                      class="CodeMirror-line"
+                      role="presentation"
+                    >
+                      <span
+                        role="presentation"
+                        style="padding-right: 0.1px;"
+                      >
+                        <span
+                          class="cm-variable-3"
+                        >
+                          $evm
+                        </span>
+                        <span
+                          class="cm-operator"
+                        >
+                          .
+                        </span>
+                        <span
+                          class="cm-property"
+                        >
+                          log
+                        </span>
+                        <span
+                          class=" CodeMirror-matchingbracket"
+                        >
+                          (
+                        </span>
+                        <span
+                          class="cm-atom"
+                        >
+                          :info
+                        </span>
+                        , 
+                        <span
+                          class="cm-variable-3"
+                        >
+                          $evm
+                        </span>
+                        <span
+                          class="cm-operator"
+                        >
+                          .
+                        </span>
+                        <span
+                          class="cm-property"
+                        >
+                          root
+                        </span>
+                        <span
+                          class=" CodeMirror-matchingbracket"
+                        >
+                          )
+                        </span>
+                      </span>
+                    </pre>
+                  </div>
+                  <div
+                    style="position: relative; z-index: 1;"
+                  />
+                  <div
+                    class="CodeMirror-cursors"
+                  />
+                  <div
+                    autocapitalize="off"
+                    autocorrect="off"
+                    class="CodeMirror-code"
+                    role="presentation"
+                    spellcheck="false"
+                    tabindex="0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="position: absolute; height: 50px; width: 1px;"
+          />
+          <div
+            class="CodeMirror-gutters"
+          >
+            <div
+              class="CodeMirror-gutter CodeMirror-linenumbers"
+              style="width: 1px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AeMethodDataEditor component should render correctly with the validate button 1`] = `
+<div>
+  <div
+    class="ae-method-data-editor"
+  >
+    <textarea
+      id="method_data"
+      name="method_data"
+      readonly=""
+      style="display: none;"
+    >
+      $evm.log(:info, $evm.root)
+    </textarea>
+    <div
+      class="react-codemirror2 miq-codemirror"
+    >
+      <div
+        class="CodeMirror cm-s-eclipse CodeMirror-focused"
+        translate="no"
+      >
+        <div
+          class="CodeMirror-vscrollbar"
+          cm-not-content="true"
+          tabindex="-1"
+        >
+          <div
+            style="min-width: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-hscrollbar"
+          cm-not-content="true"
+          tabindex="-1"
+        >
+          <div
+            style="height: 100%; min-height: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-scrollbar-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-gutter-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-scroll"
+          tabindex="-1"
+        >
+          <div
+            class="CodeMirror-sizer"
+            style="margin-left: 0px; min-width: 3px;"
+          >
+            <div
+              style="position: relative;"
+            >
+              <div
+                class="CodeMirror-lines"
+                role="presentation"
+              >
+                <div
+                  role="presentation"
+                  style="position: relative; outline: none;"
+                >
+                  <div
+                    class="CodeMirror-measure"
+                  />
+                  <div
+                    class="CodeMirror-measure"
+                  >
+                    <pre
+                      class="CodeMirror-line"
+                      role="presentation"
+                    >
+                      <span
+                        role="presentation"
+                        style="padding-right: 0.1px;"
+                      >
+                        <span
+                          class="cm-variable-3"
+                        >
+                          $evm
+                        </span>
+                        <span
+                          class="cm-operator"
+                        >
+                          .
+                        </span>
+                        <span
+                          class="cm-property"
+                        >
+                          log
+                        </span>
+                        <span
+                          class=" CodeMirror-matchingbracket"
+                        >
+                          (
+                        </span>
+                        <span
+                          class="cm-atom"
+                        >
+                          :info
+                        </span>
+                        , 
+                        <span
+                          class="cm-variable-3"
+                        >
+                          $evm
+                        </span>
+                        <span
+                          class="cm-operator"
+                        >
+                          .
+                        </span>
+                        <span
+                          class="cm-property"
+                        >
+                          root
+                        </span>
+                        <span
+                          class=" CodeMirror-matchingbracket"
+                        >
+                          )
+                        </span>
+                      </span>
+                    </pre>
+                  </div>
+                  <div
+                    style="position: relative; z-index: 1;"
+                  />
+                  <div
+                    class="CodeMirror-cursors"
+                  />
+                  <div
+                    autocapitalize="off"
+                    autocorrect="off"
+                    class="CodeMirror-code"
+                    role="presentation"
+                    spellcheck="false"
+                    tabindex="0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="position: absolute; height: 50px; width: 1px;"
+          />
+          <div
+            class="CodeMirror-gutters"
+          >
+            <div
+              class="CodeMirror-gutter CodeMirror-linenumbers"
+              style="width: 1px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ae-method-data-validate"
+      style="display: flex; justify-content: flex-end; margin-top: 8px;"
+    >
+      <button
+        class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
+        id="ae-method-data-validate"
+        title="Validate method data"
+        type="button"
+      >
+        Validate
+      </button>
+    </div>
+  </div>
+</div>
+`;
