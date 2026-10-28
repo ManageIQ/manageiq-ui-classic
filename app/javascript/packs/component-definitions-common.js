@@ -10,6 +10,7 @@ import ActionForm from '../components/action-form';
 import AddRemoveHostAggregateForm from '../components/host-aggregate-form/add-remove-host-aggregate-form';
 import AddRemoveSecurityGroupForm from '../components/vm-cloud-add-remove-security-group-form';
 import AeInlineMethod from '../components/AeInlineMethod';
+import AeMethodDataEditor from '../components/ae-method-data-editor';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-catalog-form';
@@ -218,6 +219,7 @@ ManageIQ.component.addReact('AddRemoveHostAggregateForm', AddRemoveHostAggregate
 ManageIQ.component.addReact('AddRemoveSecurityGroupForm', AddRemoveSecurityGroupForm);
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('AeInlineMethod', AeInlineMethod);
+ManageIQ.component.addReact('AeMethodDataEditor', AeMethodDataEditor);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('AnsiblePlayBookEditCatalogForm', AnsiblePlayBookEditCatalogForm);
 ManageIQ.component.addReact('AnsiblePlaybookWorkflow', AnsiblePlaybookWorkflow);
