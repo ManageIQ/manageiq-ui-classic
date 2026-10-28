@@ -3,7 +3,7 @@ const { merge } = require('webpack-merge');
 const { env, output } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
 const nodeModules = '../../node_modules';
-const appBasePath = (env.NODE_ENV === 'production') ? '/packs/' : '../../assets/images/layout/';// Need different paths for developement and prod envs.
+const appBasePath = '../../assets/images/layout/'; // Relative so css-loader/file-loader resolve it and emit the hashed filename in every env.
 
 let babelOptions = merge(babelrc, {
   babelrc: false,
@@ -69,11 +69,6 @@ module.exports = [
           url: (url) => {
             // Don't process URLs that start with /upload/ - these are runtime user-uploaded assets
             if (url.startsWith('/upload/')) {
-              return false;
-            }
-            // Don't process absolute paths starting with /packs/ in production
-            // These will be resolved at runtime
-            if (url.startsWith('/packs/')) {
               return false;
             }
             return true;
