@@ -9,9 +9,7 @@ import TextualRow from './textual_row';
 export const TextualSummary = (props) => (
   <div className="row">
     {
-      // eslint-disable-next-line react/destructuring-assignment
       props.summary.map((bigGroup, i) => (
-        // eslint-disable-next-line react/no-array-index-key
         <TextualRow onClick={props.onClick} key={i} groups={bigGroup} />
       ))
     }

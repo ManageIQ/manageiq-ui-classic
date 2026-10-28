@@ -19,10 +19,8 @@ if (process.env.NODE_ENV === 'development') {
 
   React.createElement = function(type, props, ...children) {
     // Check PropTypes for function/class components that have propTypes defined
-    // eslint-disable-next-line react/forbid-foreign-prop-types
     if (type && typeof type === 'function' && type.propTypes) {
       checkPropTypes(
-        // eslint-disable-next-line react/forbid-foreign-prop-types
         type.propTypes,
         props || {},
         'prop',

@@ -91,7 +91,6 @@ class RemoveCatalogItemModal extends React.Component {
         newRecord: true,
         pristine: true,
         // used this.state.data to get updated value from promise (whenever state updates)
-        // eslint-disable-next-line react/destructuring-assignment
         addClicked: () => removeCatalogItems(this.state.data),
       },
     });

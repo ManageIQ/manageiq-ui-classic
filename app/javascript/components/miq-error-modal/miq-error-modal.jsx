@@ -137,7 +137,6 @@ const MiqErrorModal = () => {
               <strong className="miq-error-modal-label">{__('Data')}</strong>
               <span
                 className="miq-error-modal-data"
-                /* eslint-disable-next-line react/no-danger */
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(data)) }}
               />
             </p>

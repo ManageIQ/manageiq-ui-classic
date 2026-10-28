@@ -115,7 +115,6 @@ export const Toolbar = ({
       { groups
         .filter(toolbarGroupHasContent)
         .map((group, index) =>
-          // eslint-disable-next-line react/no-array-index-key
           <ToolbarGroup key={index} onClick={onClick} group={collapseCustomGroups(group, kebabLimit)} />)}
       <ToolbarView onClick={onViewClick} views={views} />
     </div>

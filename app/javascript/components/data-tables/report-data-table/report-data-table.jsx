@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import NoRecordsFound from '../../no-records-found';
