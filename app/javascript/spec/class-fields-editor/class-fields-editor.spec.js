@@ -81,6 +81,11 @@ describe('ClassFieldsEditor', () => {
     jest.clearAllMocks();
   });
 
+  it('should match snapshot', () => {
+    const { container } = renderWithRedux(<ClassFieldsEditor {...defaultProps} initialData={[makeInitialRow()]} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('opens the modal when "Add a Field" is clicked and closes it on Cancel', async() => {
     const user = userEvent.setup();
     renderWithRedux(<ClassFieldsEditor {...defaultProps} />);

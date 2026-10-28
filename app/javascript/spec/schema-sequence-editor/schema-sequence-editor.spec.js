@@ -41,6 +41,14 @@ describe('SchemaSequenceEditor', () => {
     jest.clearAllMocks();
   });
 
+  it('should match snapshot', async() => {
+    const { container } = renderWithRedux(<SchemaSequenceEditor classId={CLASS_ID} />);
+    await waitFor(() => {
+      expect(screen.getByText('Field A (field_a)')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
+  });
+
   it('renders all fields in priority order with correct initial button states', async() => {
     renderWithRedux(<SchemaSequenceEditor classId={CLASS_ID} />);
 

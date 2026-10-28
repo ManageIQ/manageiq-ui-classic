@@ -36,6 +36,30 @@ const schemaRow = {
 };
 
 describe('Datastore (class_fields schema)', () => {
+  it('should match snapshot in read-only mode', () => {
+    const { container } = render(
+      <Datastore
+        type={DATASTORE_TYPES.schema}
+        initialData={[schemaRow]}
+        datastoreTypes={DATASTORE_TYPES}
+      />
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should match snapshot in edit mode', () => {
+    const { container } = renderWithRedux(
+      <Datastore
+        type={DATASTORE_TYPES.schema}
+        initialData={[schemaRow]}
+        datastoreTypes={DATASTORE_TYPES}
+        isEdit
+        editProps={{ aeClassId: 1, aeTypeOptions: [], dTypeOptions: [] }}
+      />
+    );
+    expect(container).toMatchSnapshot();
+  });
+
   it('renders the read-only schema table without edit controls', () => {
     render(
       <Datastore

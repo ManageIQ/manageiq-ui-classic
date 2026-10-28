@@ -893,6 +893,7 @@ describe MiqAeClassController do
         "success" => true,
         "message" => "Class Schema Sequence was saved"
       )
+      expect(controller.send(:active_tab)).to eq("schema")
       expect(@field1.reload.priority).to eq(2)
       expect(@field2.reload.priority).to eq(3)
       expect(@field3.reload.priority).to eq(1)
@@ -922,6 +923,7 @@ describe MiqAeClassController do
 
       expect(assigns(:ae_class)).to eq(cls)
       expect(assigns(:sb)[:action]).to eq("miq_ae_field_seq")
+      expect(controller.send(:active_tab)).to eq("schema")
     end
   end
 
@@ -942,6 +944,7 @@ describe MiqAeClassController do
       expect(assigns(:in_a_form_fields)).to be(true)
       expect(assigns(:hide_bottom_bar)).to be(true)
       expect(assigns(:right_cell_text)).to eq("Editing Class Schema \"foo_class\"")
+      expect(controller.send(:active_tab)).to eq("schema")
     end
 
     it "builds the type and data type options with their icons for the editor" do
@@ -961,19 +964,28 @@ describe MiqAeClassController do
                          :class_id => @cls.id, :priority => 1)
     end
 
-    it "reset returns DB fields and reset message" do
+    it "reset returns DB fields and reset message, setting active_tab to schema" do
       post :update_fields, :params => {:button => "reset", :id => @cls.id}
 
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body["message"]).to eq("All changes have been reset")
       expect(response.parsed_body["fields"].first["name"]).to eq("field01")
+      expect(controller.send(:active_tab)).to eq("schema")
     end
 
-    it "cancel returns 200 with cancellation message" do
+    it "cancel returns 200 with cancellation message and sets active_tab to schema" do
       post :update_fields, :params => {:button => "cancel", :id => @cls.id}
 
       expect(response.status).to eq(200)
       expect(response.parsed_body["message"]).to include("cancelled by the user")
+      expect(controller.send(:active_tab)).to eq("schema")
+    end
+
+    it "save sets active_tab to schema" do
+      post :update_fields, :params => {:button => "save", :id => @cls.id, :fields => [{:id => @cls.ae_fields.first.id, :name => "field01", :aetype => "attribute"}]}
+
+      expect(response).to have_http_status(:ok)
+      expect(controller.send(:active_tab)).to eq("schema")
     end
   end
 

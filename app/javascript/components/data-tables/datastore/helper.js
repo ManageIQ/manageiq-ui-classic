@@ -11,7 +11,9 @@ const nsListHeaders = (hasOptions) => {
     { text: 'Description', header_text: __('Description') },
     { text: 'Enabled', header_text: __('Enabled') },
   ];
-  if (hasOptions) columns.push({ text: 'Tenant', header_text: __('Tenant') });
+  if (hasOptions) {
+    columns.push({ text: 'Tenant', header_text: __('Tenant') });
+  }
   return columns;
 };
 

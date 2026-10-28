@@ -183,7 +183,10 @@ class MiqAeClassController < ApplicationController
 
   def get_node_info(node, _show_list = true)
     node_type, node_id = valid_active_node(node).split('-')
-    @sb[:row_selected] = nil if params[:action] == "tree_select"
+    if params[:action] == "tree_select"
+      @sb[:row_selected] = nil
+      @sb[:active_tab] = "instances" if node_type == 'aec'
+    end
     case node_type
     when 'aec' then get_class_node_info(node_id)
     when 'aei' then get_instance_node_info(node_id)
@@ -500,6 +503,7 @@ class MiqAeClassController < ApplicationController
     @in_a_form = true
     @in_a_form_fields = true
     @hide_bottom_bar = true
+    @sb[:active_tab] = "schema"
     replace_right_cell
   end
 
@@ -1010,16 +1014,17 @@ class MiqAeClassController < ApplicationController
     ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     case params[:button]
     when "cancel"
+      @sb[:active_tab] = "schema"
       message = _("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => ae_class.name}
       render :json => {:message => message}
     when "save"
+      @sb[:active_tab] = "schema"
       fields_data = params[:fields] || []
       fields_to_delete = params[:fields_to_delete] || []
       old_fields = ae_class.ae_fields.sort_by(&:priority).map { |f| masked_field_hash(f) }
       begin
         MiqAeClass.transaction do
           save_fields_from_params(ae_class, fields_data, fields_to_delete)
-          ae_class.save!
         end
       rescue StandardError => bang
         error_message = _("Error during 'save': %{error_message}") % {:error_message => bang.message}
@@ -1031,6 +1036,7 @@ class MiqAeClassController < ApplicationController
         render :json => {:message => success_message}
       end
     when "reset"
+      @sb[:active_tab] = "schema"
       fields = ae_class.ae_fields.sort_by(&:priority).map { |f| masked_field_hash(f) }
       render :json => {:fields => fields, :message => _("All changes have been reset")}
     else
@@ -1492,6 +1498,7 @@ class MiqAeClassController < ApplicationController
 
   def fields_seq_save
     assert_privileges("miq_ae_field_seq")
+    @sb[:active_tab] = "schema"
     ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     fields_data = params[:fields] || []
 
@@ -1517,6 +1524,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_field_seq")
     @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     @sb[:action] = "miq_ae_field_seq"
+    @sb[:active_tab] = "schema"
     replace_right_cell
   end
 
@@ -2131,12 +2139,11 @@ class MiqAeClassController < ApplicationController
   end
 
   def save_fields_from_params(ae_class, fields_data, fields_to_delete)
-    ae_class.ae_fields.where(:id => fields_to_delete).destroy_all
+    ae_class.ae_fields.where(:id => fields_to_delete).destroy_all if fields_to_delete.present?
 
     indexed = ae_class.ae_fields.reload.index_by(&:id)
     fields_data.each_with_index do |fld, i|
-      field = fld[:id].present? ? (indexed[fld[:id].to_i] || MiqAeField.new) : MiqAeField.new
-      field.class_id = ae_class.id if field.new_record?
+      field = fld[:id].present? ? (indexed[fld[:id].to_i] || ae_class.ae_fields.build) : ae_class.ae_fields.build
       field_attributes.each do |attr|
         value = fld[attr.to_sym]
         next if value.nil?
@@ -2149,6 +2156,7 @@ class MiqAeClassController < ApplicationController
       field.priority = i + 1
       field.save!
     end
+    ae_class.save!
   end
 
   def method_form_vars_process_fields(prefix = '')
@@ -2517,7 +2525,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_class_node_info(node_id)
-    @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed] && params[:action] != "change_tab"
+    @sb[:active_tab] ||= "instances"
     begin
       @record = @ae_class = MiqAeClass.find(node_id)
     rescue ActiveRecord::RecordNotFound

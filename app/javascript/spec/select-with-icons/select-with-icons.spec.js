@@ -40,6 +40,11 @@ const renderField = (fieldProps = {}, { initialValues, onSubmit = jest.fn(), ext
 const openList = (user) => user.click(document.querySelector('#datatype button.cds--list-box__field'));
 
 describe('SelectWithIcons', () => {
+  it('should match snapshot', () => {
+    const { container } = renderField();
+    expect(container).toMatchSnapshot();
+  });
+
   it('renders the label and the placeholder when nothing is selected', () => {
     renderField();
 

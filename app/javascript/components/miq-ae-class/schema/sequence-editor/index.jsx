@@ -26,12 +26,17 @@ const SchemaSequenceEditor = ({ classId }) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
+    miqSparkleOn();
     http.get(`/miq_ae_class/fields_seq_data?id=${classId}`)
       .then((data) => {
         setInitialFields(data.fields || []);
         setLoaded(true);
+        miqSparkleOff();
       })
-      .catch(() => setLoaded(true));
+      .catch(() => {
+        setLoaded(true);
+        miqSparkleOff();
+      });
   }, [classId]);
 
   const onSubmit = (values) => {
