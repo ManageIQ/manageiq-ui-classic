@@ -3,7 +3,7 @@ class ApplicationHelper::Toolbar::FirmwareRegistryCenter < ApplicationHelper::To
     'firmware_registry_reloading',
     [
       button(
-        :firmware_view,
+        :firmware_registry_view,
         'fa fa-refresh fa-lg',
         N_('Refresh this page'),
         nil,

@@ -23,17 +23,17 @@ class FirmwareTargetController < ApplicationController
   end
 
   def show
-    assert_privileges('firmware_show')
+    assert_privileges('firmware_target_show')
     super
   end
 
   def download_data
-    assert_privileges('firmware_show')
+    assert_privileges('firmware_target_show_list')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('firmware_show')
+    assert_privileges('firmware_target_show')
     super
   end
 
