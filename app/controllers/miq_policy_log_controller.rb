@@ -48,7 +48,7 @@ class MiqPolicyLogController < ApplicationController
   def fetch_log
     assert_privileges('policy_log')
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($policy_log, nil),
+    send_data(Vmdb::Loggers.contents($policy_log, ApplicationController::ONE_MILLION),
               :filename => "policy.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_policy_log",

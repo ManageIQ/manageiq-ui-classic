@@ -54,7 +54,7 @@ class MiqAeToolsController < ApplicationController
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    log = Vmdb::Loggers.contents($miq_ae_logger, nil)
+    log = Vmdb::Loggers.contents($miq_ae_logger, ApplicationController::ONE_MILLION)
     send_data(log, :filename => "automation.log") if log
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_automation_log",
