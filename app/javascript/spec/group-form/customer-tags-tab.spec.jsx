@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import CustomerTagsTab from '../../components/rbac-group-form/customer-tags-tab';
+import CustomerTagsTab from '../../components/group-form/customer-tags-tab';
 
 jest.mock('../../components/expression-editor', () => {
   const MockExpressionEditor = ({ onQueryChange, onContextReady }) => (

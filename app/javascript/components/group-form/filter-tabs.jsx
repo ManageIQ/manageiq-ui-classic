@@ -51,7 +51,7 @@ const FilterTabs = ({
   };
 
   return (
-    <div className="rbac-group-filter-tabs">
+    <div className="group-filter-tabs">
       <hr />
       <h3>{readOnly ? __('Assigned Filters (read only)') : __('Assign Filters')}</h3>
       <Tabs>
