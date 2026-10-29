@@ -20,6 +20,7 @@ export const createRows = (subscriptions) => {
         edit: {
           is_button: true,
           text: __('Update'),
+          title: __('Update'),
           kind: 'tertiary',
           size: 'md',
           callback: 'editSubscription',
@@ -28,6 +29,7 @@ export const createRows = (subscriptions) => {
         validate: {
           is_button: true,
           text: __('Validate'),
+          title: __('Validate'),
           kind: 'tertiary',
           size: 'md',
           callback: 'validateSubscription',
@@ -36,12 +38,14 @@ export const createRows = (subscriptions) => {
         delete: isMarkedForDeletion ? {
           is_button: true,
           text: __('Cancel Delete'),
+          title: __('Cancel Delete'),
           kind: 'tertiary',
           size: 'md',
           callback: 'cancelDelete',
         } : {
           is_button: true,
           text: __('Delete'),
+          title: __('Delete'),
           kind: 'danger',
           size: 'md',
           callback: 'deleteSubscription',
