@@ -159,7 +159,7 @@ const MiqTableCell = ({
           onKeyDown={(e) => cellButtonEvent(item, e)}
           tabIndex={0}
           size={item.size ? item.size : 'sm'}
-          title={item.title ? item.title : truncateText}
+          title={item.title ? item.title : cellTitle}
           kind={item.kind ? item.kind : 'primary'}
           className={classNames('miq-data-table-button', item.buttonClassName)}
         >
