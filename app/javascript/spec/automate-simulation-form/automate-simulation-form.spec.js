@@ -176,11 +176,8 @@ describe('Automate Simulation Form', () => {
   });
 
   it('submits the form with readonly true when Execute Methods is checked', async() => {
-    window.http = {
-      post: jest.fn().mockResolvedValue({ notice: 'Simulation complete' }),
-      get: jest.fn().mockResolvedValue({ targets: [['VM 1', '1']] }),
-    };
-    window.add_flash = jest.fn();
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=Vm', { targets: [['VM 1', '1']] });
+    fetchMock.post('/miq_ae_tools/resolve', { notice: 'Simulation complete' });
 
     const resolveData = {
       ...resolveMockData,
@@ -208,23 +205,15 @@ describe('Automate Simulation Form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Save' }));
 
     await waitFor(() => {
-      expect(window.http.post).toHaveBeenCalledWith(
-        '/miq_ae_tools/resolve',
-        expect.objectContaining({
-          readonly: true,
-          button: 'throw',
-        }),
-        expect.any(Object),
-      );
+      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
     });
+    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    expect(body).toEqual(expect.objectContaining({ readonly: true, button: 'throw' }));
   });
 
   it('submits the form with readonly false when Execute Methods is unchecked', async() => {
-    window.http = {
-      post: jest.fn().mockResolvedValue({ notice: 'Simulation complete' }),
-      get: jest.fn().mockResolvedValue({ targets: [['VM 1', '1']] }),
-    };
-    window.add_flash = jest.fn();
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=Vm', { targets: [['VM 1', '1']] });
+    fetchMock.post('/miq_ae_tools/resolve', { notice: 'Simulation complete' });
 
     const resolveData = {
       ...resolveMockData,
@@ -252,15 +241,10 @@ describe('Automate Simulation Form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Save' }));
 
     await waitFor(() => {
-      expect(window.http.post).toHaveBeenCalledWith(
-        '/miq_ae_tools/resolve',
-        expect.objectContaining({
-          readonly: false,
-          button: 'throw',
-        }),
-        expect.any(Object),
-      );
+      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
     });
+    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    expect(body).toEqual(expect.objectContaining({ readonly: false, button: 'throw' }));
   });
 
   it('uses a CHECKBOX component for the readonly field (always yields a boolean, never "1")', () => {
