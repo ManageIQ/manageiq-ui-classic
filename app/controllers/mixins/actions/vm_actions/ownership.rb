@@ -82,6 +82,8 @@ module Mixins
             MiqTemplate
           when "auth_key_pair_cloud"
             ManageIQ::Providers::CloudManager::AuthKeyPair
+          when "container_project"
+            ContainerProject
           end
         end
 
