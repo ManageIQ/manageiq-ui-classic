@@ -105,6 +105,11 @@ export const miqToRqb = (miqExp) => {
     return { id: generateId(), combinator: 'and', rules: [] };
   }
 
+  // Already an RQB query object
+  if (Array.isArray(miqExp.rules) && typeof miqExp.combinator === 'string') {
+    return miqExp;
+  }
+
   if (miqExp.not) {
     const inner = miqToRqb(miqExp.not);
     return { ...inner, id: generateId(), not: true };
@@ -241,4 +246,15 @@ const rqbGroupToMiq = (rqbGroup, isRoot = false) => {
   return not ? { not: exp } : exp;
 };
 
-export const rqbToMiq = (rqbGroup) => rqbGroupToMiq(rqbGroup, true);
+export const rqbToMiq = (rqbGroup) => {
+  if (!rqbGroup || typeof rqbGroup !== 'object') {
+    return null;
+  }
+
+  // Already a MiqExpression object (e.g. leaf atom or {and:[]}/{or:[]}/{not:...})
+  if (!Array.isArray(rqbGroup.rules) && typeof rqbGroup.combinator !== 'string') {
+    return rqbGroup;
+  }
+
+  return rqbGroupToMiq(rqbGroup, true);
+};

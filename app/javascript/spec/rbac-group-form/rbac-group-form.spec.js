@@ -1,0 +1,611 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import fetchMock from 'fetch-mock';
+import { renderWithRedux } from '../helpers/mountForm';
+import RbacGroupForm from '../../components/rbac-group-form';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
+
+jest.mock('../../helpers/miq-redirect-back');
+
+const mockGroupData = {
+  description: 'Test Group',
+  detailed_description: 'A test group',
+  miq_user_role: { id: 1, name: 'EvmRole-viewer' },
+  tenant: { id: 2, name: 'My Tenant' },
+  entitlement: {
+    filter_expression: null,
+    belongsto_filters: [],
+  },
+  users: [],
+};
+
+const mockRoles = {
+  resources: [
+    { id: 1, name: 'EvmRole-viewer' },
+    { id: 2, name: 'EvmRole-administrator' },
+  ],
+};
+
+const mockTenants = {
+  resources: [
+    { id: 2, name: 'My Tenant', divisible: true },
+    { id: 3, name: 'My Project', divisible: false },
+  ],
+};
+
+const mockExtra = {
+  hac_tree: '[]',
+  vat_tree: '[]',
+  hac_paths: {},
+  vat_paths: {},
+  tags: { tags: [], assignedTags: [], affectedItems: ['1'] },
+  deleted_belongsto_filters: [],
+};
+
+// A minimal HAC tree with one provider containing one cluster (no children
+// with hideCheckbox, so the cluster is a leaf under checkModel="leaf").
+const CLUSTER_KEY = 'cluster-a';
+const CLUSTER_PATH = '/belongsto/ExtManagementSystem|Seed Provider/EmsCluster|Cluster A';
+const PROVIDER_KEY = 'e-1';
+const PROVIDER_PATH = '/belongsto/ExtManagementSystem|Seed Provider';
+
+const mockExtraWithHacTree = {
+  ...mockExtra,
+  hac_tree: JSON.stringify([{
+    key: PROVIDER_KEY,
+    text: 'Seed Provider',
+    nodes: [{ key: CLUSTER_KEY, text: 'Cluster A', nodes: [] }],
+  }]),
+  hac_paths: {
+    [PROVIDER_KEY]: PROVIDER_PATH,
+    [CLUSTER_KEY]: CLUSTER_PATH,
+  },
+};
+
+const defaultProps = {
+  groupId: 1,
+  readOnly: false,
+  currentTenantName: 'My Tenant',
+  superAdminUser: true,
+};
+
+beforeEach(() => {
+  fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+  fetchMock.get(/\/api\/roles/, mockRoles);
+  fetchMock.get(/\/api\/tenants/, mockTenants);
+  fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+  fetchMock.post(/\/api\/groups/, { description: 'Test Group' });
+  miqRedirectBack.mockClear();
+});
+
+afterEach(() => {
+  fetchMock.reset();
+  fetchMock.restore();
+  jest.clearAllMocks();
+});
+
+describe('RbacGroupForm', () => {
+  it('renders loading state initially', async() => {
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    expect(document.querySelector('.cds--loading')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(document.getElementById('description')).toBeInTheDocument();
+    });
+  });
+
+  it('renders form fields in edit mode', async() => {
+    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(document.getElementById('description')).toBeInTheDocument();
+    });
+    expect(document.getElementById('detailed_description')).toBeInTheDocument();
+    expect(document.getElementById('role_id')).toBeInTheDocument();
+    expect(document.getElementById('tenant_id')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('pre-fills form fields from loaded group data', async() => {
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(document.getElementById('description')).toHaveValue('Test Group');
+    });
+    expect(document.getElementById('detailed_description')).toHaveValue('A test group');
+  });
+
+  it('renders read-only view when readOnly=true', async() => {
+    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+
+    // Group Information fields are rendered by the HAML helper in read-only mode,
+    // not by the React form. The React form only shows the filter tabs.
+    await waitFor(() => {
+      expect(document.getElementById('description')).not.toBeInTheDocument();
+    });
+    // Should show "Assigned Filters (read only)" heading from FilterTabs
+    await waitFor(() => {
+      expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
+  });
+
+  it('requests the form data with read_only=true only in read-only mode', async() => {
+    const { unmount } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+    await waitFor(() => {
+      expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
+    });
+    expect(fetchMock.called('begin:/ops/group_form_data/1?read_only=true')).toBe(true);
+    unmount();
+
+    fetchMock.resetHistory();
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    await waitFor(() => {
+      expect(screen.getByText('Assign Filters')).toBeInTheDocument();
+    });
+    expect(fetchMock.called(/\/ops\/group_form_data\/1$/)).toBe(true);
+  });
+
+  it('renders "Assign Filters" heading in edit mode', async() => {
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Assign Filters')).toBeInTheDocument();
+    });
+  });
+
+  it('shows deleted belongsto warning when deleted_belongsto_filters is non-empty in form data', async() => {
+    fetchMock.get(
+      /\/ops\/group_form_data\//,
+      { ...mockExtra, deleted_belongsto_filters: ['/ManageIQ/Providers/Amazon/...'] },
+      { overwriteRoutes: true }
+    );
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/outdated filters need review/i)).toBeInTheDocument();
+    });
+    expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers', { selector: 'strong' })).toBeInTheDocument();
+    expect(screen.getByText('/ManageIQ/Providers/Amazon/...')).toBeInTheDocument();
+  });
+
+  it('does not show deleted filter warning when list is empty', async() => {
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(document.getElementById('description')).toBeInTheDocument();
+    });
+    expect(screen.queryByText(/outdated filters need review/i)).not.toBeInTheDocument();
+  });
+
+  it('renders filter tabs', async() => {
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('My Tenant Tags')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+    expect(screen.getByText('VMs & Templates')).toBeInTheDocument();
+  });
+
+  describe('for new group', () => {
+    beforeEach(() => {
+      fetchMock.restore();
+      fetchMock.get(/\/api\/roles/, mockRoles);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
+      fetchMock.post('/api/groups', { description: 'New Group' });
+    });
+
+    it('renders with "Add" submit button', async() => {
+      const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /^Add$/i })).toBeInTheDocument();
+      });
+      expect(container).toMatchSnapshot();
+    });
+
+    it('calls POST /api/groups on submit', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Fill required fields
+      await user.type(document.getElementById('description'), 'New Group');
+      await user.selectOptions(document.getElementById('role_id'), '1');
+      await user.selectOptions(document.getElementById('tenant_id'), '2');
+
+      const submitBtn = screen.getByRole('button', { name: /^Add$/i });
+      await user.click(submitBtn);
+
+      await waitFor(() => {
+        expect(fetchMock.called('/api/groups')).toBe(true);
+        const lastCall = fetchMock.lastCall('/api/groups');
+        expect(JSON.parse(lastCall[1].body)).toEqual(
+          expect.objectContaining({ description: 'New Group' })
+        );
+      });
+    });
+  });
+
+  describe('for existing group', () => {
+    it('renders with "Save" submit button', async() => {
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /^Save$/i })).toBeInTheDocument();
+      });
+    });
+
+    it('calls POST /api/groups/:id with action:edit on submit', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Dirty the form so the pristine guard doesn't block submit
+      await user.type(document.getElementById('description'), ' ');
+
+      const submitBtn = screen.getByRole('button', { name: /^Save$/i });
+      await user.click(submitBtn);
+
+      await waitFor(() => {
+        expect(fetchMock.called('/api/groups/1')).toBe(true);
+        const lastCall = fetchMock.lastCall('/api/groups/1');
+        expect(JSON.parse(lastCall[1].body)).toEqual(
+          expect.objectContaining({ action: 'edit' })
+        );
+      });
+    });
+  });
+
+  describe('reset button', () => {
+    it('shows "All changes have been reset" notification after clicking Reset', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Dirty the form so the Reset button becomes enabled
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /reset/i }));
+
+      await waitFor(() => {
+        expect(screen.getByText('All changes have been reset')).toBeInTheDocument();
+      });
+    });
+
+    it('restores the original field values after clicking Reset', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toHaveValue('Test Group');
+      });
+
+      await user.clear(document.getElementById('description'));
+      await user.type(document.getElementById('description'), 'Changed Name');
+      expect(document.getElementById('description')).toHaveValue('Changed Name');
+
+      await user.click(screen.getByRole('button', { name: /reset/i }));
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toHaveValue('Test Group');
+      });
+    });
+  });
+
+  describe('submit error handling', () => {
+    beforeEach(() => {
+      fetchMock.restore();
+      fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+      fetchMock.get(/\/api\/roles/, mockRoles);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+    });
+
+    it('shows an error notification when the API call fails on submit', async() => {
+      fetchMock.post(/\/api\/groups\/1/, 400);
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      // Dirty the form so the pristine guard doesn't block submit
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+      expect(miqRedirectBack).not.toHaveBeenCalled();
+    });
+
+    it('does not navigate away when the API call fails on submit', async() => {
+      fetchMock.post(/\/api\/groups\/1/, { throws: new Error('Network error') });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+      expect(miqRedirectBack).not.toHaveBeenCalled();
+    });
+  });
+
+  it('calls miqRedirectBack with warning on cancel', async() => {
+    const user = userEvent.setup();
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /cancel/i }));
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      expect.any(String),
+      'warning',
+      '/ops/explorer'
+    );
+  });
+
+  it('calls miqRedirectBack with success after successful save', async() => {
+    const user = userEvent.setup();
+    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(document.getElementById('description')).toBeInTheDocument();
+    });
+
+    // Dirty the form so the pristine guard doesn't block submit
+    await user.type(document.getElementById('description'), ' ');
+
+    await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+    await waitFor(() => {
+      expect(miqRedirectBack).toHaveBeenCalledWith(
+        expect.any(String),
+        'success',
+        '/ops/explorer'
+      );
+    });
+  });
+
+  describe('initial load failure', () => {
+    beforeEach(() => {
+      fetchMock.restore();
+      fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+      fetchMock.get(/\/api\/roles/, 500);
+      fetchMock.get(/\/api\/tenants/, mockTenants);
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+    });
+
+    it('shows an error notification when the initial API load fails', async() => {
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
+      });
+    });
+  });
+
+  it('calls miqRedirectBack with the "Add was cancelled" message for a new group', async() => {
+    fetchMock.restore();
+    fetchMock.get(/\/api\/roles/, mockRoles);
+    fetchMock.get(/\/api\/tenants/, mockTenants);
+    fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
+
+    const user = userEvent.setup();
+    renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /cancel/i }));
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      expect.stringMatching(/cancelled/i),
+      'warning',
+      '/ops/explorer'
+    );
+  });
+
+  describe('belongsto filter trees', () => {
+    it('selecting a HAC node and submitting sends the correct belongsto path', async() => {
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      // Navigate to the HAC tab and click Select All
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      // Dirty description so the form isn't pristine
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filters.belongsto).toContain(CLUSTER_PATH);
+      // The provider key is shared — it should NOT appear as an independent
+      // belongsto path since it was not a leaf selection
+      expect(body.resource.filters.belongsto).not.toContain(PROVIDER_PATH);
+    });
+
+    it('loads a group with a saved folder-level belongsto path and shows the node as checked', async() => {
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: null,
+            filters: { belongsto: [CLUSTER_PATH], managed: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      await userEvent.click(screen.getByRole('tab', { name: /clusters/i }));
+
+      // Provider is expanded by default (it's nodes[0]); Cluster A is a direct child
+      await waitFor(() => {
+        expect(screen.getByText('Cluster A')).toBeInTheDocument();
+      });
+
+      // The cluster checkbox should be checked
+      const checkbox = screen.getByText('Cluster A')
+        .closest('li')
+        ?.querySelector('input[type="checkbox"]');
+      expect(checkbox).toBeTruthy();
+      expect(checkbox.checked).toBe(true);
+    });
+  });
+
+  describe('submit payload shape', () => {
+    it('sends an empty filters object when everything is cleared', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filters).toEqual({});
+    });
+
+    it('sends filter_expression:null and filters when in tags mode', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filter_expression).toBeNull();
+      expect(body.resource).toHaveProperty('filters');
+    });
+
+    it('sends filter_expression and no managed filters when useFilterExpression is true', async() => {
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: { exp: { '=': { field: 'MiqGroup-name', value: 'test' } } },
+            filters: { managed: [], belongsto: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+      fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(document.getElementById('description')).toBeInTheDocument();
+      });
+
+      await user.type(document.getElementById('description'), ' ');
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filter_expression).toEqual({
+        exp: { '=': { field: 'MiqGroup-name', value: 'test' } },
+      });
+      expect(body.resource.filters).toEqual({});
+    });
+
+    it('preserves existing filter_expression when only modifying belongsto filters on Tab 2', async() => {
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: { exp: { '=': { tag: 'managed-env/prod', value: 'production' } } },
+            filters: { managed: [], belongsto: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      // Switch to Tab 2 and select all
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      // Submit form
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filter_expression).toEqual({
+        exp: { '=': { tag: 'managed-env/prod', value: 'production' } },
+      });
+      expect(body.resource.filters.belongsto).toContain(CLUSTER_PATH);
+    });
+  });
+});

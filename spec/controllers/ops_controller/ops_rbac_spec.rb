@@ -262,269 +262,115 @@ describe OpsController do
     end
   end
 
-  describe "::MiqGroup" do
-    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-    let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+  describe "#group_form_data" do
+    let(:stub_tree) do
+      instance_double(TreeBuilderBelongsToHac,
+                      :bs_tree => '[{"key":"root","text":"My Cloud","nodes":[]}]',
+                      :paths   => {"root" => "/belongsto/ExtManagementSystem|My Cloud"})
+    end
 
     before do
       MiqUserRole.seed
       MiqGroup.seed
       MiqRegion.seed
       Tenant.seed
-
       stub_user(:features => :all)
-      @group = FactoryBot.create(:miq_group)
-      @role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      FactoryBot.create(
-        :classification,
-        :name        => "env",
-        :description => "Environment",
-        :children    => [FactoryBot.create(:classification)]
-      )
-      @exp = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
-      allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-    end
-
-    context "outdated belongsto filters" do
-      let(:ems) { FactoryBot.create(:ems_vmware, :name => 'ems') }
-      let(:root) do
-        datacenters = FactoryBot.create(:ems_folder, :name => "Datacenters", :ext_management_system => ems)
-        datacenters.parent = ems
-        datacenters
-      end
-
-      let(:dc) do
-        datacenter = FactoryBot.create(:ems_folder, :name => "Datacenter1", :ext_management_system => ems)
-        datacenter.parent = root
-        datacenter
-      end
-
-      let(:hfolder) do
-        hfolder = FactoryBot.create(:ems_folder, :name => "host", :ext_management_system => ems)
-        hfolder.parent = dc
-        hfolder
-      end
-      let(:cluster_1) do
-        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 1", :ext_management_system => ems)
-        cluster.parent = hfolder
-        cluster
-      end
-
-      let(:cluster_2) do
-        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 2", :ext_management_system => ems)
-        cluster.parent = hfolder
-        cluster
-      end
-
-      let(:vm_folder_path) { "/belongsto/ExtManagementSystem|#{ems.name}/EmsFolder|#{root.name}/EmsFolder|#{dc.name}/EmsFolder|#{hfolder.name}/EmsCluster|#{cluster_1.name}" }
-
-      let(:outdated_belongs_to_filters) { ["#{vm_folder_path}XXXX", "#{vm_folder_path}YYYY"] }
-
-      before do
-        @group.entitlement = Entitlement.new
-        @group.entitlement.set_belongsto_filters([vm_folder_path] + outdated_belongs_to_filters)
-        @group.entitlement.set_managed_filters([])
-        @group.save!
-      end
-
-      it "removes outdated belongs to filters" do
-        belongsto_filters = {}
-        @group.get_belongsto_filters.each do |b|
-          bobj = MiqFilter.belongsto2object(b)
-          belongsto_filters[bobj.class.to_s + "_" + bobj.id.to_s] = b if bobj
-        end
-
-        expect(@group.get_belongsto_filters).to match_array([vm_folder_path] + outdated_belongs_to_filters)
-
-        controller.instance_variable_set(:@edit, :new     => {:group_id              => @group.id,
-                                                              :use_filter_expression => false,
-                                                              :name                  => "Name",
-                                                              :description           => "Test",
-                                                              :role                  => @role.id,
-                                                              :filter_expression     => @exp.exp,
-                                                              :belongsto             => belongsto_filters,
-                                                              :filters               => {} },
-                                                 :current => {:deleted_belongsto_filters => outdated_belongs_to_filters})
-
-        controller.send(:rbac_group_set_record_vars, @group)
-
-        allow(controller).to receive(:load_edit).and_return(true)
-        allow(controller).to receive(:build_saved_audit).and_return({})
-        allow(controller).to receive(:get_node_info)
-        allow(controller).to receive(:replace_right_cell)
-        controller.send(:rbac_edit_save_or_add, "group")
-
-        expect(@group.get_belongsto_filters).to match_array([vm_folder_path])
-
-        controller.instance_variable_set(:@record, @group)
-
-        controller.send(:rbac_group_set_form_vars)
-      end
-
-      it "removes outdated belongs to filters" do
-        controller.instance_variable_set(:@record, @group)
-
-        allow(controller).to receive(:rbac_group_right_tree)
-        controller.send(:rbac_group_set_form_vars)
-
-        expect(controller.instance_variable_get(:@deleted_belongsto_filters)).to match_array(outdated_belongs_to_filters.map { |x| MiqFilter.belongsto2path_human(x) })
-      end
-
-      context 'no outdated belongs to filters' do
-        before do
-          allow(controller).to receive(:rbac_group_right_tree)
-          controller.instance_variable_set(:@record, FactoryBot.create(:miq_group))
-        end
-
-        subject { controller.instance_variable_get(:@edit) }
-
-        it 'sets @edit[:current] properly according to the outdated belongs to filters' do
-          controller.send(:rbac_group_set_form_vars)
-          expect(subject[:current]).to eq(subject[:new])
-        end
-      end
-    end
-
-    it "saves the filters when use_filter_expression is false" do
-      @group.entitlement = Entitlement.create!
-      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
-                                                        :name                  => 'Name',
-                                                        :description           => "Test",
-                                                        :role                  => @role.id,
-                                                        :filter_expression     => @exp.exp,
-                                                        :belongsto             => {},
-                                                        :filters               => {'managed/env' => '/managed/env'}})
-      controller.send(:rbac_group_set_record_vars, @group)
-      expect(@group.entitlement.filter_expression).to be_nil
-      expect(@group.entitlement.get_managed_filters).to match([["/managed/env"]])
-    end
-
-    it "saves the filters when use_filter_expression is false" do
-      @group.entitlement = Entitlement.create!
-      allow(controller).to receive(:params).and_return('data' => get_tags_json([tag]))
-      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
-                                                        :name                  => 'Name',
-                                                        :description           => "Test",
-                                                        :role                  => @role.id,
-                                                        :filter_expression     => @exp.exp,
-                                                        :belongsto             => {},
-                                                        :filters               => {'managed/department' => '/managed/department/tag1'}})
-      controller.send(:rbac_group_set_record_vars, @group)
-      expect(@group.entitlement.filter_expression).to be_nil
-      expect(@group.entitlement.get_managed_filters).to match([["/managed/department/tag1"]])
-    end
-
-    it "saves the filter_expression when use_filter_expression true" do
-      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => true,
-                                                        :name                  => 'Name',
-                                                        :description           => "Test",
-                                                        :role                  => @role.id,
-                                                        :filter_expression     => @exp.exp,
-                                                        :belongsto             => {},
-                                                        :filters               => {'managed/env' => '/managed/env'}})
-      controller.send(:rbac_group_set_record_vars, @group)
-      expect(@group.entitlement.get_managed_filters).to eq([])
-      expect(@group.entitlement.filter_expression.exp).to match(@exp.exp)
-    end
-
-    render_views
-
-    it "uses tags field only when editing the group filter_expression" do
-      new = {:use_filter_expression => true,
-             :name                  => 'Name',
-             :description           => "Test",
-             :role                  => @role.id,
-             :filter_expression     => @exp.exp,
-             :exp_key               => 'foo',
-             :belongsto             => {},
-             :filters               => {'managed/env' => '/managed/env'}}
-      allow(controller).to receive(:replace_right_cell)
-      controller.params = {:use_filter_expression => "true", :id => "new"}
-
-      edit = {:key      => "rbac_group_edit__new",
-              :new      => new,
-              :current  => new,
-              :edit_exp => {:key => '???'}}
-      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
-      edit[:filter_expression][:expression] = {:test => "foo", :token => 1}
-      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
-      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
-      controller.instance_variable_set(:@edit, edit)
-      controller.instance_variable_set(:@expkey, :filter_expression)
-      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
-      edit[:filter_expression][:exp_model] = @group.class.to_s
-      session[:edit] = edit
-      session[:expkey] = :filter_expression
-      controller.instance_variable_set(:@edit, edit)
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-      allow(controller).to receive(:replace_right_cell)
 
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details)
-
-      post :exp_token_pressed, :params => {:id => 'new', :use_filter_expression => "true", :token => 1}
-      @edit = controller.instance_variable_get(:@edit)
-      expect(@edit[:filter_expression][:exp_typ]).to eq('tags')
+      # TreeBuilderBelongsToHac/Vat walk VM infrastructure which is absent in
+      # unit tests. Stub them out so group_form_data can focus on its own logic.
+      allow(TreeBuilderBelongsToHac).to receive(:new).and_return(stub_tree)
+      allow(TreeBuilderBelongsToVat).to receive(:new).and_return(stub_tree)
     end
 
-    it "calls MiqExpression.tag_details with :no_cache to get only the My Company type tag categories" do
-      new = {:use_filter_expression => true,
-             :name                  => 'Name',
-             :description           => "Test",
-             :role                  => @role.id,
-             :belongsto             => {},
-             :filters               => {'managed/department' => '/managed/department/tag1'}}
-      allow(controller).to receive(:replace_right_cell)
-      controller.params = {:use_filter_expression => "true", :id => "new"}
+    context "for a new group" do
+      it "returns 200 with the expected JSON keys" do
+        get :group_form_data, :params => {:id => "new"}
 
-      edit = {:key      => "rbac_group_edit__new",
-              :new      => new,
-              :current  => new,
-              :edit_exp => {:key => '???'}}
-      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
-      edit[:filter_expression][:expression] = {"???" => "???"}
-      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
-      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
-      controller.instance_variable_set(:@edit, edit)
-      controller.instance_variable_set(:@expkey, :filter_expression)
-      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
-      edit[:filter_expression][:exp_model] = @group.class.to_s
-      session[:edit] = edit
-      session[:expkey] = :filter_expression
-      controller.instance_variable_set(:@edit, edit)
-      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-      allow(controller).to receive(:replace_right_cell)
+        expect(response.status).to eq(200)
+        body = response.parsed_body
+        expect(body).to include("hac_tree", "vat_tree", "hac_paths", "vat_paths",
+                                "tags", "deleted_belongsto_filters")
+      end
 
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details).with(nil, {:no_cache => true})
-      post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
+      it "returns empty deleted_belongsto_filters for a new group" do
+        get :group_form_data, :params => {:id => "new"}
+
+        expect(response.parsed_body["deleted_belongsto_filters"]).to eq([])
+      end
+
+      it "returns tags structure with tags/assignedTags/affectedItems keys" do
+        get :group_form_data, :params => {:id => "new"}
+
+        tags_payload = response.parsed_body["tags"]
+        expect(tags_payload).to include("tags", "assignedTags", "affectedItems")
+      end
     end
 
-    it "initializes the group record when switching tabs" do
-      allow(controller).to receive(:url_for_only_path).and_return("")
-      controller.instance_variable_set(:@edit,
-                                       :group_id => @group.id,
-                                       :new      => {:use_filter_expression => true,
-                                                     :name                  => 'Name',
-                                                     :description           => "Test",
-                                                     :role                  => @role.id,
-                                                     :filter_expression     => @exp.exp,
-                                                     :belongsto             => {},
-                                                     :filters               => {'managed/department' => '/managed/department/tag1'}})
-      controller.instance_variable_set(:@sb, :active_rbac_group_tab => 'rbac_customer_tags')
-      controller.params = {:use_filter_expression => "false", :id => @group.id}
-      controller.send(:rbac_group_get_form_vars)
-      expect(controller.instance_variable_get(:@group).name).to eq(@group.name)
+    it "returns the tree builder paths" do
+      get :group_form_data, :params => {:id => "new"}
+
+      expect(response.parsed_body["hac_paths"]).to eq("root" => "/belongsto/ExtManagementSystem|My Cloud")
+      expect(response.parsed_body["vat_paths"]).to eq("root" => "/belongsto/ExtManagementSystem|My Cloud")
     end
 
-    context 'setting group record variables to new values' do
-      let!(:edit) do
-        controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
-                                                          :description           => "Test",
-                                                          :role                  => @role.id,
-                                                          :filter_expression     => @exp.exp,
-                                                          :belongsto             => {},
-                                                          :filters               => {}})
+    context "when read_only is not requested" do
+      before { FactoryBot.create(:classification_department_with_tags) }
+
+      it "builds editable trees and returns the tag catalogue" do
+        expect(TreeBuilderBelongsToHac).to receive(:new).with(anything, anything, anything, hash_including(:edit => true)).and_return(stub_tree)
+        expect(TreeBuilderBelongsToVat).to receive(:new).with(anything, anything, anything, hash_including(:edit => true)).and_return(stub_tree)
+
+        get :group_form_data, :params => {:id => "new"}
+
+        expect(response.parsed_body.dig("tags", "tags").pluck("id")).to include("department")
+      end
+    end
+
+    context "when read_only=true" do
+      before { FactoryBot.create(:classification_department_with_tags) }
+
+      it "builds non-editable trees and skips the tag catalogue" do
+        expect(TreeBuilderBelongsToHac).to receive(:new).with(anything, anything, anything, hash_including(:edit => false)).and_return(stub_tree)
+        expect(TreeBuilderBelongsToVat).to receive(:new).with(anything, anything, anything, hash_including(:edit => false)).and_return(stub_tree)
+
+        get :group_form_data, :params => {:id => "new", :read_only => "true"}
+
+        expect(response.parsed_body["tags"]).to include("tags" => [], "assignedTags" => [], "affectedItems" => [""])
+      end
+    end
+
+    context "for an existing group" do
+      let!(:group) { FactoryBot.create(:miq_group) }
+
+      it "returns 200 with the expected JSON keys" do
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        expect(response.status).to eq(200)
+        body = response.parsed_body
+        expect(body).to include("hac_tree", "vat_tree", "hac_paths", "vat_paths",
+                                "tags", "deleted_belongsto_filters")
+      end
+
+      it "includes the group id in the affectedItems array" do
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        affected = response.parsed_body.dig("tags", "affectedItems")
+        expect(affected).to include(group.id.to_s)
+      end
+
+      it "returns one assignedTags entry per category with all of its values" do
+        FactoryBot.create(:classification_department_with_tags)
+        group.entitlement = Entitlement.new
+        group.entitlement.set_managed_filters([%w[/managed/department/accounting /managed/department/finance]])
+        group.save!
+
+        get :group_form_data, :params => {:id => group.id.to_s}
+
+        assigned = response.parsed_body.dig("tags", "assignedTags")
+        expect(assigned.size).to eq(1)
+        expect(assigned.first).to include("id" => "department", "label" => "Department")
+        expect(assigned.first["values"].pluck("id")).to match_array(%w[accounting finance])
       end
     end
   end
@@ -606,54 +452,6 @@ describe OpsController do
     end
   end
 
-  describe '#rbac_field_changed' do
-    let(:getvars) { "rbac_#{rec_type}_get_form_vars".to_sym }
-    let(:edit) { {:new => {}} }
-    let(:params) { {:id => "new"} }
-
-    before do
-      allow(controller).to receive(:load_edit).and_return(true)
-      allow(controller).to receive(getvars).and_call_original
-      allow(controller).to receive(:render).and_return(true)
-
-      controller.params = params
-      controller.instance_variable_set(:@edit, edit)
-      stub_user(:features => :all)
-    end
-
-    subject { controller.instance_variable_get(:@edit)[:new][:group] }
-
-    context 'adding a new group' do
-      let(:rec_type) { "group" }
-
-      it 'does not set list of selected groups' do
-        controller.send(:rbac_field_changed, rec_type)
-        expect(subject).to be_nil
-      end
-
-      context 'session[:changed]' do
-        let(:tenant) { FactoryBot.create(:tenant) }
-        let(:params) { {:id => "new", :group_tenant => tenant.id.to_s} }
-        let(:edit) { {:new => {:role => 1}} }
-
-        it 'sets session[:changed] to true while filling in role and tenant' do
-          controller.send(:rbac_field_changed, rec_type)
-          expect(controller.session[:changed]).to be(true)
-        end
-
-        context 'filling in description' do
-          let(:edit) { {:new => {:description => 'new_group'}} }
-
-          it 'sets session[:changed] to true' do
-            controller.send(:rbac_field_changed, rec_type)
-            expect(controller.session[:changed]).to be(true)
-          end
-        end
-      end
-    end
-
-  end
-
   describe "#rbac_get_info" do
     before do
       EvmSpecHelper.local_miq_server
@@ -707,22 +505,73 @@ describe OpsController do
     end
   end
 
-  describe '#rbac_edit_save_or_add' do
-    context 'adding new Group' do
-      before do
-        allow(controller).to receive(:load_edit).and_return(true)
-        allow(controller).to receive(:render_flash)
-        controller.instance_variable_set(:@edit, :new => {:description           => 'Description',
-                                                          :filters               => {},
-                                                          :filter_expression     => {'???' => '???'},
-                                                          :use_filter_expression => false})
-        controller.params = {:button => 'add'}
-      end
+  describe "#rbac_group_seq_field_changed" do
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:group1) { FactoryBot.create(:miq_group, :description => "Group 1", :sequence => 1) }
+    let!(:group2) { FactoryBot.create(:miq_group, :description => "Group 2", :sequence => 2) }
 
-      it 'sets @flash_array properly if user forgot to choose a Role for a Group' do
-        controller.send(:rbac_edit_save_or_add, 'group')
-        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'A Role must be assigned to this Group', :level => :error}])
-      end
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as admin_user
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+      session[:edit] = {
+        :key     => "rbac_group_edit__seq",
+        :new     => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]},
+        :current => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]}
+      }
+    end
+
+    it "reorders items and activates save/reset buttons when moved up" do
+      post :rbac_group_seq_field_changed, :params => {:button => "up", :seq_fields => ["Group 2"], :id => "seq"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(response.body).to include("miqButtons('show')")
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to eq(["Group 2", "Group 1"])
+    end
+
+    it "reorders items and activates save/reset buttons when moved down" do
+      post :rbac_group_seq_field_changed, :params => {:button => "down", :seq_fields => ["Group 1"], :id => "seq"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(response.body).to include("miqButtons('show')")
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to eq(["Group 2", "Group 1"])
+    end
+  end
+
+  describe "#rbac_group_seq_edit" do
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:group1) { FactoryBot.create(:miq_group, :description => "Group 1", :sequence => 1) }
+    let!(:group2) { FactoryBot.create(:miq_group, :description => "Group 2", :sequence => 2) }
+
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as admin_user
+      allow(controller).to receive(:x_node).and_return("root")
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+    end
+
+    it "initializes the sequence edit screen" do
+      post :rbac_group_seq_edit, :xhr => true
+      expect(response.status).to eq(200)
+      expect(controller.instance_variable_get(:@edit)[:key]).to eq("rbac_group_edit__seq")
+      expect(controller.instance_variable_get(:@edit)[:new][:external_auth_groups_list]).to include("Group 1", "Group 2")
+    end
+
+    it "saves the reordered sequence" do
+      session[:edit] = {
+        :key     => "rbac_group_edit__seq",
+        :new     => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 2", "Group 1"]},
+        :current => {:external_auth_groups => [group1, group2], :external_auth_groups_list => ["Group 1", "Group 2"]}
+      }
+      post :rbac_group_seq_edit, :params => {:button => "save"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(group1.reload.sequence).to eq(2)
+      expect(group2.reload.sequence).to eq(1)
+    end
+
+    it "cancels the edit sequence" do
+      session[:edit] = {:key => "rbac_group_edit__seq"}
+      post :rbac_group_seq_edit, :params => {:button => "cancel"}, :xhr => true
+      expect(response.status).to eq(200)
+      expect(session[:edit]).to be_nil
     end
   end
 end

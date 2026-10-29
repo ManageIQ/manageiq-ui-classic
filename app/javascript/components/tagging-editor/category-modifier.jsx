@@ -1,0 +1,33 @@
+import PropTypes from 'prop-types';
+import { Column, FormGroup } from '@carbon/react';
+import TagSelector from './tag-selector';
+import TaggingPropTypes from './tagging-prop-types';
+
+const CategoryModifier = ({
+  tagCategories,
+  onTagCategoryChange,
+  selectedTagCategory = {},
+  categoryLabel = __('Category'),
+  isDisabled = false,
+}) => (
+  <FormGroup legendText={categoryLabel}>
+    <Column className="tag-modifier-form-row category-modifier">
+      <TagSelector
+        tagCategories={tagCategories}
+        onTagCategoryChange={onTagCategoryChange}
+        selectedOption={selectedTagCategory}
+        isDisabled={isDisabled}
+      />
+    </Column>
+  </FormGroup>
+);
+
+CategoryModifier.propTypes = {
+  tagCategories: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
+  selectedTagCategory: TaggingPropTypes.category,
+  onTagCategoryChange: PropTypes.func.isRequired,
+  categoryLabel: PropTypes.string,
+  isDisabled: PropTypes.bool,
+};
+
+export default CategoryModifier;

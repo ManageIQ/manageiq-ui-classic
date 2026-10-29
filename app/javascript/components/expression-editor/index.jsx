@@ -34,7 +34,7 @@ const CARBON_CONTROLS = {
 };
 
 const ExpressionEditor = ({
-  model, value, onlyTags, onQueryChange, showAlias, showUserInput, onContextReady, seedEmpty,
+  model, value, onlyTags, onQueryChange, showAlias, showUserInput, onContextReady, seedEmpty, includeModel = true,
 }) => {
   const [fields, setFields]   = useState(null);
   const [query, setQuery]     = useState(() => miqToRqb(value || null));
@@ -51,7 +51,8 @@ const ExpressionEditor = ({
     setLoading(true);
     setError(null);
 
-    http.get(`/expression_editor/metadata?model=${encodeURIComponent(model)}`, { skipErrors: true })
+    const includeModelParam = includeModel ? '' : '&include_model=false';
+    http.get(`/expression_editor/metadata?model=${encodeURIComponent(model)}${includeModelParam}`, { skipErrors: true })
       .then((metadata) => {
         const includeRegkey = !onlyTags && model === 'Vm';
         const cfg = buildFieldConfig(metadata, { includeRegkey });
@@ -78,7 +79,7 @@ const ExpressionEditor = ({
         setError(String(err));
         setLoading(false);
       });
-  }, [model, onlyTags]);
+  }, [model, onlyTags, includeModel]);
 
   // Build a flat name→label map once when fields are loaded.
   const labelMap = useMemo(() => {
