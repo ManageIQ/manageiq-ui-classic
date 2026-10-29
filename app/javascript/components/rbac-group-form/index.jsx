@@ -245,9 +245,12 @@ const RbacGroupForm = ({
     };
 
     if (useFilterExpression) {
-      // filterExpression is stored as raw RQB query — convert to MIQ format now
-      const miqExpression = filterExpression ? rqbToMiq(filterExpression) : null;
-      resource.filter_expression = miqExpression ? { exp: miqExpression } : null;
+      // filterExpression may be stored as raw RQB query or MiqExpression object — normalize to MiqExpression
+      const miqExpression = (filterExpression?.rules || filterExpression?.combinator)
+        ? rqbToMiq(filterExpression)
+        : filterExpression;
+      const unwrapped = miqExpression?.exp ? miqExpression.exp : miqExpression;
+      resource.filter_expression = unwrapped ? { exp: unwrapped } : null;
       resource.filters = belongsto.length > 0 ? { belongsto, managed: [] } : {};
     } else {
       resource.filter_expression = null;

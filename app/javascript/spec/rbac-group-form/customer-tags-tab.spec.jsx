@@ -6,7 +6,15 @@ import CustomerTagsTab from '../../components/rbac-group-form/customer-tags-tab'
 jest.mock('../../components/expression-editor', () => {
   const MockExpressionEditor = ({ onQueryChange, onContextReady }) => (
     <div data-testid="expression-editor">
-      <button type="button" onClick={() => onQueryChange({ rules: [] }, [])}>trigger valid</button>
+      <button
+        type="button"
+        onClick={() => onQueryChange(
+          { rules: [{ field: '__tag__:managed/env', operator: 'CONTAINS', value: 'prod' }], combinator: 'and' },
+          []
+        )}
+      >
+        trigger valid
+      </button>
       <button type="button" onClick={() => onQueryChange({ rules: [] }, ['incomplete'])}>trigger error</button>
       <button type="button" onClick={() => onContextReady && onContextReady(new Map(), null)}>trigger context</button>
     </div>
@@ -87,7 +95,7 @@ describe('CustomerTagsTab', () => {
 
       await user.click(screen.getByText('trigger valid'));
 
-      expect(onExpressionChange).toHaveBeenCalledWith({ rules: [] }, []);
+      expect(onExpressionChange).toHaveBeenCalledWith({ CONTAINS: { tag: 'managed/env', value: 'prod' } }, []);
     });
 
     it('calls onToggle(false) when switching back to tags mode', async() => {

@@ -563,8 +563,49 @@ describe('RbacGroupForm', () => {
         expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
       });
       const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
-      expect(body.resource).toHaveProperty('filter_expression');
+      expect(body.resource.filter_expression).toEqual({
+        exp: { '=': { field: 'MiqGroup-name', value: 'test' } },
+      });
       expect(body.resource.filters).toEqual({});
+    });
+
+    it('preserves existing filter_expression when only modifying belongsto filters on Tab 2', async() => {
+      fetchMock.get(
+        /\/api\/groups\/1/,
+        {
+          ...mockGroupData,
+          entitlement: {
+            filter_expression: { exp: { '=': { tag: 'managed-env/prod', value: 'production' } } },
+            filters: { managed: [], belongsto: [] },
+          },
+        },
+        { overwriteRoutes: true }
+      );
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
+
+      const user = userEvent.setup();
+      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
+      });
+
+      // Switch to Tab 2 and select all
+      await user.click(screen.getByRole('tab', { name: /clusters/i }));
+      await user.click(screen.getAllByRole('button', { name: /select all/i })[0]);
+
+      // Submit form
+      await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+      await waitFor(() => {
+        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+      });
+      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      expect(body.resource.filter_expression).toEqual({
+        exp: { '=': { tag: 'managed-env/prod', value: 'production' } },
+      });
+      expect(body.resource.filters.belongsto).toContain(CLUSTER_PATH);
     });
   });
 });

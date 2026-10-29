@@ -75,9 +75,9 @@ const FilterTabs = ({
                 }
               }}
               filterExpression={filterExpression}
-              onExpressionChange={(q, errors) => {
+              onExpressionChange={(exp, errors) => {
                 update({
-                  filterExpression: errors.length === 0 ? q : filterExpression,
+                  filterExpression: errors.length === 0 ? exp : filterExpression,
                   expressionHasErrors: errors.length > 0,
                 });
               }}

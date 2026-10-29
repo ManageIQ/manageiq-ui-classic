@@ -125,6 +125,19 @@ describe('miqToRqb', () => {
     const ids = [result.id, result.rules[0].id, result.rules[1].id];
     expect(new Set(ids).size).toBe(3);
   });
+
+  it('returns the input untouched if already an RQB query object', () => {
+    const rqb = {
+      id: '1',
+      combinator: 'and',
+      rules: [
+        {
+          id: '2', field: 'Vm-name', operator: '=', value: 'test',
+        },
+      ],
+    };
+    expect(miqToRqb(rqb)).toBe(rqb);
+  });
 });
 
 // rqbToMiq
@@ -273,6 +286,11 @@ describe('rqbToMiq', () => {
     };
     const result = rqbToMiq(rqb);
     expect(result).toBeNull();
+  });
+
+  it('returns the input untouched if already a MiqExpression object', () => {
+    const miq = { '=': { field: 'Vm-name', value: 'test' } };
+    expect(rqbToMiq(miq)).toBe(miq);
   });
 
   it('flattens a single-rule nested subgroup to a bare atom', () => {
