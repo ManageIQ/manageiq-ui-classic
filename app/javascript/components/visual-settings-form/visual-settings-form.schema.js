@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = (shortcuts, timezoneOptions) => ({
+const createSchema = (shortcuts, timezoneOptions, locales = []) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -118,7 +118,7 @@ const createSchema = (shortcuts, timezoneOptions) => ({
           initialValue: 'default',
           options: [
             { label: __('Global Default'), value: 'default' },
-            ...Object.keys(window.locales).map((value) => ({ value, label: window.locales[value].locale_data.app.locale_name[0] })),
+            ...locales.map(([label, value]) => ({ label, value })),
           ],
         },
       ],

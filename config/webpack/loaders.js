@@ -32,22 +32,6 @@ module.exports = [
     exclude: /node_modules\/(?!(@carbon|@tanstack|@xterm|es-toolkit|react-checkbox-tree|temporal-polyfill))/,
   },
   {
-    // matches both the actual path and the aliased one
-    test: /gettext_i18n_rails_js.*jed\.js/,
-    use: {
-      loader: 'imports-loader',
-      options: {
-        wrapper: {
-          thisArg: 'window',
-          args: {
-            exports: 'undefined',
-            define: 'undefined',
-          },
-        },
-      },
-    },
-  },
-  {
     test: /\.(jpg|jpeg|png|gif|svg|eot|ttf|woff|woff2)$/i,
     use: [{
       loader: 'file-loader',
