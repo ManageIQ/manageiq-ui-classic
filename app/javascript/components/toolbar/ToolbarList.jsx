@@ -76,23 +76,28 @@ export const ToolbarList = (props) => {
         </div>
       )}
     >
-      { enabledItems.map((item) => (
-        <OverflowMenuItem
-          className="overflow-options"
-          key={item.id}
-          aria-label={item.title}
-          hasDivider={(item.type === 'separator')}
-          itemText={<MenuIcon text={item.text ? item.text : (item.title && item.title)} icon={item.icon} color={item.color} />}
-          disabled={!item.enabled}
-          onKeyDown={keydownFunc}
-          title={item.title}
-          requireTitle
-          onClick={onClick && item.enabled ? (() => onClick(item)) : null}
-        >
-          <ToolbarClick {...props} />
-        </OverflowMenuItem>
-
-      )) }
+      { enabledItems.map((item, index) => {
+        if (item.type === 'separator') {
+          return null;
+        }
+        const hasDivider = index > 0 && enabledItems[index - 1].type === 'separator';
+        return (
+          <OverflowMenuItem
+            className="overflow-options"
+            key={item.id}
+            aria-label={item.title}
+            hasDivider={hasDivider}
+            itemText={<MenuIcon text={item.text ? item.text : (item.title && item.title)} icon={item.icon} color={item.color} />}
+            disabled={!item.enabled}
+            onKeyDown={keydownFunc}
+            title={item.title}
+            requireTitle
+            onClick={onClick && item.enabled ? (() => onClick(item)) : null}
+          >
+            <ToolbarClick {...props} />
+          </OverflowMenuItem>
+        );
+      }) }
     </OverflowMenu>
   );
 };
