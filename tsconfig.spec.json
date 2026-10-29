@@ -1,0 +1,14 @@
+// Used by ESLint's @typescript-eslint/parser (parserOptions.project) only.
+// tsconfig.json excludes *.spec.ts/tsx to keep webpack builds clean, but that
+// causes ESLint to throw "file not found in any project" for spec files.
+// This config extends the root tsconfig and re-includes spec files so ESLint
+// can type-check them without affecting the webpack build.
+{
+  "extends": "./tsconfig.json",
+  // Can be probably removed once config/jest.setup.js file is converted to ts
+  "compilerOptions": {
+    "types": ["@testing-library/jest-dom"]
+  },
+  "include": ["app/javascript/**/*"],
+  "exclude": []
+}
