@@ -793,24 +793,10 @@ class MiqAeClassController < ApplicationController
     end
     render :update do |page|
       page << javascript_prologue
-      page << "if (miqDomElementExists('cls_method_data')){"
-      page << "var ta = document.getElementById('cls_method_data');"
-      page << "} else {"
-      page << "var ta = document.getElementById('method_data');"
-      page << "}"
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "miqScrollTop();" if @flash_array.present?
-      page << "var lineHeight = ta.clientHeight / ta.rows;"
-      page << "ta.scrollTop = (#{line.to_i}-1) * lineHeight;"
-      if line.positive?
-        if @sb[:row_selected]
-          page << "$('#cls_method_data_lines').scrollTop(ta.scrollTop);"
-          page << "$('#cls_method_data').scrollTop(ta.scrollTop);"
-        else
-          page << "$('#method_data_lines').scrollTop(ta.scrollTop);"
-          page << "$('#method_data').scrollTop(ta.scrollTop);"
-        end
-      end
+      # Place the cursor on the first line with an error in the CodeMirror editor, without scrolling away from the flash message
+      page << "if (ManageIQ.editor) { ManageIQ.editor.setCursor({line: #{line.to_i - 1}, ch: 0}, null, {scroll: false}); }" if line.positive?
     end
   end
 
