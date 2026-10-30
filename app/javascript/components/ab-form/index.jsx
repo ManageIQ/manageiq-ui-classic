@@ -43,8 +43,7 @@ const AbForm = ({
       getInitialValues(recId),
     ]).then(([fetchedRoles, fetchedDialogs, fetchedFormData, fetchedValues]) => {
       const icon = fetchedValues?.options?.button_icon || 'ff ff-action';
-      // For edit, use applies_to_class from the API response (source of truth).
-      // For new, fall back to the prop passed from the HAML.
+      // For edit, use applies_to_class from the API response
       const resolvedClass = (recId && fetchedValues?.applies_to_class) || appliesToClassProp;
       setState({
         isLoading: false,
@@ -87,12 +86,9 @@ const AbForm = ({
       const assignFailureMessage = __('Custom Button was saved but could not be assigned. Please assign it manually.');
 
       // customButtonGroupId and appliesToId are mutually exclusive:
-      //   customButtonGroupId — set when adding a button directly under a button group node (ab_tree/sandt_tree cbg- node).
-      //   appliesToId         — set when adding a standalone button under a service template node (sandt_tree st- node).
-      // The group branch takes priority; if both were somehow set the ST assign would be redundant
-      // because the group itself is already associated with the service template.
+      //   customButtonGroupId — set when adding a button directly under a button group node.
+      //   appliesToId         — set when adding a standalone button under a service template node.
       if (!recId && customButtonGroupId) {
-        // Link the new button to its group via the atomic add_custom_button API action.
         const newId = parseInt(response?.results?.[0]?.id, 10);
         if (!newId) {
           miqRedirectBack(message, 'success', redirectUrl);
@@ -108,8 +104,6 @@ const AbForm = ({
       }
 
       if (!recId && appliesToId) {
-        // Register the new button in the service template's button_order via the
-        // atomic add_custom_button API action so it appears in the catalog tree.
         const newId = parseInt(response?.results?.[0]?.id, 10);
         if (newId) {
           API.post(`/api/service_templates/${appliesToId}`, { action: 'add_custom_button', button_id: newId })
@@ -161,7 +155,6 @@ const AbForm = ({
           onCloseButtonClick={() => setFlashError(null)}
         />
       )}
-      {/* initialValues is only unset when the initial data load failed; show the error alone */}
       {initialValues && (
         <MiqFormRenderer
           componentMapper={componentMapper}

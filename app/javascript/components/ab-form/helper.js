@@ -1,4 +1,4 @@
-import { API } from '../../http_api';
+import { API, http } from '../../http_api';
 
 const getButtonTypes = () => API.options('/api/custom_buttons')
   .then((response) => Object.keys(response.data.custom_button_types)
@@ -53,7 +53,7 @@ const getInitialValues = (recId) => {
       .filter(([k]) => !skipKeys.has(k))
       .map(([k, v]) => ({ key: k, value: v }));
 
-    // Ansible playbook inventory_type normalisation (same logic as CustomButtonForm)
+    // Ansible playbook inventory_type normalisation
     if (data.options?.button_type === 'ansible_playbook') {
       values.uri_attributes = { ...data.uri_attributes, request: 'create' };
       const hosts = data.uri_attributes?.hosts;
@@ -67,7 +67,6 @@ const getInitialValues = (recId) => {
       }
     }
 
-    // Role visibility normalisation — SELECT expects a string, not an array
     if (data.visibility?.roles) {
       if (data.visibility.roles[0] === '_ALL_') {
         values.visibility = { roles: '_ALL_' };
@@ -77,11 +76,9 @@ const getInitialValues = (recId) => {
       }
     }
 
-    // Expressions come back as { exp: {...} } objects from the API
     values.enablement_expression = data.enablement_expression?.exp ?? null;
     values.visibility_expression = data.visibility_expression?.exp ?? null;
 
-    // dialog_id comes back as a string from the API — cast to int so the select matches
     if (values.resource_action?.dialog_id) {
       values.resource_action = {
         ...values.resource_action,
@@ -103,7 +100,6 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     submit.options = { ...submit.options, button_icon: buttonIcon };
   }
 
-  // Role visibility — convert back from normalised form to API format
   if (values.visibility?.roles === 'role' && values.available_roles) {
     let roles = values.available_roles;
     if (recId && roles.length > 0 && roles[0].value === undefined) {
@@ -115,14 +111,12 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     submit.visibility = { roles: ['_ALL_'] };
   }
 
-  // Resource action
   submit.resource_action = {
     ...submit.resource_action,
     ae_class: 'PROCESS',
     ae_namespace: 'SYSTEM',
   };
 
-  // Attribute/value pairs — re-pack [{key, value}] array back into uri_attributes
   if (values.options?.button_type !== 'ansible_playbook') {
     const packed = {};
     (values.attribute_pairs || []).forEach(({ key, value }) => {
@@ -149,7 +143,7 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     delete submit.attribute_pairs;
   }
 
-  // Expressions — strip the sentinel value used when editor has errors
+  // Expressions
   const INVALID = '__expression_invalid__';
   submit.enablement_expression = (values.enablement_expression && values.enablement_expression !== INVALID)
     ? { exp: values.enablement_expression }

@@ -10,9 +10,6 @@ import {
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
-// Mock the whole helper so tests don't need to set up window.http or
-// run real network calls for roles/dialogs/formData on every test.
-// Individual tests can override specific functions via mockResolvedValue.
 jest.mock('../../components/ab-form/helper', () => ({
   getRoles: jest.fn(),
   getServiceDialogs: jest.fn(),
@@ -22,7 +19,6 @@ jest.mock('../../components/ab-form/helper', () => ({
   buildSubmitData: jest.requireActual('../../components/ab-form/helper').buildSubmitData,
 }));
 
-// Stub custom DDF fields that are heavy or have their own tests
 jest.mock('../../components/fonticon-picker/font-icon-picker-ddf', () => ({
   __esModule: true,
   default: () => <div data-testid="font-icon-picker" />,
@@ -38,8 +34,17 @@ jest.mock('../../components/condition-form/expression-editor-field', () => ({
 
 const nameField = () => screen.getByRole('textbox', { name: /^name/i });
 const descriptionField = () => screen.getByRole('textbox', { name: /^description/i });
+const requestField = () => screen.getByRole('textbox', { name: /^request/i });
 
-// ── shared fixtures ──────────────────────────────────────────────────────────
+const submitNewButton = async(user, { name = 'Test Button', description = 'A description', request = 'my_request' } = {}) => {
+  await screen.findByRole('textbox', { name: /^name/i });
+  await user.type(nameField(), name);
+  await user.type(descriptionField(), description);
+  await user.click(screen.getByRole('tab', { name: 'Advanced' }));
+  await screen.findByRole('textbox', { name: /^request/i });
+  await user.type(requestField(), request);
+  await user.click(screen.getByRole('button', { name: 'Add' }));
+};
 
 const newDefaults = {
   inventory_type: 'localhost',
@@ -54,7 +59,6 @@ const newDefaults = {
     open_url: false,
   },
   resource_action: { ae_message: 'create', ae_instance: 'Request' },
-  uri_attributes: { request: 'create' },
   visibility: { roles: '_ALL_' },
 };
 
@@ -87,8 +91,6 @@ const defaultProps = {
   redirectUrl: '/miq_ae_customization/explorer',
 };
 
-// ── setup / teardown ─────────────────────────────────────────────────────────
-
 beforeEach(() => {
   getRoles.mockResolvedValue([{ label: 'EvmRole-administrator', value: 'EvmRole-administrator' }]);
   getServiceDialogs.mockResolvedValue([{ label: 'My Dialog', value: 1 }]);
@@ -106,12 +108,9 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-// ── tests ────────────────────────────────────────────────────────────────────
-
 describe('AbForm', () => {
   describe('new button', () => {
     it('shows a loading spinner while data is fetched', () => {
-      // Never resolve so we stay in loading state
       getInitialValues.mockReturnValue(new Promise(() => {}));
       renderWithRedux(<AbForm {...defaultProps} />);
       expect(screen.getByRole('img', { name: /loading/i })).toBeInTheDocument();
@@ -172,12 +171,7 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '99' }] });
 
       renderWithRedux(<AbForm {...defaultProps} />);
-      await screen.findByRole('textbox', { name: /^name/i });
-
-      await user.type(nameField(), 'Test Button');
-      await user.type(descriptionField(), 'A test button');
-
-      await user.click(screen.getByRole('button', { name: 'Add' }));
+      await submitNewButton(user, { name: 'Test Button', description: 'A test button' });
 
       await waitFor(() => {
         expect(fetchMock.calls('/api/custom_buttons/')).toHaveLength(1);
@@ -194,11 +188,7 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_buttons/', { throws: { data: { error: { message: 'Validation failed' } } } });
 
       renderWithRedux(<AbForm {...defaultProps} />);
-      await screen.findByRole('textbox', { name: /^name/i });
-
-      await user.type(nameField(), 'Bad Button');
-      await user.type(descriptionField(), 'desc');
-      await user.click(screen.getByRole('button', { name: 'Add' }));
+      await submitNewButton(user, { name: 'Bad Button', description: 'desc' });
 
       expect(await screen.findByText('Validation failed')).toBeInTheDocument();
     });
@@ -250,7 +240,6 @@ describe('AbForm', () => {
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await waitFor(() => expect(screen.getByDisplayValue('My Button')).toBeInTheDocument());
 
-      // Change a field to make the form dirty
       await user.clear(descriptionField());
       await user.type(descriptionField(), 'Updated description');
 
@@ -279,7 +268,6 @@ describe('AbForm', () => {
 
       expect(await screen.findByText('Save failed')).toBeInTheDocument();
 
-      // Dismiss the notification
       await user.click(screen.getByRole('button', { name: /close/i }));
       expect(screen.queryByText('Save failed')).not.toBeInTheDocument();
     });
@@ -292,11 +280,7 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_button_sets/10', {});
 
       renderWithRedux(<AbForm {...defaultProps} customButtonGroupId={10} />);
-      await screen.findByRole('textbox', { name: /^name/i });
-
-      await user.type(nameField(), 'Group Button');
-      await user.type(descriptionField(), 'desc');
-      await user.click(screen.getByRole('button', { name: 'Add' }));
+      await submitNewButton(user, { name: 'Group Button', description: 'desc' });
 
       await waitFor(() => {
         expect(fetchMock.calls('/api/custom_button_sets/10')).toHaveLength(1);
@@ -314,11 +298,7 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/service_templates/42', {});
 
       renderWithRedux(<AbForm {...defaultProps} appliesToId="42" />);
-      await screen.findByRole('textbox', { name: /^name/i });
-
-      await user.type(nameField(), 'ST Button');
-      await user.type(descriptionField(), 'desc');
-      await user.click(screen.getByRole('button', { name: 'Add' }));
+      await submitNewButton(user, { name: 'ST Button', description: 'desc' });
 
       await waitFor(() => {
         expect(fetchMock.calls('/api/service_templates/42')).toHaveLength(1);

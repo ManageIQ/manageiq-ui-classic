@@ -1,7 +1,13 @@
-import { buildSubmitData, getInitialValues } from '../../components/ab-form/helper';
-import { API } from '../../http_api';
+import {
+  buildSubmitData, getInitialValues,
+  getRoles, getServiceDialogs, getButtonFormData, getButtonTypes,
+} from '../../components/ab-form/helper';
+import { API, http } from '../../http_api';
 
-jest.mock('../../http_api', () => ({ API: { get: jest.fn() } }));
+jest.mock('../../http_api', () => ({
+  API: { get: jest.fn(), options: jest.fn() },
+  http: { get: jest.fn() },
+}));
 
 const baseValues = {
   name: 'My Button',
@@ -323,5 +329,94 @@ describe('getInitialValues', () => {
         expect(result.hosts).toBe('10.0.0.1');
       });
     });
+  });
+});
+
+describe('getRoles', () => {
+  afterEach(() => jest.clearAllMocks());
+
+  it('fetches roles from /api/roles and maps to label/value pairs', async() => {
+    API.get.mockResolvedValue({
+      resources: [{ name: 'EvmRole-administrator' }, { name: 'EvmRole-auditor' }],
+    });
+
+    const result = await getRoles();
+
+    expect(API.get).toHaveBeenCalledWith(expect.stringContaining('/api/roles'));
+    expect(result).toEqual([
+      { label: 'EvmRole-administrator', value: 'EvmRole-administrator' },
+      { label: 'EvmRole-auditor', value: 'EvmRole-auditor' },
+    ]);
+  });
+});
+
+describe('getServiceDialogs', () => {
+  afterEach(() => jest.clearAllMocks());
+
+  it('fetches dialogs from /api/service_dialogs and maps to label/value pairs', async() => {
+    API.get.mockResolvedValue({
+      resources: [
+        { label: 'My Dialog', id: 1 },
+        { label: 'Another Dialog', id: 2 },
+      ],
+    });
+
+    const result = await getServiceDialogs();
+
+    expect(API.get).toHaveBeenCalledWith(expect.stringContaining('/api/service_dialogs'));
+    expect(result).toEqual([
+      { label: 'My Dialog', value: 1 },
+      { label: 'Another Dialog', value: 2 },
+    ]);
+  });
+});
+
+describe('getButtonFormData', () => {
+  afterEach(() => jest.clearAllMocks());
+
+  it('fetches from the given URL and maps arrays to label/value pairs', async() => {
+    http.get.mockResolvedValue({
+      distinct_instances: ['Request', 'AutomationRequest'],
+      ansible_playbooks: ['playbook_a', 'playbook_b'],
+    });
+
+    const result = await getButtonFormData('/miq_ae_customization/ab_button_form_data');
+
+    expect(http.get).toHaveBeenCalledWith('/miq_ae_customization/ab_button_form_data');
+    expect(result.distinct_instances).toEqual([
+      { value: 'Request', label: 'Request' },
+      { value: 'AutomationRequest', label: 'AutomationRequest' },
+    ]);
+    expect(result.ansible_playbooks).toEqual([
+      { value: 'playbook_a', label: 'playbook_a' },
+      { value: 'playbook_b', label: 'playbook_b' },
+    ]);
+  });
+
+  it('returns empty arrays when keys are absent from the response', async() => {
+    http.get.mockResolvedValue({});
+
+    const result = await getButtonFormData('/miq_ae_customization/ab_button_form_data');
+
+    expect(result.distinct_instances).toEqual([]);
+    expect(result.ansible_playbooks).toEqual([]);
+  });
+});
+
+describe('getButtonTypes', () => {
+  afterEach(() => jest.clearAllMocks());
+
+  it('fetches button types from /api/custom_buttons OPTIONS and maps to label/value pairs', async() => {
+    API.options.mockResolvedValue({
+      data: { custom_button_types: { default: 'Default', ansible_playbook: 'Ansible Playbook' } },
+    });
+
+    const result = await getButtonTypes();
+
+    expect(API.options).toHaveBeenCalledWith('/api/custom_buttons');
+    expect(result).toEqual(expect.arrayContaining([
+      { value: 'default', label: 'Default' },
+      { value: 'ansible_playbook', label: 'Ansible Playbook' },
+    ]));
   });
 });

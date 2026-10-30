@@ -2397,7 +2397,6 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
-        # button_edit uses AbForm (React) which renders its own buttons — hide the legacy bottom bar
         if (action == 'at_st_new' && (ansible_playbook_type? || terraform_template_type?)) ||
            %w[st_catalog_new st_catalog_edit copy_catalog button_edit].include?(action)
           presenter.hide(:form_buttons_div)

@@ -290,7 +290,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   # allowed function is used to show form buttons in custom-button form page.
-  # ab_button_new/edit are excluded because AbForm (React) renders its own buttons.
   def allowed(action)
     allowed = %w[ab_group_reorder old_dialogs_new old_dialogs_edit old_dialogs_copy]
     action ? allowed.include?(action.to_s) : false

@@ -32,7 +32,6 @@ const createSchema = ({
       id: 'ab-tabs',
       name: 'ab-tabs',
       fields: [
-        // ── Options tab ────────────────────────────────────────────────────────
         {
           name: 'options-tab',
           title: __('Options'),
@@ -44,7 +43,7 @@ const createSchema = ({
               label: __('Button Type'),
               loadOptions: () => getButtonTypes(),
             },
-            // Ansible playbook sub-fields (conditional)
+            // Ansible playbook sub-fields
             {
               component: componentTypes.SUB_FORM,
               id: 'playbook-fields',
@@ -80,7 +79,6 @@ const createSchema = ({
                 },
               ],
             },
-            // Name + Display on Button
             {
               component: componentTypes.SUB_FORM,
               id: 'name-wrapper',
@@ -127,7 +125,6 @@ const createSchema = ({
               label: __('Icon Color'),
               type: 'color',
             },
-            // Dialog — hidden for ansible_playbook, disabled when display_for != single
             {
               component: componentTypes.SELECT,
               id: 'dialog_id',
@@ -166,12 +163,10 @@ const createSchema = ({
           ],
         },
 
-        // ── Advanced tab ───────────────────────────────────────────────────────
         {
           name: 'advanced-tab',
           title: __('Advanced'),
           fields: [
-            // Enablement expression + Disabled Button Text (only when display_for == single)
             {
               component: componentTypes.SUB_FORM,
               id: 'enablement-section',
@@ -197,7 +192,6 @@ const createSchema = ({
                 },
               ],
             },
-            // Visibility expression (only when display_for == single)
             {
               component: componentTypes.SUB_FORM,
               id: 'visibility-section',
@@ -216,7 +210,7 @@ const createSchema = ({
                 },
               ],
             },
-            // AE fields — hidden for ansible_playbook
+            // AE fields
             {
               component: componentTypes.SELECT,
               id: 'ae_instance',
@@ -243,7 +237,6 @@ const createSchema = ({
               maxLength: 255,
               condition: { not: { when: 'options.button_type', is: 'ansible_playbook' } },
             },
-            // Attribute/Value Pairs — hidden for ansible_playbook
             {
               component: 'key-value-list',
               id: 'attribute_pairs',
@@ -253,7 +246,6 @@ const createSchema = ({
               valueLabel: __('Value'),
               condition: { not: { when: 'options.button_type', is: 'ansible_playbook' } },
             },
-            // Role Access
             {
               component: componentTypes.SUB_FORM,
               id: 'role-access',
