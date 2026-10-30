@@ -291,7 +291,7 @@ class MiqAeCustomizationController < ApplicationController
 
   # allowed function is used to show form buttons in custom-button form page.
   def allowed(action)
-    allowed = ['ab_button_new', 'ab_button_edit', 'ab_group_reorder', 'old_dialogs_new', 'old_dialogs_edit', 'old_dialogs_copy']
+    allowed = %w[ab_group_reorder old_dialogs_new old_dialogs_edit old_dialogs_copy]
     action ? allowed.include?(action.to_s) : false
   end
 
@@ -307,8 +307,6 @@ class MiqAeCustomizationController < ApplicationController
                        when 'ab_group_new'     then 'group_create'
                        when 'ab_group_edit'    then 'group_update'
                        when 'ab_group_reorder' then 'ab_group_reorder'
-                       when 'ab_button_new'    then 'button_create'
-                       when 'ab_button_edit'   then 'button_update'
                        end
                      end
         locals = {
@@ -456,7 +454,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   menu_section :automate
-  feature_for_actions %w[ab_button_new ab_button_edit ab_group_new ab_group_edit], *EXP_EDITOR_ACTIONS
 
   def breadcrumbs_options
     {
