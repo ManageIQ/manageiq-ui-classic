@@ -86,4 +86,38 @@ describe MiqAeClassHelper do
       end
     end
   end
+
+  describe '#schema_data' do
+    let(:helper) { dummy_class.tap { |h| h.instance_variable_set(:@initial_data, []) } }
+    let(:ns) { FactoryBot.create(:miq_ae_namespace) }
+    let(:ae_class) { FactoryBot.create(:miq_ae_class, :namespace_id => ns.id) }
+
+    it 'adds the attributes the schema editor needs to each row' do
+      field = FactoryBot.create(:miq_ae_field, :name => 'var1', :display_name => 'Var 1', :aetype => 'attribute',
+                                               :datatype => 'string', :substitute => false, :class_id => ae_class.id, :priority => 1)
+
+      helper.send(:schema_data, [field])
+
+      expect(helper.instance_variable_get(:@initial_data).first).to include(
+        :id           => '0',
+        :field_id     => field.id,
+        :clickable    => false,
+        :aetype       => 'attribute',
+        :datatype     => 'string',
+        :display_name => 'Var 1',
+        :substitute   => false
+      )
+    end
+
+    it 'masks a password default value in the row cells' do
+      field = FactoryBot.create(:miq_ae_field, :name => 'secret', :aetype => 'attribute', :datatype => 'password',
+                                               :default_value => 'hunter2', :class_id => ae_class.id, :priority => 1)
+
+      helper.send(:schema_data, [field])
+
+      row = helper.instance_variable_get(:@initial_data).first
+      expect(row[:cells][2]).to eq(:text => '********')
+      expect(row.to_json).not_to include('hunter2')
+    end
+  end
 end

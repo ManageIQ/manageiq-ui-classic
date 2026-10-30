@@ -1,4 +1,4 @@
 #add_class_props_div
-- if @in_a_form_fields && x_node.split('-')[0] == "aec" || params[:pressed] || %w(field_select field_accept field_delete).include?(params[:action])
+- if (@in_a_form_fields && x_node.split('-')[0] == "aec") || params[:pressed]
   #form_div
     = render :partial => "class_form"

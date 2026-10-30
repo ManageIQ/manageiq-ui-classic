@@ -591,6 +591,12 @@ form .miq-validation-button, .miq-async-action-button {
   }
 }
 
+// Remove the browser's default bullets and indent from the icon dropdown options.
+.select-with-icons .cds--list-box__menu {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
 .domains-priority-form {
   .cds--btn-set {
     .cds--btn {

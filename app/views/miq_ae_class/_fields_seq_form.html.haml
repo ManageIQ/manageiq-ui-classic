@@ -1,16 +1,1 @@
-#column_lists
-  .col-md-7.col-sm-10.col-xs-10
-    = _('Class Schema Sequencing:')
-    = select_tag('seq_fields[]',
-      options_for_select(@edit[:new][:fields_list], @selected),
-      :multiple => true, :class  => "form-control", :style => "overflow-x: scroll;", :size => 20, :id => "seq_fields")
-    %small= _('* Select one or more consecutive fields to move up or down.')
-
-  - button_params = @edit[:new][:fields].length >= 2 ? [[_("Move selected fields up"),   'column_lists', 'up',    'fa-angle-up'],
-                                                        [_("Move selected fields down"), 'column_lists', 'down',  'fa-angle-down']] : []
-  = render :partial => "shared/views/seq_selector_buttons",
-           :locals  => {:fields_count  => @edit[:new][:fields].length,
-                        :button_params => button_params,
-                        :button_action => 'fields_seq_field_changed',
-                        :id            => 'seq'}
-
+= react('SchemaSequenceEditor', {:classId => @ae_class.id.to_s})

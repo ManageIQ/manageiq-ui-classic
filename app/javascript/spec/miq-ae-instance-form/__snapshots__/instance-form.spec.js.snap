@@ -308,12 +308,9 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
                       class="cell"
                       title=""
                     >
-                      <i
-                        class="fa-lg icon ff ff-attribute"
-                      />
                       <svg
-                        aria-label="carbon--CloseOutline"
-                        class="icon carbon-icons-style carbon--CloseOutline"
+                        aria-label="carbon--Grid"
+                        class="icon carbon-icons-style carbon--Grid"
                         fill="currentColor"
                         focusable="false"
                         height="20"
@@ -324,10 +321,32 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M16,28C9.4,28,4,22.6,4,16S9.4,4,16,4s12,5.4,12,12 S22.6,28,16,28z"
+                          d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
                         />
                         <path
-                          d="M21.4 23 16 17.6 10.6 23 9 21.4 14.4 16 9 10.6 10.6 9 16 14.4 21.4 9 23 10.6 17.6 16 23 21.4z"
+                          d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                        />
+                        <path
+                          d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                        />
+                        <path
+                          d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--Close"
+                        class="icon carbon-icons-style carbon--Close"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                         />
                       </svg>
                       <span
@@ -400,15 +419,9 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
                       class="cell"
                       title=""
                     >
-                      <i
-                        class="fa-lg icon ff ff-attribute"
-                      />
-                      <i
-                        class="fa-lg icon ff ff-integer"
-                      />
                       <svg
-                        aria-label="carbon--CloseOutline"
-                        class="icon carbon-icons-style carbon--CloseOutline"
+                        aria-label="carbon--Grid"
+                        class="icon carbon-icons-style carbon--Grid"
                         fill="currentColor"
                         focusable="false"
                         height="20"
@@ -419,10 +432,54 @@ exports[`InstanceForm Component Add Instance should render add instance form cor
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M16,28C9.4,28,4,22.6,4,16S9.4,4,16,4s12,5.4,12,12 S22.6,28,16,28z"
+                          d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
                         />
                         <path
-                          d="M21.4 23 16 17.6 10.6 23 9 21.4 14.4 16 9 10.6 10.6 9 16 14.4 21.4 9 23 10.6 17.6 16 23 21.4z"
+                          d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                        />
+                        <path
+                          d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                        />
+                        <path
+                          d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--StringInteger"
+                        class="icon carbon-icons-style carbon--StringInteger"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M26,12H22v2h4v2H23v2h3v2H22v2h4a2.0027,2.0027,0,0,0,2-2V14A2.0023,2.0023,0,0,0,26,12Z"
+                        />
+                        <path
+                          d="M19,22H13V18a2.002,2.002,0,0,1,2-2h2V14H13V12h4a2.0023,2.0023,0,0,1,2,2v2a2.0023,2.0023,0,0,1-2,2H15v2h4Z"
+                        />
+                        <path
+                          d="M8 20 8 12 6 12 6 13 4 13 4 15 6 15 6 20 4 20 4 22 10 22 10 20 8 20z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--Close"
+                        class="icon carbon-icons-style carbon--Close"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                         />
                       </svg>
                       <span
@@ -911,12 +968,9 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
                       class="cell"
                       title=""
                     >
-                      <i
-                        class="fa-lg icon ff ff-attribute"
-                      />
                       <svg
-                        aria-label="carbon--CloseOutline"
-                        class="icon carbon-icons-style carbon--CloseOutline"
+                        aria-label="carbon--Grid"
+                        class="icon carbon-icons-style carbon--Grid"
                         fill="currentColor"
                         focusable="false"
                         height="20"
@@ -927,10 +981,32 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M16,28C9.4,28,4,22.6,4,16S9.4,4,16,4s12,5.4,12,12 S22.6,28,16,28z"
+                          d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
                         />
                         <path
-                          d="M21.4 23 16 17.6 10.6 23 9 21.4 14.4 16 9 10.6 10.6 9 16 14.4 21.4 9 23 10.6 17.6 16 23 21.4z"
+                          d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                        />
+                        <path
+                          d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                        />
+                        <path
+                          d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--Close"
+                        class="icon carbon-icons-style carbon--Close"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                         />
                       </svg>
                       <span
@@ -1003,15 +1079,9 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
                       class="cell"
                       title=""
                     >
-                      <i
-                        class="fa-lg icon ff ff-attribute"
-                      />
-                      <i
-                        class="fa-lg icon ff ff-integer"
-                      />
                       <svg
-                        aria-label="carbon--CloseOutline"
-                        class="icon carbon-icons-style carbon--CloseOutline"
+                        aria-label="carbon--Grid"
+                        class="icon carbon-icons-style carbon--Grid"
                         fill="currentColor"
                         focusable="false"
                         height="20"
@@ -1022,10 +1092,54 @@ exports[`InstanceForm Component Edit Instance should render edit instance form c
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M16,28C9.4,28,4,22.6,4,16S9.4,4,16,4s12,5.4,12,12 S22.6,28,16,28z"
+                          d="M12,4H6A2,2,0,0,0,4,6v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,12,4Zm0,8H6V6h6Z"
                         />
                         <path
-                          d="M21.4 23 16 17.6 10.6 23 9 21.4 14.4 16 9 10.6 10.6 9 16 14.4 21.4 9 23 10.6 17.6 16 23 21.4z"
+                          d="M26,4H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,8H20V6h6Z"
+                        />
+                        <path
+                          d="M12,18H6a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,12,18Zm0,8H6V20h6Z"
+                        />
+                        <path
+                          d="M26,18H20a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V20A2,2,0,0,0,26,18Zm0,8H20V20h6Z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--StringInteger"
+                        class="icon carbon-icons-style carbon--StringInteger"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M26,12H22v2h4v2H23v2h3v2H22v2h4a2.0027,2.0027,0,0,0,2-2V14A2.0023,2.0023,0,0,0,26,12Z"
+                        />
+                        <path
+                          d="M19,22H13V18a2.002,2.002,0,0,1,2-2h2V14H13V12h4a2.0023,2.0023,0,0,1,2,2v2a2.0023,2.0023,0,0,1-2,2H15v2h4Z"
+                        />
+                        <path
+                          d="M8 20 8 12 6 12 6 13 4 13 4 15 6 15 6 20 4 20 4 22 10 22 10 20 8 20z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--Close"
+                        class="icon carbon-icons-style carbon--Close"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                         />
                       </svg>
                       <span
@@ -1591,12 +1705,9 @@ exports[`InstanceForm Component State Machine Class should render state machine 
                       class="cell"
                       title=""
                     >
-                      <i
-                        class="fa-lg icon ff ff-state"
-                      />
                       <svg
-                        aria-label="carbon--CloseOutline"
-                        class="icon carbon-icons-style carbon--CloseOutline"
+                        aria-label="carbon--Renew"
+                        class="icon carbon-icons-style carbon--Renew"
                         fill="currentColor"
                         focusable="false"
                         height="20"
@@ -1607,10 +1718,26 @@ exports[`InstanceForm Component State Machine Class should render state machine 
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M16,28C9.4,28,4,22.6,4,16S9.4,4,16,4s12,5.4,12,12 S22.6,28,16,28z"
+                          d="M12,10H6.78A11,11,0,0,1,27,16h2A13,13,0,0,0,6,7.68V4H4v8h8Z"
                         />
                         <path
-                          d="M21.4 23 16 17.6 10.6 23 9 21.4 14.4 16 9 10.6 10.6 9 16 14.4 21.4 9 23 10.6 17.6 16 23 21.4z"
+                          d="M20,22h5.22A11,11,0,0,1,5,16H3a13,13,0,0,0,23,8.32V28h2V20H20Z"
+                        />
+                      </svg>
+                      <svg
+                        aria-label="carbon--Close"
+                        class="icon carbon-icons-style carbon--Close"
+                        fill="currentColor"
+                        focusable="false"
+                        height="20"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                         />
                       </svg>
                       <span
