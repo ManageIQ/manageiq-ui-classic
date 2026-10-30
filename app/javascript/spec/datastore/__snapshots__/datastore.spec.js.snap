@@ -331,7 +331,7 @@ exports[`Datastore (class_fields schema) should match snapshot in edit mode 1`] 
                         <button
                           class="miq-data-table-button cds--btn cds--btn--md cds--layout--size-md cds--btn--tertiary"
                           tabindex="0"
-                          title="[object Object]"
+                          title="Update"
                           type="button"
                         >
                           <span
@@ -350,7 +350,7 @@ exports[`Datastore (class_fields schema) should match snapshot in edit mode 1`] 
                         <button
                           class="miq-data-table-button cds--btn cds--btn--md cds--layout--size-md cds--btn--danger"
                           tabindex="0"
-                          title="[object Object]"
+                          title="Delete"
                           type="button"
                         >
                           <span

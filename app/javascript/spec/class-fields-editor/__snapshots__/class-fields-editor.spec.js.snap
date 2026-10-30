@@ -394,7 +394,7 @@ exports[`ClassFieldsEditor should match snapshot 1`] = `
                         <button
                           class="miq-data-table-button cds--btn cds--btn--md cds--layout--size-md cds--btn--tertiary"
                           tabindex="0"
-                          title="[object Object]"
+                          title="Update"
                           type="button"
                         >
                           <span
@@ -413,7 +413,7 @@ exports[`ClassFieldsEditor should match snapshot 1`] = `
                         <button
                           class="miq-data-table-button cds--btn cds--btn--md cds--layout--size-md cds--btn--danger"
                           tabindex="0"
-                          title="[object Object]"
+                          title="Delete"
                           type="button"
                         >
                           <span
