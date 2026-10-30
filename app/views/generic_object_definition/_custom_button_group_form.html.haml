@@ -1,6 +1,6 @@
 = render :partial => "layouts/flash_msg"
 
-= react 'GroupForm', :recId => @custom_button_group.try(:id),
+= react 'ButtonGroupForm', :recId => @custom_button_group.try(:id),
                      :url => "/#{controller_name}/",
                      :appliesToId => @generic_object_definition.try(:id),
                      :appliesToClass => 'GenericObjectDefinition',

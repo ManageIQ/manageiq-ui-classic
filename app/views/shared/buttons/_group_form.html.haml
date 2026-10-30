@@ -1,6 +1,6 @@
 #group_form_div
   = render :partial => "layouts/flash_msg"
-  = react 'GroupForm', :recId => @edit[:rec_id],
+  = react 'ButtonGroupForm', :recId => @edit[:rec_id],
                     :availableFields => (@edit[:new][:available_fields] || []), 
                     :fields => (@edit[:new][:fields] || []),
                     :url => url_for_only_path(:id => (@custom_button_set.id || 'new')),

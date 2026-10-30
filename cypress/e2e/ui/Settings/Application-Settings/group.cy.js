@@ -43,7 +43,7 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
     cy.get('select#tenant_id').select(GROUP_TENANT, { force: true });
 
     // Tags tab — assign a tag category and value; capture their labels for later assertions
-    cy.contains('.rbac-group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
+    cy.contains('.group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
     cy.get('#dropdown-tag-select button.cds--list-box__field').click();
     cy.get('#dropdown-tag-select .cds--list-box__menu .cds--list-box__menu-item')
       .first()
@@ -76,12 +76,12 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
       'Groups',
       GROUP_DESCRIPTION,
     ]);
-    cy.get('.rbac-group-form #description').should('have.value', GROUP_DESCRIPTION);
-    cy.get('.rbac-group-form #detailed_description').should('have.value', GROUP_DETAILED_DESCRIPTION);
-    cy.get('.rbac-group-form #role_id').should('contain.text', GROUP_ROLE);
-    cy.get('.rbac-group-form #tenant_id').should('contain.text', 'My Company');
-    cy.get('.rbac-group-filter-tabs h3').should('have.text', 'Assigned Filters (read only)');
-    cy.contains('.rbac-group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
+    cy.get('.group-form #description').should('have.value', GROUP_DESCRIPTION);
+    cy.get('.group-form #detailed_description').should('have.value', GROUP_DETAILED_DESCRIPTION);
+    cy.get('.group-form #role_id').should('contain.text', GROUP_ROLE);
+    cy.get('.group-form #tenant_id').should('contain.text', 'My Company');
+    cy.get('.group-filter-tabs h3').should('have.text', 'Assigned Filters (read only)');
+    cy.contains('.group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
     cy.get('@tagCategory').then((cat) => {
       cy.get('.customer-tags-tab .category-label').invoke('attr', 'title').should('eq', cat);
     });
@@ -97,7 +97,7 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
       .type(GROUP_DESCRIPTION_EDITED);
 
     // Tags tab — switch to expression-based filtering and build a tag expression
-    cy.contains('.rbac-group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
+    cy.contains('.group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
     cy.get('select#use-filter-expression').select('expression', { force: true });
 
     // Wait for the QueryBuilder to seed an empty rule (field-group select appears)
@@ -142,10 +142,10 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
 
     // HAC tab — check first tree node if providers are configured
     cy.contains(
-      '.rbac-group-filter-tabs .cds--tabs__nav-item',
+      '.group-filter-tabs .cds--tabs__nav-item',
       'Clusters, Datastores, Hosts'
     ).click();
-    cy.get('.rbac-group-filter-tabs .belongs-to-tab').then(($tab) => {
+    cy.get('.group-filter-tabs .belongs-to-tab').then(($tab) => {
       const checkboxes = $tab.find('input[type="checkbox"]');
       if (checkboxes.length > 0) {
         cy.wrap(checkboxes.first()).check({ force: true });
@@ -170,9 +170,9 @@ describe.skip('Settings > Application Settings > Access Control > Add Group', ()
       'Groups',
       GROUP_DESCRIPTION_EDITED,
     ]);
-    cy.get('.rbac-group-form #description').should('have.value', GROUP_DESCRIPTION_EDITED);
-    cy.get('.rbac-group-filter-tabs h3').should('have.text', 'Assigned Filters (read only)');
-    cy.contains('.rbac-group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
+    cy.get('.group-form #description').should('have.value', GROUP_DESCRIPTION_EDITED);
+    cy.get('.group-filter-tabs h3').should('have.text', 'Assigned Filters (read only)');
+    cy.contains('.group-filter-tabs .cds--tabs__nav-item', 'Tags').click();
     cy.get('.customer-tags-tab__expression-text').should('exist').and('not.be.empty');
 
     // DELETE

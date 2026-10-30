@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
+exports[`GroupForm for new group renders with "Add" submit button 1`] = `
 <div>
   <div
-    class="rbac-group-form"
+    class="group-form"
   >
     <form
       class="cds--form form-0-2-3 form-react"
@@ -249,7 +249,7 @@ exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
         </div>
       </div>
       <div
-        class="rbac-group-filter-tabs"
+        class="group-filter-tabs"
       >
         <hr />
         <h3>
@@ -780,10 +780,10 @@ exports[`RbacGroupForm for new group renders with "Add" submit button 1`] = `
 </div>
 `;
 
-exports[`RbacGroupForm renders form fields in edit mode 1`] = `
+exports[`GroupForm renders form fields in edit mode 1`] = `
 <div>
   <div
-    class="rbac-group-form"
+    class="group-form"
   >
     <form
       class="cds--form form-0-2-3 form-react"
@@ -1029,7 +1029,7 @@ exports[`RbacGroupForm renders form fields in edit mode 1`] = `
         </div>
       </div>
       <div
-        class="rbac-group-filter-tabs"
+        class="group-filter-tabs"
       >
         <hr />
         <h3>
@@ -1567,17 +1567,17 @@ exports[`RbacGroupForm renders form fields in edit mode 1`] = `
 </div>
 `;
 
-exports[`RbacGroupForm renders read-only view when readOnly=true 1`] = `
+exports[`GroupForm renders read-only view when readOnly=true 1`] = `
 <div>
   <div
-    class="rbac-group-form"
+    class="group-form"
   >
     <form
       class="cds--form form-0-2-3 form-react"
       novalidate=""
     >
       <div
-        class="rbac-group-filter-tabs"
+        class="group-filter-tabs"
       >
         <hr />
         <h3>

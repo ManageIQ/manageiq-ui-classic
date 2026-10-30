@@ -14,6 +14,7 @@
 @use './data-table';
 @use './ddf_override';
 @use './expression-editor';
+@use './group-form';
 @use './menu';
 @use './miq-ae-class';
 @use './miq-custom-tab';
@@ -26,7 +27,6 @@
 @use './no-records-found';
 @use './notifications';
 @use './quadicon';
-@use './rbac-group-form';
 @use './search-bar';
 @use './selected-groups-list';
 @use './settings-cu-collection.scss';

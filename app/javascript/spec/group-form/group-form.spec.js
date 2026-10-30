@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
-import RbacGroupForm from '../../components/rbac-group-form';
+import GroupForm from '../../components/group-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 jest.mock('../../helpers/miq-redirect-back');
@@ -84,9 +84,9 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('RbacGroupForm', () => {
+describe('GroupForm', () => {
   it('renders loading state initially', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
     expect(document.querySelector('.cds--loading')).toBeInTheDocument();
     await waitFor(() => {
       expect(document.getElementById('description')).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders form fields in edit mode', async() => {
-    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    const { container } = renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('description')).toBeInTheDocument();
@@ -106,7 +106,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('pre-fills form fields from loaded group data', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('description')).toHaveValue('Test Group');
@@ -115,7 +115,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders read-only view when readOnly=true', async() => {
-    const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+    const { container } = renderWithRedux(<GroupForm {...defaultProps} readOnly />);
 
     // Group Information fields are rendered by the HAML helper in read-only mode,
     // not by the React form. The React form only shows the filter tabs.
@@ -130,7 +130,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('requests the form data with read_only=true only in read-only mode', async() => {
-    const { unmount } = renderWithRedux(<RbacGroupForm {...defaultProps} readOnly />);
+    const { unmount } = renderWithRedux(<GroupForm {...defaultProps} readOnly />);
     await waitFor(() => {
       expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
     });
@@ -138,7 +138,7 @@ describe('RbacGroupForm', () => {
     unmount();
 
     fetchMock.resetHistory();
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
     await waitFor(() => {
       expect(screen.getByText('Assign Filters')).toBeInTheDocument();
     });
@@ -146,7 +146,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders "Assign Filters" heading in edit mode', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByText('Assign Filters')).toBeInTheDocument();
@@ -159,7 +159,7 @@ describe('RbacGroupForm', () => {
       { ...mockExtra, deleted_belongsto_filters: ['/ManageIQ/Providers/Amazon/...'] },
       { overwriteRoutes: true }
     );
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByText(/outdated filters need review/i)).toBeInTheDocument();
@@ -169,7 +169,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('does not show deleted filter warning when list is empty', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('description')).toBeInTheDocument();
@@ -178,7 +178,7 @@ describe('RbacGroupForm', () => {
   });
 
   it('renders filter tabs', async() => {
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByText('My Tenant Tags')).toBeInTheDocument();
@@ -197,7 +197,7 @@ describe('RbacGroupForm', () => {
     });
 
     it('renders with "Add" submit button', async() => {
-      const { container } = renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+      const { container } = renderWithRedux(<GroupForm {...defaultProps} groupId="new" />);
 
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /^Add$/i })).toBeInTheDocument();
@@ -207,7 +207,7 @@ describe('RbacGroupForm', () => {
 
     it('calls POST /api/groups on submit', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+      renderWithRedux(<GroupForm {...defaultProps} groupId="new" />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -233,7 +233,7 @@ describe('RbacGroupForm', () => {
 
   describe('for existing group', () => {
     it('renders with "Save" submit button', async() => {
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /^Save$/i })).toBeInTheDocument();
@@ -242,7 +242,7 @@ describe('RbacGroupForm', () => {
 
     it('calls POST /api/groups/:id with action:edit on submit', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -267,7 +267,7 @@ describe('RbacGroupForm', () => {
   describe('reset button', () => {
     it('shows "All changes have been reset" notification after clicking Reset', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -285,7 +285,7 @@ describe('RbacGroupForm', () => {
 
     it('restores the original field values after clicking Reset', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toHaveValue('Test Group');
@@ -316,7 +316,7 @@ describe('RbacGroupForm', () => {
       fetchMock.post(/\/api\/groups\/1/, 400);
 
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -337,7 +337,7 @@ describe('RbacGroupForm', () => {
       fetchMock.post(/\/api\/groups\/1/, { throws: new Error('Network error') });
 
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -356,7 +356,7 @@ describe('RbacGroupForm', () => {
 
   it('calls miqRedirectBack with warning on cancel', async() => {
     const user = userEvent.setup();
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
@@ -373,7 +373,7 @@ describe('RbacGroupForm', () => {
 
   it('calls miqRedirectBack with success after successful save', async() => {
     const user = userEvent.setup();
-    renderWithRedux(<RbacGroupForm {...defaultProps} />);
+    renderWithRedux(<GroupForm {...defaultProps} />);
 
     await waitFor(() => {
       expect(document.getElementById('description')).toBeInTheDocument();
@@ -403,7 +403,7 @@ describe('RbacGroupForm', () => {
     });
 
     it('shows an error notification when the initial API load fails', async() => {
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
@@ -418,7 +418,7 @@ describe('RbacGroupForm', () => {
     fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
 
     const user = userEvent.setup();
-    renderWithRedux(<RbacGroupForm {...defaultProps} groupId="new" />);
+    renderWithRedux(<GroupForm {...defaultProps} groupId="new" />);
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
@@ -437,7 +437,7 @@ describe('RbacGroupForm', () => {
     it('selecting a HAC node and submitting sends the correct belongsto path', async() => {
       fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
@@ -475,7 +475,7 @@ describe('RbacGroupForm', () => {
         { overwriteRoutes: true }
       );
 
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();
@@ -500,7 +500,7 @@ describe('RbacGroupForm', () => {
   describe('submit payload shape', () => {
     it('sends an empty filters object when everything is cleared', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -518,7 +518,7 @@ describe('RbacGroupForm', () => {
 
     it('sends filter_expression:null and filters when in tags mode', async() => {
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -550,7 +550,7 @@ describe('RbacGroupForm', () => {
       fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
 
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(document.getElementById('description')).toBeInTheDocument();
@@ -585,7 +585,7 @@ describe('RbacGroupForm', () => {
       fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
 
       const user = userEvent.setup();
-      renderWithRedux(<RbacGroupForm {...defaultProps} />);
+      renderWithRedux(<GroupForm {...defaultProps} />);
 
       await waitFor(() => {
         expect(screen.getByText('Clusters, Datastores, Hosts, Managers & Providers')).toBeInTheDocument();

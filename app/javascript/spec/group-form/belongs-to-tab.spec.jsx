@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import BelongsToTab from '../../components/rbac-group-form/belongs-to-tab';
+import BelongsToTab from '../../components/group-form/belongs-to-tab';
 
 const noop = () => {};
 

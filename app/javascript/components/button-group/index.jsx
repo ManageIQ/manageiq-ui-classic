@@ -3,14 +3,14 @@ import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { Button, Loading } from '@carbon/react';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import createSchema from './group-form.schema';
+import createSchema from './button-group-form.schema';
 import {
   formatButton, formatName, formatSetData, getButtonList,
 } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
 
-const GroupForm = ({
+const ButtonGroupForm = ({
   recId,
   availableFields = [],
   fields = [],
@@ -195,7 +195,7 @@ const FormTemplate = ({
   );
 };
 
-GroupForm.propTypes = {
+ButtonGroupForm.propTypes = {
   recId: PropTypes.number,
   availableFields: PropTypes.arrayOf(PropTypes.any),
   fields: PropTypes.arrayOf(PropTypes.any),
@@ -211,4 +211,4 @@ FormTemplate.propTypes = {
   modified: PropTypes.bool,
 };
 
-export default GroupForm;
+export default ButtonGroupForm;

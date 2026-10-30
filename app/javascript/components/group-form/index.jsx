@@ -6,7 +6,7 @@ import { API, http } from '../../http_api';
 import mapper from '../../forms/mappers/componentMapper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { rqbToMiq } from '../expression-editor/expression-adapter';
-import createSchema from './rbac-group-form.schema';
+import createSchema from './group-form.schema';
 import FilterTabs from './filter-tabs';
 
 const componentMapper = { ...mapper, 'filter-tabs': FilterTabs };
@@ -39,7 +39,7 @@ const removeTagPathsFromManaged = (managedFilters) => {
   return allFilters.filter((f) => !f.startsWith('/managed/'));
 };
 
-const RbacGroupForm = ({
+const GroupForm = ({
   groupId = undefined,
   readOnly = false,
   currentTenantName = undefined,
@@ -298,7 +298,7 @@ const RbacGroupForm = ({
   }
 
   return (
-    <div className="rbac-group-form">
+    <div className="group-form">
       {(deletedBelongstoFilters.length > 0) && (
         <InlineNotification
           kind="warning"
@@ -309,7 +309,7 @@ const RbacGroupForm = ({
           hideCloseButton
           lowContrast
         >
-          <ul className="rbac-group-form__deleted-filters">
+          <ul className="group-form__deleted-filters">
             <li>
               <strong>{__('Clusters, Datastores, Hosts, Managers & Providers')}</strong>
               <ul>
@@ -365,11 +365,11 @@ const RbacGroupForm = ({
   );
 };
 
-RbacGroupForm.propTypes = {
+GroupForm.propTypes = {
   groupId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   readOnly: PropTypes.bool,
   currentTenantName: PropTypes.string,
   superAdminUser: PropTypes.bool,
 };
 
-export default RbacGroupForm;
+export default GroupForm;
