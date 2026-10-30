@@ -308,7 +308,6 @@ Rails.application.routes.draw do
         ae_tree_select_toggle
         atomic_form_field_changed
         atomic_st_edit
-        playbook_options_field_changed
         embedded_workflows_modal
         explorer
         group_create
@@ -343,7 +342,6 @@ Rails.application.routes.draw do
         x_history
         x_show
       ] +
-               exp_post +
                dialog_runner_post
     },
 
@@ -1960,7 +1958,6 @@ Rails.application.routes.draw do
       :post => %w[
         ab_group_reorder
         accordion_select
-        playbook_options_field_changed
         change_tab
         dialog_copy_editor
         dialog_edit_editor
@@ -1983,8 +1980,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ] +
-               exp_post
+      ]
     },
 
     :miq_ae_tools             => {

@@ -2,7 +2,6 @@ module ApplicationController::Buttons
   extend ActiveSupport::Concern
 
   included do
-    include Mixins::PlaybookOptions
     include CustomButtonHelper
   end
 
@@ -296,7 +295,7 @@ module ApplicationController::Buttons
     end
   end
 
-  # Set form variables for button add/edit
+  # Set form variables for button group reorder
   def group_reorder_set_form_vars
     @edit = {}
     @edit[:new] = {}
@@ -383,7 +382,7 @@ module ApplicationController::Buttons
     end
   end
 
-  # Set form variables for button add/edit
+  # Set form variables for button group add/edit
   def group_set_form_vars
     @sb[:buttons_node] = true
     if session[:resolve]
@@ -615,5 +614,4 @@ module ApplicationController::Buttons
     is_consecutive = last_idx - first_idx + 1 <= params[:selected_fields].length
     [is_consecutive, first_idx, last_idx]
   end
-
 end

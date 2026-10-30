@@ -87,8 +87,6 @@ module MiqAeCustomizationController::CustomButtons
                                       else
                                         @nodetype[1]
                                       end
-      @visibility_expression_table = exp_build_table(@custom_button.visibility_expression.exp) if @custom_button.visibility_expression.kind_of?(MiqExpression)
-      @enablement_expression_table = exp_build_table(@custom_button.enablement_expression.exp) if @custom_button.enablement_expression.kind_of?(MiqExpression)
       @right_cell_text = _("Button \"%{name}\"") % {:name => @custom_button.name}
     else # assigned buttons node/folder
       @sb[:applies_to_class] = @nodetype[1]

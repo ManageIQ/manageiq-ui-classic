@@ -455,7 +455,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   menu_section :automate
-  feature_for_actions %w[ab_button_new ab_button_edit ab_group_new ab_group_edit], *EXP_EDITOR_ACTIONS
 
   def breadcrumbs_options
     {

@@ -11,10 +11,10 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
 
 const AbForm = ({
-  recId,
+  recId = null,
   appliesToClass: appliesToClassProp = '',
-  appliesToId,
-  customButtonGroupId,
+  appliesToId = null,
+  customButtonGroupId = null,
   formDataUrl = '/miq_ae_customization/ab_button_form_data',
   redirectUrl = '/miq_ae_customization/explorer',
 }) => {
@@ -60,10 +60,11 @@ const AbForm = ({
         distinctInstances: fetchedFormData.distinct_instances || [],
         ansiblePlaybooks: fetchedFormData.ansible_playbooks || [],
       });
-    }).catch(() => {
+    }).catch((error) => {
       setState((s) => ({ ...s, isLoading: false }));
+      setFlashError(error?.data?.error?.message || error?.message || __('An error occurred while loading the form.'));
     });
-  }, [recId, appliesToClassProp]);
+  }, [recId, appliesToClassProp, formDataUrl]);
 
   const onSubmit = (values) => {
     if (isSubmitting) {
@@ -91,13 +92,13 @@ const AbForm = ({
       // The group branch takes priority; if both were somehow set the ST assign would be redundant
       // because the group itself is already associated with the service template.
       if (!recId && customButtonGroupId) {
-        // Link the new button to its group via the atomic assign_custom_button API action.
+        // Link the new button to its group via the atomic add_custom_button API action.
         const newId = parseInt(response?.results?.[0]?.id, 10);
         if (!newId) {
           miqRedirectBack(message, 'success', redirectUrl);
           return;
         }
-        API.post(`/api/custom_button_sets/${customButtonGroupId}`, { action: 'assign_custom_button', button_id: newId })
+        API.post(`/api/custom_button_sets/${customButtonGroupId}`, { action: 'add_custom_button', button_id: newId })
           .then(() => miqRedirectBack(message, 'success', redirectUrl))
           .catch((error) => {
             setIsSubmitting(false);
@@ -108,10 +109,10 @@ const AbForm = ({
 
       if (!recId && appliesToId) {
         // Register the new button in the service template's button_order via the
-        // atomic assign_custom_button API action so it appears in the catalog tree.
+        // atomic add_custom_button API action so it appears in the catalog tree.
         const newId = parseInt(response?.results?.[0]?.id, 10);
         if (newId) {
-          API.post(`/api/service_templates/${appliesToId}`, { action: 'assign_custom_button', button_id: newId })
+          API.post(`/api/service_templates/${appliesToId}`, { action: 'add_custom_button', button_id: newId })
             .then(() => miqRedirectBack(message, 'success', redirectUrl))
             .catch((error) => {
               setIsSubmitting(false);
@@ -160,24 +161,27 @@ const AbForm = ({
           onCloseButtonClick={() => setFlashError(null)}
         />
       )}
-      <MiqFormRenderer
-        componentMapper={componentMapper}
-        schema={createSchema({
-          roles,
-          serviceDialogs,
-          buttonIcon,
-          setState,
-          distinctInstances,
-          ansiblePlaybooks,
-        })}
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        onReset={onReset}
-        canReset={!!recId}
-        disableSubmit={isSubmitting ? ['submitting'] : disabledKeys}
-        buttonsLabels={{ submitLabel: recId ? __('Save') : __('Add') }}
-      />
+      {/* initialValues is only unset when the initial data load failed; show the error alone */}
+      {initialValues && (
+        <MiqFormRenderer
+          componentMapper={componentMapper}
+          schema={createSchema({
+            roles,
+            serviceDialogs,
+            buttonIcon,
+            setState,
+            distinctInstances,
+            ansiblePlaybooks,
+          })}
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          onReset={onReset}
+          canReset={!!recId}
+          disableSubmit={isSubmitting ? ['submitting'] : disabledKeys}
+          buttonsLabels={{ submitLabel: recId ? __('Save') : __('Add') }}
+        />
+      )}
     </div>
   );
 };

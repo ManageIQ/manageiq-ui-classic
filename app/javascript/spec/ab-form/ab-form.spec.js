@@ -4,6 +4,9 @@ import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import AbForm from '../../components/ab-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import {
+  getRoles, getServiceDialogs, getButtonFormData, getInitialValues, getButtonTypes,
+} from '../../components/ab-form/helper';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
@@ -33,9 +36,8 @@ jest.mock('../../components/condition-form/expression-editor-field', () => ({
   default: () => <div data-testid="expression-editor" />,
 }));
 
-import {
-  getRoles, getServiceDialogs, getButtonFormData, getInitialValues, getButtonTypes,
-} from '../../components/ab-form/helper';
+const nameField = () => screen.getByRole('textbox', { name: /^name/i });
+const descriptionField = () => screen.getByRole('textbox', { name: /^description/i });
 
 // ── shared fixtures ──────────────────────────────────────────────────────────
 
@@ -99,6 +101,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  fetchMock.reset();
   fetchMock.restore();
   jest.clearAllMocks();
 });
@@ -111,14 +114,22 @@ describe('AbForm', () => {
       // Never resolve so we stay in loading state
       getInitialValues.mockReturnValue(new Promise(() => {}));
       renderWithRedux(<AbForm {...defaultProps} />);
-      expect(document.querySelector('.cds--loading')).toBeInTheDocument();
+      expect(screen.getByRole('img', { name: /loading/i })).toBeInTheDocument();
     });
 
     it('renders the Options tab fields after loading', async() => {
       renderWithRedux(<AbForm {...defaultProps} />);
 
-      await waitFor(() => expect(document.getElementById('name')).toBeInTheDocument());
-      expect(document.getElementById('description')).toBeInTheDocument();
+      await screen.findByRole('textbox', { name: /^name/i });
+      expect(descriptionField()).toBeInTheDocument();
+    });
+
+    it('shows an inline error and no form when the initial data fails to load', async() => {
+      getInitialValues.mockRejectedValue({ data: { error: { message: 'Load failed' } } });
+      renderWithRedux(<AbForm {...defaultProps} />);
+
+      expect(await screen.findByText('Load failed')).toBeInTheDocument();
+      expect(screen.queryByRole('textbox', { name: /^name/i })).not.toBeInTheDocument();
     });
 
     it('renders both tabs', async() => {
@@ -161,15 +172,15 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '99' }] });
 
       renderWithRedux(<AbForm {...defaultProps} />);
-      await waitFor(() => expect(document.getElementById('name')).toBeInTheDocument());
+      await screen.findByRole('textbox', { name: /^name/i });
 
-      await user.type(document.getElementById('name'), 'Test Button');
-      await user.type(document.getElementById('description'), 'A test button');
+      await user.type(nameField(), 'Test Button');
+      await user.type(descriptionField(), 'A test button');
 
       await user.click(screen.getByRole('button', { name: 'Add' }));
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_buttons/').length).toBe(1);
+        expect(fetchMock.calls('/api/custom_buttons/')).toHaveLength(1);
         expect(miqRedirectBack).toHaveBeenCalledWith(
           expect.stringContaining('Test Button'),
           'success',
@@ -183,16 +194,13 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_buttons/', { throws: { data: { error: { message: 'Validation failed' } } } });
 
       renderWithRedux(<AbForm {...defaultProps} />);
-      await waitFor(() => expect(document.getElementById('name')).toBeInTheDocument());
+      await screen.findByRole('textbox', { name: /^name/i });
 
-      await user.type(document.getElementById('name'), 'Bad Button');
-      await user.type(document.getElementById('description'), 'desc');
+      await user.type(nameField(), 'Bad Button');
+      await user.type(descriptionField(), 'desc');
       await user.click(screen.getByRole('button', { name: 'Add' }));
 
-      await waitFor(() => {
-        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
-        expect(document.querySelector('.cds--inline-notification--error')).toHaveTextContent('Validation failed');
-      });
+      expect(await screen.findByText('Validation failed')).toBeInTheDocument();
     });
   });
 
@@ -204,7 +212,7 @@ describe('AbForm', () => {
     it('shows a loading spinner while data is fetched', () => {
       getInitialValues.mockReturnValue(new Promise(() => {}));
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
-      expect(document.querySelector('.cds--loading')).toBeInTheDocument();
+      expect(screen.getByRole('img', { name: /loading/i })).toBeInTheDocument();
     });
 
     it('populates form fields with existing values', async() => {
@@ -243,13 +251,13 @@ describe('AbForm', () => {
       await waitFor(() => expect(screen.getByDisplayValue('My Button')).toBeInTheDocument());
 
       // Change a field to make the form dirty
-      await user.clear(document.getElementById('description'));
-      await user.type(document.getElementById('description'), 'Updated description');
+      await user.clear(descriptionField());
+      await user.type(descriptionField(), 'Updated description');
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_buttons/5').length).toBe(1);
+        expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1);
         expect(miqRedirectBack).toHaveBeenCalledWith(
           expect.stringContaining('My Button'),
           'success',
@@ -265,18 +273,15 @@ describe('AbForm', () => {
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await waitFor(() => expect(screen.getByDisplayValue('My Button')).toBeInTheDocument());
 
-      await user.clear(document.getElementById('description'));
-      await user.type(document.getElementById('description'), 'Changed');
+      await user.clear(descriptionField());
+      await user.type(descriptionField(), 'Changed');
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      await waitFor(() => {
-        expect(document.querySelector('.cds--inline-notification--error')).toBeInTheDocument();
-        expect(document.querySelector('.cds--inline-notification--error')).toHaveTextContent('Save failed');
-      });
+      expect(await screen.findByText('Save failed')).toBeInTheDocument();
 
       // Dismiss the notification
       await user.click(screen.getByRole('button', { name: /close/i }));
-      expect(document.querySelector('.cds--inline-notification--error')).not.toBeInTheDocument();
+      expect(screen.queryByText('Save failed')).not.toBeInTheDocument();
     });
   });
 
@@ -287,16 +292,16 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/custom_button_sets/10', {});
 
       renderWithRedux(<AbForm {...defaultProps} customButtonGroupId={10} />);
-      await waitFor(() => expect(document.getElementById('name')).toBeInTheDocument());
+      await screen.findByRole('textbox', { name: /^name/i });
 
-      await user.type(document.getElementById('name'), 'Group Button');
-      await user.type(document.getElementById('description'), 'desc');
+      await user.type(nameField(), 'Group Button');
+      await user.type(descriptionField(), 'desc');
       await user.click(screen.getByRole('button', { name: 'Add' }));
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_button_sets/10').length).toBe(1);
+        expect(fetchMock.calls('/api/custom_button_sets/10')).toHaveLength(1);
         const [, opts] = fetchMock.calls('/api/custom_button_sets/10')[0];
-        expect(JSON.parse(opts.body)).toMatchObject({ action: 'assign_custom_button', button_id: 77 });
+        expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 77 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
     });
@@ -309,16 +314,16 @@ describe('AbForm', () => {
       fetchMock.postOnce('/api/service_templates/42', {});
 
       renderWithRedux(<AbForm {...defaultProps} appliesToId="42" />);
-      await waitFor(() => expect(document.getElementById('name')).toBeInTheDocument());
+      await screen.findByRole('textbox', { name: /^name/i });
 
-      await user.type(document.getElementById('name'), 'ST Button');
-      await user.type(document.getElementById('description'), 'desc');
+      await user.type(nameField(), 'ST Button');
+      await user.type(descriptionField(), 'desc');
       await user.click(screen.getByRole('button', { name: 'Add' }));
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/service_templates/42').length).toBe(1);
+        expect(fetchMock.calls('/api/service_templates/42')).toHaveLength(1);
         const [, opts] = fetchMock.calls('/api/service_templates/42')[0];
-        expect(JSON.parse(opts.body)).toMatchObject({ action: 'assign_custom_button', button_id: 88 });
+        expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 88 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
     });
