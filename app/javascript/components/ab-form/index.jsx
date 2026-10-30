@@ -75,8 +75,8 @@ const AbForm = ({
     const submitData = buildSubmitData(values, recId, appliesToClass, appliesToId, initialValues, buttonIcon);
 
     const request = recId
-      ? API.put(`/api/custom_buttons/${recId}`, submitData, { skipErrors: [400] })
-      : API.post('/api/custom_buttons/', submitData, { skipErrors: [400] });
+      ? API.put(`/api/custom_buttons/${recId}`, submitData)
+      : API.post('/api/custom_buttons/', submitData);
 
     request.then((response) => {
       const message = recId

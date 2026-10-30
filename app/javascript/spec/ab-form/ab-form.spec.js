@@ -183,9 +183,12 @@ describe('AbForm', () => {
       });
     });
 
-    it('shows an inline error notification on submit failure', async() => {
+    it('triggers error modal and shows an inline error notification on submit failure', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { throws: { data: { error: { message: 'Validation failed' } } } });
+      fetchMock.postOnce('/api/custom_buttons/', {
+        status: 400,
+        body: { error: { message: 'Validation failed' } },
+      });
 
       renderWithRedux(<AbForm {...defaultProps} />);
       await submitNewButton(user, { name: 'Bad Button', description: 'desc' });
@@ -255,9 +258,12 @@ describe('AbForm', () => {
       });
     });
 
-    it('shows an inline error on save failure and allows dismissal', async() => {
+    it('triggers error modal and shows an inline error on save failure and allows dismissal', async() => {
       const user = userEvent.setup();
-      fetchMock.putOnce('/api/custom_buttons/5', { throws: { data: { error: { message: 'Save failed' } } } });
+      fetchMock.putOnce('/api/custom_buttons/5', {
+        status: 400,
+        body: { error: { message: 'Save failed' } },
+      });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await waitFor(() => expect(screen.getByDisplayValue('My Button')).toBeInTheDocument());
