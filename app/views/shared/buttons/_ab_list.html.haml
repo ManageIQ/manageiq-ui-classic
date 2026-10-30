@@ -28,7 +28,7 @@
                           :nodeType => @nodetype[0]
 - elsif %w(ab_group_edit ab_group_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "group_update")
   = render :partial => 'shared/buttons/group_form'
-- elsif %w(ab_button_edit ab_button_new).include?(params[:pressed])
+- elsif %w[ab_button_edit ab_button_new].include?(params[:pressed])
   = render :partial => 'shared/buttons/ab_form'
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")
   = render :partial => 'shared/buttons/group_order_form'

@@ -146,6 +146,7 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     }
     delete submit.inventory_type;
     delete submit.hosts;
+    delete submit.attribute_pairs;
   }
 
   // Expressions — strip the sentinel value used when editor has errors

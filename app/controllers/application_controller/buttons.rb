@@ -107,7 +107,7 @@ module ApplicationController::Buttons
 
   def ab_button_form_data
     assert_privileges("ab_button_new", "ab_button_edit")
-    instances = MiqAeClass.find_distinct_instances_across_domains(current_user, "SYSTEM/PROCESS").collect(&:name).sort
+    instances = MiqAeClass.find_distinct_instances_across_domains(current_user, "SYSTEM/PROCESS").map(&:name).sort
     templates = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name)
     render :json => {:distinct_instances => instances, :ansible_playbooks => templates}
   end

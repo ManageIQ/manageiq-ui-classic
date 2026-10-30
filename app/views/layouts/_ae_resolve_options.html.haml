@@ -1,8 +1,8 @@
 - rec_id = @edit && @edit[:action_id].present? ? @edit[:action_id] : "new"
 #main-div
   = react('AutomateSimulationForm',
-        :resolve               => resolve,
-        :maxNameLength         => ViewHelper::MAX_NAME_LEN,
-        :url                   => "/miq_ae_tools/resolve_automate_simulation/#{rec_id}",
-        :attrValuesPairs       => ApplicationController::AE_MAX_RESOLUTION_FIELDS.times,
-        :maxLength             => ViewHelper::MAX_NAME_LEN)
+          :resolve           => resolve,
+          :maxNameLength     => ViewHelper::MAX_NAME_LEN,
+          :url               => "/miq_ae_tools/resolve_automate_simulation/#{rec_id}",
+          :attrValuesPairs   => ApplicationController::AE_MAX_RESOLUTION_FIELDS.times,
+          :maxLength         => ViewHelper::MAX_NAME_LEN)
