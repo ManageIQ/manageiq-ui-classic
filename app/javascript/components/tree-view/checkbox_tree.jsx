@@ -1,23 +1,9 @@
 import {
   useState, useEffect, useMemo, useRef,
 } from 'react';
-import CheckboxTree from 'react-checkbox-tree';
 import { Button } from '@carbon/react';
 import { useFieldApi } from '@@ddf';
-import 'react-checkbox-tree/lib/react-checkbox-tree.css';
-import {
-  CheckboxChecked, Checkbox, CheckboxCheckedFilled, ChevronRight, ChevronDown, Folder, FolderOpen,
-} from '@carbon/react/icons';
-
-const carbonIcons = {
-  check: <span><CheckboxCheckedFilled /></span>,
-  uncheck: <span><Checkbox /></span>,
-  halfCheck: <span><CheckboxChecked /></span>,
-  expandClose: <span><ChevronRight /></span>,
-  expandOpen: <span><ChevronDown /></span>,
-  parentClose: <span><Folder /></span>,
-  parentOpen: <span><FolderOpen /></span>,
-};
+import BaseCheckboxTree from './base_checkbox_tree';
 
 const CheckboxTreeComponent = (props) => {
   const fieldApi = useFieldApi(props);
@@ -113,8 +99,7 @@ const CheckboxTreeComponent = (props) => {
           </Button>
         </div>
       )}
-      <CheckboxTree
-        icons={carbonIcons}
+      <BaseCheckboxTree
         nodes={transformedNodes}
         checked={treeState.checked}
         expanded={treeState.expanded}

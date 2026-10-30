@@ -51,33 +51,33 @@ describe('Automation > Embedded Automate > Simulation', () => {
       cy.get('.cds--accordion__content');
 
       // Expand the tree view
-      cy.get('.fa').click();
+      cy.get('.rct-node-collapsed .rct-collapse-btn').click();
 
       // Check the tree view for all the correct values and attributes entered in the form
-      cy.get('.indent-0 > span').contains('ManageIQ/System / PROCESS / Request');
+      cy.get('.rct-node-parent.rct-node-expanded .rct-label').contains('ManageIQ/System / PROCESS / Request');
       cy.get('span').contains('instance = Request').should('be.visible');
 
-      cy.get('span').contains('attribute 1').parent().find('.fa').click();
+      cy.get('span').contains('attribute 1').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = attribute 1').should('be.visible');
       cy.get('span').contains('value 1').should('be.visible');
 
-      cy.get('span').contains('attribute 2').parent().find('.fa').click();
+      cy.get('span').contains('attribute 2').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = attribute 2').should('be.visible');
       cy.get('span').contains('value 2').should('be.visible');
 
-      cy.get('span').contains('attribute 3').parent().find('.fa').click();
+      cy.get('span').contains('attribute 3').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = attribute 3').should('be.visible');
       cy.get('span').contains('value 3').should('be.visible');
 
-      cy.get('span').contains('attribute 4').parent().find('.fa').click();
+      cy.get('span').contains('attribute 4').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = attribute 4').should('be.visible');
       cy.get('span').contains('value 4').should('be.visible');
 
-      cy.get('span').contains('message').parent().find('.fa').click();
+      cy.get('span').contains('message').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = message').should('be.visible');
       cy.get('span').contains('create').should('be.visible');
 
-      cy.get('span').contains('request').parent().find('.fa').click();
+      cy.get('span').contains('request').closest('span.rct-text').find('.rct-collapse-btn').click();
       cy.get('span').contains('name = request').should('be.visible');
       cy.get('span').contains('TestRequest').should('be.visible');
 
