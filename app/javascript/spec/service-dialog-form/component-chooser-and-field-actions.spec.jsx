@@ -7,7 +7,7 @@ import { fieldComponents } from '../../components/service-dialog-form/data';
 describe('DynamicComponentChooser', () => {
   it('renders a palette item for each of the 8 field types', () => {
     renderWithRedux(<DynamicComponentChooser />);
-    fieldComponents.forEach(({ label }) => {
+    fieldComponents().forEach(({ label }) => {
       expect(screen.getByText(label)).toBeInTheDocument();
     });
   });
@@ -15,7 +15,7 @@ describe('DynamicComponentChooser', () => {
   it('each palette item has draggable=true', () => {
     renderWithRedux(<DynamicComponentChooser />);
     const items = document.querySelectorAll('.dynamic-component-chooser__item');
-    expect(items).toHaveLength(fieldComponents.length);
+    expect(items).toHaveLength(fieldComponents().length);
     items.forEach((el) => expect(el.getAttribute('draggable')).toBe('true'));
   });
 

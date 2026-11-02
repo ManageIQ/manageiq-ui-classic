@@ -15,18 +15,18 @@ import { componentTypes } from '@@ddf';
 
 // Shared option lists
 
-export const SORT_BY_OPTIONS = [
+export const SORT_BY_OPTIONS = () => [
   { label: __('None'), value: 'none' },
   { label: __('Description'), value: 'description' },
   { label: __('Value'), value: 'value' },
 ];
 
-export const SORT_ORDER_OPTIONS = [
+export const SORT_ORDER_OPTIONS = () => [
   { label: __('Ascending'), value: 'ascending' },
   { label: __('Descending'), value: 'descending' },
 ];
 
-export const DATA_TYPE_OPTIONS = [
+export const DATA_TYPE_OPTIONS = () => [
   { label: __('String'), value: 'string' },
   { label: __('Integer'), value: 'integer' },
 ];
@@ -98,13 +98,13 @@ const sortFields = () => [
     component: 'select',
     name: 'options.sort_by',
     label: __('Sort by'),
-    options: SORT_BY_OPTIONS,
+    options: SORT_BY_OPTIONS(),
   },
   {
     component: 'select',
     name: 'options.sort_order',
     label: __('Sort order'),
-    options: SORT_ORDER_OPTIONS,
+    options: SORT_ORDER_OPTIONS(),
   },
 ];
 
@@ -115,7 +115,7 @@ const dataTypeField = (resetOnChange = false) => ({
   component: 'select',
   name: 'data_type',
   label: __('Value type'),
-  options: DATA_TYPE_OPTIONS,
+  options: DATA_TYPE_OPTIONS(),
   ...(resetOnChange ? {
     resolveProps: (_props, { meta, input }, formOptions) => {
       if (meta.dirty && meta.active !== undefined) {

@@ -7,7 +7,7 @@ const DynamicComponentChooser = ({ onDragStart = undefined }) => (
       {__('Fields')}
     </div>
     <div className="dynamic-component-chooser__items">
-      {fieldComponents.map(({ id, label, icon: Icon }) => (
+      {fieldComponents().map(({ id, label, icon: Icon }) => (
         <div
           key={id}
           className="dynamic-component-chooser__item"

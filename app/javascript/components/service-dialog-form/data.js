@@ -6,7 +6,8 @@ import {
 export { SD_ACTIONS } from './helper';
 
 // Field type definitions for the palette chooser
-export const fieldComponents = [
+// A function so that __() is evaluated at call time, not at module load.
+export const fieldComponents = () => [
   {
     id: 'DialogFieldTextBox',
     label: __('Text Box'),
@@ -64,7 +65,7 @@ const typeToNameBase = (type) => {
 };
 
 const fieldLabelForType = (type) => {
-  const comp = fieldComponents.find((c) => c.id === type);
+  const comp = fieldComponents().find((c) => c.id === type);
   return comp ? comp.label : __('Field');
 };
 

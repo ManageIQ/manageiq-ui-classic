@@ -18,7 +18,7 @@ describe('defaultField', () => {
   });
 
   it('uses the palette label as the default label', () => {
-    fieldComponents.forEach(({ id, label }) => {
+    fieldComponents().forEach(({ id, label }) => {
       expect(defaultField(id).label).toBe(label);
     });
   });
