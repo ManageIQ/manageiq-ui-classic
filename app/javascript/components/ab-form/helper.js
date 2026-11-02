@@ -1,5 +1,12 @@
 import { API, http } from '../../http_api';
 
+// Classes whose buttons may open a URL, and only together with display_for == single
+const MODEL_WITH_OPEN_URL = [
+  'ExtManagementSystem', 'Service', 'User', 'MiqGroup', 'Tenant', 'CloudTenant', 'GenericObject', 'Vm',
+];
+
+const canOpenUrl = (appliesToClass, displayFor) => MODEL_WITH_OPEN_URL.includes(appliesToClass) && displayFor === 'single';
+
 const getButtonTypes = () => API.options('/api/custom_buttons')
   .then((response) => Object.keys(response.data.custom_button_types)
     .map((key) => ({ value: key, label: response.data.custom_button_types[key] })));
@@ -11,7 +18,7 @@ const getButtonFormData = (url = '/miq_ae_customization/ab_button_form_data') =>
   }));
 
 const getRoles = () => API.get('/api/roles?expand=resources&attributes=name')
-  .then((response) => response.resources.map((role) => ({ label: role.name, value: role.name })));
+  .then((response) => response.resources.map((role) => ({ label: role.name, value: String(role.id) })));
 
 const getServiceDialogs = () => API.get('/api/service_dialogs?expand=resources&attributes=label')
   .then((response) => response.resources.map((dialog) => ({ label: dialog.label, value: dialog.id })));
@@ -34,7 +41,7 @@ const getInitialValues = (recId) => {
         ae_message: 'create',
         ae_instance: 'Request',
       },
-      visibility: { roles: ['_ALL_'] },
+      visibility: { roles: '_ALL_' },
     });
   }
 
@@ -71,7 +78,7 @@ const getInitialValues = (recId) => {
       if (data.visibility.roles[0] === '_ALL_') {
         values.visibility = { roles: '_ALL_' };
       } else {
-        values.available_roles = data.visibility.roles;
+        values.available_roles = data.visibility.roles.map(String);
         values.visibility = { roles: 'role' };
       }
     }
@@ -100,16 +107,12 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     submit.options = { ...submit.options, button_icon: buttonIcon };
   }
 
-  if (values.visibility?.roles === 'role' && values.available_roles) {
-    let roles = values.available_roles;
-    if (recId && roles.length > 0 && roles[0].value === undefined) {
-      roles = roles.map((r) => ({ label: r, value: r }));
-    }
-    submit.visibility = { roles: roles.map((r) => r.value) };
-    delete submit.available_roles;
+  if (values.visibility?.roles === 'role') {
+    submit.visibility = { roles: (values.available_roles || []).map((r) => String(r?.value ?? r)) };
   } else {
     submit.visibility = { roles: ['_ALL_'] };
   }
+  delete submit.available_roles;
 
   submit.resource_action = {
     ...submit.resource_action,
@@ -124,7 +127,13 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
         packed[key.trim()] = (value || '').trim();
       }
     });
-    submit.uri_attributes = { ...(submit.uri_attributes || {}), ...packed };
+    // Rebuild from the fixed fields plus the current pairs so removed or renamed pairs are dropped.
+    const { request, object_name: objectName } = values.uri_attributes || {};
+    submit.uri_attributes = {
+      request,
+      ...(objectName !== undefined && { object_name: objectName }),
+      ...packed,
+    };
     delete submit.attribute_pairs;
   }
 
@@ -152,8 +161,13 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
     ? { exp: values.visibility_expression }
     : null;
 
-  // Clear expressions when not applicable
+  // Clear a stale Open URL that the checkbox no longer allows
+  if (submit.options && !canOpenUrl(appliesToClass, values.options?.display_for)) {
+    submit.options = { ...submit.options, open_url: false };
+  }
+
   if (values.options?.display_for !== 'single') {
+    submit.resource_action = { ...submit.resource_action, dialog_id: null };
     submit.enablement_expression = null;
     submit.visibility_expression = null;
   }
@@ -163,5 +177,5 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
 
 export {
   getButtonTypes, getButtonFormData,
-  getRoles, getServiceDialogs, getInitialValues, buildSubmitData,
+  getRoles, getServiceDialogs, getInitialValues, buildSubmitData, canOpenUrl,
 };

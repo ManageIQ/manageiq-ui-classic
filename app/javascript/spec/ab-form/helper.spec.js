@@ -54,6 +54,37 @@ describe('buildSubmitData', () => {
     expect(result.options.button_icon).toBe('ff ff-check');
   });
 
+  describe('display_for restrictions', () => {
+    const singleOpenUrl = { ...baseValues.options, open_url: true };
+
+    it('keeps open_url and dialog_id for a single-entity button on a supported class', () => {
+      const values = { ...baseValues, options: singleOpenUrl, resource_action: { dialog_id: 7 } };
+      const result = buildSubmitData(values, null, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.options.open_url).toBe(true);
+      expect(result.resource_action.dialog_id).toBe(7);
+    });
+
+    it('clears open_url and dialog_id when display_for is not single', () => {
+      const values = {
+        ...baseValues,
+        options: { ...singleOpenUrl, display_for: 'list' },
+        resource_action: { dialog_id: 7 },
+      };
+      const result = buildSubmitData(values, null, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.options.open_url).toBe(false);
+      expect(result.resource_action.dialog_id).toBeNull();
+    });
+
+    it('clears open_url for a class that cannot open URLs', () => {
+      const values = { ...baseValues, options: singleOpenUrl };
+      const result = buildSubmitData(values, null, 'AvailabilityZone', null, {}, 'ff ff-action');
+
+      expect(result.options.open_url).toBe(false);
+    });
+  });
+
   describe('role visibility', () => {
     it('converts _ALL_ to array format', () => {
       const result = buildSubmitData(baseValues, null, 'Vm', null, {}, 'ff ff-action');
@@ -62,30 +93,38 @@ describe('buildSubmitData', () => {
       expect(result.available_roles).toBeUndefined();
     });
 
-    it('converts by-role with label/value objects to array of values', () => {
+    it('converts by-role with label/value objects to an array of role IDs', () => {
       const values = {
         ...baseValues,
         visibility: { roles: 'role' },
         available_roles: [
-          { label: 'EvmRole-auditor', value: 'EvmRole-auditor' },
-          { label: 'EvmRole-approver', value: 'EvmRole-approver' },
+          { label: 'EvmRole-auditor', value: '3' },
+          { label: 'EvmRole-approver', value: '4' },
         ],
       };
       const result = buildSubmitData(values, null, 'Vm', null, {}, 'ff ff-action');
 
-      expect(result.visibility).toEqual({ roles: ['EvmRole-auditor', 'EvmRole-approver'] });
+      expect(result.visibility).toEqual({ roles: ['3', '4'] });
       expect(result.available_roles).toBeUndefined();
     });
 
-    it('re-wraps plain strings when editing', () => {
+    it('accepts plain role IDs left untouched when editing', () => {
       const values = {
         ...baseValues,
         visibility: { roles: 'role' },
-        available_roles: ['EvmRole-auditor', 'EvmRole-approver'],
+        available_roles: ['3', '4'],
       };
       const result = buildSubmitData(values, 5, 'Vm', null, {}, 'ff ff-action');
 
-      expect(result.visibility).toEqual({ roles: ['EvmRole-auditor', 'EvmRole-approver'] });
+      expect(result.visibility).toEqual({ roles: ['3', '4'] });
+    });
+
+    it('never widens a by-role button to _ALL_ when no roles are selected', () => {
+      const values = { ...baseValues, visibility: { roles: 'role' }, available_roles: [] };
+      const result = buildSubmitData(values, null, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.visibility).toEqual({ roles: [] });
+      expect(result.available_roles).toBeUndefined();
     });
   });
 
@@ -103,6 +142,28 @@ describe('buildSubmitData', () => {
       expect(result.uri_attributes.env).toBe('prod');
       expect(result.uri_attributes.tier).toBe('web');
       expect(result.attribute_pairs).toBeUndefined();
+    });
+
+    it('drops previously loaded pairs that were removed in the UI', () => {
+      const values = {
+        ...baseValues,
+        uri_attributes: { request: 'my_request', env: 'prod' },
+        attribute_pairs: [],
+      };
+      const result = buildSubmitData(values, 5, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.uri_attributes).toEqual({ request: 'my_request' });
+    });
+
+    it('drops the old key when a pair is renamed and keeps object_name', () => {
+      const values = {
+        ...baseValues,
+        uri_attributes: { request: 'my_request', object_name: 'obj', env: 'prod' },
+        attribute_pairs: [{ key: 'environment', value: 'prod' }],
+      };
+      const result = buildSubmitData(values, 5, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.uri_attributes).toEqual({ request: 'my_request', object_name: 'obj', environment: 'prod' });
     });
 
     it('ignores pairs with blank keys', () => {
@@ -219,7 +280,7 @@ describe('getInitialValues', () => {
 
     expect(result.options.button_type).toBe('default');
     expect(result.attribute_pairs).toEqual([]);
-    expect(result.visibility).toEqual({ roles: ['_ALL_'] });
+    expect(result.visibility).toEqual({ roles: '_ALL_' });
   });
 
   describe('when recId is present', () => {
@@ -261,15 +322,15 @@ describe('getInitialValues', () => {
       expect(result.visibility).toEqual({ roles: '_ALL_' });
     });
 
-    it('normalises by-role visibility and sets available_roles', async() => {
+    it('normalises by-role visibility and sets available_roles as string IDs', async() => {
       API.get.mockResolvedValue({
         ...apiButton,
-        visibility: { roles: ['EvmRole-auditor', 'EvmRole-approver'] },
+        visibility: { roles: [3, '4'] },
       });
       const result = await getInitialValues(5);
 
       expect(result.visibility).toEqual({ roles: 'role' });
-      expect(result.available_roles).toEqual(['EvmRole-auditor', 'EvmRole-approver']);
+      expect(result.available_roles).toEqual(['3', '4']);
     });
 
     it('unwraps enablement_expression from { exp: ... }', async() => {
@@ -335,17 +396,20 @@ describe('getInitialValues', () => {
 describe('getRoles', () => {
   afterEach(() => jest.clearAllMocks());
 
-  it('fetches roles from /api/roles and maps to label/value pairs', async() => {
+  it('fetches roles from /api/roles and maps names to labels and IDs to values', async() => {
     API.get.mockResolvedValue({
-      resources: [{ name: 'EvmRole-administrator' }, { name: 'EvmRole-auditor' }],
+      resources: [
+        { id: '1', name: 'EvmRole-administrator' },
+        { id: '2', name: 'EvmRole-auditor' },
+      ],
     });
 
     const result = await getRoles();
 
     expect(API.get).toHaveBeenCalledWith(expect.stringContaining('/api/roles'));
     expect(result).toEqual([
-      { label: 'EvmRole-administrator', value: 'EvmRole-administrator' },
-      { label: 'EvmRole-auditor', value: 'EvmRole-auditor' },
+      { label: 'EvmRole-administrator', value: '1' },
+      { label: 'EvmRole-auditor', value: '2' },
     ]);
   });
 });

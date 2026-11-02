@@ -14,6 +14,14 @@ describe MiqAeCustomizationController do
         expect(assigns(:resolve)[:new][:target_class]).to eq("Host")
       end
 
+      it "sets applies_to_class when the unassigned buttons node is clicked" do
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@resolve, :target_classes => {"Vm" => "Vm"})
+        controller.send(:ab_get_node_info, "-ub-Vm")
+
+        expect(assigns(:sb)[:applies_to_class]).to eq("Vm")
+      end
+
       it "loads role names from role IDs for display" do
         role1 = FactoryBot.create(:miq_user_role, :name => "TestRole1")
         role2 = FactoryBot.create(:miq_user_role, :name => "TestRole2")

@@ -1,5 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import { getButtonTypes } from './helper';
+import { getButtonTypes, canOpenUrl } from './helper';
 
 const inventoryOptions = () => [
   { value: 'localhost', label: __('Localhost') },
@@ -24,7 +24,7 @@ const visibilityOptions = () => [
 ];
 
 const createSchema = ({
-  roles, serviceDialogs, buttonIcon, setState, distinctInstances, ansiblePlaybooks,
+  roles, serviceDialogs, buttonIcon, setState, distinctInstances, ansiblePlaybooks, appliesToClass,
 }) => ({
   fields: [
     {
@@ -145,6 +145,17 @@ const createSchema = ({
               id: 'open_url',
               name: 'options.open_url',
               label: __('Open URL'),
+              resolveProps: (_props, _field, formOptions) => {
+                const displayFor = formOptions.getState().values?.options?.display_for;
+                const disabled = !canOpenUrl(appliesToClass, displayFor);
+                return {
+                  disabled,
+                  ...(disabled && {
+                    // eslint-disable-next-line max-len
+                    helperText: __('Only available for VM, Provider, Service, User, Group, Tenant, Cloud Tenant and Generic Object with "Display for" set to "Single"'),
+                  }),
+                };
+              },
             },
             {
               component: componentTypes.SELECT,
@@ -264,6 +275,8 @@ const createSchema = ({
                   name: 'available_roles',
                   label: __('User Roles'),
                   isMulti: true,
+                  validate: [{ type: validatorTypes.REQUIRED }],
+                  isRequired: true,
                   sortItems: (items) => items,
                   options: roles,
                   condition: { when: 'visibility.roles', is: 'role' },

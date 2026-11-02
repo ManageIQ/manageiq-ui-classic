@@ -165,6 +165,7 @@ const AbForm = ({
             setState,
             distinctInstances,
             ansiblePlaybooks,
+            appliesToClass,
           })}
           initialValues={initialValues}
           onSubmit={onSubmit}

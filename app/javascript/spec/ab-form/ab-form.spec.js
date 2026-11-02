@@ -17,6 +17,7 @@ jest.mock('../../components/ab-form/helper', () => ({
   getInitialValues: jest.fn(),
   getButtonTypes: jest.fn(),
   buildSubmitData: jest.requireActual('../../components/ab-form/helper').buildSubmitData,
+  canOpenUrl: jest.requireActual('../../components/ab-form/helper').canOpenUrl,
 }));
 
 jest.mock('../../components/fonticon-picker/font-icon-picker-ddf', () => ({
@@ -92,7 +93,10 @@ const defaultProps = {
 };
 
 beforeEach(() => {
-  getRoles.mockResolvedValue([{ label: 'EvmRole-administrator', value: 'EvmRole-administrator' }]);
+  getRoles.mockResolvedValue([
+    { label: 'EvmRole-administrator', value: '1' },
+    { label: 'EvmRole-auditor', value: '2' },
+  ]);
   getServiceDialogs.mockResolvedValue([{ label: 'My Dialog', value: 1 }]);
   getButtonFormData.mockResolvedValue({ distinct_instances: [], ansible_playbooks: [] });
   getInitialValues.mockResolvedValue(newDefaults);
@@ -276,6 +280,156 @@ describe('AbForm', () => {
 
       await user.click(screen.getByRole('button', { name: /close/i }));
       expect(screen.queryByText('Save failed')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('role visibility', () => {
+    const openAdvancedTab = async(user) => {
+      await screen.findByRole('textbox', { name: /^name/i });
+      await user.click(screen.getByRole('tab', { name: 'Advanced' }));
+      await screen.findByRole('textbox', { name: /^request/i });
+    };
+
+    it('submits the IDs of the selected roles', async() => {
+      const user = userEvent.setup();
+      fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '99' }] });
+
+      renderWithRedux(<AbForm {...defaultProps} />);
+      await screen.findByRole('textbox', { name: /^name/i });
+      await user.type(nameField(), 'Role Button');
+      await user.type(descriptionField(), 'desc');
+      await user.click(screen.getByRole('tab', { name: 'Advanced' }));
+      await user.type(await screen.findByRole('textbox', { name: /^request/i }), 'my_request');
+
+      await user.selectOptions(screen.getByLabelText('Role Access'), 'role');
+      await user.click(await screen.findByRole('combobox', { name: /user roles/i }));
+      await user.click(await screen.findByText('EvmRole-auditor'));
+      await user.click(screen.getByRole('button', { name: 'Add' }));
+
+      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/')).toHaveLength(1));
+      const [, opts] = fetchMock.calls('/api/custom_buttons/')[0];
+      expect(JSON.parse(opts.body).visibility).toEqual({ roles: ['2'] });
+    });
+
+    it('does not allow submitting By Role with no roles selected', async() => {
+      const user = userEvent.setup();
+
+      renderWithRedux(<AbForm {...defaultProps} />);
+      await user.type(await screen.findByRole('textbox', { name: /^name/i }), 'Role Button');
+      await user.type(descriptionField(), 'desc');
+      await user.click(screen.getByRole('tab', { name: 'Advanced' }));
+      await user.type(await screen.findByRole('textbox', { name: /^request/i }), 'my_request');
+
+      await user.selectOptions(screen.getByLabelText('Role Access'), 'role');
+
+      expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled();
+    });
+
+    it('preselects stored role IDs on edit and resubmits them unchanged', async() => {
+      const user = userEvent.setup();
+      getInitialValues.mockResolvedValue({
+        ...editValues,
+        visibility: { roles: 'role' },
+        available_roles: ['2'],
+      });
+      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+
+      renderWithRedux(<AbForm {...defaultProps} recId={5} />);
+      await openAdvancedTab(user);
+
+      // The multi-select only shows a count tag, so open the menu and check which option is selected.
+      await user.click(await screen.findByRole('combobox', { name: /user roles/i }));
+      expect(await screen.findByRole('option', { name: 'EvmRole-auditor' })).toHaveAttribute('aria-selected', 'true');
+      expect(screen.getByRole('option', { name: 'EvmRole-administrator' })).toHaveAttribute('aria-selected', 'false');
+
+      await user.click(screen.getByRole('tab', { name: 'Options' }));
+      await user.clear(descriptionField());
+      await user.type(descriptionField(), 'Changed');
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const [, opts] = fetchMock.calls('/api/custom_buttons/5')[0];
+      expect(JSON.parse(opts.body).visibility).toEqual({ roles: ['2'] });
+    });
+  });
+
+  describe('Open URL and dialog restrictions', () => {
+    it('disables Open URL for a class that cannot open URLs', async() => {
+      renderWithRedux(<AbForm {...defaultProps} appliesToClass="AvailabilityZone" />);
+
+      expect(await screen.findByRole('checkbox', { name: 'Open URL' })).toBeDisabled();
+    });
+
+    it('enables Open URL for a supported class with display_for single', async() => {
+      renderWithRedux(<AbForm {...defaultProps} appliesToClass="Vm" />);
+
+      expect(await screen.findByRole('checkbox', { name: 'Open URL' })).toBeEnabled();
+    });
+
+    it('disables Open URL once display_for is no longer single', async() => {
+      const user = userEvent.setup();
+      renderWithRedux(<AbForm {...defaultProps} appliesToClass="Vm" />);
+      await screen.findByRole('checkbox', { name: 'Open URL' });
+
+      await user.selectOptions(screen.getByLabelText('Display for'), 'list');
+
+      expect(screen.getByRole('checkbox', { name: 'Open URL' })).toBeDisabled();
+    });
+
+    it('does not submit a stale dialog or Open URL after switching display_for to list', async() => {
+      const user = userEvent.setup();
+      getInitialValues.mockResolvedValue({
+        ...editValues,
+        options: { ...editValues.options, open_url: true },
+        resource_action: { ...editValues.resource_action, dialog_id: 1 },
+      });
+      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+
+      renderWithRedux(<AbForm {...defaultProps} recId={5} />);
+      await screen.findByDisplayValue('My Button');
+      await user.selectOptions(screen.getByLabelText('Display for'), 'list');
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      expect(body.options.open_url).toBe(false);
+      expect(body.resource_action.dialog_id).toBeNull();
+    });
+  });
+
+  describe('ansible playbook button (edit round trip)', () => {
+    it('loads and resubmits an ansible button with the playbook, hosts and request set correctly', async() => {
+      const user = userEvent.setup();
+      getButtonFormData.mockResolvedValue({
+        distinct_instances: [],
+        ansible_playbooks: [{ value: 'my_playbook', label: 'my_playbook' }],
+      });
+      getInitialValues.mockResolvedValue({
+        ...editValues,
+        options: { ...editValues.options, button_type: 'ansible_playbook' },
+        uri_attributes: { request: 'create', service_template_name: 'my_playbook' },
+        inventory_type: 'manual',
+        hosts: '10.0.0.1',
+      });
+      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+
+      renderWithRedux(<AbForm {...defaultProps} recId={5} />);
+      await screen.findByDisplayValue('My Button');
+      expect(await screen.findByDisplayValue('10.0.0.1')).toBeInTheDocument();
+
+      await user.clear(descriptionField());
+      await user.type(descriptionField(), 'Changed');
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      expect(body.uri_attributes).toEqual({
+        request: 'Order_Ansible_Playbook',
+        service_template_name: 'my_playbook',
+        hosts: '10.0.0.1',
+      });
+      expect(body.inventory_type).toBeUndefined();
+      expect(body.hosts).toBeUndefined();
     });
   });
 
