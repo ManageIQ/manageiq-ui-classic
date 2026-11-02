@@ -24,10 +24,6 @@ jest.mock('../../components/fonticon-picker/font-icon-picker-ddf', () => ({
   __esModule: true,
   default: () => <div data-testid="font-icon-picker" />,
 }));
-jest.mock('../../components/key-value-list', () => ({
-  __esModule: true,
-  default: () => <div data-testid="key-value-list" />,
-}));
 jest.mock('../../components/condition-form/expression-editor-field', () => ({
   __esModule: true,
   default: () => <div data-testid="expression-editor" />,
@@ -187,7 +183,7 @@ describe('AbForm', () => {
       });
     });
 
-    it('triggers error modal and shows an inline error notification on submit failure', async() => {
+    it('shows an inline error notification on submit failure', async() => {
       const user = userEvent.setup();
       fetchMock.postOnce('/api/custom_buttons/', {
         status: 400,
@@ -262,7 +258,7 @@ describe('AbForm', () => {
       });
     });
 
-    it('triggers error modal and shows an inline error on save failure and allows dismissal', async() => {
+    it('shows an inline error on save failure and allows dismissal', async() => {
       const user = userEvent.setup();
       fetchMock.putOnce('/api/custom_buttons/5', {
         status: 400,
@@ -433,6 +429,42 @@ describe('AbForm', () => {
     });
   });
 
+  describe('attribute pairs', () => {
+    it('deleting an attribute pair drops it from the saved uri_attributes', async() => {
+      const user = userEvent.setup();
+      getInitialValues.mockResolvedValue({
+        ...editValues,
+        uri_attributes: { request: 'create', env: 'prod', tier: 'web' },
+        attribute_pairs: [
+          { key: 'env', value: 'prod' },
+          { key: 'tier', value: 'web' },
+        ],
+      });
+      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+
+      renderWithRedux(<AbForm {...defaultProps} recId={5} />);
+      await screen.findByDisplayValue('My Button');
+
+      await user.click(screen.getByRole('tab', { name: 'Advanced' }));
+      await screen.findByDisplayValue('env');
+
+      const deleteButtons = screen.getAllByRole('button', { name: /delete key-value pair/i });
+      await user.click(deleteButtons[0]);
+
+      expect(screen.queryByDisplayValue('env')).not.toBeInTheDocument();
+      expect(screen.getByDisplayValue('tier')).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      expect(body.uri_attributes).toEqual({
+        request: 'create',
+        tier: 'web',
+      });
+    });
+  });
+
   describe('new button under a button group (customButtonGroupId)', () => {
     it('POSTs the button then assigns it to the group', async() => {
       const user = userEvent.setup();
@@ -448,6 +480,23 @@ describe('AbForm', () => {
         expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 77 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
+    });
+
+    it('redirects with a warning and skips assignment when the response has no id', async() => {
+      const user = userEvent.setup();
+      fetchMock.postOnce('/api/custom_buttons/', { results: [{}] });
+
+      renderWithRedux(<AbForm {...defaultProps} customButtonGroupId={10} />);
+      await submitNewButton(user, { name: 'Group Button', description: 'desc' });
+
+      await waitFor(() => {
+        expect(miqRedirectBack).toHaveBeenCalledWith(
+          'Custom Button was saved but could not be assigned. Please assign it manually.',
+          'warning',
+          expect.any(String),
+        );
+      });
+      expect(fetchMock.calls('/api/custom_button_sets/10')).toHaveLength(0);
     });
   });
 
@@ -466,6 +515,23 @@ describe('AbForm', () => {
         expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 88 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
+    });
+
+    it('redirects with a warning and skips assignment when the response has no id', async() => {
+      const user = userEvent.setup();
+      fetchMock.postOnce('/api/custom_buttons/', { results: [{}] });
+
+      renderWithRedux(<AbForm {...defaultProps} appliesToId="42" />);
+      await submitNewButton(user, { name: 'ST Button', description: 'desc' });
+
+      await waitFor(() => {
+        expect(miqRedirectBack).toHaveBeenCalledWith(
+          'Custom Button was saved but could not be assigned. Please assign it manually.',
+          'warning',
+          expect.any(String),
+        );
+      });
+      expect(fetchMock.calls('/api/service_templates/42')).toHaveLength(0);
     });
   });
 });

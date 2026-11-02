@@ -19,7 +19,7 @@ const AbForm = ({
   redirectUrl = '/miq_ae_customization/explorer',
 }) => {
   const [{
-    isLoading, initialValues, buttonIcon, roles, serviceDialogs, appliesToClass,
+    isLoading, initialValues, buttonIcon, roles, serviceDialogs,
     distinctInstances, ansiblePlaybooks,
   }, setState] = useState({
     isLoading: true,
@@ -27,7 +27,6 @@ const AbForm = ({
     buttonIcon: 'ff ff-action',
     roles: [],
     serviceDialogs: [],
-    appliesToClass: appliesToClassProp || '',
     distinctInstances: [],
     ansiblePlaybooks: [],
   });
@@ -43,7 +42,6 @@ const AbForm = ({
       getInitialValues(recId),
     ]).then(([fetchedRoles, fetchedDialogs, fetchedFormData, fetchedValues]) => {
       const icon = fetchedValues?.options?.button_icon || 'ff ff-action';
-      // For edit, use applies_to_class from the API response
       const resolvedClass = (recId && fetchedValues?.applies_to_class) || appliesToClassProp;
       setState({
         isLoading: false,
@@ -55,7 +53,6 @@ const AbForm = ({
         buttonIcon: icon,
         roles: fetchedRoles,
         serviceDialogs: fetchedDialogs,
-        appliesToClass: resolvedClass,
         distinctInstances: fetchedFormData.distinct_instances || [],
         ansiblePlaybooks: fetchedFormData.ansible_playbooks || [],
       });
@@ -64,6 +61,8 @@ const AbForm = ({
       setFlashError(error?.data?.error?.message || error?.message || __('An error occurred while loading the form.'));
     });
   }, [recId, appliesToClassProp, formDataUrl]);
+
+  const appliesToClass = (recId && initialValues?.applies_to_class) || appliesToClassProp;
 
   const onSubmit = (values) => {
     if (isSubmitting) {
@@ -85,35 +84,25 @@ const AbForm = ({
 
       const assignFailureMessage = __('Custom Button was saved but could not be assigned. Please assign it manually.');
 
-      // customButtonGroupId and appliesToId are mutually exclusive:
-      //   customButtonGroupId — set when adding a button directly under a button group node.
-      //   appliesToId         — set when adding a standalone button under a service template node.
-      if (!recId && customButtonGroupId) {
+      if (!recId && (customButtonGroupId || appliesToId)) {
         const newId = parseInt(response?.results?.[0]?.id, 10);
         if (!newId) {
-          miqRedirectBack(message, 'success', redirectUrl);
+          // The button already exists, so leave the form instead of letting the user re-submit a duplicate.
+          miqRedirectBack(assignFailureMessage, 'warning', redirectUrl);
           return;
         }
-        API.post(`/api/custom_button_sets/${customButtonGroupId}`, { action: 'add_custom_button', button_id: newId })
+        // When adding under a button group, customButtonGroupId takes precedence over appliesToId
+        // (in the catalog explorer, appliesToId is present on all nodes including button groups).
+        const assignUrl = customButtonGroupId
+          ? `/api/custom_button_sets/${customButtonGroupId}`
+          : `/api/service_templates/${appliesToId}`;
+        API.post(assignUrl, { action: 'add_custom_button', button_id: newId })
           .then(() => miqRedirectBack(message, 'success', redirectUrl))
           .catch((error) => {
             setIsSubmitting(false);
             setFlashError(error?.data?.error?.message || assignFailureMessage);
           });
         return;
-      }
-
-      if (!recId && appliesToId) {
-        const newId = parseInt(response?.results?.[0]?.id, 10);
-        if (newId) {
-          API.post(`/api/service_templates/${appliesToId}`, { action: 'add_custom_button', button_id: newId })
-            .then(() => miqRedirectBack(message, 'success', redirectUrl))
-            .catch((error) => {
-              setIsSubmitting(false);
-              setFlashError(error?.data?.error?.message || assignFailureMessage);
-            });
-          return;
-        }
       }
 
       miqRedirectBack(message, 'success', redirectUrl);

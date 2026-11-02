@@ -175,6 +175,17 @@ describe('buildSubmitData', () => {
 
       expect(Object.keys(result.uri_attributes)).toEqual(['request']);
     });
+
+    it('does not allow a pair named request to overwrite uri_attributes.request', () => {
+      const values = {
+        ...baseValues,
+        uri_attributes: { request: 'dedicated_request' },
+        attribute_pairs: [{ key: 'request', value: 'rogue_request' }],
+      };
+      const result = buildSubmitData(values, null, 'Vm', null, {}, 'ff ff-action');
+
+      expect(result.uri_attributes.request).toBe('dedicated_request');
+    });
   });
 
   describe('expressions', () => {

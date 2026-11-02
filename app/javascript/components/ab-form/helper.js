@@ -127,12 +127,12 @@ const buildSubmitData = (values, recId, appliesToClass, appliesToId, initialValu
         packed[key.trim()] = (value || '').trim();
       }
     });
-    // Rebuild from the fixed fields plus the current pairs so removed or renamed pairs are dropped.
+    // Rebuild from current pairs plus fixed fields so removed/renamed pairs are dropped
     const { request, object_name: objectName } = values.uri_attributes || {};
     submit.uri_attributes = {
+      ...packed,
       request,
       ...(objectName !== undefined && { object_name: objectName }),
-      ...packed,
     };
     delete submit.attribute_pairs;
   }
