@@ -29,7 +29,8 @@ describe('ReviewImportModal component', () => {
   });
 
   it('should list the dialogs with their status', () => {
-    renderModal();
+    const { container } = renderModal();
+    expect(container).toMatchSnapshot();
     expect(screen.getByRole('checkbox', { name: 'New dialog' })).toBeInTheDocument();
     expect(screen.getByText('New object')).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: 'Existing dialog' })).toBeInTheDocument();

@@ -13,6 +13,11 @@ describe('Service dialog ExportSection component', () => {
 
   beforeEach(() => jest.clearAllMocks());
 
+  it('should render the export section', () => {
+    const { container } = renderWithRedux(<ExportSection dialogExports={dialogExports} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('should disable the export button when nothing is selected', () => {
     renderWithRedux(<ExportSection dialogExports={dialogExports} />);
     expect(screen.getByRole('button', { name: /^Export$/i })).toBeDisabled();

@@ -14,8 +14,9 @@ describe('ServiceDialogImportExport component', () => {
   });
 
   it('should render the import and export sections without the review modal', () => {
-    renderWithRedux(<ServiceDialogImportExport dialogExports={[['Dialog A', 1]]} />);
+    const { container } = renderWithRedux(<ServiceDialogImportExport dialogExports={[['Dialog A', 1]]} />);
 
+    expect(container).toMatchSnapshot();
     expect(screen.getByRole('heading', { name: 'Import' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Export' })).toBeInTheDocument();
     expect(screen.queryByText('Import Service Dialogs')).not.toBeInTheDocument();

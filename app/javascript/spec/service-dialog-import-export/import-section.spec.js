@@ -19,6 +19,11 @@ describe('Service dialog ImportSection component', () => {
     await user.upload(screen.getByLabelText(/Choose file/i), file);
   };
 
+  it('should render the import section', () => {
+    const { container } = renderWithRedux(<ImportSection onUploadComplete={jest.fn()} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('should disable the upload button until a file is chosen', () => {
     renderWithRedux(<ImportSection onUploadComplete={jest.fn()} />);
     expect(screen.getByRole('button', { name: /^Upload$/i })).toBeDisabled();
