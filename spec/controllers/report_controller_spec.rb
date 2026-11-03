@@ -763,6 +763,7 @@ describe ReportController do
         expect(miq_schedule.sched_action[:method]).to eq("run_report")
         expect(miq_schedule.sched_action[:options]).to be_kind_of(Hash)
         expect(miq_schedule.sched_action[:options][:miq_group_id]).to eq(@current_user.current_group.id)
+        expect(miq_schedule.sched_action[:options]).not_to have_key(:email_url_prefix)
       end
     end
   end
