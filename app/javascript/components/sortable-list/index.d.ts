@@ -1,8 +1,10 @@
 import type { ComponentType } from 'react';
 
+export type SortableListItem = string | Record<string, unknown>;
+
 export type SortableListInput = {
-  value: string[];
-  onChange: (newValue: string[]) => void;
+  value: SortableListItem[];
+  onChange: (newValue: SortableListItem[]) => void;
 };
 
 export type SortableListProps = {
@@ -10,6 +12,8 @@ export type SortableListProps = {
   label?: string;
   helperText?: string;
   isRequired?: boolean;
+  labelKey?: string;
+  multiSelect?: boolean;
   onRemove?: ((item: string) => void) | null;
   labelMap?: Record<string, string>;
 };
@@ -21,6 +25,8 @@ export type SortableListDDFProps = {
   label?: string;
   helperText?: string;
   isRequired?: boolean;
+  labelKey?: string;
+  multiSelect?: boolean;
   onRemove?: ((item: string) => void) | null;
   labelMap?: Record<string, string>;
 };
