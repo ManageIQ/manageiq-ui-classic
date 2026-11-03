@@ -459,6 +459,64 @@ describe MiqAeCustomizationController do
     end
   end
 
+  describe '#ab_button_form_data' do
+    it 'returns the sorted System/Process instance names and the ansible playbook names' do
+      allow(MiqAeClass).to receive(:find_distinct_instances_across_domains)
+        .with(anything, "SYSTEM/PROCESS")
+        .and_return([double(:name => 'Request'), double(:name => 'AutomationRequest')])
+      FactoryBot.create(:service_template_ansible_playbook, :name => 'playbook_b')
+      FactoryBot.create(:service_template_ansible_playbook, :name => 'playbook_a')
+
+      get :ab_button_form_data
+
+      expect(response.status).to eq(200)
+      expect(response.parsed_body).to eq(
+        'distinct_instances' => %w[AutomationRequest Request],
+        'ansible_playbooks'  => %w[playbook_a playbook_b]
+      )
+    end
+
+    it 'asserts privileges for adding or editing a button' do
+      expect(controller).to receive(:assert_privileges).with('ab_button_new', 'ab_button_edit')
+      allow(MiqAeClass).to receive(:find_distinct_instances_across_domains).and_return([])
+
+      get :ab_button_form_data
+    end
+  end
+
+  describe '#button_new_edit' do
+    before do
+      controller.instance_variable_set(:@sb, {})
+      allow(controller).to receive(:replace_right_cell)
+    end
+
+    it 'sets @sb[:button_group_id] when adding a button under a button group node' do
+      allow(controller).to receive(:x_node).and_return('xx-ab_Vm_cbg-12')
+
+      controller.send(:button_new_edit, 'new')
+
+      expect(controller.instance_variable_get(:@sb)[:button_group_id]).to eq(12)
+    end
+
+    it 'leaves @sb[:button_group_id] nil when adding a button under a non-group node' do
+      allow(controller).to receive(:x_node).and_return('xx-ab_Vm')
+
+      controller.send(:button_new_edit, 'new')
+
+      expect(controller.instance_variable_get(:@sb)[:button_group_id]).to be_nil
+    end
+
+    it 'leaves @sb[:button_group_id] nil when editing a button' do
+      button = FactoryBot.create(:custom_button, :applies_to_class => 'Vm', :name => 'btn')
+      controller.params = {:id => button.id}
+      allow(controller).to receive(:x_node).and_return('xx-ab_Vm_cbg-12_cb-1')
+
+      controller.send(:button_new_edit, 'edit')
+
+      expect(controller.instance_variable_get(:@sb)[:button_group_id]).to be_nil
+    end
+  end
+
   describe 'replace_right_cell' do
     it "Can build all the trees" do
       seed_session_trees('miq_ae_customization', :ab, 'root')

@@ -41,6 +41,7 @@ module MiqAeCustomizationController::CustomButtons
       end
     elsif @nodetype.length == 1 && nodeid[1] == "ub" # Unassigned buttons group selected
       @sb[:buttons] = []
+      @sb[:applies_to_class] = nodeid[2]
       @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @resolve[:target_classes][nodeid[2]]}
       uri = CustomButton.buttons_for(nodeid[2]).includes(:custom_button_sets).sort_by(&:name)
       if uri.present?
@@ -87,8 +88,6 @@ module MiqAeCustomizationController::CustomButtons
                                       else
                                         @nodetype[1]
                                       end
-      @visibility_expression_table = exp_build_table(@custom_button.visibility_expression.exp) if @custom_button.visibility_expression.kind_of?(MiqExpression)
-      @enablement_expression_table = exp_build_table(@custom_button.enablement_expression.exp) if @custom_button.enablement_expression.kind_of?(MiqExpression)
       @right_cell_text = _("Button \"%{name}\"") % {:name => @custom_button.name}
     else # assigned buttons node/folder
       @sb[:applies_to_class] = @nodetype[1]
