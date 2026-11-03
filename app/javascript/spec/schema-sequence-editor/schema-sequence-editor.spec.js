@@ -86,7 +86,7 @@ describe('SchemaSequenceEditor', () => {
   });
 
   describe('reordering', () => {
-    const itemNames = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i })
+    const itemNames = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i })
       .map((el) => el.textContent.match(/\(([^)]+)\)/)[1]);
     const dataTransfer = () => ({ setData: jest.fn(), effectAllowed: '', dropEffect: '' });
 
@@ -104,7 +104,7 @@ describe('SchemaSequenceEditor', () => {
 
     it('reorders a single item by dragging it over another one', async() => {
       await renderLoaded();
-      const items = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i });
+      const items = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
 
       fireEvent.dragStart(items()[0], { dataTransfer: dataTransfer() });
       fireEvent.dragOver(items()[2], { dataTransfer: dataTransfer() });
@@ -116,7 +116,7 @@ describe('SchemaSequenceEditor', () => {
 
     it('does not enable Save when a drag ends without changing the order', async() => {
       await renderLoaded();
-      const items = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i });
+      const items = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
 
       fireEvent.dragStart(items()[0], { dataTransfer: dataTransfer() });
       fireEvent.dragEnd(items()[0]);
@@ -128,7 +128,7 @@ describe('SchemaSequenceEditor', () => {
     it('drags a group of consecutive selected items together', async() => {
       const user = userEvent.setup();
       await renderLoaded();
-      const items = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i });
+      const items = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
 
       const checkboxes = screen.getAllByRole('checkbox');
       await user.click(checkboxes[1]);
@@ -144,7 +144,7 @@ describe('SchemaSequenceEditor', () => {
 
     // Drags the first item over the third one, giving the order B, A, C.
     const dragFirstItemDown = () => {
-      const items = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i });
+      const items = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
       fireEvent.dragStart(items()[0], { dataTransfer: dataTransfer() });
       fireEvent.dragOver(items()[2], { dataTransfer: dataTransfer() });
       fireEvent.dragEnd(items()[1]);
@@ -171,7 +171,7 @@ describe('SchemaSequenceEditor', () => {
     it('POSTs the order of a dragged group of selected items', async() => {
       const user = userEvent.setup();
       await renderLoaded();
-      const items = () => screen.getAllByRole('button', { name: /Press arrow keys to reorder/i });
+      const items = () => screen.getAllByRole('option', { name: /Press arrow keys to reorder/i });
 
       const checkboxes = screen.getAllByRole('checkbox');
       await user.click(checkboxes[1]);

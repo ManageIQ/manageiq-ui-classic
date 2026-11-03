@@ -178,7 +178,9 @@ describe('FieldPicker — header pre-fill', () => {
   beforeEach(() => {
     window.http = {
       get: jest.fn((url) => {
-        if (url.includes('react_available_fields')) return Promise.resolve(availFields);
+        if (url.includes('react_available_fields')) {
+          return Promise.resolve(availFields);
+        }
         return Promise.resolve(baseFormData);
       }),
       post: jest.fn(() => Promise.resolve({ success: true })),
@@ -188,7 +190,9 @@ describe('FieldPicker — header pre-fill', () => {
   it('pre-fills column header with the field label when a new field is added', async() => {
     // Render with an existing column whose header was already saved
     window.http.get.mockImplementation((url) => {
-      if (url.includes('react_available_fields')) return Promise.resolve(availFields);
+      if (url.includes('react_available_fields')) {
+        return Promise.resolve(availFields);
+      }
       return Promise.resolve({
         ...baseFormData,
         report: {

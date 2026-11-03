@@ -1,4 +1,6 @@
-import type { AvailableField, FieldMeta, FieldMetadata } from './report-editor-types';
+import type {
+  AvailableField, FieldMeta, FieldMetadata, ReportType,
+} from './report-editor-types';
 
 export const NOTHING = '<<<Nothing>>>';
 
@@ -8,10 +10,10 @@ export const buildLabelMap = (availableFields: AvailableField[] = []): Record<st
 export const getColumnMeta = (fieldMetadata: FieldMetadata | null | undefined, fieldId: string): FieldMeta =>
   (fieldMetadata || {})[fieldId] || {};
 
-// Mirror of ReportController::Reports::Editor#react_report_type / model_report_type.
-// Kept in sync with the Rails helper; used by ReportEditor to update the tab set
-// when the user changes the model dropdown without a round-trip to the server.
-export const modelToReportType = (model: string | null | undefined): string => {
+// Mirrors the model-name rules of ReportController::Reports::Editor#react_report_type
+// so the tab set can follow the model dropdown without a round-trip to the server.
+// Rails also treats every Chargeback subclass as chargeback; the Metering models are such subclasses.
+export const modelToReportType = (model: string | null | undefined): ReportType => {
   if (!model) {
     return 'standard';
   }

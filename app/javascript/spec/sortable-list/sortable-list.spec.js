@@ -53,6 +53,11 @@ describe('SortableList', () => {
     expect(onRemove).toHaveBeenCalledWith('field-a');
   });
 
+  it('renders without an input prop', () => {
+    const { container } = render(<SortableList />);
+    expect(container.querySelector('.sortable-list')).toBeEmptyDOMElement();
+  });
+
   it('calls onChange with the new order after ArrowDown key on first item', () => {
     const onChange = jest.fn();
     const { getAllByRole } = render(

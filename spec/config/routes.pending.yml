@@ -1038,7 +1038,6 @@ PxeController:
 - x_history
 ReportController:
 - accordion_select
-- change_tab
 - db_form_field_changed
 - explorer
 - filter_change
@@ -1048,7 +1047,6 @@ ReportController:
 - report_data
 - saved_report_paging
 - send_report_data
-- show_preview
 - tree_autoload
 - tree_select
 - wait_for_task

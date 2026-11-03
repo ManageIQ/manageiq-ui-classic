@@ -17,14 +17,14 @@ type LabelValuePair = [string, string];
 /**
  * TrendColumnsTab — replaces the standard FieldPicker for VimPerformanceTrend reports.
  *
- * Mirrors _form_columns_trend.html.haml:
+ * Shows:
  *   - Performance Interval (daily/hourly)
  *   - Trending for (single dropdown from react_available_fields)
  *   - Trend Target Limit (Column picker OR Value text input, shown after a trend_col is chosen)
  *   - Trend Target Percents (up to 3 percent selects, shown after a trend_col is chosen)
  *
- * trend_col is stored as "db-col" e.g. "VmPerformance-cpu_usage_rate_average",
- * matching the format the old chosen_trend_col param used.
+ * trend_col is a "db-col" field id, e.g. "VmPerformance-cpu_usage_rate_average";
+ * the server splits it into the trend database and column.
  */
 const TrendColumnsTab = (props: UseFieldApiConfig) => {
   useFieldApi(props); // bind to the DDF field (trend_col)

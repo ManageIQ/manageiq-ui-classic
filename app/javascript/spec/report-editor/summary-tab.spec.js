@@ -27,7 +27,6 @@ const makeFormData = (overrides = {}) => ({
   queue_timeout_options: [['(Use System Default)', null]],
   pdf_page_sizes: [],
   available_fields: [['Name', 'Vm-name'], ['CPUs', 'Vm-num_cpu']],
-  field_metadata: {},
   field_metadata: {
     'Vm-name': { numeric: false, break_suffixes: [], available_formats: [] },
     'Vm-num_cpu': { numeric: true, break_suffixes: [], available_formats: [] },

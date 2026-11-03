@@ -223,12 +223,6 @@ describe "routes for ReportController" do
     end
   end
 
-  describe "#show_preview" do
-    it "routes with POST" do
-      expect(post("/report/show_preview")).to route_to("report#show_preview")
-    end
-  end
-
   describe "#tree_autoload" do
     it "routes with POST" do
       expect(post("/report/tree_autoload"))

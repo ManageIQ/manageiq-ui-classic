@@ -55,7 +55,7 @@ describe('ReportEditor component', () => {
   it('renders all 6 tabs for a standard report', async() => {
     renderWithRedux(<ReportEditor recordId="new" />);
     await waitFor(() => {
-      expect(screen.getAllByRole('tab').length).toBe(6);
+      expect(screen.getAllByRole('tab')).toHaveLength(6);
     });
     const tabs = getTabNames();
     expect(tabs).toContain('Columns');
@@ -70,7 +70,7 @@ describe('ReportEditor component', () => {
     window.http.get.mockResolvedValue({ ...baseFormData, report_type: 'chargeback' });
     renderWithRedux(<ReportEditor recordId="42" />);
     await waitFor(() => {
-      expect(screen.getAllByRole('tab').length).toBe(3);
+      expect(screen.getAllByRole('tab')).toHaveLength(3);
     });
     const tabs = getTabNames();
     expect(tabs).toContain('Columns');
@@ -85,7 +85,7 @@ describe('ReportEditor component', () => {
     window.http.get.mockResolvedValue({ ...baseFormData, report_type: 'performance' });
     renderWithRedux(<ReportEditor recordId="42" />);
     await waitFor(() => {
-      expect(screen.getAllByRole('tab').length).toBe(6);
+      expect(screen.getAllByRole('tab')).toHaveLength(6);
     });
     const tabs = getTabNames();
     expect(tabs).toContain('Columns');
@@ -100,7 +100,7 @@ describe('ReportEditor component', () => {
     window.http.get.mockResolvedValue({ ...baseFormData, report_type: 'performance' });
     renderWithRedux(<ReportEditor recordId="42" />);
     await waitFor(() => {
-      expect(screen.getAllByRole('tab').length).toBe(6);
+      expect(screen.getAllByRole('tab')).toHaveLength(6);
     });
     expect(document.getElementById('perf_interval')).toBeInTheDocument();
     expect(document.getElementById('perf_avgs')).toBeInTheDocument();
@@ -109,7 +109,7 @@ describe('ReportEditor component', () => {
   it('does NOT render perf_interval or perf_avgs selects for standard reports', async() => {
     renderWithRedux(<ReportEditor recordId="new" />);
     await waitFor(() => {
-      expect(screen.getAllByRole('tab').length).toBe(6);
+      expect(screen.getAllByRole('tab')).toHaveLength(6);
     });
     expect(document.getElementById('perf_interval')).not.toBeInTheDocument();
     expect(document.getElementById('perf_avgs')).not.toBeInTheDocument();

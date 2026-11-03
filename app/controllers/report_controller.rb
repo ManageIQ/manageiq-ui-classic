@@ -105,14 +105,9 @@ class ReportController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    case params[:tab].split("_")[0]
-    when "edit"
-      redirect_to(:action => "miq_report_edit", :tab => params[:tab])
-    else
-      assert_privileges("miq_report")
+    assert_privileges("miq_report")
 
-      redirect_to(:action => params[:tab], :id => params[:id])
-    end
+    redirect_to(:action => params[:tab], :id => params[:id])
   end
 
   def explorer
@@ -589,9 +584,6 @@ class ReportController < ApplicationController
         action_url = "db_edit"
         record_id = @edit[:db_id] ? @edit[:db_id] : nil
       end
-    elsif x_active_tree == :reports_tree
-      action_url = "miq_report_edit"
-      record_id = @edit[:rpt_id] ? @edit[:rpt_id] : nil
     elsif x_active_tree == :roles_tree
       action_url = "menu_update"
       locals[:default_button] = true

@@ -214,9 +214,8 @@ const TAB_BUILDERS: Record<TabName, (formData: FormDataWithType) => TabField> = 
 
 const createSchema = (formData: FormDataWithType): MiqFormSchemaType => {
   const reportType = formData.report_type || 'standard';
-  // Trend and chargeback use the reduced 3-tab set.
-  // Performance now uses the full standard tab set (same as standard reports),
-  // matching the old HAML which showed all 8 tabs for performance models.
+  // Trend and chargeback reports only have the tabs that apply to them;
+  // performance reports use the full set.
   const tabNames: readonly TabName[] = (reportType === 'trend' || reportType === 'chargeback')
     ? REDUCED_TABS
     : STANDARD_TABS;

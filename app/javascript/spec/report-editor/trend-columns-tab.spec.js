@@ -40,8 +40,12 @@ describe('TrendColumnsTab (via ReportEditor)', () => {
   beforeEach(() => {
     window.http = {
       get: jest.fn((url) => {
-        if (url.includes('react_available_fields')) return Promise.resolve(trendFields);
-        if (url.includes('react_trend_limit_cols')) return Promise.resolve({ limit_cols: [] });
+        if (url.includes('react_available_fields')) {
+          return Promise.resolve(trendFields);
+        }
+        if (url.includes('react_trend_limit_cols')) {
+          return Promise.resolve({ limit_cols: [] });
+        }
         return Promise.resolve(trendFormData);
       }),
       post: jest.fn(() => Promise.resolve({ success: true })),
@@ -88,8 +92,12 @@ describe('TrendColumnsTab (via ReportEditor)', () => {
 
   it('shows Target Limit and Target Percents after a trend_col is pre-loaded', async() => {
     window.http.get.mockImplementation((url) => {
-      if (url.includes('react_available_fields')) return Promise.resolve(trendFields);
-      if (url.includes('react_trend_limit_cols')) return Promise.resolve({ limit_cols: [] });
+      if (url.includes('react_available_fields')) {
+        return Promise.resolve(trendFields);
+      }
+      if (url.includes('react_trend_limit_cols')) {
+        return Promise.resolve({ limit_cols: [] });
+      }
       return Promise.resolve({
         ...trendFormData,
         report: {

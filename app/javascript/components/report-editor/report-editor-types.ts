@@ -139,6 +139,9 @@ export type ReportRecord = {
   headers?: string[];
   pdf_page_size?: string;
   sortby?: string[];
+  sort1_suffix?: string | null;
+  sort2_suffix?: string | null;
+  break_format?: string | null;
   order?: string;
   group?: string;
   hide_details?: boolean;
@@ -161,6 +164,8 @@ export type ReportRecord = {
   pivot_by2?: string;
   pivot_by3?: string;
   pivot_cols?: Record<string, string[]>;
+  /** Performance reports: the start offset relative to the end offset */
+  perf_start?: number | null;
   db_options?: {
     interval?: string;
     calc_avgs_by?: string;

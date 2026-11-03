@@ -23,13 +23,16 @@ exports[`SchemaSequenceEditor should match snapshot 1`] = `
           Drag and drop to reorder fields. Select multiple consecutive fields using checkboxes to drag them together.
         </div>
         <div
+          aria-label="Fields:"
           class="sortable-list"
+          role="listbox"
         >
           <div
             aria-label="Field A (field_a). Press arrow keys to reorder."
+            aria-selected="false"
             class="sortable-list-item"
             draggable="true"
-            role="button"
+            role="option"
             tabindex="0"
           >
             <div
@@ -92,9 +95,10 @@ exports[`SchemaSequenceEditor should match snapshot 1`] = `
           </div>
           <div
             aria-label="Field B (field_b). Press arrow keys to reorder."
+            aria-selected="false"
             class="sortable-list-item"
             draggable="true"
-            role="button"
+            role="option"
             tabindex="0"
           >
             <div
@@ -157,9 +161,10 @@ exports[`SchemaSequenceEditor should match snapshot 1`] = `
           </div>
           <div
             aria-label="Field C (field_c). Press arrow keys to reorder."
+            aria-selected="false"
             class="sortable-list-item"
             draggable="true"
-            role="button"
+            role="option"
             tabindex="0"
           >
             <div

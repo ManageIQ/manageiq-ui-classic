@@ -4,6 +4,9 @@ import { Draggable, Close } from '@carbon/react/icons';
 import { Checkbox, InlineNotification } from '@carbon/react';
 import { useFieldApi } from '@@ddf';
 
+// Module-level so the default does not change identity on every render
+const EMPTY_INPUT = { value: [], onChange: () => {} };
+
 /**
  * SortableList - A reusable drag-and-drop list component.
  * Uses HTML5 drag-and-drop API with Carbon 11 styling.
@@ -18,7 +21,7 @@ import { useFieldApi } from '@@ddf';
  * dragged together as a group. Non-consecutive selections are blocked with an error message.
  */
 const SortableList = ({
-  input = { value: [], onChange: () => {} },
+  input = EMPTY_INPUT,
   label = '',
   helperText = '',
   isRequired = false,

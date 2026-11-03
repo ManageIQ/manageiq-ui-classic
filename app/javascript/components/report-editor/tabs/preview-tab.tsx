@@ -14,6 +14,7 @@ import {
 import { Renew } from '@carbon/react/icons';
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { ReportFormValues } from '../report-editor-types';
+import { buildReportData } from '../report-form-values';
 
 type PreviewData = {
   columns?: string[];
@@ -25,28 +26,6 @@ type PreviewState = {
   isLoading: boolean;
   data: PreviewData | null;
   error: string | null;
-};
-
-const buildReportData = (values: ReportFormValues) => {
-  const colOrder = values.col_order || [];
-  const colOptions = values.col_options || {};
-  const headers = colOrder.map((id) => colOptions[id]?.header || '');
-  const colFormats = colOrder.map((id) => colOptions[id]?.format || '');
-  return {
-    name: values.name,
-    title: values.title,
-    model: values.model,
-    col_order: colOrder,
-    headers,
-    col_formats: colFormats,
-    col_options: colOptions,
-    record_filter: values.record_filter,
-    display_filter: values.display_filter,
-    sortby: values.sortby,
-    order: values.order,
-    group: values.group,
-    tz: values.tz,
-  };
 };
 
 const PreviewTab = () => {

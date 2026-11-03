@@ -2674,8 +2674,6 @@ Rails.application.routes.draw do
         accordion_select
         change_tab
         dashboard_render
-        react_preview
-        react_save
         db_copy
         db_edit
         db_form_field_changed
@@ -2692,12 +2690,13 @@ Rails.application.routes.draw do
         menu_folder_message_display
         menu_update
         miq_report_edit
+        react_preview
+        react_save
         reload
         rep_change_tab
         saved_report_paging
         schedule_edit
         schedule_form_field_changed
-        show_preview
         tree_autoload
         tree_select
         upload

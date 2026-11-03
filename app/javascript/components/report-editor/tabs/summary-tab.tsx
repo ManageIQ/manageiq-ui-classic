@@ -19,8 +19,9 @@ import { NOTHING, buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
 import type { ColOptions, ReportFormValues } from '../report-editor-types';
 
-const GROUPING_OPTIONS = ['avg', 'max', 'min', 'sum'];
-const PIVOT_OPTIONS = ['avg', 'max', 'min', 'sum', 'first', 'last'];
+// The calculations core knows: MiqReport::GROUPINGS (break rows) and MiqReport::PIVOTS (consolidation)
+const GROUPING_OPTIONS = ['min', 'avg', 'max', 'total'];
+const PIVOT_OPTIONS = ['min', 'avg', 'max', 'total'];
 const ROW_LIMIT_OPTIONS = ['', '5', '10', '20', '50', '100'];
 
 type NumericColumn = { fieldId: string; label: string };

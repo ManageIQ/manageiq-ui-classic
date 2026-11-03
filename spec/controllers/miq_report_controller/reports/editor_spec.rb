@@ -11,9 +11,9 @@ describe ReportController do
 
     describe "#miq_report_edit" do
       it "should allow user with miq_report_edit access to edit a report" do
-        user = FactoryBot.create(:user, :features => %w(miq_report_edit))
+        user = FactoryBot.create(:user, :features => %w[miq_report_edit])
         login_as user
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
+        EvmSpecHelper.seed_specific_product_features(%w[miq_report_edit])
         ApplicationController.handle_exceptions = true
 
         rep = FactoryBot.create(
@@ -36,8 +36,8 @@ describe ReportController do
       end
 
       it "should allow user with miq_report_new access to add a new report" do
-        login_as FactoryBot.create(:user, :features => %w(miq_report_new))
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
+        login_as FactoryBot.create(:user, :features => %w[miq_report_new])
+        EvmSpecHelper.seed_specific_product_features(%w[miq_report_new])
         ApplicationController.handle_exceptions = true
 
         allow(controller).to receive(:javascript_redirect)

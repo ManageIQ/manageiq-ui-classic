@@ -72,7 +72,7 @@ describe('ColumnFormattingTable (via ReportEditor)', () => {
     // Confirm they appear as table cells specifically
     const table = screen.getByRole('table');
     expect(table).toBeInTheDocument();
-    expect(table.querySelectorAll('tbody tr').length).toBe(2);
+    expect(table.querySelectorAll('tbody tr')).toHaveLength(2);
   });
 
   it('renders Column name, Header, and Format headers', async() => {

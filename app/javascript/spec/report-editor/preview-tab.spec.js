@@ -26,7 +26,7 @@ const makeFormData = (overrides = {}) => ({
   ...overrides,
 });
 
-const renderAndOpenPreview = async(formData) => {
+const renderAndOpenPreview = async() => {
   renderWithRedux(<ReportEditor recordId="new" />);
   await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
   const previewTab = screen.getAllByRole('tab').find((t) => t.textContent.trim() === 'Preview');
@@ -45,7 +45,7 @@ describe('PreviewTab (via ReportEditor)', () => {
         get: jest.fn(() => Promise.resolve(makeFormData())),
         post: jest.fn(),
       };
-      await renderAndOpenPreview(makeFormData());
+      await renderAndOpenPreview();
       // Use the specific preview-tab message to disambiguate from Summary/Styling tabs
       expect(screen.getByText('Add columns on the Columns tab, then click Refresh to preview.')).toBeInTheDocument();
     });
@@ -55,7 +55,7 @@ describe('PreviewTab (via ReportEditor)', () => {
         get: jest.fn(() => Promise.resolve(makeFormData())),
         post: jest.fn(),
       };
-      await renderAndOpenPreview(makeFormData());
+      await renderAndOpenPreview();
       // The Refresh button is always present; the hint text is what gates the empty state
       expect(screen.getByRole('button', { name: /refresh/i })).toBeInTheDocument();
     });
@@ -81,7 +81,9 @@ describe('PreviewTab (via ReportEditor)', () => {
       let resolvePreview;
       window.http = {
         get: jest.fn(() => Promise.resolve(formDataWithCols)),
-        post: jest.fn(() => new Promise((res) => { resolvePreview = res; })),
+        post: jest.fn(() => new Promise((res) => {
+          resolvePreview = res;
+        })),
       };
       const { container } = renderWithRedux(<ReportEditor recordId="new" />);
       await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
@@ -102,10 +104,9 @@ describe('PreviewTab (via ReportEditor)', () => {
             columns: ['Name', 'Power State'],
             col_keys: ['Vm-name', 'Vm-power_state'],
             rows: [['My VM', 'on'], ['Other VM', 'off']],
-          })
-        ),
+          })),
       };
-      const { container } = renderWithRedux(<ReportEditor recordId="new" />);
+      renderWithRedux(<ReportEditor recordId="new" />);
       await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
       const previewTab = screen.getAllByRole('tab').find((t) => t.textContent.trim() === 'Preview');
       fireEvent.click(previewTab);
@@ -140,7 +141,7 @@ describe('PreviewTab (via ReportEditor)', () => {
         get: jest.fn(() => Promise.resolve(formDataWithCols)),
         post: jest.fn(() => Promise.resolve({ columns: ['Name'], col_keys: ['Vm-name'], rows: [] })),
       };
-      const { container } = renderWithRedux(<ReportEditor recordId="new" />);
+      renderWithRedux(<ReportEditor recordId="new" />);
       await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
       const previewTab = screen.getAllByRole('tab').find((t) => t.textContent.trim() === 'Preview');
       fireEvent.click(previewTab);

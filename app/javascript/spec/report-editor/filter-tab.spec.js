@@ -27,7 +27,7 @@ const baseFormData = {
 // Mocked chargeback options returned by react_chargeback_options
 const cbOptions = {
   users: { admin: 'Administrator', bob: 'Bob Smith' },
-  tenants: { '1': 'My Company', '2': 'Acme Corp' },
+  tenants: { 1: 'My Company', 2: 'Acme Corp' },
   categories: { environment: 'Environment', department: 'Department' },
   container_providers: [['OpenShift', '10']],
   image_labels: ['version', 'release'],
@@ -39,7 +39,7 @@ const cbOptions = {
 };
 
 // Helper to render, wait for load, then click the Filter tab
-const renderAndClickFilter = async(formData = baseFormData) => {
+const renderAndClickFilter = async() => {
   renderWithRedux(<ReportEditor recordId="new" />);
   await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
   const filterTab = screen.getAllByRole('tab').find((t) => t.textContent.trim() === 'Filter');
@@ -76,7 +76,7 @@ describe('FilterTab', () => {
         report: { ...baseFormData.report, model: '' },
       };
       window.http.get.mockResolvedValue(data);
-      await renderAndClickFilter(data);
+      await renderAndClickFilter();
       expect(screen.getByText(/Select a model on the Columns tab/)).toBeInTheDocument();
     });
 
@@ -132,6 +132,7 @@ describe('FilterTab', () => {
       report: {
         ...baseFormData.report,
         model: 'VimPerformanceTrend',
+        perf_start: 86400,
         db_options: { interval: 'daily', end_offset: 0, start_offset: 86400 },
       },
     };
@@ -141,18 +142,18 @@ describe('FilterTab', () => {
     });
 
     it('shows Performance Timeframe heading for trend reports', async() => {
-      await renderAndClickFilter(trendData);
+      await renderAndClickFilter();
       expect(screen.getByText('Performance Timeframe')).toBeInTheDocument();
     });
 
     it('renders end and start selects for trend', async() => {
-      await renderAndClickFilter(trendData);
+      await renderAndClickFilter();
       expect(document.getElementById('perf_end')).toBeInTheDocument();
       expect(document.getElementById('perf_start')).toBeInTheDocument();
     });
 
     it('does NOT show an expression editor for trend', async() => {
-      await renderAndClickFilter(trendData);
+      await renderAndClickFilter();
       expect(screen.queryByText(/Record Filter/)).not.toBeInTheDocument();
       expect(screen.queryByText(/Display Filter/)).not.toBeInTheDocument();
     });
@@ -169,6 +170,7 @@ describe('FilterTab', () => {
       report: {
         ...baseFormData.report,
         model: 'VmPerformance',
+        perf_start: 86400,
         db_options: { interval: 'daily', end_offset: 0, start_offset: 86400 },
       },
     };
@@ -183,48 +185,54 @@ describe('FilterTab', () => {
     });
 
     it('shows Performance Timeframe heading', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       expect(screen.getByText('Performance Timeframe')).toBeInTheDocument();
     });
 
     it('renders end and start selects', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       expect(document.getElementById('perf_end')).toBeInTheDocument();
       expect(document.getElementById('perf_start')).toBeInTheDocument();
     });
 
     it('shows "going back" label between selects', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       expect(screen.getByText('going back')).toBeInTheDocument();
     });
 
     it('shows daily label for daily interval', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       expect(screen.getByText('Show daily data from')).toBeInTheDocument();
     });
 
     it('shows hourly label for hourly interval', async() => {
       const hourlyData = {
         ...perfData,
-        report: { ...perfData.report, db_options: { interval: 'hourly', end_offset: 0, start_offset: 3600 } },
+        report: {
+          ...perfData.report,
+          perf_start: 3600,
+          db_options: { interval: 'hourly', end_offset: 0, start_offset: 3600 },
+        },
       };
       window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) return Promise.resolve({ fields: [] });
+        if (url.includes('expression_editor/metadata')) {
+          return Promise.resolve({ fields: [] });
+        }
         return Promise.resolve(hourlyData);
       });
-      await renderAndClickFilter(hourlyData);
+      await renderAndClickFilter();
       expect(screen.getByText('Show hourly data from')).toBeInTheDocument();
     });
 
     it('shows the Primary (Record) Filter heading', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText(/Primary \(Record\) Filter/)).toBeInTheDocument();
       });
     });
 
     it('renders an ExpressionEditor for the record filter', async() => {
-      await renderAndClickFilter(perfData);
+      await renderAndClickFilter();
       await waitFor(() => {
         // ExpressionEditor renders when model is set; at minimum the section heading appears
         expect(screen.getByText(/Primary \(Record\) Filter/)).toBeInTheDocument();
@@ -243,7 +251,11 @@ describe('FilterTab', () => {
       report: {
         ...baseFormData.report,
         model: 'ChargebackVm',
-        db_options: { options: { interval: 'daily', groupby: 'date', interval_size: 1, end_interval_offset: 1 } },
+        db_options: {
+          options: {
+            interval: 'daily', groupby: 'date', interval_size: 1, end_interval_offset: 1,
+          },
+        },
       },
     };
 
@@ -257,7 +269,7 @@ describe('FilterTab', () => {
     });
 
     it('calls react_chargeback_options endpoint', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(window.http.get).toHaveBeenCalledWith(
           expect.stringContaining('react_chargeback_options')
@@ -266,35 +278,35 @@ describe('FilterTab', () => {
     });
 
     it('shows Chargeback Filters heading', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Chargeback Filters')).toBeInTheDocument();
       });
     });
 
     it('shows Chargeback Interval heading', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Chargeback Interval')).toBeInTheDocument();
       });
     });
 
     it('renders cb_interval select', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(document.getElementById('cb_interval')).toBeInTheDocument();
       });
     });
 
     it('renders cb_show_typ select', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(document.getElementById('cb_show_typ')).toBeInTheDocument();
       });
     });
 
     it('renders cb_groupby select', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(document.getElementById('cb_groupby')).toBeInTheDocument();
       });
@@ -317,38 +329,40 @@ describe('FilterTab', () => {
         },
       };
       window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) return Promise.resolve(cbOptions);
+        if (url.includes('react_chargeback_options')) {
+          return Promise.resolve(cbOptions);
+        }
         return Promise.resolve(ownerData);
       });
-      await renderAndClickFilter(ownerData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(document.getElementById('cb_owner_id')).toBeInTheDocument();
       });
     });
 
     it('shows Include C&U Metrics toggle for ChargebackVm', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Include Capacity & Utilization Metrics')).toBeInTheDocument();
       });
     });
 
     it('shows Include Cumulative Rate toggle for Chargeback models', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Include Cumulative Rate Calculation')).toBeInTheDocument();
       });
     });
 
     it('shows Method for allocated metrics select for ChargebackVm', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Method for allocated metrics')).toBeInTheDocument();
       });
     });
 
     it('shows timezone select', async() => {
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(document.getElementById('tz')).toBeInTheDocument();
       });
@@ -361,7 +375,7 @@ describe('FilterTab', () => {
         }
         return Promise.resolve(cbData);
       });
-      await renderAndClickFilter(cbData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText('Failed to load chargeback options.')).toBeInTheDocument();
       });
@@ -373,10 +387,12 @@ describe('FilterTab', () => {
         report: { ...cbData.report, model: '' },
       };
       window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) return Promise.resolve(cbOptions);
+        if (url.includes('react_chargeback_options')) {
+          return Promise.resolve(cbOptions);
+        }
         return Promise.resolve(noModelData);
       });
-      await renderAndClickFilter(noModelData);
+      await renderAndClickFilter();
       await waitFor(() => {
         expect(screen.getByText(/Select a model on the Columns tab/)).toBeInTheDocument();
       });
