@@ -1955,6 +1955,7 @@ Rails.application.routes.draw do
       :post => %w[
         ab_group_reorder
         accordion_select
+        cancel_import_service_dialogs
         change_tab
         dialog_copy_editor
         dialog_edit_editor
