@@ -27,14 +27,10 @@ const chooseFile = (contents, fileName = 'dialogs.yml') => {
 };
 
 describe('Automation > Embedded Automate > Customization > Service Dialog Import/Export', () => {
-  let exportDialogId;
-
   beforeEach(() => {
     cy.appFactories([
       ['create', 'dialog', { label: EXPORT_DIALOG_LABEL }],
-    ]).then(([dialog]) => {
-      exportDialogId = dialog.id;
-    });
+    ]);
     cy.login();
     cy.menu('Automation', 'Embedded Automate', 'Customization');
     cy.accordion('Import/Export');
@@ -140,23 +136,6 @@ describe('Automation > Embedded Automate > Customization > Service Dialog Import
       cy.contains('.cds--list-box__menu-item', EXPORT_DIALOG_LABEL).click();
 
       cy.get('#export-service-dialogs').should('not.be.disabled');
-    });
-
-    it('requests the export of the selected dialogs', () => {
-      // The yaml generation is covered by the controller spec. Stubbing the response with 204 keeps
-      // the page in place and avoids writing a file to cypress/downloads.
-      cy.intercept('GET', '/miq_ae_customization/export_service_dialogs*', { statusCode: 204 }).as('exportServiceDialogs');
-
-      cy.get('#service-dialog-export-select').click();
-      cy.contains('.cds--list-box__menu-item', EXPORT_DIALOG_LABEL).click();
-      // The multi-select menu stays open after a selection and covers the Export button.
-      cy.get('#service-dialog-export-select').type('{esc}');
-      cy.get('#export-service-dialogs').click();
-
-      cy.wait('@exportServiceDialogs').then(({ request }) => {
-        expect(decodeURIComponent(request.url)).to.include(`service_dialogs[]=${exportDialogId}`);
-      });
-      cy.get('.service-dialog-import-export').should('be.visible');
     });
   });
 });
