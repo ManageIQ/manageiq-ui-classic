@@ -27,10 +27,14 @@ const chooseFile = (contents, fileName = 'dialogs.yml') => {
 };
 
 describe('Automation > Embedded Automate > Customization > Service Dialog Import/Export', () => {
+  let exportDialogId;
+
   beforeEach(() => {
     cy.appFactories([
       ['create', 'dialog', { label: EXPORT_DIALOG_LABEL }],
-    ]);
+    ]).then(([dialog]) => {
+      exportDialogId = dialog.id;
+    });
     cy.login();
     cy.menu('Automation', 'Embedded Automate', 'Customization');
     cy.accordion('Import/Export');
@@ -138,8 +142,10 @@ describe('Automation > Embedded Automate > Customization > Service Dialog Import
       cy.get('#export-service-dialogs').should('not.be.disabled');
     });
 
-    it('downloads the selected dialogs as a yaml file', () => {
-      cy.intercept('GET', '/miq_ae_customization/export_service_dialogs*').as('exportServiceDialogs');
+    it('requests the export of the selected dialogs', () => {
+      // The yaml generation is covered by the controller spec. Stubbing the response with 204 keeps
+      // the page in place and avoids writing a file to cypress/downloads.
+      cy.intercept('GET', '/miq_ae_customization/export_service_dialogs*', { statusCode: 204 }).as('exportServiceDialogs');
 
       cy.get('#service-dialog-export-select').click();
       cy.contains('.cds--list-box__menu-item', EXPORT_DIALOG_LABEL).click();
@@ -147,12 +153,10 @@ describe('Automation > Embedded Automate > Customization > Service Dialog Import
       cy.get('#service-dialog-export-select').type('{esc}');
       cy.get('#export-service-dialogs').click();
 
-      cy.wait('@exportServiceDialogs').then(({ request, response }) => {
-        expect(request.url).to.include('service_dialogs');
-        expect(response.statusCode).to.equal(200);
-        expect(response.headers['content-disposition']).to.include('dialog_export_');
-        expect(response.body).to.include(EXPORT_DIALOG_LABEL);
+      cy.wait('@exportServiceDialogs').then(({ request }) => {
+        expect(decodeURIComponent(request.url)).to.include(`service_dialogs[]=${exportDialogId}`);
       });
+      cy.get('.service-dialog-import-export').should('be.visible');
     });
   });
 });
