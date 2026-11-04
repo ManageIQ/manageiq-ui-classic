@@ -82,6 +82,8 @@ const createTreeReducer = (namespace, oncheck, onclick) => {
       .addCase(ACTIONS.CHILD_NODES, (draft, { nodeId, value }) => {
         if (nodeId && draft[nodeId]) {
           draft[nodeId].nodes = value;
+          // The children are loaded, so the node must not be lazy loaded again (even if it has no children).
+          draft[nodeId].lazyLoad = false;
         }
       })
       .addCase(ACTIONS.LOADING, (draft, { nodeId, value }) => {

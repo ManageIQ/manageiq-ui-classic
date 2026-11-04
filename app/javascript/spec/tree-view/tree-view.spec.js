@@ -1,5 +1,6 @@
 import { renderWithRedux } from '../helpers/mountForm';
 import { TreeViewRedux } from '../../components/tree-view';
+import { ACTIONS, createTreeReducer } from '../../components/tree-view/reducers';
 
 ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
 
@@ -73,5 +74,27 @@ describe('Tree View component', () => {
   it('should mount to the correct redux store', () => {
     renderWithRedux(<TreeViewRedux {...props} />);
     expect(ManageIQ.redux.store.getState().object_tree).toBeTruthy();
+  });
+
+  it('should clear lazyLoad once the children of a node are loaded, even if there are none', () => {
+    const reducer = createTreeReducer('lazy_tree', '', '');
+    const state = {
+      '': { nodeId: '', nodes: ['0'] },
+      0: {
+        nodeId: '0',
+        nodes: [],
+        lazyLoad: true,
+        state: {},
+      },
+    };
+    const result = reducer(state, {
+      type: ACTIONS.CHILD_NODES,
+      nodeId: '0',
+      value: [],
+      namespace: 'lazy_tree',
+    });
+
+    expect(result[0].lazyLoad).toBe(false);
+    expect(result[0].nodes).toEqual([]);
   });
 });
