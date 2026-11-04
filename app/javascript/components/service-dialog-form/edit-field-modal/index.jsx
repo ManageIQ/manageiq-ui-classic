@@ -5,14 +5,16 @@ import MiqFormRenderer, { FormSpy, useFieldApi } from '../../../forms/data-drive
 import defaultComponentMapper from '../../../forms/mappers/componentMapper';
 import {
   getRefreshEnabledFields, fieldValuesToArray, isoToDatePickerValue, extractTimeFromDateTime, combineDateAndTime,
+  uniqueNameValidator,
 } from '../helper';
 import buildFieldSchema from './fields.schema';
+import { fieldShape, dialogDataShape, categoryShape } from '../prop-shapes';
 
 
 // Read-only list of tag entries for the currently selected category.
 // FormSpy subscribes to all form values so this re-renders whenever options.category_id changes.
-const TagEntriesList = (props) => {
-  const { label, categories = [] } = useFieldApi(props);
+const TagEntriesList = ({ categories = [], ...props }) => {
+  const { label } = useFieldApi(props);
   const [categoryId, setCategoryId] = useState('');
 
   const selected = categories.find((c) => String(c.id) === String(categoryId));
@@ -39,8 +41,8 @@ const TagEntriesList = (props) => {
 };
 
 TagEntriesList.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/no-unused-prop-types, react/forbid-prop-types
-  label: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+  categories: PropTypes.arrayOf(categoryShape),
+  label: PropTypes.string,
 };
 
 const editFieldModalMapper = { ...defaultComponentMapper, 'tag-entries': TagEntriesList };
@@ -167,17 +169,14 @@ export const buildInitialValues = (field) => {
 
   // Dropdown / RadioButton: convert values [[v,d],...] to [{value,description},...] for FIELD_ARRAY.
   // Entries where both value and description are empty are filtered out on load.
-  // values_sorted mirrors values for the non-draggable conditional variant (avoids duplicate React keys).
   if (field.type === 'DialogFieldDropDownList' || field.type === 'DialogFieldRadioButton') {
-    const converted = (field.values || [])
+    values.values = (field.values || [])
       .filter((v) => {
         const val = Array.isArray(v) ? v[0] : v.value;
         const desc = Array.isArray(v) ? v[1] : v.description;
         return val || desc;
       })
       .map((v) => (Array.isArray(v) ? { value: v[0], description: v[1] } : v));
-    values.values = converted;
-    values.values_sorted = converted;
   }
 
   return values;
@@ -245,13 +244,8 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   }
 
   // Dropdown/RadioButton: convert [{value,description},...] back to [[v,d],...]
-  // values_sorted is a UI alias for the non-draggable conditional variant — merge whichever is populated.
   if (fieldType === 'DialogFieldDropDownList' || fieldType === 'DialogFieldRadioButton') {
-    const source = (result.values_sorted && result.values_sorted.length > 0 && result.options.sort_by !== 'none')
-      ? result.values_sorted
-      : result.values;
-    result.values = fieldValuesToArray(source || []);
-    delete result.values_sorted;
+    result.values = fieldValuesToArray(result.values || []);
   }
 
   // Automate: if resource_action is still a tree-selection object (element.metadata.fqname),
@@ -262,8 +256,9 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
   // For nodes that are MiqAeClass (no instance), only namespace + class are set.
   if (result.resource_action && result.resource_action.element && result.resource_action.element.metadata) {
     const meta = result.resource_action.element.metadata;
-    // Prefer domain_fqname (strips domain prefix); fall back to full fqname.
-    const fqname = meta.domain_fqname || meta.fqname || '';
+    // Prefer domain_fqname; without it, drop the leading domain segment of the full fqname so the
+    // domain is never read as the namespace.
+    const fqname = meta.domain_fqname || (meta.fqname || '').replace(/^\/[^/]*/, '');
     // Strip leading slash and split into path segments.
     const parts = fqname.replace(/^\//, '').split('/').filter(Boolean);
     const existingRa = result.resource_action;
@@ -336,7 +331,7 @@ export const normaliseSubmitted = (submitted, fieldType, categories = []) => {
 const EditFieldModal = ({
   isOpen = false,
   field,
-  dialogData,
+  dialogData = null,
   emsWorkflowsEnabled = false,
   categories = [],
   onSave,
@@ -369,9 +364,11 @@ const EditFieldModal = ({
       dynamicFields,
       defaultValueOptions,
       categories,
+      // `field` is the object stored in dialogData, so it is excluded from the comparison by identity.
+      isNameTaken: (name) => uniqueNameValidator(dialogData || { dialog_tabs: [] }, name, field),
     }),
 
-    [field.type, isDynamic, emsWorkflowsEnabled, dynamicFields, defaultValueOptions, categories]
+    [field.type, isDynamic, emsWorkflowsEnabled, dynamicFields, defaultValueOptions, categories, dialogData]
   );
 
   // Build initial values once — these don't change while the modal is open
@@ -451,10 +448,10 @@ const EditFieldModal = ({
 
 EditFieldModal.propTypes = {
   isOpen: PropTypes.bool,
-  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  field: fieldShape.isRequired,
+  dialogData: dialogDataShape,
   emsWorkflowsEnabled: PropTypes.bool,
-  categories: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/forbid-prop-types
+  categories: PropTypes.arrayOf(categoryShape),
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

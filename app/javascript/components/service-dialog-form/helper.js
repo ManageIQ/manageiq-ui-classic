@@ -37,10 +37,21 @@ const getAllFields = (dialogData) => {
 };
 
 // Unique field name validator
-// Returns true if name is already used by another field in the dialog
-export const uniqueNameValidator = (dialogData, currentField) => {
-  const allFields = getAllFields(dialogData);
-  return allFields.some((f) => f.name === currentField.name && f !== currentField);
+// Returns true if `name` is already used by a field in the dialog other than `excludeField`
+// (compared by object identity, so the field being edited does not clash with itself).
+export const uniqueNameValidator = (dialogData, name, excludeField) =>
+  getAllFields(dialogData).some((f) => f !== excludeField && f.name === name);
+
+// Returns the first field name used by more than one field in the dialog, or undefined
+const firstDuplicateFieldName = (data) => {
+  const seen = new Set();
+  return getAllFields(data).map((f) => f.name).find((name) => {
+    if (seen.has(name)) {
+      return true;
+    }
+    seen.add(name);
+    return false;
+  });
 };
 
 // Reorder / immutable array helpers
@@ -205,26 +216,78 @@ export const combineDateAndTime = (dateStr, timeStr) => {
   return `${dateStr} ${timeStr}`;
 };
 
-// Properties edit (immutable update)
-// Merges updatedProps into the target field identified by fieldName
-export const handlePropertiesEdit = (data, fieldName, updatedProps) => {
-  const tabs = data.dialog_tabs.map((tab) => ({
+export const findFieldByName = (data, fieldName) => {
+  let found;
+  (data.dialog_tabs || []).forEach((tab) => (tab.dialog_groups || []).forEach((group) => (
+    (group.dialog_fields || []).forEach((field) => {
+      if (!found && field.name === fieldName) {
+        found = field;
+      }
+    })
+  )));
+  return found;
+};
+
+// Replaces `oldName` in every field's dialog_field_responders with `newName`,
+// or removes it when `newName` is not given. Fields that do not reference `oldName` are left untouched.
+export const updateFieldResponders = (data, oldName, newName) => ({
+  ...data,
+  dialog_tabs: (data.dialog_tabs || []).map((tab) => ({
     ...tab,
     dialog_groups: (tab.dialog_groups || []).map((group) => ({
       ...group,
       dialog_fields: (group.dialog_fields || []).map((field) => {
-        if (field.name !== fieldName) {
+        const responders = field.dialog_field_responders;
+        if (!responders || !responders.includes(oldName)) {
           return field;
         }
-        return { ...field, ...updatedProps, _version: (field._version || 1) + 1 };
+        const remaining = responders.filter((name) => name !== oldName);
+        return {
+          ...field,
+          dialog_field_responders: newName && !remaining.includes(newName) ? [...remaining, newName] : remaining,
+        };
       }),
     })),
-  }));
-  return { ...data, dialog_tabs: tabs };
+  })),
+});
+
+// Merges updatedProps into the field at the given position
+const handleFieldEdit = (data, tabIndex, sectionIndex, fieldIndex, updatedProps) => ({
+  ...data,
+  dialog_tabs: data.dialog_tabs.map((tab, ti) => (ti !== tabIndex ? tab : {
+    ...tab,
+    dialog_groups: (tab.dialog_groups || []).map((group, si) => (si !== sectionIndex ? group : {
+      ...group,
+      dialog_fields: (group.dialog_fields || []).map((field, fi) => (fi !== fieldIndex ? field : {
+        ...field,
+        ...updatedProps,
+        _version: (field._version || 1) + 1,
+      })),
+    })),
+  })),
+});
+
+// Properties edit (immutable update)
+// Merges updatedProps into the field at tabIndex / sectionIndex / fieldIndex. Fields are addressed by
+// position rather than name, so two fields that share a name are edited independently.
+// Keeps other fields' dialog_field_responders consistent when the field stops being dynamic or is renamed.
+export const handlePropertiesEdit = (data, tabIndex, sectionIndex, fieldIndex, updatedProps) => {
+  const before = (((data.dialog_tabs[tabIndex] || {}).dialog_groups || [])[sectionIndex] || {}).dialog_fields?.[fieldIndex];
+  const edited = handleFieldEdit(data, tabIndex, sectionIndex, fieldIndex, updatedProps);
+  if (!before) {
+    return edited;
+  }
+  if (before.dynamic && updatedProps.dynamic === false) {
+    return updateFieldResponders(edited, before.name);
+  }
+  if (updatedProps.name && updatedProps.name !== before.name) {
+    return updateFieldResponders(edited, before.name, updatedProps.name);
+  }
+  return edited;
 };
 
 // Delete helpers
-export const deleteField = (data, tabIndex, sectionIndex, fieldIndex) => {
+const removeFieldAt = (data, tabIndex, sectionIndex, fieldIndex) => {
   const tabs = [...data.dialog_tabs];
   const tab = { ...tabs[tabIndex] };
   const groups = [...tab.dialog_groups];
@@ -238,6 +301,17 @@ export const deleteField = (data, tabIndex, sectionIndex, fieldIndex) => {
   tabs[tabIndex] = tab;
 
   return { ...data, dialog_tabs: tabs };
+};
+
+// Deletes the field and drops its name from other fields' dialog_field_responders,
+// unless another field with the same name remains.
+export const deleteField = (data, tabIndex, sectionIndex, fieldIndex) => {
+  const deleted = (((data.dialog_tabs[tabIndex] || {}).dialog_groups || [])[sectionIndex] || {}).dialog_fields;
+  const deletedName = deleted && deleted[fieldIndex] && deleted[fieldIndex].name;
+  const result = removeFieldAt(data, tabIndex, sectionIndex, fieldIndex);
+  return deletedName && !findFieldByName(result, deletedName)
+    ? updateFieldResponders(result, deletedName)
+    : result;
 };
 
 export const deleteSection = (data, tabIndex, sectionIndex) => {
@@ -278,16 +352,44 @@ export const defaultTab = (position = 0) => ({
 //   1. no label
 //   2. no tabs, or any tab has no label or no groups
 //   3. any group has no label or no fields
-export const isSaveDisabled = (data) =>
-  !data
-  || !data.label?.trim()
-  || (data.dialog_tabs || []).length === 0
-  || (data.dialog_tabs || []).some((tab) =>
-    !tab.label?.trim()
-      || (tab.dialog_groups || []).length === 0
-      || (tab.dialog_groups || []).some((group) =>
-        !group.label?.trim()
-          || (group.dialog_fields || []).length === 0));
+//   4. two fields share the same name
+const tabReason = (tab) => {
+  if (!tab.label?.trim()) {
+    return __('Every tab needs a label');
+  }
+  const groups = tab.dialog_groups || [];
+  if (groups.length === 0) {
+    return sprintf(__('Tab "%s" needs at least one section'), tab.label);
+  }
+  const unlabelled = groups.some((group) => !group.label?.trim());
+  if (unlabelled) {
+    return sprintf(__('Every section in tab "%s" needs a label'), tab.label);
+  }
+  const empty = groups.find((group) => (group.dialog_fields || []).length === 0);
+  return empty ? sprintf(__('Section "%s" needs at least one field'), empty.label) : null;
+};
+
+// Returns the message for the first failing condition, or null when the dialog can be saved.
+export const saveDisabledReason = (data) => {
+  if (!data) {
+    return __('The dialog has not loaded yet');
+  }
+  if (!data.label?.trim()) {
+    return __('Enter a label for the dialog');
+  }
+  const tabs = data.dialog_tabs || [];
+  if (tabs.length === 0) {
+    return __('Add at least one tab');
+  }
+  const tabProblem = tabs.map(tabReason).find(Boolean);
+  if (tabProblem) {
+    return tabProblem;
+  }
+  const duplicate = firstDuplicateFieldName(data);
+  return duplicate === undefined ? null : sprintf(__('Field names must be unique, "%s" is used more than once'), duplicate);
+};
+
+export const isSaveDisabled = (data) => saveDisabledReason(data) !== null;
 
 // Strip UI-only fields and normalise the field shape before sending to the API
 const sanitiseField = (field, position, action) => {
@@ -327,7 +429,8 @@ const sanitiseField = (field, position, action) => {
       ...(ae_class !== undefined ? { ae_class } : {}),
       ...(ae_instance !== undefined ? { ae_instance } : {}),
       ...(configuration_script_id !== undefined ? { configuration_script_id } : {}),
-      ...(ra_id !== undefined ? { id: ra_id } : {}),
+      // A copied field is a new record, so it must not point at the original's resource_action row.
+      ...(ra_id !== undefined && action !== 'copy' ? { id: ra_id } : {}),
     };
   }
   /* eslint-enable camelcase */

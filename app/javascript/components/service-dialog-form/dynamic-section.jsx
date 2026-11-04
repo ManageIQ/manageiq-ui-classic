@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import { Edit, TrashCan } from '@carbon/react/icons';
 import { SD_ACTIONS, sortItems } from './helper';
+import { fieldShape, dialogDataShape } from './prop-shapes';
 import DynamicField from './dynamic-field';
 
 /**
@@ -22,7 +23,7 @@ const DynamicSection = ({
   sectionIndex,
   onAction,
   emsWorkflowsEnabled = false,
-  dialogData,
+  dialogData = null,
 }) => {
   const [dragFieldIndex, setDragFieldIndex] = useState(null);
   // Index of the field-wrapper the cursor is currently hovering over during
@@ -215,13 +216,13 @@ const DynamicSection = ({
 DynamicSection.propTypes = {
   section: PropTypes.shape({
     label: PropTypes.string,
-    dialog_fields: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    dialog_fields: PropTypes.arrayOf(fieldShape),
   }).isRequired,
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
-  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  dialogData: dialogDataShape,
 };
 
 export default DynamicSection;

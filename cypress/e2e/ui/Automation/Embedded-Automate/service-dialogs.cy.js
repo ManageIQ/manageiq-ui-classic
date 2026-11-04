@@ -21,6 +21,13 @@ const goToServiceDialogs = () => {
 };
 
 /**
+ * Click the primary button of the confirmation modal (Abandon changes? / Delete ...).
+ */
+const confirmModal = (buttonText) => {
+  cy.get('.cds--modal.is-visible').contains('button', buttonText).click();
+};
+
+/**
  * Select a named Service Dialog in the accordion tree.
  * This navigates to the record and enables the Edit / Copy / Remove toolbar actions.
  */
@@ -95,6 +102,7 @@ describe('Service Dialogs — Cancel', () => {
     cy.get('#dialog-label').type(TEST_LABEL);
 
     cy.contains('button', 'Cancel').click();
+    confirmModal('Abandon');
     cy.expect_flash(flashClassMap.warning, 'cancelled');
   });
 });
@@ -130,6 +138,7 @@ describe('Service Dialogs — Edit', () => {
     cy.get('#dialog-label').clear().type(EDITED_LABEL);
 
     cy.contains('button', 'Cancel').click();
+    confirmModal('Abandon');
     cy.expect_flash(flashClassMap.warning, 'cancelled');
   });
 });
@@ -275,6 +284,7 @@ describe('Service Dialogs — Field edit and delete', () => {
 
   it('Remove button deletes the field from the section', () => {
     cy.get('.dynamic-field-actions button').last().click({ force: true });
+    confirmModal('Delete');
     cy.get('.dynamic-field').should('not.exist');
   });
 });
@@ -326,6 +336,7 @@ describe('Service Dialogs — Tab management', () => {
     saveModalWithLabel('Doomed Tab');
     cy.contains('[role="tab"]', 'Doomed Tab').find('.cds--overflow-menu').click();
     cy.contains('.cds--overflow-menu-options__btn', 'Delete').click();
+    confirmModal('Delete');
     cy.contains('[role="tab"]', 'Doomed Tab').should('not.exist');
     cy.get('[role="tab"]').should('have.length', 1);
   });
@@ -376,6 +387,7 @@ describe('Service Dialogs — Section management', () => {
       .find('.dynamic-section__actions button')
       .last()
       .click();
+    confirmModal('Delete');
     cy.contains('.dynamic-section__title', 'Doomed Section').should('not.exist');
   });
 });
@@ -421,6 +433,7 @@ describe('Service Dialogs — Save guard', () => {
     cy.dropFieldIntoSection('DialogFieldTextBox');
     cy.contains('button', 'Save').should('not.be.disabled');
     cy.get('.dynamic-field-actions button').last().click({ force: true });
+    confirmModal('Delete');
     cy.contains('button', 'Save').should('be.disabled');
   });
 
@@ -509,6 +522,7 @@ describe('Service Dialogs — Draft recovery', () => {
       expect(win.sessionStorage.getItem(DRAFT_KEY)).to.not.equal(null);
     });
     cy.contains('button', 'Cancel').click();
+    confirmModal('Abandon');
     cy.expect_flash(flashClassMap.warning, 'cancelled');
     cy.window().then((win) => {
       expect(win.sessionStorage.getItem(DRAFT_KEY)).to.equal(null);

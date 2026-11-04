@@ -4,7 +4,7 @@ import MiqFormRenderer from '../../../forms/data-driven-form';
 import tabSchema from './tab.schema';
 
 const EditTabModal = ({
-  tab,
+  tab = null,
   isOpen = false,
   onSave,
   onClose,

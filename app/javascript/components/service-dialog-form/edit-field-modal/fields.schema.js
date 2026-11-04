@@ -22,6 +22,7 @@ import {
  *   opts.dynamicFields                — array of {name, label} for the Fields-to-Refresh select
  *   opts.defaultValueOptions          — array of {label, value} for Dropdown/Radio default_value select
  *   opts.categories                   — array of category objects for TagControl
+ *   opts.isNameTaken                  — fn(name) → true when another field already uses the name
  */
 const buildFieldSchema = (type, isDynamic, opts = {}) => {
   const showDynamic = type !== 'DialogFieldTagControl';
@@ -31,7 +32,7 @@ const buildFieldSchema = (type, isDynamic, opts = {}) => {
     id: 'field-info-tab',
     name: 'field-info-tab',
     label: __('Field Information'),
-    fields: fieldInfoFields(showDynamic),
+    fields: fieldInfoFields(showDynamic, opts.isNameTaken),
   };
 
   const tab2 = {

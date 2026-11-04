@@ -188,10 +188,14 @@ const WorkflowEntryPoints = ({
     }
   };
 
-  return createPortal(
+  const modalHeading = workflowTypes[type]
+    ? sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])
+    : __('Select Embedded Workflow Entry Point');
+
+  const modal = (
     <Modal
       open
-      modalHeading={sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])}
+      modalHeading={modalHeading}
       primaryButtonText={__('Apply')}
       primaryButtonDisabled={!isValidSelection()}
       secondaryButtonText={__('Cancel')}
@@ -228,9 +232,12 @@ const WorkflowEntryPoints = ({
           <NoRecordsFound />
         )}
       </ModalBody>
-    </Modal>,
-    document.body
+    </Modal>
   );
+
+  // React mode renders into document.body; legacy mode stays in its container so that
+  // clearing the container's innerHTML (Apply/Cancel) removes the modal.
+  return setShowModal ? createPortal(modal, document.body) : modal;
 };
 
 WorkflowEntryPoints.propTypes = {

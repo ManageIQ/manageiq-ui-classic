@@ -612,6 +612,12 @@ exports[`ServiceDialogForm new dialog renders the form with empty label and desc
       >
         Cancel
       </button>
+      <span
+        class="service-dialog-form__save-hint"
+        role="status"
+      >
+        Enter a label for the dialog
+      </span>
     </div>
   </div>
 </div>

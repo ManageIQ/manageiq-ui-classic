@@ -59,9 +59,16 @@
 
   &__footer {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
     padding: 1rem;
     border-top: 1px solid var(--cds-border-subtle);
+  }
+
+  &__save-hint {
+    margin-left: 0.5rem;
+    color: var(--cds-text-secondary);
+    font-size: 0.875rem;
   }
 
   &__add-tab-btn {

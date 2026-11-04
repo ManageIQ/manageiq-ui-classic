@@ -16,6 +16,7 @@ import {
 } from '@carbon/react';
 import { AddAlt } from '@carbon/react/icons';
 import { API } from '../../http_api';
+import miqFlash from '../../helpers/miq-flash';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import DynamicComponentChooser from './dynamic-component-chooser';
 import DynamicSection from './dynamic-section';
@@ -36,7 +37,8 @@ import {
   dropComponent,
   buildDialogPayload,
   handlePropertiesEdit,
-  isSaveDisabled,
+  deleteField,
+  saveDisabledReason,
 } from './helper';
 import { defaultField, resetFieldCounters, seedFieldCounters } from './data';
 import './style.scss';
@@ -47,7 +49,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(action !== 'new');
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [_isDraggingTab, setIsDraggingTab] = useState(false);
   const [dragTabIndex, setDragTabIndex] = useState(null);
 
   // Draft recovery
@@ -55,10 +56,20 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   const [showDraftModal, setShowDraftModal] = useState(false);
   const pendingDraft = useRef(null); // holds the draft captured at mount; cleared after modal decision
   const debounceTimer = useRef(null);
+  const initialSnapshot = useRef(null); // serialised state as first loaded; an unchanged dialog needs no draft
+
+  // Delete confirmation
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [showAbandonConfirm, setShowAbandonConfirm] = useState(false);
 
   // Modal states
   const [tabModal, setTabModal] = useState({ open: false, tabIndex: null });
   const [sectionModal, setSectionModal] = useState({ open: false, tabIndex: null, sectionIndex: null });
+
+  const setInitialData = (initial) => {
+    initialSnapshot.current = JSON.stringify(initial);
+    setData(initial);
+  };
 
   // Load dialog data
   useEffect(() => {
@@ -69,13 +80,13 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         pendingDraft.current = draft;
         setShowDraftModal(true);
       }
-      setData(emptyDialog());
+      setInitialData(emptyDialog());
       setIsLoading(false);
       return;
     }
 
     if (!dialogId) {
-      setData(emptyDialog());
+      setInitialData(emptyDialog());
       setIsLoading(false);
       return;
     }
@@ -107,10 +118,10 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
           setShowDraftModal(true);
         }
         seedFieldCounters(loaded);
-        setData(loaded);
+        setInitialData(loaded);
       })
       .catch(() => {
-        setData(emptyDialog());
+        setInitialData(emptyDialog());
       })
       .finally(() => {
         setIsLoading(false);
@@ -120,16 +131,20 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
   // Debounced draft save on every data change.
   // Suppressed while showDraftModal is true so the initial load doesn't overwrite
   // the captured draft before the user makes a Restore/Discard decision.
+  // Data identical to the initial state is not a draft, so any stored draft is cleared instead.
   useEffect(() => {
-    if (!data || showDraftModal) {
-      return;
+    if (data && !showDraftModal) {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
+      debounceTimer.current = setTimeout(() => {
+        if (JSON.stringify(data) === initialSnapshot.current) {
+          clearDraft();
+        } else {
+          saveDraft(data);
+        }
+      }, 500);
     }
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-    debounceTimer.current = setTimeout(() => {
-      saveDraft(data);
-    }, 500);
     return () => {
       if (debounceTimer.current) {
         clearTimeout(debounceTimer.current);
@@ -144,24 +159,33 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       return;
     }
 
+    const isDelete = [SD_ACTIONS.tab.delete, SD_ACTIONS.section.delete, SD_ACTIONS.field.delete].includes(actionType);
+    if (isDelete && !payload.confirmed) {
+      setDeleteConfirm({ actionType, payload });
+      return;
+    }
+
+    // Selection changes live outside the setData updater, which must stay free of side effects.
+    if (actionType === SD_ACTIONS.tab.delete) {
+      setSelectedTabIndex(Math.max(0, selectedTabIndex - (payload.tabIndex <= selectedTabIndex ? 1 : 0)));
+    } else if (actionType === SD_ACTIONS.tab.add && data) {
+      setSelectedTabIndex((data.dialog_tabs || []).length); // focus the new tab
+    }
+
     setData((prev) => {
       if (!prev) {
         return prev;
       }
 
       switch (actionType) {
-        case SD_ACTIONS.tab.delete: {
-          const newData = deleteTab(prev, payload.tabIndex);
-          setSelectedTabIndex(Math.max(0, selectedTabIndex - (payload.tabIndex <= selectedTabIndex ? 1 : 0)));
-          return newData;
-        }
+        case SD_ACTIONS.tab.delete:
+          return deleteTab(prev, payload.tabIndex);
         case SD_ACTIONS.tab.add: {
           const existingTabs = prev.dialog_tabs || [];
           const newTab = {
             ...defaultTab(existingTabs.length),
             ...(payload && payload.values ? payload.values : {}),
           };
-          setSelectedTabIndex(existingTabs.length); // focus the new tab
           return { ...prev, dialog_tabs: [...existingTabs, newTab] };
         }
         case SD_ACTIONS.tab.edit: {
@@ -206,27 +230,16 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         case SD_ACTIONS.field.add:
           return dropComponent(prev, payload.tabIndex, payload.sectionIndex, payload.fieldType, defaultField);
 
-        case SD_ACTIONS.field.delete: {
-          const tabs = [...(prev.dialog_tabs || [])];
-          const tab = { ...tabs[payload.tabIndex] };
-          const groups = [...(tab.dialog_groups || [])];
-          const group = { ...groups[payload.sectionIndex] };
-          const fields = [...(group.dialog_fields || [])];
-          fields.splice(payload.fieldIndex, 1);
-          group.dialog_fields = fields.map((f, i) => ({ ...f, position: i }));
-          groups[payload.sectionIndex] = group;
-          tab.dialog_groups = groups;
-          tabs[payload.tabIndex] = tab;
-          return { ...prev, dialog_tabs: tabs };
-        }
+        case SD_ACTIONS.field.delete:
+          return deleteField(prev, payload.tabIndex, payload.sectionIndex, payload.fieldIndex);
         case SD_ACTIONS.field.edit:
-          return handlePropertiesEdit(prev, payload.fieldName, payload.values);
+          return handlePropertiesEdit(prev, payload.tabIndex, payload.sectionIndex, payload.fieldIndex, payload.values);
 
         default:
           return prev;
       }
     });
-  }, [selectedTabIndex]);
+  }, [data, selectedTabIndex]);
 
   const handleSubmit = () => {
     if (!data) {
@@ -243,7 +256,7 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       ? `/api/service_dialogs/${dialogId}`
       : '/api/service_dialogs';
 
-    API.post(url, payload)
+    API.post(url, payload, { skipErrors: [400] })
       .then(() => {
         clearDraft();
         const msg = isEdit
@@ -251,17 +264,29 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
           : sprintf(__('Service Dialog "%s" was added'), data.label);
         miqRedirectBack(msg, 'success', '/miq_ae_customization/explorer');
       })
-      .catch(() => {
+      .catch((error) => {
         miqSparkleOff();
+        const reason = error && error.data && error.data.error && error.data.error.message;
+        if (reason) {
+          miqFlash('error', sprintf(__('There was an error editing this dialog: %s'), reason));
+        }
       });
   };
 
-  const handleCancel = () => {
+  const leaveEditor = () => {
     clearDraft();
     const msg = action === 'edit'
       ? sprintf(__('Edit of Service Dialog "%s" was cancelled by the user'), data ? data.label : '')
       : __('Creation of a new Service Dialog was cancelled by the user');
     miqRedirectBack(msg, 'warning', '/miq_ae_customization/explorer');
+  };
+
+  const handleCancel = () => {
+    if (JSON.stringify(data) === initialSnapshot.current) {
+      leaveEditor();
+    } else {
+      setShowAbandonConfirm(true);
+    }
   };
 
   // Tab drag-and-drop
@@ -271,7 +296,6 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
       return;
     }
     setDragTabIndex(tabIndex);
-    setIsDraggingTab(true);
     e.dataTransfer.setData('application/sd-tab', String(tabIndex));
     e.dataTransfer.effectAllowed = 'move';
   };
@@ -281,14 +305,12 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     // Ignore palette drags that land on a tab header
     if (e.dataTransfer.getData('text/plain')) {
       setDragTabIndex(null);
-      setIsDraggingTab(false);
       return;
     }
     if (dragTabIndex !== null && dragTabIndex !== toIndex) {
       handleAction(SD_ACTIONS.tab.reorder, { fromIndex: dragTabIndex, toIndex });
     }
     setDragTabIndex(null);
-    setIsDraggingTab(false);
   };
 
   const openTabEditModal = (tabIndex) => {
@@ -324,6 +346,51 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
     }
     closeSectionModal();
   };
+
+  const deleteConfirmModal = deleteConfirm && (() => {
+    const { actionType, payload } = deleteConfirm;
+    const tab = ((data && data.dialog_tabs) || [])[payload.tabIndex];
+    const section = tab && (tab.dialog_groups || [])[payload.sectionIndex];
+    const field = section && (section.dialog_fields || [])[payload.fieldIndex];
+    const kinds = {
+      [SD_ACTIONS.tab.delete]: { heading: __('Delete tab'), item: tab },
+      [SD_ACTIONS.section.delete]: { heading: __('Delete section'), item: section },
+      [SD_ACTIONS.field.delete]: { heading: __('Delete field'), item: field },
+    };
+    const { heading, item } = kinds[actionType];
+    return (
+      <Modal
+        open
+        danger
+        size="sm"
+        modalHeading={heading}
+        primaryButtonText={__('Delete')}
+        secondaryButtonText={__('Cancel')}
+        onRequestSubmit={() => {
+          setDeleteConfirm(null);
+          handleAction(actionType, { ...payload, confirmed: true });
+        }}
+        onRequestClose={() => setDeleteConfirm(null)}
+      >
+        <p>{sprintf(__('Are you sure you want to delete "%s"?'), (item && item.label) || '')}</p>
+      </Modal>
+    );
+  })();
+
+  const abandonConfirmModal = showAbandonConfirm && (
+    <Modal
+      open
+      danger
+      size="sm"
+      modalHeading={__('Abandon changes?')}
+      primaryButtonText={__('Abandon')}
+      secondaryButtonText={__('Keep editing')}
+      onRequestSubmit={leaveEditor}
+      onRequestClose={() => setShowAbandonConfirm(false)}
+    >
+      <p>{__('Your changes to this dialog have not been saved and will be lost.')}</p>
+    </Modal>
+  );
 
   // Draft recovery modal — shown before full UI so user can decide before interacting
   const draftModal = showDraftModal && (
@@ -365,13 +432,16 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
 
   const tabs = (data && data.dialog_tabs) || [];
 
-  const saveDisabled = isSaveDisabled(data);
+  const saveReason = saveDisabledReason(data);
+  const saveDisabled = saveReason !== null;
 
   const currentTabIndex = Math.min(selectedTabIndex, Math.max(0, tabs.length - 1));
 
   return (
     <div className="service-dialog-form">
       {draftModal}
+      {deleteConfirmModal}
+      {abandonConfirmModal}
       {/* Header: label + description */}
       <div className="service-dialog-form__header">
         <h4 className="service-dialog-form__general-heading">{__('General')}</h4>
@@ -491,6 +561,9 @@ const ServiceDialogForm = ({ dialogAction, emsWorkflowsEnabled = false }) => {
         <Button kind="secondary" onClick={handleCancel}>
           {__('Cancel')}
         </Button>
+        {saveDisabled && (
+          <span className="service-dialog-form__save-hint" role="status">{saveReason}</span>
+        )}
       </div>
 
       {/* Tab edit modal */}

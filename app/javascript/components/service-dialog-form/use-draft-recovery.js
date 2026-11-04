@@ -2,15 +2,23 @@
  * useDraftRecovery — session-storage draft persistence for ServiceDialogForm.
  *
  * Key schema:
- *   new / copy  →  'service_dialog-new'  // copy shares the 'new' key — copies produce a new dialog with no id to key on
- *   edit        →  'service_dialog-{dialogId}'
+ *   new   →  'service_dialog-new'
+ *   copy  →  'service_dialog-copy-{sourceDialogId}'
+ *   edit  →  'service_dialog-{dialogId}'
  */
+const draftKeySuffix = (id, action) => {
+  if (action === 'new') {
+    return 'new';
+  }
+  return action === 'copy' ? `copy-${id}` : id;
+};
+
 const useDraftRecovery = (id, action) => {
-  const key = `service_dialog-${action === 'new' || action === 'copy' ? 'new' : id}`;
+  const key = `service_dialog-${draftKeySuffix(id, action)}`;
 
   const saveDraft = (data) => {
     try {
-      sessionStorage.setItem(key, JSON.stringify(data));
+      window.sessionStorage.setItem(key, JSON.stringify(data));
     } catch (_e) {
       // sessionStorage unavailable or quota exceeded — silently ignore
     }
@@ -18,7 +26,7 @@ const useDraftRecovery = (id, action) => {
 
   const loadDraft = () => {
     try {
-      const raw = sessionStorage.getItem(key);
+      const raw = window.sessionStorage.getItem(key);
       if (!raw) {
         return null;
       }
@@ -30,7 +38,7 @@ const useDraftRecovery = (id, action) => {
 
   const clearDraft = () => {
     try {
-      sessionStorage.removeItem(key);
+      window.sessionStorage.removeItem(key);
     } catch (_e) {
       // ignore
     }

@@ -74,13 +74,28 @@ describe('ServiceDialogForm — tab CRUD', () => {
     await waitFor(() => expect(screen.getByText('Brand New Tab')).toBeInTheDocument());
   });
 
-  it('deletes a tab when Delete is chosen from the options menu', async() => {
+  it('deletes a tab only after the confirmation modal is accepted', async() => {
     fetchMock.get(dialogApiUrl, mockDialog);
     renderWithRedux(<ServiceDialogForm dialogAction={editAction} />);
     await waitFor(() => screen.getByText('Tab 1'));
     fireEvent.click(screen.getByRole('button', { name: /options/i }));
     fireEvent.click(screen.getByText('Delete'));
+    await waitFor(() => expect(openModal().getByText('Are you sure you want to delete "Tab 1"?')).toBeInTheDocument());
+    expect(screen.getByRole('tab', { name: /Tab 1/ })).toBeInTheDocument();
+    fireEvent.click(openModal().getByRole('button', { name: /^delete$/i }));
     await waitFor(() => expect(screen.queryByText('Tab 1')).toBeNull());
+  });
+
+  it('keeps the tab when the delete confirmation is cancelled', async() => {
+    fetchMock.get(dialogApiUrl, mockDialog);
+    renderWithRedux(<ServiceDialogForm dialogAction={editAction} />);
+    await waitFor(() => screen.getByText('Tab 1'));
+    fireEvent.click(screen.getByRole('button', { name: /options/i }));
+    fireEvent.click(screen.getByText('Delete'));
+    await waitFor(() => screen.getByRole('dialog'));
+    fireEvent.click(openModal().getByRole('button', { name: /cancel/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(screen.getByRole('tab', { name: /Tab 1/ })).toBeInTheDocument();
   });
 
   it('edits a tab label via the overflow Edit menu item', async() => {
@@ -103,12 +118,26 @@ describe('ServiceDialogForm — section CRUD', () => {
     await waitFor(() => expect(screen.getByText('Extra Section')).toBeInTheDocument());
   });
 
-  it('deletes a section when Section Delete is chosen', async() => {
+  it('deletes a section only after the confirmation modal is accepted', async() => {
     fetchMock.get(dialogApiUrl, mockDialog);
     renderWithRedux(<ServiceDialogForm dialogAction={editAction} />);
     await waitFor(() => screen.getByText('Section 1'));
     fireEvent.click(screen.getByRole('button', { name: /delete section/i }));
+    await waitFor(() => expect(openModal().getByText('Are you sure you want to delete "Section 1"?')).toBeInTheDocument());
+    expect(screen.getByText('Section 1', { selector: '.dynamic-section__title' })).toBeInTheDocument();
+    fireEvent.click(openModal().getByRole('button', { name: /^delete$/i }));
     await waitFor(() => expect(screen.queryByText('Section 1')).toBeNull());
+  });
+
+  it('deletes a field only after the confirmation modal is accepted', async() => {
+    fetchMock.get(dialogApiUrl, mockDialog);
+    renderWithRedux(<ServiceDialogForm dialogAction={editAction} />);
+    await waitFor(() => screen.getByText('Field One'));
+    fireEvent.click(screen.getByRole('button', { name: /remove field/i }));
+    await waitFor(() => expect(openModal().getByText('Are you sure you want to delete "Field One"?')).toBeInTheDocument());
+    expect(screen.getByText('Field One')).toBeInTheDocument();
+    fireEvent.click(openModal().getByRole('button', { name: /^delete$/i }));
+    await waitFor(() => expect(screen.queryByText('Field One')).toBeNull());
   });
 
   it('cancels the section modal without adding a section', async() => {
@@ -168,6 +197,22 @@ describe('ServiceDialogForm — draft recovery', () => {
   it('does not show the recovery modal when no draft is stored', () => {
     renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
     expect(screen.queryByText('Restore previous changes?')).toBeNull();
+  });
+
+  it('does not store a draft for an untouched dialog, and stores one once it changes', async() => {
+    renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    expect(window.sessionStorage.getItem('service_dialog-new')).toBeNull();
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: 'Typed' } });
+    await waitFor(() => expect(window.sessionStorage.getItem('service_dialog-new')).not.toBeNull());
+  });
+
+  it('removes the stored draft when the dialog is edited back to its initial state', async() => {
+    renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: 'Typed' } });
+    await waitFor(() => expect(window.sessionStorage.getItem('service_dialog-new')).not.toBeNull());
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: '' } });
+    await waitFor(() => expect(window.sessionStorage.getItem('service_dialog-new')).toBeNull());
   });
 });
 
@@ -285,6 +330,16 @@ describe('ServiceDialogForm — handleCancel', () => {
     expect(mockRedirectBack.mock.calls[0][0]).toMatch(/my dialog/i);
   });
 
+  it('keeps the draft for a copy separate from the draft for a new dialog', async() => {
+    window.sessionStorage.setItem('service_dialog-new', JSON.stringify({ label: 'New draft', description: '', dialog_tabs: [] }));
+    fetchMock.get(dialogApiUrl, mockDialog);
+    renderWithRedux(<ServiceDialogForm dialogAction={copyAction} />);
+    await waitFor(() => screen.getByDisplayValue(/copy of my dialog/i));
+    expect(screen.queryByText('Restore previous changes?')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(window.sessionStorage.getItem('service_dialog-new')).not.toBeNull();
+  });
+
   it('clears the draft on Cancel', () => {
     window.sessionStorage.setItem('service_dialog-new', '{"label":"leftovers"}');
     renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
@@ -294,6 +349,31 @@ describe('ServiceDialogForm — handleCancel', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
     expect(window.sessionStorage.getItem('service_dialog-new')).toBeNull();
   });
+
+  it('asks "Abandon changes?" when the dialog was changed, and leaves only after confirming', async() => {
+    renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: 'Changed' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    await waitFor(() => expect(openModal().getByText('Abandon changes?')).toBeInTheDocument());
+    expect(mockRedirectBack).not.toHaveBeenCalled();
+    fireEvent.click(openModal().getByRole('button', { name: /^abandon$/i }));
+    expect(mockRedirectBack).toHaveBeenCalledWith(
+      expect.stringMatching(/cancelled/i),
+      'warning',
+      '/miq_ae_customization/explorer'
+    );
+  });
+
+  it('stays in the editor with the changes intact when "Keep editing" is chosen', async() => {
+    renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: 'Changed' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    await waitFor(() => screen.getByRole('dialog'));
+    fireEvent.click(openModal().getByRole('button', { name: /keep editing/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(mockRedirectBack).not.toHaveBeenCalled();
+    expect(screen.getByDisplayValue('Changed')).toBeInTheDocument();
+  });
 });
 
 describe('ServiceDialogForm — selected-tab adjustment on delete', () => {
@@ -301,6 +381,8 @@ describe('ServiceDialogForm — selected-tab adjustment on delete', () => {
     renderWithRedux(<ServiceDialogForm dialogAction={newAction} />);
     fireEvent.click(screen.getByRole('button', { name: /options/i }));
     fireEvent.click(screen.getByText('Delete'));
+    await waitFor(() => screen.getByRole('dialog'));
+    fireEvent.click(openModal().getByRole('button', { name: /^delete$/i }));
     await waitFor(() => expect(screen.queryAllByRole('tab')).toHaveLength(0));
   });
 });
@@ -315,6 +397,8 @@ describe('ServiceDialogForm — selected tab after delete', () => {
     const menus = screen.getAllByRole('button', { name: /options/i });
     fireEvent.click(menus[menus.length - 1]);
     fireEvent.click(screen.getByText('Delete'));
+    await waitFor(() => screen.getByRole('dialog'));
+    fireEvent.click(openModal().getByRole('button', { name: /^delete$/i }));
     await waitFor(() => expect(screen.queryByText('Tab Two')).toBeNull());
     const remaining = screen.getAllByRole('tab');
     expect(remaining).toHaveLength(1);
@@ -352,6 +436,17 @@ describe('ServiceDialogForm — save-enable gate', () => {
     await waitFor(() => screen.getByDisplayValue('My Dialog'));
     fireEvent.change(screen.getByLabelText(/label/i), { target: { value: '' } });
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+  });
+
+  it('shows why Save is disabled and hides the reason once the dialog is valid', async() => {
+    fetchMock.get(dialogApiUrl, mockDialog);
+    renderWithRedux(<ServiceDialogForm dialogAction={editAction} />);
+    await waitFor(() => screen.getByDisplayValue('My Dialog'));
+    expect(screen.queryByRole('status')).toBeNull();
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: '' } });
+    expect(screen.getByRole('status')).toHaveTextContent('Enter a label for the dialog');
+    fireEvent.change(screen.getByLabelText(/label/i), { target: { value: 'Back' } });
+    expect(screen.queryByRole('status')).toBeNull();
   });
 });
 

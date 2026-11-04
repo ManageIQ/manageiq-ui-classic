@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { RadioButtonGroup, RadioButton } from '@carbon/react';
 import { getFieldValues } from '../helper';
+import { valuesShape } from '../prop-shapes';
 
 // values stored as [[value, description], ...]; normalised to [{value, description}].
 const DynamicRadioButton = ({ field }) => {
@@ -32,7 +33,7 @@ DynamicRadioButton.propTypes = {
     label: PropTypes.string,
     default_value: PropTypes.string,
     read_only: PropTypes.bool,
-    values: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    values: valuesShape,
   }).isRequired,
 };
 

@@ -3,6 +3,7 @@ import {
   overridableOptionsFields,
   fieldInfoFields,
   validateEntryPoint,
+  integerValueValidator,
 } from '../../components/service-dialog-form/dynamic-fields/dynamic-field-configuration';
 
 // Helper — recursively collect all `name` values from a DDF field array.
@@ -369,9 +370,19 @@ describe('validateEntryPoint', () => {
     expect(validateEntryPoint(value)).toBeUndefined();
   });
 
-  it('returns undefined when only ae_namespace is present (partial legacy automate)', () => {
+  it('returns an error string when only ae_namespace is present (partial legacy automate)', () => {
     const value = { ae_namespace: 'Service' };
+    expect(typeof validateEntryPoint(value)).toBe('string');
+  });
+
+  it('returns undefined for a legacy automate entry with a namespace and a class but no instance', () => {
+    const value = { ae_namespace: 'Service', ae_class: 'Lifecycle' };
     expect(validateEntryPoint(value)).toBeUndefined();
+  });
+
+  it('returns an error string for an automate resource_action that only has a database id', () => {
+    const value = { id: 7, resource_type: 'DialogField', ae_attributes: {} };
+    expect(typeof validateEntryPoint(value)).toBe('string');
   });
 
   it('returns undefined for a workflow row with id (workflow new selection)', () => {
@@ -417,6 +428,59 @@ describe('fieldInfoFields — validate arrays', () => {
   it('dynamic toggle is present for all other types (showDynamic=true)', () => {
     const names = fieldInfoFields(true).map((f) => f.name);
     expect(names).toContain('dynamic');
+  });
+
+  describe('duplicate name validator', () => {
+    const nameValidators = (isNameTaken) => fieldInfoFields(true, isNameTaken).find((f) => f.name === 'name').validate;
+
+    it('adds no function validator when isNameTaken is not supplied', () => {
+      expect(nameValidators().filter((v) => typeof v === 'function')).toHaveLength(0);
+    });
+
+    it('returns an error message when the name is already taken', () => {
+      const [fn] = nameValidators((name) => name === 'taken').filter((v) => typeof v === 'function');
+      expect(fn('taken')).toBe('Duplicate field name found');
+    });
+
+    it('returns undefined when the name is free or empty', () => {
+      const [fn] = nameValidators((name) => name === 'taken').filter((v) => typeof v === 'function');
+      expect(fn('free')).toBeUndefined();
+      expect(fn('')).toBeUndefined();
+    });
+  });
+});
+
+describe('integerValueValidator', () => {
+  const MESSAGE = 'Value type is set as Integer, but the value entered is not a number';
+
+  it('rejects a non-numeric value when data_type is integer', () => {
+    expect(integerValueValidator('abc', { data_type: 'integer' })).toBe(MESSAGE);
+    expect(integerValueValidator('1x', { data_type: 'integer' })).toBe(MESSAGE);
+  });
+
+  it('accepts numeric values when data_type is integer', () => {
+    expect(integerValueValidator('42', { data_type: 'integer' })).toBeUndefined();
+    expect(integerValueValidator('-7', { data_type: 'integer' })).toBeUndefined();
+    expect(integerValueValidator('0', { data_type: 'integer' })).toBeUndefined();
+  });
+
+  it('accepts a blank value when data_type is integer', () => {
+    expect(integerValueValidator('', { data_type: 'integer' })).toBeUndefined();
+    expect(integerValueValidator(undefined, { data_type: 'integer' })).toBeUndefined();
+  });
+
+  it('accepts anything when data_type is string or missing', () => {
+    expect(integerValueValidator('abc', { data_type: 'string' })).toBeUndefined();
+    expect(integerValueValidator('abc', {})).toBeUndefined();
+    expect(integerValueValidator('abc', undefined)).toBeUndefined();
+  });
+
+  ['DialogFieldDropDownList', 'DialogFieldRadioButton'].forEach((type) => {
+    it(`${type} static: the entry value input uses the integer validator`, () => {
+      const valuesField = optionsFields(type, false).find((f) => f && f.name === 'values');
+      const valueInput = valuesField.fields.find((f) => f.name === 'value');
+      expect(valueInput.validate).toContain(integerValueValidator);
+    });
   });
 });
 
@@ -572,11 +636,11 @@ describe('optionsFields — Dropdown static values FIELD_ARRAY has validate', ()
     expect(valuesField.validate.some((v) => v.type === 'required')).toBe(true);
   });
 
-  it('DialogFieldDropDownList static: values_sorted FIELD_ARRAY also has a required validator', () => {
+  it('DialogFieldDropDownList static: has a single values FIELD_ARRAY shown for every sort_by (no values_sorted)', () => {
     const fields = optionsFields('DialogFieldDropDownList', false);
-    const sortedField = fields.find((f) => f && f.name === 'values_sorted');
-    expect(sortedField).toBeDefined();
-    expect(sortedField.validate.some((v) => v.type === 'required')).toBe(true);
+    expect(fields.filter((f) => f && f.name === 'values')).toHaveLength(1);
+    expect(fields.find((f) => f && f.name === 'values').condition).toBeUndefined();
+    expect(fields.find((f) => f && f.name === 'values_sorted')).toBeUndefined();
   });
 
   it('DialogFieldDropDownList dynamic does NOT have a values FIELD_ARRAY', () => {
@@ -592,11 +656,11 @@ describe('optionsFields — Dropdown static values FIELD_ARRAY has validate', ()
     expect(valuesField.validate.some((v) => v.type === 'required')).toBe(true);
   });
 
-  it('DialogFieldRadioButton static: values_sorted FIELD_ARRAY also has a required validator', () => {
+  it('DialogFieldRadioButton static: has a single values FIELD_ARRAY shown for every sort_by (no values_sorted)', () => {
     const fields = optionsFields('DialogFieldRadioButton', false);
-    const sortedField = fields.find((f) => f && f.name === 'values_sorted');
-    expect(sortedField).toBeDefined();
-    expect(sortedField.validate.some((v) => v.type === 'required')).toBe(true);
+    expect(fields.filter((f) => f && f.name === 'values')).toHaveLength(1);
+    expect(fields.find((f) => f && f.name === 'values').condition).toBeUndefined();
+    expect(fields.find((f) => f && f.name === 'values_sorted')).toBeUndefined();
   });
 });
 

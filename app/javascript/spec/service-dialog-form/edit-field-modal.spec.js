@@ -1,4 +1,7 @@
-import {
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderWithRedux } from '../helpers/mountForm';
+import EditFieldModal, {
   buildInitialValues,
   normaliseSubmitted,
 } from '../../components/service-dialog-form/edit-field-modal';
@@ -123,19 +126,18 @@ describe('buildInitialValues', () => {
       expect(result.values).toEqual([{ value: '1', description: 'One' }]);
     });
 
-    it('mirrors values into values_sorted for non-draggable conditional', () => {
+    it('does not create a values_sorted mirror', () => {
       const field = makeField('DialogFieldDropDownList', {
         values: [['1', 'One']],
       });
       const result = buildInitialValues(field);
-      expect(result.values_sorted).toEqual(result.values);
+      expect(result.values_sorted).toBeUndefined();
     });
 
-    it('produces empty values / values_sorted for DropDownList with no values', () => {
+    it('produces empty values for DropDownList with no values', () => {
       const field = makeField('DialogFieldDropDownList', { values: undefined });
       const result = buildInitialValues(field);
       expect(result.values).toEqual([]);
-      expect(result.values_sorted).toEqual([]);
     });
   });
 
@@ -277,7 +279,6 @@ describe('normaliseSubmitted', () => {
     it('converts [{value,description},...] back to [[v,d],...]', () => {
       const submitted = makeSubmitted({
         values: [{ value: '1', description: 'One' }, { value: '2', description: 'Two' }],
-        values_sorted: [],
         options: {
           sort_by: 'none',
           sort_order: 'ascending',
@@ -292,59 +293,26 @@ describe('normaliseSubmitted', () => {
       expect(result.values).toEqual([['1', 'One'], ['2', 'Two']]);
     });
 
-    it('uses values_sorted when sort_by !== "none" and values_sorted is populated', () => {
-      const submitted = makeSubmitted({
-        values: [{ value: '1', description: 'One' }],
-        values_sorted: [{ value: '2', description: 'Two' }],
-        options: {
-          sort_by: 'description',
-          sort_order: 'ascending',
-          protected: false,
-          force_multi_value: false,
-          force_single_value: false,
-          show_past_dates: false,
-          category_id: '',
-        },
+    // Regression: edits made while sort_by was "none" were dropped after switching sort_by,
+    // because a separate values_sorted list was submitted instead.
+    ['none', 'description', 'value'].forEach((sortBy) => {
+      it(`submits the edited values list when sort_by === "${sortBy}"`, () => {
+        const submitted = makeSubmitted({
+          values: [{ value: '9', description: 'EDITED' }],
+          options: {
+            sort_by: sortBy,
+            sort_order: 'ascending',
+            protected: false,
+            force_multi_value: false,
+            force_single_value: false,
+            show_past_dates: false,
+            category_id: '',
+          },
+        });
+        const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
+        expect(result.values).toEqual([['9', 'EDITED']]);
+        expect(result.values_sorted).toBeUndefined();
       });
-      const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
-      // values_sorted should be the source when sort_by !== 'none'
-      expect(result.values).toEqual([['2', 'Two']]);
-    });
-
-    it('uses values (draggable list) when sort_by === "none"', () => {
-      const submitted = makeSubmitted({
-        values: [{ value: '1', description: 'Draggable' }],
-        values_sorted: [{ value: '2', description: 'Sorted' }],
-        options: {
-          sort_by: 'none',
-          sort_order: 'ascending',
-          protected: false,
-          force_multi_value: false,
-          force_single_value: false,
-          show_past_dates: false,
-          category_id: '',
-        },
-      });
-      const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
-      expect(result.values).toEqual([['1', 'Draggable']]);
-    });
-
-    it('removes values_sorted from the result', () => {
-      const submitted = makeSubmitted({
-        values: [{ value: '1', description: 'One' }],
-        values_sorted: [{ value: '1', description: 'One' }],
-        options: {
-          sort_by: 'none',
-          sort_order: 'ascending',
-          protected: false,
-          force_multi_value: false,
-          force_single_value: false,
-          show_past_dates: false,
-          category_id: '',
-        },
-      });
-      const result = normaliseSubmitted(submitted, 'DialogFieldDropDownList');
-      expect(result.values_sorted).toBeUndefined();
     });
   });
 
@@ -386,6 +354,16 @@ describe('normaliseSubmitted', () => {
       expect(result.resource_action.ae_namespace).toBe('Service');
       expect(result.resource_action.ae_class).toBe('Lifecycle');
       expect(result.resource_action.ae_instance).toBeUndefined();
+    });
+
+    it('drops the domain segment of fqname when domain_fqname is missing', () => {
+      const treeObj = makeTreeSelection('/Service/Lifecycle/refresh');
+      delete treeObj.element.metadata.domain_fqname;
+      const submitted = makeSubmitted({ resource_action: treeObj });
+      const result = normaliseSubmitted(submitted, 'DialogFieldTextBox');
+      expect(result.resource_action.ae_namespace).toBe('Service');
+      expect(result.resource_action.ae_class).toBe('Lifecycle');
+      expect(result.resource_action.ae_instance).toBe('refresh');
     });
 
     it('preserves existing resource_type and ae_attributes during conversion', () => {
@@ -587,12 +565,13 @@ describe('buildInitialValues — blank-entry filtering', () => {
     expect(result.values).toEqual([{ value: '', description: 'Blank value' }]);
   });
 
-  it('applies the same filtering to values_sorted mirror', () => {
+  it('does not create a values_sorted mirror', () => {
     const field = makeField('DialogFieldDropDownList', {
       values: [['a', 'A'], ['', '']],
     });
     const result = buildInitialValues(field);
-    expect(result.values_sorted).toEqual(result.values);
+    expect(result.values).toEqual([{ value: 'a', description: 'A' }]);
+    expect(result.values_sorted).toBeUndefined();
   });
 });
 
@@ -838,7 +817,6 @@ describe('normaliseSubmitted — multiselect Dropdown default_value', () => {
     automation_type: 'embedded_automate',
     default_value: defaultValue,
     values: [{ value: 'opt1', description: 'Option 1' }],
-    values_sorted: [],
   });
 
   it('preserves array default_value for multiselect Dropdown after normalise', () => {
@@ -858,7 +836,7 @@ describe('normaliseSubmitted — multiselect Dropdown default_value', () => {
   });
 });
 
-// RadioButton shares the same sort_by / values_sorted source-selection logic as Dropdown
+// RadioButton uses the same single values list as Dropdown
 
 describe('normaliseSubmitted — RadioButton values', () => {
   const makeRBSubmitted = (overrides = {}) => ({
@@ -892,40 +870,23 @@ describe('normaliseSubmitted — RadioButton values', () => {
     ...overrides,
   });
 
-  it('uses values (draggable list) when sort_by === "none"', () => {
-    const submitted = makeRBSubmitted({
-      values: [{ value: 'yes', description: 'Draggable' }],
-      values_sorted: [{ value: 'no', description: 'Sorted' }],
-      options: {
-        sort_by: 'none',
-        sort_order: 'ascending',
-        protected: false,
-        force_multi_value: false,
-        force_single_value: false,
-        show_past_dates: false,
-        category_id: '',
-      },
+  ['none', 'description', 'value'].forEach((sortBy) => {
+    it(`submits the edited values list when sort_by === "${sortBy}"`, () => {
+      const submitted = makeRBSubmitted({
+        values: [{ value: 'yes', description: 'Edited' }],
+        options: {
+          sort_by: sortBy,
+          sort_order: 'ascending',
+          protected: false,
+          force_multi_value: false,
+          force_single_value: false,
+          show_past_dates: false,
+          category_id: '',
+        },
+      });
+      const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
+      expect(result.values).toEqual([['yes', 'Edited']]);
     });
-    const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
-    expect(result.values).toEqual([['yes', 'Draggable']]);
-  });
-
-  it('uses values_sorted when sort_by === "description" and values_sorted is populated', () => {
-    const submitted = makeRBSubmitted({
-      values: [{ value: 'yes', description: 'Yes' }],
-      values_sorted: [{ value: 'no', description: 'No' }],
-      options: {
-        sort_by: 'description',
-        sort_order: 'ascending',
-        protected: false,
-        force_multi_value: false,
-        force_single_value: false,
-        show_past_dates: false,
-        category_id: '',
-      },
-    });
-    const result = normaliseSubmitted(submitted, 'DialogFieldRadioButton');
-    expect(result.values).toEqual([['no', 'No']]);
   });
 });
 
@@ -1046,3 +1007,167 @@ describe('normaliseSubmitted — Dropdown integer data_type values stay string',
     expect(typeof result.values[0][0]).toBe('string');
   });
 });
+
+describe('EditFieldModal — duplicate field name', () => {
+  const fieldA = makeField('DialogFieldTextBox', { name: 'field_a', label: 'field_a' });
+  const fieldB = makeField('DialogFieldTextBox', { name: 'field_b', label: 'field_b' });
+  const dialogData = {
+    dialog_tabs: [{ dialog_groups: [{ dialog_fields: [fieldA, fieldB] }] }],
+  };
+
+  const renderModal = (onSave = jest.fn()) => {
+    renderWithRedux(
+      <EditFieldModal
+        isOpen
+        field={fieldA}
+        dialogData={dialogData}
+        onSave={onSave}
+        onClose={jest.fn()}
+      />
+    );
+    return onSave;
+  };
+
+  it('rejects a name already used by another field and does not save', async() => {
+    const user = userEvent.setup();
+    const onSave = renderModal();
+
+    const nameInput = document.getElementById('name');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'field_b');
+    await user.tab();
+
+    await waitFor(() => expect(screen.getAllByText('Duplicate field name found').length).toBeGreaterThan(0));
+    // The form is invalid, so Save stays disabled and nothing is submitted.
+    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('saves when the name is unchanged (a field does not clash with itself)', async() => {
+    const user = userEvent.setup();
+    const onSave = renderModal();
+
+    // Save is disabled until the form is dirty, so change an unrelated property.
+    await user.type(document.getElementById('label'), ' edited');
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    expect(onSave.mock.calls[0][0].name).toBe('field_a');
+    expect(screen.queryByText('Duplicate field name found')).not.toBeInTheDocument();
+  });
+});
+
+describe('EditFieldModal — integer entry values', () => {
+  const dropdown = (dataType, values) => makeField('DialogFieldDropDownList', {
+    name: 'dd',
+    label: 'dd',
+    data_type: dataType,
+    options: { sort_by: 'none' },
+    values,
+  });
+
+  const openOptionsTab = async(user, field, onSave) => {
+    renderWithRedux(
+      <EditFieldModal
+        isOpen
+        field={field}
+        dialogData={{ dialog_tabs: [{ dialog_groups: [{ dialog_fields: [field] }] }] }}
+        onSave={onSave}
+        onClose={jest.fn()}
+      />
+    );
+    await user.click(screen.getByRole('tab', { name: 'Options' }));
+  };
+
+  it('blocks Save when data_type is integer and an entry value is not a number', async() => {
+    const user = userEvent.setup();
+    const onSave = jest.fn();
+    await openOptionsTab(user, dropdown('integer', [['abc', 'Bad']]), onSave);
+
+    const valueInput = document.querySelector('input[name="values[0].value"]');
+    await user.type(valueInput, 'x');
+    await user.tab();
+
+    await waitFor(() => expect(
+      screen.getAllByText('Value type is set as Integer, but the value entered is not a number').length
+    ).toBeGreaterThan(0));
+    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('allows the same non-numeric value when data_type is string', async() => {
+    const user = userEvent.setup();
+    const onSave = jest.fn();
+    await openOptionsTab(user, dropdown('string', [['abc', 'Fine']]), onSave);
+
+    await user.type(document.querySelector('input[name="values[0].value"]'), 'x');
+    await user.tab();
+
+    expect(screen.queryByText('Value type is set as Integer, but the value entered is not a number')).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled());
+  });
+
+  // Regression: DDF memoizes validators by value only, so the integer error for "abc" used to be
+  // replayed after switching Value type back to String.
+  it('clears the integer error after switching Value type from Integer to String', async() => {
+    const user = userEvent.setup();
+    await openOptionsTab(user, dropdown('integer', [['abc', 'Bad']]), jest.fn());
+
+    await user.type(document.querySelector('input[name="values[0].value"]'), 'x');
+    await user.tab();
+    await waitFor(() => expect(
+      screen.getAllByText('Value type is set as Integer, but the value entered is not a number').length
+    ).toBeGreaterThan(0));
+
+    await user.selectOptions(document.getElementById('data_type'), 'string');
+
+    await waitFor(() => expect(
+      screen.queryByText('Value type is set as Integer, but the value entered is not a number')
+    ).not.toBeInTheDocument());
+    expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+  });
+});
+
+describe('EditFieldModal — fields to refresh', () => {
+  const trigger = (responders = []) => makeField('DialogFieldTextBox', {
+    name: 'trigger',
+    label: 'Trigger',
+    dialog_field_responders: responders,
+  });
+  const target = makeField('DialogFieldTextBox', { name: 'target', label: 'Target', dynamic: true });
+
+  const renderModal = async(user, field, onSave = jest.fn()) => {
+    renderWithRedux(
+      <EditFieldModal
+        isOpen
+        field={field}
+        dialogData={{ dialog_tabs: [{ dialog_groups: [{ dialog_fields: [field, target] }] }] }}
+        onSave={onSave}
+        onClose={jest.fn()}
+      />
+    );
+    await user.click(screen.getByRole('tab', { name: 'Options' }));
+    return onSave;
+  };
+
+  it('saves the selected responders as field names', async() => {
+    const user = userEvent.setup();
+    const onSave = await renderModal(user, trigger());
+
+    await user.click(screen.getByText('Fields to refresh').closest('.cds--list-box__wrapper, .cds--form-item').querySelector('button'));
+    await user.click(await screen.findByText('Target'));
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    expect(onSave.mock.calls[0][0].dialog_field_responders).toEqual(['target']);
+  });
+
+  it('shows saved responder names as selected', async() => {
+    const user = userEvent.setup();
+    await renderModal(user, trigger(['target']));
+
+    expect(screen.getByText('Fields to refresh').closest('.cds--list-box__wrapper, .cds--form-item')
+      .querySelector('.cds--tag, .cds--list-box__selection')).toHaveTextContent('1');
+  });
+});
+

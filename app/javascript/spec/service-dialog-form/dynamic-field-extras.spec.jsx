@@ -50,7 +50,8 @@ describe('DynamicField — TagControl categories fetch', () => {
     render(makeField('DialogFieldTagControl', { values: [] }));
     await waitFor(() => expect(window.API.get).toHaveBeenCalledTimes(1));
     expect(window.API.get).toHaveBeenCalledWith(
-      '/api/categories?expand=resources&attributes=id,name,description,single_value,children'
+      '/api/categories?expand=resources&attributes=id,name,description,single_value,children',
+      { skipErrors: true }
     );
   });
 
@@ -77,10 +78,12 @@ describe('DynamicField — TagControl categories fetch', () => {
     expect(screen.getByTestId('modal-categories').textContent).toBe('[]');
   });
 
-  it('swallows an API failure and still renders the field', async() => {
+  it('flashes an error on an API failure and still renders the field', async() => {
+    const addFlash = jest.spyOn(window, 'add_flash').mockImplementation(() => true);
     window.API.get.mockRejectedValue(new Error('boom'));
     render(makeField('DialogFieldTagControl', { values: [] }));
-    await waitFor(() => expect(window.API.get).toHaveBeenCalled());
+    await waitFor(() => expect(addFlash).toHaveBeenCalledWith('Unable to load the tag categories', 'error', undefined));
+    addFlash.mockRestore();
     expect(document.querySelector('select')).not.toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /edit field/i }));
     expect(screen.getByTestId('modal-categories').textContent).toBe('[]');
@@ -112,11 +115,13 @@ describe('DynamicField — edit modal lifecycle', () => {
     expect(onAction).not.toHaveBeenCalled();
   });
 
-  it('fires field.edit with the field name and values on save, then closes', () => {
+  it('fires field.edit with the field position and values on save, then closes', () => {
     render(makeField('DialogFieldTextBox'));
     fireEvent.click(screen.getByRole('button', { name: /edit field/i }));
     fireEvent.click(screen.getByText('mock-save'));
-    expect(onAction).toHaveBeenCalledWith('field.edit', { fieldName: 'test_field', values: { label: 'Updated' } });
+    expect(onAction).toHaveBeenCalledWith('field.edit', {
+      tabIndex: 0, sectionIndex: 3, fieldIndex: 2, values: { label: 'Updated' },
+    });
     expect(screen.queryByTestId('edit-field-modal')).toBeNull();
   });
 

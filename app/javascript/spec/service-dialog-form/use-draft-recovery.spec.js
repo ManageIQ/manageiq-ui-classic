@@ -3,26 +3,27 @@ import useDraftRecovery from '../../components/service-dialog-form/use-draft-rec
 // jsdom provides a real sessionStorage implementation — no mocking needed.
 
 beforeEach(() => {
-  sessionStorage.clear();
+  window.sessionStorage.clear();
 });
 
 describe('useDraftRecovery — key generation', () => {
   it('uses "service_dialog-new" for action new', () => {
     const { saveDraft, loadDraft: _loadDraft } = useDraftRecovery('', 'new');
     saveDraft({ label: 'test' });
-    expect(sessionStorage.getItem('service_dialog-new')).not.toBeNull();
+    expect(window.sessionStorage.getItem('service_dialog-new')).not.toBeNull();
   });
 
-  it('uses "service_dialog-new" for action copy', () => {
+  it('uses "service_dialog-copy-{id}" for action copy, separate from new', () => {
     const { saveDraft, loadDraft: _loadDraft2 } = useDraftRecovery('42', 'copy');
     saveDraft({ label: 'test' });
-    expect(sessionStorage.getItem('service_dialog-new')).not.toBeNull();
+    expect(window.sessionStorage.getItem('service_dialog-copy-42')).not.toBeNull();
+    expect(window.sessionStorage.getItem('service_dialog-new')).toBeNull();
   });
 
   it('uses "service_dialog-{id}" for action edit', () => {
     const { saveDraft } = useDraftRecovery('42', 'edit');
     saveDraft({ label: 'test' });
-    expect(sessionStorage.getItem('service_dialog-42')).not.toBeNull();
+    expect(window.sessionStorage.getItem('service_dialog-42')).not.toBeNull();
   });
 });
 
@@ -40,7 +41,7 @@ describe('useDraftRecovery — saveDraft / loadDraft round-trip', () => {
   });
 
   it('returns null when stored value is invalid JSON', () => {
-    sessionStorage.setItem('service_dialog-new', 'not-json{{{');
+    window.sessionStorage.setItem('service_dialog-new', 'not-json{{{');
     const { loadDraft } = useDraftRecovery('', 'new');
     expect(loadDraft()).toBeNull();
   });

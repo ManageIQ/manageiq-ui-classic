@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { API } from '../../http_api';
+import miqFlash from '../../helpers/miq-flash';
 import { getComponentIdFromType } from './helper';
+import { fieldShape, dialogDataShape } from './prop-shapes';
 import DynamicFieldActions from './dynamic-field-actions';
 import EditFieldModal from './edit-field-modal';
 
@@ -37,7 +39,7 @@ const DynamicField = ({
   sectionIndex,
   onAction,
   emsWorkflowsEnabled = false,
-  dialogData,
+  dialogData = null,
 }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -48,9 +50,9 @@ const DynamicField = ({
     if (field.type !== 'DialogFieldTagControl') {
       return;
     }
-    API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children')
+    API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children', { skipErrors: true })
       .then((response) => setCategories(response.resources || []))
-      .catch(() => {});
+      .catch(() => miqFlash('error', __('Unable to load the tag categories')));
   }, [field.type]);
 
   const componentId = getComponentIdFromType(field.type);
@@ -60,7 +62,9 @@ const DynamicField = ({
   const handleCloseModal = () => setEditModalOpen(false);
 
   const handleSaveField = (updatedValues) => {
-    onAction('field.edit', { fieldName: field.name, values: updatedValues });
+    onAction('field.edit', {
+      tabIndex, sectionIndex, fieldIndex, values: updatedValues,
+    });
     setEditModalOpen(false);
   };
 
@@ -100,13 +104,13 @@ const DynamicField = ({
 };
 
 DynamicField.propTypes = {
-  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  field: fieldShape.isRequired,
   fieldIndex: PropTypes.number.isRequired,
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   onAction: PropTypes.func.isRequired,
   emsWorkflowsEnabled: PropTypes.bool,
-  dialogData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  dialogData: dialogDataShape,
 };
 
 export default DynamicField;

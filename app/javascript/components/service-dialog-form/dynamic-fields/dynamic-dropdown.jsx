@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Dropdown, MultiSelect } from '@carbon/react';
 import { getFieldValues } from '../helper';
+import { valuesShape } from '../prop-shapes';
 
 // values are stored as [[value, description], ...]; getFieldValues normalises to [{value, description}].
 const DynamicDropdown = ({ field }) => {
@@ -51,7 +52,7 @@ DynamicDropdown.propTypes = {
     label: PropTypes.string,
     default_value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     read_only: PropTypes.bool,
-    values: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    values: valuesShape,
     options: PropTypes.shape({ force_multi_value: PropTypes.bool }),
   }).isRequired,
 };

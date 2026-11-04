@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import { Edit, TrashCan } from '@carbon/react/icons';
 import { SD_ACTIONS } from './helper';
+import { fieldShape } from './prop-shapes';
 
 /**
  * Renders the Edit (pencil) and Remove (trash) icon buttons shown on
@@ -44,7 +45,7 @@ DynamicFieldActions.propTypes = {
   tabIndex: PropTypes.number.isRequired,
   sectionIndex: PropTypes.number.isRequired,
   fieldIndex: PropTypes.number.isRequired,
-  field: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  field: fieldShape.isRequired,
   onAction: PropTypes.func.isRequired,
   onEditField: PropTypes.func.isRequired,
 };

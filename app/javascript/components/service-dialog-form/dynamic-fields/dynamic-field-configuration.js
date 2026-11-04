@@ -7,7 +7,7 @@ import { componentTypes } from '@@ddf';
  * Two public compositor functions assemble Tab 2 / Tab 4 for any type × mode.
  *
  * Callers use (in tab order):
- *   fieldInfoFields(showDynamic)             → Tab 1 field list
+ *   fieldInfoFields(showDynamic, isNameTaken) → Tab 1 field list
  *   optionsFields(type, isDynamic, opts)     → Tab 2 field list
  *   advancedFields()                         → Tab 3 field list
  *   overridableOptionsFields(type)           → Tab 4 field list (dynamic only)
@@ -15,26 +15,27 @@ import { componentTypes } from '@@ddf';
 
 // Shared option lists
 
-export const SORT_BY_OPTIONS = () => [
+export const sortByOptions = () => [
   { label: __('None'), value: 'none' },
   { label: __('Description'), value: 'description' },
   { label: __('Value'), value: 'value' },
 ];
 
-export const SORT_ORDER_OPTIONS = () => [
+export const sortOrderOptions = () => [
   { label: __('Ascending'), value: 'ascending' },
   { label: __('Descending'), value: 'descending' },
 ];
 
-export const DATA_TYPE_OPTIONS = () => [
+export const dataTypeOptions = () => [
   { label: __('String'), value: 'string' },
   { label: __('Integer'), value: 'integer' },
 ];
 
 // Tab 1: Field Information
 // showDynamic=false hides the Dynamic toggle (TagControl has no dynamic mode)
+// isNameTaken(name) → true when another field in the dialog already uses that name
 
-export const fieldInfoFields = (showDynamic = true) => [
+export const fieldInfoFields = (showDynamic = true, isNameTaken = undefined) => [
   {
     component: 'text-field',
     name: 'label',
@@ -47,7 +48,12 @@ export const fieldInfoFields = (showDynamic = true) => [
     name: 'name',
     label: __('Name'),
     isRequired: true,
-    validate: [{ type: 'required' }],
+    validate: [
+      { type: 'required' },
+      ...(isNameTaken
+        ? [(value) => (value && isNameTaken(value) ? __('Duplicate field name found') : undefined)]
+        : []),
+    ],
   },
   {
     component: 'textarea',
@@ -98,15 +104,34 @@ const sortFields = () => [
     component: 'select',
     name: 'options.sort_by',
     label: __('Sort by'),
-    options: SORT_BY_OPTIONS(),
+    options: sortByOptions(),
   },
   {
     component: 'select',
     name: 'options.sort_order',
     label: __('Sort order'),
-    options: SORT_ORDER_OPTIONS(),
+    options: sortOrderOptions(),
   },
 ];
+
+// DDF memoizes function validators on `fn.cache`, keyed by the field value only (allValues is ignored).
+// A result that depends on another field (here data_type) would be replayed after that field changes,
+// so give the function a cache that is always empty.
+const withoutCache = (fn) => {
+  Object.defineProperty(fn, 'cache', { get: () => ({}) });
+  return fn;
+};
+
+// Dropdown / RadioButton entry value check. When the field's Value type is Integer every
+// entry value must be numeric (a blank value is allowed, as it was in the Angular editor).
+export const integerValueValidator = withoutCache((value, allValues) => {
+  if (allValues?.data_type !== 'integer' || value === undefined || value === null || String(value).trim() === '') {
+    return undefined;
+  }
+  return Number.isNaN(Number(value))
+    ? __('Value type is set as Integer, but the value entered is not a number')
+    : undefined;
+});
 
 // resetOnChange=true adds the resolveProps side-effect that resets default_value
 // when data_type changes. Used by Dropdown and RadioButton static tabs where
@@ -115,7 +140,7 @@ const dataTypeField = (resetOnChange = false) => ({
   component: 'select',
   name: 'data_type',
   label: __('Value type'),
-  options: DATA_TYPE_OPTIONS(),
+  options: dataTypeOptions(),
   ...(resetOnChange ? {
     resolveProps: (_props, { meta, input }, formOptions) => {
       if (meta.dirty && meta.active !== undefined) {
@@ -157,13 +182,15 @@ const validationFields = () => [
 //   { element: { metadata: { fqname, domain_fqname }, ... }, ... }
 // EmbeddedWorkflowEntryPoint stores the selected row object:
 //   { id: <numeric_id>, name: { text: '...' }, ... }
+// An automate resource_action also carries a database id, so a bare id is not a workflow
+// selection: a row needs its name, a persisted workflow needs configuration_script_id.
 // An empty/cleared state is {} or undefined.
 export const validateEntryPoint = (value) => {
   const hasAutomateSelection = value && value.element && value.element.metadata && value.element.metadata.fqname;
-  const hasWorkflowSelection = value && (value.configuration_script_id || value.id);
+  const hasWorkflowSelection = value && (value.configuration_script_id || (value.id && value.name));
   // Fields loaded from the API carry ae_namespace/ae_class/ae_instance without a tree-selection
-  // object — accept any of these as a valid saved automate entry point.
-  const hasLegacyAutomate = value && (value.ae_class || value.ae_namespace || value.ae_instance);
+  // object — a saved automate entry point needs at least a namespace and a class.
+  const hasLegacyAutomate = value && value.ae_namespace && value.ae_class;
   if (!hasAutomateSelection && !hasWorkflowSelection && !hasLegacyAutomate) {
     return __('Entry Point needs to be set for Dynamic elements');
   }
@@ -233,6 +260,7 @@ const fieldsToRefreshField = (dynamicFields = []) => ({
   name: 'dialog_field_responders',
   label: __('Fields to refresh'),
   isMulti: true,
+  simpleValue: true,
   options: dynamicFields.map((f) => ({ label: f.label || f.name, value: f.name })),
 });
 
@@ -386,7 +414,8 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         },
       },
       // Description column first, Value second.
-      // isDraggable only when sort_by === 'none'; when sorted automatically the handle is hidden.
+      // A single list is used for every sort_by value so edits are never lost when sort_by changes;
+      // the sort itself is applied by the dialog runner, not stored in the entries.
       {
         component: componentTypes.FIELD_ARRAY,
         name: 'values',
@@ -395,27 +424,12 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         buttonLabels: { add: __('Add'), remove: __('Remove') },
         AddButtonProps: { size: 'sm' },
         RemoveButtonProps: { size: 'sm' },
-        isDraggable: true,
-        condition: { when: 'options.sort_by', is: 'none' },
         validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Description') },
-          { component: 'text-field', name: 'value', label: __('Value') },
-        ],
-      },
-      {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'values_sorted',
-        label: __('Entries'),
-        noItemsMessage: __('None'),
-        buttonLabels: { add: __('Add'), remove: __('Remove') },
-        AddButtonProps: { size: 'sm' },
-        RemoveButtonProps: { size: 'sm' },
-        condition: { when: 'options.sort_by', pattern: /^(?!none$)/ },
-        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
-        fields: [
-          { component: 'text-field', name: 'description', label: __('Description') },
-          { component: 'text-field', name: 'value', label: __('Value') },
+          {
+            component: 'text-field', name: 'value', label: __('Value'), validate: [integerValueValidator],
+          },
         ],
       },
       refresh,
@@ -432,7 +446,7 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
       ];
     }
     // Same layout as Dropdown static but without force_multi_value.
-    // RadioButton labels entries as "Key" / "Value". isDraggable only when sort_by === 'none'.
+    // RadioButton labels entries as "Key" / "Value".
     return [
       ...visibilityFields(),
       requiredField(),
@@ -453,27 +467,12 @@ export const optionsFields = (type, isDynamic, opts = {}) => {
         buttonLabels: { add: __('Add'), remove: __('Remove') },
         AddButtonProps: { size: 'sm' },
         RemoveButtonProps: { size: 'sm' },
-        isDraggable: true,
-        condition: { when: 'options.sort_by', is: 'none' },
-        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
+        validate: [{ type: 'required', message: __('Radio button needs to have entries') }],
         fields: [
           { component: 'text-field', name: 'description', label: __('Key') },
-          { component: 'text-field', name: 'value', label: __('Value') },
-        ],
-      },
-      {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'values_sorted',
-        label: __('Entries'),
-        noItemsMessage: __('None'),
-        buttonLabels: { add: __('Add'), remove: __('Remove') },
-        AddButtonProps: { size: 'sm' },
-        RemoveButtonProps: { size: 'sm' },
-        condition: { when: 'options.sort_by', pattern: /^(?!none$)/ },
-        validate: [{ type: 'required', message: __('Dropdown needs to have entries') }],
-        fields: [
-          { component: 'text-field', name: 'description', label: __('Key') },
-          { component: 'text-field', name: 'value', label: __('Value') },
+          {
+            component: 'text-field', name: 'value', label: __('Value'), validate: [integerValueValidator],
+          },
         ],
       },
       refresh,

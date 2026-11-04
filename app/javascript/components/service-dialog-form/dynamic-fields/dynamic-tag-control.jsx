@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Select, SelectItem } from '@carbon/react';
+import { valuesShape } from '../prop-shapes';
 
 // TagControl renders a Select showing the category's children (values).
 // values are populated from the API and stored as [[value, description], ...].
@@ -30,7 +31,7 @@ DynamicTagControl.propTypes = {
     label: PropTypes.string,
     default_value: PropTypes.string,
     read_only: PropTypes.bool,
-    values: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    values: valuesShape,
   }).isRequired,
 };
 

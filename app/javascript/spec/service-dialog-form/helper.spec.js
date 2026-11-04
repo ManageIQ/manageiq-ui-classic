@@ -12,12 +12,14 @@ import {
   dropComponent,
   handlePropertiesEdit,
   deleteField,
+  updateFieldResponders,
   deleteSection,
   deleteTab,
   defaultTab,
   defaultSection,
   buildDialogPayload,
   isSaveDisabled,
+  saveDisabledReason,
 } from '../../components/service-dialog-form/helper';
 
 // seedFieldCounters — duplicate name regression
@@ -141,20 +143,27 @@ describe('uniqueNameValidator', () => {
     const fieldA = makeField('field_a');
     const fieldB = makeField('field_b');
     const dialog = makeDialog([makeTab('T', [makeSection('S', [fieldA, fieldB])])]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(false);
+    expect(uniqueNameValidator(dialog, 'field_a', fieldA)).toBe(false);
   });
 
   it('returns true when another field shares the same name', () => {
     const fieldA = makeField('shared_name');
     const fieldB = makeField('shared_name'); // same name, different object identity
     const dialog = makeDialog([makeTab('T', [makeSection('S', [fieldA, fieldB])])]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(true);
+    expect(uniqueNameValidator(dialog, 'shared_name', fieldA)).toBe(true);
   });
 
   it('does not flag the field against itself', () => {
     const fieldA = makeField('solo');
     const dialog = makeDialog([makeTab('T', [makeSection('S', [fieldA])])]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(false);
+    expect(uniqueNameValidator(dialog, 'solo', fieldA)).toBe(false);
+  });
+
+  it('flags a new name typed into the edited field when another field already uses it', () => {
+    const fieldA = makeField('field_a');
+    const fieldB = makeField('field_b');
+    const dialog = makeDialog([makeTab('T', [makeSection('S', [fieldA, fieldB])])]);
+    expect(uniqueNameValidator(dialog, 'field_b', fieldA)).toBe(true);
   });
 });
 
@@ -318,7 +327,7 @@ describe('dropComponent', () => {
 describe('handlePropertiesEdit', () => {
   it('merges updatedProps into the matching field', () => {
     const dialog = sampleDialog();
-    const result = handlePropertiesEdit(dialog, 'field_a', { label: 'Updated Label', required: true });
+    const result = handlePropertiesEdit(dialog, 0, 0, 0, { label: 'Updated Label', required: true });
     const field = result.dialog_tabs[0].dialog_groups[0].dialog_fields[0];
     expect(field.label).toBe('Updated Label');
     expect(field.required).toBe(true);
@@ -327,24 +336,103 @@ describe('handlePropertiesEdit', () => {
   it('increments _version on update', () => {
     const dialog = sampleDialog();
     const original = dialog.dialog_tabs[0].dialog_groups[0].dialog_fields[0]._version;
-    const result = handlePropertiesEdit(dialog, 'field_a', { label: 'X' });
+    const result = handlePropertiesEdit(dialog, 0, 0, 0, { label: 'X' });
     const field = result.dialog_tabs[0].dialog_groups[0].dialog_fields[0];
     expect(field._version).toBe(original + 1);
   });
 
   it('leaves other fields untouched', () => {
     const dialog = sampleDialog();
-    const result = handlePropertiesEdit(dialog, 'field_a', { label: 'X' });
+    const result = handlePropertiesEdit(dialog, 0, 0, 0, { label: 'X' });
     const fieldB = result.dialog_tabs[0].dialog_groups[0].dialog_fields[1];
     expect(fieldB.name).toBe('field_b');
     expect(fieldB.label).toBe('Label field_b');
   });
 
+  it('edits only the field at the given position when two fields share a name', () => {
+    const dialog = makeDialog([makeTab('T', [makeSection('S', [makeField('dup'), makeField('dup')])])]);
+    const result = handlePropertiesEdit(dialog, 0, 0, 1, { label: 'Second' });
+    const [first, second] = result.dialog_tabs[0].dialog_groups[0].dialog_fields;
+    expect(first.label).toBe('Label dup');
+    expect(second.label).toBe('Second');
+  });
+
+  it('returns the data unchanged for a position that does not exist', () => {
+    const dialog = sampleDialog();
+    const result = handlePropertiesEdit(dialog, 5, 0, 0, { label: 'X' });
+    expect(result.dialog_tabs).toEqual(dialog.dialog_tabs);
+  });
+
   it('does not mutate the original', () => {
     const dialog = sampleDialog();
     const originalLabel = dialog.dialog_tabs[0].dialog_groups[0].dialog_fields[0].label;
-    handlePropertiesEdit(dialog, 'field_a', { label: 'Changed' });
+    handlePropertiesEdit(dialog, 0, 0, 0, { label: 'Changed' });
     expect(dialog.dialog_tabs[0].dialog_groups[0].dialog_fields[0].label).toBe(originalLabel);
+  });
+});
+
+// dialog_field_responders upkeep
+
+const respondersDialog = () => makeDialog([
+  makeTab('T', [
+    makeSection('S', [
+      makeField('dyn', { dynamic: true, dialog_field_responders: ['target', 'other'] }),
+      makeField('target'),
+      makeField('other'),
+    ]),
+  ]),
+]);
+
+const fieldsOf = (dialog) => dialog.dialog_tabs[0].dialog_groups[0].dialog_fields;
+
+describe('updateFieldResponders', () => {
+  it('removes the name from every field that references it', () => {
+    const result = updateFieldResponders(respondersDialog(), 'target');
+    expect(fieldsOf(result)[0].dialog_field_responders).toEqual(['other']);
+  });
+
+  it('replaces the name when a new name is given', () => {
+    const result = updateFieldResponders(respondersDialog(), 'target', 'renamed');
+    expect(fieldsOf(result)[0].dialog_field_responders).toEqual(['other', 'renamed']);
+  });
+
+  it('keeps untouched fields as the same object', () => {
+    const dialog = respondersDialog();
+    const result = updateFieldResponders(dialog, 'target');
+    expect(fieldsOf(result)[1]).toBe(fieldsOf(dialog)[1]);
+  });
+});
+
+describe('handlePropertiesEdit — dialog_field_responders', () => {
+  it('removes the field from other fields\' responders when it stops being dynamic', () => {
+    const dialog = makeDialog([
+      makeTab('T', [
+        makeSection('S', [
+          makeField('target', { dynamic: true }),
+          makeField('dyn', { dynamic: true, dialog_field_responders: ['target', 'other'] }),
+        ]),
+      ]),
+    ]);
+    const result = handlePropertiesEdit(dialog, 0, 0, 0, { dynamic: false });
+    expect(fieldsOf(result)[1].dialog_field_responders).toEqual(['other']);
+  });
+
+  it('keeps the responders when the field stays dynamic', () => {
+    const dialog = makeDialog([
+      makeTab('T', [
+        makeSection('S', [
+          makeField('target', { dynamic: true }),
+          makeField('dyn', { dynamic: true, dialog_field_responders: ['target'] }),
+        ]),
+      ]),
+    ]);
+    const result = handlePropertiesEdit(dialog, 0, 0, 0, { label: 'New' });
+    expect(fieldsOf(result)[1].dialog_field_responders).toEqual(['target']);
+  });
+
+  it('follows a rename in other fields\' responders', () => {
+    const result = handlePropertiesEdit(respondersDialog(), 0, 0, 1, { name: 'renamed' });
+    expect(fieldsOf(result)[0].dialog_field_responders).toEqual(['other', 'renamed']);
   });
 });
 
@@ -373,6 +461,25 @@ describe('deleteField', () => {
     const fields = result.dialog_tabs[0].dialog_groups[0].dialog_fields;
     expect(fields.map((f) => f.position)).toEqual([0, 1]);
     expect(fields.map((f) => f.name)).toEqual(['a', 'c']);
+  });
+
+  it('removes the deleted field from other fields\' responders', () => {
+    const result = deleteField(respondersDialog(), 0, 0, 1); // remove 'target'
+    expect(fieldsOf(result)[0].dialog_field_responders).toEqual(['other']);
+  });
+
+  it('keeps the responder when another field with the same name remains', () => {
+    const dialog = makeDialog([
+      makeTab('T', [
+        makeSection('S', [
+          makeField('dyn', { dynamic: true, dialog_field_responders: ['twin'] }),
+          makeField('twin'),
+        ]),
+        makeSection('S2', [makeField('twin')]),
+      ]),
+    ]);
+    const result = deleteField(dialog, 0, 0, 1);
+    expect(fieldsOf(result)[0].dialog_field_responders).toEqual(['twin']);
   });
 });
 
@@ -567,6 +674,21 @@ describe('buildDialogPayload (copy)', () => {
     expect(payload.resource.dialog_tabs[0].id).toBeUndefined();
     expect(payload.resource.dialog_tabs[0].dialog_groups[0].id).toBeUndefined();
   });
+
+  it('strips resource_action id for copy but keeps it for edit', () => {
+    const resourceAction = {
+      id: 99, resource_type: 'DialogField', ae_namespace: 'a', ae_class: 'b', ae_instance: 'c', ae_attributes: {},
+    };
+    const dialog = makeDialog([
+      makeTab('T', [makeSection('S', [makeField('f', { id: 7, dynamic: true, resource_action: resourceAction })])]),
+    ]);
+    const copied = buildDialogPayload(dialog, 'copy').resource.dialog_tabs[0].dialog_groups[0].dialog_fields[0];
+    expect(copied.resource_action.id).toBeUndefined();
+    expect(copied.resource_action.ae_instance).toBe('c');
+
+    const edited = buildDialogPayload(dialog, 'edit').resource.content.dialog_tabs[0].dialog_groups[0].dialog_fields[0];
+    expect(edited.resource_action.id).toBe(99);
+  });
 });
 
 describe('seedFieldCounters', () => {
@@ -642,7 +764,7 @@ describe('uniqueNameValidator — cross-structure', () => {
       makeTab('T1', [makeSection('S1', [fieldA])]),
       makeTab('T2', [makeSection('S2', [fieldB])]),
     ]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(true);
+    expect(uniqueNameValidator(dialog, 'shared_name', fieldA)).toBe(true);
   });
 
   it('detects a duplicate name across different sections in the same tab', () => {
@@ -651,7 +773,7 @@ describe('uniqueNameValidator — cross-structure', () => {
     const dialog = makeDialog([
       makeTab('T', [makeSection('S1', [fieldA]), makeSection('S2', [fieldB])]),
     ]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(true);
+    expect(uniqueNameValidator(dialog, 'shared_name', fieldA)).toBe(true);
   });
 
   it('returns false when names are unique across all tabs and sections', () => {
@@ -661,7 +783,7 @@ describe('uniqueNameValidator — cross-structure', () => {
       makeTab('T1', [makeSection('S1', [fieldA])]),
       makeTab('T2', [makeSection('S2', [fieldB])]),
     ]);
-    expect(uniqueNameValidator(dialog, fieldA)).toBe(false);
+    expect(uniqueNameValidator(dialog, 'alpha', fieldA)).toBe(false);
   });
 });
 
@@ -738,5 +860,56 @@ describe('isSaveDisabled', () => {
     const tab2 = makeTab('Tab 2', [makeSection('S2', [])]);
     const dialog = { ...makeDialog([tab, tab2]), label: 'My Dialog' };
     expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when two fields share the same name', () => {
+    const dialog = {
+      ...makeDialog([makeTab('Tab', [makeSection('S', [makeField('a'), makeField('a')])])]),
+      label: 'My Dialog',
+    };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+
+  it('is true when duplicate names are in different tabs', () => {
+    const dialog = {
+      ...makeDialog([
+        makeTab('T1', [makeSection('S1', [makeField('a')])]),
+        makeTab('T2', [makeSection('S2', [makeField('a')])]),
+      ]),
+      label: 'My Dialog',
+    };
+    expect(isSaveDisabled(dialog)).toBe(true);
+  });
+});
+
+describe('saveDisabledReason', () => {
+  const field = makeField('f1');
+  const tab = makeTab('Tab', [makeSection('Section', [field])]);
+  const valid = { ...makeDialog([tab]), label: 'My Dialog' };
+
+  it('is null when the dialog can be saved', () => {
+    expect(saveDisabledReason(valid)).toBeNull();
+  });
+
+  it('explains each failing condition', () => {
+    expect(saveDisabledReason(null)).toBe('The dialog has not loaded yet');
+    expect(saveDisabledReason({ ...valid, label: ' ' })).toBe('Enter a label for the dialog');
+    expect(saveDisabledReason({ ...makeDialog([]), label: 'D' })).toBe('Add at least one tab');
+    expect(saveDisabledReason({ ...makeDialog([{ ...tab, label: '' }]), label: 'D' })).toBe('Every tab needs a label');
+    expect(saveDisabledReason({ ...makeDialog([makeTab('T1', [])]), label: 'D' })).toBe('Tab "T1" needs at least one section');
+    expect(saveDisabledReason({ ...makeDialog([makeTab('T1', [makeSection('', [field])])]), label: 'D' }))
+      .toBe('Every section in tab "T1" needs a label');
+    expect(saveDisabledReason({ ...makeDialog([makeTab('T1', [makeSection('S1', [])])]), label: 'D' }))
+      .toBe('Section "S1" needs at least one field');
+  });
+
+  it('names the first duplicated field', () => {
+    const dup = { ...makeDialog([makeTab('T', [makeSection('S', [makeField('a'), makeField('b'), makeField('b')])])]), label: 'D' };
+    expect(saveDisabledReason(dup)).toBe('Field names must be unique, "b" is used more than once');
+  });
+
+  it('agrees with isSaveDisabled', () => {
+    expect(isSaveDisabled(valid)).toBe(saveDisabledReason(valid) !== null);
+    expect(isSaveDisabled({ ...valid, label: '' })).toBe(true);
   });
 });

@@ -4,7 +4,7 @@ import MiqFormRenderer from '../../../forms/data-driven-form';
 import sectionSchema from './section.schema';
 
 const EditSectionModal = ({
-  section,
+  section = null,
   isOpen = false,
   onSave,
   onClose,
