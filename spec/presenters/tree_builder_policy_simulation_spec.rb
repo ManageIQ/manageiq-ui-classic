@@ -107,10 +107,10 @@ describe TreeBuilderPolicySimulation do
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
       expect(kid_one[:text]).to eq("<strong>Scope:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
       expect(kid_one[:icon]).to eq('fa fa-ban')
-      expect(kid_one[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
+      expect(kid_one[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1")
       expect(kid_two[:text]).to eq("<strong>Expression:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
       expect(kid_two[:icon]).to eq('fa fa-ban')
-      expect(kid_two[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
+      expect(kid_two[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1")
     end
   end
   context 'TreeBuilderPolicySimulation without data' do
