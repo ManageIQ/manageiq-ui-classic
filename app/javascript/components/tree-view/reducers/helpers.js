@@ -1,5 +1,3 @@
-import { Tree } from 'react-wooden-tree';
-
 export const nodeCheckedWithDirty = (propNode, value) => {
   let node = { ...propNode };
   if (!node.state.disabled) {
@@ -13,7 +11,8 @@ export const nodeCheckedWithDirty = (propNode, value) => {
       };
     }
     node = {
-      ...Tree.nodeChecked(node, value),
+      ...node,
+      state: { ...node.state, checked: value },
       classes: value !== node.state.defaultChecked ? 'dirty' : undefined,
     };
   }

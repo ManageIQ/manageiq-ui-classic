@@ -42,7 +42,7 @@ const createSchema = (domains, existingDomains, getNamespacesForDomain) => {
         title: __('Select Namespaces to Import'),
         fields: [
           {
-            component: 'namespace-tree-checkbox',
+            component: 'checkbox-tree',
             id: 'selected_namespaces',
             name: 'selected_namespaces',
             showSelectButtons: true,

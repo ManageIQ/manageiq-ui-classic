@@ -6,8 +6,6 @@ import {
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import createSchema from './review-import-form.schema';
-import CheckboxTreeComponent from '../tree-view/checkbox_tree';
-import defaultComponentMapper from '../../forms/mappers/componentMapper';
 
 const ReviewImportForm = ({
   importFileUploadId, onClose, onImportComplete = null,
@@ -149,10 +147,6 @@ const ReviewImportForm = ({
         <MiqFormRenderer
           initialValues={initialValues}
           schema={schema}
-          componentMapper={{
-            ...defaultComponentMapper,
-            'namespace-tree-checkbox': CheckboxTreeComponent,
-          }}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           buttonsLabels={{
