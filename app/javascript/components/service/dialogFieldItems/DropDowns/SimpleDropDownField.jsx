@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@carbon/react';
-import { fieldProperties } from '../../helper.field';
+import { fieldProperties, updateDialogField } from '../../helper.field';
 import FieldLabel, { fieldLabelText } from '../FieldLabel';
 import ServiceContext from '../../ServiceContext';
 import ServiceValidator from '../../ServiceValidator';
@@ -16,22 +16,8 @@ const SimpleDropDownField = ({ field, options }) => {
   /** Dropdown onChange event handler */
   const onChange = ({ selectedItem }) => {
     const { valid, value } = ServiceValidator.validateField({ value: selectedItem, field });
-    data.dialogFields[field.name] = {
-      ...data.dialogFields[field.name],
-      value,
-      valid,
-    };
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
-      setData({
-        ...data,
-        dialogFields: { ...data.dialogFields },
-        fieldsToRefresh: field.dialog_field_responders,
-      });
-    } else {
-      setData({
-        ...data,
-        dialogFields: { ...data.dialogFields },
-      });
+      updateDialogField(setData, field, { value, valid });
     }
   };
 

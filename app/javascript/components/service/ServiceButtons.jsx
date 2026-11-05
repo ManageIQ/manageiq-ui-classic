@@ -3,12 +3,24 @@ import { Button } from '@carbon/react';
 import ServiceContext from './ServiceContext';
 import { omitValidation } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { API } from '../../http_api';
+import { API, http } from '../../http_api';
 import { ServiceType } from './constants';
 
-const ServiceButtons = React.memo(() => {
+/** Function to extract the error messages from a failed API response.
+ * The API returns messages in the form 'Bad request - Error one,Error two'. */
+export const submitErrorMessages = (error) => {
+  const message = error && error.data && error.data.error && error.data.error.message;
+  if (typeof message !== 'string' || message.length === 0) {
+    return [__('Error submitting request')];
+  }
+  const detail = message.includes(' - ') ? message.split(' - ').slice(1).join(' - ') : message;
+  const messages = detail.split(',').map((item) => item.trim()).filter(Boolean);
+  return messages.length > 0 ? messages : [__('Error submitting request')];
+};
+
+const ServiceButtons = () => {
   const { data, setData } = useContext(ServiceContext);
-  const setError = (message) => setData((prev) => ({ ...prev, submitError: message, locked: false }));
+  const setError = (messages) => setData((prev) => ({ ...prev, submitError: [].concat(messages), locked: false }));
   const {
     apiAction, apiSubmitEndpoint, openUrl, finishSubmitEndpoint, cancelEndPoint,
   } = data.urls;
@@ -20,7 +32,7 @@ const ServiceButtons = React.memo(() => {
     if (data.locked) {
       const handleSubmission = async() => {
         const values = omitValidation(data.dialogFields);
-        let submitData = { action: 'order', ...values };
+        let submitData = { action: apiAction, ...values };
 
         if (apiSubmitEndpoint.includes('/generic_objects/')) {
           submitData = { action: apiAction, parameters: values };
@@ -32,16 +44,19 @@ const ServiceButtons = React.memo(() => {
           const response = await API.post(apiSubmitEndpoint, submitData, { skipErrors: [400] });
           if (openUrl === 'true') {
             const { params } = data;
-            const taskResponse = await API.wait_for_task(response.task_id)
-              .then(() =>
-                // eslint-disable-next-line no-undef
-                $http.post('open_url_after_dialog', {
-                  targetId: params.targetId,
-                  realTargetType: params.realTargetType,
-                }));
+            let urlResponse;
+            try {
+              await API.wait_for_task(response.task_id);
+              urlResponse = await http.post('open_url_after_dialog', {
+                targetId: params.targetId,
+                realTargetType: params.realTargetType,
+              });
+            } catch {
+              throw { data: { error: { message: `- ${__('Automate failed to obtain URL.')}` } } }; // eslint-disable-line no-throw-literal
+            }
 
-            if (taskResponse.data.open_url) {
-              window.open(taskResponse.data.open_url);
+            if (urlResponse.open_url) {
+              window.open(urlResponse.open_url);
               miqRedirectBack(__('Order Request was Submitted'), submitFlashLevel, finishSubmitEndpoint);
             } else {
               miqSparkleOff();
@@ -50,9 +65,9 @@ const ServiceButtons = React.memo(() => {
           } else {
             miqRedirectBack(__('Order Request was Submitted'), submitFlashLevel, finishSubmitEndpoint);
           }
-        } catch (_error) {
+        } catch (error) {
           miqSparkleOff();
-          setError(__('Error submitting request'));
+          setError(submitErrorMessages(error));
         }
       };
 
@@ -90,6 +105,6 @@ const ServiceButtons = React.memo(() => {
       </Button>
     </div>
   );
-});
+};
 
 export default ServiceButtons;

@@ -86,8 +86,14 @@ class ServiceController < ApplicationController
     assert_privileges('service_reconfigure')
 
     service = find_record_with_rbac(Service, params[:id])
-    service_template = service.service_template
-    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    resource_action = service.service_template&.resource_actions&.find_by(:action => 'Reconfigure')
+
+    unless resource_action&.dialog
+      add_flash(_("Service \"%{name}\" does not have a Reconfigure dialog") % {:name => service.name}, :error)
+      session[:flash_msgs] = @flash_array
+      redirect_to(:action => 'show_list')
+      return
+    end
 
     @dialog_locals = {
       :dialogId => resource_action.dialog.id,
@@ -99,8 +105,8 @@ class ServiceController < ApplicationController
       :urls     => {
         :apiSubmitEndpoint    => "/api/services/#{service.id}",
         :apiAction            => 'reconfigure',
-        :cancelEndPoint       => '/service/show_list',
-        :finishSubmitEndpoint => '/miq_request/show_list?typ=service/',
+        :cancelEndPoint       => '/service',
+        :finishSubmitEndpoint => '/service',
         :openUrl              => false
       }
     }

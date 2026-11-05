@@ -32,8 +32,8 @@ describe('Service component - Service Reconfigure', () => {
     urls: {
       apiSubmitEndpoint: `/api/services/${serviceId}`,
       apiAction: 'reconfigure',
-      cancelEndPoint: '/service/show_list',
-      finishSubmitEndpoint: '/miq_request/show_list?typ=service/',
+      cancelEndPoint: '/service',
+      finishSubmitEndpoint: '/service',
       openUrl: false,
     },
   };
@@ -91,7 +91,7 @@ describe('Service component - Service Reconfigure', () => {
       expect(miqRedirectBack).toHaveBeenCalledWith(
         __('Order Request was Submitted'),
         'info',
-        '/miq_request/show_list?typ=service/'
+        '/service'
       );
     });
   });
@@ -154,7 +154,7 @@ describe('Service component - Service Reconfigure', () => {
     expect(miqRedirectBack).toHaveBeenCalledWith(
       __('Dialog Cancelled'),
       'info',
-      '/service/show_list'
+      '/service'
     );
   });
 

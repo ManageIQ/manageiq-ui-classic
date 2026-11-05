@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { TextInput, PasswordInput } from '@carbon/react';
 import FieldLabel, { fieldLabelText } from './FieldLabel';
-import { fieldProperties } from '../helper.field';
+import { fieldProperties, updateDialogField } from '../helper.field';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
 
@@ -17,17 +17,7 @@ const TextInputField = ({ field }) => {
   const onChange = (event) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value, message } = ServiceValidator.validateField({ value: event.target.value, field });
-      data.dialogFields[field.name] = {
-        ...data.dialogFields[field.name],
-        value,
-        valid,
-        message,
-      };
-      setData({
-        ...data,
-        dialogFields: { ...data.dialogFields },
-        fieldsToRefresh: field.dialog_field_responders,
-      });
+      updateDialogField(setData, field, { value, valid, message });
     }
   };
 

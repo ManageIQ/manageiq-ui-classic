@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { RadioButtonGroup, RadioButton } from '@carbon/react';
-import { fieldProperties } from '../helper.field';
+import { fieldProperties, updateDialogField } from '../helper.field';
 import FieldLabel from './FieldLabel';
 import ServiceContext from '../ServiceContext';
 import ServiceValidator from '../ServiceValidator';
@@ -17,16 +17,7 @@ const RadioField = ({ field }) => {
   const onChange = (selectedValue) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value } = ServiceValidator.validateField({ value: selectedValue, field });
-      data.dialogFields[field.name] = {
-        ...data.dialogFields[field.name],
-        value,
-        valid,
-      };
-      setData({
-        ...data,
-        dialogFields: { ...data.dialogFields },
-        fieldsToRefresh: field.dialog_field_responders,
-      });
+      updateDialogField(setData, field, { value, valid });
     }
   };
 
@@ -45,11 +36,11 @@ const RadioField = ({ field }) => {
         {
           field.values && field.values.map((radio) => (
             <RadioButton
-              key={`radio-${radio[1]}`}
+              key={`${fieldId}-${radio[0]}`}
               disabled={isDisabled}
               labelText={radio[1]}
               value={radio[0]}
-              id={`radio-${radio[1]}`}
+              id={`${fieldId}-${radio[0]}`}
             />
           ))
         }

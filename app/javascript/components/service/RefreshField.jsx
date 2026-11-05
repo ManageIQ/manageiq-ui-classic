@@ -40,7 +40,7 @@ const RefreshField = ({ field }) => {
               dialogFields: resetDialogField(data.dialogFields, field),
             });
           }}
-          iconDescription={__(`Refresh ${field.label}`)}
+          iconDescription={sprintf(__('Refresh %s'), field.label)}
           tooltipAlignment="start"
           tooltipPosition="left"
           renderIcon={Renew}

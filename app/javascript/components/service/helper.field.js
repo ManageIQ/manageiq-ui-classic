@@ -32,6 +32,14 @@ export const isObject = (value) => value && typeof value === 'object' && !Array.
 /** Function to check if the value is an Array */
 export const isArrayOfObjects = (value) => Array.isArray(value) && value.every((item) => typeof item === 'object' && !Array.isArray(item));
 
+/** Function to update a field's data and trigger the refresh of the fields depending on it.
+ * It uses the latest state, so quick consecutive changes are not lost. */
+export const updateDialogField = (setData, field, changes) => setData((prev) => ({
+  ...prev,
+  dialogFields: { ...prev.dialogFields, [field.name]: { ...prev.dialogFields[field.name], ...changes } },
+  fieldsToRefresh: field.dialog_field_responders || [],
+}));
+
 /** Function to return an object that is required to be used in every field. */
 export const fieldProperties = (field, data) => {
   const fieldData = data.dialogFields[field.name];

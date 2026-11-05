@@ -11,7 +11,7 @@ import ServiceValidator from './ServiceValidator';
 import './services.style.scss';
 
 /** Function to render the Loader during initial API call. */
-const renderLoader = () => <div className="loadingSpinner"><Loading active small withOverlay={false} className="loading" /></div>;
+const renderLoader = () => <div className="service-loading-spinner"><Loading active small withOverlay={false} className="loading" /></div>;
 
 /** Component to render (ServiceType)-
  * 1. Order Service Form
@@ -21,14 +21,12 @@ const renderLoader = () => <div className="loadingSpinner"><Loading active small
  * */
 const Service = ({
   initialData: {
-    dialogId, params, urls, requestDialogOptions,
+    dialogId, params, urls, requestDialogOptions, dialogReplaceData,
   }, serviceType,
 }) => {
   const isOrderServiceForm = serviceType === ServiceType.order;
   const isServiceReconfigure = serviceType === ServiceType.reconfigure;
   const showButtons = isOrderServiceForm || isServiceReconfigure;
-
-  ServiceValidator.instance = new ServiceValidator(serviceType);
 
   let resource;
   if (isOrderServiceForm || isServiceReconfigure) {
@@ -66,8 +64,12 @@ const Service = ({
         fieldsToRefresh: [...remaining, ...responders],
       }));
     } catch {
-      // eslint-disable-next-line no-console
-      console.log({ type: 'error', message: __('Unexpected error occurred when the field was refreshed.') });
+      // Stop refreshing, otherwise the fields stay disabled with a spinner for ever.
+      setData((prevData) => ({
+        ...prevData,
+        fieldsToRefresh: [],
+        submitError: [__('Unexpected error occurred when the field was refreshed.')],
+      }));
     }
   };
 
@@ -79,6 +81,10 @@ const Service = ({
   };
 
   useEffect(() => {
+    // The constructor registers the validator as ServiceValidator.instance, which the fields use for validation.
+    // eslint-disable-next-line no-new
+    new ServiceValidator(serviceType);
+
     let url;
 
     if (isServiceReconfigure) {
@@ -91,7 +97,7 @@ const Service = ({
       }
     }
 
-    fetchInitialData(url, requestDialogOptions, serviceType)
+    fetchInitialData(url, requestDialogOptions, serviceType, dialogReplaceData)
       .then((response) => setData((prevData) => ({ ...prevData, ...response })))
       .catch(() => setData((prevData) => ({ ...prevData, isLoading: false })));
   }, []);
@@ -109,14 +115,15 @@ const Service = ({
   /** Function to render the form contents like Tabs, Section and Fields. */
   const renderContent = () => (
     <ServiceContext.Provider value={{ data, setData }}>
-      {data.submitError && (
+      {data.submitError && data.submitError.map((message) => (
         <InlineNotification
+          key={message}
           kind="error"
-          title={data.submitError}
+          title={message}
           lowContrast
           onCloseButtonClick={() => setData((prev) => ({ ...prev, submitError: null }))}
         />
-      )}
+      ))}
       <DialogTabs />
       {showButtons && <ServiceButtons />}
     </ServiceContext.Provider>
@@ -133,6 +140,10 @@ Service.propTypes = {
   initialData: PropTypes.shape({
     dialogId: PropTypes.number.isRequired,
     requestDialogOptions: PropTypes.shape({}),
+    dialogReplaceData: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.array]),
+    })),
     params: PropTypes.shape({
       resourceActionId: PropTypes.number,
       targetId: PropTypes.number,

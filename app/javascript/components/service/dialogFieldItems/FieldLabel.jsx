@@ -11,7 +11,7 @@ export const fieldLabelText = (field) => field.label || '';
 
 /** Refreshing indicator rendered above the field, separate from Carbon's label. */
 const RefreshingLabel = ({ label }) => (
-  <Tag className="field-label-refreshing" type="red">{__(`Refreshing ${label}...`)}</Tag>
+  <Tag className="field-label-refreshing" type="red">{sprintf(__('Refreshing %s...'), label)}</Tag>
 );
 
 RefreshingLabel.propTypes = { label: PropTypes.string.isRequired };

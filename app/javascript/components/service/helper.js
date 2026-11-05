@@ -3,7 +3,7 @@ import ServiceValidator from './ServiceValidator';
 import { DIALOG_FIELD_TYPES, ServiceType } from './constants';
 import { API } from '../../http_api';
 import {
-  formatDate, formatDateTime, currentDate, currentDateTime,
+  formatDate, formatDateTime, currentDate, currentDateTime, currentTime,
 } from './helper.dateTime';
 import { serviceRequestValue } from './helper.serviceRequest';
 import { isObject, isArrayOfObjects } from './helper.field';
@@ -56,22 +56,79 @@ export const extractDialogTabs = (apiResponse) => {
   return [];
 };
 
+/** Function to convert the items of a field's values (either [id, text] pairs or objects) into {id, text} items. */
+const fieldItems = (field) => (field.values || []).map((item) => ({ id: item.id || item[0], text: item.description || item[1] }));
+
+/** Function to convert a default value (id, array of ids, JSON array string) into an array of id strings. */
+const defaultIds = (value) => {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(isObject(item) ? item.id : item));
+  }
+  if (typeof value === 'string' && value.startsWith('[')) {
+    try {
+      return defaultIds(JSON.parse(value));
+    } catch {
+      return [];
+    }
+  }
+  return (value === null || value === undefined || value === '') ? [] : [String(value)];
+};
+
+/** Function to convert the default value of a dropdown or tag field into the {id, text} item(s) the field expects. */
+const defaultSelection = (field, isMulti) => {
+  const ids = defaultIds(field.default_value);
+  const selected = fieldItems(field).filter((item) => ids.includes(String(item.id)));
+  if (isMulti) {
+    return selected;
+  }
+  return selected.length > 0 ? selected[0] : '';
+};
+
+/** Function to read the date from a default value such as '2026-01-31'. Returns undefined when there is no date. */
+const parseDefaultDate = (value) => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
+  return match ? { year: Number(match[1]), month: Number(match[2]), day: Number(match[3]) } : undefined;
+};
+
+/** Function to read the date and time from a default value such as '2026-01-31T15:26:00Z' or '2026-01-31 15:26:00 UTC'.
+ * The time is the wall-clock time of the user, see formatDateTime. */
+const parseDefaultDateTime = (value) => {
+  const date = parseDefaultDate(value);
+  const time = /[T ](\d{2}):(\d{2})/.exec(value);
+  if (!date || !time) {
+    return undefined;
+  }
+  const hours = Number(time[1]);
+  const { hours: hoursList, minutes } = currentTime();
+  return {
+    ...date,
+    hours: hoursList,
+    minutes,
+    hour: hours % 12 || 12,
+    minute: Number(time[2]),
+    meridiem: hours >= 12 ? 'PM' : 'AM',
+  };
+};
+
 const otherServiceTypesValue = (field) => {
+  if (field.type === DIALOG_FIELD_TYPES.date) {
+    return { defaultValue: parseDefaultDate(field.default_value) || currentDate(), defaultType: field.type };
+  }
+  if (field.type === DIALOG_FIELD_TYPES.dateTime) {
+    return { defaultValue: parseDefaultDateTime(field.default_value) || currentDateTime(), defaultType: field.type };
+  }
+  if (field.type === DIALOG_FIELD_TYPES.checkBox) {
+    return { defaultValue: ['t', 'true', true].includes(field.default_value), defaultType: field.type };
+  }
+  if (field.type === DIALOG_FIELD_TYPES.dropDown) {
+    return { defaultValue: defaultSelection(field, !!(field.options && field.options.force_multi_value)), defaultType: field.type };
+  }
+  if (field.type === DIALOG_FIELD_TYPES.tag) {
+    return { defaultValue: defaultSelection(field, !!(field.options && !field.options.force_single_value)), defaultType: field.type };
+  }
   if (typeof field.default_value === 'string' || field.default_value instanceof String) {
     if (field.default_value === '[]') {
       return { defaultValue: [], defaultType: field.type };
-    }
-    if (field.type === DIALOG_FIELD_TYPES.checkBox) {
-      return { defaultValue: false, defaultType: field.type };
-    }
-    if (field.type === DIALOG_FIELD_TYPES.tag) {
-      return { defaultValue: {}, defaultType: field.type };
-    }
-    if (field.type === DIALOG_FIELD_TYPES.date) {
-      return { defaultValue: currentDate(), defaultType: field.type };
-    }
-    if (field.type === DIALOG_FIELD_TYPES.dateTime) {
-      return { defaultValue: currentDateTime(), defaultType: field.type };
     }
     return { defaultValue: field.default_value, defaultType: field.type };
   }
@@ -152,10 +209,25 @@ const updateRefreshResponse = (apiResponse, currentRefreshField, result) => {
   return { updatedApiResponse: { ...apiResponse }, responders: data.dialog_field_responders };
 };
 
+/** Function to override the default values of the fields with the values of an existing request (Copy request).
+ * dialogReplaceData format: [{ name: 'field_name', value: 'value' }]. */
+const applyReplaceData = (apiResponse, dialogReplaceData) => {
+  if (!Array.isArray(dialogReplaceData) || dialogReplaceData.length === 0) {
+    return;
+  }
+  extractDialogTabs(apiResponse).forEach((tab) => tab.dialog_groups.forEach((group) => group.dialog_fields.forEach((field) => {
+    const replace = dialogReplaceData.find((item) => item.name === field.name);
+    if (replace) {
+      field.default_value = replace.value;
+    }
+  })));
+};
+
 /** Function to fetch initial API data. */
-export const fetchInitialData = async(url, requestDialogOptions, serviceType) => {
+export const fetchInitialData = async(url, requestDialogOptions, serviceType, dialogReplaceData) => {
   try {
     const apiResponse = await API.get(url, { skipErrors: [500] });
+    applyReplaceData(apiResponse, dialogReplaceData);
 
     // For service reconfigure, we need to extract the dialog ID from the response
     if (serviceType === ServiceType.reconfigure && apiResponse.reconfigure_dialog && apiResponse.reconfigure_dialog[0]) {

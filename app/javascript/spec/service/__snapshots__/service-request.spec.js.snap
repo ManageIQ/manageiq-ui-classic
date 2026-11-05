@@ -253,6 +253,7 @@ exports[`Service component - Service Request should render the Service component
                   >
                     <input
                       aria-readonly="false"
+                      checked=""
                       class="cds--checkbox"
                       disabled=""
                       id="check_box_1-DialogFieldCheckBox-7544"
@@ -575,7 +576,7 @@ exports[`Service component - Service Request should render the Service component
                         disabled=""
                         id="tag_control_1-DialogFieldTextBox-7550"
                         type="text"
-                        value=""
+                        value="Database, DHCP Server"
                       />
                       <span
                         aria-atomic="true"

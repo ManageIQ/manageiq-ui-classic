@@ -5,7 +5,8 @@ import { renderWithRedux } from '../helpers/mountForm';
 import Service from '../../components/service';
 import { ServiceType } from '../../components/service/constants';
 import { serviceDialogResponse, payloadTestDialogResponse, regexTestDialogResponse } from './data';
-import { API } from '../../http_api';
+import { API, http } from '../../http_api';
+import { extractDate, extractDateTime } from '../../components/service/helper.dateTime';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import '../helpers/miqSparkle';
@@ -13,6 +14,9 @@ import '../helpers/miqSparkle';
 jest.mock('../../http_api', () => ({
   API: {
     get: jest.fn(),
+    post: jest.fn(),
+  },
+  http: {
     post: jest.fn(),
   },
 }));
@@ -61,7 +65,6 @@ describe('Service component - Order Service', () => {
   afterEach(() => {
     fetchMock.restore();
     jest.clearAllMocks();
-    delete window.$http;
   });
 
   it('renders all field types and the Submit and Cancel buttons', async() => {
@@ -200,9 +203,7 @@ describe('Service component - Order Service', () => {
 
     API.post.mockResolvedValueOnce({ task_id: 'task-abc' });
     API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
-    window.$http = {
-      post: jest.fn().mockResolvedValueOnce({ data: { open_url: 'https://example.com/vm/1' } }),
-    };
+    http.post.mockResolvedValueOnce({ open_url: 'https://example.com/vm/1' });
     window.open = jest.fn();
 
     renderWithRedux(<Service initialData={openUrlInitialData} serviceType={ServiceType.order} />);
@@ -215,7 +216,7 @@ describe('Service component - Order Service', () => {
     });
 
     await waitFor(() => {
-      expect(window.$http.post).toHaveBeenCalledWith(
+      expect(http.post).toHaveBeenCalledWith(
         'open_url_after_dialog',
         { targetId: 170, realTargetType: 'ServiceTemplate' }
       );
@@ -237,9 +238,7 @@ describe('Service component - Order Service', () => {
 
     API.post.mockResolvedValueOnce({ task_id: 'task-xyz' });
     API.wait_for_task = jest.fn().mockResolvedValueOnce({ state: 'Finished', status: 'Ok' });
-    window.$http = {
-      post: jest.fn().mockResolvedValueOnce({ data: { open_url: null } }),
-    };
+    http.post.mockResolvedValueOnce({ open_url: null });
     window.open = jest.fn();
 
     renderWithRedux(<Service initialData={openUrlInitialData} serviceType={ServiceType.order} />);
@@ -274,7 +273,7 @@ describe('Service component - Order Service', () => {
       expect(body.my_text).toBe('hello');
       // CheckBox: default_value 't' → initialised as true → reformatValue → 't'
       expect(body.my_checkbox).toBe('t');
-      // Single dropdown: default_value '1' → item {id:'1', text:'One'} → processDropdownOrTag → '1'
+      // Single dropdown: default_value '1' is matched to the item {id:'1', text:'One'} → processDropdownOrTag → '1'
       expect(body.my_single_dd).toBe('1');
     });
   });
@@ -367,5 +366,243 @@ describe('Service component - Order Service', () => {
     await waitFor(() => {
       expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
     });
+  });
+
+  const payloadDialog = (changes = {}) => {
+    const dialog = JSON.parse(JSON.stringify(payloadTestDialogResponse));
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      if (changes[f.name]) {
+        Object.assign(f, changes[f.name]);
+      }
+    });
+    return dialog;
+  };
+
+  const submitAndGetBody = async(user) => {
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    await user.click(screen.getByText(__('Submit')));
+    await waitFor(() => expect(API.post).toHaveBeenCalled());
+    return API.post.mock.calls[0][1];
+  };
+
+  // Default values
+
+  it('renders the checkbox as checked for the default "t" and unchecked for "f"', async() => {
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadDialog({ my_checkbox: { default_value: 'f' } }) });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByRole('checkbox')).toBeInTheDocument());
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+  });
+
+  it('sends "f" for an untouched checkbox with the default "f" and "t" after it is checked', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadDialog({ my_checkbox: { default_value: 'f' } }) });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByRole('checkbox')).toBeInTheDocument());
+    await user.click(screen.getByRole('checkbox'));
+    expect(screen.getByRole('checkbox')).toBeChecked();
+
+    const body = await submitAndGetBody(user);
+    expect(body.my_checkbox).toBe('t');
+  });
+
+  it('sends "f" when a checked checkbox is unchecked', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByRole('checkbox')).toBeChecked());
+    await user.click(screen.getByRole('checkbox'));
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+
+    const body = await submitAndGetBody(user);
+    expect(body.my_checkbox).toBe('f');
+  });
+
+  it('enables Submit for a required dropdown that has a default value', async() => {
+    API.get.mockResolvedValueOnce({
+      id: 200,
+      content: payloadDialog({ my_single_dd: { required: true, default_value: '2' } }),
+    });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
+    expect(screen.getByText('Two')).toBeInTheDocument();
+  });
+
+  it('submits the default of a dropdown whose values use integer ids', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({
+      id: 200,
+      content: payloadDialog({ my_single_dd: { default_value: '2', values: [[1, 'One'], [2, 'Two']] } }),
+    });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    const body = await submitAndGetBody(user);
+    expect(body.my_single_dd).toBe('2');
+  });
+
+  it('preselects the multi-select items listed in the default value', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({
+      id: 200,
+      content: payloadDialog({ my_multi_dd: { default_value: '["a","c"]' } }),
+    });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    const body = await submitAndGetBody(user);
+    expect(body.my_multi_dd).toEqual(['a', 'c']);
+  });
+
+  it('uses the default value of a date field instead of today', async() => {
+    API.get.mockResolvedValueOnce({ id: 118, content: serviceDialogResponse });
+    const dialogReplaceData = [{ name: 'date_control_1', value: '2026-01-31' }];
+
+    renderWithRedux(<Service initialData={{ ...initialData, dialogReplaceData }} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    expect(document.querySelector('input[id^="date_control_1"]').value).toBe('01/31/2026');
+  });
+
+  it('renders date and datetime fields whose default value is null', async() => {
+    const dialog = JSON.parse(JSON.stringify(serviceDialogResponse));
+    dialog[0].dialog_tabs[0].dialog_groups[0].dialog_fields.forEach((f) => {
+      if (['DialogFieldDateControl', 'DialogFieldDateTimeControl'].includes(f.type)) {
+        f.default_value = null;
+      }
+    });
+    API.get.mockResolvedValueOnce({ id: 118, content: dialog });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    expect(document.querySelector('input[id^="date_control_1"]').value).not.toBe('');
+  });
+
+  // Custom button dialogs
+
+  it('submits the custom button name as the action', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(
+      <Service
+        initialData={{ ...initialData, urls: { ...initialData.urls, apiSubmitEndpoint: '/api/vms/9', apiAction: 'my_button' } }}
+        serviceType={ServiceType.order}
+      />
+    );
+
+    const body = await submitAndGetBody(user);
+    expect(body.action).toBe('my_button');
+    expect(API.post.mock.calls[0][0]).toBe('/api/vms/9');
+  });
+
+  // Copy request
+
+  it('replaces the dialog defaults with dialogReplaceData', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadDialog() });
+    API.post.mockResolvedValueOnce({ success: true });
+    const dialogReplaceData = [
+      { name: 'my_text', value: 'copied' },
+      { name: 'my_checkbox', value: 'f' },
+      { name: 'my_single_dd', value: '2' },
+    ];
+
+    renderWithRedux(<Service initialData={{ ...initialData, dialogReplaceData }} serviceType={ServiceType.order} />);
+
+    const body = await submitAndGetBody(user);
+    expect(body.my_text).toBe('copied');
+    expect(body.my_checkbox).toBe('f');
+    expect(body.my_single_dd).toBe('2');
+  });
+
+  // Submit errors
+
+  it('shows each message of a 400 API error as a separate notification', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockRejectedValueOnce({ data: { error: { message: 'Bad request - Field one is invalid,Field two is invalid' } } });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => {
+      expect(screen.getByText('Field one is invalid')).toBeInTheDocument();
+      expect(screen.getByText('Field two is invalid')).toBeInTheDocument();
+    });
+    expect(screen.getByText(__('Submit')).closest('button')).not.toBeDisabled();
+  });
+
+  it('shows an error and stops refreshing when a field refresh fails', async() => {
+    const user = userEvent.setup();
+    mockDialogFetch();
+    API.post.mockRejectedValueOnce(new Error('refresh failed'));
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(document.querySelector('.refresh-field-item button')).toBeInTheDocument());
+    await user.click(document.querySelector('.refresh-field-item button'));
+
+    await waitFor(() => {
+      expect(screen.getByText(__('Unexpected error occurred when the field was refreshed.'))).toBeInTheDocument();
+    });
+    // The spinner is gone and the refresh button is back
+    expect(document.querySelector('.refresh-field-item .loading')).not.toBeInTheDocument();
+    expect(document.querySelector('.refresh-field-item button')).toBeInTheDocument();
+  });
+
+  it('keeps earlier changes when several fields are changed one after the other', async() => {
+    const user = userEvent.setup();
+    API.get.mockResolvedValueOnce({ id: 200, content: payloadTestDialogResponse });
+    API.post.mockResolvedValueOnce({ success: true });
+
+    renderWithRedux(<Service initialData={initialData} serviceType={ServiceType.order} />);
+
+    await waitFor(() => expect(screen.getByText(__('Submit'))).toBeInTheDocument());
+
+    const textInput = document.querySelector('input[type="text"]');
+    await user.clear(textInput);
+    await user.type(textInput, 'abc');
+    await user.click(document.querySelector('input[type="checkbox"]'));
+    await user.click(screen.getByText(__('Submit')));
+
+    await waitFor(() => expect(API.post).toHaveBeenCalled());
+    const body = API.post.mock.calls[0][1];
+    expect(Object.values(body)).toContain('abc');
+  });
+});
+
+describe('Service component - date helpers', () => {
+  it('extractDateTime keeps the selected hour, minute and meridiem', () => {
+    const time = { hour: { id: 3 }, minute: { id: 15 }, meridiem: { id: 'PM' } };
+    expect(extractDateTime(new Date(2026, 0, 31), time)).toEqual({
+      day: 31, month: 1, year: 2026, hour: 3, minute: 15, meridiem: 'PM',
+    });
+  });
+
+  it('extractDate returns the local day, month and year without shifting the day', () => {
+    expect(extractDate(new Date(2026, 0, 31))).toEqual({ day: 31, month: 1, year: 2026 });
+    expect(extractDate(new Date(2026, 11, 1))).toEqual({ day: 1, month: 12, year: 2026 });
+  });
+
+  it('extractDate returns undefined parts when there is no date', () => {
+    expect(extractDate(undefined)).toEqual({ day: undefined, month: undefined, year: undefined });
   });
 });

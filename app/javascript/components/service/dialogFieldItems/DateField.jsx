@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from '@carbon/react';
-import { fieldProperties } from '../helper.field';
+import { fieldProperties, updateDialogField } from '../helper.field';
 import { extractDate, dateString } from '../helper.dateTime';
 import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
@@ -20,16 +20,7 @@ const DateField = ({ field }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const extractedDate = extractDate(selectedItem[0]);
       const { valid, value } = ServiceValidator.validateField({ field, value: extractedDate });
-      data.dialogFields[field.name] = {
-        ...data.dialogFields[field.name],
-        value,
-        valid,
-      };
-      setData({
-        ...data,
-        dialogFields: { ...data.dialogFields },
-        fieldsToRefresh: field.dialog_field_responders,
-      });
+      updateDialogField(setData, field, { value, valid });
     }
   };
 

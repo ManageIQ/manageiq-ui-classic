@@ -201,6 +201,31 @@ describe('ServiceValidator', () => {
     });
   });
 
+  describe('DateTime', () => {
+    const dtField = (required = true) => field({ type: 'DialogFieldDateTimeControl', required });
+    const date = { day: 15, month: 6, year: 2025 };
+
+    it('accepts hour 0 as a time', () => {
+      const result = ServiceValidator.validateField({
+        field: dtField(),
+        value: {
+          ...date, hour: 0, minute: 0, meridiem: 'AM',
+        },
+      });
+      expect(result.valid).toBe(true);
+    });
+
+    it('is invalid when required and the time is missing', () => {
+      const result = ServiceValidator.validateField({ field: dtField(), value: { ...date } });
+      expect(result.valid).toBe(false);
+    });
+
+    it('is valid when optional and the time is missing', () => {
+      const result = ServiceValidator.validateField({ field: dtField(false), value: { ...date } });
+      expect(result.valid).toBe(true);
+    });
+  });
+
   describe('Date', () => {
     it('is invalid when required and date is incomplete', () => {
       const result = ServiceValidator.validateField({

@@ -315,11 +315,14 @@ exports[`Service component - Dialog Summary should render the Service component 
                       id="downshift-_r_4_-toggle-button"
                       role="combobox"
                       tabindex="0"
+                      title="16GB"
                       type="button"
                     >
                       <span
                         class="cds--list-box__label"
-                      />
+                      >
+                        16GB
+                      </span>
                       <div
                         class="cds--list-box__menu-icon"
                       >
@@ -527,14 +530,14 @@ exports[`Service component - Dialog Summary should render the Service component 
                         <input
                           class="cds--radio-button"
                           disabled=""
-                          id="radio-One"
+                          id="radio_button_1-DialogFieldRadioButton-7547-1"
                           name="radio_button_1"
                           type="radio"
                           value="1"
                         />
                         <label
                           class="cds--radio-button__label"
-                          for="radio-One"
+                          for="radio_button_1-DialogFieldRadioButton-7547-1"
                         >
                           <span
                             class="cds--radio-button__appearance"
@@ -553,14 +556,14 @@ exports[`Service component - Dialog Summary should render the Service component 
                         <input
                           class="cds--radio-button"
                           disabled=""
-                          id="radio-Two"
+                          id="radio_button_1-DialogFieldRadioButton-7547-2"
                           name="radio_button_1"
                           type="radio"
                           value="2"
                         />
                         <label
                           class="cds--radio-button__label"
-                          for="radio-Two"
+                          for="radio_button_1-DialogFieldRadioButton-7547-2"
                         >
                           <span
                             class="cds--radio-button__appearance"
@@ -579,14 +582,14 @@ exports[`Service component - Dialog Summary should render the Service component 
                         <input
                           class="cds--radio-button"
                           disabled=""
-                          id="radio-Three"
+                          id="radio_button_1-DialogFieldRadioButton-7547-3"
                           name="radio_button_1"
                           type="radio"
                           value="3"
                         />
                         <label
                           class="cds--radio-button__label"
-                          for="radio-Three"
+                          for="radio_button_1-DialogFieldRadioButton-7547-3"
                         >
                           <span
                             class="cds--radio-button__appearance"

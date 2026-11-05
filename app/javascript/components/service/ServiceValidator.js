@@ -34,7 +34,7 @@ class ServiceValidator {
   }
 
   static checkbox(data) {
-    return { valid: (data.field.required ? !!data.value : true), value: data.value !== '' };
+    return { valid: (data.field.required ? !!data.value : true), value: !!data.value };
   }
 
   static date({ field, value }) {
@@ -45,8 +45,8 @@ class ServiceValidator {
 
   static time({ field, value }) {
     const { hour, minute, meridiem } = value;
-    const hasMinute = !!((hour && { hour, minute, meridiem }));
-    return { valid: field.required ? hasMinute : true, value: { hour, minute, meridiem } };
+    const hasTime = hour != null && minute != null && !!meridiem;
+    return { valid: field.required ? hasTime : true, value: { hour, minute, meridiem } };
   }
 
   static dateTime(data) {

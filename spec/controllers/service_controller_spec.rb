@@ -73,8 +73,8 @@ describe ServiceController do
           :urls     => {
             :apiSubmitEndpoint    => "/api/services/#{service.id}",
             :apiAction            => 'reconfigure',
-            :cancelEndPoint       => '/service/show_list',
-            :finishSubmitEndpoint => '/miq_request/show_list?typ=service/',
+            :cancelEndPoint       => '/service',
+            :finishSubmitEndpoint => '/service',
             :openUrl              => false
           }
         )
@@ -102,20 +102,28 @@ describe ServiceController do
     context "when the service has no service template" do
       let(:service) { FactoryBot.create(:service, :name => "bare service") }
 
-      it "raises an error" do
+      it "flashes an error and redirects to the service list" do
         allow(controller).to receive(:assert_privileges)
+        expect(controller).to receive(:redirect_to).with(:action => 'show_list')
 
-        expect { controller.send(:service_reconfigure) }.to raise_error(NoMethodError)
+        controller.send(:service_reconfigure)
+
+        expect(assigns(:flash_array).first[:level]).to eq(:error)
+        expect(assigns(:dialog_locals)).to be_nil
       end
     end
 
     context "when the service template has no Reconfigure resource action" do
       let(:service_template) { FactoryBot.create(:service_template, :name => "no reconfigure template") }
 
-      it "raises an error" do
+      it "flashes an error and redirects to the service list" do
         allow(controller).to receive(:assert_privileges)
+        expect(controller).to receive(:redirect_to).with(:action => 'show_list')
 
-        expect { controller.send(:service_reconfigure) }.to raise_error(NoMethodError)
+        controller.send(:service_reconfigure)
+
+        expect(assigns(:flash_array).first[:level]).to eq(:error)
+        expect(assigns(:dialog_locals)).to be_nil
       end
     end
   end

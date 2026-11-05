@@ -33,6 +33,9 @@ const handleDropDownField = (field, updatedData) => {
     }
     return updatedData[field.name].map((item) => item.label).join(', ');
   }
+  if (Array.isArray(updatedData[field.name])) {
+    return updatedData[field.name].join(', ');
+  }
   return updatedData[field.name].toString();
 };
 
@@ -42,10 +45,11 @@ const handleCheckBoxField = (updatedData, field) => (updatedData[field.name] ===
 /** Function to handle how the data must be presented for tag field. */
 const handleTagField = (field, updatedData) => {
   updateFieldTypeToTextBox(field);
-  return field.values
-    .filter((i) => updatedData[field.name].includes(i.id))
-    .map((j) => j.description)
-    .join(', ');
+  const value = updatedData[field.name];
+  if (isArrayOfObjects(value)) {
+    return value.map((item) => item.label).join(', ');
+  }
+  return isObject(value) ? value.label : '';
 };
 
 /** Function to handle how the data must be presented for date field. */
@@ -69,7 +73,13 @@ export const serviceRequestValue = (field, requestDialogOptions) => {
 
     if (!Object.keys(updatedData).includes(field.name)) {
       updateFieldTypeToTextBox(field);
-      return '<None>';
+      return { defaultValue: '<None>', defaultType: DIALOG_FIELD_TYPES.textBox };
+    }
+
+    if (field.options && field.options.protected) {
+      updateFieldTypeToTextBox(field);
+      field.options = { ...field.options, protected: false };
+      return { defaultValue: '********', defaultType: DIALOG_FIELD_TYPES.textBox };
     }
 
     if (updatedData[field.name] && updatedData[field.name].toString().length > 0) {

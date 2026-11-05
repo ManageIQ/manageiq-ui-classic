@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker, Dropdown, DatePickerInput } from '@carbon/react';
-import { fieldProperties } from '../helper.field';
+import { fieldProperties, updateDialogField } from '../helper.field';
 import { currentDateTime, dateTimeString, extractDateTime } from '../helper.dateTime';
 import FieldLabel, { fieldLabelText } from './FieldLabel';
 import ServiceContext from '../ServiceContext';
@@ -16,36 +16,36 @@ const DateTimeField = ({ field }) => {
   const selectedDateTime = dateTimeString(fieldData.value);
   const { hours, minutes } = currentDateTime();
 
-  const updateDateTime = (fieldData) => {
-    data.dialogFields[field.name] = { ...data.dialogFields[field.name], ...fieldData };
-    setData({
-      ...data,
-      dialogFields: { ...data.dialogFields },
-      fieldsToRefresh: field.dialog_field_responders,
+  /** Function to change a part (hour, minute, meridiem) of the time without touching the rest of the value. */
+  const updateTimePart = (part) => {
+    setData((prev) => {
+      const current = prev.dialogFields[field.name];
+      return {
+        ...prev,
+        dialogFields: { ...prev.dialogFields, [field.name]: { ...current, value: { ...current.value, ...part } } },
+        fieldsToRefresh: field.dialog_field_responders || [],
+      };
     });
   };
 
   /** Function to handle the hour's onChange event. */
   const onHourChange = ({ selectedItem }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
-      fieldData.value.hour = selectedItem.id;
-      updateDateTime({ ...fieldData });
+      updateTimePart({ hour: selectedItem.id });
     }
   };
 
   /** Function to handle the minute's onChange event. */
   const onMinuteChange = ({ selectedItem }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
-      fieldData.value.minute = selectedItem.id;
-      updateDateTime({ ...fieldData });
+      updateTimePart({ minute: selectedItem.id });
     }
   };
 
   /** Function to handle the AM/PM onChange event. */
   const onMeridiemChange = ({ selectedItem }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
-      fieldData.value.meridiem = selectedItem.id;
-      updateDateTime({ ...fieldData });
+      updateTimePart({ meridiem: selectedItem.id });
     }
   };
 
@@ -54,7 +54,7 @@ const DateTimeField = ({ field }) => {
     if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const extractedDateTime = extractDateTime(selectedItem[0], selectedDateTime);
       const { valid, value } = ServiceValidator.validateField({ field, value: extractedDateTime });
-      updateDateTime({ value, valid, type: field.type });
+      updateDialogField(setData, field, { value, valid, type: field.type });
     }
   };
 

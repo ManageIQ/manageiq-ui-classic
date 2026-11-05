@@ -6,7 +6,7 @@ const padString = (i) => i.toString().padStart(2, '0');
 export const currentTime = () => {
   const now = new Date();
   const h = now.getHours();
-  const hours = Array.from({ length: 13 }, (_, h) => ({ id: h, text: padString(h) }));
+  const hours = Array.from({ length: 12 }, (_, i) => ({ id: i + 1, text: padString(i + 1) }));
   const minutes = [...Array(60)].map((_, minute) => ({ id: minute, text: padString(minute) }));
   const meridiem = h >= 12 ? 'PM' : 'AM';
   let currentHour = h % 12;
@@ -57,19 +57,17 @@ export const extractDate = (inputDate) => {
     return { day: undefined, month: undefined, year: undefined };
   }
   const date = new Date(inputDate);
-  const year = date.getUTCFullYear();
-  const month = date.getUTCMonth() + 1;
-  const day = date.getUTCDate() + 1;
-
-  return { day, month, year };
+  return { day: date.getDate(), month: date.getMonth() + 1, year: date.getFullYear() };
 };
 
 /** Function to reformat the selected date and time during the DateTimeField onchange event."
  * */
 export const extractDateTime = (inputDate, time) => {
   const date = extractDate(inputDate);
-  const { hour, minute } = time;
-  return { ...date, hour: hour.id, minute: minute.id };
+  const { hour, minute, meridiem } = time;
+  return {
+    ...date, hour: hour.id, minute: minute.id, meridiem: meridiem.id,
+  };
 };
 
 export const formatDate = ({ day, month, year }) =>
@@ -114,9 +112,9 @@ export const formatDateTime = ({
 
 export const serviceRequestDate = (value) => {
   const date = new Date(value);
-  const year = date.getFullYear();
-  const month = padString(date.getMonth() + 1);
-  const day = padString(date.getDate());
+  const year = date.getUTCFullYear();
+  const month = padString(date.getUTCMonth() + 1);
+  const day = padString(date.getUTCDate());
   return `${month}/${day}/${year}`;
 };
 
