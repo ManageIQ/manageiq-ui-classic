@@ -58,6 +58,12 @@ describe ReportController do
         expect(body["field_metadata"]["Vm-name"]).to include("data_type" => "string")
       end
 
+      it "marks a column of the base table as not plural" do
+        get :form_data, :params => {:id => report.id}
+
+        expect(body["field_metadata"]["Vm-name"]).to include("plural" => false)
+      end
+
       it "rejects default reports" do
         report.update!(:rpt_type => "Default")
 
@@ -99,6 +105,25 @@ describe ReportController do
         expect(response).to have_http_status(:ok)
         expect(body["fields"]).to eq([%w[Name Vm-name]])
         expect(body["field_metadata"]["Vm-name"]).to include("data_type" => "string")
+      end
+
+      it "marks columns of a has_many child table as plural" do
+        allow(MiqExpression).to receive(:reporting_available_fields).with("Vm").and_return([["Disk Size", "Vm.disks-size"], %w[Name Vm-name]])
+
+        get :available_fields, :params => {:model => "Vm"}
+
+        expect(body["field_metadata"]["Vm.disks-size"]).to include("plural" => true)
+        expect(body["field_metadata"]["Vm-name"]).to include("plural" => false)
+      end
+
+      it "does not raise for custom attribute fields whose name matches the tag syntax" do
+        allow(MiqExpression).to receive(:reporting_available_fields).with("ChargebackContainerProject").and_return([["Label", "ChargebackContainerProject-virtual_custom_attribute_app.kubernetes.io/managed-by:SECTION:labels"]])
+        allow(MiqReport).to receive(:reportable_models).and_return(%w[Vm ChargebackContainerProject])
+
+        get :available_fields, :params => {:model => "ChargebackContainerProject"}
+
+        expect(response).to have_http_status(:ok)
+        expect(body["field_metadata"]["ChargebackContainerProject-virtual_custom_attribute_app.kubernetes.io/managed-by:SECTION:labels"]).to include("plural" => false)
       end
 
       it "rejects a blank model" do
@@ -734,8 +759,10 @@ describe ReportController do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
+    let(:preview_report) { MiqReport.new.tap { |rpt| allow(MiqReport).to receive(:new).and_return(rpt) } }
+
     it "queues the generation instead of running it in the request" do
-      expect_any_instance_of(MiqReport).not_to receive(:generate_table)
+      expect(preview_report).not_to receive(:generate_table)
 
       expect do
         post :preview, :params => preview_params
@@ -747,7 +774,7 @@ describe ReportController do
     end
 
     it "limits the queued report to the preview rows" do
-      expect_any_instance_of(MiqReport).to receive(:async_generate_table).with(hash_including(:limit => described_class::PREVIEW_ROW_LIMIT)).and_return(42)
+      expect(preview_report).to receive(:async_generate_table).with(hash_including(:limit => described_class::PREVIEW_ROW_LIMIT)).and_return(42)
 
       post :preview, :params => preview_params
 

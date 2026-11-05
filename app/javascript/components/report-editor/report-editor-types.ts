@@ -6,6 +6,8 @@ export type { MiqFormSchemaType };
 export type ReportType = 'standard' | 'performance' | 'trend' | 'chargeback';
 
 export type FieldMeta = {
+  /** Column of a child table (has_many / habtm); only these can be filtered by the display filter. */
+  plural?: boolean;
   numeric?: boolean;
   data_type?: string;
   format_sub_type?: string;

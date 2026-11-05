@@ -4,6 +4,7 @@ import { rqbToMiq } from '../../../expression-editor/expression-adapter';
 import { miqExpressionToHuman } from '../../../expression-editor/expression-human';
 import { LabeledSection } from '../../form-row';
 import type { ReportFormValues } from '../../report-editor-types';
+import { useFieldMetadata } from '../../field-metadata-context';
 import { ExpressionEditor, type FormOptionsApi } from './shared';
 
 type StandardFilterProps = {
@@ -12,7 +13,9 @@ type StandardFilterProps = {
 };
 
 const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
-  const hasColumns = (formValues.col_order || []).length > 0;
+  const { fieldMetadata } = useFieldMetadata();
+  // Same rule as the classic form: the display filter needs a selected column from a child table.
+  const hasPluralColumns = (formValues.col_order || []).some((id) => fieldMetadata[id]?.plural);
 
   // *Ref naming: ExpressionEditor passes tagValuesCache as a { current: Map } ref object
   // so that tag lookups always read the latest values without re-firing the callback.
@@ -89,29 +92,23 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
         )}
       </LabeledSection>
 
-      <LabeledSection title={__('Display Filter — filters rows based on child table fields')}>
-        {hasColumns ? (
-          <>
-            <ExpressionEditor
-              model={model}
-              value={formValues.display_filter || null}
-              onQueryChange={handleDisplayFilterChange}
-              onContextReady={handleDisplayContextReady}
-              seedEmpty={false}
-            />
-            {displayPreview && (
-              <div className="exp-preview">
-                <div className="exp-preview__label">{__('Preview')}</div>
-                <div>{displayPreview}</div>
-              </div>
-            )}
-          </>
-        ) : (
-          <p className="report-editor-filter__text-muted">
-            {__('Add columns first to enable the display filter.')}
-          </p>
-        )}
-      </LabeledSection>
+      {hasPluralColumns && (
+        <LabeledSection title={__('Display Filter — filters rows based on child table fields')}>
+          <ExpressionEditor
+            model={model}
+            value={formValues.display_filter || null}
+            onQueryChange={handleDisplayFilterChange}
+            onContextReady={handleDisplayContextReady}
+            seedEmpty={false}
+          />
+          {displayPreview && (
+            <div className="exp-preview">
+              <div className="exp-preview__label">{__('Preview')}</div>
+              <div>{displayPreview}</div>
+            </div>
+          )}
+        </LabeledSection>
+      )}
     </>
   );
 };

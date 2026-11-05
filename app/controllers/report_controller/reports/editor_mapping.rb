@@ -654,6 +654,7 @@ module ReportController::Reports::EditorMapping
     formats = (column_info[:available_formats] || {}).invert.sort_by { |label, _| label }.map { |label, sym| [_(label), sym.to_s] }
 
     {
+      :plural            => plural_column?(bare_id),
       :numeric           => column_info[:numeric],
       :data_type         => column_info[:data_type]&.to_s,
       :format_sub_type   => format_sub_type&.to_s,
@@ -662,6 +663,17 @@ module ReportController::Reports::EditorMapping
       :default_format    => column_info[:default_format]&.to_s,
       :units             => units&.map { |unit| [_(unit.to_s), unit.to_s] }
     }.compact
+  end
+
+  # A column from a child table (has_many / habtm). Only such columns can be filtered by the display filter.
+  # Fields that don't resolve to a model (e.g. some chargeback fields) are never plural.
+  def plural_column?(field_id)
+    [MiqExpression::Field, MiqExpression::Tag].any? do |klass|
+      target = klass.parse(field_id)
+      target&.model && target.plural?
+    end
+  rescue ArgumentError
+    false
   end
 
   def chargeback_report_model?(model)

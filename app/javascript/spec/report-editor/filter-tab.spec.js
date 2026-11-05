@@ -31,12 +31,22 @@ const expressionMetadata = {
   ],
 };
 
+// A column of the base table: not enough for the display filter.
 const withColumns = {
   col_order: ['Vm-name'],
   headers: ['Name'],
   col_formats: [''],
   col_options: { 'Vm-name': { header: 'Name', format: '' } },
 };
+
+// A column of a child table (has_many): enables the display filter.
+const withPluralColumn = {
+  col_order: ['Vm.disks-size'],
+  headers: ['Disk Size'],
+  col_formats: [''],
+  col_options: { 'Vm.disks-size': { header: 'Disk Size', format: '' } },
+};
+const pluralFieldMetadata = { 'Vm.disks-size': { plural: true } };
 
 const change = (id, value) => fireEvent.change(document.getElementById(id), { target: { value } });
 
@@ -63,26 +73,35 @@ describe('FilterTab', () => {
       });
     });
 
-    it('shows Display Filter section heading', async() => {
-      await openFilter();
+    it('shows the Display Filter when a column of a child table is selected', async() => {
+      await openFilter(makeFormData({ field_metadata: pluralFieldMetadata, report: withPluralColumn }));
       await waitFor(() => {
         expect(screen.getByText(/Display Filter/)).toBeInTheDocument();
       });
     });
 
-    it('shows a hint when no columns are selected for display filter', async() => {
+    it('hides the Display Filter when no columns are selected', async() => {
       await openFilter();
-      await waitFor(() => {
-        expect(screen.getByText(/Add columns first/)).toBeInTheDocument();
-      });
+      await waitFor(() => expect(screen.getByText(/Record Filter/)).toBeInTheDocument());
+      expect(screen.queryByText(/Display Filter/)).not.toBeInTheDocument();
+    });
+
+    it('hides the Display Filter when only columns of the base table are selected', async() => {
+      await openFilter(makeFormData({
+        field_metadata: { 'Vm-name': { plural: false } },
+        report: withColumns,
+      }));
+      await waitFor(() => expect(screen.getByText(/Record Filter/)).toBeInTheDocument());
+      expect(screen.queryByText(/Display Filter/)).not.toBeInTheDocument();
     });
   });
 
 
   describe('standard report expression editors', () => {
     const filtered = makeFormData({
+      field_metadata: pluralFieldMetadata,
       report: {
-        ...withColumns,
+        ...withPluralColumn,
         record_filter: { '=': { field: 'Vm-name', value: 'prod' } },
         display_filter: { '=': { field: 'Vm-name', value: 'dev' } },
       },
@@ -105,7 +124,7 @@ describe('FilterTab', () => {
     });
 
     it('has no preview when the report has no filters', async() => {
-      await openFiltered(makeFormData({ report: withColumns }));
+      await openFiltered(makeFormData({ field_metadata: pluralFieldMetadata, report: withPluralColumn }));
       await waitFor(() => expect(document.querySelectorAll('.exp-query-builder').length).toBeGreaterThan(0));
 
       expect(previews()).toHaveLength(0);
@@ -180,20 +199,20 @@ describe('FilterTab', () => {
       expect(previews()[0]).toContain('"prod"');
     });
 
-    it('keeps the display filter disabled while the report has no columns', async() => {
-      await openFiltered(makeFormData({ report: { record_filter: filtered.report.record_filter } }));
+    it('has no display filter while the report has no child table columns', async() => {
+      await openFiltered(makeFormData({ report: { ...withColumns, record_filter: filtered.report.record_filter } }));
       await waitFor(() => expect(previews()).toHaveLength(1));
 
-      expect(screen.getByText('Add columns first to enable the display filter.')).toBeInTheDocument();
+      expect(screen.queryByText(/Display Filter/)).not.toBeInTheDocument();
       expect(document.querySelectorAll('.exp-query-builder')).toHaveLength(1);
     });
 
-    it('enables the display filter once the report has columns', async() => {
+    it('has a display filter once the report has a child table column', async() => {
       await openFiltered();
       await waitFor(() => expect(previews()).toHaveLength(2));
 
       expect(document.querySelectorAll('.exp-query-builder')).toHaveLength(2);
-      expect(screen.queryByText('Add columns first to enable the display filter.')).not.toBeInTheDocument();
+      expect(screen.getByText(/Display Filter/)).toBeInTheDocument();
     });
 
     it('saves the edited filters in MiqExpression form', async() => {
