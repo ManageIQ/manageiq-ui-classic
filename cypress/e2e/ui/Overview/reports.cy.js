@@ -47,7 +47,6 @@ describe('Overview > Reports Tests', () => {
       cy.contains('[role="tab"]', 'Filter').scrollIntoView().click();
       cy.wait('@expressionMeta');
       cy.contains('Record Filter').should('be.visible');
-      cy.contains('Display Filter').should('be.visible');
 
       // Visit Summary, Charts, Styling, and Preview tabs
       cy.contains('[role="tab"]', 'Summary').scrollIntoView().click();

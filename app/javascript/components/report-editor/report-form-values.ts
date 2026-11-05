@@ -2,12 +2,13 @@ import { rqbToMiq } from '../expression-editor/expression-adapter';
 import type {
   ChargebackDbOptions,
   ColOptions,
+  FieldMetadata,
   FormData,
   ReportFilter,
   ReportFormValues,
   ReportRecord,
 } from './report-editor-types';
-import { NOTHING } from './utils';
+import { NOTHING, hasChildTableColumns } from './utils';
 
 // Core's default for chargeback reports that predate the option
 export const DEFAULT_ALLOCATED_METHOD = 'max';
@@ -131,8 +132,9 @@ export const buildInitialValues = (data: FormData): ReportFormValues => {
   };
 };
 
-// The settings posted to save and preview, which share one server-side mapping
-export const buildReportData = (values: ReportFormValues) => {
+// The settings posted to save and preview, which share one server-side mapping.
+// The display filter is hidden in the editor without a child table column, so it is not sent either.
+export const buildReportData = (values: ReportFormValues, fieldMetadata: FieldMetadata) => {
   const colOrder = values.col_order || [];
   const colOptions = values.col_options || {};
 
@@ -147,7 +149,7 @@ export const buildReportData = (values: ReportFormValues) => {
     col_formats: colOrder.map((id) => colOptions[id]?.format || ''),
     col_options: colOptions,
     record_filter: toMiqExpression(values.record_filter),
-    display_filter: toMiqExpression(values.display_filter),
+    display_filter: hasChildTableColumns(colOrder, fieldMetadata) ? toMiqExpression(values.display_filter) : null,
     perf_interval: values.perf_interval,
     perf_avgs: values.perf_avgs,
     perf_end: values.perf_end,

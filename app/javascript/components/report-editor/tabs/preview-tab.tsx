@@ -16,6 +16,7 @@ import {
 import { Renew } from '@carbon/react/icons';
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { ReportFormValues } from '../report-editor-types';
+import { useFieldMetadata } from '../field-metadata-context';
 import { buildReportData } from '../report-form-values';
 
 type PreviewData = {
@@ -38,6 +39,7 @@ type PreviewState = {
 
 const PreviewTab = () => {
   const formOptions = useFormApi();
+  const { fieldMetadata } = useFieldMetadata();
   const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
 
   const [{ isLoading, data, error }, setState] = useState<PreviewState>({
@@ -99,7 +101,7 @@ const PreviewTab = () => {
     };
 
     setState({ isLoading: true, data: null, error: null });
-    http.post<PreviewResponse>('/report/preview', { report_data: buildReportData(values as ReportFormValues) })
+    http.post<PreviewResponse>('/report/preview', { report_data: buildReportData(values as ReportFormValues, fieldMetadata) })
       .then((result) => {
         if (requestId !== latestRequestRef.current) {
           return;
@@ -112,7 +114,7 @@ const PreviewTab = () => {
         poll(result.task_id);
       })
       .catch(fail);
-  }, [formOptions, stopPolling]);
+  }, [formOptions, fieldMetadata, stopPolling]);
 
   const renderContent = () => {
     if ((colOrder as string[]).length === 0) {

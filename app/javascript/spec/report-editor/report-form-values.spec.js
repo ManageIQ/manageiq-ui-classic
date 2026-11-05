@@ -225,10 +225,25 @@ describe('buildReportData', () => {
       .toEqual({ '=': { field: 'Vm-name', value: 'test' } });
   });
 
-  it('passes an existing MiqExpression filter through untouched', () => {
+  it('passes an existing MiqExpression display filter through when a child table column is selected', () => {
+    const miq = { '=': { field: 'Vm-name', value: 'test' } };
+    const fieldMetadata = { 'Vm-name': { plural: true } };
+
+    expect(buildReportData({ ...values, display_filter: miq }, fieldMetadata).display_filter).toBe(miq);
+  });
+
+  it('drops the display filter once no child table column is selected', () => {
+    const miq = { '=': { field: 'Vm-name', value: 'test' } };
+    const fieldMetadata = { 'Vm-name': { plural: false }, 'Vm-num_cpu': {} };
+
+    expect(buildReportData({ ...values, display_filter: miq }, fieldMetadata).display_filter).toBeNull();
+    expect(buildReportData({ ...values, display_filter: miq }, {}).display_filter).toBeNull();
+  });
+
+  it('keeps the record filter regardless of child table columns', () => {
     const miq = { '=': { field: 'Vm-name', value: 'test' } };
 
-    expect(buildReportData({ ...values, display_filter: miq }).display_filter).toBe(miq);
+    expect(buildReportData({ ...values, record_filter: miq }, {}).record_filter).toBe(miq);
   });
 
   it('sends null when there is no filter', () => {

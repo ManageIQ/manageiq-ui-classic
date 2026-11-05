@@ -4,6 +4,7 @@ import { rqbToMiq } from '../../../expression-editor/expression-adapter';
 import { miqExpressionToHuman } from '../../../expression-editor/expression-human';
 import { LabeledSection } from '../../form-row';
 import type { ReportFormValues } from '../../report-editor-types';
+import { hasChildTableColumns } from '../../utils';
 import { useFieldMetadata } from '../../field-metadata-context';
 import { ExpressionEditor, type FormOptionsApi } from './shared';
 
@@ -15,7 +16,7 @@ type StandardFilterProps = {
 const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
   const { fieldMetadata } = useFieldMetadata();
   // Same rule as the classic form: the display filter needs a selected column from a child table.
-  const hasPluralColumns = (formValues.col_order || []).some((id) => fieldMetadata[id]?.plural);
+  const hasPluralColumns = hasChildTableColumns(formValues.col_order, fieldMetadata);
 
   // *Ref naming: ExpressionEditor passes tagValuesCache as a { current: Map } ref object
   // so that tag lookups always read the latest values without re-firing the callback.

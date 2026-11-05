@@ -138,7 +138,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
     setShowResetNotice(false);
     setIsSubmitting(true);
 
-    const reportData = buildReportData(values);
+    const reportData = buildReportData(values, fieldMetadataState.fieldMetadata);
 
     const url = isNew ? '/report/save/new' : `/report/save/${recordId}`;
     http.post<{ success: boolean; message?: string }>(url, { report_data: reportData })
