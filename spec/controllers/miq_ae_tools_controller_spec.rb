@@ -466,6 +466,38 @@ describe MiqAeToolsController do
     end
   end
 
+  describe '#get_simulation_form_vars' do
+    # get_simulation_form_vars also iterates @resolve[:new][:attrs], so we
+    # must seed it with the expected nested array structure.
+    let(:attrs) { Array.new(ApplicationController::AE_MAX_RESOLUTION_FIELDS) { [nil, nil] } }
+
+    before do
+      stub_user(:features => :all)
+      controller.instance_variable_set(
+        :@resolve,
+        :new => {:readonly => nil, :attrs => attrs}
+      )
+    end
+
+    it "sets readonly to false when boolean true is sent (Execute Methods checked)" do
+      controller.instance_variable_set(:@_params, :readonly => true)
+      controller.send(:get_simulation_form_vars)
+      expect(controller.instance_variable_get(:@resolve)[:new][:readonly]).to be(false)
+    end
+
+    it "sets readonly to true when boolean false is sent (Execute Methods unchecked)" do
+      controller.instance_variable_set(:@_params, :readonly => false)
+      controller.send(:get_simulation_form_vars)
+      expect(controller.instance_variable_get(:@resolve)[:new][:readonly]).to be(true)
+    end
+
+    it "does not update readonly when the param is absent" do
+      controller.instance_variable_set(:@_params, {})
+      controller.send(:get_simulation_form_vars)
+      expect(controller.instance_variable_get(:@resolve)[:new][:readonly]).to be_nil
+    end
+  end
+
   describe "breadcrumbs" do
     it "shows 'simulation' on resolve screen" do
       get :resolve
