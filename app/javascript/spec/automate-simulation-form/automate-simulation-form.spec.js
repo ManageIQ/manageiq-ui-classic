@@ -1,6 +1,8 @@
 import fetchMock from 'fetch-mock';
-import { waitFor, screen, fireEvent, act } from '@testing-library/react';
+import { waitFor, screen, fireEvent } from '@testing-library/react';
+import { componentTypes } from '@@ddf';
 import AutomateSimulationForm from '../../components/automate-simulation-form';
+import createSchema from '../../components/automate-simulation-form/automate-simulation-form.schema';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Automate Simulation Form', () => {
@@ -101,7 +103,7 @@ describe('Automate Simulation Form', () => {
       },
     };
 
-    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+    renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
     await waitFor(() => {
       expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
@@ -149,5 +151,107 @@ describe('Automate Simulation Form', () => {
     await waitFor(() => {
       expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
     });
+  });
+
+  it('renders the Execute Methods checkbox as unchecked when readonly is true', async() => {
+    const resolveData = {
+      ...resolveMockData,
+      new: { ...resolveMockData.new, readonly: true },
+    };
+    renderWithRedux(<AutomateSimulationForm resolve={resolveData} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText('Execute Methods')).not.toBeChecked();
+    });
+  });
+
+  it('renders the Execute Methods checkbox as checked when readonly is false', async() => {
+    const resolveData = {
+      ...resolveMockData,
+      new: { ...resolveMockData.new, readonly: false },
+    };
+    renderWithRedux(<AutomateSimulationForm resolve={resolveData} attrValuesPairs={[0, 1, 2, 3, 4]} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText('Execute Methods')).toBeChecked();
+    });
+  });
+
+  it('submits the form with readonly true when Execute Methods is checked', async() => {
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=Vm', { targets: [['VM 1', '1']] });
+    fetchMock.post('/miq_ae_tools/resolve', { notice: 'Simulation complete' });
+
+    const resolveData = {
+      ...resolveMockData,
+      new: {
+        ...resolveMockData.new,
+        object_request: 'VM Provision',
+        target_class: 'Vm',
+        target_id: '1',
+        readonly: false,
+      },
+    };
+
+    renderWithRedux(
+      <AutomateSimulationForm
+        resolve={resolveData}
+        attrValuesPairs={[0, 1, 2, 3, 4]}
+        url="/miq_ae_tools/resolve"
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
+    });
+    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    expect(body).toEqual(expect.objectContaining({ readonly: true, button: 'throw' }));
+  });
+
+  it('submits the form with readonly false when Execute Methods is unchecked', async() => {
+    fetchMock.get('/miq_ae_tools/get_form_targets?target_class=Vm', { targets: [['VM 1', '1']] });
+    fetchMock.post('/miq_ae_tools/resolve', { notice: 'Simulation complete' });
+
+    const resolveData = {
+      ...resolveMockData,
+      new: {
+        ...resolveMockData.new,
+        object_request: 'VM Provision',
+        target_class: 'Vm',
+        target_id: '1',
+        readonly: true,
+      },
+    };
+
+    renderWithRedux(
+      <AutomateSimulationForm
+        resolve={resolveData}
+        attrValuesPairs={[0, 1, 2, 3, 4]}
+        url="/miq_ae_tools/resolve"
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
+    });
+    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    expect(body).toEqual(expect.objectContaining({ readonly: false, button: 'throw' }));
+  });
+
+  it('uses a CHECKBOX component for the readonly field (always yields a boolean, never "1")', () => {
+    const schema = createSchema(
+      resolveMockData, 128, '/miq_ae_tools/resolve', [0, 1, 2, 3, 4], 128, [], '', jest.fn(),
+    );
+    const field = schema.fields.find((f) => f.name === 'readonly');
+    expect(field.component).toBe(componentTypes.CHECKBOX);
   });
 });
