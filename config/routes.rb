@@ -2647,24 +2647,23 @@ Rails.application.routes.draw do
 
     :report                   => {
       :get  => %w[
+        copy
         dashboard_get
         db_copy
         db_widget_dd_done
         download_report
+        edit
         explorer
         export_widgets
-        miq_report_edit
-        miq_report_new
-        preview_chart
-        react_available_fields
-        react_chargeback_entities
-        react_chargeback_options
-        react_edit
-        react_form_data
-        react_trend_limit_cols
+        new
+        available_fields
+        chargeback_entities
+        chargeback_options
+        form_data
+        preview_result
+        trend_limit_cols
         render_chart
         report_only
-        sample_chart
         print_report
         send_report_data
         tree_autoload
@@ -2689,9 +2688,8 @@ Rails.application.routes.draw do
         menu_field_changed
         menu_folder_message_display
         menu_update
-        miq_report_edit
-        react_preview
-        react_save
+        preview
+        save
         reload
         rep_change_tab
         saved_report_paging
@@ -2710,8 +2708,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ] +
-               exp_post
+      ]
     },
 
     :resource_pool            => {

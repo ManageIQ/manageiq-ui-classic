@@ -31,6 +31,27 @@ const DATE_VALUE_OPTIONS = [
   'This Year',
 ];
 
+// Option values are sent to the server untranslated, so only the labels are translated.
+// Literal strings are required in __() calls for the gettext extractor to pick them up.
+const getDateValueLabels = (): Record<string, string> => ({
+  Today: __('Today'),
+  Yesterday: __('Yesterday'),
+  'Last 2 Days': __('Last 2 Days'),
+  'Last 7 Days': __('Last 7 Days'),
+  'Last 30 Days': __('Last 30 Days'),
+  'This Week': __('This Week'),
+  'This Month': __('This Month'),
+  'This Quarter': __('This Quarter'),
+  'This Year': __('This Year'),
+});
+
+const getOperatorLabels = (): Record<string, string> => ({
+  DEFAULT: __('DEFAULT'),
+  INCLUDES: __('INCLUDES'),
+  'IS NULL': __('IS NULL'),
+  'IS NOT NULL': __('IS NOT NULL'),
+});
+
 type FormOptionsApi = FormOptions<Record<string, unknown>>;
 
 const getColumnStyles = (formValues: ReportFormValues, fieldId: string): StyleRule[] =>
@@ -86,19 +107,14 @@ const updateStyleRule = (
 type StyleValueInputProps = {
   fieldId: string;
   index: number;
-  operator: string;
   rule: StyleRule;
   columnMeta: FieldMeta;
   formOptions: FormOptionsApi;
 };
 
 const StyleValueInput = ({
-  fieldId, index, operator, rule, columnMeta, formOptions,
+  fieldId, index, rule, columnMeta, formOptions,
 }: StyleValueInputProps) => {
-  if (operator === DEFAULT_OPERATOR || isNullOperator(operator)) {
-    return null;
-  }
-
   if (columnMeta.data_type === 'boolean') {
     return (
       <Select
@@ -115,6 +131,7 @@ const StyleValueInput = ({
   }
 
   if (['datetime', 'date'].includes(columnMeta.format_sub_type || '') || ['datetime', 'date'].includes(columnMeta.data_type || '')) {
+    const dateValueLabels = getDateValueLabels();
     return (
       <Select
         id={`style-value-${fieldId}-${index}`}
@@ -123,12 +140,11 @@ const StyleValueInput = ({
         value={rule.value || DATE_VALUE_OPTIONS[0]}
         onChange={(e) => formOptions.change(`col_options.${fieldId}.style.${index}.value`, e.target.value)}
       >
-        {DATE_VALUE_OPTIONS.map((value) => <SelectItem key={value} value={value} text={__(value)} />)}
+        {DATE_VALUE_OPTIONS.map((value) => <SelectItem key={value} value={value} text={dateValueLabels[value]} />)}
       </Select>
     );
   }
 
-  // Numeric / text field — may also have units
   const units = columnMeta.units || [];
   return (
     <div className="report-editor-styling__value-with-units">
@@ -173,6 +189,7 @@ const StyleRuleEditor = ({
   formOptions,
   formValues,
 }: StyleRuleEditorProps) => {
+  const operatorLabels = getOperatorLabels();
   const selectedClass = rule.class || NOTHING_STYLE;
   const selectedOperator = rule.operator || DEFAULT_OPERATOR;
 
@@ -214,7 +231,7 @@ const StyleRuleEditor = ({
                 });
               }}
             >
-              {STYLE_OPERATORS.map((operator) => <SelectItem key={operator} value={operator} text={__(operator)} />)}
+              {STYLE_OPERATORS.map((operator) => <SelectItem key={operator} value={operator} text={operatorLabels[operator] || operator} />)}
             </Select>
           </FormRow>
 
@@ -223,7 +240,6 @@ const StyleRuleEditor = ({
               <StyleValueInput
                 fieldId={fieldId}
                 index={index}
-                operator={selectedOperator}
                 rule={rule}
                 columnMeta={columnMeta}
                 formOptions={formOptions}
@@ -277,7 +293,7 @@ const StylingTab = ({ formData }: StylingTabProps) => {
                   <span>{labelMap[fieldId] || fieldId}</span>
                   {ruleCount > 0 && (
                     <span className="report-editor-styling__accordion-title-count">
-                      {sprintf(ruleCount === 1 ? __('%s rule') : __('%s rules'), ruleCount)}
+                      {sprintf(n__('%s rule', '%s rules', ruleCount), ruleCount)}
                     </span>
                   )}
                 </div>

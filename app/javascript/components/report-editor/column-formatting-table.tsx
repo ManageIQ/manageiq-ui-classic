@@ -15,24 +15,13 @@ import {
 import { useFieldMetadata } from './field-metadata-context';
 import type { ColOptions } from './report-editor-types';
 
-/**
- * ColumnFormattingTable — custom DDF component.
- *
- * Bound to `col_options` in form state (object keyed by field id).
- * Subscribes to `col_order` via useFieldApi so it re-renders whenever the
- * user reorders or adds/removes columns in the field picker.
- * Reads available fields and per-field formats from FieldMetadataContext
- * instead of form state.
- */
 const ColumnFormattingTable = (props: UseFieldApiConfig) => {
   const {
     input: { value: colOptions = {} as ColOptions, onChange },
   } = useFieldApi(props);
-  // Subscribe to col_order so the table re-renders when order changes.
   const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
   const { availableFields, fieldMetadata } = useFieldMetadata();
 
-  // Build a label map from available_fields [[label, id], ...]
   const labelMap = Object.fromEntries((availableFields || []).map(([label, id]) => [id, label]));
 
   const updateOption = (fieldId: string, key: string, val: string) => {

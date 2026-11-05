@@ -19,12 +19,14 @@ class ApplicationHelper::Toolbar::MiqReportCenter < ApplicationHelper::Toolbar::
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Report'),
           t,
+          :url   => "/new",
           :klass => ApplicationHelper::Button::MiqReportNew),
         button(
           :miq_report_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Report'),
           t,
+          :url   => "/edit",
           :klass => ApplicationHelper::Button::MiqReportEdit),
         button(
           :miq_report_copy,

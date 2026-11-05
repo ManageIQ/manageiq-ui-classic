@@ -10,20 +10,16 @@ type FilterTabProps = {
   input?: Record<string, unknown>;
 };
 
-// Dispatches to the filter variant of the current report type. The parent
-// ReportEditor derives reportType from the selected model.
+// Dispatches to the filter variant of the current report type.
 const FilterTab = ({ reportType, input }: FilterTabProps) => {
-  useFieldApi((input || { name: 'filter_tab_content' }) as UseFieldApiConfig); // bind DDF field
+  useFieldApi((input || { name: 'filter_tab_content' }) as UseFieldApiConfig);
   const formOptions = useFormApi();
-  // Subscribe to every field read as a controlled-input value so FilterTab
-  // (and its sub-components) re-renders when any of them change.
-  const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
+  // Subscribed so FilterTab and its sub-components re-render when any change.
+  const { input: { value: model = '' } } = useFieldApi({ name: 'model' });
   const { input: { value: colOrder = [] } } = useFieldApi({ name: 'col_order' });
-  // Performance / trend fields
   useFieldApi({ name: 'perf_interval' });
   useFieldApi({ name: 'perf_end' });
   useFieldApi({ name: 'perf_start' });
-  // Chargeback fields
   useFieldApi({ name: 'cb_show_typ' });
   useFieldApi({ name: 'cb_owner_id' });
   useFieldApi({ name: 'cb_tenant_id' });
@@ -42,7 +38,6 @@ const FilterTab = ({ reportType, input }: FilterTabProps) => {
   useFieldApi({ name: 'method_for_allocated_metrics' });
   useFieldApi({ name: 'cumulative_rate_calculation' });
 
-  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
   const formValues: ReportFormValues = {
     ...formOptions.getState().values as ReportFormValues,
     model,

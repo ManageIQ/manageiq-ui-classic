@@ -24,10 +24,10 @@ describe ReportController do
     allow(controller).to receive(:assert_privileges)
   end
 
-  describe "#react_form_data" do
+  describe "#form_data" do
     context "when id is 'new'" do
       it "returns defaults and lookup data with HTTP 200" do
-        get :react_form_data, :params => {:id => "new"}
+        get :form_data, :params => {:id => "new"}
 
         expect(response).to have_http_status(:ok)
         expect(body).to include("report", "models", "chart_types", "pdf_page_sizes",
@@ -44,7 +44,7 @@ describe ReportController do
 
     context "when id is an existing report" do
       it "returns the report's attributes and HTTP 200" do
-        get :react_form_data, :params => {:id => report.id}
+        get :form_data, :params => {:id => report.id}
 
         expect(response).to have_http_status(:ok)
         expect(body["report"]).to include("name" => "Test Report", "title" => "Test Title", "model" => "Vm", "group" => "No")
@@ -53,7 +53,7 @@ describe ReportController do
       end
 
       it "includes metadata for the selected columns" do
-        get :react_form_data, :params => {:id => report.id}
+        get :form_data, :params => {:id => report.id}
 
         expect(body["field_metadata"]["Vm-name"]).to include("data_type" => "string")
       end
@@ -61,7 +61,7 @@ describe ReportController do
       it "rejects default reports" do
         report.update!(:rpt_type => "Default")
 
-        get :react_form_data, :params => {:id => report.id}
+        get :form_data, :params => {:id => report.id}
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -69,7 +69,7 @@ describe ReportController do
 
     context "when copying a report" do
       it "starts a new report named after the source" do
-        get :react_form_data, :params => {:id => "new", :copy_from => report.id}
+        get :form_data, :params => {:id => "new", :copy_from => report.id}
 
         expect(response).to have_http_status(:ok)
         expect(body["report"]).to include("record_id" => nil, "name" => "Copy of Test Report")
@@ -79,22 +79,22 @@ describe ReportController do
     it "checks the edit privilege for an existing report" do
       expect(controller).to receive(:assert_privileges).with("miq_report_edit")
 
-      get :react_form_data, :params => {:id => report.id}
+      get :form_data, :params => {:id => report.id}
     end
 
     it "checks the new privilege for a new report" do
       expect(controller).to receive(:assert_privileges).with("miq_report_new")
 
-      get :react_form_data, :params => {:id => "new"}
+      get :form_data, :params => {:id => "new"}
     end
   end
 
   describe "helper endpoints" do
-    describe "#react_available_fields" do
+    describe "#available_fields" do
       it "returns the fields of a valid model" do
         allow(MiqExpression).to receive(:reporting_available_fields).with("Vm").and_return([%w[Name Vm-name]])
 
-        get :react_available_fields, :params => {:model => "Vm"}
+        get :available_fields, :params => {:model => "Vm"}
 
         expect(response).to have_http_status(:ok)
         expect(body["fields"]).to eq([%w[Name Vm-name]])
@@ -102,29 +102,29 @@ describe ReportController do
       end
 
       it "rejects a blank model" do
-        get :react_available_fields, :params => {:model => ""}
+        get :available_fields, :params => {:model => ""}
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(body).to have_key("error")
+        expect(body).to include("success" => false, "message" => "Invalid or missing model")
       end
 
       it "rejects an unknown model" do
-        get :react_available_fields, :params => {:model => "NotAModel"}
+        get :available_fields, :params => {:model => "NotAModel"}
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(body).to have_key("error")
+        expect(body).to include("success" => false, "message" => "Invalid or missing model")
       end
 
       it "accepts either the new or the edit privilege" do
         expect(controller).to receive(:assert_privileges).with("miq_report_new", "miq_report_edit")
 
-        get :react_available_fields, :params => {:model => "Vm"}
+        get :available_fields, :params => {:model => "Vm"}
       end
     end
 
-    describe "#react_trend_limit_cols" do
+    describe "#trend_limit_cols" do
       it "returns an empty list without a trend column" do
-        get :react_trend_limit_cols
+        get :trend_limit_cols
 
         expect(body["limit_cols"]).to eq([])
       end
@@ -133,15 +133,15 @@ describe ReportController do
         expect(VimPerformanceTrend).to receive(:trend_limit_cols)
           .with("VmPerformance", "cpu_usagemhz_rate_average", "daily").and_return([%w[Max max_cpu]])
 
-        get :react_trend_limit_cols, :params => {:trend_col => "VmPerformance-cpu_usagemhz_rate_average", :perf_interval => "daily"}
+        get :trend_limit_cols, :params => {:trend_col => "VmPerformance-cpu_usagemhz_rate_average", :perf_interval => "daily"}
 
         expect(body["limit_cols"]).to eq([%w[Max max_cpu]])
       end
     end
 
-    describe "#react_chargeback_options" do
+    describe "#chargeback_options" do
       it "returns the option lists for a chargeback model" do
-        get :react_chargeback_options, :params => {:model => "ChargebackVm"}
+        get :chargeback_options, :params => {:model => "ChargebackVm"}
 
         expect(response).to have_http_status(:ok)
         expect(body).to include("users", "tenants", "categories", "tag_values", "timezones")
@@ -149,24 +149,25 @@ describe ReportController do
       end
 
       it "rejects a model that is not chargeback" do
-        get :react_chargeback_options, :params => {:model => "Vm"}
+        get :chargeback_options, :params => {:model => "Vm"}
 
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(body).to include("success" => false, "message" => "Invalid or non-chargeback model")
       end
     end
 
-    describe "#react_chargeback_entities" do
+    describe "#chargeback_entities" do
       let(:project) { FactoryBot.create(:container_project) }
       let(:provider) { FactoryBot.create(:ems_container).tap { |ems| ems.container_projects = [project] } }
 
       it "returns the projects of a provider" do
-        get :react_chargeback_entities, :params => {:provider_id => provider.id, :model => "ChargebackContainerProject"}
+        get :chargeback_entities, :params => {:provider_id => provider.id, :model => "ChargebackContainerProject"}
 
         expect(body["entities"]).to eq([[project.name, project.id.to_s]])
       end
 
       it "returns nothing without a provider" do
-        get :react_chargeback_entities, :params => {:model => "ChargebackContainerProject"}
+        get :chargeback_entities, :params => {:model => "ChargebackContainerProject"}
 
         expect(body["entities"]).to eq([])
       end
@@ -179,7 +180,7 @@ describe ReportController do
         EvmSpecHelper.seed_specific_product_features(%w[miq_report_new miq_report_edit miq_report_run])
         login_as FactoryBot.create(:user, :features => %w[miq_report_run])
 
-        get :react_available_fields, :params => {:model => "Vm"}
+        get :available_fields, :params => {:model => "Vm"}
 
         expect(response).to redirect_to(:controller => "dashboard", :action => "auth_error")
       end
@@ -188,14 +189,77 @@ describe ReportController do
         EvmSpecHelper.seed_specific_product_features(%w[miq_report_new miq_report_edit])
         login_as FactoryBot.create(:user, :features => %w[miq_report_edit])
 
-        get :react_available_fields, :params => {:model => "Vm"}
+        get :available_fields, :params => {:model => "Vm"}
 
         expect(response).to have_http_status(:ok)
       end
     end
   end
 
-  describe "#react_save" do
+  describe "editor RBAC pairing" do
+    let(:auth_error) { redirect_to(:controller => "dashboard", :action => "auth_error") }
+    let(:editor_requests) do
+      {
+        "new"                 => -> { get :new },
+        "edit"                => -> { get :edit, :params => {:id => report.id} },
+        "copy"                => -> { get :copy, :params => {:id => report.id} },
+        "form_data"           => -> { get :form_data, :params => {:id => "new"} },
+        "available_fields"    => -> { get :available_fields, :params => {:model => "Vm"} },
+        "save"                => -> { post :save, :params => {:report_data => {:name => "x"}} },
+        "preview"             => -> { post :preview, :params => {:report_data => {:model => "Vm"}} },
+        "preview_result"      => -> { get :preview_result, :params => {:task_id => 1} },
+        "trend_limit_cols"    => -> { get :trend_limit_cols, :params => {:id => "VimPerformanceTrend"} },
+        "chargeback_options"  => -> { get :chargeback_options, :params => {:model => "ChargebackVm"} },
+        "chargeback_entities" => -> { get :chargeback_entities, :params => {:model => "ChargebackContainerProject"} }
+      }
+    end
+
+    before { EvmSpecHelper.seed_specific_product_features(%w[miq_report_new miq_report_edit miq_report_copy miq_report_run]) }
+
+    it "denies every editor action to a user without the editor features" do
+      login_as FactoryBot.create(:user, :features => %w[miq_report_run])
+
+      editor_requests.each do |action, request|
+        instance_exec(&request)
+        expect(response).to(auth_error, "expected #{action} to be denied")
+      end
+    end
+
+    it "lets a user with only miq_report_new reach the actions shared by new and edit" do
+      login_as FactoryBot.create(:user, :features => %w[miq_report_new])
+
+      %w[new form_data available_fields save preview].each do |action|
+        instance_exec(&editor_requests[action])
+        expect(response).not_to(auth_error, "expected #{action} to be allowed")
+      end
+    end
+
+    it "denies edit to a user with only miq_report_new" do
+      login_as FactoryBot.create(:user, :features => %w[miq_report_new])
+
+      get :edit, :params => {:id => report.id}
+
+      expect(response).to auth_error
+    end
+
+    it "denies new to a user with only miq_report_edit" do
+      login_as FactoryBot.create(:user, :features => %w[miq_report_edit])
+
+      get :new
+
+      expect(response).to auth_error
+    end
+
+    it "denies copy to a user without miq_report_copy" do
+      login_as FactoryBot.create(:user, :features => %w[miq_report_new])
+
+      get :copy, :params => {:id => report.id}
+
+      expect(response).to auth_error
+    end
+  end
+
+  describe "#save" do
     let(:report_data) do
       {
         :name      => "New Report",
@@ -207,7 +271,7 @@ describe ReportController do
     end
 
     def save(data = report_data, report_id: nil)
-      post :react_save, :params => {:id => report_id, :report_data => data}.compact
+      post :save, :params => {:id => report_id, :report_data => data}.compact
     end
 
     def saved_report
@@ -246,7 +310,7 @@ describe ReportController do
     end
 
     it "rejects a missing report_data" do
-      post :react_save
+      post :save
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(body["success"]).to be(false)
@@ -307,7 +371,7 @@ describe ReportController do
       it "returns the original field ids when the report is loaded again" do
         save(related)
 
-        get :react_form_data, :params => {:id => body["id"]}
+        get :form_data, :params => {:id => body["id"]}
 
         expect(body["report"]["col_order"]).to eq(related[:col_order])
       end
@@ -369,7 +433,7 @@ describe ReportController do
       it "loads the sort settings the way the editor expects them" do
         save(sorted.merge(:group => "Yes"))
 
-        get :react_form_data, :params => {:id => body["id"]}
+        get :form_data, :params => {:id => body["id"]}
 
         expect(body["report"]).to include(
           "sortby" => %w[Vm-name Vm-os_image_name], "group" => "Yes", "order" => "Descending"
@@ -440,7 +504,7 @@ describe ReportController do
       it "returns the group fields and calculations when loaded again" do
         save(pivoted)
 
-        get :react_form_data, :params => {:id => body["id"]}
+        get :form_data, :params => {:id => body["id"]}
 
         expect(body["report"]).to include(
           "col_order" => %w[Vm-name Vm-mem_cpu], "headers" => %w[Name Memory],
@@ -493,7 +557,7 @@ describe ReportController do
       it "returns the start relative to the end when loaded again" do
         save(perf)
 
-        get :react_form_data, :params => {:id => body["id"]}
+        get :form_data, :params => {:id => body["id"]}
 
         expect(body["report_type"]).to eq("performance")
         expect(body["report"]["perf_start"]).to eq(604_800)
@@ -578,7 +642,7 @@ describe ReportController do
       it "returns the tag category and values when loaded again" do
         save(chargeback)
 
-        get :react_form_data, :params => {:id => body["id"]}
+        get :form_data, :params => {:id => body["id"]}
 
         expect(body["report_type"]).to eq("chargeback")
         expect(body["report"]["db_options"]["options"]).to include("tag" => ["environment", %w[prod dev]])
@@ -655,55 +719,218 @@ describe ReportController do
     end
   end
 
-  describe "#react_preview" do
+  describe "#preview" do
+    let(:preview_params) { {:report_data => {:model => {:value => "Vm", :label => "VMs"}, :col_order => ["Vm-name"], :headers => ["Name"]}} }
+
     it "returns an empty result without columns" do
-      post :react_preview, :params => {:report_data => {:model => "Vm", :col_order => []}}
+      post :preview, :params => {:report_data => {:model => "Vm", :col_order => []}}
 
       expect(body).to eq("columns" => [], "rows" => [])
     end
 
     it "rejects a missing report_data" do
-      post :react_preview
+      post :preview
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it "generates the report from the posted settings without saving it" do
-      FactoryBot.create(:vm_vmware, :name => "preview-vm")
+    it "queues the generation instead of running it in the request" do
+      expect_any_instance_of(MiqReport).not_to receive(:generate_table)
 
       expect do
-        post :react_preview, :params => {:report_data => {:model => {:value => "Vm", :label => "VMs"}, :col_order => ["Vm-name"], :headers => ["Name"]}}
-      end.not_to(change { MiqReport.count })
+        post :preview, :params => preview_params
+      end.to change { MiqQueue.where(:method_name => "_async_generate_table").count }.by(1)
 
       expect(response).to have_http_status(:ok)
-      expect(body["columns"]).to eq(["Name"])
-      expect(body["rows"]).to include(["preview-vm"])
+      expect(body["task_id"]).to eq(MiqTask.last.id)
+      expect(MiqReport.count).to eq(0)
+    end
+
+    it "limits the queued report to the preview rows" do
+      expect_any_instance_of(MiqReport).to receive(:async_generate_table).with(hash_including(:limit => described_class::PREVIEW_ROW_LIMIT)).and_return(42)
+
+      post :preview, :params => preview_params
+
+      expect(body["task_id"]).to eq(42)
     end
   end
 
-  describe "#react_edit" do
+  describe "#preview_result" do
+    let(:task) { FactoryBot.create(:miq_task, :state => state, :status => "Ok") }
+    let(:state) { MiqTask::STATE_ACTIVE }
+
+    def start_preview_session(task_id)
+      session[:report_preview_task_id] = task_id
+    end
+
+    def attach_finished_report_result(task)
+      rpt = MiqReport.new(:name => "Preview", :title => "Preview", :db => "Vm", :cols => %w[name], :col_order => %w[name], :headers => ["Name"])
+      FactoryBot.create(:vm_vmware, :name => "preview-vm")
+      rpt.generate_table(:userid => "admin")
+      # Same as MiqReport#_async_generate_table: the result is attached to the task
+      task.miq_report_result = rpt.build_create_results({:userid => "admin|session|adhoc", :report_source => "Generated by user"}, task.id)
+      task.save!
+    end
+
+    it "reports that the report is still being generated" do
+      start_preview_session(task.id)
+
+      get :preview_result, :params => {:task_id => task.id}
+
+      expect(response).to have_http_status(:ok)
+      expect(body).to eq("complete" => false)
+      expect(MiqTask.exists?(task.id)).to be(true)
+    end
+
+    context "when the task has finished" do
+      let(:state) { MiqTask::STATE_FINISHED }
+
+      it "returns the columns and rows, and removes the task and its result" do
+        attach_finished_report_result(task)
+        start_preview_session(task.id)
+
+        get :preview_result, :params => {:task_id => task.id}
+
+        expect(response).to have_http_status(:ok)
+        expect(body).to include("complete" => true, "columns" => ["Name"], "col_keys" => ["name"])
+        expect(body["rows"]).to include(["preview-vm"])
+        expect(MiqTask.exists?(task.id)).to be(false)
+        expect(MiqReportResult.where(:miq_task_id => task.id)).to be_empty
+      end
+
+      it "returns a generic message and logs the cause when generation failed" do
+        task.update!(:status => "Error", :message => "secret internal detail")
+        start_preview_session(task.id)
+        expect($log).to receive(:error).with(/secret internal detail/)
+
+        get :preview_result, :params => {:task_id => task.id}
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(body["success"]).to be(false)
+        expect(body["message"]).not_to include("secret internal detail")
+        expect(MiqTask.exists?(task.id)).to be(false)
+      end
+
+      it "can only be read once" do
+        attach_finished_report_result(task)
+        start_preview_session(task.id)
+
+        get :preview_result, :params => {:task_id => task.id}
+        get :preview_result, :params => {:task_id => task.id}
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    it "does not expose a task that this session did not start" do
+      other_task = FactoryBot.create(:miq_task, :state => MiqTask::STATE_FINISHED, :status => "Ok")
+      start_preview_session(task.id)
+
+      get :preview_result, :params => {:task_id => other_task.id}
+
+      expect(response).to have_http_status(:not_found)
+      expect(MiqTask.exists?(other_task.id)).to be(true)
+    end
+
+    it "returns not found when no preview was started" do
+      get :preview_result, :params => {:task_id => task.id}
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  describe "#miq_report_copy" do
+    it "redirects to the copy action when pressing miq_report_copy" do
+      expect(controller).to receive(:assert_privileges).with("miq_report_copy")
+      expect(controller).to receive(:javascript_redirect).with(:controller => "report", :action => "copy", :id => report.id.to_s)
+
+      post :x_button, :params => {:pressed => "miq_report_copy", :id => report.id}
+    end
+  end
+
+  describe "report editor pages" do
     render_views
 
+    it "renders the editor for a new report" do
+      get :new
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("ReportEditor")
+      expect(response.body).not_to include("copyFrom")
+    end
+
     it "renders the editor for an existing report" do
-      get :react_edit, :params => {:id => report.id}
+      get :edit, :params => {:id => report.id}
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("ReportEditor")
     end
 
-    it "passes the source report when copying" do
-      get :react_edit, :params => {:id => "new", :copy_from => report.id}
+    it "passes the source report when copying and checks privileges" do
+      expect(controller).to receive(:assert_privileges).with("miq_report_copy")
+      expect(controller).to receive(:assert_privileges).with("miq_report_new")
+
+      get :copy, :params => {:id => report.id}
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include("ReportEditor")
+      expect(response.body).to include("copyFrom")
       expect(response.body).to include(report.id.to_s)
     end
 
     it "refuses to edit a default report" do
       report.update!(:rpt_type => "Default")
 
-      get :react_edit, :params => {:id => report.id}
+      get :edit, :params => {:id => report.id}
 
       expect(response).to redirect_to(:action => "explorer")
+    end
+  end
+
+  describe "#reportable_models" do
+    subject { controller.send(:reportable_models) }
+
+    it "does not contain duplicate items" do
+      duplicates = subject.group_by(&:first).select { |_, v| v.size > 1 }.map(&:first)
+      expect(duplicates).to be_empty
+    end
+  end
+
+  # The React editor derives the report type from the model name in
+  # app/javascript/components/report-editor/utils.ts (modelToReportType).
+  # Keep this table identical to the one in app/javascript/spec/report-editor/utils.spec.js.
+  describe "#report_type_for_model" do
+    let(:report_type_examples) do
+      {
+        "standard"    => %w[Vm Host MiqTemplate ContainerImage],
+        "performance" => %w[
+          ContainerGroupPerformance ContainerNodePerformance ContainerPerformance ContainerProjectPerformance
+          EmsClusterPerformance ExtManagementSystemPerformance HostPerformance StoragePerformance VmPerformance
+        ],
+        "trend"       => %w[VimPerformanceTrend],
+        "chargeback"  => %w[
+          ChargebackConfiguredSystem ChargebackContainerImage ChargebackContainerProject ChargebackVm
+          MeteringContainerImage MeteringContainerProject MeteringVm
+        ]
+      }
+    end
+
+    it "maps every example model to its report type" do
+      report_type_examples.each do |report_type, models|
+        models.each do |model|
+          expect(controller.send(:report_type_for_model, model)).to eq(report_type), "expected #{model} to be #{report_type}"
+        end
+      end
+    end
+
+    it "treats a missing model as a standard report" do
+      expect(controller.send(:report_type_for_model, nil)).to eq("standard")
+    end
+
+    it "lists every reportable special-case model, so the JS table cannot silently go stale" do
+      special = MiqReport.reportable_models.grep(/Chargeback|Metering|Performance|MetricsRollup|Trend/)
+
+      expect(special - report_type_examples.values.flatten).to be_empty
     end
   end
 end

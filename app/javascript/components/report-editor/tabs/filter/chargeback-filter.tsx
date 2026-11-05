@@ -84,6 +84,19 @@ function buildCbIntervalOptions(interval: string): CbIntervalOptions {
   }
 }
 
+// Whole-phrase literals so each label is translated as one unit
+function endingWithLabel(interval: string): string {
+  switch (interval) {
+    case 'weekly':
+      return __('Weekly Ending with');
+    case 'monthly':
+      return __('Monthly Ending with');
+    case 'daily':
+    default:
+      return __('Daily Ending with');
+  }
+}
+
 type CbState = {
   loading: boolean;
   cbOpts: ChargebackOptions | null;
@@ -103,29 +116,39 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
     error: null,
   });
 
-  // Derived flags
   const isVm = model === 'ChargebackVm' || model === 'MeteringVm';
   const isChargeback = model.startsWith('Chargeback');
   const isMetering = model.startsWith('Metering');
   const isContainerImage = model === 'ChargebackContainerImage' || model === 'MeteringContainerImage';
   const isContainerProject = model === 'ChargebackContainerProject' || model === 'MeteringContainerProject';
 
-  // Load chargeback options from backend (includes tag_values map for all categories).
+  // `ignore` drops the response of a superseded request (the model changed while it was in flight).
   useEffect(() => {
     if (!model) {
-      return;
+      return undefined;
     }
+    let ignore = false;
     setCbState({ loading: true, cbOpts: null, error: null });
-    http.get<ChargebackOptions>(`/report/react_chargeback_options?model=${encodeURIComponent(model)}`)
-      .then((data) => setCbState({ loading: false, cbOpts: data, error: null }))
-      .catch(() => setCbState({
-        loading: false,
-        cbOpts: null,
-        error: __('Failed to load chargeback options.'),
-      }));
+    http.get<ChargebackOptions>(`/report/chargeback_options?model=${encodeURIComponent(model)}`)
+      .then((data) => {
+        if (!ignore) {
+          setCbState({ loading: false, cbOpts: data, error: null });
+        }
+      })
+      .catch(() => {
+        if (!ignore) {
+          setCbState({
+            loading: false,
+            cbOpts: null,
+            error: __('Failed to load chargeback options.'),
+          });
+        }
+      });
+    return () => {
+      ignore = true;
+    };
   }, [model]);
 
-  // Derive tag values for the selected category directly from the initial payload.
   const tagValues = cbOpts?.tag_values?.[formValues.cb_tag_cat || ''] || [];
 
   // Entity list (projects or images) of the selected container provider
@@ -134,13 +157,25 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
     const providerId = formValues.cb_provider_id;
     if (!providerId || providerId === 'all') {
       setEntityList([]);
-      return;
+      return undefined;
     }
+    let ignore = false;
     http.get<{ entities?: LabelValuePair[] }>(
-      `/report/react_chargeback_entities?provider_id=${encodeURIComponent(providerId)}&model=${encodeURIComponent(model)}`
+      `/report/chargeback_entities?provider_id=${encodeURIComponent(providerId)}&model=${encodeURIComponent(model)}`
     )
-      .then((data) => setEntityList(data.entities || []))
-      .catch(() => setEntityList([]));
+      .then((data) => {
+        if (!ignore) {
+          setEntityList(data.entities || []);
+        }
+      })
+      .catch(() => {
+        if (!ignore) {
+          setEntityList([]);
+        }
+      });
+    return () => {
+      ignore = true;
+    };
   }, [formValues.cb_provider_id, model]);
 
   const change = useCallback(
@@ -168,7 +203,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
   const showCostLabel = isMetering ? __('Show usage by') : __('Show Costs by');
   const cbModel = cbOpts?.cb_model || model;
 
-  // Build Show Costs By options depending on model
   const buildShowByOpts = (): LabelValuePair[] => {
     const none: LabelValuePair = [__('<Choose>'), ''];
     if (isContainerProject) {
@@ -190,7 +224,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
   const cbShowTyp = formValues.cb_show_typ || '';
   const cbGroupby = formValues.cb_groupby || 'date';
 
-  // Group-by options
   const groupByOpts: LabelValuePair[] = [
     [`${cbModel} ${__('and Date')}`, 'date'],
     [`${__('Date')} ${__('and')} ${cbModel}`, 'date-first'],
@@ -212,7 +245,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
 
   return (
     <>
-      {/* Chargeback Resources */}
       {(isVm || isChargeback) && (
         <LabeledSection title={__('Chargeback Resources')}>
           {model === 'ChargebackVm' && (
@@ -256,7 +288,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
         </LabeledSection>
       )}
 
-      {/* Chargeback Filters */}
       <LabeledSection title={__('Chargeback Filters')}>
         <FormRow label={showCostLabel}>
           <Select
@@ -272,7 +303,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </Select>
         </FormRow>
 
-        {/* Cascade: owner */}
         {cbShowTyp === 'owner' && (
           <FormRow label={__('Owner')}>
             <Select
@@ -290,7 +320,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </FormRow>
         )}
 
-        {/* Cascade: tenant */}
         {cbShowTyp === 'tenant' && (
           <FormRow label={__('Tenant')}>
             <Select
@@ -308,7 +337,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </FormRow>
         )}
 
-        {/* Cascade: tag */}
         {cbShowTyp === 'tag' && (
           <>
             <FormRow label={__('Tag Category')}>
@@ -348,7 +376,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </>
         )}
 
-        {/* Cascade: entity */}
         {cbShowTyp === 'entity' && (
           <>
             <FormRow label={__('Provider')}>
@@ -389,7 +416,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </>
         )}
 
-        {/* Group by */}
         <FormRow label={__('Group by')}>
           <Select
             id="cb_groupby"
@@ -440,7 +466,6 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
         )}
       </LabeledSection>
 
-      {/* Chargeback Interval */}
       <LabeledSection title={__('Chargeback Interval')}>
         <FormRow label={showCostLabel}>
           <Select
@@ -456,7 +481,7 @@ const ChargebackFilter = ({ formValues, formOptions, model }: ChargebackFilterPr
           </Select>
         </FormRow>
 
-        <FormRow label={`${cbInterval.charAt(0).toUpperCase() + cbInterval.slice(1)} ${__('Ending with')}`}>
+        <FormRow label={endingWithLabel(cbInterval)}>
           <div className="report-editor-row__content--flex-center">
             <Select
               id="cb_end_interval_offset"

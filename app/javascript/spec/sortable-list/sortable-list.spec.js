@@ -1,5 +1,7 @@
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import MiqFormRenderer from '@@ddf';
 import SortableList from '../../components/sortable-list';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('SortableList', () => {
   const items = ['field-a', 'field-b', 'field-c'];
@@ -67,9 +69,7 @@ describe('SortableList', () => {
       />
     );
     const listItems = getAllByRole('option');
-    listItems[0].dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })
-    );
+    fireEvent.keyDown(listItems[0], { key: 'ArrowDown' });
     expect(onChange).toHaveBeenCalledWith(['field-b', 'field-a', 'field-c']);
   });
 
@@ -82,9 +82,7 @@ describe('SortableList', () => {
       />
     );
     const listItems = getAllByRole('option');
-    listItems[1].dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })
-    );
+    fireEvent.keyDown(listItems[1], { key: 'ArrowUp' });
     expect(onChange).toHaveBeenCalledWith(['field-b', 'field-a', 'field-c']);
   });
 
@@ -107,5 +105,68 @@ describe('SortableList', () => {
       <SortableList input={{ value: [], onChange: jest.fn() }} labelMap={labelMap} />
     );
     expect(container.querySelector('.sortable-list')).toBeEmptyDOMElement();
+  });
+
+  it('names the remove button after the label, not the raw id', () => {
+    const { getByRole } = render(
+      <SortableList
+        input={{ value: items, onChange: jest.fn() }}
+        labelMap={labelMap}
+        onRemove={jest.fn()}
+      />
+    );
+    expect(getByRole('button', { name: 'Remove Field A' })).toBeInTheDocument();
+  });
+
+  it('names the remove button after labelKey for object items', () => {
+    const objectItems = [{ id: 'a', name: 'alpha', display_name: 'Alpha' }, { id: 'b', name: 'beta', display_name: 'Beta' }];
+    const { getByRole } = render(
+      <SortableList
+        input={{ value: objectItems, onChange: jest.fn() }}
+        labelKey="name"
+        onRemove={jest.fn()}
+      />
+    );
+    expect(getByRole('button', { name: 'Remove Beta (beta)' })).toBeInTheDocument();
+  });
+});
+
+// The 'sortable-list' schema component is the SortableListDDF wrapper from the component mapper.
+describe('SortableListDDF (via MiqFormRenderer)', () => {
+  const schema = {
+    fields: [{
+      component: 'sortable-list',
+      id: 'order',
+      name: 'order',
+      label: 'Order',
+      helperText: 'Drag to reorder',
+      labelMap: { 'field-a': 'Field A', 'field-b': 'Field B' },
+    }],
+  };
+
+  const renderForm = (onSubmit = jest.fn()) => renderWithRedux(
+    <MiqFormRenderer
+      schema={schema}
+      initialValues={{ order: ['field-a', 'field-b'] }}
+      onSubmit={onSubmit}
+    />
+  );
+
+  it('renders the form value as a sortable list with the schema label and helper text', () => {
+    renderForm();
+    expect(screen.getByText('Order')).toBeInTheDocument();
+    expect(screen.getByText('Drag to reorder')).toBeInTheDocument();
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['Field A', 'Field B']);
+  });
+
+  it('writes the new order back to the form value', async() => {
+    const onSubmit = jest.fn();
+    renderForm(onSubmit);
+    fireEvent.keyDown(screen.getAllByRole('option')[0], { key: 'ArrowDown' });
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['Field B', 'Field A']);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    await screen.findAllByRole('option');
+    expect(onSubmit).toHaveBeenCalledWith({ order: ['field-b', 'field-a'] }, expect.anything(), expect.anything());
   });
 });

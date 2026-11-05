@@ -111,8 +111,7 @@ const renderCalculationTable = (
 
 const SummaryTab = () => {
   const formOptions = useFormApi();
-  // Subscribe to every field used as a controlled-input value so the component
-  // re-renders when any of them change — otherwise dropdowns snap back.
+  // Subscribed so the component re-renders when any change; otherwise dropdowns snap back.
   const { input: { value: colOrder = [] as string[] } } = useFieldApi({ name: 'col_order' });
   const { input: { value: sortby = [] as string[] } } = useFieldApi({ name: 'sortby' });
   const { input: { value: group = 'No' } } = useFieldApi({ name: 'group' });
@@ -125,6 +124,8 @@ const SummaryTab = () => {
   const { input: { value: pivotBy1Raw = NOTHING } } = useFieldApi({ name: 'pivot_by1' });
   const { input: { value: pivotBy2Raw = NOTHING } } = useFieldApi({ name: 'pivot_by2' });
   const { input: { value: pivotBy3Raw = NOTHING } } = useFieldApi({ name: 'pivot_by3' });
+  useFieldApi({ name: 'col_options' });
+  useFieldApi({ name: 'pivot_cols' });
   const formValues = formOptions.getState().values as ReportFormValues;
   const { availableFields, fieldMetadata } = useFieldMetadata();
 

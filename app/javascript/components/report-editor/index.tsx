@@ -17,6 +17,7 @@ import TrendColumnsTab from './tabs/trend-columns-tab';
 import { FieldMetadataContext } from './field-metadata-context';
 import { modelToReportType } from './utils';
 import { buildInitialValues, buildReportData } from './report-form-values';
+import { validateReportForm } from './validation';
 import type {
   FormData,
   FieldMetadataContextValue,
@@ -56,6 +57,7 @@ type FieldMetadataState = {
   fieldMetadata: FieldMetadata;
 };
 
+// The tab set depends on the report type, which is derived from the selected model.
 const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) => {
   const [{ isLoading, formData, loadError }, setState] = useState<EditorState>({
     isLoading: true,
@@ -64,6 +66,9 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [flashError, setFlashError] = useState<string | null>(null);
+  const [showResetNotice, setShowResetNotice] = useState(false);
+  // Bumped on reset to remount the form: the expression editors copy their value into local state on mount.
+  const [resetCount, setResetCount] = useState(0);
   const [reportType, setReportType] = useState<ReportType>('standard');
 
   const [fieldMetadataState, setFieldMetadataState] = useState<FieldMetadataState>({
@@ -71,11 +76,12 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
     fieldMetadata: {},
   });
 
+  // A ref (not state): only compared, never rendered.
   const prevModelRef = useRef<string | null>(null);
   const isNew = !recordId || recordId === 'new';
 
   useEffect(() => {
-    let url = isNew ? '/report/react_form_data/new' : `/report/react_form_data/${recordId}`;
+    let url = isNew ? '/report/form_data/new' : `/report/form_data/${recordId}`;
     if (isNew && copyFrom) {
       url += `?copy_from=${encodeURIComponent(String(copyFrom))}`;
     }
@@ -86,7 +92,7 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
         setReportType(data.report_type || 'standard');
         prevModelRef.current = (data.report || {}).model || '';
         setFieldMetadataState({
-          availableFields: data.available_fields || [],
+          availableFields: [],
           fieldMetadata: data.field_metadata || {},
         });
       })
@@ -113,8 +119,10 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
     [formData],
   );
 
+  // Runs on every form change. Only a different model matters: it can switch the report
+  // type and with it the tab set (see modelToReportType, which mirrors the server rule).
   const handleFormChange = ({ values }: { values: ReportFormValues }) => {
-    const model = (values.model as { value?: string })?.value ?? (values.model as string) ?? '';
+    const model = values.model ?? '';
     if (model !== prevModelRef.current) {
       prevModelRef.current = model;
       const next = modelToReportType(model || null);
@@ -127,11 +135,12 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
       return;
     }
     setFlashError(null);
+    setShowResetNotice(false);
     setIsSubmitting(true);
 
     const reportData = buildReportData(values);
 
-    const url = isNew ? '/report/react_save/new' : `/report/react_save/${recordId}`;
+    const url = isNew ? '/report/save/new' : `/report/save/${recordId}`;
     http.post<{ success: boolean; message?: string }>(url, { report_data: reportData })
       .then((response) => {
         if (response.success) {
@@ -148,12 +157,24 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
       });
   };
 
+  const onReset = () => {
+    setFlashError(null);
+    setShowResetNotice(true);
+    setResetCount((count) => count + 1);
+  };
+
   const onCancel = () => {
     const message = isNew
       ? __('Add of new Report was cancelled by the user')
       : sprintf(__('Edit of Report "%s" was cancelled by the user'), formData?.report?.name || '');
     miqRedirectBack(message, 'warning', REDIRECT_URL);
   };
+
+  // Editing: nothing to save until something changed. Adding/copying: a prefilled form can be saved as is.
+  let disableSubmit = isNew ? ['invalid'] : ['pristine', 'invalid'];
+  if (isSubmitting) {
+    disableSubmit = ['submitting'];
+  }
 
   if (isLoading) {
     return <Loading active withOverlay={false} />;
@@ -192,13 +213,26 @@ const ReportEditor = ({ recordId = 'new', copyFrom = null }: ReportEditorProps) 
             onCloseButtonClick={() => setFlashError(null)}
           />
         )}
+        {showResetNotice && (
+          <InlineNotification
+            kind="warning"
+            role="status"
+            title={__('All changes have been reset')}
+            lowContrast
+            onCloseButtonClick={() => setShowResetNotice(false)}
+          />
+        )}
         <MiqFormRenderer
+          key={resetCount}
           componentMapper={componentMapper}
           schema={createSchema({ ...formData, report_type: reportType })}
           initialValues={initialValues}
           onSubmit={onSubmit}
           onCancel={onCancel}
-          disableSubmit={isSubmitting ? ['submitting'] : ['invalid']}
+          onReset={onReset}
+          validate={validateReportForm}
+          disableSubmit={disableSubmit}
+          canReset={!isNew}
           buttonsLabels={{ submitLabel: isNew ? __('Add') : __('Save') }}
         >
           <FormSpy subscription={{ values: true }} onChange={handleFormChange as Parameters<typeof FormSpy>[0]['onChange']} />

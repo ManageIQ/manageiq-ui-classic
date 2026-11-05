@@ -3,68 +3,74 @@ module ReportController::Reports::Editor
   include ReportController::Reports::EditorMapping
 
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
+  PREVIEW_ROW_LIMIT = 100
 
   # Helper endpoints are used while adding as well as while editing a report
   EDITOR_FEATURES = %w[miq_report_new miq_report_edit].freeze
+
+  # Actions that serve the editor for either a new or an existing report
+  EDITOR_ACTIONS = %i[
+    form_data
+    available_fields
+    save
+    preview
+    preview_result
+    trend_limit_cols
+    chargeback_options
+    chargeback_entities
+  ].freeze
 
   def self.chart_top_values
     ::Settings.reporting.chart_top_values
   end
 
-  def miq_report_new
-    assert_privileges("miq_report_new")
-    javascript_redirect(:controller => "report", :action => "react_edit", :id => "new")
-  end
-
   def miq_report_copy
     assert_privileges("miq_report_copy")
-    javascript_redirect(:controller => "report", :action => "react_edit", :id => "new", :copy_from => params[:id])
+    javascript_redirect(:controller => "report", :action => "copy", :id => params[:id])
   end
 
-  def miq_report_edit
-    assert_privileges(params[:id] ? "miq_report_edit" : "miq_report_new")
-    javascript_redirect(:controller => "report", :action => "react_edit", :id => params[:id] || "new")
+  # GET /report/new
+  # Renders the page that mounts the React report editor for a new report.
+  def new
+    assert_privileges("miq_report_new")
+    @record_id = "new"
+    drop_breadcrumb(:name => _("Add a new Report"), :url => url_for_only_path(:action => "new"))
+    render_report_editor
   end
 
-  # Get string with unavailable fields while adding/editing report
-  def unavailable_fields_for_model(model)
-    case model
-    when 'ChargebackVm'
-      _('* Caution: CPU Cores Allocated Metric, CPU Cores Used Metric are not supported for Chargeback for Vms.')
-    when 'ChargebackContainerImage'
-      _('* Caution: CPU Allocated Metric, CPU Used Metric, Disk I/O Used Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Images.')
-    when 'ChargebackContainerProject'
-      _('* Caution: CPU Allocated Metric, CPU Used Metric, CPU Cores Allocated Metric, Disk I/O Used Metric, Memory Allocated Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Projects.')
+  # GET /report/edit/:id
+  # Renders the page that mounts the React report editor for an existing report.
+  def edit
+    assert_privileges("miq_report_edit")
+    rpt = find_record_with_rbac(MiqReport, params[:id])
+    if rpt.rpt_type == "Default"
+      flash_to_session(_('Default reports can not be edited'), :error)
+      redirect_to(:action => "explorer")
+      return
     end
+    @record_id = rpt.id.to_s
+    drop_breadcrumb(:name => _("Edit Report \"%{name}\"") % {:name => rpt.name}, :url => url_for_only_path(:action => "edit", :id => rpt.id))
+    render_report_editor
   end
 
-  # GET /report/react_edit(/:id)
-  # Renders the page that mounts the React report editor. The editor loads its
-  # data from react_form_data; copy_from is forwarded so a new report can start
-  # as a copy of an existing one.
-  def react_edit
-    if params[:id] && params[:id] != "new"
-      assert_privileges("miq_report_edit")
-      rpt = find_record_with_rbac(MiqReport, params[:id])
-      if rpt.rpt_type == "Default"
-        flash_to_session(_('Default reports can not be edited'), :error)
-        redirect_to(:action => "explorer")
-        return
-      end
-      @record_id = rpt.id.to_s
-      drop_breadcrumb(:name => _("Edit Report \"%{name}\"") % {:name => rpt.name}, :url => url_for_only_path(:action => "react_edit", :id => rpt.id))
-    else
-      assert_privileges("miq_report_new")
-      @record_id = "new"
-      drop_breadcrumb(:name => _("Add a new Report"), :url => url_for_only_path(:action => "react_edit", :id => "new"))
-    end
-    @copy_from = params[:copy_from]
+  # GET /report/copy/:id
+  # Renders the React report editor for a new report that starts as a copy of
+  # the report with the given id. The editor loads the source through
+  # form_data?copy_from=:id.
+  def copy
+    assert_privileges("miq_report_copy")
+    assert_privileges("miq_report_new")
+    rpt = find_record_with_rbac(MiqReport, params[:id])
+    @record_id = "new"
+    @copy_from = rpt.id.to_s
+    drop_breadcrumb(:name => _("Add a new Report"), :url => url_for_only_path(:action => "copy", :id => rpt.id))
+    render_report_editor
   end
 
-  # GET /report/react_form_data(/:id)
+  # GET /report/form_data(/:id)
   # Returns all data needed to populate the React report editor.
   # When id is "new" and copy_from is supplied, pre-populate from the source report.
-  def react_form_data
+  def form_data
     if params[:id] && params[:id] != "new"
       assert_privileges("miq_report_edit")
       rpt = find_record_with_rbac(MiqReport, params[:id])
@@ -75,7 +81,7 @@ module ReportController::Reports::Editor
       assert_privileges("miq_report_new")
       rpt = find_record_with_rbac(MiqReport, params[:copy_from])
       # The copy is a new custom report, so it must not carry the identity of the source
-      report_attrs = serialize_report_attrs(rpt).merge(:record_id => nil, :name => "Copy of #{rpt.name}")
+      report_attrs = serialize_report_attrs(rpt).merge(:record_id => nil, :name => _("Copy of %{name}") % {:name => rpt.name})
     else
       assert_privileges("miq_report_new")
       report_attrs = {
@@ -107,25 +113,25 @@ module ReportController::Reports::Editor
 
     render :json => {
       :report                     => report_attrs,
-      :report_type                => react_report_type(rpt&.db),
+      :report_type                => report_type_for_model(rpt&.db),
       :models                     => reportable_models,
       :chart_types                => ManageIQ::Reporting::Charting.chart_names_for_select,
       :pdf_page_sizes             => ViewHelper::PDF_PAGE_SIZES.map { |k, v| [_(v), k] },
       :style_classes              => ReportHelper::STYLE_CLASSES.transform_values { |v| _(v) },
-      :queue_timeout_options      => react_queue_timeout_options,
+      :queue_timeout_options      => queue_timeout_options,
       :field_metadata             => field_metadata,
       :unavailable_fields_warning => rpt ? unavailable_fields_for_model(rpt.db) : nil
     }
   end
 
-  # GET /report/react_available_fields?model=SomeModel[&perf_interval=daily]
+  # GET /report/available_fields?model=SomeModel[&perf_interval=daily]
   # Returns the reportable fields of a model with the metadata the editor needs.
   # perf_interval is used for trend/performance models (daily or hourly).
-  def react_available_fields
+  def available_fields
     assert_privileges(*EDITOR_FEATURES)
     model = params[:model].to_s.strip
     if model.blank? || MiqReport.reportable_models.exclude?(model)
-      render :json => {:error => _("Invalid or missing model")}, :status => 422
+      render :json => {:success => false, :message => _("Invalid or missing model")}, :status => 422
       return
     end
     perf_interval = params[:perf_interval].presence
@@ -134,9 +140,9 @@ module ReportController::Reports::Editor
     render :json => {:fields => fields, :field_metadata => field_metadata}
   end
 
-  # POST /report/react_save(/:id)
+  # POST /report/save(/:id)
   # Saves (create or update) a report from a JSON body.
-  def react_save
+  def save
     id = params[:id]
     if id && id != "new"
       assert_privileges("miq_report_edit")
@@ -154,7 +160,7 @@ module ReportController::Reports::Editor
     previous_attrs = report_audit_attrs(rpt)
 
     assign_report_attributes(rpt, report_data)
-    errors = report_validation_errors(rpt, report_data, react_report_type(rpt.db))
+    errors = report_validation_errors(rpt, report_data, report_type_for_model(rpt.db))
     if errors.present?
       render :json => {:success => false, :message => errors.join(", ")}, :status => 422
       return
@@ -175,11 +181,12 @@ module ReportController::Reports::Editor
     render :json => {:success => true, :message => _("Report was saved"), :id => rpt.id}
   end
 
-  # POST /report/react_preview
-  # Builds a temporary MiqReport from the posted report_data, runs generate_table
-  # synchronously with a 100-row limit, and returns { columns:, rows: } as JSON.
-  # Nothing is persisted.
-  def react_preview
+  # POST /report/preview
+  # Builds a temporary MiqReport from the posted report_data and queues its generation
+  # (limited to PREVIEW_ROW_LIMIT rows) on a reporting worker, so a slow report does not
+  # hold a web worker. Returns { task_id: } to poll with preview_result.
+  # Without columns there is nothing to generate and { columns: [], rows: [] } is returned.
+  def preview
     assert_privileges(*EDITOR_FEATURES)
 
     report_data = report_data_param
@@ -192,30 +199,54 @@ module ReportController::Reports::Editor
 
     rpt = MiqReport.new
     assign_report_attributes(rpt, report_data)
-    rpt.name  = rpt.name.presence || "Preview"
-    rpt.title = rpt.title.presence || "Preview"
+    rpt.name  = rpt.name.presence || _("Preview")
+    rpt.title = rpt.title.presence || _("Preview")
 
-    begin
-      rpt.generate_table(:userid => session[:userid], :limit => 100)
-    rescue StandardError => e
-      render :json => {:success => false, :message => e.message}, :status => 422
+    task_id = rpt.async_generate_table(
+      :userid     => session[:userid],
+      :session_id => request.session_options[:id],
+      :limit      => PREVIEW_ROW_LIMIT,
+      :mode       => "adhoc"
+    )
+    # Only the task started here may be read back through preview_result
+    session[:report_preview_task_id] = task_id
+    render :json => {:task_id => task_id}
+  end
+
+  # GET /report/preview_result?task_id=123
+  # Polled by the editor after #preview. Returns { complete: false } while the task runs,
+  # then { columns:, col_keys:, rows: }. The task and its result are removed once read.
+  def preview_result
+    assert_privileges(*EDITOR_FEATURES)
+
+    task_id = params[:task_id].to_i
+    task = session[:report_preview_task_id] == task_id ? MiqTask.find_by(:id => task_id) : nil
+    if task.nil?
+      render :json => {:success => false, :message => _("Report preview not found")}, :status => 404
       return
     end
 
-    col_keys = Array(rpt.col_order)
-    headers = Array(rpt.headers)
-    # Pad labels to match col_order length in case headers is shorter
-    col_labels = col_keys.each_with_index.map { |col, i| headers[i].presence || col }
-    rows = (rpt.table&.data || []).map do |rec|
-      col_keys.map { |col| rec.data[col].to_s }
+    unless task.state == MiqTask::STATE_FINISHED
+      render :json => {:complete => false}
+      return
     end
 
-    render :json => {:columns => col_labels, :col_keys => col_keys, :rows => rows}
+    session[:report_preview_task_id] = nil
+    unless task.results_ready?
+      $log.error("MIQ(#{self.class.name}#preview_result) Failed to generate the report preview: #{task.message}")
+      task.destroy
+      render :json => {:success => false, :message => _("Failed to generate the report preview")}, :status => 422
+      return
+    end
+
+    render :json => {:complete => true}.merge(preview_payload(task.miq_report_result.report_results))
+    task.miq_report_result.destroy
+    task.destroy
   end
 
-  # GET /report/react_trend_limit_cols?trend_col=VmPerformance-cpu_usagemhz_rate_average&perf_interval=daily
+  # GET /report/trend_limit_cols?trend_col=VmPerformance-cpu_usagemhz_rate_average&perf_interval=daily
   # Returns the limit column choices for a given trend column selection.
-  def react_trend_limit_cols
+  def trend_limit_cols
     assert_privileges(*EDITOR_FEATURES)
     trend_col_id = params[:trend_col].to_s.strip
     perf_interval = params[:perf_interval].to_s.strip.presence || "daily"
@@ -228,14 +259,14 @@ module ReportController::Reports::Editor
     render :json => {:limit_cols => limit_cols}
   end
 
-  # GET /report/react_chargeback_options?model=ChargebackVm
+  # GET /report/chargeback_options?model=ChargebackVm
   # Returns option lists needed to render the chargeback filter tab.
-  def react_chargeback_options
+  def chargeback_options
     assert_privileges(*EDITOR_FEATURES)
 
     model = params[:model].to_s.strip
     unless chargeback_report_model?(model)
-      render :json => {:error => _("Invalid or non-chargeback model")}, :status => 422
+      render :json => {:success => false, :message => _("Invalid or non-chargeback model")}, :status => 422
       return
     end
 
@@ -282,9 +313,9 @@ module ReportController::Reports::Editor
     }
   end
 
-  # GET /report/react_chargeback_entities?provider_id=123&model=ChargebackContainerProject
+  # GET /report/chargeback_entities?provider_id=123&model=ChargebackContainerProject
   # Returns the list of entities (projects or images) for a given container provider.
-  def react_chargeback_entities
+  def chargeback_entities
     assert_privileges(*EDITOR_FEATURES)
     provider_id = params[:provider_id].to_s.strip
     model = params[:model].to_s.strip
@@ -302,6 +333,36 @@ module ReportController::Reports::Editor
   end
 
   private
+
+  # Get string with unavailable fields while adding/editing report
+  def unavailable_fields_for_model(model)
+    case model
+    when 'ChargebackVm'
+      _('* Caution: CPU Cores Allocated Metric, CPU Cores Used Metric are not supported for Chargeback for Vms.')
+    when 'ChargebackContainerImage'
+      _('* Caution: CPU Allocated Metric, CPU Used Metric, Disk I/O Used Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Images.')
+    when 'ChargebackContainerProject'
+      _('* Caution: CPU Allocated Metric, CPU Used Metric, CPU Cores Allocated Metric, Disk I/O Used Metric, Memory Allocated Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Projects.')
+    end
+  end
+
+  # Columns, column keys and rows of a generated report, as the editor's preview table needs them.
+  def preview_payload(rpt)
+    col_keys = Array(rpt.col_order)
+    headers = Array(rpt.headers)
+    # Pad labels to match col_order length in case headers is shorter
+    col_labels = col_keys.each_with_index.map { |col, i| headers[i].presence || col }
+    rows = (rpt.table&.data || []).map do |rec|
+      col_keys.map { |col| rec.data[col].to_s }
+    end
+
+    {:columns => col_labels, :col_keys => col_keys, :rows => rows}
+  end
+
+  def render_report_editor
+    @in_a_form = true
+    render :action => "editor"
+  end
 
   def reportable_models
     MiqReport.reportable_models.map do |m|
@@ -324,7 +385,7 @@ module ReportController::Reports::Editor
 
   # Report type the editor tab set depends on: standard, performance, trend or chargeback.
   # Metering models inherit from Chargeback, so they are chargeback reports as well.
-  def react_report_type(model)
+  def report_type_for_model(model)
     if model == ApplicationController::TREND_MODEL
       "trend"
     elsif model.to_s.ends_with?("Performance", "MetricsRollup")
@@ -337,8 +398,10 @@ module ReportController::Reports::Editor
   end
 
   # Build the queue timeout options list used by the React form.
-  def react_queue_timeout_options
-    options = [[_("(Use System Default)"), nil]]
+  # The system default entry names the actual default so users can see what they get.
+  def queue_timeout_options
+    default_label = "<#{_('System Default')} (#{helpers.distance_of_time_in_words(MiqReport.default_queue_timeout)})>"
+    options = [[default_label, nil]]
     (1..6).each { |n| options << [n_("%{count} Hour", "%{count} Hours", n) % {:count => n}, n.hours.to_i] }
     options
   end

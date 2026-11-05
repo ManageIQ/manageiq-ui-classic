@@ -9,29 +9,19 @@ import {
 import { useFormApi, useFieldApi } from '@@ddf';
 import { FormRow, LabeledSection } from '../form-row';
 
-// Percent steps 0, 5, 10 … 100
 const PCT_STEPS = Array.from({ length: 21 }, (_, i) => i * 5);
 
 type LabelValuePair = [string, string];
 
-/**
- * TrendColumnsTab — replaces the standard FieldPicker for VimPerformanceTrend reports.
- *
- * Shows:
- *   - Performance Interval (daily/hourly)
- *   - Trending for (single dropdown from react_available_fields)
- *   - Trend Target Limit (Column picker OR Value text input, shown after a trend_col is chosen)
- *   - Trend Target Percents (up to 3 percent selects, shown after a trend_col is chosen)
- *
- * trend_col is a "db-col" field id, e.g. "VmPerformance-cpu_usage_rate_average";
- * the server splits it into the trend database and column.
- */
+// Replaces the FieldPicker for trend reports.
+// trend_col is a "db-col" field id, e.g. "VmPerformance-cpu_usage_rate_average";
+// the server splits it into the trend database and column.
 const TrendColumnsTab = (props: UseFieldApiConfig) => {
-  useFieldApi(props); // bind to the DDF field (trend_col)
+  useFieldApi(props);
   const formOptions = useFormApi();
+  const change: typeof formOptions.change = (field, value) => formOptions.change(field, value);
 
-  const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
-  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
+  const { input: { value: model = '' } } = useFieldApi({ name: 'model' });
   const { input: { value: perfInterval = 'daily' } } = useFieldApi({ name: 'perf_interval' });
   const { input: { value: trendCol = '' } } = useFieldApi({ name: 'trend_col' });
   const { input: { value: trendLimitCol = '' } } = useFieldApi({ name: 'trend_limit_col' });
@@ -44,42 +34,67 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
   const [fieldsLoading, setFieldsLoading] = useState(false);
   const [limitCols, setLimitCols] = useState<LabelValuePair[]>([]);
 
-  // Fetch available trend fields whenever model or perf_interval changes
+  // `ignore` drops the response of a superseded request (model or interval changed while it was in flight).
   useEffect(() => {
     if (!model) {
       setFields([]);
-      return;
+      return undefined;
     }
+    let ignore = false;
     setFieldsLoading(true);
     http.get<{ fields?: LabelValuePair[] }>(
-      `/report/react_available_fields?model=${encodeURIComponent(model)}&perf_interval=${encodeURIComponent(perfInterval as string)}`
+      `/report/available_fields?model=${encodeURIComponent(model)}&perf_interval=${encodeURIComponent(perfInterval as string)}`
     )
       .then((data) => {
+        if (ignore) {
+          return;
+        }
         const sorted = (data.fields || []).slice().sort((a, b) => a[0].localeCompare(b[0]));
         setFields(sorted);
         setFieldsLoading(false);
       })
       .catch(() => {
+        if (ignore) {
+          return;
+        }
         setFields([]);
         setFieldsLoading(false);
       });
+    return () => {
+      ignore = true;
+    };
   }, [model, perfInterval]);
 
-  // Fetch limit_cols whenever the chosen trend_col changes
   useEffect(() => {
     if (!trendCol) {
       setLimitCols([]);
-      return;
+      return undefined;
     }
+    let ignore = false;
     const interval = (perfInterval as string) || 'daily';
     http.get<{ limit_cols?: LabelValuePair[] }>(
-      `/report/react_trend_limit_cols?trend_col=${encodeURIComponent(trendCol as string)}&perf_interval=${encodeURIComponent(interval)}`
+      `/report/trend_limit_cols?trend_col=${encodeURIComponent(trendCol as string)}&perf_interval=${encodeURIComponent(interval)}`
     )
-      .then((data) => setLimitCols(data.limit_cols || []))
-      .catch(() => setLimitCols([]));
+      .then((data) => {
+        if (ignore) {
+          return;
+        }
+        const cols = data.limit_cols || [];
+        setLimitCols(cols);
+        if (cols.length > 0) {
+          change('trend_limit_col', cols[0][1]);
+          change('trend_limit_val', '');
+        }
+      })
+      .catch(() => {
+        if (!ignore) {
+          setLimitCols([]);
+        }
+      });
+    return () => {
+      ignore = true;
+    };
   }, [trendCol, perfInterval]);
-
-  const change: typeof formOptions.change = (field, value) => formOptions.change(field, value);
 
   return (
     <div className="report-editor-trend-columns">
@@ -94,9 +109,8 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
             value={trendCol as string}
             onChange={(e) => {
               change('trend_col', e.target.value);
-              // Reset dependent fields when trend column changes
               change('trend_limit_col', '');
-              change('trend_limit_val', '');
+              change('trend_limit_val', '100');
               change('trend_pct1', '100');
               change('trend_pct2', '');
               change('trend_pct3', '');
@@ -110,7 +124,6 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
         )}
       </FormRow>
 
-      {/* Target Limit and Target Percents — only shown once a trend_col is chosen */}
       {trendCol && (
         <>
           <LabeledSection title={__('Trend Target Limit')}>
@@ -123,7 +136,6 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
                   value={trendLimitCol as string}
                   onChange={(e) => {
                     change('trend_limit_col', e.target.value);
-                    // Choosing a column clears the manual value
                     if (e.target.value) {
                       change('trend_limit_val', '');
                     }
@@ -137,7 +149,6 @@ const TrendColumnsTab = (props: UseFieldApiConfig) => {
               </FormRow>
             )}
 
-            {/* Value input — shown when no limit column is selected */}
             {!trendLimitCol && (
               <FormRow label={__('Value')}>
                 <TextInput

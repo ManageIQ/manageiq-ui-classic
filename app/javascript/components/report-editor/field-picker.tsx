@@ -7,9 +7,7 @@ import {
 import SortableList from '../sortable-list';
 import { useFieldMetadata } from './field-metadata-context';
 import type { AvailableField, FieldMetadata } from './report-editor-types';
-
-const MAX_COLUMNS = 100;
-const WARN_COLUMNS = 80;
+import { MAX_COLUMNS, WARN_COLUMNS } from './validation';
 
 type FieldsResponse = {
   fields?: AvailableField[];
@@ -17,9 +15,8 @@ type FieldsResponse = {
 };
 
 const FieldPicker = (props: UseFieldApiConfig) => {
-  const { input: { value: colOrder = [] as string[], onChange } } = useFieldApi(props);
-  const { input: { value: modelRaw = '' } } = useFieldApi({ name: 'model' });
-  const model: string = (modelRaw as { value?: string })?.value ?? (modelRaw as string);
+  const { input: { value: colOrder = [] as string[], onChange }, meta } = useFieldApi(props);
+  const { input: { value: model = '' } } = useFieldApi({ name: 'model' });
   const formOptions = useFormApi();
   const { availableFields: contextFields, setFieldData } = useFieldMetadata();
 
@@ -28,9 +25,11 @@ const FieldPicker = (props: UseFieldApiConfig) => {
   const [fieldsLoading, setFieldsLoading] = useState(false);
   const [availableFields, setAvailableFields] = useState<AvailableField[]>(contextFields);
   const prevModelRef = useRef<string | undefined>(undefined);
+  // Incremented per fetch so a slow response for a previous model can't overwrite the current one.
+  const latestRequestRef = useRef(0);
 
   const applySelection = (newIds: string[], fields: AvailableField[] = availableFields) => {
-    onChange(newIds);
+    formOptions.change('col_order', newIds);
     type ColOptionsMap = Record<string, { header?: string; format?: string }>;
     const formValues = formOptions.getState().values as Record<string, ColOptionsMap>;
     const colOptions: ColOptionsMap = formValues.col_options || {};
@@ -42,26 +41,37 @@ const FieldPicker = (props: UseFieldApiConfig) => {
   };
 
   const fetchFieldsForModel = (m: string) => {
+    latestRequestRef.current += 1;
+    const requestId = latestRequestRef.current;
     if (!m) {
       setAvailableFields([]);
+      setFieldsLoading(false);
       setFieldData({ availableFields: [], fieldMetadata: {} });
       return;
     }
     setFieldsLoading(true);
-    http.get<FieldsResponse>(`/report/react_available_fields?model=${encodeURIComponent(m)}`)
+    http.get<FieldsResponse>(`/report/available_fields?model=${encodeURIComponent(m)}`)
       .then((data) => {
+        if (requestId !== latestRequestRef.current) {
+          return;
+        }
         const fields = data.fields || [];
         setAvailableFields(fields);
         setFieldsLoading(false);
         setFieldData({ availableFields: fields, fieldMetadata: data.field_metadata || {} });
       })
       .catch(() => {
+        if (requestId !== latestRequestRef.current) {
+          return;
+        }
         setAvailableFields([]);
         setFieldsLoading(false);
         setFieldData({ availableFields: [], fieldMetadata: {} });
       });
   };
 
+  // Deliberately keyed on `model` only: the body uses refs and reads the form state fresh via
+  // formOptions.getState(), so the re-created helpers never go stale. Adding them would refetch every render.
   useEffect(() => {
     if (model === prevModelRef.current) {
       return;
@@ -74,8 +84,17 @@ const FieldPicker = (props: UseFieldApiConfig) => {
       return;
     }
 
-    const currentColOrder: string[] = (formOptions.getState().values as Record<string, unknown>).col_order as string[] || [];
-    if (currentColOrder.length > 0) {
+    const { values, initialValues } = formOptions.getState() as {
+      values: Record<string, unknown>;
+      initialValues: Record<string, unknown>;
+    };
+    const currentColOrder = (values.col_order as string[]) || [];
+    const initialColOrder = (initialValues.col_order as string[]) || [];
+    // A form reset restores the model and the columns together; the columns are then the saved ones, so there is nothing to confirm.
+    const isBackToInitial = model === initialValues.model
+      && currentColOrder.length === initialColOrder.length
+      && currentColOrder.every((id, index) => id === initialColOrder[index]);
+    if (currentColOrder.length > 0 && !isBackToInitial) {
       setPendingSelection(() => () => {
         applySelection([], []);
         fetchFieldsForModel(model);
@@ -89,6 +108,9 @@ const FieldPicker = (props: UseFieldApiConfig) => {
   const items = availableFields.map(([label, val]) => ({ id: val, label }));
   const initialSelectedItems = items.filter((i) => colOrder.includes(i.id));
 
+  // FilterableMultiSelect only reads initialSelectedItems on mount, so `pickerKey` is used as its `key`
+  // to remount it when the selection changes from outside: new available fields, or a shrinking col_order.
+  // `prevColOrderLenRef` tracks the previous length to detect shrinking; growth comes from the dropdown itself.
   const prevColOrderLenRef = useRef(colOrder.length);
   const [pickerKey, setPickerKey] = useState(0);
   useEffect(() => {
@@ -104,8 +126,6 @@ const FieldPicker = (props: UseFieldApiConfig) => {
   const handleSelectionChange = ({ selectedItems: newSelection }: { selectedItems: { id: string; label: string }[] }) => {
     const newIds = newSelection.map((i: { id: string }) => i.id);
 
-    // preserve order: keep existing selections in their current order,
-    // then append newly added ones at the end
     const added = newIds.filter((id: string) => !colOrder.includes(id));
     const kept = colOrder.filter((id: string) => newIds.includes(id));
     applySelection([...kept, ...added]);
@@ -188,6 +208,16 @@ const FieldPicker = (props: UseFieldApiConfig) => {
             kind="warning"
             title={__('Approaching column limit')}
             subtitle={sprintf(__('%s of %s columns selected.'), count, MAX_COLUMNS)}
+            hideCloseButton
+            lowContrast
+          />
+        )}
+
+        {count === 0 && (meta.touched || meta.submitFailed) && meta.error && (
+          <InlineNotification
+            kind="error"
+            title={__('Field selection required')}
+            subtitle={meta.error}
             hideCloseButton
             lowContrast
           />

@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import {
+  useState, useCallback, useEffect, useRef,
+} from 'react';
 import {
   Button,
   DataTable,
@@ -22,6 +24,12 @@ type PreviewData = {
   rows?: (string[] | Record<string, string>)[];
 };
 
+// The server queues the report on a reporting worker: `preview` answers with a task id,
+// `preview_result` is polled until the task has finished.
+type PreviewResponse = PreviewData & { task_id?: number; complete?: boolean };
+
+const POLL_INTERVAL_MS = 1000;
+
 type PreviewState = {
   isLoading: boolean;
   data: PreviewData | null;
@@ -38,28 +46,73 @@ const PreviewTab = () => {
     error: null,
   });
 
+  // Identifies the latest Refresh; polling of an older (or unmounted) request stops when it no longer matches.
+  const latestRequestRef = useRef(0);
+  const pollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const stopPolling = useCallback(() => {
+    latestRequestRef.current += 1;
+    if (pollTimerRef.current) {
+      clearTimeout(pollTimerRef.current);
+      pollTimerRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => stopPolling, [stopPolling]);
+
   const fetchPreview = useCallback(() => {
     const { values } = formOptions.getState();
     const currentColOrder: string[] = (values as ReportFormValues).col_order || [];
+
+    stopPolling();
+    const requestId = latestRequestRef.current;
 
     if (currentColOrder.length === 0) {
       setState({ isLoading: false, data: null, error: null });
       return;
     }
 
-    setState({ isLoading: true, data: null, error: null });
-    http.post<PreviewData>('/report/react_preview', { report_data: buildReportData(values as ReportFormValues) })
-      .then((result) => {
-        setState({ isLoading: false, data: result, error: null });
-      })
-      .catch((err: { data?: { message?: string }; message?: string }) => {
-        setState({
-          isLoading: false,
-          data: null,
-          error: err.data?.message || err.message || __('Failed to load preview data.'),
-        });
+    const fail = (err: { data?: { message?: string }; message?: string }) => {
+      if (requestId !== latestRequestRef.current) {
+        return;
+      }
+      setState({
+        isLoading: false,
+        data: null,
+        error: err.data?.message || err.message || __('Failed to load preview data.'),
       });
-  }, [formOptions]);
+    };
+
+    const poll = (taskId: number) => {
+      http.get<PreviewResponse>(`/report/preview_result?task_id=${taskId}`)
+        .then((result) => {
+          if (requestId !== latestRequestRef.current) {
+            return;
+          }
+          if (result.complete === false) {
+            pollTimerRef.current = setTimeout(() => poll(taskId), POLL_INTERVAL_MS);
+            return;
+          }
+          setState({ isLoading: false, data: result, error: null });
+        })
+        .catch(fail);
+    };
+
+    setState({ isLoading: true, data: null, error: null });
+    http.post<PreviewResponse>('/report/preview', { report_data: buildReportData(values as ReportFormValues) })
+      .then((result) => {
+        if (requestId !== latestRequestRef.current) {
+          return;
+        }
+        if (result.task_id === undefined) {
+          // Nothing to generate: the server answered with the (empty) preview directly.
+          setState({ isLoading: false, data: result, error: null });
+          return;
+        }
+        poll(result.task_id);
+      })
+      .catch(fail);
+  }, [formOptions, stopPolling]);
 
   const renderContent = () => {
     if ((colOrder as string[]).length === 0) {

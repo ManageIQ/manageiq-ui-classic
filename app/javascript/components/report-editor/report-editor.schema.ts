@@ -1,14 +1,14 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import type { MiqFormSchemaType, BaseFieldType } from '../../types/forms';
 import type { FormDataWithType } from './report-editor-types';
+import { MAX_COLUMNS } from './validation';
 
-const STANDARD_TABS = ['columns', 'filter', 'summary', 'charts', 'styling', 'preview'] as const;
-// Trend and chargeback have a reduced tab set; performance now uses all standard tabs.
+const STANDARD_TABS = ['columns', 'styling', 'filter', 'summary', 'charts', 'preview'] as const;
+// Trend and chargeback have a reduced tab set.
 const REDUCED_TABS = ['columns', 'filter', 'preview'] as const;
 
 type TabName = typeof STANDARD_TABS[number];
 
-// SchemaField is wide; use BaseFieldType for tab field objects
 type TabField = BaseFieldType & Record<string, unknown>;
 
 const columnsTab = (formData: FormDataWithType): TabField => {
@@ -45,8 +45,9 @@ const columnsTab = (formData: FormDataWithType): TabField => {
         placeholder: __('<Choose>'),
         includeEmpty: true,
         options: (formData.models || []).map(([label, value]) => ({ label, value })),
+        validate: [{ type: validatorTypes.REQUIRED }],
+        isRequired: true,
       },
-      // Performance Interval & Averages Based On — only shown for performance reports
       ...(isPerformance ? [
         {
           component: componentTypes.SELECT,
@@ -69,20 +70,33 @@ const columnsTab = (formData: FormDataWithType): TabField => {
           ],
         },
       ] : []),
-      // Trend column picker — replaces FieldPicker for trend reports
       ...(isTrend ? [
         {
           component: 'report-trend-columns-tab',
           name: 'trend_col',
           id: 'trend_col',
+          validate: [{ type: validatorTypes.REQUIRED }],
+          isRequired: true,
         },
       ] : []),
-      // Field picker, formatting table, and PDF size are only for non-trend reports
       ...(!isTrend ? [
         {
           component: 'report-field-picker',
           name: 'col_order',
           id: 'col_order',
+          validate: [
+            { type: validatorTypes.REQUIRED },
+            (value: string[] = []) => {
+              if (!value || value.length === 0) {
+                return __('At least one field must be selected');
+              }
+              if (value.length > MAX_COLUMNS) {
+                return sprintf(__('Maximum %s columns allowed'), MAX_COLUMNS);
+              }
+              return undefined;
+            },
+          ],
+          isRequired: true,
         },
         {
           component: componentTypes.SELECT,
@@ -130,10 +144,8 @@ const filterTab = (formData: FormDataWithType): TabField => ({
       id: 'filter_tab_content',
       reportType: formData.report_type || 'standard',
     },
-    // Hidden fields — not rendered but must be registered so DDF includes
-    // their values in the submitted form state. FilterTab calls
-    // formOptions.change('record_filter', rqbQuery) directly; without
-    // registration those values are silently dropped at submit time.
+    // Hidden but registered: FilterTab sets these via formOptions.change, and DDF
+    // silently drops unregistered values at submit time.
     {
       component: componentTypes.TEXT_FIELD,
       name: 'record_filter',
@@ -205,17 +217,15 @@ const previewTab = (): TabField => ({
 
 const TAB_BUILDERS: Record<TabName, (formData: FormDataWithType) => TabField> = {
   columns: columnsTab,
+  styling: stylingTab,
   filter: filterTab,
   summary: () => summaryTab(),
   charts: chartsTab,
-  styling: stylingTab,
   preview: () => previewTab(),
 };
 
 const createSchema = (formData: FormDataWithType): MiqFormSchemaType => {
   const reportType = formData.report_type || 'standard';
-  // Trend and chargeback reports only have the tabs that apply to them;
-  // performance reports use the full set.
   const tabNames: readonly TabName[] = (reportType === 'trend' || reportType === 'chargeback')
     ? REDUCED_TABS
     : STANDARD_TABS;

@@ -1,30 +1,16 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react';
-import { renderWithRedux } from '../helpers/mountForm';
-import ReportEditor from '../../components/report-editor';
+import {
+  fireEvent, screen, waitFor, within,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  makeFormData, openTab, postedBody, renderAndOpenTab, requestedUrls, requestsTo, resetFetchMock,
+} from '../helpers/reportEditor';
 
-// Base form data returned by the mocked http.get call.
-const baseFormData = {
-  report: {
-    name: 'My Report',
-    title: 'My Title',
-    model: 'Vm',
-    col_order: [],
-    headers: [],
-    col_formats: [],
-    col_options: {},
-    queue_timeout: null,
-    pdf_page_size: 'US-Letter',
-    db_options: {},
-  },
-  report_type: 'standard',
-  models: [['Virtual Machines', 'Vm'], ['Hosts', 'Host']],
-  queue_timeout_options: [['(Use System Default)', null], ['1 Hour', 3600]],
+const baseFormData = makeFormData({
+  report: { db_options: {} },
   pdf_page_sizes: [['US Letter', 'US-Letter'], ['A4', 'A4']],
-  available_fields: [],
-  field_metadata: {},
-};
+});
 
-// Mocked chargeback options returned by react_chargeback_options
 const cbOptions = {
   users: { admin: 'Administrator', bob: 'Bob Smith' },
   tenants: { 1: 'My Company', 2: 'Acme Corp' },
@@ -38,92 +24,202 @@ const cbOptions = {
   cb_model: 'Vm',
 };
 
-// Helper to render, wait for load, then click the Filter tab
-const renderAndClickFilter = async() => {
-  renderWithRedux(<ReportEditor recordId="new" />);
-  await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
-  const filterTab = screen.getAllByRole('tab').find((t) => t.textContent.trim() === 'Filter');
-  fireEvent.click(filterTab);
-  // Small tick to let any state updates settle
-  await waitFor(() => {});
+const expressionMetadata = {
+  fields: [
+    ['VM and Instance : Name', 'Vm-name', { col_type: 'string' }],
+    ['VM and Instance : CPUs', 'Vm-num_cpu', { col_type: 'integer' }],
+  ],
 };
 
+const withColumns = {
+  col_order: ['Vm-name'],
+  headers: ['Name'],
+  col_formats: [''],
+  col_options: { 'Vm-name': { header: 'Name', format: '' } },
+};
+
+const change = (id, value) => fireEvent.change(document.getElementById(id), { target: { value } });
+
+// Renders the editor for the given form data and opens the Filter tab.
+const openFilter = (formData = baseFormData, responses = {}) => renderAndOpenTab('Filter', {
+  formData,
+  chargebackOptions: cbOptions,
+  ...responses,
+});
+
 describe('FilterTab', () => {
-  beforeEach(() => {
-    window.http = {
-      get: jest.fn((url) => {
-        if (url.includes('react_chargeback_options')) {
-          return Promise.resolve(cbOptions);
-        }
-        return Promise.resolve(baseFormData);
-      }),
-      post: jest.fn(() => Promise.resolve({ success: true, message: 'Report was saved' })),
-    };
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  // -------------------------------------------------------------------------
-  // Standard variant
-  // -------------------------------------------------------------------------
+  afterEach(resetFetchMock);
 
   describe('standard report', () => {
     it('shows a prompt when no model is selected', async() => {
-      const data = {
-        ...baseFormData,
-        report: { ...baseFormData.report, model: '' },
-      };
-      window.http.get.mockResolvedValue(data);
-      await renderAndClickFilter();
+      await openFilter(makeFormData({ report: { model: '' } }));
       expect(screen.getByText(/Select a model on the Columns tab/)).toBeInTheDocument();
     });
 
     it('shows Record Filter heading when model is set', async() => {
-      // ExpressionEditor will try to fetch /expression_editor/metadata — mock it
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) {
-          return Promise.resolve({ fields: [] });
-        }
-        return Promise.resolve(baseFormData);
-      });
-      await renderAndClickFilter();
+      await openFilter();
       await waitFor(() => {
         expect(screen.getByText(/Record Filter/)).toBeInTheDocument();
       });
     });
 
     it('shows Display Filter section heading', async() => {
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) {
-          return Promise.resolve({ fields: [] });
-        }
-        return Promise.resolve(baseFormData);
-      });
-      await renderAndClickFilter();
+      await openFilter();
       await waitFor(() => {
         expect(screen.getByText(/Display Filter/)).toBeInTheDocument();
       });
     });
 
     it('shows a hint when no columns are selected for display filter', async() => {
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) {
-          return Promise.resolve({ fields: [] });
-        }
-        return Promise.resolve(baseFormData);
-      });
-      await renderAndClickFilter();
+      await openFilter();
       await waitFor(() => {
         expect(screen.getByText(/Add columns first/)).toBeInTheDocument();
       });
     });
   });
 
-  // -------------------------------------------------------------------------
-  // Trend variant
-  // -------------------------------------------------------------------------
+
+  describe('standard report expression editors', () => {
+    const filtered = makeFormData({
+      report: {
+        ...withColumns,
+        record_filter: { '=': { field: 'Vm-name', value: 'prod' } },
+        display_filter: { '=': { field: 'Vm-name', value: 'dev' } },
+      },
+    });
+    const openFiltered = (formData = filtered, responses = {}) => openFilter(formData, { expressionMetadata, ...responses });
+    const previews = () => Array.from(document.querySelectorAll('.exp-preview')).map((el) => el.textContent);
+
+    it('requests the expression metadata for the record and display filters', async() => {
+      await openFiltered();
+      await waitFor(() => expect(requestsTo('/expression_editor/metadata')).toHaveLength(2));
+      expect(requestsTo('/expression_editor/metadata')[0][0]).toContain('model=Vm');
+    });
+
+    it('previews the saved record and display filters in words', async() => {
+      await openFiltered();
+
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      expect(previews()[0]).toContain('VM and Instance : Name = "prod"');
+      expect(previews()[1]).toContain('VM and Instance : Name = "dev"');
+    });
+
+    it('has no preview when the report has no filters', async() => {
+      await openFiltered(makeFormData({ report: withColumns }));
+      await waitFor(() => expect(document.querySelectorAll('.exp-query-builder').length).toBeGreaterThan(0));
+
+      expect(previews()).toHaveLength(0);
+    });
+
+    it('restores the saved filters when the form is reset', async() => {
+      const user = userEvent.setup();
+      await renderAndOpenTab('Filter', {
+        formData: filtered, chargebackOptions: cbOptions, expressionMetadata,
+      }, { recordId: '42' });
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      const recordValue = document.querySelectorAll('.exp-query-builder')[0].querySelector('input[value="prod"]');
+      await user.clear(recordValue);
+      await user.type(recordValue, 'staging');
+      await waitFor(() => expect(previews()[0]).toContain('"staging"'));
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      await openTab('Filter');
+
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      expect(previews()[0]).toContain('"prod"');
+      expect(document.querySelectorAll('.exp-query-builder')[0].querySelector('input[value="prod"]')).toBeInTheDocument();
+    });
+
+    it('updates the record filter preview when the value is edited', async() => {
+      const user = userEvent.setup();
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      const recordValue = document.querySelectorAll('.exp-query-builder')[0].querySelector('input[value="prod"]');
+
+      await user.clear(recordValue);
+      await user.type(recordValue, 'staging');
+
+      await waitFor(() => expect(previews()[0]).toContain('"staging"'));
+      expect(previews()[1]).toContain('"dev"');
+    });
+
+    it('updates the display filter preview when the value is edited', async() => {
+      const user = userEvent.setup();
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      const displayValue = document.querySelectorAll('.exp-query-builder')[1].querySelector('input[value="dev"]');
+
+      await user.clear(displayValue);
+      await user.type(displayValue, 'qa');
+
+      await waitFor(() => expect(previews()[1]).toContain('"qa"'));
+      expect(previews()[0]).toContain('"prod"');
+    });
+
+    it('clears the record filter preview when the last rule is removed', async() => {
+      const user = userEvent.setup();
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+
+      const recordEditor = document.querySelectorAll('.exp-query-builder')[0];
+      await user.click(within(recordEditor).getAllByRole('button', { name: /remove rule/i })[0]);
+
+      await waitFor(() => expect(previews()).toHaveLength(1));
+      expect(previews()[0]).toContain('"dev"');
+    });
+
+    it('clears the display filter preview when the last rule is removed', async() => {
+      const user = userEvent.setup();
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+
+      const displayEditor = document.querySelectorAll('.exp-query-builder')[1];
+      await user.click(within(displayEditor).getAllByRole('button', { name: /remove rule/i })[0]);
+
+      await waitFor(() => expect(previews()).toHaveLength(1));
+      expect(previews()[0]).toContain('"prod"');
+    });
+
+    it('keeps the display filter disabled while the report has no columns', async() => {
+      await openFiltered(makeFormData({ report: { record_filter: filtered.report.record_filter } }));
+      await waitFor(() => expect(previews()).toHaveLength(1));
+
+      expect(screen.getByText('Add columns first to enable the display filter.')).toBeInTheDocument();
+      expect(document.querySelectorAll('.exp-query-builder')).toHaveLength(1);
+    });
+
+    it('enables the display filter once the report has columns', async() => {
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+
+      expect(document.querySelectorAll('.exp-query-builder')).toHaveLength(2);
+      expect(screen.queryByText('Add columns first to enable the display filter.')).not.toBeInTheDocument();
+    });
+
+    it('saves the edited filters in MiqExpression form', async() => {
+      const user = userEvent.setup();
+      await openFiltered();
+      await waitFor(() => expect(previews()).toHaveLength(2));
+      const recordValue = document.querySelectorAll('.exp-query-builder')[0].querySelector('input[value="prod"]');
+      await user.clear(recordValue);
+      await user.type(recordValue, 'staging');
+      await waitFor(() => expect(previews()[0]).toContain('"staging"'));
+
+      await user.click(screen.getAllByRole('button', { name: 'Add' })[0]);
+      await waitFor(() => expect(requestsTo('/report/save/')).toHaveLength(1));
+
+      const { report_data: data } = postedBody('/report/save/');
+      expect(data.record_filter).toEqual({ '=': { field: 'Vm-name', value: 'staging' } });
+      expect(data.display_filter).toEqual({ '=': { field: 'Vm-name', value: 'dev' } });
+    });
+
+    it('shows an error in place of the editor when the metadata request fails', async() => {
+      await openFiltered(filtered, { expressionMetadata: { throws: new Error('Metadata unavailable') } });
+
+      await waitFor(() => expect(screen.getAllByText('Expression Editor').length).toBeGreaterThan(0));
+      expect(previews()).toHaveLength(0);
+    });
+  });
 
   describe('trend report', () => {
     const trendData = {
@@ -137,31 +233,24 @@ describe('FilterTab', () => {
       },
     };
 
-    beforeEach(() => {
-      window.http.get.mockResolvedValue(trendData);
-    });
-
     it('shows Performance Timeframe heading for trend reports', async() => {
-      await renderAndClickFilter();
+      await openFilter(trendData);
       expect(screen.getByText('Performance Timeframe')).toBeInTheDocument();
     });
 
     it('renders end and start selects for trend', async() => {
-      await renderAndClickFilter();
+      await openFilter(trendData);
       expect(document.getElementById('perf_end')).toBeInTheDocument();
       expect(document.getElementById('perf_start')).toBeInTheDocument();
     });
 
     it('does NOT show an expression editor for trend', async() => {
-      await renderAndClickFilter();
+      await openFilter(trendData);
       expect(screen.queryByText(/Record Filter/)).not.toBeInTheDocument();
       expect(screen.queryByText(/Display Filter/)).not.toBeInTheDocument();
     });
   });
 
-  // -------------------------------------------------------------------------
-  // Performance variant
-  // -------------------------------------------------------------------------
 
   describe('performance report', () => {
     const perfData = {
@@ -175,33 +264,24 @@ describe('FilterTab', () => {
       },
     };
 
-    beforeEach(() => {
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) {
-          return Promise.resolve({ fields: [] });
-        }
-        return Promise.resolve(perfData);
-      });
-    });
-
     it('shows Performance Timeframe heading', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       expect(screen.getByText('Performance Timeframe')).toBeInTheDocument();
     });
 
     it('renders end and start selects', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       expect(document.getElementById('perf_end')).toBeInTheDocument();
       expect(document.getElementById('perf_start')).toBeInTheDocument();
     });
 
     it('shows "going back" label between selects', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       expect(screen.getByText('going back')).toBeInTheDocument();
     });
 
     it('shows daily label for daily interval', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       expect(screen.getByText('Show daily data from')).toBeInTheDocument();
     });
 
@@ -214,25 +294,19 @@ describe('FilterTab', () => {
           db_options: { interval: 'hourly', end_offset: 0, start_offset: 3600 },
         },
       };
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('expression_editor/metadata')) {
-          return Promise.resolve({ fields: [] });
-        }
-        return Promise.resolve(hourlyData);
-      });
-      await renderAndClickFilter();
+      await openFilter(hourlyData);
       expect(screen.getByText('Show hourly data from')).toBeInTheDocument();
     });
 
     it('shows the Primary (Record) Filter heading', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       await waitFor(() => {
         expect(screen.getByText(/Primary \(Record\) Filter/)).toBeInTheDocument();
       });
     });
 
     it('renders an ExpressionEditor for the record filter', async() => {
-      await renderAndClickFilter();
+      await openFilter(perfData);
       await waitFor(() => {
         // ExpressionEditor renders when model is set; at minimum the section heading appears
         expect(screen.getByText(/Primary \(Record\) Filter/)).toBeInTheDocument();
@@ -240,9 +314,107 @@ describe('FilterTab', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // Chargeback variant
-  // -------------------------------------------------------------------------
+
+  describe('performance timeframe', () => {
+    const timeframeData = (interval) => makeFormData({
+      report_type: 'performance',
+      report: {
+        model: 'VmPerformance',
+        ...withColumns,
+        db_options: { interval, end_offset: 0, start_offset: 86400 },
+      },
+    });
+    const values = (id) => Array.from(document.getElementById(id).options).map((option) => option.value);
+
+    it('offers day-based choices for a daily interval', async() => {
+      await openFilter(timeframeData('daily'));
+
+      expect(values('perf_end')).toEqual(['0', '1', '2', '3', '4', '5', '6', '7']);
+      expect(values('perf_start')[0]).toBe('86400');
+      expect(values('perf_start')).toHaveLength(8);
+    });
+
+    it('offers hour-based choices for an hourly interval', async() => {
+      await openFilter(timeframeData('hourly'));
+
+      expect(values('perf_end')).toEqual(['0', '1', '2', '3', '4', '6', '12', '24']);
+      expect(values('perf_start')[0]).toBe('3600');
+      expect(screen.getByText('Now (partial)')).toBeInTheDocument();
+    });
+
+    it('changes the end of the timeframe', async() => {
+      await openFilter(timeframeData('daily'));
+
+      change('perf_end', '3');
+
+      await waitFor(() => expect(document.getElementById('perf_end')).toHaveValue('3'));
+    });
+
+    it('changes the length of the timeframe', async() => {
+      await openFilter(timeframeData('daily'));
+
+      change('perf_start', '1209600');
+
+      await waitFor(() => expect(document.getElementById('perf_start')).toHaveValue('1209600'));
+    });
+
+    it('saves the chosen timeframe', async() => {
+      const user = userEvent.setup();
+      await openFilter(timeframeData('daily'));
+      change('perf_end', '2');
+      change('perf_start', '604800');
+      await waitFor(() => expect(document.getElementById('perf_start')).toHaveValue('604800'));
+
+      await user.click(screen.getAllByRole('button', { name: 'Add' })[0]);
+      await waitFor(() => expect(requestsTo('/report/save/')).toHaveLength(1));
+
+      expect(postedBody('/report/save/').report_data).toMatchObject({ perf_end: '2', perf_start: '604800' });
+    });
+
+    it('edits the record filter of a performance report', async() => {
+      const user = userEvent.setup();
+      await openFilter(
+        makeFormData({
+          report_type: 'performance',
+          report: {
+            model: 'VmPerformance',
+            ...withColumns,
+            db_options: { interval: 'daily' },
+            record_filter: { '=': { field: 'Vm-name', value: 'prod' } },
+          },
+        }),
+        { expressionMetadata },
+      );
+      const input = await waitFor(() => {
+        const found = document.querySelector('.exp-query-builder input[value="prod"]');
+        expect(found).toBeInTheDocument();
+        return found;
+      });
+
+      await user.clear(input);
+      await user.type(input, 'staging');
+      await user.click(screen.getAllByRole('button', { name: 'Add' })[0]);
+      await waitFor(() => expect(requestsTo('/report/save/')).toHaveLength(1));
+
+      expect(postedBody('/report/save/').report_data.record_filter)
+        .toEqual({ '=': { field: 'Vm-name', value: 'staging' } });
+    });
+  });
+
+  describe('trend timeframe', () => {
+    it('changes the timeframe of a trend report', async() => {
+      await openFilter(makeFormData({
+        report_type: 'trend',
+        report: { model: 'VimPerformanceTrend', db_options: { interval: 'daily' } },
+      }));
+
+      change('perf_end', '1');
+      change('perf_start', '172800');
+
+      await waitFor(() => expect(document.getElementById('perf_end')).toHaveValue('1'));
+      expect(document.getElementById('perf_start')).toHaveValue('172800');
+    });
+  });
 
   describe('chargeback report', () => {
     const cbData = {
@@ -259,54 +431,43 @@ describe('FilterTab', () => {
       },
     };
 
-    beforeEach(() => {
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) {
-          return Promise.resolve(cbOptions);
-        }
-        return Promise.resolve(cbData);
-      });
-    });
-
-    it('calls react_chargeback_options endpoint', async() => {
-      await renderAndClickFilter();
+    it('calls chargeback_options endpoint', async() => {
+      await openFilter(cbData);
       await waitFor(() => {
-        expect(window.http.get).toHaveBeenCalledWith(
-          expect.stringContaining('react_chargeback_options')
-        );
+        expect(requestedUrls()).toContainEqual(expect.stringContaining('chargeback_options?model=ChargebackVm'));
       });
     });
 
     it('shows Chargeback Filters heading', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(screen.getByText('Chargeback Filters')).toBeInTheDocument();
       });
     });
 
     it('shows Chargeback Interval heading', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(screen.getByText('Chargeback Interval')).toBeInTheDocument();
       });
     });
 
     it('renders cb_interval select', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(document.getElementById('cb_interval')).toBeInTheDocument();
       });
     });
 
     it('renders cb_show_typ select', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(document.getElementById('cb_show_typ')).toBeInTheDocument();
       });
     });
 
     it('renders cb_groupby select', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(document.getElementById('cb_groupby')).toBeInTheDocument();
       });
@@ -328,54 +489,42 @@ describe('FilterTab', () => {
           },
         },
       };
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) {
-          return Promise.resolve(cbOptions);
-        }
-        return Promise.resolve(ownerData);
-      });
-      await renderAndClickFilter();
+      await openFilter(ownerData);
       await waitFor(() => {
         expect(document.getElementById('cb_owner_id')).toBeInTheDocument();
       });
     });
 
     it('shows Include C&U Metrics toggle for ChargebackVm', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(screen.getByText('Include Capacity & Utilization Metrics')).toBeInTheDocument();
       });
     });
 
     it('shows Include Cumulative Rate toggle for Chargeback models', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(screen.getByText('Include Cumulative Rate Calculation')).toBeInTheDocument();
       });
     });
 
     it('shows Method for allocated metrics select for ChargebackVm', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(screen.getByText('Method for allocated metrics')).toBeInTheDocument();
       });
     });
 
     it('shows timezone select', async() => {
-      await renderAndClickFilter();
+      await openFilter(cbData);
       await waitFor(() => {
         expect(document.getElementById('tz')).toBeInTheDocument();
       });
     });
 
     it('shows an error notification when options fail to load', async() => {
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) {
-          return Promise.reject(new Error('Network error'));
-        }
-        return Promise.resolve(cbData);
-      });
-      await renderAndClickFilter();
+      await openFilter(cbData, { chargebackOptions: { throws: new Error('Network error') } });
       await waitFor(() => {
         expect(screen.getByText('Failed to load chargeback options.')).toBeInTheDocument();
       });
@@ -386,13 +535,7 @@ describe('FilterTab', () => {
         ...cbData,
         report: { ...cbData.report, model: '' },
       };
-      window.http.get.mockImplementation((url) => {
-        if (url.includes('react_chargeback_options')) {
-          return Promise.resolve(cbOptions);
-        }
-        return Promise.resolve(noModelData);
-      });
-      await renderAndClickFilter();
+      await openFilter(noModelData);
       await waitFor(() => {
         expect(screen.getByText(/Select a model on the Columns tab/)).toBeInTheDocument();
       });

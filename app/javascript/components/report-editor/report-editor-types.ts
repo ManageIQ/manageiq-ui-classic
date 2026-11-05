@@ -1,22 +1,9 @@
-/**
- * Shared type definitions for the Report Editor component.
- */
-
 import type { ReactNode } from 'react';
 import type { MiqFormSchemaType } from '../../types/forms';
 
-// Re-export for convenience within the module
 export type { MiqFormSchemaType };
 
-// ---------------------------------------------------------------------------
-// Report type discriminant
-// ---------------------------------------------------------------------------
-
 export type ReportType = 'standard' | 'performance' | 'trend' | 'chargeback';
-
-// ---------------------------------------------------------------------------
-// Field metadata (from server react_form_data / react_available_fields)
-// ---------------------------------------------------------------------------
 
 export type FieldMeta = {
   numeric?: boolean;
@@ -29,22 +16,13 @@ export type FieldMeta = {
 
 export type FieldMetadata = Record<string, FieldMeta>;
 
-/** [label, fieldId][] */
 export type AvailableField = [string, string];
-
-// ---------------------------------------------------------------------------
-// FieldMetadataContext value
-// ---------------------------------------------------------------------------
 
 export type FieldMetadataContextValue = {
   availableFields: AvailableField[];
   fieldMetadata: FieldMetadata;
   setFieldData: (data: { availableFields: AvailableField[]; fieldMetadata: FieldMetadata }) => void;
 };
-
-// ---------------------------------------------------------------------------
-// Form values (the DDF form state shape)
-// ---------------------------------------------------------------------------
 
 export type StyleRule = {
   class?: string;
@@ -66,7 +44,7 @@ export type ColOptions = Record<string, ColOption>;
 export type ReportFormValues = {
   name?: string;
   title?: string;
-  model?: string | { value: string; label?: string };
+  model?: string;
   queue_timeout?: string;
   col_order?: string[];
   col_options?: ColOptions;
@@ -119,14 +97,8 @@ export type ReportFormValues = {
   cumulative_rate_calculation?: boolean;
 };
 
-// Loose object that represents either a MiqExpression hash or an RQB query
-// (before or after the user edits it).  We can't fully type MiqExpression
-// without mirroring the entire expression tree, so `Record<string, unknown>` suffices.
+// Either a MiqExpression hash or an RQB query; the expression tree is not mirrored in types.
 export type ReportFilter = Record<string, unknown>;
-
-// ---------------------------------------------------------------------------
-// Server response shapes (react_form_data)
-// ---------------------------------------------------------------------------
 
 export type ReportRecord = {
   name?: string;
@@ -199,16 +171,11 @@ export type FormData = {
   models?: [string, string][];
   queue_timeout_options?: [string, string | null][];
   pdf_page_sizes?: [string, string][];
-  available_fields?: AvailableField[];
   field_metadata?: FieldMetadata;
   chart_types?: [string, string][];
   style_classes?: Record<string, string>;
   unavailable_fields_warning?: string;
 };
-
-// ---------------------------------------------------------------------------
-// Chargeback options response (react_chargeback_options)
-// ---------------------------------------------------------------------------
 
 export type ChargebackOptions = {
   users?: Record<string, string>;
@@ -221,24 +188,12 @@ export type ChargebackOptions = {
   tag_values?: Record<string, [string, string][]>;
 };
 
-// ---------------------------------------------------------------------------
-// DDF form-options (useFormApi) — subset we actually call
-// ---------------------------------------------------------------------------
-
 export type FormOptions = {
   change: (field: string, value: string | boolean | string[] | Record<string, unknown> | null | undefined) => void;
   getState: () => { values: ReportFormValues };
 };
 
-// ---------------------------------------------------------------------------
-// Schema (report-editor.schema)
-// ---------------------------------------------------------------------------
-
 export type FormDataWithType = FormData & { report_type?: ReportType };
-
-// ---------------------------------------------------------------------------
-// Props shared across sub-components
-// ---------------------------------------------------------------------------
 
 export type FormRowProps = {
   label: string;

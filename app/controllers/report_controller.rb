@@ -38,8 +38,6 @@ class ReportController < ApplicationController
   REPORT_X_BUTTON_ALLOWED_ACTIONS = {
     'miq_report_copy'             => :miq_report_copy,
     'miq_report_delete'           => :miq_report_delete,
-    'miq_report_edit'             => :miq_report_edit,
-    'miq_report_new'              => :miq_report_new,
     'miq_report_run'              => :miq_report_run,
     'miq_report_schedule_add'     => :miq_report_schedule_add,
     'miq_report_schedule_edit'    => :miq_report_schedule_edit,
@@ -929,5 +927,9 @@ class ReportController < ApplicationController
   end
 
   menu_section :vi
-  feature_for_actions %w[miq_report_new miq_report_copy miq_report_edit], *EXP_EDITOR_ACTIONS
+
+  feature_for_actions 'miq_report_new', :new
+  feature_for_actions 'miq_report_edit', :edit
+  feature_for_actions 'miq_report_copy', :copy
+  feature_for_actions ReportController::Reports::Editor::EDITOR_FEATURES, *ReportController::Reports::Editor::EDITOR_ACTIONS
 end

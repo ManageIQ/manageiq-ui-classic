@@ -1,15 +1,16 @@
-import { screen, waitFor } from '@testing-library/react';
-import { renderWithRedux } from '../helpers/mountForm';
-import ReportEditor from '../../components/report-editor';
+import {
+  fireEvent, screen, waitFor, within,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  makeFormData, mockApi, mockRoute, postedBody, renderEditor, requestsTo, resetFetchMock, waitForTabs,
+} from '../helpers/reportEditor';
 
 // ColumnFormattingTable is rendered inside the Columns tab (no tab click needed).
 // It appears when col_order is non-empty (schema condition: isNotEmpty).
 
-const baseFormData = {
+const baseFormData = makeFormData({
   report: {
-    name: 'My Report',
-    title: 'My Title',
-    model: 'Vm',
     col_order: ['Vm-name', 'Vm-power_state'],
     headers: ['Name', 'Power State'],
     col_formats: ['', ''],
@@ -17,68 +18,48 @@ const baseFormData = {
       'Vm-name': { header: 'Name', format: '' },
       'Vm-power_state': { header: 'Power State', format: '' },
     },
-    queue_timeout: null,
-    db_options: {},
   },
-  report_type: 'standard',
   models: [['Virtual Machines', 'Vm']],
-  queue_timeout_options: [['(Use System Default)', null]],
   pdf_page_sizes: [],
-  available_fields: [['Name', 'Vm-name'], ['Power State', 'Vm-power_state']],
   field_metadata: {
     'Vm-name': { available_formats: [], default_format: null },
     'Vm-power_state': { available_formats: [], default_format: null },
   },
-};
+});
 
-// FieldPicker fetches available fields from react_available_fields on mount.
+// FieldPicker fetches available fields from available_fields on mount.
 // field_metadata is populated via this fetch and stored in the FieldMetadataContext.
 const availFieldsResponse = {
   fields: [['Name', 'Vm-name'], ['Power State', 'Vm-power_state']],
-  field_metadata: {
-    'Vm-name': { available_formats: [], default_format: null },
-    'Vm-power_state': { available_formats: [], default_format: null },
-  },
+  field_metadata: baseFormData.field_metadata,
 };
 
 describe('ColumnFormattingTable (via ReportEditor)', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  afterEach(resetFetchMock);
 
   beforeEach(() => {
-    window.http = {
-      get: jest.fn((url) => {
-        if (url.includes('react_available_fields')) {
-          return Promise.resolve(availFieldsResponse);
-        }
-        return Promise.resolve(baseFormData);
-      }),
-      post: jest.fn(() => Promise.resolve({ success: true })),
-    };
+    mockApi({ formData: baseFormData, availableFields: availFieldsResponse });
   });
 
   it('shows the table heading when columns are selected', async() => {
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
   });
 
   it('renders a table row for each selected column', async() => {
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
     // Column cells appear as <td> — use getAllByText since the label may also appear in selects
     expect(screen.getAllByText('Name').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Power State').length).toBeGreaterThan(0);
-    // Confirm they appear as table cells specifically
     const table = screen.getByRole('table');
     expect(table).toBeInTheDocument();
-    expect(table.querySelectorAll('tbody tr')).toHaveLength(2);
+    expect(within(table).getAllByRole('row')).toHaveLength(3);
   });
 
   it('renders Column name, Header, and Format headers', async() => {
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
-    // The table headers are rendered as text nodes in the document
     expect(screen.getByText('Column name')).toBeInTheDocument();
     expect(screen.getByText('Header')).toBeInTheDocument();
     // 'Format' also appears in the PDF page size label but that's not rendered here
@@ -86,7 +67,7 @@ describe('ColumnFormattingTable (via ReportEditor)', () => {
   });
 
   it('pre-populates header TextInput with the existing header value', async() => {
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
     const nameHeaderInput = document.getElementById('col-header-Vm-name');
     expect(nameHeaderInput).toBeInTheDocument();
@@ -104,55 +85,112 @@ describe('ColumnFormattingTable (via ReportEditor)', () => {
         col_options: {},
       },
     };
-    window.http.get.mockImplementation((url) => {
-      if (url.includes('react_available_fields')) {
-        return Promise.resolve({ fields: [], field_metadata: {} });
-      }
-      return Promise.resolve(emptyColsData);
-    });
-    renderWithRedux(<ReportEditor recordId="new" />);
+    mockApi({ formData: emptyColsData, availableFields: { fields: [], field_metadata: {} } });
+    renderEditor();
     await waitFor(() => expect(screen.getAllByRole('tab').length).toBeGreaterThan(0));
     expect(screen.queryByText('Column headers and formatting')).not.toBeInTheDocument();
   });
 
   it('does not render a format select when field_metadata has no formats for a column', async() => {
-    // When field_metadata has empty available_formats, no Select is rendered for that column
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
-    // available_formats is [] so no format select appears
     expect(document.getElementById('col-format-Vm-name')).not.toBeInTheDocument();
     expect(document.getElementById('col-format-Vm-power_state')).not.toBeInTheDocument();
   });
 
   it('renders a format Select dropdown when field_metadata has formats for a column', async() => {
-    // Simulate the async fetch returning formats for one of the fields
-    window.http.get.mockImplementation((url) => {
-      if (url.includes('react_available_fields')) {
-        return Promise.resolve({
-          fields: [['Name', 'Vm-name'], ['Power State', 'Vm-power_state']],
-          field_metadata: {
-            'Vm-name': {
-              available_formats: [['Boolean (True/False)', 'boolean'], ['Suffixed Bytes (B, KB, MB, GB)', 'bytes_human']],
-              default_format: 'bytes_human',
-            },
-            'Vm-power_state': { available_formats: [], default_format: null },
-          },
-        });
-      }
-      return Promise.resolve(baseFormData);
+    mockRoute('availableFields', {
+      fields: [['Name', 'Vm-name'], ['Power State', 'Vm-power_state']],
+      field_metadata: {
+        'Vm-name': {
+          available_formats: [['Boolean (True/False)', 'boolean'], ['Suffixed Bytes (B, KB, MB, GB)', 'bytes_human']],
+          default_format: 'bytes_human',
+        },
+        'Vm-power_state': { available_formats: [], default_format: null },
+      },
     });
 
-    renderWithRedux(<ReportEditor recordId="new" />);
+    renderEditor();
     await waitFor(() => expect(screen.getByText('Column headers and formatting')).toBeInTheDocument());
-    // After the fetch, a Select dropdown should appear for Vm-name (has formats)
     await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toBeInTheDocument());
-    // Vm-power_state has no formats so no Select
     expect(document.getElementById('col-format-Vm-power_state')).not.toBeInTheDocument();
-    // The static options <None> and <Reset to Default> should be present
     expect(screen.getByText('<None>')).toBeInTheDocument();
     expect(screen.getByText('<Reset to Default>')).toBeInTheDocument();
-    // The format options from the server should appear
     expect(screen.getByText('Boolean (True/False)')).toBeInTheDocument();
     expect(screen.getByText('Suffixed Bytes (B, KB, MB, GB)')).toBeInTheDocument();
+  });
+
+  describe('editing', () => {
+    const formats = [['Boolean (True/False)', 'boolean'], ['Suffixed Bytes (B, KB, MB, GB)', 'bytes_human']];
+    const withFormats = {
+      fields: [['Name', 'Vm-name'], ['Power State', 'Vm-power_state']],
+      field_metadata: {
+        'Vm-name': { available_formats: formats, default_format: 'bytes_human' },
+        'Vm-power_state': { available_formats: [], default_format: null },
+      },
+    };
+
+    it('edits a column header', async() => {
+      const user = userEvent.setup();
+      renderEditor();
+      await waitFor(() => expect(document.getElementById('col-header-Vm-name')).toBeInTheDocument());
+
+      await user.clear(document.getElementById('col-header-Vm-name'));
+      await user.type(document.getElementById('col-header-Vm-name'), 'Server');
+
+      expect(document.getElementById('col-header-Vm-name')).toHaveValue('Server');
+      expect(document.getElementById('col-header-Vm-power_state')).toHaveValue('Power State');
+    });
+
+    it('limits a header to 40 characters', async() => {
+      renderEditor();
+      await waitFor(() => expect(document.getElementById('col-header-Vm-name')).toHaveAttribute('maxlength', '40'));
+    });
+
+    it('lists the none, reset and available formats', async() => {
+      mockRoute('availableFields', withFormats);
+      renderEditor();
+      await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toBeInTheDocument());
+
+      const options = Array.from(document.getElementById('col-format-Vm-name').options).map((option) => option.value);
+      expect(options).toEqual(['_none_', '', 'boolean', 'bytes_human']);
+    });
+
+    it('changes a column format', async() => {
+      mockRoute('availableFields', withFormats);
+      renderEditor();
+      await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toBeInTheDocument());
+
+      fireEvent.change(document.getElementById('col-format-Vm-name'), { target: { value: 'boolean' } });
+
+      await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toHaveValue('boolean'));
+    });
+
+    it('saves the edited header and format with the report', async() => {
+      const user = userEvent.setup();
+      mockRoute('availableFields', withFormats);
+      renderEditor({ recordId: '9' });
+      await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toBeInTheDocument());
+      await user.clear(document.getElementById('col-header-Vm-name'));
+      await user.type(document.getElementById('col-header-Vm-name'), 'Server');
+      fireEvent.change(document.getElementById('col-format-Vm-name'), { target: { value: 'bytes_human' } });
+      await waitFor(() => expect(document.getElementById('col-format-Vm-name')).toHaveValue('bytes_human'));
+
+      await user.click(screen.getAllByRole('button', { name: 'Save' })[0]);
+      await waitFor(() => expect(requestsTo('/report/save/')).toHaveLength(1));
+
+      const { report_data: data } = postedBody('/report/save/');
+      expect(data.headers).toEqual(['Server', 'Power State']);
+      expect(data.col_formats).toEqual(['bytes_human', '']);
+    });
+
+    it('falls back to the column ids as names when the available fields are unknown', async() => {
+      mockRoute('availableFields', { fields: [], field_metadata: {} });
+      renderEditor();
+      await waitForTabs();
+
+      await waitFor(() => expect(within(screen.getByRole('table')).getByText('Vm-name')).toBeInTheDocument());
+      expect(within(screen.getByRole('table')).getByText('Vm-power_state')).toBeInTheDocument();
+    });
   });
 });

@@ -14,7 +14,6 @@ type StandardFilterProps = {
 const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
   const hasColumns = (formValues.col_order || []).length > 0;
 
-  // Preview state — same pattern as ExpressionEditorField in condition-form.
   // *Ref naming: ExpressionEditor passes tagValuesCache as a { current: Map } ref object
   // so that tag lookups always read the latest values without re-firing the callback.
   // We store the ref object itself, then read .current when we need the Map.
@@ -27,9 +26,7 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
 
   const handleRecordContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
     recordLabelMapRef.current = labelMap;
-    recordTagCacheRefObj.current = tagValuesCache; // store the ref object
-    // Seed the preview from the initial value (a MiqExpression hash when editing
-    // an existing report that already has a filter).
+    recordTagCacheRefObj.current = tagValuesCache;
     const initial = (formOptions.getState().values as ReportFormValues).record_filter;
     if (initial && (initial as Record<string, unknown>).combinator === undefined) {
       // It's a MiqExpression hash (not yet touched by the user) — render it directly.
@@ -40,7 +37,7 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
 
   const handleDisplayContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
     displayLabelMapRef.current = labelMap;
-    displayTagCacheRefObj.current = tagValuesCache; // store the ref object
+    displayTagCacheRefObj.current = tagValuesCache;
     const initial = (formOptions.getState().values as ReportFormValues).display_filter;
     if (initial && (initial as Record<string, unknown>).combinator === undefined) {
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
@@ -62,9 +59,7 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
     setDisplayPreview(miq ? miqExpressionToHuman(miq, displayLabelMapRef.current, tagMap) : '');
   }, [formOptions]);
 
-  const model = typeof formValues.model === 'string'
-    ? formValues.model
-    : (formValues.model as { value?: string })?.value || '';
+  const model = formValues.model || '';
 
   if (!model) {
     return (

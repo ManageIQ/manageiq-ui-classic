@@ -57,21 +57,6 @@ module ReportController::Reports
     send_data(@yaml_string, :filename => file_name)
   end
 
-  # Generating sample chart
-  def sample_chart
-    assert_privileges("view_graph")
-
-    render ManageIQ::Reporting::Charting.render_format => ManageIQ::Reporting::Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
-  end
-
-  # generate preview chart when editing report
-  def preview_chart
-    assert_privileges("view_graph")
-
-    render ManageIQ::Reporting::Charting.render_format => session[:edit][:chart_data]
-    session[:edit][:chart_data] = nil
-  end
-
   # get saved reports for a specific report
   def get_all_reps(nodeid = nil)
     # set nodeid from @sb, incase sort was pressed

@@ -17,13 +17,13 @@ module ReportController::Reports::EditorMapping
 
   private
 
-  # ---------------------------------------------------------------------------
-  # Editor -> MiqReport
-  # ---------------------------------------------------------------------------
-
+  # Every attribute the editor owns is reset first, so an edit never keeps a stale
+  # value (e.g. columns, sorting or chart settings the user removed). The order of
+  # the steps below matters: sorting, chart and col_options look columns up in
+  # `col_for_field`, which assign_columns builds.
   def assign_report_attributes(rpt, report_data)
     db = report_model_from(report_data)
-    report_type = react_report_type(db)
+    report_type = report_type_for_model(db)
 
     rpt.template_type = "report"
     rpt.name          = report_data[:name].to_s.strip
@@ -52,7 +52,7 @@ module ReportController::Reports::EditorMapping
     when "chargeback"           then assign_chargeback_options(rpt, report_data)
     end
 
-    # Trend reports cannot be sorted by the user
+    # Trend reports cannot be sorted by the user; they are always ordered by resource name
     if report_type == "trend"
       rpt.sortby = ["resource_name"]
       rpt.order = "Ascending"
@@ -60,6 +60,7 @@ module ReportController::Reports::EditorMapping
 
     col_for_field = assign_columns(rpt, report_data)
 
+    # Trend and chargeback reports have no summary, sorting, chart or per-column options
     unless %w[trend chargeback].include?(report_type)
       assign_sorting_and_chart(rpt, report_data, col_for_field)
       assign_col_options(rpt, report_data, col_for_field)
@@ -72,8 +73,7 @@ module ReportController::Reports::EditorMapping
     rpt.add_includes_for_virtual_custom_attributes
   end
 
-  # The DDF Carbon SELECT stores {value:, label:} objects (simpleValue: false),
-  # so model may arrive as either a plain string or a nested hash.
+  # The DDF Carbon SELECT may send model as a {value:, label:} hash instead of a string.
   def report_model_from(report_data)
     model = report_data[:model]
     model = model.to_unsafe_h if model.respond_to?(:to_unsafe_h)
@@ -107,6 +107,9 @@ module ReportController::Reports::EditorMapping
     ].compact
   end
 
+  # Chargeback options live in db_options[:options]. Only the filter matching the
+  # selected "Show Costs by" type is stored (see chargeback_filter_options); nil
+  # values are dropped so core falls back to its defaults.
   def assign_chargeback_options(rpt, report_data)
     rpt.db_options[:rpt_type] = rpt.db
 
@@ -128,10 +131,14 @@ module ReportController::Reports::EditorMapping
     options.merge!(chargeback_filter_options(report_data))
     rpt.db_options[:options] = options.compact
 
+    # Core sets the static columns (dates, group-by column), their headers and the
+    # sorting here; assign_columns then appends the columns the user selected.
     tag_header = groupby_tag.present? ? Classification.lookup_by_name(groupby_tag.first)&.description : nil
     rpt.db.constantize.set_chargeback_report_options(rpt, groupby, tag_header, groupby_label, report_data[:tz].presence)
   end
 
+  # Only the filter for the chosen "Show Costs by" type (owner, tenant, tag or entity)
+  # is stored; any other filter fields in the payload are ignored.
   def chargeback_filter_options(report_data)
     case report_data[:cb_show_typ].to_s
     when "owner"
@@ -150,6 +157,9 @@ module ReportController::Reports::EditorMapping
     end
   end
 
+  # Adds the selected columns to the report and returns { field id => col_order entry }.
+  # With a consolidation (pivot) every calculation of a column becomes its own
+  # "<col>__<calc>" column; the pivot group-by columns themselves get no calculation.
   def assign_columns(rpt, report_data)
     field_ids = Array(report_data[:col_order]).map(&:to_s)
     headers = Array(report_data[:headers])
@@ -214,6 +224,8 @@ module ReportController::Reports::EditorMapping
     value.presence&.to_sym
   end
 
+  # Sorting, summary grouping and chart settings. A chart is only stored when the
+  # report has at least one sort field (validation requires one for charts).
   def assign_sorting_and_chart(rpt, report_data, col_for_field)
     sort_fields = Array(report_data[:sortby]).map(&:to_s).first(2)
     suffixes = [report_data[:sort1_suffix], report_data[:sort2_suffix]]
@@ -249,6 +261,8 @@ module ReportController::Reports::EditorMapping
     }.compact
   end
 
+  # Per-column options (grouping calculations, styling rules), keyed by the report
+  # column rather than the editor field id.
   def assign_col_options(rpt, report_data, col_for_field)
     raw = report_data[:col_options]
     raw = raw.respond_to?(:to_unsafe_h) ? raw.to_unsafe_h : (raw || {}).to_h
@@ -289,6 +303,7 @@ module ReportController::Reports::EditorMapping
     cleaned
   end
 
+  # Converts the expression editor JSON into a MiqExpression, or nil when there is no filter.
   def expression_from(filter)
     return if filter.blank?
 
@@ -298,6 +313,9 @@ module ReportController::Reports::EditorMapping
     MiqExpression.new(raw) if raw["???"].blank?
   end
 
+  # rpt_options holds the settings core stores outside of columns: pivot, row limit,
+  # PDF page size, queue timeout and summary options. The row limit only applies to
+  # reports without a summary, and the summary options only to reports with one.
   def assign_rpt_options(rpt, report_data, col_for_field)
     # Start from the stored options so keys the editor does not manage survive an edit
     options = rpt.rpt_options.kind_of?(Hash) ? rpt.rpt_options.deep_dup : {}
@@ -349,14 +367,12 @@ module ReportController::Reports::EditorMapping
     ActiveModel::Type::Boolean.new.cast(value)
   end
 
+  # Core stores a chargeback tag filter as full tag paths, e.g. "/managed/environment/prod"
   def parse_tag_categories(category, tag_values)
     tag_values.map { |tag_value| "/managed/#{category}/#{tag_value}" }
   end
 
-  # ---------------------------------------------------------------------------
-  # Validation (mirrors the checks of the legacy editor)
-  # ---------------------------------------------------------------------------
-
+  # Mirrors the checks of the legacy editor
   def report_validation_errors(rpt, report_data, report_type)
     errors = []
 
@@ -430,11 +446,8 @@ module ReportController::Reports::EditorMapping
     end
   end
 
-  # ---------------------------------------------------------------------------
-  # MiqReport -> editor
-  # ---------------------------------------------------------------------------
-
-  # Serialise a MiqReport into the attribute hash the React form expects.
+  # Serialises a MiqReport into the attribute hash the React form expects.
+  # The inverse of assign_report_attributes.
   def serialize_report_attrs(rpt)
     graph = rpt.graph.kind_of?(Hash) ? rpt.graph : {}
     rpt_options = rpt.rpt_options.kind_of?(Hash) ? rpt.rpt_options : {}
@@ -535,24 +548,23 @@ module ReportController::Reports::EditorMapping
     "#{rpt.db}.#{tables}-#{col.split(".").last}"
   end
 
-  # Build the full includes string by finding the column in the includes hash
+  # Finds the association path of a column in the includes hash. For col
+  # "host.hardware.cpu_speed" and {"host" => {"include" => {"hardware" => {"columns" => ["cpu_speed"]}}}}
+  # this returns "host.hardware".
   def find_includes(col, includes)
     tables = col.split(".")[0..-2]
     field = col.split(".").last
 
     table = tables.first
 
-    # Does this level include have the table name and does columns have the field name?
     return table if includes[table] && includes[table]["columns"]&.include?(field)
 
     if includes[table] && includes[table]["include"]
       new_col = [tables[1..], field].flatten.join('.')
-      # recursively search it for the table.col
       inc_table = find_includes(new_col, includes[table]["include"])
       return "#{table}.#{inc_table}" if inc_table
     end
 
-    # Need to go to the next level
     includes.each_pair do |key, inc|
       next unless inc["include"]
 
@@ -573,6 +585,8 @@ module ReportController::Reports::EditorMapping
       field_id.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
   end
 
+  # Re-keys the stored per-column options by editor field id. Pivot columns
+  # ("<col>__<calc>") share the options of their base column.
   def editor_col_options(rpt, col_to_field)
     (rpt.col_options || {}).each_with_object({}) do |(col, option), result|
       field_id = col_to_field[col.to_s.split("__").first]

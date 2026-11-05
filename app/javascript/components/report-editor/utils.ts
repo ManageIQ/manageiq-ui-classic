@@ -10,7 +10,7 @@ export const buildLabelMap = (availableFields: AvailableField[] = []): Record<st
 export const getColumnMeta = (fieldMetadata: FieldMetadata | null | undefined, fieldId: string): FieldMeta =>
   (fieldMetadata || {})[fieldId] || {};
 
-// Mirrors the model-name rules of ReportController::Reports::Editor#react_report_type
+// Mirrors the model-name rules of ReportController::Reports::Editor#report_type_for_model
 // so the tab set can follow the model dropdown without a round-trip to the server.
 // Rails also treats every Chargeback subclass as chargeback; the Metering models are such subclasses.
 export const modelToReportType = (model: string | null | undefined): ReportType => {

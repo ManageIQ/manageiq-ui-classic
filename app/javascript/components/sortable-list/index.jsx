@@ -8,8 +8,7 @@ import { useFieldApi } from '@@ddf';
 const EMPTY_INPUT = { value: [], onChange: () => {} };
 
 /**
- * SortableList - A reusable drag-and-drop list component.
- * Uses HTML5 drag-and-drop API with Carbon 11 styling.
+ * SortableList - A reusable drag-and-drop list component for Data-Driven Forms.
  *
  * Accepts a plain `input` prop directly (use `SortableListDDF` for the DDF field type).
  *
@@ -192,7 +191,7 @@ const SortableList = ({
               <button
                 type="button"
                 className="sortable-list-item__remove"
-                aria-label={sprintf(__('Remove %s'), item)}
+                aria-label={sprintf(__('Remove %s'), labelMap[item] || getLabel(item))}
                 onClick={(e) => {
                   e.stopPropagation();
                   onRemove(item);

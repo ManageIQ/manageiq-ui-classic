@@ -17,6 +17,7 @@ import {
   StackBarChartGraph,
   StackHorizontalChart,
 } from '../../carbon-charts';
+import type { ChartGraphProps } from '../../carbon-charts';
 import { pieData, sampleData } from '../../carbon-charts/helpers';
 import { FormRow } from '../form-row';
 import { NOTHING, buildLabelMap, getColumnMeta } from '../utils';
@@ -26,10 +27,7 @@ import type { FormData } from '../report-editor-types';
 const NO_CHART = '';
 const TOP_VALUE_OPTIONS = Array.from({ length: 18 }, (_, index) => String(index + 3));
 
-// Carbon-charts components accept optional props; use a permissive type to avoid
-// fighting PropTypes-annotated JS component signatures.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ChartComponent = ComponentType<any>;
+type ChartComponent = ComponentType<ChartGraphProps>;
 
 const CHART_COMPONENTS: Record<string, ChartComponent> = {
   Area: AreaChartGraph,
@@ -157,6 +155,8 @@ const ChartsTab = ({ formData }: ChartsTabProps) => {
                 labelText=""
                 hideLabel
                 value={graphColumn as string}
+                invalid={!graphColumn}
+                invalidText={__('Data column must be selected when chart mode is set to "Values"')}
                 onChange={(e) => formOptions.change('graph_column', e.target.value)}
               >
                 <SelectItem value="" text={__('Nothing selected')} />

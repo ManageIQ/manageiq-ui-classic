@@ -51,7 +51,6 @@ const perfStartHourly = (): LabelValuePair[] => [
   [__('2 Days'), '172800'],
 ];
 
-// The Performance Timeframe rows (reused by Trend and Performance)
 export type PerfTimeframeProps = {
   formValues: ReportFormValues;
   formOptions: FormOptionsApi;
@@ -100,18 +99,12 @@ export const TrendFilter = ({ formValues, formOptions }: PerfTimeframeProps) => 
   <PerformanceTimeframe formValues={formValues} formOptions={formOptions} />
 );
 
-// ---------------------------------------------------------------------------
-// Performance filter variant — Timeframe + Primary Record Filter
-// ---------------------------------------------------------------------------
-
 export const PerformanceFilter = ({ formValues, formOptions }: PerfTimeframeProps) => {
   const handleRecordFilterChange = useCallback((query: RuleGroupType) => {
     formOptions.change('record_filter', query);
   }, [formOptions]);
 
-  const model = typeof formValues.model === 'string'
-    ? formValues.model
-    : (formValues.model as { value?: string })?.value || '';
+  const model = formValues.model || '';
 
   return (
     <>

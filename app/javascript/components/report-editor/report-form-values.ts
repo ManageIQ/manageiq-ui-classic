@@ -111,13 +111,13 @@ export const buildInitialValues = (data: FormData): ReportFormValues => {
     trend_pct1: numberToString(report.trend_pct1, '100'),
     trend_pct2: numberToString(report.trend_pct2),
     trend_pct3: numberToString(report.trend_pct3),
-    cb_show_typ: chargebackFilterType(chargeback),
+    cb_show_typ: chargebackFilterType(chargeback) || 'entity',
     cb_owner_id: chargeback.owner || '',
     cb_tenant_id: numberToString(chargeback.tenant_id),
     cb_tag_cat: chargeback.tag ? chargeback.tag[0] : '',
     cb_tag_value: asArray(chargeback.tag?.[1]),
     cb_provider_id: numberToString(chargeback.provider_id),
-    cb_entity_id: chargeback.entity_id || '',
+    cb_entity_id: chargeback.entity_id || 'all',
     cb_groupby: chargeback.groupby || 'date',
     cb_groupby_tag: asArray(chargeback.groupby_tag),
     cb_groupby_label: chargeback.groupby_label || '',
@@ -131,7 +131,7 @@ export const buildInitialValues = (data: FormData): ReportFormValues => {
   };
 };
 
-// The settings posted to react_save and react_preview, which share one server-side mapping
+// The settings posted to save and preview, which share one server-side mapping
 export const buildReportData = (values: ReportFormValues) => {
   const colOrder = values.col_order || [];
   const colOptions = values.col_options || {};

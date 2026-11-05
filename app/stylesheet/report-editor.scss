@@ -3,13 +3,30 @@
 // Carbon's .cds--tabs wrapper has overflow-x: hidden by default, which clips
 // tab buttons in narrower viewports and causes Cypress visibility failures.
 // Override to visible so all tabs in the report-editor are always reachable.
-.report-editor .cds--tabs {
-  overflow-x: visible;
+.report-editor {
+  .cds--tabs {
+    overflow-x: visible;
+  }
+
+  > .cds--inline-notification {
+    margin-bottom: 1rem;
+  }
 }
 
 .report-editor-formatting-table {
   &__heading {
     margin-bottom: 0.75rem;
+  }
+
+  // Equal-width columns so the Header input is not squeezed
+  .cds--data-table {
+    table-layout: fixed;
+    width: 100%;
+
+    th,
+    td {
+      width: 33.33%;
+    }
   }
 
   // Ensure dropdowns and text inputs are vertically centered with column labels

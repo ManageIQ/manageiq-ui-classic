@@ -1040,8 +1040,6 @@ ReportController:
 - accordion_select
 - db_form_field_changed
 - explorer
-- filter_change
-- form_field_changed
 - index
 - reload
 - report_data

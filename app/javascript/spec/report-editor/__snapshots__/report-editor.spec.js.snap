@@ -1,0 +1,310 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ReportEditor component should render the add form tabs 1`] = `
+<div
+  aria-label="List of tabs"
+  class="cds--tab--list"
+  role="tablist"
+>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-0"
+    aria-selected="true"
+    class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+    component="tab-item"
+    fields="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
+    id="ccs-_r_0_-tab-0"
+    role="tab"
+    tabindex="0"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Columns
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+      tabindex="-1"
+      title="Remove Columns tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Columns tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-1"
+    aria-selected="false"
+    class="cds--tabs__nav-item cds--tabs__nav-link"
+    component="tab-item"
+    fields="[object Object]"
+    id="ccs-_r_0_-tab-1"
+    role="tab"
+    tabindex="-1"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Styling
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden"
+      tabindex="-1"
+      title="Remove Styling tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Styling tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-2"
+    aria-selected="false"
+    class="cds--tabs__nav-item cds--tabs__nav-link"
+    component="tab-item"
+    fields="[object Object],[object Object],[object Object]"
+    id="ccs-_r_0_-tab-2"
+    role="tab"
+    tabindex="-1"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Filter
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden"
+      tabindex="-1"
+      title="Remove Filter tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Filter tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-3"
+    aria-selected="false"
+    class="cds--tabs__nav-item cds--tabs__nav-link"
+    component="tab-item"
+    fields="[object Object]"
+    id="ccs-_r_0_-tab-3"
+    role="tab"
+    tabindex="-1"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Summary
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden"
+      tabindex="-1"
+      title="Remove Summary tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Summary tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-4"
+    aria-selected="false"
+    class="cds--tabs__nav-item cds--tabs__nav-link"
+    component="tab-item"
+    fields="[object Object]"
+    id="ccs-_r_0_-tab-4"
+    role="tab"
+    tabindex="-1"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Charts
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden"
+      tabindex="-1"
+      title="Remove Charts tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Charts tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+  <button
+    aria-controls="ccs-_r_0_-tabpanel-5"
+    aria-selected="false"
+    class="cds--tabs__nav-item cds--tabs__nav-link"
+    component="tab-item"
+    fields="[object Object]"
+    id="ccs-_r_0_-tab-5"
+    role="tab"
+    tabindex="-1"
+    type="button"
+  >
+    <div
+      class="cds--tabs__nav-item-label-wrapper"
+    >
+      <span
+        class="cds--tabs__nav-item-label"
+        dir="auto"
+      >
+        Preview
+      </span>
+    </div>
+  </button>
+  <div
+    class="cds--tabs__nav-item--close--hidden"
+  >
+    <button
+      aria-hidden="true"
+      class="cds--visually-hidden"
+      tabindex="-1"
+      title="Remove Preview tab"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="Press delete to remove Preview tab"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 32 32"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
