@@ -81,6 +81,7 @@ declare global {
   const miqTreeActivateNode: (tree: string, key: string) => void;
 
   const __: (key: string) => string;
+  const n__: (singular: string, plural: string, count: number) => string;
   // eslint-disable-next-line camelcase
   const add_flash: (message: string, type?: string) => void;
   const listenToRx: (callback: (data: GenericDataType) => void) => {

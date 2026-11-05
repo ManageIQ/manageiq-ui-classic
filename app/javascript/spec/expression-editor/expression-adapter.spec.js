@@ -288,6 +288,35 @@ describe('rqbToMiq', () => {
     expect(result).toBeNull();
   });
 
+  it('skips rules that have no field yet', () => {
+    const rqb = {
+      id: '1',
+      combinator: 'and',
+      not: false,
+      rules: [
+        {
+          id: '2', field: '', operator: '=', value: 'x',
+        },
+        {
+          id: '3', field: 'Vm-name', operator: '=', value: 'test',
+        },
+      ],
+    };
+    expect(rqbToMiq(rqb)).toEqual({ '=': { field: 'Vm-name', value: 'test' } });
+  });
+
+  it('returns null when no rule has a field', () => {
+    const rqb = {
+      id: '1',
+      combinator: 'and',
+      not: false,
+      rules: [{
+        id: '2', field: '', operator: '=', value: '',
+      }],
+    };
+    expect(rqbToMiq(rqb)).toBeNull();
+  });
+
   it('returns the input untouched if already a MiqExpression object', () => {
     const miq = { '=': { field: 'Vm-name', value: 'test' } };
     expect(rqbToMiq(miq)).toBe(miq);

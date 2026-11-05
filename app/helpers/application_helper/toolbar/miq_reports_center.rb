@@ -11,6 +11,7 @@ class ApplicationHelper::Toolbar::MiqReportsCenter < ApplicationHelper::Toolbar:
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Report'),
           t,
+          :url   => "/new",
           :klass => ApplicationHelper::Button::MiqReportNew),
       ]
     ),

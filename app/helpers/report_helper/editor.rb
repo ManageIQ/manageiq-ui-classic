@@ -9,16 +9,4 @@ module ReportHelper::Editor
       provider.container_images.order(:name).pluck(:name, :id)
     end
   end
-
-  def cb_image_labels
-    CustomAttribute.where(:section => "docker_labels").distinct('name').pluck(:name).each_with_object({}) { |l, h| h[l] = l }
-  end
-
-  def refresh_chargeback_filter_tab
-    @edit[:cb_users] = Rbac::Filterer.filtered(User.in_my_region).each_with_object({}) { |u, h| h[u.userid] = u.name }
-    @edit[:cb_tenant] = Rbac::Filterer.filtered(Tenant.in_my_region).each_with_object({}) { |t, h| h[t.id] = t.name }
-
-    tenant = Tenant.find_by(:id => @edit[:current][:cb_tenant_id])
-    @edit[:cb_tenant][tenant.id] = "#{tenant.name} (" + _('Region') + " #{tenant.miq_region.region})" if tenant && (tenant.miq_region&.region != MiqRegion.my_region_number)
-  end
 end

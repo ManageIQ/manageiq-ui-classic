@@ -1,11 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Draggable } from '@carbon/react/icons';
+import { Draggable, Close } from '@carbon/react/icons';
 import { Checkbox, InlineNotification } from '@carbon/react';
 import { useFieldApi } from '@@ddf';
 
+// Module-level so the default does not change identity on every render
+const EMPTY_INPUT = { value: [], onChange: () => {} };
+
 /**
  * SortableList - A reusable drag-and-drop list component for Data-Driven Forms.
+ *
+ * Accepts a plain `input` prop directly (use `SortableListDDF` for the DDF field type).
  *
  * Supports two modes:
  *  - Simple mode (default): items is an array of strings, each string is both value and label.
@@ -15,28 +20,25 @@ import { useFieldApi } from '@@ddf';
  * dragged together as a group. Non-consecutive selections are blocked with an error message.
  */
 const SortableList = ({
-  input = { value: [], onChange: () => {} },
+  input = EMPTY_INPUT,
   label = '',
   helperText = '',
   isRequired = false,
   labelKey = undefined,
   multiSelect = false,
-  ...rest
+  onRemove = null,
+  labelMap = {},
 }) => {
-  const { input: fieldInput } = useFieldApi(rest);
-  const actualInput = fieldInput || input;
-
-  const [items, setItems] = useState(actualInput.value || []);
+  const [items, setItems] = useState(input.value || []);
   const [draggedIndices, setDraggedIndices] = useState([]);
   const [selectedIndices, setSelectedIndices] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const dragStartOrderRef = useRef(null);
 
+  // Sync items with input.value when it changes (including when cleared to [])
   useEffect(() => {
-    if (actualInput.value && actualInput.value.length > 0) {
-      setItems(actualInput.value);
-    }
-  }, [actualInput.value]);
+    setItems(input.value || []);
+  }, [input.value]);
 
   const getLabel = (item) => {
     if (labelKey && typeof item === 'object') {
@@ -106,7 +108,7 @@ const SortableList = ({
       && (dragStartOrderRef.current.length !== items.length
         || dragStartOrderRef.current.some((item, idx) => item !== items[idx]));
     if (orderChanged) {
-      actualInput.onChange(items);
+      input.onChange(items);
     }
     setDraggedIndices([]);
     dragStartOrderRef.current = null;
@@ -123,13 +125,13 @@ const SortableList = ({
       const newItems = [...items];
       [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
       setItems(newItems);
-      actualInput.onChange(newItems);
+      input.onChange(newItems);
     } else if (e.key === 'ArrowDown' && index < items.length - 1) {
       e.preventDefault();
       const newItems = [...items];
       [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
       setItems(newItems);
-      actualInput.onChange(newItems);
+      input.onChange(newItems);
     }
   };
 
@@ -158,7 +160,7 @@ const SortableList = ({
           style={{ marginBottom: '0.5rem' }}
         />
       )}
-      <div className="sortable-list">
+      <div className="sortable-list" role="listbox" aria-label={label || undefined}>
         {items.map((item, index) => (
           <div
             key={labelKey ? item.id : item}
@@ -170,8 +172,9 @@ const SortableList = ({
             onDrop={handleDrop}
             onKeyDown={(e) => handleKeyDown(e, index)}
             tabIndex={0}
-            role="button"
-            aria-label={`${getLabel(item)}. Press arrow keys to reorder.`}
+            role="option"
+            aria-selected={multiSelect && isSelected(index)}
+            aria-label={`${labelMap[item] || getLabel(item)}. Press arrow keys to reorder.`}
           >
             {multiSelect && (
               <Checkbox
@@ -183,7 +186,20 @@ const SortableList = ({
               />
             )}
             <Draggable className="sortable-list-item__icon" size={20} />
-            <span className="sortable-list-item__text">{getLabel(item)}</span>
+            <span className="sortable-list-item__text">{labelMap[item] || getLabel(item)}</span>
+            {onRemove && (
+              <button
+                type="button"
+                className="sortable-list-item__remove"
+                aria-label={sprintf(__('Remove %s'), labelMap[item] || getLabel(item))}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove(item);
+                }}
+              >
+                <Close size={16} />
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -203,6 +219,31 @@ SortableList.propTypes = {
   labelKey: PropTypes.string,
   /** Enable checkbox multi-select for grouped dragging */
   multiSelect: PropTypes.bool,
+  onRemove: PropTypes.func,
+  labelMap: PropTypes.objectOf(PropTypes.string),
 };
 
+/**
+ * DDF wrapper — registered as a schema field type via componentMapper.
+ * Resolves the DDF field binding then delegates to SortableList.
+ */
+const SortableListDDF = (props) => {
+  const {
+    input, label, helperText, isRequired, onRemove, labelMap, labelKey, multiSelect,
+  } = useFieldApi(props);
+  return (
+    <SortableList
+      input={input}
+      label={label}
+      helperText={helperText}
+      isRequired={isRequired}
+      onRemove={onRemove}
+      labelMap={labelMap}
+      labelKey={labelKey}
+      multiSelect={multiSelect}
+    />
+  );
+};
+
+export { SortableListDDF };
 export default SortableList;

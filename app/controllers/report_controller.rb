@@ -38,8 +38,6 @@ class ReportController < ApplicationController
   REPORT_X_BUTTON_ALLOWED_ACTIONS = {
     'miq_report_copy'             => :miq_report_copy,
     'miq_report_delete'           => :miq_report_delete,
-    'miq_report_edit'             => :miq_report_edit,
-    'miq_report_new'              => :miq_report_new,
     'miq_report_run'              => :miq_report_run,
     'miq_report_schedule_add'     => :miq_report_schedule_add,
     'miq_report_schedule_edit'    => :miq_report_schedule_edit,
@@ -105,14 +103,9 @@ class ReportController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    case params[:tab].split("_")[0]
-    when "edit"
-      redirect_to(:action => "miq_report_edit", :tab => params[:tab])
-    else
-      assert_privileges("miq_report")
+    assert_privileges("miq_report")
 
-      redirect_to(:action => params[:tab], :id => params[:id])
-    end
+    redirect_to(:action => params[:tab], :id => params[:id])
   end
 
   def explorer
@@ -589,9 +582,6 @@ class ReportController < ApplicationController
         action_url = "db_edit"
         record_id = @edit[:db_id] ? @edit[:db_id] : nil
       end
-    elsif x_active_tree == :reports_tree
-      action_url = "miq_report_edit"
-      record_id = @edit[:rpt_id] ? @edit[:rpt_id] : nil
     elsif x_active_tree == :roles_tree
       action_url = "menu_update"
       locals[:default_button] = true
@@ -937,5 +927,9 @@ class ReportController < ApplicationController
   end
 
   menu_section :vi
-  feature_for_actions %w[miq_report_new miq_report_copy miq_report_edit], *EXP_EDITOR_ACTIONS
+
+  feature_for_actions 'miq_report_new', :new
+  feature_for_actions 'miq_report_edit', :edit
+  feature_for_actions 'miq_report_copy', :copy
+  feature_for_actions ReportController::Reports::Editor::EDITOR_FEATURES, *ReportController::Reports::Editor::EDITOR_ACTIONS
 end

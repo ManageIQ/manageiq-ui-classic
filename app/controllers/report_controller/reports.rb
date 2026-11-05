@@ -20,38 +20,6 @@ module ReportController::Reports
     replace_right_cell(:replace_trees => %i[reports savedreports])
   end
 
-  def show_preview
-    assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
-    unless params[:task_id]                       # First time thru, kick off the report generate task
-      @rpt = create_report_object                 # Build a report object from the latest edit fields
-      initiate_wait_for_task(:task_id => @rpt.async_generate_table(:userid     => session[:userid],
-                                                                   :session_id => request.session_options[:id],
-                                                                   :limit      => 50,
-                                                                   :mode       => "adhoc"),
-                             :response_type => :json)
-      return
-    end
-    miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
-    rpt = miq_task.task_results
-    if !miq_task.results_ready?
-      add_flash(_("Report preview generation returned: Status [%{status}] Message [%{message}]") % {:status => miq_task.status, :message => miq_task.message},
-                :error)
-    else
-      rr = miq_task.miq_report_result
-      table_content = report_build_html_table(rr.report, rr.html_rows(:page => 1, :per_page => 100).join)
-      @html = update_content(table_content, :striped, 'preview')
-      if !rpt.graph.nil? && rpt.graph[:type].present? # If graph present
-        # FIXME: UNTESTED!!!
-        rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
-        @edit[:chart_data] = rpt.chart
-      else
-        @edit[:chart_data] = nil
-      end
-    end
-    miq_task.destroy
-    render :partial => "form_preview", :layout => false
-  end
-
   def miq_report_delete
     assert_privileges("miq_report_delete")
     rpt = MiqReport.for_user(current_user).find(params[:id])
@@ -87,21 +55,6 @@ module ReportController::Reports
     file_name    = "Reports_#{format_timezone(Time.now, Time.zone, "export_filename")}.yaml"
     disable_client_cache
     send_data(@yaml_string, :filename => file_name)
-  end
-
-  # Generating sample chart
-  def sample_chart
-    assert_privileges("view_graph")
-
-    render ManageIQ::Reporting::Charting.render_format => ManageIQ::Reporting::Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
-  end
-
-  # generate preview chart when editing report
-  def preview_chart
-    assert_privileges("view_graph")
-
-    render ManageIQ::Reporting::Charting.render_format => session[:edit][:chart_data]
-    session[:edit][:chart_data] = nil
   end
 
   # get saved reports for a specific report
@@ -192,13 +145,6 @@ module ReportController::Reports
     end
     retname = retname.blank? ? " " : retname + " : " # Use space for base fields, add : to others
     retname
-  end
-
-  # Create a report object from the current edit fields
-  def create_report_object
-    rpt_rec = MiqReport.new  # Create a new report record
-    set_record_vars(rpt_rec) # Set the fields into the record
-    rpt_rec                  # Create a report object from the record
   end
 
   # Build the main reports tree
