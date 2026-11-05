@@ -92,7 +92,7 @@ export type FormInitialValues = {
   filter_typ?: string;
   name?: string;
   description?: string;
-  enabled?: boolean;
+  enabled?: string;
   start_date?: Date | string;
   start_hour?: string | Date;
   time_zone?: string;
@@ -126,7 +126,10 @@ export type ScheduleResponse = {
   filter_type: string;
   schedule_name: string;
   schedule_description: string;
-  schedule_enabled: boolean;
+  object_message?: string;
+  object_request?: string;
+  starting_object?: string;
+  schedule_enabled: string;
   schedule_start_date: string;
   schedule_start_hour: number;
   schedule_start_min: number;
@@ -134,11 +137,14 @@ export type ScheduleResponse = {
   schedule_timer_type: string;
   schedule_timer_value: number;
   instance_names?: string[];
-  target_classes?: string[];
+  target_class?: string;
+  target_id?: string;
+  target_classes?: string[][];
   targets?: string[][];
   filtered_item_list?: string[][];
   filter_value?: string;
   ui_attrs?: Array<[string, string]>;
+  zone_id?: string;
 };
 
 /**
@@ -184,7 +190,7 @@ export type FilterOptionType = {
  */
 export type AutomateSchedulesResponse = {
   instance_names: string[];
-  target_classes: string[];
+  target_classes: string[][];
 };
 
 /**

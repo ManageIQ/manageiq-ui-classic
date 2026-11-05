@@ -88,7 +88,7 @@ const FLASH_MESSAGE_FAILED_TO_ADD_SCHEDULE = 'failed';
 // Browser alert text snippets
 const BROWSER_ALERT_DELETE_CONFIRM_TEXT = 'removed';
 
-function selectConfigMenu(menuOption) {
+function selectConfigMenu(menuOption: string) {
   return cy.toolbar(CONFIG_TOOLBAR_BUTTON, menuOption);
 }
 
@@ -140,12 +140,10 @@ function addSchedule() {
         .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
         .click(),
   });
-  return cy.then(() => {
-    return INITIAL_SCHEDULE_NAME;
-  });
+  return cy.then(() => INITIAL_SCHEDULE_NAME);
 }
 
-function clickScheduleItem(scheduleName) {
+function clickScheduleItem(scheduleName: string) {
   cy.selectAccordionItem([
     MANAGEIQ_REGION_ACCORDION_ITEM,
     SCHEDULES_ACCORDION_ITEM,
