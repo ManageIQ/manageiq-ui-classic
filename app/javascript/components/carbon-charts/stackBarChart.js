@@ -5,6 +5,7 @@ const StackBarChartGraph = ({
   data = null,
   title = '',
   chart_options = null,
+  dualYAxis = null,
 }) => {
   const options = {
     title,
@@ -17,6 +18,14 @@ const StackBarChartGraph = ({
         mapsTo: 'key',
         scaleType: 'labels',
       },
+      ...(dualYAxis && {
+        right: {
+          mapsTo: dualYAxis.mapsTo,
+          scaleType: 'linear',
+          title: dualYAxis.title,
+          correspondingDatasets: dualYAxis.correspondingDatasets,
+        },
+      }),
     },
     height: '400px',
     tooltip: {
@@ -34,6 +43,11 @@ const StackBarChartGraph = ({
 StackBarChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
+  dualYAxis: PropTypes.shape({
+    mapsTo: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    correspondingDatasets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
 };
 
 export default StackBarChartGraph;
