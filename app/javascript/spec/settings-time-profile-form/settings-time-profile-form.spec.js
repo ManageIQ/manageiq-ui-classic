@@ -7,12 +7,13 @@ import '../helpers/miqAjaxButton';
 
 describe('VM common form component', () => {
   let submitSpy;
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
   beforeEach(() => {
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
   });
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
     submitSpy.mockRestore();
   });
   it('should render adding form variant blank form', () => {
@@ -66,7 +67,7 @@ describe('VM common form component', () => {
       },
       rollup_daily_metrics: true,
     };
-    fetchMock.getOnce('api/time_profiles/1', {
+    fetchMock.getOnce('/api/time_profiles/1', {
       description: 'UTC',
       profile_type: 'user',
       profile_key: 'user1',
@@ -91,7 +92,7 @@ describe('VM common form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/time_profiles/1')).toBe(true);
     });
 
     expect(container).toMatchSnapshot();
@@ -109,7 +110,7 @@ describe('VM common form component', () => {
       },
       rollup_daily_metrics: false,
     };
-    fetchMock.getOnce('api/time_profiles/1', {
+    fetchMock.getOnce('/api/time_profiles/1', {
       description: 'UTC',
       profile_type: 'user',
       profile_key: 'admin',
@@ -134,7 +135,7 @@ describe('VM common form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/time_profiles/1')).toBe(true);
     });
 
     expect(container).toMatchSnapshot();
@@ -155,7 +156,7 @@ describe('VM common form component', () => {
       },
       rollup_daily_metrics: false,
     };
-    fetchMock.getOnce('api/time_profiles/1', {
+    fetchMock.getOnce('/api/time_profiles/1', {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'user',
@@ -181,7 +182,7 @@ describe('VM common form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/time_profiles/1')).toBe(true);
     });
 
     expect(container).toMatchSnapshot();
@@ -199,7 +200,7 @@ describe('VM common form component', () => {
       },
       rollup_daily_metrics: false,
     };
-    fetchMock.getOnce('api/time_profiles/1', {
+    fetchMock.getOnce('/api/time_profiles/1', {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'user',
@@ -225,7 +226,7 @@ describe('VM common form component', () => {
     );
 
     await waitFor(() => {
-      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
+      expect(fetchMock.callHistory.called('/api/time_profiles/1')).toBe(true);
     });
 
     expect(container).toMatchSnapshot();

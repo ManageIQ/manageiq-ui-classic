@@ -23,24 +23,20 @@ import {
 ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
 
 describe('Ansible playbook edit catalog Form Component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
     fetchMock.get(
       `/api/currencies/?expand=resources&attributes=id,full_name,symbol,code&sort_by=full_name&sort_order=ascending`,
       currenciesmockData
     );
-    fetchMock.get(
-      `/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=0&sort_by=name&sort_order=ascending`,
-      repositoriesMockData
-    );
-    fetchMock.get(
-      `/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name,options&sort_by=name&sort_order=ascending`,
-      MachineCredentialMockData
-    );
-    fetchMock.get(
-      `/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending`,
-      VaultCredentialMockData
-    );
-    fetchMock.once('/api/authentications', CloudTypesMockData);
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=0&sort_by=name&sort_order=ascending', repositoriesMockData);
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name,options&sort_by=name&sort_order=ascending', MachineCredentialMockData);
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending', VaultCredentialMockData);
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/authentications' }, CloudTypesMockData);
     fetchMock.get(
       `/api/zones/?expand=resources&attributes=id,description,visible&sort_by=description&sort_order=ascending`,
       zonesMockData
@@ -56,21 +52,17 @@ describe('Ansible playbook edit catalog Form Component', () => {
   });
 
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render correct form fields initially', async() => {
     fetchMock.get('/api/service_templates/148', mockServiceTemplateResponseForFirstTestCase);
     fetchMock.get(`/api/authentications/151`, getSpecificCloudTypeMockData);
-    fetchMock.get(
-      `/api/configuration_script_sources/18/configuration_script_payloads?expand=resources&filter[]=region_number=0&sort_by=name&sort_order=ascending`,
-      playBookOptionsMockData
-    );
-    fetchMock.get(
-      `/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending`,
-      cloudCredentailOptions
-    );
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/configuration_script_sources/18/configuration_script_payloads?expand=resources&filter[]=region_number=0&sort_by=name&sort_order=ascending', playBookOptionsMockData);
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending', cloudCredentailOptions);
 
     const { container } = renderWithRedux(
       <AnsiblePlayBookEditCatalogForm initialData={initalDataForFirstTestCase} />
@@ -100,14 +92,10 @@ describe('Ansible playbook edit catalog Form Component', () => {
   it('should not render some fields in retirement tab when repository id is not present in retirement section', async() => {
     fetchMock.get('/api/service_templates/148', mockServiceTemplateResponseForSecondTestCase);
     fetchMock.get(`/api/authentications/151`, getSpecificCloudTypeMockData);
-    fetchMock.get(
-      `/api/configuration_script_sources/18/configuration_script_payloads?expand=resources&filter[]=region_number=0&sort_by=name&sort_order=ascending`,
-      playBookOptionsMockData
-    );
-    fetchMock.get(
-      `/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending`,
-      cloudCredentailOptions
-    );
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/configuration_script_sources/18/configuration_script_payloads?expand=resources&filter[]=region_number=0&sort_by=name&sort_order=ascending', playBookOptionsMockData);
+    // eslint-disable-next-line max-len
+    fetchMock.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending', cloudCredentailOptions);
 
     const { container } = renderWithRedux(
       <AnsiblePlayBookEditCatalogForm initialData={initalDataForFirstTestCase} />

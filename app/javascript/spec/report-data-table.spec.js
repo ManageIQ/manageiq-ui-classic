@@ -6,20 +6,18 @@ import './helpers/miqSparkle';
 import ReportDataTable from '../components/data-tables/report-data-table/report-data-table';
 
 describe('<ReportDataTable />', () => {
-  let initialProps;
-  jest.setTimeout(30000);
+  const initialProps = {
+    reportResultId: 123,
+    perPageDefault: 20,
+    perPageOptions: [20, 50, 100],
+    reportType: 'data',
+  };
 
-  beforeEach(() => {
-    initialProps = {
-      reportResultId: 123,
-      perPageDefault: 20,
-      perPageOptions: [20, 50, 100],
-      reportType: 'data',
-    };
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   afterEach(() => {
-    fetchMock.reset();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   const requestUrl = () => {
@@ -36,29 +34,29 @@ describe('<ReportDataTable />', () => {
     return `/api/results/${initialProps.reportResultId}?${params}`;
   };
 
-  it('should fetch and display report data when instantiated', async () => {
-    fetchMock.getOnce(requestUrl(), { report: { col_order: [] }, count: 1, result_set: [{ foo: 'bar' }] });
-    
+  it('should fetch and display report data when instantiated', async() => {
+    fetchMock.get(requestUrl(), { report: { col_order: [] }, count: 1, result_set: [{ foo: 'bar' }] });
+
     const { container } = render(<ReportDataTable {...initialProps} />);
-    
+
     // Wait for data to load
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
-    
+
     expect(container.querySelector('div.report-table-toolbar')).toBeInTheDocument();
     expect(container.querySelector('div.report-data-table')).toBeInTheDocument();
     expect(container.querySelector('div.miq-pagination')).toBeInTheDocument();
   });
 
-  it('should display empty state when there is no data', async () => {
-    fetchMock.getOnce(requestUrl(), { report: { col_order: [] }, count: 0, result_set: [] });
+  it('should display empty state when there is no data', async() => {
+    fetchMock.get(requestUrl(), { report: { col_order: [] }, count: 0, result_set: [] });
 
     const { container } = render(<ReportDataTable {...initialProps} />);
 
     // Wait for data to load
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
     });
 
     expect(container.querySelector('div.report-table-toolbar')).toBeInTheDocument();

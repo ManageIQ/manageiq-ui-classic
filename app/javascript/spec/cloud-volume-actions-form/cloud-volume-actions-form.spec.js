@@ -68,12 +68,9 @@ describe('Cloud Volume Restore from backup form component', () => {
   const restoreFromBackupComponent = <CloudVolumeActions recordId={cloudVolume.recordId} name={cloudVolume.name} type={cloudVolume.type} />;
   const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
 
+  beforeAll(() => fetchMock.mockGlobal());
   beforeEach(() => {
-    fetchMock.mock(`/api/cloud_volumes/${cloudVolume.recordId}?attributes=cloud_volume_backups`, {});
-  });
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.get(`/api/cloud_volumes/${cloudVolume.recordId}?attributes=cloud_volume_backups`, {});
   });
 
   describe('restore from backup form data object has keys containing', () => {

@@ -1,14 +1,7 @@
-import fetchMock from 'fetch-mock';
 import { renderWithRedux } from '../helpers/mountForm';
 import SettingsTasksForm from '../../components/settings-tasks-form';
 
-import '../helpers/miqAjaxButton';
-
 describe('VM common form component', () => {
-  let submitSpy;
-  beforeEach(() => {
-    submitSpy = jest.spyOn(window, 'miqAjaxButton');
-  });
   const timePeriods = [
     ['Today', '0'],
     ['1 Days Ago', '1'],
@@ -21,11 +14,7 @@ describe('VM common form component', () => {
   const zones = [['All Zones', 'all']];
   const taskStates = [['All States', 'all']];
   const tz = { tzinfo: { info: { identifier: 'America/New_York' } } };
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpy.mockRestore();
-  });
+
   it('should render my tasks form', () => {
     const { container } = renderWithRedux(
       <SettingsTasksForm

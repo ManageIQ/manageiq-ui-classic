@@ -6,10 +6,9 @@ import createSchema from '../../components/automate-simulation-form/automate-sim
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Automate Simulation Form', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
+
+  afterEach(() => fetchMock.callHistory.clear());
 
   const resolveMockData = {
     ae_result: 'ok',
@@ -106,7 +105,7 @@ describe('Automate Simulation Form', () => {
     renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
     });
   });
 
@@ -130,7 +129,7 @@ describe('Automate Simulation Form', () => {
     const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveWithTarget} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudNetwork')).toBe(true);
     });
 
     const targetClassInput = container.querySelector('#target_class');
@@ -149,7 +148,7 @@ describe('Automate Simulation Form', () => {
     }
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/get_form_targets?target_class=CloudSubnet')).toBe(true);
     });
   });
 
@@ -205,9 +204,9 @@ describe('Automate Simulation Form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Save' }));
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
     });
-    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    const body = JSON.parse(fetchMock.callHistory.lastCall('/miq_ae_tools/resolve').options.body);
     expect(body).toEqual(expect.objectContaining({ readonly: true, button: 'throw' }));
   });
 
@@ -241,9 +240,9 @@ describe('Automate Simulation Form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Save' }));
 
     await waitFor(() => {
-      expect(fetchMock.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
+      expect(fetchMock.callHistory.called('/miq_ae_tools/resolve', 'POST')).toBe(true);
     });
-    const body = JSON.parse(fetchMock.lastOptions('/miq_ae_tools/resolve').body);
+    const body = JSON.parse(fetchMock.callHistory.lastCall('/miq_ae_tools/resolve').options.body);
     expect(body).toEqual(expect.objectContaining({ readonly: false, button: 'throw' }));
   });
 

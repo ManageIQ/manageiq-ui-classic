@@ -36,10 +36,7 @@ const defaultProps = {
 };
 
 describe('CustomerTagsTab', () => {
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   describe('edit mode — tags', () => {
     it('renders the filter mode select defaulting to Specific Tags', () => {

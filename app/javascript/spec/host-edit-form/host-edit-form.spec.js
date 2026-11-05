@@ -14,10 +14,7 @@ describe('Show Edit Host Form Component', () => {
   const id = [1];
   const ids = [1, 2, 3];
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   /** Render Form */
   it('should render form for *one* host', async() => {
@@ -26,13 +23,13 @@ describe('Show Edit Host Form Component', () => {
         `/api/hosts/${id[0]}?expand=resources&attributes=authentications`,
         sampleInitialValues
       )
-      .mock(`/api/hosts/${id[0]}`, sampleSingleResponse);
+      .route({ method: 'OPTIONS', url: `http://localhost/api/hosts/${id[0]}` }, sampleSingleResponse);
 
     const { container } = renderWithRedux(<HostEditForm ids={id} />);
 
     await waitFor(() => {
       expect(
-        fetchMock.called(
+        fetchMock.callHistory.called(
           `/api/hosts/${id[0]}?expand=resources&attributes=authentications`
         )
       ).toBe(true);
@@ -51,7 +48,7 @@ describe('Show Edit Host Form Component', () => {
 
     await waitFor(() => {
       expect(
-        fetchMock.called(
+        fetchMock.callHistory.called(
           `/api/hosts?expand=resources&attributes=id,name&filter[]=id=[${ids}]`
         )
       ).toBe(true);

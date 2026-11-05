@@ -4,6 +4,8 @@ import AttachDetachCloudVolumeForm from '../../components/cloud-volume-form/atta
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Attach / Detach form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   const sampleVmChoice = [
     ['server1', 1],
     ['server2', 2],
@@ -30,12 +32,7 @@ describe('Attach / Detach form component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.once('/api/cloud_volumes/1?option_action=attach', response);
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.route({ method: 'OPTIONS', url: 'http://localhost/api/cloud_volumes/1?option_action=attach' }, response);
   });
 
   it('should render form', async() => {
@@ -135,7 +132,7 @@ describe('Attach / Detach form component', () => {
         device: '',
       },
     };
-    fetchMock.postOnce('/api/cloud_volumes/1', submitData);
+    fetchMock.post('http://localhost/api/cloud_volumes/1', submitData);
 
     const { container } = renderWithRedux(
       <AttachDetachCloudVolumeForm
@@ -162,7 +159,7 @@ describe('Attach / Detach form component', () => {
         device: '',
       },
     };
-    fetchMock.postOnce('/api/cloud_volumes/1', submitData);
+    fetchMock.post('http://localhost/api/cloud_volumes/1', submitData);
 
     const { container } = renderWithRedux(
       <AttachDetachCloudVolumeForm

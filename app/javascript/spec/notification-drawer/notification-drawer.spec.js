@@ -24,6 +24,10 @@ jest.mock('../../notifications/backend.js', () => ({
 }));
 
 describe('Notification drawer tests', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
+  beforeEach(() => jest.spyOn(initNotifications, 'default').mockImplementation(() => {}));
+
   const initialState = {
     notificationReducer: {
       unreadCount: 2,
@@ -35,17 +39,6 @@ describe('Notification drawer tests', () => {
       maxNotifications: 100,
     },
   };
-  const miqFormatNotificationSpy = jest.spyOn(window, 'miqFormatNotification');
-
-  beforeEach(() => {
-    jest.spyOn(initNotifications, 'default');
-    initNotifications.default = () => {};
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    miqFormatNotificationSpy.mockReset();
-  });
 
   it('should render correctly', () => {
     const store = makeStore({ ...initialState });
@@ -146,11 +139,11 @@ describe('Notification drawer tests', () => {
       ...initialState,
       maxNotifications: lowerMaxNotifications,
     });
-    fetchMock.getOnce(
+    fetchMock.get(
       '/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc',
       resources,
     );
-    fetchMock.getOnce('/api/notifications', {});
+    fetchMock.get('/api/notifications', {});
     render(
       <Provider store={store}>
         <NotificationDrawer />
@@ -173,7 +166,7 @@ describe('Notification drawer tests', () => {
 
   it('should dispatch markAllRead after click on Mark all read', async() => {
     const user = userEvent.setup();
-    fetchMock.postOnce('/api/notifications/', {});
+    fetchMock.post('/api/notifications/', {});
     const store = makeStore({ ...initialState });
     render(
       <Provider store={store}>
@@ -194,17 +187,17 @@ describe('Notification drawer tests', () => {
 
   it('should clear all and init after click on Clear all', async() => {
     const user = userEvent.setup();
-    fetchMock.postOnce('/api/notifications/', {});
+    fetchMock.post('/api/notifications/', {});
     const store = makeStore({ ...initialState });
     const { maxNotifications } = store.getState().notificationReducer;
     const limitFragment = !!maxNotifications
       ? `&limit=${maxNotifications}`
       : '';
-    fetchMock.getOnce(
+    fetchMock.get(
       `/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`,
       resources,
     );
-    fetchMock.getOnce('/api/notifications', {});
+    fetchMock.get('/api/notifications', {});
     render(
       <Provider store={store}>
         <NotificationDrawer />

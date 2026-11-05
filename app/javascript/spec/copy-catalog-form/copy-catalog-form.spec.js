@@ -6,28 +6,21 @@ import CopyCatalogForm from '../../components/copy-catalog-form/copy-catalog-for
 import '../helpers/miqAjaxButton';
 
 describe('Copy catalog form', () => {
-  let initialProps;
-  let cancelUrl;
-  let copySavedUrl;
+  const initialProps = {
+    catalogId: '10000000000000',
+    originName: 'Template1',
+  };
+  const cancelUrl = `/catalog/servicetemplate_copy_cancel/${initialProps.catalogId}`;
+  const copySavedUrl = '/catalog/servicetemplate_copy_saved';
   let spyMiqAjaxButton;
 
+  beforeAll(() => fetchMock.mockGlobal());
+
   beforeEach(() => {
-    initialProps = {
-      catalogId: '10000000000000',
-      originName: 'Template1',
-    };
-
-    cancelUrl = `/catalog/servicetemplate_copy_cancel/${initialProps.catalogId}`;
-    copySavedUrl = '/catalog/servicetemplate_copy_saved';
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
-
-    fetchMock.getOnce('/catalog/servicetemplates_names', {
+    fetchMock.get('/catalog/servicetemplates_names', {
       names: ['Template1', 'Template2'],
     });
-  });
-
-  afterEach(() => {
-    fetchMock.restore();
   });
 
   it('should handle cancel', async() => {
@@ -51,7 +44,7 @@ describe('Copy catalog form', () => {
   it('should handle submit', async() => {
     const user = userEvent.setup();
     const postData = '{"id":"10000000000000","name":"Copy of Template1","copy_tags":false}';
-    fetchMock.postOnce('/catalog/save_copy_catalog', {});
+    fetchMock.post('/catalog/save_copy_catalog', {});
 
     const { container } = renderWithRedux(
       <CopyCatalogForm {...initialProps} />
@@ -64,11 +57,11 @@ describe('Copy catalog form', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(fetchMock.called('/catalog/save_copy_catalog')).toBe(true);
+      expect(fetchMock.callHistory.called('/catalog/save_copy_catalog')).toBe(true);
     });
     await waitFor(() => {
       expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
     });
-    expect(fetchMock.lastOptions().body).toEqual(postData);
+    expect(fetchMock.callHistory.lastCall().options.body).toEqual(postData);
   });
 });

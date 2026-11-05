@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'fetch-mock';
 
 import GitDomainRefreshForm from '../../components/git-domain-refresh-form';
 import { renderWithRedux } from '../helpers/mountForm';
@@ -11,27 +10,14 @@ import '../helpers/miqSparkle';
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
 describe('GitDomainRefreshForm component', () => {
-  let initialProps;
-  let submitSpyMiqSparkleOn;
-
-  beforeEach(() => {
-    initialProps = {
-      domainId: '123',
-      gitRepoId: '789',
-      branchNames: ['origin/main', 'origin/develop', 'origin/feature/test'],
-      tagNames: ['v1.0.0', 'v1.1.0', 'v2.0.0'],
-      refType: 'branch',
-      refName: 'origin/main',
-    };
-
-    submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
-  });
-
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-    submitSpyMiqSparkleOn.mockRestore();
-  });
+  const initialProps = {
+    domainId: '123',
+    gitRepoId: '789',
+    branchNames: ['origin/main', 'origin/develop', 'origin/feature/test'],
+    tagNames: ['v1.0.0', 'v1.1.0', 'v2.0.0'],
+    refType: 'branch',
+    refName: 'origin/main',
+  };
 
   it('should render correctly', () => {
     const { container } = renderWithRedux(<GitDomainRefreshForm {...initialProps} />);
@@ -116,6 +102,7 @@ describe('GitDomainRefreshForm component', () => {
   });
 
   it('should call correct API endpoint on submit with branch', async() => {
+    jest.spyOn(window, 'miqSparkleOn');
     const user = userEvent.setup();
 
     API.post = jest.fn().mockResolvedValue({
@@ -168,6 +155,7 @@ describe('GitDomainRefreshForm component', () => {
   });
 
   it('should call correct API endpoint on submit with tag', async() => {
+    jest.spyOn(window, 'miqSparkleOn');
     const user = userEvent.setup();
 
     API.post = jest.fn().mockResolvedValue({

@@ -14,9 +14,13 @@ import {
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Schedule form component', () => {
+  beforeAll(() => {
+    fetchMock.mockGlobal();
+  });
+
   afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
   });
 
   it('should render schedule add form', async() => {
@@ -30,7 +34,7 @@ describe('Schedule form component', () => {
       />
     );
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(1);
+      expect(fetchMock.callHistory.calls()).toHaveLength(1);
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
@@ -53,7 +57,7 @@ describe('Schedule form component', () => {
       />
     );
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(3);
+      expect(fetchMock.callHistory.calls()).toHaveLength(3);
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
@@ -73,7 +77,7 @@ describe('Schedule form component', () => {
     fetchMock.postOnce('/ops/fetch_target_ids/?target_class=AvailabilityZone', {
       targets,
     });
-    fetchMock.getOnce(zoneUrl, { resources }, { overwriteRoutes: false });
+    fetchMock.getOnce(zoneUrl, { resources });
 
     const { container } = renderWithRedux(
       <ScheduleForm
@@ -83,7 +87,7 @@ describe('Schedule form component', () => {
       />
     );
     await waitFor(() => {
-      expect(fetchMock.calls()).toHaveLength(6);
+      expect(fetchMock.callHistory.calls()).toHaveLength(6);
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 

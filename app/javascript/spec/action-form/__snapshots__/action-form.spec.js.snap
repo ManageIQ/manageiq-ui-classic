@@ -1,140 +1,5 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Action Form Component should render adding a new action 1`] = `
-<div>
-  <form
-    class="cds--form form-0-2-3 form-react"
-    novalidate=""
-  >
-    <div
-      class=""
-      id="basic-information"
-      name="basic-information"
-    >
-      <div>
-        <h3>
-          Basic Information
-        </h3>
-      </div>
-      <div
-        class="cds--form-item cds--text-input-wrapper"
-      >
-        <div
-          class="cds--text-input__label-wrapper"
-        >
-          <label
-            class="cds--label"
-            dir="auto"
-            for="description"
-          >
-            <span
-              aria-hidden="true"
-              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-            >
-              *
-            </span>
-            Description
-          </label>
-        </div>
-        <div
-          class="cds--text-input__field-outer-wrapper"
-        >
-          <div
-            class="cds--text-input__field-wrapper"
-          >
-            <input
-              class="cds--text-input"
-              id="description"
-              maxlength="50"
-              name="description"
-              type="text"
-              value=""
-            />
-            <span
-              aria-atomic="true"
-              aria-live="assertive"
-              class="cds--text-input__counter-alert"
-              role="alert"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="cds--form-item"
-      >
-        <div
-          class="cds--select"
-        >
-          <label
-            class="cds--label"
-            dir="auto"
-            for="action_type"
-          >
-            <span
-              aria-hidden="true"
-              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-            >
-              *
-            </span>
-            Action Type
-          </label>
-          <div
-            class="cds--select-input__wrapper"
-          >
-            <select
-              class="cds--select-input"
-              id="action_type"
-              name="action_type"
-              title=""
-            >
-              <option
-                class="cds--select-option"
-                value=""
-              >
-                &lt;Choose&gt;
-              </option>
-            </select>
-            <svg
-              aria-hidden="true"
-              class="cds--select__arrow"
-              fill="currentColor"
-              focusable="false"
-              height="16"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 16 16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="cds--btn-set"
-    >
-      <button
-        class="cds--btn cds--btn--primary cds--btn--disabled"
-        disabled=""
-        type="submit"
-        variant="primary"
-      >
-        Add
-      </button>
-      <button
-        class="cds--btn cds--btn--secondary"
-        type="button"
-      >
-        Cancel
-      </button>
-    </div>
-  </form>
-</div>
-`;
-
 exports[`Action Form Component should render correctly 1`] = `
 <div>
   <form
@@ -224,9 +89,108 @@ exports[`Action Form Component should render correctly 1`] = `
             >
               <option
                 class="cds--select-option"
+                label="<Choose>"
                 value=""
               >
                 &lt;Choose&gt;
+              </option>
+              <option
+                class="cds--select-option"
+                label="Assign Profile to Analysis Task"
+                value="assign_scan_profile"
+              >
+                Assign Profile to Analysis Task
+              </option>
+              <option
+                class="cds--select-option"
+                label="Create a Snapshot"
+                value="create_snapshot"
+              >
+                Create a Snapshot
+              </option>
+              <option
+                class="cds--select-option"
+                label="Delete Snapshots by Age"
+                value="delete_snapshots_by_age"
+              >
+                Delete Snapshots by Age
+              </option>
+              <option
+                class="cds--select-option"
+                label="Evaluate Alerts"
+                value="evaluate_alerts"
+              >
+                Evaluate Alerts
+              </option>
+              <option
+                class="cds--select-option"
+                label="Inherit Parent Tags"
+                value="inherit_parent_tags"
+              >
+                Inherit Parent Tags
+              </option>
+              <option
+                class="cds--select-option"
+                label="Invoke a Custom Automation"
+                value="custom_automation"
+              >
+                Invoke a Custom Automation
+              </option>
+              <option
+                class="cds--select-option"
+                label="Reconfigure CPUs"
+                value="reconfigure_cpus"
+              >
+                Reconfigure CPUs
+              </option>
+              <option
+                class="cds--select-option"
+                label="Reconfigure Memory"
+                value="reconfigure_memory"
+              >
+                Reconfigure Memory
+              </option>
+              <option
+                class="cds--select-option"
+                label="Remove Tags"
+                value="remove_tags"
+              >
+                Remove Tags
+              </option>
+              <option
+                class="cds--select-option"
+                label="Run Ansible Playbook"
+                value="run_ansible_playbook"
+              >
+                Run Ansible Playbook
+              </option>
+              <option
+                class="cds--select-option"
+                label="Send an E-mail"
+                value="email"
+              >
+                Send an E-mail
+              </option>
+              <option
+                class="cds--select-option"
+                label="Send an SNMP Trap"
+                value="snmp_trap"
+              >
+                Send an SNMP Trap
+              </option>
+              <option
+                class="cds--select-option"
+                label="Set a Custom Attribute in vCenter"
+                value="set_custom_attribute"
+              >
+                Set a Custom Attribute in vCenter
+              </option>
+              <option
+                class="cds--select-option"
+                label="Tag"
+                value="tag"
+              >
+                Tag
               </option>
             </select>
             <svg

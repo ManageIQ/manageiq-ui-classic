@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { screen, waitFor, cleanup } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import '../helpers/miqSparkle';
 import { renderWithRedux } from '../helpers/mountForm';
 import PxeCustomizationTemplateForm from '../../components/pxe-customization-template-form/index';
@@ -26,11 +26,9 @@ describe('Pxe Customization Template Form Component', () => {
     script: 'write script here',
   };
 
-  afterEach(() => {
-    cleanup();
-    fetchMock.restore();
-    jest.clearAllMocks();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
+
+  afterEach(() => fetchMock.callHistory.clear());
 
   it('should render adding a new pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
@@ -41,7 +39,7 @@ describe('Pxe Customization Template Form Component', () => {
       expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(2);
+    expect(fetchMock.callHistory.calls()).toHaveLength(2);
     expect(container).toMatchSnapshot();
   });
 
@@ -55,7 +53,7 @@ describe('Pxe Customization Template Form Component', () => {
       expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(container).toMatchSnapshot();
   });
 
@@ -69,7 +67,7 @@ describe('Pxe Customization Template Form Component', () => {
       expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     });
 
-    expect(fetchMock.calls()).toHaveLength(3);
+    expect(fetchMock.callHistory.calls()).toHaveLength(3);
     expect(container).toMatchSnapshot();
   });
 });

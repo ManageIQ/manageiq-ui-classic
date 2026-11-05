@@ -4,12 +4,10 @@ import TimelinePage from '../../components/timeline-options/timeline-page';
 import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Show Timeline Page', () => {
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  beforeAll(() => fetchMock.mockGlobal());
 
   it('should render empty page', async() => {
-    fetchMock.mock('/api/event_streams', {
+    fetchMock.once({ method: 'OPTIONS', url: '/api/event_streams' }, {
       data: {
         timeline_events: {
           EmsEvent: {

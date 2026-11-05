@@ -103,12 +103,13 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  fetchMock.reset();
-  fetchMock.restore();
-  jest.clearAllMocks();
+  fetchMock.removeRoutes();
+  fetchMock.callHistory.clear();
 });
 
 describe('AbForm', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   describe('new button', () => {
     it('shows a loading spinner while data is fetched', () => {
       getInitialValues.mockReturnValue(new Promise(() => {}));
@@ -168,13 +169,13 @@ describe('AbForm', () => {
 
     it('POSTs to /api/custom_buttons/ on submit and redirects', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '99' }] });
+      fetchMock.post('/api/custom_buttons/', { results: [{ id: '99' }] });
 
       renderWithRedux(<AbForm {...defaultProps} />);
       await submitNewButton(user, { name: 'Test Button', description: 'A test button' });
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_buttons/')).toHaveLength(1);
+        expect(fetchMock.callHistory.calls('/api/custom_buttons/')).toHaveLength(1);
         expect(miqRedirectBack).toHaveBeenCalledWith(
           expect.stringContaining('Test Button'),
           'success',
@@ -185,7 +186,7 @@ describe('AbForm', () => {
 
     it('shows an inline error notification on submit failure', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', {
+      fetchMock.post('/api/custom_buttons/', {
         status: 400,
         body: { error: { message: 'Validation failed' } },
       });
@@ -238,7 +239,7 @@ describe('AbForm', () => {
 
     it('PUTs to /api/custom_buttons/:id on save and redirects', async() => {
       const user = userEvent.setup();
-      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+      fetchMock.put('/api/custom_buttons/5', { id: '5', name: 'My Button' });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await waitFor(() => expect(screen.getByDisplayValue('My Button')).toBeInTheDocument());
@@ -249,7 +250,7 @@ describe('AbForm', () => {
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1);
+        expect(fetchMock.callHistory.calls('/api/custom_buttons/5')).toHaveLength(1);
         expect(miqRedirectBack).toHaveBeenCalledWith(
           expect.stringContaining('My Button'),
           'success',
@@ -260,7 +261,7 @@ describe('AbForm', () => {
 
     it('shows an inline error on save failure and allows dismissal', async() => {
       const user = userEvent.setup();
-      fetchMock.putOnce('/api/custom_buttons/5', {
+      fetchMock.put('/api/custom_buttons/5', {
         status: 400,
         body: { error: { message: 'Save failed' } },
       });
@@ -288,7 +289,7 @@ describe('AbForm', () => {
 
     it('submits the IDs of the selected roles', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '99' }] });
+      fetchMock.post('/api/custom_buttons/', { results: [{ id: '99' }] });
 
       renderWithRedux(<AbForm {...defaultProps} />);
       await screen.findByRole('textbox', { name: /^name/i });
@@ -302,8 +303,8 @@ describe('AbForm', () => {
       await user.click(await screen.findByText('EvmRole-auditor'));
       await user.click(screen.getByRole('button', { name: 'Add' }));
 
-      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/')).toHaveLength(1));
-      const [, opts] = fetchMock.calls('/api/custom_buttons/')[0];
+      await waitFor(() => expect(fetchMock.callHistory.calls('/api/custom_buttons/')).toHaveLength(1));
+      const { options: opts } = fetchMock.callHistory.calls('/api/custom_buttons/')[0];
       expect(JSON.parse(opts.body).visibility).toEqual({ roles: ['2'] });
     });
 
@@ -328,7 +329,7 @@ describe('AbForm', () => {
         visibility: { roles: 'role' },
         available_roles: ['2'],
       });
-      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+      fetchMock.put('/api/custom_buttons/5', { id: '5', name: 'My Button' });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await openAdvancedTab(user);
@@ -343,8 +344,8 @@ describe('AbForm', () => {
       await user.type(descriptionField(), 'Changed');
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
-      const [, opts] = fetchMock.calls('/api/custom_buttons/5')[0];
+      await waitFor(() => expect(fetchMock.callHistory.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const { options: opts } = fetchMock.callHistory.calls('/api/custom_buttons/5')[0];
       expect(JSON.parse(opts.body).visibility).toEqual({ roles: ['2'] });
     });
   });
@@ -379,15 +380,15 @@ describe('AbForm', () => {
         options: { ...editValues.options, open_url: true },
         resource_action: { ...editValues.resource_action, dialog_id: 1 },
       });
-      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+      fetchMock.put('/api/custom_buttons/5', { id: '5', name: 'My Button' });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await screen.findByDisplayValue('My Button');
       await user.selectOptions(screen.getByLabelText('Display for'), 'list');
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
-      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      await waitFor(() => expect(fetchMock.callHistory.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.callHistory.calls('/api/custom_buttons/5')[0].options.body);
       expect(body.options.open_url).toBe(false);
       expect(body.resource_action.dialog_id).toBeNull();
     });
@@ -407,7 +408,7 @@ describe('AbForm', () => {
         inventory_type: 'manual',
         hosts: '10.0.0.1',
       });
-      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+      fetchMock.put('/api/custom_buttons/5', { id: '5', name: 'My Button' });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await screen.findByDisplayValue('My Button');
@@ -417,8 +418,8 @@ describe('AbForm', () => {
       await user.type(descriptionField(), 'Changed');
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
-      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      await waitFor(() => expect(fetchMock.callHistory.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.callHistory.calls('/api/custom_buttons/5')[0].options.body);
       expect(body.uri_attributes).toEqual({
         request: 'Order_Ansible_Playbook',
         service_template_name: 'my_playbook',
@@ -440,7 +441,7 @@ describe('AbForm', () => {
           { key: 'tier', value: 'web' },
         ],
       });
-      fetchMock.putOnce('/api/custom_buttons/5', { id: '5', name: 'My Button' });
+      fetchMock.put('/api/custom_buttons/5', { id: '5', name: 'My Button' });
 
       renderWithRedux(<AbForm {...defaultProps} recId={5} />);
       await screen.findByDisplayValue('My Button');
@@ -456,8 +457,8 @@ describe('AbForm', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      await waitFor(() => expect(fetchMock.calls('/api/custom_buttons/5')).toHaveLength(1));
-      const body = JSON.parse(fetchMock.calls('/api/custom_buttons/5')[0][1].body);
+      await waitFor(() => expect(fetchMock.callHistory.calls('/api/custom_buttons/5')).toHaveLength(1));
+      const body = JSON.parse(fetchMock.callHistory.calls('/api/custom_buttons/5')[0].options.body);
       expect(body.uri_attributes).toEqual({
         request: 'create',
         tier: 'web',
@@ -468,15 +469,15 @@ describe('AbForm', () => {
   describe('new button under a button group (customButtonGroupId)', () => {
     it('POSTs the button then assigns it to the group', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '77' }] });
-      fetchMock.postOnce('/api/custom_button_sets/10', {});
+      fetchMock.post('/api/custom_buttons/', { results: [{ id: '77' }] });
+      fetchMock.post('/api/custom_button_sets/10', {});
 
       renderWithRedux(<AbForm {...defaultProps} customButtonGroupId={10} />);
       await submitNewButton(user, { name: 'Group Button', description: 'desc' });
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/custom_button_sets/10')).toHaveLength(1);
-        const [, opts] = fetchMock.calls('/api/custom_button_sets/10')[0];
+        expect(fetchMock.callHistory.calls('/api/custom_button_sets/10')).toHaveLength(1);
+        const { options: opts } = fetchMock.callHistory.calls('/api/custom_button_sets/10')[0];
         expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 77 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
@@ -484,7 +485,7 @@ describe('AbForm', () => {
 
     it('redirects with a warning and skips assignment when the response has no id', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{}] });
+      fetchMock.post('/api/custom_buttons/', { results: [{}] });
 
       renderWithRedux(<AbForm {...defaultProps} customButtonGroupId={10} />);
       await submitNewButton(user, { name: 'Group Button', description: 'desc' });
@@ -496,22 +497,22 @@ describe('AbForm', () => {
           expect.any(String),
         );
       });
-      expect(fetchMock.calls('/api/custom_button_sets/10')).toHaveLength(0);
+      expect(fetchMock.callHistory.calls('/api/custom_button_sets/10')).toHaveLength(0);
     });
   });
 
   describe('new button under a service template (appliesToId)', () => {
     it('POSTs the button then assigns it to the service template', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{ id: '88' }] });
-      fetchMock.postOnce('/api/service_templates/42', {});
+      fetchMock.post('/api/custom_buttons/', { results: [{ id: '88' }] });
+      fetchMock.post('/api/service_templates/42', {});
 
       renderWithRedux(<AbForm {...defaultProps} appliesToId="42" />);
       await submitNewButton(user, { name: 'ST Button', description: 'desc' });
 
       await waitFor(() => {
-        expect(fetchMock.calls('/api/service_templates/42')).toHaveLength(1);
-        const [, opts] = fetchMock.calls('/api/service_templates/42')[0];
+        expect(fetchMock.callHistory.calls('/api/service_templates/42')).toHaveLength(1);
+        const { options: opts } = fetchMock.callHistory.calls('/api/service_templates/42')[0];
         expect(JSON.parse(opts.body)).toMatchObject({ action: 'add_custom_button', button_id: 88 });
         expect(miqRedirectBack).toHaveBeenCalled();
       });
@@ -519,7 +520,7 @@ describe('AbForm', () => {
 
     it('redirects with a warning and skips assignment when the response has no id', async() => {
       const user = userEvent.setup();
-      fetchMock.postOnce('/api/custom_buttons/', { results: [{}] });
+      fetchMock.post('/api/custom_buttons/', { results: [{}] });
 
       renderWithRedux(<AbForm {...defaultProps} appliesToId="42" />);
       await submitNewButton(user, { name: 'ST Button', description: 'desc' });
@@ -531,7 +532,7 @@ describe('AbForm', () => {
           expect.any(String),
         );
       });
-      expect(fetchMock.calls('/api/service_templates/42')).toHaveLength(0);
+      expect(fetchMock.callHistory.calls('/api/service_templates/42')).toHaveLength(0);
     });
   });
 });

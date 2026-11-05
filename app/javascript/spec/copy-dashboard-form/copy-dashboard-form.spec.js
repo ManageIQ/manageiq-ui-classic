@@ -8,43 +8,37 @@ import '../helpers/miqAjaxButton';
 import * as handleFailure from '../../helpers/handle-failure';
 
 describe('Copy Dashboard form', () => {
-  let initialProps;
-  let baseUrl;
-  let apiUrl;
-  let dashboardData;
-  let apiData;
+  beforeAll(() => fetchMock.mockGlobal());
+
+  const initialProps = { dashboardId: '55' };
+  const baseUrl = `/report/dashboard_get/${initialProps.dashboardId}`;
+  const apiUrl = '/api/groups?expand=resources';
+  const dashboardData = {
+    name: 'Clint',
+    description: 'good dashboard',
+    owner_id: '12',
+  };
+  const apiData = {
+    resources: [
+      { description: 'name1', id: '1' },
+      { description: '80s', id: '80s' },
+      { description: 'current group', id: '12' },
+    ],
+  };
+
   let submitSpyMiqSparkleOn;
   let submitSpyMiqSparkleOff;
   let spyMiqAjaxButton;
 
   beforeEach(() => {
-    initialProps = { dashboardId: '55' };
-
-    dashboardData = {
-      name: 'Clint',
-      description: 'good dashboard',
-      owner_id: '12',
-    };
-
-    apiData = {
-      resources: [
-        { description: 'name1', id: '1' },
-        { description: '80s', id: '80s' },
-        { description: 'current group', id: '12' },
-      ],
-    };
-
-    baseUrl = `/report/dashboard_get/${initialProps.dashboardId}`;
-
-    apiUrl = '/api/groups?expand=resources';
-
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
   });
 
   afterEach(() => {
-    fetchMock.restore();
+    fetchMock.removeRoutes();
+    fetchMock.callHistory.clear();
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
@@ -52,9 +46,9 @@ describe('Copy Dashboard form', () => {
 
   it('should render correctly and set initialValue', async() => {
     fetchMock
-      .getOnce(baseUrl, dashboardData)
-      .getOnce(apiUrl, apiData)
-      .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
+      .get(baseUrl, dashboardData)
+      .get(apiUrl, apiData)
+      .get('/report/dashboard_get/55?name=Clint', { length: 1 });
 
     renderWithRedux(<CopyDashboardForm {...initialProps} />);
 
@@ -75,11 +69,11 @@ describe('Copy Dashboard form', () => {
     /* eslint-enable no-console */
 
     fetchMock
-      .getOnce(baseUrl, dashboardData)
-      .getOnce(apiUrl, { body: {}, status: 400 })
-      .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
+      .get(baseUrl, dashboardData)
+      .get(apiUrl, { body: {}, status: 400 })
+      .get('/report/dashboard_get/55?name=Clint', { length: 1 });
 
-    handleFailure.default = jest.fn();
+    jest.spyOn(handleFailure, 'default').mockImplementation(() => {});
 
     renderWithRedux(<CopyDashboardForm {...initialProps} />);
     await waitFor(() => {
@@ -94,9 +88,9 @@ describe('Copy Dashboard form', () => {
   it('should handle cancel', async() => {
     const user = userEvent.setup();
     fetchMock
-      .getOnce(baseUrl, dashboardData)
-      .getOnce(apiUrl, apiData)
-      .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
+      .get(baseUrl, dashboardData)
+      .get(apiUrl, apiData)
+      .get('/report/dashboard_get/55?name=Clint', { length: 1 });
 
     renderWithRedux(<CopyDashboardForm {...initialProps} />);
 
@@ -116,11 +110,11 @@ describe('Copy Dashboard form', () => {
   it('should handle submit', async() => {
     const user = userEvent.setup();
     fetchMock
-      .getOnce(baseUrl, dashboardData)
-      .getOnce(apiUrl, apiData)
-      .postOnce('/report/db_copy/55?button=save', { name: 'original_name' })
-      .getOnce('/report/dashboard_get/55?name=Clint', { length: 0 })
-      .getOnce('/report/dashboard_get/55?name=new_name', { length: 0 });
+      .get(baseUrl, dashboardData)
+      .get(apiUrl, apiData)
+      .post('/report/db_copy/55?button=save', { name: 'original_name' })
+      .get('/report/dashboard_get/55?name=Clint', { length: 0 })
+      .get('/report/dashboard_get/55?name=new_name', { length: 0 });
 
     const { container } = renderWithRedux(
       <CopyDashboardForm {...initialProps} />
@@ -128,7 +122,7 @@ describe('Copy Dashboard form', () => {
     await waitFor(() => {
       expect(screen.getByLabelText('Name')).toBeInTheDocument();
     });
-    expect(fetchMock.calls()).toHaveLength(2);
+    expect(fetchMock.callHistory.calls()).toHaveLength(2);
 
     const nameInput = screen.getByLabelText('Name');
     const groupInput = screen.getByRole('combobox', { name: 'Select Group' });
@@ -145,7 +139,7 @@ describe('Copy Dashboard form', () => {
     });
     await user.click(submitButton);
     await waitFor(() => {
-      expect(fetchMock.called('/report/db_copy/55?button=save')).toBe(true);
+      expect(fetchMock.callHistory.called('/report/db_copy/55?button=save')).toBe(true);
     });
     await waitFor(() => {
       expect(spyMiqAjaxButton).toHaveBeenCalledWith(
@@ -157,6 +151,6 @@ describe('Copy Dashboard form', () => {
         }
       );
     });
-    expect(fetchMock.calls()).toHaveLength(4);
+    expect(fetchMock.callHistory.calls()).toHaveLength(4);
   });
 });

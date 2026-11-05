@@ -10,6 +10,7 @@ const cloudVolume = {
 };
 
 describe('Cloud Volume backup form component', () => {
+  beforeAll(() => fetchMock.mockGlobal());
   const mockResources = {
     resources: [
       { id: '1', name: 'Volume 1' },
@@ -18,14 +19,10 @@ describe('Cloud Volume backup form component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.mock(
+    fetchMock.get(
       `/api/cloud_volumes?expand=resources&attributes=name,id`,
       mockResources
     );
-  });
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
   });
 
   it('should render the restore cloud volume backup form', async() => {

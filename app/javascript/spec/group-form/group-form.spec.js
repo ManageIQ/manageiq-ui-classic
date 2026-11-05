@@ -70,21 +70,21 @@ const defaultProps = {
 };
 
 beforeEach(() => {
-  fetchMock.get(/\/api\/groups\/1/, mockGroupData);
+  fetchMock.get(/\/api\/groups\/1/, mockGroupData, { name: 'group' });
   fetchMock.get(/\/api\/roles/, mockRoles);
   fetchMock.get(/\/api\/tenants/, mockTenants);
-  fetchMock.get(/\/ops\/group_form_data\//, mockExtra);
+  fetchMock.get(/\/ops\/group_form_data\//, mockExtra, { name: 'formData' });
   fetchMock.post(/\/api\/groups/, { description: 'Test Group' });
   miqRedirectBack.mockClear();
 });
 
 afterEach(() => {
-  fetchMock.reset();
-  fetchMock.restore();
-  jest.clearAllMocks();
+  fetchMock.removeRoutes();
 });
 
 describe('GroupForm', () => {
+  beforeAll(() => fetchMock.mockGlobal());
+
   it('renders loading state initially', async() => {
     renderWithRedux(<GroupForm {...defaultProps} />);
     expect(document.querySelector('.cds--loading')).toBeInTheDocument();
@@ -134,15 +134,15 @@ describe('GroupForm', () => {
     await waitFor(() => {
       expect(screen.getByText('Assigned Filters (read only)')).toBeInTheDocument();
     });
-    expect(fetchMock.called('begin:/ops/group_form_data/1?read_only=true')).toBe(true);
+    expect(fetchMock.callHistory.called('begin:http://localhost/ops/group_form_data/1?read_only=true')).toBe(true);
     unmount();
 
-    fetchMock.resetHistory();
+    fetchMock.callHistory.clear();
     renderWithRedux(<GroupForm {...defaultProps} />);
     await waitFor(() => {
       expect(screen.getByText('Assign Filters')).toBeInTheDocument();
     });
-    expect(fetchMock.called(/\/ops\/group_form_data\/1$/)).toBe(true);
+    expect(fetchMock.callHistory.called(/\/ops\/group_form_data\/1$/)).toBe(true);
   });
 
   it('renders "Assign Filters" heading in edit mode', async() => {
@@ -154,10 +154,10 @@ describe('GroupForm', () => {
   });
 
   it('shows deleted belongsto warning when deleted_belongsto_filters is non-empty in form data', async() => {
+    fetchMock.removeRoutes({ names: ['formData'] });
     fetchMock.get(
       /\/ops\/group_form_data\//,
-      { ...mockExtra, deleted_belongsto_filters: ['/ManageIQ/Providers/Amazon/...'] },
-      { overwriteRoutes: true }
+      { ...mockExtra, deleted_belongsto_filters: ['/ManageIQ/Providers/Amazon/...'] }
     );
     renderWithRedux(<GroupForm {...defaultProps} />);
 
@@ -189,7 +189,6 @@ describe('GroupForm', () => {
 
   describe('for new group', () => {
     beforeEach(() => {
-      fetchMock.restore();
       fetchMock.get(/\/api\/roles/, mockRoles);
       fetchMock.get(/\/api\/tenants/, mockTenants);
       fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
@@ -222,9 +221,9 @@ describe('GroupForm', () => {
       await user.click(submitBtn);
 
       await waitFor(() => {
-        expect(fetchMock.called('/api/groups')).toBe(true);
-        const lastCall = fetchMock.lastCall('/api/groups');
-        expect(JSON.parse(lastCall[1].body)).toEqual(
+        expect(fetchMock.callHistory.called('/api/groups')).toBe(true);
+        const lastCall = fetchMock.callHistory.lastCall('/api/groups');
+        expect(JSON.parse(lastCall.options.body)).toEqual(
           expect.objectContaining({ description: 'New Group' })
         );
       });
@@ -255,9 +254,9 @@ describe('GroupForm', () => {
       await user.click(submitBtn);
 
       await waitFor(() => {
-        expect(fetchMock.called('/api/groups/1')).toBe(true);
-        const lastCall = fetchMock.lastCall('/api/groups/1');
-        expect(JSON.parse(lastCall[1].body)).toEqual(
+        expect(fetchMock.callHistory.called('/api/groups/1')).toBe(true);
+        const lastCall = fetchMock.callHistory.lastCall('/api/groups/1');
+        expect(JSON.parse(lastCall.options.body)).toEqual(
           expect.objectContaining({ action: 'edit' })
         );
       });
@@ -305,7 +304,7 @@ describe('GroupForm', () => {
 
   describe('submit error handling', () => {
     beforeEach(() => {
-      fetchMock.restore();
+      fetchMock.removeRoutes();
       fetchMock.get(/\/api\/groups\/1/, mockGroupData);
       fetchMock.get(/\/api\/roles/, mockRoles);
       fetchMock.get(/\/api\/tenants/, mockTenants);
@@ -395,7 +394,7 @@ describe('GroupForm', () => {
 
   describe('initial load failure', () => {
     beforeEach(() => {
-      fetchMock.restore();
+      fetchMock.removeRoutes();
       fetchMock.get(/\/api\/groups\/1/, mockGroupData);
       fetchMock.get(/\/api\/roles/, 500);
       fetchMock.get(/\/api\/tenants/, mockTenants);
@@ -412,7 +411,6 @@ describe('GroupForm', () => {
   });
 
   it('calls miqRedirectBack with the "Add was cancelled" message for a new group', async() => {
-    fetchMock.restore();
     fetchMock.get(/\/api\/roles/, mockRoles);
     fetchMock.get(/\/api\/tenants/, mockTenants);
     fetchMock.get(/\/ops\/group_form_data\/new/, mockExtra);
@@ -435,7 +433,8 @@ describe('GroupForm', () => {
 
   describe('belongsto filter trees', () => {
     it('selecting a HAC node and submitting sends the correct belongsto path', async() => {
-      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.removeRoutes({ names: ['formData'] });
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree);
       const user = userEvent.setup();
       renderWithRedux(<GroupForm {...defaultProps} />);
 
@@ -452,9 +451,9 @@ describe('GroupForm', () => {
       await user.click(screen.getByRole('button', { name: /^Save$/i }));
 
       await waitFor(() => {
-        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+        expect(fetchMock.callHistory.called(/\/api\/groups\/1/)).toBe(true);
       });
-      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      const body = JSON.parse(fetchMock.callHistory.lastCall(/\/api\/groups\/1/).options.body);
       expect(body.resource.filters.belongsto).toContain(CLUSTER_PATH);
       // The provider key is shared — it should NOT appear as an independent
       // belongsto path since it was not a leaf selection
@@ -462,7 +461,8 @@ describe('GroupForm', () => {
     });
 
     it('loads a group with a saved folder-level belongsto path and shows the node as checked', async() => {
-      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.removeRoutes({ names: ['formData', 'group'] });
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree);
       fetchMock.get(
         /\/api\/groups\/1/,
         {
@@ -471,8 +471,7 @@ describe('GroupForm', () => {
             filter_expression: null,
             filters: { belongsto: [CLUSTER_PATH], managed: [] },
           },
-        },
-        { overwriteRoutes: true }
+        }
       );
 
       renderWithRedux(<GroupForm {...defaultProps} />);
@@ -510,9 +509,9 @@ describe('GroupForm', () => {
       await user.click(screen.getByRole('button', { name: /^Save$/i }));
 
       await waitFor(() => {
-        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+        expect(fetchMock.callHistory.called(/\/api\/groups\/1/)).toBe(true);
       });
-      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      const body = JSON.parse(fetchMock.callHistory.lastCall(/\/api\/groups\/1/).options.body);
       expect(body.resource.filters).toEqual({});
     });
 
@@ -528,14 +527,15 @@ describe('GroupForm', () => {
       await user.click(screen.getByRole('button', { name: /^Save$/i }));
 
       await waitFor(() => {
-        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+        expect(fetchMock.callHistory.called(/\/api\/groups\/1/)).toBe(true);
       });
-      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      const body = JSON.parse(fetchMock.callHistory.lastCall(/\/api\/groups\/1/).options.body);
       expect(body.resource.filter_expression).toBeNull();
       expect(body.resource).toHaveProperty('filters');
     });
 
     it('sends filter_expression and no managed filters when useFilterExpression is true', async() => {
+      fetchMock.removeRoutes({ names: ['group'] });
       fetchMock.get(
         /\/api\/groups\/1/,
         {
@@ -544,8 +544,7 @@ describe('GroupForm', () => {
             filter_expression: { exp: { '=': { field: 'MiqGroup-name', value: 'test' } } },
             filters: { managed: [], belongsto: [] },
           },
-        },
-        { overwriteRoutes: true }
+        }
       );
       fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
 
@@ -560,9 +559,9 @@ describe('GroupForm', () => {
       await user.click(screen.getByRole('button', { name: /^Save$/i }));
 
       await waitFor(() => {
-        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+        expect(fetchMock.callHistory.called(/\/api\/groups\/1/)).toBe(true);
       });
-      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      const body = JSON.parse(fetchMock.callHistory.lastCall(/\/api\/groups\/1/).options.body);
       expect(body.resource.filter_expression).toEqual({
         exp: { '=': { field: 'MiqGroup-name', value: 'test' } },
       });
@@ -570,6 +569,7 @@ describe('GroupForm', () => {
     });
 
     it('preserves existing filter_expression when only modifying belongsto filters on Tab 2', async() => {
+      fetchMock.removeRoutes({ names: ['group', 'formData'] });
       fetchMock.get(
         /\/api\/groups\/1/,
         {
@@ -578,10 +578,9 @@ describe('GroupForm', () => {
             filter_expression: { exp: { '=': { tag: 'managed-env/prod', value: 'production' } } },
             filters: { managed: [], belongsto: [] },
           },
-        },
-        { overwriteRoutes: true }
+        }
       );
-      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree, { overwriteRoutes: true });
+      fetchMock.get(/\/ops\/group_form_data\//, mockExtraWithHacTree);
       fetchMock.get(/\/expression_editor\/metadata/, { fields: [] });
 
       const user = userEvent.setup();
@@ -599,9 +598,9 @@ describe('GroupForm', () => {
       await user.click(screen.getByRole('button', { name: /^Save$/i }));
 
       await waitFor(() => {
-        expect(fetchMock.called(/\/api\/groups\/1/)).toBe(true);
+        expect(fetchMock.callHistory.called(/\/api\/groups\/1/)).toBe(true);
       });
-      const body = JSON.parse(fetchMock.lastCall(/\/api\/groups\/1/)[1].body);
+      const body = JSON.parse(fetchMock.callHistory.lastCall(/\/api\/groups\/1/).options.body);
       expect(body.resource.filter_expression).toEqual({
         exp: { '=': { tag: 'managed-env/prod', value: 'production' } },
       });
