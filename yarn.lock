@@ -1969,8 +1969,8 @@ __metadata:
   linkType: hard
 
 "@data-driven-forms/carbon-component-mapper@npm:~4.2.0":
-  version: 4.2.1
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.2.1"
+  version: 4.2.4
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.2.4"
   dependencies:
     "@data-driven-forms/common": "npm:*"
     clsx: "npm:^1.1.1"
@@ -1979,7 +1979,7 @@ __metadata:
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/6fb6d356c430587ec62ebe0687386d2b418bfcf362982e5f664afe370503c960f6078a94c713b3d792db0e100fb1420ed2553ff2f8190b7035de8bd673710adc
+  checksum: 10/6099fa9eb7db366bdbe059aab7451465c4a9b2a7815f13865c3a291cfad2ba202d6cb65876b8e0c6af2c6e8116003b96bac988e068ed04117fd62a683ebee164
   languageName: node
   linkType: hard
 
