@@ -1,0 +1,56 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox } from '@carbon/react';
+import { fieldProperties, updateDialogField } from '../helper.field';
+import FieldLabel, { fieldLabelText } from './FieldLabel';
+import ServiceContext from '../ServiceContext';
+import ServiceValidator from '../ServiceValidator';
+
+/** Component to render the Checkbox in the Service/DialogTabs/DialogGroups/DialogFields component */
+const CheckboxField = ({ field }) => {
+  const { data, setData } = useContext(ServiceContext);
+  const {
+    fieldData, isDisabled, fieldId, requiredLabel,
+  } = fieldProperties(field, data);
+
+  /** Checkbox onChange event handler */
+  const onChange = (_evt, { checked }) => {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
+      const { valid, value } = ServiceValidator.validateField({ value: checked, field });
+      updateDialogField(setData, field, { value, valid });
+    }
+  };
+
+  return (
+    <div className="field-checkbox">
+      <FieldLabel field={field} />
+      <Checkbox
+        disabled={isDisabled}
+        id={fieldId}
+        checked={!!fieldData.value}
+        labelText={fieldLabelText(field)}
+        hideLabel
+        onChange={onChange}
+        readOnly={field.read_only}
+      />
+      {
+        !fieldData.valid && <div className="cds--form__helper-text">{requiredLabel}</div>
+      }
+    </div>
+  );
+};
+
+CheckboxField.propTypes = {
+  field: PropTypes.shape({
+    id: PropTypes.string,
+    type: PropTypes.string,
+    default_value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    dialog_field_responders: PropTypes.arrayOf(PropTypes.string),
+    label: PropTypes.string,
+    name: PropTypes.string,
+    required: PropTypes.bool,
+    read_only: PropTypes.bool,
+  }).isRequired,
+};
+
+export default CheckboxField;
