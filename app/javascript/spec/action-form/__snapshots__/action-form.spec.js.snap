@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Action Form Component should render correctly 1`] = `
+exports[`Action Form Component create mode should render correctly 1`] = `
 <div>
   <form
     class="cds--form form-0-2-3 form-react"
