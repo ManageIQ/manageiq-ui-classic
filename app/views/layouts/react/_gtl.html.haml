@@ -1,4 +1,6 @@
 - no_flash_div ||= false
-#flash_msg_div
+- skip_flash_msg_div ||= false
+- unless skip_flash_msg_div
+  #flash_msg_div
 = render_gtl_outer(no_flash_div)
 %div{:style => "padding-bottom: 20px"}

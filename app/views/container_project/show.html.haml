@@ -1,5 +1,7 @@
 - if %w(container_routes container_services container_replicators container_groups container_nodes container_images container_templates containers custom_button_events).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+- elsif @ownershipitems
+  = render :partial => "shared/views/ownership"
 - elsif @showtype == "timeline"
   = render :partial => "layouts/tl_show_async"
 - elsif @showtype == "performance"
