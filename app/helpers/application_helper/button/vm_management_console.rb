@@ -2,6 +2,6 @@ class ApplicationHelper::Button::VmManagementConsole < ApplicationHelper::Button
   needs :@record
 
   def visible?
-    @record.vendor == 'ibm_power_hmc'
+    @record.supports?(:management_console)
   end
 end
