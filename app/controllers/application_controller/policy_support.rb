@@ -41,7 +41,7 @@ module ApplicationController::PolicySupport
         end
         return
       elsif params[:button] == "save"
-        ppids = @edit[:new].keys + @edit[:current].keys # Get union of policy profile ids
+        ppids = (@edit[:new].keys + @edit[:current].keys).grep(Integer) # Get union of policy profile ids
         ppids.uniq.each do |ppid|
           next if @edit[:new][ppid] == @edit[:current][ppid] # Only process changes
 
