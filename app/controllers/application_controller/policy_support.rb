@@ -162,6 +162,7 @@ module ApplicationController::PolicySupport
     )
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
     @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name) # Get the db records
+    @in_a_form = true # must be set before get_db_view so the GTL options carry in_a_form and report_data skips adv_search_build
     @view = get_db_view(session[:pol_db], :clickable => false) # Instantiate the MIQ Report view object
 
     @edit = {}
@@ -174,7 +175,6 @@ module ApplicationController::PolicySupport
     end
     @edit[:current] = @edit[:new].dup                 # Save the existing counts
     session[:changed] = false
-    @in_a_form = true
     protect_build_tree
     build_targets_hash(@politems)
   end
