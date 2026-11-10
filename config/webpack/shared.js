@@ -196,6 +196,10 @@ module.exports = {
     alias: {
       ...sharedPackages.reduce((acc, pkg) => ({ ...acc, [pkg]: resolveModule(pkg) }), {}),
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
+      // @brickhouse-tech/angular-lts (aliased as "angular") bundles the ngAnimate, ngSanitize and ngMock files
+      'angular-animate$': resolveModule('angular/angular-animate.js'),
+      'angular-sanitize$': resolveModule('angular/angular-sanitize.js'),
+      'angular-mocks$': resolveModule('angular/angular-mocks.js'),
       '@patternfly/patternfly': resolveModule('NONEXISTENT'),
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
       '@@ddf': resolve(dirname(__filename), '../../app/javascript/forms/data-driven-form'),
