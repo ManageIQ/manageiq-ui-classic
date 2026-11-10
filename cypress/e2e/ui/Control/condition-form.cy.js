@@ -216,7 +216,7 @@ describe('Control > Conditions > New Condition', () => {
 
   it('description enforces 255-char max length', () => {
     const longText = 'A'.repeat(256);
-    cy.get('input#description').type(longText);
+    cy.get('input#description').type(longText, { delay: 10 });
     cy.get('input#description').invoke('val').then((val) => {
       expect(val.length).to.be.at.most(255);
     });
