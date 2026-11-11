@@ -66,6 +66,9 @@ import './assertions/expect_text.js';
 import './assertions/expect_title.js';
 import './assertions/miq_data_table_assertions.js';
 
+// Skip remaining tests after the first failure
+import 'cypress-fail-fast';
+
 // cypress on rails setup:
 // ***********************************************************
 
