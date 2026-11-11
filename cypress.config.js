@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const { defineConfig } = require('cypress');
+const cypressFailFast = require('cypress-fail-fast/plugin');
 const fs = require('fs');
 const path = require('path');
 
@@ -29,6 +30,11 @@ module.exports = defineConfig({
       runMode: true,
     },
     setupNodeEvents(on, config) {
+      // In CI, skip the remaining tests in the run after the first failure (after retries are
+      // exhausted) to save time. Disabled elsewhere so developers can see multiple failures at once.
+      config.expose = { ...config.expose, failFastEnabled: !!process.env.CI };
+      cypressFailFast(on, config);
+
       // Check for Cypress build marker
       const markerPath = path.resolve(__dirname, 'tmp/.cypress-build-marker');
       if (!fs.existsSync(markerPath)) {
@@ -94,6 +100,8 @@ module.exports = defineConfig({
         }
         return launchOptions;
       });
+
+      return config;
     },
   },
 });

@@ -6037,6 +6037,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: "npm:^4.1.0"
+    supports-color: "npm:^7.1.0"
+  checksum: 10/cb3f3e594913d63b1814d7ca7c9bafbf895f75fbf93b92991980610dfd7b48500af4e3a5d4e3a8f337990a96b168d7eb84ee55efdce965e2ee8efc20f8c8f139
+  languageName: node
+  linkType: hard
+
 "chalk@npm:^2.3.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -6045,16 +6055,6 @@ __metadata:
     escape-string-regexp: "npm:^1.0.5"
     supports-color: "npm:^5.3.0"
   checksum: 10/3d1d103433166f6bfe82ac75724951b33769675252d8417317363ef9d54699b7c3b2d46671b772b893a8e50c3ece70c4b933c73c01e81bc60ea4df9b55afa303
-  languageName: node
-  linkType: hard
-
-"chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "chalk@npm:4.1.2"
-  dependencies:
-    ansi-styles: "npm:^4.1.0"
-    supports-color: "npm:^7.1.0"
-  checksum: 10/cb3f3e594913d63b1814d7ca7c9bafbf895f75fbf93b92991980610dfd7b48500af4e3a5d4e3a8f337990a96b168d7eb84ee55efdce965e2ee8efc20f8c8f139
   languageName: node
   linkType: hard
 
@@ -6770,6 +6770,17 @@ __metadata:
   version: 1.0.2
   resolution: "cyclist@npm:1.0.2"
   checksum: 10/404cfe8f22b411cd1d38c0573e43d70ade67c0b66c9f4ae21957968ad6fce462563ecb5e0bb59dff80941b50400ae1d0f1989f4dbf6997035495110934368fd2
+  languageName: node
+  linkType: hard
+
+"cypress-fail-fast@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "cypress-fail-fast@npm:8.2.0"
+  dependencies:
+    chalk: "npm:4.1.2"
+  peerDependencies:
+    cypress: ">=15.10.0"
+  checksum: 10/e81a51812386599bb86c9a619ec886d8f98853b1be9c5590943519499a239a8e4cfcea455405113332c46fec541c47c31b9fe3ec7979182c1d40e1a94eb87a77
   languageName: node
   linkType: hard
 
@@ -11722,6 +11733,7 @@ __metadata:
     core-js: "npm:~3.50.0"
     css-loader: "npm:^5.0.0"
     cypress: "npm:~15.21.0"
+    cypress-fail-fast: "npm:^8.2.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.4.16"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
