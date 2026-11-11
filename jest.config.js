@@ -33,6 +33,7 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css|scss)$": 'identity-obj-proxy',
     '^react$': '<rootDir>/node_modules/react/',
+    '^angular-mocks$': resolveModule('angular/angular-mocks.js'), // bundled in @brickhouse-tech/angular-lts
     '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
     '@@ddf': '<rootDir>/app/javascript/forms/data-driven-form',
     '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
