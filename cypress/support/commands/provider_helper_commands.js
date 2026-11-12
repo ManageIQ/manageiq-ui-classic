@@ -57,7 +57,7 @@ function fillFormFields(fields, values) {
           inputType: 'number',
         })
           .clear()
-          .type(values[field.id]);
+          .type(values[field.id], { delay: 10 });
         break;
       case 'password':
         cy.getFormInputFieldByIdAndType({
@@ -66,7 +66,10 @@ function fillFormFields(fields, values) {
         }).type(values[field.id]);
         break;
       case 'textarea':
-        cy.getFormTextareaById({ textareaId: field.id }).type(values[field.id]);
+        cy.getFormTextareaById({ textareaId: field.id }).type(
+          values[field.id],
+          { delay: 10 }
+        );
         break;
       case 'toggle_button':
         if (values[field.id]) {
