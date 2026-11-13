@@ -4,7 +4,7 @@ import { MisuseOutline } from '@carbon/react/icons';
 import DOMPurify from 'dompurify';
 
 const findError = (data) => {
-  if (!data) {
+  if (!data || typeof data !== 'string') {
     return data;
   }
 
@@ -53,10 +53,31 @@ const buildErrorDetails = ({ backendName, error, source }) => {
   const isHtml = (contentType || '').match('text/html');
   const isJson = (contentType || '').match('application/json');
 
+  if (isJson && typeof data === 'string') {
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed && typeof parsed === 'object') {
+        data = parsed;
+      }
+    } catch {
+      // not valid JSON, leave data as string
+    }
+  }
+
   if (isHtml && data) {
     data = findError(data);
-  } else if (isJson && data?.error?.message) {
-    data = data.error.message;
+  } else if (data && typeof data === 'object') {
+    if (data?.error?.message) {
+      data = data.error.message;
+    } else if (data?.message) {
+      data = data.message;
+    } else if (typeof data?.error === 'string') {
+      data = data.error;
+    } else if (Array.isArray(data?.errors)) {
+      data = data.errors.join(', ');
+    } else {
+      data = JSON.stringify(data, null, 2);
+    }
   }
 
   if (source !== 'server') {
