@@ -76,7 +76,10 @@ const createTreeReducer = (namespace, oncheck, onclick) => {
       .addCase(ACTIONS.SELECTED, (draft, { nodeId, value }) => {
         if (nodeId && draft[nodeId]) {
           draft[nodeId].state.selected = value;
-          callIfAllowed(onclick, draft[nodeId].attr.key);
+          // Only the newly selected node triggers the click handler, not the previously selected node being deselected
+          if (value) {
+            callIfAllowed(onclick, draft[nodeId].attr.key);
+          }
         }
       })
       .addCase(ACTIONS.CHILD_NODES, (draft, { nodeId, value }) => {
