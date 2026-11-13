@@ -148,6 +148,7 @@ import SchemaSequenceEditor from '../components/miq-ae-class/schema/sequence-edi
 import SearchBar from '../components/search-bar';
 import ServersDataChart from '../components/provider-dashboard-charts/servers-pie-chart';
 import ServiceDetailStdout from '../components/service-detail-stdout';
+import ServiceDialogForm from '../components/service-dialog-form';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
 import ServiceRequestDefault from '../components/service-request-default';
 import SetOwnershipForm from '../components/set-ownership-form';
@@ -365,6 +366,7 @@ ManageIQ.component.addReact('SchemaSequenceEditor', SchemaSequenceEditor);
 ManageIQ.component.addReact('SearchBar', SearchBar);
 ManageIQ.component.addReact('ServersDataChart', ServersDataChart);
 ManageIQ.component.addReact('ServiceDetailStdout', ServiceDetailStdout);
+ManageIQ.component.addReact('ServiceDialogForm', ServiceDialogForm);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);
 ManageIQ.component.addReact('ServiceRequestDefault', ServiceRequestDefault);
 ManageIQ.component.addReact('SetOwnershipForm', SetOwnershipForm);
