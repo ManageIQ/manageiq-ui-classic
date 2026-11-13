@@ -5652,6 +5652,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bootstrap@npm:3.4.1":
+  version: 3.4.1
+  resolution: "bootstrap@npm:3.4.1"
+  checksum: 10/c46285f9d46f6d7a716fa2d294a68b83d8da5f394b2df80e96e0015055e78899312186ac998474568949545e8edcea5c396d500fb9de71c2c81ad5bac1fb56b6
+  languageName: node
+  linkType: hard
+
 "bootstrap@npm:>=2.3.2":
   version: 5.3.8
   resolution: "bootstrap@npm:5.3.8"
@@ -5661,10 +5668,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:^3.3, bootstrap@npm:^3.4.1, bootstrap@npm:~3.4.1":
+"bootstrap@patch:bootstrap@npm%3A3.4.1#~/.yarn/patches/bootstrap-3.4.1.patch":
   version: 3.4.1
-  resolution: "bootstrap@npm:3.4.1"
-  checksum: 10/c46285f9d46f6d7a716fa2d294a68b83d8da5f394b2df80e96e0015055e78899312186ac998474568949545e8edcea5c396d500fb9de71c2c81ad5bac1fb56b6
+  resolution: "bootstrap@patch:bootstrap@npm%3A3.4.1#~/.yarn/patches/bootstrap-3.4.1.patch::version=3.4.1&hash=41b83f"
+  checksum: 10/03e8739b260fb210516620cd3fca9ea01b8cf5ab63c8dce6c7518d821efbc295bfa5488a1c5adbffec6f403f3398f70f398d733ee5237b5d6f4b5444aaeb9a92
   languageName: node
   linkType: hard
 
