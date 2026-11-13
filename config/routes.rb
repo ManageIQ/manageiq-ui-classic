@@ -840,6 +840,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         index
+        ownership
         perf_top_chart
         show
         show_list
@@ -849,6 +850,7 @@ Rails.application.routes.draw do
         button
         dynamic_checkbox_refresh
         listnav_search_selected
+        ownership_update
         quick_search
         sections_field_changed
         show
