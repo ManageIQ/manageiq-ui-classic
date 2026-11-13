@@ -5670,8 +5670,8 @@ __metadata:
 
 "bootstrap@patch:bootstrap@npm%3A3.4.1#~/.yarn/patches/bootstrap-3.4.1.patch":
   version: 3.4.1
-  resolution: "bootstrap@patch:bootstrap@npm%3A3.4.1#~/.yarn/patches/bootstrap-3.4.1.patch::version=3.4.1&hash=d1602b"
-  checksum: 10/e39beba95c9fb5fa4ce48163ccb3d3eec851689eb13287278b188680326bb5d10f60254d48a54574d74d2b21be9d005f7fef5f6d1ca5c5859bc0f0b9b48434cc
+  resolution: "bootstrap@patch:bootstrap@npm%3A3.4.1#~/.yarn/patches/bootstrap-3.4.1.patch::version=3.4.1&hash=510cdc"
+  checksum: 10/464626496958bfa8b5f3fa32d484ef024417407e6c3a79e4058ac4507a67abf3028723ca6c19a1ba1a0b957ba52e7154d1b0068ba400a02f6cae64f9382a1ff8
   languageName: node
   linkType: hard
 
