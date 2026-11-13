@@ -86,9 +86,31 @@ class ServiceController < ApplicationController
     assert_privileges('service_reconfigure')
 
     service = find_record_with_rbac(Service, params[:id])
-    service_template = service.service_template
-    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
-    @dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    resource_action = service.service_template&.resource_actions&.find_by(:action => 'Reconfigure')
+
+    unless resource_action&.dialog
+      add_flash(_("Service \"%{name}\" does not have a Reconfigure dialog") % {:name => service.name}, :error)
+      session[:flash_msgs] = @flash_array
+      redirect_to(:action => 'show_list')
+      return
+    end
+
+    @dialog_locals = {
+      :dialogId => resource_action.dialog.id,
+      :params   => {
+        :resourceActionId => resource_action.id,
+        :targetId         => service.id,
+        :targetType       => 'service'
+      },
+      :urls     => {
+        :apiSubmitEndpoint    => "/api/services/#{service.id}",
+        :apiAction            => 'reconfigure',
+        :cancelEndPoint       => '/service',
+        :finishSubmitEndpoint => '/service',
+        :openUrl              => false
+      }
+    }
+
     @in_a_form = true
     drop_breadcrumb(:name => _("Reconfigure Service \"%{name}\"") % {:name => service.name}, :url => "/service/service_reconfigure/#{service.id}")
   end
@@ -206,10 +228,6 @@ class ServiceController < ApplicationController
       partial = "shared/views/retire"
       header = _("Set/Remove retirement date for Service")
       action = "retire"
-    when "reconfigure_dialog"
-      partial = "shared/dialogs/reconfigure_dialog"
-      header = @right_cell_text
-      action = nil
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
