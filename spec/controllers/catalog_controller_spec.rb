@@ -638,6 +638,31 @@ describe CatalogController do
       end
     end
 
+    describe "#servicetemplate_edit pre-selects catalog" do
+      let(:catalog) { FactoryBot.create(:service_template_catalog) }
+
+      before do
+        session[:sandboxes] = {
+          "catalog" => {
+            :active_tree => :sandt_tree,
+            :trees       => {:sandt_tree => {:active_node => "stc-#{catalog.id}",
+                                             :open_nodes  => []}}
+          }
+        }
+        allow(controller).to receive(:replace_right_cell)
+      end
+
+      it "pre-selects catalog when creating a new catalog bundle from a catalog folder node" do
+        post :x_button, :params => {:pressed => 'catalogitem_new'}
+        expect(assigns(:edit)[:new][:catalog_id]).to eq(catalog.id)
+      end
+
+      it "pre-selects catalog when creating a new atomic catalog item from a catalog folder node" do
+        post :x_button, :params => {:pressed => 'atomic_catalogitem_new'}
+        expect(assigns(:edit)[:new][:catalog_id]).to eq(catalog.id)
+      end
+    end
+
     describe "#servicetemplate_ownership" do
       it "renders ownership views successfully after button is pressed" do
         st = FactoryBot.create(:service_template)
@@ -1230,6 +1255,49 @@ describe CatalogController do
         it "doesn't set available_managers" do
           controller.send(:set_form_vars)
           expect(controller.instance_variable_get(:@edit)[:new].keys).not_to include(:available_managers)
+        end
+      end
+    end
+    context 'when creating a new catalog item' do
+      let(:catalog) { FactoryBot.create(:service_template_catalog) }
+      let(:record) { FactoryBot.build(:service_template) }
+
+      before do
+        allow(controller).to receive(:build_automate_tree)
+        controller.instance_variable_set(:@edit, :new => {}, :key => "prov_edit__new")
+        controller.instance_variable_set(:@record, record)
+        controller.instance_variable_set(:@sb,
+                                         :active_tree => :sandt_tree,
+                                         :trees       => {:sandt_tree => {:active_node => active_node,
+                                                                          :open_nodes  => []}})
+      end
+
+      context 'when a catalog folder node is selected' do
+        let(:active_node) { "stc-#{catalog.id}" }
+
+        it 'pre-selects the catalog from the tree node' do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:catalog_id]).to eq(catalog.id)
+        end
+      end
+
+      context 'when a catalog item node under a catalog is selected' do
+        let(:existing_item) { FactoryBot.create(:service_template, :service_template_catalog => catalog) }
+        let(:active_node) { "stc-#{catalog.id}_st-#{existing_item.id}" }
+
+        it 'pre-selects the catalog from the tree node' do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:catalog_id]).to eq(catalog.id)
+        end
+      end
+
+      context 'when the Unassigned node is selected' do
+        let(:unassigned_item) { FactoryBot.create(:service_template) }
+        let(:active_node) { "-Unassigned_st-#{unassigned_item.id}" }
+
+        it 'leaves catalog_id nil' do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:catalog_id]).to be_nil
         end
       end
     end
