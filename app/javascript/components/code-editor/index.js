@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import {
+  useState, useRef, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { FormGroup, RadioButtonGroup, RadioButton } from '@carbon/react';
@@ -14,6 +16,14 @@ import 'codemirror/mode/shell/shell';
 // editor help
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/search/search';
+import 'codemirror/addon/dialog/dialog';
+import 'codemirror/addon/search/searchcursor';
+import 'codemirror/addon/search/matchesonscrollbar';
+import 'codemirror/addon/search/matchesonscrollbar.css';
+import 'codemirror/addon/search/match-highlighter';
+import 'codemirror/addon/scroll/annotatescrollbar';
+import 'codemirror/addon/display/panel';
 
 const getMode = (mode) => ({
   json: { name: 'javascript', json: true },
@@ -29,17 +39,67 @@ const CodeEditor = (props) => {
     validateOnMount,
     mode = 'yaml',
     modes = [],
+    showSearch = false,
     ...rest
   } = useFieldApi(prepareProps(props));
 
   const [codeMode, setCodeMode] = useState(mode);
-  const [editor, setEditor] = useState();
+  const editorRef = useRef(null);
+  const cursorRef = useRef(null);
+  const scrollbarRef = useRef(null);
+  const searchInputRef = useRef(null);
 
-  useEffect(() => {
-    if (editor) {
-      editor.refresh();
+  const runSearch = useCallback((query, forward = true) => {
+    const cm = editorRef.current;
+    if (!cm || !query) {
+      return;
     }
-  }, [editor]);
+
+    // update scrollbar highlights
+    if (scrollbarRef.current) {
+      scrollbarRef.current.clear();
+    }
+    scrollbarRef.current = cm.showMatchesOnScrollbar(query, true);
+
+    // always create a fresh cursor from the current selection so direction changes work correctly
+    let startPos;
+    if (forward) {
+      startPos = cursorRef.current ? cursorRef.current.to() : cm.getCursor();
+    } else {
+      startPos = cursorRef.current ? cursorRef.current.from() : cm.getCursor();
+    }
+    cursorRef.current = cm.getSearchCursor(query, startPos, true);
+    cursorRef.current.query = query;
+
+    const found = forward ? cursorRef.current.findNext() : cursorRef.current.findPrevious();
+    if (!found) {
+      // wrap around to opposite end of document
+      const lastLine = cm.lastLine();
+      const wrapPos = forward
+        ? { line: 0, ch: 0 }
+        : { line: lastLine, ch: cm.getLine(lastLine).length };
+      cursorRef.current = cm.getSearchCursor(query, wrapPos, true);
+      cursorRef.current.query = query;
+      if (forward) {
+        cursorRef.current.findNext();
+      } else {
+        cursorRef.current.findPrevious();
+      }
+    }
+
+    if (cursorRef.current.from()) {
+      cm.setSelection(cursorRef.current.from(), cursorRef.current.to());
+      cm.scrollIntoView({ from: cursorRef.current.from(), to: cursorRef.current.to() }, 40);
+    }
+  }, []);
+
+  const clearSearch = useCallback(() => {
+    if (scrollbarRef.current) {
+      scrollbarRef.current.clear();
+      scrollbarRef.current = null;
+    }
+    cursorRef.current = null;
+  }, []);
 
   const invalid = (touched || validateOnMount) && error;
   const warnText = (touched || validateOnMount) && warning;
@@ -62,16 +122,91 @@ const CodeEditor = (props) => {
           autoCloseBrackets: true,
           styleActiveLine: true,
           gutters: ['CodeMirror-lint-markers'],
+          highlightSelectionMatches: { annotateScrollbar: true },
+          extraKeys: showSearch ? {
+            'Ctrl-F': () => {
+              if (searchInputRef.current) {
+                searchInputRef.current.focus();
+                searchInputRef.current.select();
+              }
+            },
+            'Cmd-F': () => {
+              if (searchInputRef.current) {
+                searchInputRef.current.focus();
+                searchInputRef.current.select();
+              }
+            },
+          } : {},
         }}
         style={{ height: 'auto' }}
-        onBeforeChange={(editor, _data, value) => {
+        onBeforeChange={(_editor, _data, value) => {
           onChange(value);
         }}
         onChange={(_editor, _data, value) => {
           onChange(value);
         }}
-        editorDidMount={(editor) => {
-          setEditor(editor);
+        editorDidMount={(mountedEditor) => {
+          editorRef.current = mountedEditor;
+          mountedEditor.refresh();
+
+          if (showSearch) {
+            const panel = document.createElement('div');
+            panel.className = 'miq-codemirror-search-panel';
+            panel.style.cssText = 'display:flex;align-items:center;gap:6px;padding:4px 6px;border-bottom:1px solid #ddd;background:#f5f5f5;';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Search…';
+            input.style.cssText = 'flex:1;min-width:0;padding:2px 6px;border:1px solid #ccc;border-radius:3px;font-size:13px;';
+            searchInputRef.current = input;
+
+            const btnPrev = document.createElement('button');
+            btnPrev.type = 'button';
+            btnPrev.textContent = '▲';
+            btnPrev.title = 'Previous match';
+            btnPrev.style.cssText = 'padding:1px 6px;font-size:11px;cursor:pointer;';
+
+            const btnNext = document.createElement('button');
+            btnNext.type = 'button';
+            btnNext.textContent = '▼';
+            btnNext.title = 'Next match';
+            btnNext.style.cssText = 'padding:1px 6px;font-size:11px;cursor:pointer;';
+
+            panel.appendChild(input);
+            panel.appendChild(btnPrev);
+            panel.appendChild(btnNext);
+
+            let lastQuery = '';
+
+            input.addEventListener('input', () => {
+              const q = input.value;
+              if (q !== lastQuery) {
+                lastQuery = q;
+                if (scrollbarRef.current) {
+                  scrollbarRef.current.clear();
+                  scrollbarRef.current = null;
+                }
+                cursorRef.current = null;
+              }
+              if (q) {
+                runSearch(q, true);
+              } else {
+                clearSearch();
+              }
+            });
+
+            input.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                runSearch(input.value, !e.shiftKey);
+              }
+            });
+
+            btnNext.addEventListener('click', () => runSearch(input.value, true));
+            btnPrev.addEventListener('click', () => runSearch(input.value, false));
+
+            mountedEditor.addPanel(panel, { position: 'top', stable: true });
+          }
         }}
         value={value}
         {...rest}
