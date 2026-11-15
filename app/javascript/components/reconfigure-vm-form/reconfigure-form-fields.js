@@ -111,6 +111,70 @@ const processorFormFields = (data, setData, options) => ({
   ],
 });
 
+// IBM Power HMC — "Processor" toggle sub-form
+// Shared mode: Processing Units is a decimal (e.g. 0.5, 1.25)
+// Dedicated mode: Processing Units is a whole integer (e.g. 1, 2, 4)
+const ibmProcessorFormFields = (isSharedProcessor) => ({
+  component: componentTypes.SUB_FORM,
+  id: 'ibm-processor-sub-form',
+  name: 'ibm-processor-sub-form',
+  className: 'reconfigure-sub-form',
+  condition: {
+    when: 'processor',
+    is: true,
+  },
+  fields: [
+    {
+      component: componentTypes.TEXT_FIELD,
+      id: 'processing_units',
+      name: 'processing_units',
+      label: __('Processing Units'),
+      type: 'number',
+      step: isSharedProcessor ? 0.01 : 1,
+      min: isSharedProcessor ? 0.01 : 1,
+      isRequired: true,
+      helperText: isSharedProcessor ? __('Decimal value, e.g. 0.5, 1.0, 1.25') : __('Integer value, e.g. 1, 2, 4'),
+      validate: [{ type: 'required' }],
+    },
+  ],
+});
+
+// IBM Power HMC — "Virtual Processors" toggle (shared only, separate from Processor toggle)
+const vprocsToggleField = () => ({
+  component: 'switch',
+  name: 'cb_vprocs',
+  label: __('Virtual Processors'),
+  onText: __('Yes'),
+  offText: __('No'),
+});
+
+// IBM Power HMC — Virtual Processors sub-form: integer count
+// vprocsLimit: { min, max } from vm.reconfigure_vcpu_limits (server-supplied)
+const ibmVprocsFormFields = (vprocsLimit) => ({
+  component: componentTypes.SUB_FORM,
+  id: 'ibm-vprocs-sub-form',
+  name: 'ibm-vprocs-sub-form',
+  className: 'reconfigure-sub-form',
+  condition: {
+    when: 'cb_vprocs',
+    is: true,
+  },
+  fields: [
+    {
+      component: componentTypes.TEXT_FIELD,
+      id: 'vprocs_count',
+      name: 'vprocs_count',
+      label: __('Virtual Processors'),
+      type: 'number',
+      step: 1,
+      min: vprocsLimit ? vprocsLimit.min : 1,
+      max: vprocsLimit ? vprocsLimit.max : undefined,
+      isRequired: true,
+      validate: [{ type: 'required' }],
+    },
+  ],
+});
+
 const diskTable = (data, roles, setData, onCellClick, buttonClick) => ({
   component: 'reconfigure-table',
   name: 'disk',
@@ -161,8 +225,20 @@ export const reconfigureFormFields = (recordId, roles, memory, data, setData, op
     formFields.push(memoryFormFields(roles));
   }
   if (roles.allowCpuChange) {
-    formFields.push(processorField());
-    formFields.push(processorFormFields(data, setData, options, memory.max_cpu));
+    if (roles.isIbmPowerHmc) {
+      // IBM: "Processor" toggle → Processing Units field
+      formFields.push(processorField());
+      formFields.push(ibmProcessorFormFields(roles.isSharedProcessor));
+      if (roles.isSharedProcessor) {
+        // IBM shared only: separate "Virtual Processors" toggle → vprocs count field
+        formFields.push(vprocsToggleField());
+        formFields.push(ibmVprocsFormFields(data.vprocs_limit));
+      }
+    } else {
+      // All other VMs (VMware, RHV, etc.): Sockets / Cores
+      formFields.push(processorField());
+      formFields.push(processorFormFields(data, setData, options, memory.max_cpu));
+    }
   }
   if (recordId.length === 1) {
     formFields.push(renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick));
