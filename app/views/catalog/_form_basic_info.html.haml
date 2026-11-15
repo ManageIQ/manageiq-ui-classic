@@ -1,7 +1,7 @@
 - url = form_field_change_url(@edit)
 
-%h3= _('Basic Information')
 .catalogs_form#basic_info_div
+  %h3= _('Basic Information')
   = hidden_div_if(@edit && @edit[:ae_tree_select] != true, :id => "ae_tree_select_div") do
     = render(:partial => 'layouts/ae_tree_select')
   .form-horizontal
@@ -46,19 +46,67 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('catalog_id', '#{url}')
-    .form-group
-      %label.col-md-2.control-label
-        = _('Dialog')
-      .col-md-10
-        %p.form-control-static
-          - available_dialogs = @edit[:new][:available_dialogs].invert.to_a.sort_by { |a| a.first.downcase }
-          - options = [["<#{_('No Dialog')}>", nil]] + available_dialogs
-          = select_tag('dialog_id',
-                        options_for_select(options, @edit[:new][:dialog_id]),
-                        "data-miq_sparkle_on" => true,
-                        :class                => "selectpicker")
-          :javascript
-            miqSelectPickerEvent('dialog_id', '#{url}')
+    - if @edit[:new][:st_prov_type] == 'embedded_terraform'
+      .form-group
+        %label.col-md-2.control-label
+          = _('Dialog')
+        .col-md-10
+          .radio
+            %label
+              %input{:type                => 'radio',
+                     :name                => 'dialog_type',
+                     :id                  => 'dialog_type',
+                     :value               => 'useExisting',
+                     "data-miq_observe"   => {:url => url}.to_json,
+                     :checked             => @edit[:new][:dialog_type] != 'createNew'}
+              = _('Use Existing')
+          .radio
+            %label
+              %input{:type                => 'radio',
+                     :name                => 'dialog_type',
+                     :id                  => 'dialog_type',
+                     :value               => 'createNew',
+                     "data-miq_observe"   => {:url => url}.to_json,
+                     :checked             => @edit[:new][:dialog_type] == 'createNew'}
+              = _('Create New')
+      - if @edit[:new][:dialog_type] == 'createNew'
+        .form-group
+          %label.col-md-2.control-label
+            = _('Enter a new Dialog')
+          .col-md-10
+            = text_field_tag("new_dialog_name",
+                             @edit[:new][:new_dialog_name].to_s,
+                             :maxlength         => 255,
+                             :class             => "form-control",
+                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      - else
+        .form-group
+          %label.col-md-2.control-label
+            = _('Existing Dialog')
+          .col-md-10
+            %p.form-control-static
+              - available_dialogs = @edit[:new][:available_dialogs].invert.to_a.sort_by { |a| a.first.downcase }
+              - options = [["<#{_('No Dialog')}>", nil]] + available_dialogs
+              = select_tag('dialog_id',
+                            options_for_select(options, @edit[:new][:dialog_id]),
+                            "data-miq_sparkle_on" => true,
+                            :class                => "selectpicker")
+              :javascript
+                miqSelectPickerEvent('dialog_id', '#{url}')
+    - else
+      .form-group
+        %label.col-md-2.control-label
+          = _('Dialog')
+        .col-md-10
+          %p.form-control-static
+            - available_dialogs = @edit[:new][:available_dialogs].invert.to_a.sort_by { |a| a.first.downcase }
+            - options = [["<#{_('No Dialog')}>", nil]] + available_dialogs
+            = select_tag('dialog_id',
+                          options_for_select(options, @edit[:new][:dialog_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+            :javascript
+              miqSelectPickerEvent('dialog_id', '#{url}')
     - unless @edit[:new][:service_type] == "composite"
       .form-group
         %label.col-md-2.control-label
