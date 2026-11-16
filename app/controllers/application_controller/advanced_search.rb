@@ -163,17 +163,6 @@ module ApplicationController::AdvancedSearch
     @edit[:adv_search_report] = nil                                           # Clear the report name
   end
 
-  def adv_search_redraw_tree_and_main(tree)
-    display_mode = params[:button] == 'save' ? params[:button] : nil
-    tree_name = x_active_tree.to_s
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("#{tree_name}_div",  :partial => "shared/tree",               :locals => {:tree => tree, :name => tree_name})
-      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode, :force => true})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode, :force => true})
-    end
-  end
-
   def adv_search_redraw_listnav_and_main
     display_mode = params[:button] == 'save' ? params[:button] : nil
     render :update do |page|
@@ -186,16 +175,8 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_redraw_left_div
     if @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree].include?(x_active_tree.to_s)
-      tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
-      builder = TreeBuilder.class_for_type(tree_type)
-      tree = builder.new(x_active_tree, @sb)
-      if tree_for_building_accordions?
-        @explorer = true
-        build_accordions_and_trees
-      else
-        adv_search_redraw_tree_and_main(tree)
-        return
-      end
+      @explorer = true
+      build_accordions_and_trees
     elsif %w[ems_cloud ems_infra].include?(@layout)
       build_listnav_search_list(@view.db)
     else
@@ -203,18 +184,6 @@ module ApplicationController::AdvancedSearch
     end
 
     adv_search_redraw_listnav_and_main
-  end
-
-  def tree_for_building_accordions?
-    %w[automation_manager_cs_filter_tree
-       configuration_scripts_tree
-       images_filter_tree
-       instances_filter_tree
-       storage_tree
-       templates_filter_tree
-       templates_images_filter_tree
-       vms_filter_tree
-       vms_instances_filter_tree].include?(x_active_tree.to_s)
   end
 
   def adv_search_redraw_search_partials(display_mode = nil)
