@@ -97,4 +97,64 @@ describe ApplicationController do
       expect(controller.session[:flash_msgs]).to eq([{:message => 'Edit policy assignments was cancelled by the user', :level => :success}])
     end
   end
+
+  describe '#protect_build_screen' do
+    let(:host) { FactoryBot.create(:host) }
+
+    before do
+      allow(controller).to receive(:session).and_return(:pol_db => Host, :pol_items => [host.id])
+      allow(controller).to receive(:drop_breadcrumb)
+      allow(controller).to receive(:protect_build_tree)
+      allow(controller).to receive(:build_targets_hash)
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    it 'sets @in_a_form before building the GTL view, so adv_search_build is skipped' do
+      in_a_form_during_get_db_view = nil
+      allow(controller).to receive(:get_db_view) do
+        in_a_form_during_get_db_view = controller.instance_variable_get(:@in_a_form)
+        nil
+      end
+
+      controller.send(:protect_build_screen)
+
+      expect(in_a_form_during_get_db_view).to be(true)
+    end
+
+    it 'starts with a clean state where :new equals :current' do
+      allow(controller).to receive(:get_db_view)
+
+      controller.send(:protect_build_screen)
+
+      edit = controller.instance_variable_get(:@edit)
+      expect(edit[:new]).to eq(edit[:current])
+      expect(controller.session[:changed]).to be(false)
+    end
+  end
+
+  describe '#protect with the reset button in explorer' do
+    let(:host) { FactoryBot.create(:host) }
+
+    before do
+      allow(controller).to receive(:session).and_return(:edit => {:explorer => true}, :pol_db => Host, :pol_items => [host.id])
+      allow(controller).to receive(:drop_breadcrumb)
+      allow(controller).to receive(:get_db_view)
+      allow(controller).to receive(:protect_build_tree)
+      allow(controller).to receive(:build_targets_hash)
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:button => 'reset'}
+    end
+
+    it 'rebuilds the form in its initial, unchanged state' do
+      controller.send(:protect)
+
+      edit = controller.instance_variable_get(:@edit)
+      expect(edit[:new]).to eq(edit[:current])
+      expect(edit[:new].keys).to all(be_an(Integer))
+      expect(controller.session[:changed]).to be(false)
+      expect(controller.instance_variable_get(:@in_a_form)).to be(true)
+      expect(controller.instance_variable_get(:@sb)[:action]).to eq('protect')
+    end
+  end
 end
