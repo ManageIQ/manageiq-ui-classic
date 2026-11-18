@@ -36,12 +36,12 @@ describe PictureController do
   end
 
   it "responds with Not Modified when the browser sends a matching ETag" do
-    get :show, :params => { :basename => "#{picture.id}.#{picture.extension}" }
+    get :show, :params => {:basename => "#{picture.id}.#{picture.extension}"}
     etag = response.headers["ETag"]
     expect(etag).to be_present
 
     request.headers["If-None-Match"] = etag
-    get :show, :params => { :basename => "#{picture.id}.#{picture.extension}" }
+    get :show, :params => {:basename => "#{picture.id}.#{picture.extension}"}
     expect(response.status).to eq(304)
     expect(response.body).to be_blank
   end
