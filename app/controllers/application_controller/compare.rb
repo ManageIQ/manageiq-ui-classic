@@ -1260,7 +1260,7 @@ module ApplicationController::Compare
       icon = h.decorate.fonticon
       html_text <<
         "<a href=\"/ems_cluster/show/#{h[:id]}\">
-          <i class=\"#{icon}\" align=\"middle\" border=\"0\" width=\"20\" height=\"20\"/>
+          <i class=\"#{icon}\" align=\"middle\" border=\"0\" width=\"20\" height=\"20\"></i>
         </a>"
     end
     if i.zero?
