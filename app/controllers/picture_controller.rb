@@ -8,9 +8,7 @@ class PictureController < ApplicationController
     picture = Picture.where(:extension => extension).find_by(:id => id)
     return head(:not_found) unless picture
 
-    fresh_when(:etag => picture.md5, :public => true)
-
     extension = 'svg+xml' if extension == 'svg'
-    send_data(picture.content, :type => "image/#{extension}", :disposition => 'inline') if stale?
+    send_data(picture.content, :type => "image/#{extension}", :disposition => 'inline') if stale?(:etag => picture.md5, :public => true)
   end
 end
