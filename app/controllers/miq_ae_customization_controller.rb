@@ -4,7 +4,6 @@ class MiqAeCustomizationController < ApplicationController
   include OldDialogs
   include Dialogs
 
-  helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
   include MiqAeCustomizationHelper
@@ -37,13 +36,14 @@ class MiqAeCustomizationController < ApplicationController
 
   def upload_import_file
     assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
+    response_data = {}
     if params[:upload].nil? || params[:upload][:file].blank?
       add_flash(_("Use the Choose file button to locate an import file"), :warning)
     else
       begin
         import_file = dialog_import_service.store_for_import(params[:upload][:file].read)
-        @import_file_upload_id = import_file.id
-        @import = import_file.service_dialog_list
+        response_data[:import_file_upload_id] = import_file.id
+        response_data[:dialogs] = import_file.service_dialog_list.map { |item| {:name => item[:name], :exists => item[:exists]} }
         add_flash(_("Select Dialogs to import"), :info)
       rescue DialogImportValidator::ImportNonYamlError
         add_flash(_("Error: the file uploaded is not of the supported format"), :error)
@@ -59,20 +59,14 @@ class MiqAeCustomizationController < ApplicationController
         add_flash(_("Error during upload: the version of exported dialog is not supported in this release"), :error)
       end
     end
-    get_node_info
-    replace_right_cell(:nodetype => x_node)
+    render :json => response_data.merge(:message => @flash_array.first[:message], :level => @flash_array.first[:level])
   end
 
   def import_service_dialogs
     assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
-    if params[:commit] == _('Commit')
-      if params[:dialogs_to_import].blank?
-        javascript_flash(:spinner_off => true,
-                         :text        => _("At least one Service Dialog must be selected."),
-                         :severity    => :error)
-        return
-      end
-
+    if params[:dialogs_to_import].blank?
+      add_flash(_("At least one Service Dialog must be selected."), :error)
+    else
       import_file_upload = ImportFileUpload.find_by(:id => params[:import_file_upload_id])
 
       if import_file_upload
@@ -81,12 +75,15 @@ class MiqAeCustomizationController < ApplicationController
       else
         add_flash(_("Error: ImportFileUpload expired"), :error)
       end
-    else
-      dialog_import_service.cancel_import(params[:import_file_upload_id])
-      add_flash(_("Service dialog import cancelled"), :success)
     end
-    get_node_info
-    replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
+    render :json => @flash_array.to_json
+  end
+
+  def cancel_import_service_dialogs
+    assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
+    dialog_import_service.cancel_import(params[:import_file_upload_id])
+    add_flash(_("Service dialog import cancelled"), :success)
+    render :json => @flash_array.to_json
   end
 
   def export_service_dialogs

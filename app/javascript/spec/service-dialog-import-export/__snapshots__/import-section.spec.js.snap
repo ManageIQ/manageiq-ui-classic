@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Service dialog ImportSection component should render the import section 1`] = `
+<div>
+  <div
+    class="service-dialog-import-section"
+  >
+    <h3>
+      Import
+    </h3>
+    <div
+      class="cds--form-item"
+    >
+      <h3
+        class="cds--file--label"
+        dir="auto"
+      >
+        Upload file
+      </h3>
+      <p
+        class="cds--label-description"
+        dir="auto"
+        id="file-uploader-_r_0_"
+      />
+      <button
+        aria-describedby="file-uploader-_r_0_"
+        class="cds--btn cds--btn--primary cds--btn--md cds--layout--size-md"
+        type="button"
+      >
+        Choose file
+      </button>
+      <label
+        class="cds--visually-hidden"
+        for="id-_r_1_"
+      >
+        <span>
+          Choose file
+        </span>
+      </label>
+      <input
+        accept=".yml,.yaml"
+        class="cds--visually-hidden"
+        id="id-_r_1_"
+        name="upload[file]"
+        tabindex="-1"
+        type="file"
+      />
+      <div
+        class="cds--file-container"
+      />
+    </div>
+    <div
+      class="upload-button-wrapper"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        id="upload-service-dialog-import"
+        type="button"
+      >
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ServiceDialogImportExport component should render the import and export sections without the review modal 1`] = `
+<div>
+  <div
+    class="import-export-page service-dialog-import-export"
+  >
+    <div
+      class="cds--css-grid"
+    >
+      <div
+        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+      >
+        <div
+          class="import-export-section"
+        >
+          <div
+            class="service-dialog-import-section"
+          >
+            <h3>
+              Import
+            </h3>
+            <div
+              class="cds--form-item"
+            >
+              <h3
+                class="cds--file--label"
+                dir="auto"
+              >
+                Upload file
+              </h3>
+              <p
+                class="cds--label-description"
+                dir="auto"
+                id="file-uploader-_r_0_"
+              />
+              <button
+                aria-describedby="file-uploader-_r_0_"
+                class="cds--btn cds--btn--primary cds--btn--md cds--layout--size-md"
+                type="button"
+              >
+                Choose file
+              </button>
+              <label
+                class="cds--visually-hidden"
+                for="id-_r_1_"
+              >
+                <span>
+                  Choose file
+                </span>
+              </label>
+              <input
+                accept=".yml,.yaml"
+                class="cds--visually-hidden"
+                id="id-_r_1_"
+                name="upload[file]"
+                tabindex="-1"
+                type="file"
+              />
+              <div
+                class="cds--file-container"
+              />
+            </div>
+            <div
+              class="upload-button-wrapper"
+            >
+              <button
+                class="cds--btn cds--btn--primary cds--btn--disabled"
+                disabled=""
+                id="upload-service-dialog-import"
+                type="button"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+      >
+        <div
+          class="import-export-section-divider"
+        />
+        <div
+          class="import-export-section"
+        >
+          <div
+            class="service-dialog-export-section"
+          >
+            <h3>
+              Export
+            </h3>
+            <div
+              class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
+            >
+              <label
+                class="cds--label"
+                for="service-dialog-export-select-input"
+                id="service-dialog-export-select-label"
+              >
+                Service Dialogs
+                <span
+                  class="cds--visually-hidden"
+                >
+                  Total items selected:  0.
+                </span>
+              </label>
+              <div
+                class="cds--multi-select cds--combo-box cds--multi-select--filterable cds--list-box"
+                id="service-dialog-export-select"
+              >
+                <div
+                  class="cds--list-box__field"
+                >
+                  <input
+                    aria-activedescendant=""
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="cds--text-input cds--text-input--empty"
+                    id="service-dialog-export-select-input"
+                    placeholder="Select service dialogs to export"
+                    role="combobox"
+                    value=""
+                  />
+                  <button
+                    aria-controls="service-dialog-export-select__menu"
+                    aria-expanded="false"
+                    aria-label="Open"
+                    class="cds--list-box__menu-icon"
+                    id="service-dialog-export-select-toggle-button"
+                    tabindex="-1"
+                    title="Open"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <ul
+                  aria-labelledby="service-dialog-export-select-label"
+                  class="cds--list-box__menu"
+                  hidden=""
+                  id="service-dialog-export-select__menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+            <div
+              class="export-button-wrapper"
+            >
+              <button
+                class="cds--btn cds--btn--primary cds--btn--disabled"
+                disabled=""
+                id="export-service-dialogs"
+                type="button"
+              >
+                Export
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

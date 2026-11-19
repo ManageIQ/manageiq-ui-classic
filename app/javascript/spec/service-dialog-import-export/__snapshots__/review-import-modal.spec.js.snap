@@ -1,0 +1,296 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ReviewImportModal component should list the dialogs with their status 1`] = `
+<div>
+  <div
+    class="cds--layer-one cds--modal cds--modal-tall is-visible service-dialog-review-import-modal"
+    role="presentation"
+  >
+    <span
+      class="cds--visually-hidden"
+      role="link"
+      tabindex="0"
+    >
+      Focus sentinel
+    </span>
+    <div
+      aria-label="Import Service Dialogs"
+      aria-modal="true"
+      class="cds--modal-container cds--modal-container--md"
+      role="dialog"
+      tabindex="-1"
+    >
+      <div
+        class="cds--modal-header"
+      >
+        <h2
+          class="cds--modal-header__heading"
+          dir="auto"
+          id="cds--modal-header__heading--modal-id-_r_1_"
+        >
+          Import Service Dialogs
+        </h2>
+        <div
+          class="cds--modal-close-button"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-label="Close"
+                aria-labelledby="tooltip-_r_3_"
+                class="cds--modal-close cds--btn cds--btn--primary cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="cds--modal-close__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-_r_3_"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Close
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade"
+        id="cds--modal-body--modal-id-_r_1_"
+      >
+        <section
+          class="cds--data-table-container"
+        >
+          <div
+            class="cds--data-table-content"
+          >
+            <table
+              class="cds--data-table cds--data-table--md"
+            >
+              <thead>
+                <tr>
+                  <th
+                    aria-live="off"
+                    class="cds--table-column-checkbox"
+                    scope="col"
+                  >
+                    <div
+                      class="cds--checkbox--inline"
+                    >
+                      <input
+                        class="cds--checkbox"
+                        id="service-dialog-import-select-all"
+                        name="select-all-dialogs"
+                        type="checkbox"
+                      />
+                      <label
+                        class="cds--checkbox-label"
+                        for="service-dialog-import-select-all"
+                      >
+                        <span
+                          class="cds--visually-hidden"
+                        >
+                          Select all dialogs
+                        </span>
+                      </label>
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    <div
+                      class="cds--table-header-label"
+                    >
+                      Dialog name
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    <div
+                      class="cds--table-header-label"
+                    >
+                      Status
+                      <div
+                        class="cds--table-header-label--decorator-inner"
+                      />
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                aria-live="polite"
+              >
+                <tr>
+                  <td
+                    aria-live="off"
+                    class="cds--table-column-checkbox"
+                  >
+                    <div
+                      class="cds--checkbox--inline"
+                    >
+                      <input
+                        class="cds--checkbox"
+                        id="service-dialog-import-New dialog"
+                        name="dialogs_to_import-New dialog"
+                        type="checkbox"
+                      />
+                      <label
+                        class="cds--checkbox-label"
+                        for="service-dialog-import-New dialog"
+                      >
+                        <span
+                          class="cds--visually-hidden"
+                        >
+                          New dialog
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    New dialog
+                  </td>
+                  <td>
+                    <span
+                      class="service-dialog-import-status"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"
+                        />
+                        <path
+                          d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"
+                          data-icon-path="inner-path"
+                          opacity="0"
+                        />
+                      </svg>
+                      New object
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    aria-live="off"
+                    class="cds--table-column-checkbox"
+                  >
+                    <div
+                      class="cds--checkbox--inline"
+                    >
+                      <input
+                        class="cds--checkbox"
+                        id="service-dialog-import-Existing dialog"
+                        name="dialogs_to_import-Existing dialog"
+                        type="checkbox"
+                      />
+                      <label
+                        class="cds--checkbox-label"
+                        for="service-dialog-import-Existing dialog"
+                      >
+                        <span
+                          class="cds--visually-hidden"
+                        >
+                          Existing dialog
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    Existing dialog
+                  </td>
+                  <td>
+                    <span
+                      class="service-dialog-import-status"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"
+                        />
+                        <path
+                          d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"
+                        />
+                      </svg>
+                      This object already exists in the database with the same name
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <div
+        aria-busy="false"
+        class="cds--modal-footer cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="button"
+        >
+          Commit
+        </button>
+      </div>
+    </div>
+    <span
+      class="cds--visually-hidden"
+      role="link"
+      tabindex="0"
+    >
+      Focus sentinel
+    </span>
+  </div>
+</div>
+`;
