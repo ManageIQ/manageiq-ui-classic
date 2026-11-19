@@ -2,6 +2,7 @@ module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
   include Mixins::ChargebackPreviewMixin
+  include Mixins::ComplianceHistoryMixin
   include ProvisionCustomizeHelper
   include HidePartialHelper
 
@@ -246,10 +247,10 @@ module VmCommon
       end
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, @sb, true, :root => @record)
+      @compliance_checks = serialize_compliance_history(@record, count)
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       if count == 1
-        drop_breadcrumb(:name => @record.name + _(" (Latest Compliance Check)"),
+        drop_breadcrumb(:name => @record.name + _(" (Compliance Status)"),
                         :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
       else
         drop_breadcrumb(:name => @record.name + _(" (Compliance History - Last %{number} Checks)") % {:number => count},
@@ -1154,6 +1155,8 @@ module VmCommon
       n_("Advanced Setting", "Advanced Settings", amount)
     when "disks"
       n_("Number of Disk", "Number of Disks", amount)
+    when "compliance_history"
+      n_("Compliance Status", "Compliance History", amount)
     when "drift_history"
       n_("Drift History", "Drift History", amount)
     when "event_logs"
@@ -1362,6 +1365,13 @@ module VmCommon
           :name           => name,
           :item_name      => @item.kind_of?(ScanHistory) ? @item.started_on.to_s : @item.name,
           :action         => action_type(@sb[:action], 1)
+        }
+      elsif @showtype == "compliance_history"
+        count = params[:count] ? params[:count].to_i : 10
+        header = _("\"%{action}\" for %{vm_or_template} \"%{name}\"") % {
+          :vm_or_template => ui_lookup(:table => table),
+          :name           => name,
+          :action         => action_type(@sb[:action], count == 1 ? 1 : 2)
         }
       else
         header = _("\"%{action}\" for %{vm_or_template} \"%{name}\"") % {
