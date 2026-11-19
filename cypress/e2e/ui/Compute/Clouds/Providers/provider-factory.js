@@ -279,7 +279,7 @@ export function getProviderFactoryConfig(providerConfig) {
         },
       };
     default:
-      cy.logAndThrowError(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
+      throw new Error(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
   }
 }
 
@@ -1305,7 +1305,7 @@ const PROVIDER_REGISTRY = {
  */
 export function getProviderConfig(type) {
   if (!PROVIDER_REGISTRY[type]) {
-    cy.logAndThrowError(`Provider type "${type}" is not supported`);
+    throw new Error(`Provider type "${type}" is not supported`);
   }
   return PROVIDER_REGISTRY[type]();
 }
