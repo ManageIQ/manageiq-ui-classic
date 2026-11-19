@@ -771,9 +771,10 @@ class MiqAeClassController < ApplicationController
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "miqScrollTop();" if @flash_array.present?
-      # Highlight errors in CodeMirror editor and place cursor on the first error line
+      # Highlight errors in the AeMethodDataEditor (only the inline method editor defines these functions)
       page << if res.present?
-                "if (ManageIQ.editor) { if (ManageIQ.editor.setSyntaxErrors) { ManageIQ.editor.setSyntaxErrors(#{errors_json}); } else { ManageIQ.editor.setCursor({line: #{res.first[0].to_i - 1}, ch: 0}, null, {scroll: false}); } }"
+                "if (ManageIQ.editor && ManageIQ.editor.setSyntaxErrors) " \
+                  "{ ManageIQ.editor.setSyntaxErrors(#{errors_json}); }"
               else
                 "if (ManageIQ.editor && ManageIQ.editor.clearSyntaxErrors) { ManageIQ.editor.clearSyntaxErrors(); }"
               end

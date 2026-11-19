@@ -104,6 +104,48 @@ describe('AeMethodDataEditor component', () => {
     expect(marker.title).toBe('syntax error, unexpected end-of-input');
   });
 
+  it('lists every message for a line that has several errors', () => {
+    render(<AeMethodDataEditor {...props} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 1, message: 'first error' },
+        { line: 1, message: 'second error' },
+      ]);
+    });
+
+    const marker = ManageIQ.editor.lineInfo(0).gutterMarkers['CodeMirror-error-markers'];
+    expect(marker.title).toBe('first error\nsecond error');
+  });
+
+  it('groups an error reported past the end of the text with the errors on the last line', () => {
+    render(<AeMethodDataEditor {...props} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 1, message: 'on the last line' },
+        { line: 5, message: 'unexpected end-of-input' },
+      ]);
+    });
+
+    expect(ManageIQ.editor.lineCount()).toBe(1);
+    const marker = ManageIQ.editor.lineInfo(0).gutterMarkers['CodeMirror-error-markers'];
+    expect(marker.title).toBe('on the last line\nunexpected end-of-input');
+  });
+
+  it('places the cursor on the first reported error line', () => {
+    render(<AeMethodDataEditor {...props} value={'a\nb\nc'} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 3, message: 'reported first' },
+        { line: 2, message: 'reported second' },
+      ]);
+    });
+
+    expect(ManageIQ.editor.getCursor().line).toBe(2);
+  });
+
   it('clears syntax error decorations when text is modified', () => {
     const { container } = render(<AeMethodDataEditor {...props} />);
 

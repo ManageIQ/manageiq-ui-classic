@@ -47,13 +47,22 @@ const AeMethodDataEditor = ({
       return;
     }
 
+    // The checker can report several errors for one line, or a line past the end of the text
+    // (e.g. "unexpected end-of-input"), so group the messages by the line they land on.
+    const lastLine = cm.lineCount() - 1;
+    const messagesByLine = new Map();
     errors.forEach((err) => {
-      const lineIdx = Math.max(0, err.line - 1);
+      const lineIdx = Math.min(Math.max(0, err.line - 1), lastLine);
+      messagesByLine.set(lineIdx, [...(messagesByLine.get(lineIdx) || []), err.message]);
+    });
+
+    messagesByLine.forEach((messages, lineIdx) => {
+      const title = messages.join('\n');
 
       // Gutter error indicator
       const marker = document.createElement('div');
       marker.className = 'cm-gutter-error-marker';
-      marker.title = err.message;
+      marker.title = title;
       marker.textContent = '●';
       cm.setGutterMarker(lineIdx, 'CodeMirror-error-markers', marker);
 
@@ -64,14 +73,14 @@ const AeMethodDataEditor = ({
         { line: lineIdx, ch: lineLength },
         {
           className: 'cm-syntax-error-text',
-          title: err.message,
+          title,
         },
       );
       textMarkersRef.current.push(textMarker);
     });
 
     // Place cursor on the first error line without scrolling away from flash message
-    const firstLine = Math.max(0, errors[0].line - 1);
+    const [firstLine] = messagesByLine.keys();
     cm.setCursor({ line: firstLine, ch: 0 }, null, { scroll: false });
   };
 
@@ -87,7 +96,10 @@ const AeMethodDataEditor = ({
     }
   };
 
-  /** Used by the legacy javascript to refresh the editor when the tab becomes visible and exposes helpers. */
+  /**
+   * Stores the CodeMirror instance, exposes the syntax error helpers on it, and publishes it as
+   * ManageIQ.editor so the validate response and the legacy tab refresh code can reach it.
+   */
   const editorDidMount = (editor) => {
     editorRef.current = editor;
     editor.setSyntaxErrors = setSyntaxErrors;
