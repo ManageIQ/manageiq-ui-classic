@@ -339,12 +339,30 @@ function setupTabForValidation(tab, providerConfig) {
 }
 
 /**
+ * Validates the endpoints sub-form heading and whether it renders a tab strip.
+ * Each provider gem defines its own heading ("Endpoints" or "Endpoint") and tab structure,
+ * which are captured by endpointsTitle and hasTabs in the provider config.
+ * @param {Object} providerConfig - The provider configuration object
+ */
+function validateEndpointsLayout(providerConfig) {
+  cy.get('[name="endpoints-subform"] h3')
+    .eq(0)
+    .should('have.text', providerConfig.endpointsTitle);
+  if (providerConfig.hasTabs) {
+    cy.get('[role="tablist"]').should('have.length', 1);
+  } else {
+    cy.get('[role="tablist"]').should('not.exist');
+  }
+}
+
+/**
  * Validates a provider form based on provider configuration
  * @param {Object} providerConfig - The provider configuration object
  * @param {boolean} isEdit - Whether the form is in edit mode
  */
 Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
   validateCommonFormFields(providerConfig, isEdit);
+  validateEndpointsLayout(providerConfig);
   // Buttons are asserted on the untouched form, before any tab is opened or any dropdown is
   // selected. At this point the form is pristine, so Add/Save, Validate and (edit mode) Reset
   // are disabled for every provider. Selecting dropdown values in setupTabForValidation below
