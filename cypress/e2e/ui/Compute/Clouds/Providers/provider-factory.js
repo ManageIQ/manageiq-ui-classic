@@ -287,6 +287,7 @@ export function getProviderFactoryConfig(providerConfig) {
  * Creates a provider configuration object with all necessary properties
  *
  * Optional config keys (defaults in baseConfig below):
+ *  - className: Ruby provider class, used by the Jest suite to synthesise the form schema.
  *  - hasTabs (true): whether the endpoints sub-form renders a tab strip.
  *  - endpointsTitle ('Endpoints'): heading of the endpoints sub-form ("Endpoint" for some gems).
  *  hasTabs and endpointsTitle are asserted by both the Cypress and Jest suites.
@@ -351,6 +352,7 @@ function createProviderConfig(type, config = {}) {
  */
 function getVMwareVcloudProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.VMWARE_VCLOUD, {
+    className: 'ManageIQ::Providers::Vmware::CloudManager',
     formFields: {
       default: [
         {
@@ -449,6 +451,7 @@ function getVMwareVcloudProviderConfig() {
  */
 function getOracleCloudProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.ORACLE_CLOUD, {
+    className: 'ManageIQ::Providers::OracleCloud::CloudManager',
     hasTabs: false,
     formFields: {
       default: [
@@ -504,6 +507,7 @@ function getOracleCloudProviderConfig() {
  */
 function getIBMCloudVPCProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CLOUD_VPC, {
+    className: 'ManageIQ::Providers::IbmCloud::VPC::CloudManager',
     endpointsTitle: 'Endpoint',
     formFields: {
       default: [
@@ -574,6 +578,7 @@ function getIBMCloudVPCProviderConfig() {
  */
 function getIBMPowerSystemsProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_POWER_SYSTEMS, {
+    className: 'ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager',
     formFields: {
       default: [
         {
@@ -626,6 +631,7 @@ function getIBMPowerSystemsProviderConfig() {
  */
 function getGoogleComputeEngineProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.GOOGLE_COMPUTE, {
+    className: 'ManageIQ::Providers::Google::CloudManager',
     endpointsTitle: 'Endpoint',
     hasTabs: false,
     formFields: {
@@ -661,6 +667,7 @@ function getGoogleComputeEngineProviderConfig() {
  */
 function getAzureStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE_STACK, {
+    className: 'ManageIQ::Providers::AzureStack::CloudManager',
     endpointsTitle: 'Endpoint',
     hasTabs: false,
     formFields: {
@@ -739,6 +746,7 @@ function getAzureStackProviderConfig() {
  */
 function getAzureProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE, {
+    className: 'ManageIQ::Providers::Azure::CloudManager',
     endpointsTitle: 'Endpoint',
     hasTabs: false,
     formFields: {
@@ -801,6 +809,7 @@ function getAzureProviderConfig() {
  */
 function getAmazonEC2ProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AMAZON_EC2, {
+    className: 'ManageIQ::Providers::Amazon::CloudManager',
     formFields: {
       default: [
         {
@@ -868,6 +877,7 @@ function getAmazonEC2ProviderConfig() {
  */
 function getIBMPowerVCProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_POWERVC, {
+    className: 'ManageIQ::Providers::IbmPowerVc::CloudManager',
     formFields: {
       default: [
         {
@@ -996,6 +1006,7 @@ function getIBMPowerVCProviderConfig() {
  */
 function getIBMCICProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CIC, {
+    className: 'ManageIQ::Providers::IbmCic::CloudManager',
     hasTabs: false,
     formFields: {
       default: [
@@ -1132,6 +1143,7 @@ function getIBMCICProviderConfig() {
  */
 function getOpenStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.OPENSTACK, {
+    className: 'ManageIQ::Providers::Openstack::CloudManager',
     hasTabs: false,
     formFields: {
       default: [
