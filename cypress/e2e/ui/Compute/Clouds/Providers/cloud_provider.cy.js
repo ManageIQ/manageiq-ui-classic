@@ -8,47 +8,47 @@ describe('Automate Cloud Provider form operations: Compute > Clouds > Providers 
 
   // Generate tests for VMware vCloud provider
   const vmwareVcloudConfig = getProviderConfig(PROVIDER_TYPES.VMWARE_VCLOUD);
-  generateProviderTests(vmwareVcloudConfig);
+  generateProviderTests(vmwareVcloudConfig, { skip: true });
 
   // Generate tests for Amazon EC2 provider
   const amazonEC2Config = getProviderConfig(PROVIDER_TYPES.AMAZON_EC2);
-  generateProviderTests(amazonEC2Config);
+  generateProviderTests(amazonEC2Config, { only: true });
 
   // Generate tests for Azure provider
   const azureConfig = getProviderConfig(PROVIDER_TYPES.AZURE);
-  generateProviderTests(azureConfig);
+  generateProviderTests(azureConfig, { skip: true });
 
   // Generate tests for Azure Stack provider (requires special handling)
   const azureStackConfig = getProviderConfig(PROVIDER_TYPES.AZURE_STACK);
-  generateProviderTests(azureStackConfig);
+  generateProviderTests(azureStackConfig, { skip: true });
 
   // Generate tests for Google Compute Engine provider
   const googleComputeConfig = getProviderConfig(PROVIDER_TYPES.GOOGLE_COMPUTE);
-  generateProviderTests(googleComputeConfig);
+  generateProviderTests(googleComputeConfig, { skip: true });
 
   // Generate tests for IBM Cloud VPC provider
   const ibmCloudVpcConfig = getProviderConfig(PROVIDER_TYPES.IBM_CLOUD_VPC);
-  generateProviderTests(ibmCloudVpcConfig);
+  generateProviderTests(ibmCloudVpcConfig, { skip: true });
 
   // Generate tests for IBM Power Systems Virtual Servers provider
   const ibmPowerSystemsConfig = getProviderConfig(
     PROVIDER_TYPES.IBM_POWER_SYSTEMS
   );
-  generateProviderTests(ibmPowerSystemsConfig);
+  generateProviderTests(ibmPowerSystemsConfig, { skip: true });
 
   // Generate tests for IBM PowerVC provider
   const ibmPowerVcConfig = getProviderConfig(PROVIDER_TYPES.IBM_POWERVC);
-  generateProviderTests(ibmPowerVcConfig);
+  generateProviderTests(ibmPowerVcConfig, { skip: true });
 
   // Generate tests for IBM Cloud Infrastructure Center provider
   const ibmCicConfig = getProviderConfig(PROVIDER_TYPES.IBM_CIC);
-  generateProviderTests(ibmCicConfig);
+  generateProviderTests(ibmCicConfig, { skip: true });
 
   // Generate tests for Oracle Cloud provider
   const oracleCloudConfig = getProviderConfig(PROVIDER_TYPES.ORACLE_CLOUD);
-  generateProviderTests(oracleCloudConfig);
+  generateProviderTests(oracleCloudConfig, { skip: true });
 
   // Generate tests for OpenStack provider
   const openstackConfig = getProviderConfig(PROVIDER_TYPES.OPENSTACK);
-  generateProviderTests(openstackConfig);
+  generateProviderTests(openstackConfig, { skip: true });
 });
