@@ -145,7 +145,7 @@ class MiqAeCustomizationController < ApplicationController
       @record = Dialog.find(params[:id])
     elsif params[:copy].present?
       feature = 'dialog_copy_editor'
-      @record = Dialog.find(params[:copy])
+      @record = Dialog.new
     else
       feature = 'dialog_new_editor'
       @record = Dialog.new
