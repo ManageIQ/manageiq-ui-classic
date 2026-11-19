@@ -284,6 +284,11 @@ export function getProviderFactoryConfig(providerConfig) {
 
 /**
  * Creates a provider configuration object with all necessary properties
+ *
+ * Optional config keys (defaults in baseConfig below):
+ *  - hasTabs (true): whether the endpoints sub-form renders a tab strip.
+ *  - endpointsTitle ('Endpoints'): heading of the endpoints sub-form ("Endpoint" for some gems).
+ *  hasTabs and endpointsTitle are asserted by both the Cypress and Jest suites.
  * @param {string} type - The provider type
  * @param {Object} config - Additional configuration options
  * @returns {Object} - The provider configuration object
@@ -291,6 +296,8 @@ export function getProviderFactoryConfig(providerConfig) {
 function createProviderConfig(type, config = {}) {
   const baseConfig = {
     type,
+    hasTabs: true,
+    endpointsTitle: 'Endpoints',
     validationError: VALIDATION_ERRORS[type.replace(/\s+/g, '_').toUpperCase()],
     formFields: {
       common: [
@@ -441,6 +448,7 @@ function getVMwareVcloudProviderConfig() {
  */
 function getOracleCloudProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.ORACLE_CLOUD, {
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -495,6 +503,7 @@ function getOracleCloudProviderConfig() {
  */
 function getIBMCloudVPCProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CLOUD_VPC, {
+    endpointsTitle: 'Endpoint',
     formFields: {
       default: [
         {
@@ -597,6 +606,8 @@ function getIBMPowerSystemsProviderConfig() {
  */
 function getGoogleComputeEngineProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.GOOGLE_COMPUTE, {
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -630,6 +641,8 @@ function getGoogleComputeEngineProviderConfig() {
  */
 function getAzureStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE_STACK, {
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -706,6 +719,8 @@ function getAzureStackProviderConfig() {
  */
 function getAzureProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE, {
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -961,6 +976,7 @@ function getIBMPowerVCProviderConfig() {
  */
 function getIBMCICProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CIC, {
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -1096,6 +1112,7 @@ function getIBMCICProviderConfig() {
  */
 function getOpenStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.OPENSTACK, {
+    hasTabs: false,
     formFields: {
       default: [
         {
