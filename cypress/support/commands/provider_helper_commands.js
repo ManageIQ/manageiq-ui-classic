@@ -923,16 +923,34 @@ function generateNameUniquenessTests(providerConfig) {
 }
 
 /**
+ * Picks `describe`, `describe.only` or `describe.skip`
+ * @param {Object} options - `{ only, skip }`
+ */
+function pickSuite({ only, skip }) {
+  if (only) {
+    return describe.only;
+  }
+  if (skip) {
+    return describe.skip;
+  }
+  return describe;
+}
+
+/**
  * Generates all test suites for a provider
  * @param {Object} providerConfig - The provider configuration object
+ * @param {Object} [options]
+ * @param {boolean} [options.only] - Run only this provider (`describe.only`)
+ * @param {boolean} [options.skip] - Skip this provider (`describe.skip`)
  */
-export function generateProviderTests(providerConfig) {
+export function generateProviderTests(providerConfig, { only = false, skip = false } = {}) {
   const testOptions = {
     isAzureStack: providerConfig.type === PROVIDER_TYPES.AZURE_STACK,
     isAmazonEc2: providerConfig.type === PROVIDER_TYPES.AMAZON_EC2,
   };
+  const suite = pickSuite({ only, skip });
 
-  describe(`Validate cloud provider type: ${providerConfig.type}`, () => {
+  suite(`Validate cloud provider type: ${providerConfig.type}`, () => {
     generateAddFormValidationTests(providerConfig, testOptions);
     generateEditFormValidationTests(providerConfig, testOptions);
     generateNameUniquenessTests(providerConfig, testOptions);
