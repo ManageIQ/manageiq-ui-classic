@@ -21,6 +21,7 @@ export const FIELD_LABELS = {
   PUBLIC_KEY: 'Public Key',
   PRIVATE_KEY: 'Private Key',
   IBM_CLOUD: 'IBM Cloud',
+  IBM_CLOUD_MONITORING_GUID: 'IBM Cloud Monitoring Instance GUID',
   SERVICE: 'Service',
   PROJECT_ID: 'Project ID',
   SUBSCRIPTION_ID: 'Subscription ID',
@@ -589,6 +590,20 @@ function getIBMPowerSystemsProviderConfig() {
           required: true,
         },
       ],
+      metrics: [
+        {
+          label: FIELD_LABELS.TYPE,
+          id: 'metrics_selection',
+          type: 'select',
+          required: false,
+        },
+        {
+          label: FIELD_LABELS.IBM_CLOUD_MONITORING_GUID,
+          id: 'endpoints.metrics.options.monitoring_instance_id',
+          type: 'password',
+          required: false,
+        },
+      ],
     },
     formValues: {
       default: {
@@ -596,7 +611,12 @@ function getIBMPowerSystemsProviderConfig() {
         uid_ems: FIELD_VALUES.GUID,
       },
     },
-    tabs: [TAB_LABELS.DEFAULT],
+    fieldSelectionValues: {
+      metrics: {
+        metrics_selection: SELECT_OPTIONS.ENABLED,
+      },
+    },
+    tabs: [TAB_LABELS.DEFAULT, TAB_LABELS.METRICS],
   });
 }
 
