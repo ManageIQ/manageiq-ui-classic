@@ -1821,4 +1821,36 @@ describe MiqAeClassController do
       end
     end
   end
+
+  describe "#validate_method_data" do
+    before do
+      stub_user(:features => :all)
+      session[:edit] = {
+        :key => "aemethod_edit__new",
+        :new => {:data => ""}
+      }
+      allow(controller).to receive(:render)
+    end
+
+    it "adds success flash and clears errors when data is valid" do
+      allow(MiqAeMethod).to receive(:validate_syntax).and_return(nil)
+      controller.params = {:id => "new", :method_data => "puts 'hello'"}
+      controller.send(:validate_method_data)
+
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to eq("Data validated successfully")
+      expect(flash_messages.first[:level]).to eq(:success)
+    end
+
+    it "adds error flash with error count and highlights errors when data is invalid" do
+      errors = [[2, "syntax error, unexpected end-of-input"], [4, "syntax error, unexpected ')'"]]
+      allow(MiqAeMethod).to receive(:validate_syntax).and_return(errors)
+      controller.params = {:id => "new", :method_data => "a = (\nb = 2 2\n"}
+      controller.send(:validate_method_data)
+
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to eq("Syntax validation failed with 2 errors. See highlighted lines in the editor.")
+      expect(flash_messages.first[:level]).to eq(:error)
+    end
+  end
 end

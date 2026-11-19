@@ -755,21 +755,28 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
     @edit[:new][:data] = params[:method_data] if params[:method_data]
     res = MiqAeMethod.validate_syntax(@edit[:new][:data])
-    line = 0
-    if !res
+    if res.blank?
       add_flash(_("Data validated successfully"))
     else
-      res.each do |err|
-        line = err[0] if line.zero?
-        add_flash(_("Error on line %{line_num}: %{err_txt}") % {:line_num => err[0], :err_txt => err[1]}, :error)
-      end
+      count = res.size
+      add_flash(
+        n_("Syntax validation failed with %{count} error. See highlighted line in the editor.",
+           "Syntax validation failed with %{count} errors. See highlighted lines in the editor.",
+           count) % {:count => count},
+        :error
+      )
     end
+    errors_json = (res || []).map { |err| {:line => err[0], :message => err[1]} }.to_json
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "miqScrollTop();" if @flash_array.present?
-      # Place the cursor on the first line with an error in the CodeMirror editor, without scrolling away from the flash message
-      page << "if (ManageIQ.editor) { ManageIQ.editor.setCursor({line: #{line.to_i - 1}, ch: 0}, null, {scroll: false}); }" if line.positive?
+      # Highlight errors in CodeMirror editor and place cursor on the first error line
+      page << if res.present?
+                "if (ManageIQ.editor) { if (ManageIQ.editor.setSyntaxErrors) { ManageIQ.editor.setSyntaxErrors(#{errors_json}); } else { ManageIQ.editor.setCursor({line: #{res.first[0].to_i - 1}, ch: 0}, null, {scroll: false}); } }"
+              else
+                "if (ManageIQ.editor && ManageIQ.editor.clearSyntaxErrors) { ManageIQ.editor.clearSyntaxErrors(); }"
+              end
     end
   end
 

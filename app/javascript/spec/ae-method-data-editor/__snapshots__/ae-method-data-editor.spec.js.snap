@@ -156,6 +156,9 @@ exports[`AeMethodDataEditor component should render correctly 1`] = `
               class="CodeMirror-gutter CodeMirror-linenumbers"
               style="width: 1px;"
             />
+            <div
+              class="CodeMirror-gutter CodeMirror-error-markers"
+            />
           </div>
         </div>
       </div>
@@ -319,6 +322,9 @@ exports[`AeMethodDataEditor component should render correctly with the validate 
             <div
               class="CodeMirror-gutter CodeMirror-linenumbers"
               style="width: 1px;"
+            />
+            <div
+              class="CodeMirror-gutter CodeMirror-error-markers"
             />
           </div>
         </div>

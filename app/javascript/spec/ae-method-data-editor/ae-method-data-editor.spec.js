@@ -87,4 +87,56 @@ describe('AeMethodDataEditor component', () => {
 
     expect(screen.getByRole('button', { name: 'Validate' })).toBeEnabled();
   });
+
+  it('decorates syntax errors in the gutter when setSyntaxErrors is called', () => {
+    render(<AeMethodDataEditor {...props} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 1, message: 'syntax error, unexpected end-of-input' },
+      ]);
+    });
+
+    const lineInfo = ManageIQ.editor.lineInfo(0);
+    const marker = lineInfo.gutterMarkers['CodeMirror-error-markers'];
+    expect(marker).toBeDefined();
+    expect(marker.className).toBe('cm-gutter-error-marker');
+    expect(marker.title).toBe('syntax error, unexpected end-of-input');
+  });
+
+  it('clears syntax error decorations when text is modified', () => {
+    const { container } = render(<AeMethodDataEditor {...props} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 1, message: 'syntax error, unexpected end-of-input' },
+      ]);
+    });
+
+    expect(ManageIQ.editor.lineInfo(0).gutterMarkers?.['CodeMirror-error-markers']).toBeDefined();
+
+    act(() => {
+      container.querySelector('.CodeMirror').CodeMirror.setValue('fixed_code');
+    });
+
+    expect(ManageIQ.editor.lineInfo(0).gutterMarkers?.['CodeMirror-error-markers']).toBeUndefined();
+  });
+
+  it('clears syntax error decorations when clearSyntaxErrors is called', () => {
+    render(<AeMethodDataEditor {...props} />);
+
+    act(() => {
+      ManageIQ.editor.setSyntaxErrors([
+        { line: 1, message: 'syntax error, unexpected end-of-input' },
+      ]);
+    });
+
+    expect(ManageIQ.editor.lineInfo(0).gutterMarkers?.['CodeMirror-error-markers']).toBeDefined();
+
+    act(() => {
+      ManageIQ.editor.clearSyntaxErrors();
+    });
+
+    expect(ManageIQ.editor.lineInfo(0).gutterMarkers?.['CodeMirror-error-markers']).toBeUndefined();
+  });
 });

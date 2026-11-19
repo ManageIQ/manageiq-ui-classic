@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
@@ -16,25 +16,82 @@ const AeMethodDataEditor = ({
   name, value = '', url = undefined, validateUrl = undefined, mode = 'ruby',
 }) => {
   const [text, setText] = useState(value || '');
+  const editorRef = useRef(null);
+  const textMarkersRef = useRef([]);
 
   /** Allows miqSendOneTrans to send one request for this newly drawn editor. */
   useEffect(() => {
     ManageIQ.oneTransition.oneTrans = 0;
   }, []);
 
+  /** Clears gutter error markers and wavy text underlines from the editor. */
+  const clearErrors = (cm) => {
+    const editor = cm || editorRef.current;
+    if (editor) {
+      editor.clearGutter('CodeMirror-error-markers');
+    }
+    textMarkersRef.current.forEach((marker) => marker.clear());
+    textMarkersRef.current = [];
+  };
+
+  /** Sets error markers and underlines for the provided syntax errors array: [{ line, message }, ...] */
+  const setSyntaxErrors = (errors = []) => {
+    const cm = editorRef.current;
+    if (!cm) {
+      return;
+    }
+
+    clearErrors(cm);
+
+    if (!errors || errors.length === 0) {
+      return;
+    }
+
+    errors.forEach((err) => {
+      const lineIdx = Math.max(0, err.line - 1);
+
+      // Gutter error indicator
+      const marker = document.createElement('div');
+      marker.className = 'cm-gutter-error-marker';
+      marker.title = err.message;
+      marker.textContent = '●';
+      cm.setGutterMarker(lineIdx, 'CodeMirror-error-markers', marker);
+
+      // Wavy underline on the error line
+      const lineLength = cm.getLine(lineIdx)?.length || 1;
+      const textMarker = cm.markText(
+        { line: lineIdx, ch: 0 },
+        { line: lineIdx, ch: lineLength },
+        {
+          className: 'cm-syntax-error-text',
+          title: err.message,
+        },
+      );
+      textMarkersRef.current.push(textMarker);
+    });
+
+    // Place cursor on the first error line without scrolling away from flash message
+    const firstLine = Math.max(0, errors[0].line - 1);
+    cm.setCursor({ line: firstLine, ch: 0 }, null, { scroll: false });
+  };
+
   /** Validates the method data on the server; the response renders the flash message. */
   const onValidate = () => miqAjaxButton(validateUrl, true);
 
-  /** Updates the text and notifies the haml form that something changed. */
-  const onBeforeChange = (_editor, _data, newValue) => {
+  /** Updates the text, clears syntax error highlights, and notifies the haml form that something changed. */
+  const onBeforeChange = (editor, _data, newValue) => {
+    clearErrors(editor);
     setText(newValue);
     if (url && window.miqSendOneTrans) {
       window.miqSendOneTrans(url);
     }
   };
 
-  /** Used by the legacy javascript to refresh the editor when the tab becomes visible. */
+  /** Used by the legacy javascript to refresh the editor when the tab becomes visible and exposes helpers. */
   const editorDidMount = (editor) => {
+    editorRef.current = editor;
+    editor.setSyntaxErrors = setSyntaxErrors;
+    editor.clearSyntaxErrors = () => clearErrors(editor);
     ManageIQ.editor = editor;
     editor.focus();
   };
@@ -49,6 +106,7 @@ const AeMethodDataEditor = ({
           theme: 'eclipse',
           lineNumbers: true,
           matchBrackets: true,
+          gutters: ['CodeMirror-linenumbers', 'CodeMirror-error-markers'],
           inputStyle: 'contenteditable',
           viewportMargin: Infinity,
         }}

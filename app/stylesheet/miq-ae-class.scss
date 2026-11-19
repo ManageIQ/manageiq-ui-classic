@@ -127,3 +127,24 @@
   padding-top: 16px;
   border-top: 1px solid #e0e0e0;
 }
+
+// CodeMirror syntax error decorations in ae-method-data-editor
+.ae-method-data-editor {
+  .CodeMirror-error-markers {
+    width: 16px;
+  }
+
+  .cm-gutter-error-marker {
+    color: var(--cds-support-error, #da1e28);
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .cm-syntax-error-text {
+    text-decoration: underline wavy var(--cds-support-error, #da1e28) 1.5px;
+    background-color: rgba(218, 30, 40, 0.08);
+  }
+}
