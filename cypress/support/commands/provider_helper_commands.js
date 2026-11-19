@@ -271,32 +271,16 @@ function validateProviderFormButtons(providerType, isEdit) {
     .scrollIntoView()
     .should('be.visible')
     .and('be.disabled');
-  // TODO: Confirm why the Save button for "IBM Cloud VPC" is enabled in edit mode even when no changes are made
-  const saveButtonAssertionText =
-    isEdit && providerType === PROVIDER_TYPES.IBM_CLOUD_VPC
-      ? 'be.enabled'
-      : 'be.disabled';
   cy.getFormButtonByTypeWithText({
     buttonText: isEdit ? 'Save' : 'Add',
     buttonType: 'submit',
   })
     .should('be.visible')
-    .and(saveButtonAssertionText);
+    .and('be.disabled');
   if (isEdit) {
-    const resetButtonEnabledProviderTypes = [
-      PROVIDER_TYPES.VMWARE_VCLOUD,
-      PROVIDER_TYPES.IBM_CLOUD_VPC,
-      PROVIDER_TYPES.IBM_CIC,
-      PROVIDER_TYPES.OPENSTACK,
-    ];
-    const resetButtonAssertionText = resetButtonEnabledProviderTypes.includes(
-      providerType
-    )
-      ? 'be.enabled'
-      : 'be.disabled';
     cy.getFormButtonByTypeWithText({ buttonText: 'Reset' })
       .should('be.visible')
-      .and(resetButtonAssertionText);
+      .and('be.disabled');
   }
   cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' })
     .should('be.visible')
@@ -358,6 +342,11 @@ function setupTabForValidation(tab, providerConfig) {
  */
 Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
   validateCommonFormFields(providerConfig, isEdit);
+  // Buttons are asserted on the untouched form, before any tab is opened or any dropdown is
+  // selected. At this point the form is pristine, so Add/Save, Validate and (edit mode) Reset
+  // are disabled for every provider. Selecting dropdown values in setupTabForValidation below
+  // would make the form dirty and change Reset/Save depending on the provider.
+  validateProviderFormButtons(providerConfig.type, isEdit);
   providerConfig.tabs.forEach((tab) => {
     // If not on the default tab, switch to it
     if (tab !== TAB_LABELS.DEFAULT) {
@@ -377,7 +366,6 @@ Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
   if (providerConfig.tabs.length > 1) {
     cy.tabs({ tabLabel: TAB_LABELS.DEFAULT });
   }
-  validateProviderFormButtons(providerConfig.type, isEdit);
 });
 
 /**
