@@ -138,6 +138,11 @@ describe ApplicationController do
       controller.params = {:miq_grid_checks => "1, 2, 3, 4"}
       expect(controller.send(:find_checked_items)).to eq([1, 2, 3, 4])
     end
+
+    it "ignores the LIST placeholder id sent by list toolbar buttons and uses the checked rows" do
+      controller.params = {:id => "LIST", :miq_grid_checks => "1,2"}
+      expect(controller.send(:find_checked_items)).to eq([1, 2])
+    end
   end
 
   describe "#prov_redirect" do

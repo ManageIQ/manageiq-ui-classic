@@ -14,7 +14,8 @@ module Mixins
       has_no_select_row = params.each_key.none? { |var| var.start_with?("select-row-") }
 
       # If id is present use id, unless when nested list exists, example on summary pages
-      if params[:id].present? && has_no_select_row && has_no_check
+      # 'LIST' is a placeholder id sent by list toolbar buttons (e.g. custom buttons), not a record id
+      if params[:id].present? && params[:id] != 'LIST' && has_no_select_row && has_no_check
         Array.wrap(params[:id])
       elsif params[:miq_grid_checks].present?
         params[:miq_grid_checks].split(",").collect(&:to_i)
