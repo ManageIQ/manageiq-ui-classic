@@ -271,32 +271,16 @@ function validateProviderFormButtons(providerType, isEdit) {
     .scrollIntoView()
     .should('be.visible')
     .and('be.disabled');
-  // TODO: Confirm why the Save button for "IBM Cloud VPC" is enabled in edit mode even when no changes are made
-  const saveButtonAssertionText =
-    isEdit && providerType === PROVIDER_TYPES.IBM_CLOUD_VPC
-      ? 'be.enabled'
-      : 'be.disabled';
   cy.getFormButtonByTypeWithText({
     buttonText: isEdit ? 'Save' : 'Add',
     buttonType: 'submit',
   })
     .should('be.visible')
-    .and(saveButtonAssertionText);
+    .and('be.disabled');
   if (isEdit) {
-    const resetButtonEnabledProviderTypes = [
-      PROVIDER_TYPES.VMWARE_VCLOUD,
-      PROVIDER_TYPES.IBM_CLOUD_VPC,
-      PROVIDER_TYPES.IBM_CIC,
-      PROVIDER_TYPES.OPENSTACK,
-    ];
-    const resetButtonAssertionText = resetButtonEnabledProviderTypes.includes(
-      providerType
-    )
-      ? 'be.enabled'
-      : 'be.disabled';
     cy.getFormButtonByTypeWithText({ buttonText: 'Reset' })
       .should('be.visible')
-      .and(resetButtonAssertionText);
+      .and('be.disabled');
   }
   cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' })
     .should('be.visible')
@@ -352,12 +336,35 @@ function setupTabForValidation(tab, providerConfig) {
 }
 
 /**
+ * Validates the endpoints sub-form heading and whether it renders a tab strip.
+ * Each provider gem defines its own heading ("Endpoints" or "Endpoint") and tab structure,
+ * which are captured by endpointsTitle and hasTabs in the provider config.
+ * @param {Object} providerConfig - The provider configuration object
+ */
+function validateEndpointsLayout(providerConfig) {
+  cy.get('[name="endpoints-subform"] h3')
+    .eq(0)
+    .should('have.text', providerConfig.endpointsTitle);
+  if (providerConfig.hasTabs) {
+    cy.get('[role="tablist"]').should('have.length', 1);
+  } else {
+    cy.get('[role="tablist"]').should('not.exist');
+  }
+}
+
+/**
  * Validates a provider form based on provider configuration
  * @param {Object} providerConfig - The provider configuration object
  * @param {boolean} isEdit - Whether the form is in edit mode
  */
 Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
   validateCommonFormFields(providerConfig, isEdit);
+  validateEndpointsLayout(providerConfig);
+  // Buttons are asserted on the untouched form, before any tab is opened or any dropdown is
+  // selected. At this point the form is pristine, so Add/Save, Validate and (edit mode) Reset
+  // are disabled for every provider. Selecting dropdown values in setupTabForValidation below
+  // would make the form dirty and change Reset/Save depending on the provider.
+  validateProviderFormButtons(providerConfig.type, isEdit);
   providerConfig.tabs.forEach((tab) => {
     // If not on the default tab, switch to it
     if (tab !== TAB_LABELS.DEFAULT) {
@@ -377,7 +384,6 @@ Cypress.Commands.add('validateProviderFormFields', (providerConfig, isEdit) => {
   if (providerConfig.tabs.length > 1) {
     cy.tabs({ tabLabel: TAB_LABELS.DEFAULT });
   }
-  validateProviderFormButtons(providerConfig.type, isEdit);
 });
 
 /**
@@ -917,16 +923,34 @@ function generateNameUniquenessTests(providerConfig) {
 }
 
 /**
+ * Picks `describe`, `describe.only` or `describe.skip`
+ * @param {Object} options - `{ only, skip }`
+ */
+function pickSuite({ only, skip }) {
+  if (only) {
+    return describe.only;
+  }
+  if (skip) {
+    return describe.skip;
+  }
+  return describe;
+}
+
+/**
  * Generates all test suites for a provider
  * @param {Object} providerConfig - The provider configuration object
+ * @param {Object} [options]
+ * @param {boolean} [options.only] - Run only this provider (`describe.only`)
+ * @param {boolean} [options.skip] - Skip this provider (`describe.skip`)
  */
-export function generateProviderTests(providerConfig) {
+export function generateProviderTests(providerConfig, { only = false, skip = false } = {}) {
   const testOptions = {
     isAzureStack: providerConfig.type === PROVIDER_TYPES.AZURE_STACK,
     isAmazonEc2: providerConfig.type === PROVIDER_TYPES.AMAZON_EC2,
   };
+  const suite = pickSuite({ only, skip });
 
-  describe(`Validate cloud provider type: ${providerConfig.type}`, () => {
+  suite(`Validate cloud provider type: ${providerConfig.type}`, () => {
     generateAddFormValidationTests(providerConfig, testOptions);
     generateEditFormValidationTests(providerConfig, testOptions);
     generateNameUniquenessTests(providerConfig, testOptions);
