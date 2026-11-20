@@ -8,17 +8,11 @@ module OpsController::Settings::CapAndU
 
     cu_collection_get_form_vars
 
-    if @edit[:new][:all_clusters] != @edit[:current][:all_clusters]
-      Metric::Targets.perf_capture_always = {
-        :host_and_cluster => @edit[:new][:all_clusters]
-      }
-    end
-
-    if @edit[:new][:all_storages] != @edit[:current][:all_storages]
-      Metric::Targets.perf_capture_always = {
-        :storage => @edit[:new][:all_storages]
-      }
-    end
+    # Always write: comparing against a possibly stale @edit[:current] could skip the save.
+    Metric::Targets.perf_capture_always = {
+      :host_and_cluster => @edit[:new][:all_clusters],
+      :storage          => @edit[:new][:all_storages]
+    }
 
     set_perf_collection_for_clusters if @edit[:new] != @edit[:current]
 
@@ -44,7 +38,11 @@ module OpsController::Settings::CapAndU
       end
     end
 
-    render :json => {:success => true, :message => _("Capacity and Utilization Collection settings saved")}
+    # Return the saved state so the UI doesn't need a second (possibly stale) fetch.
+    render :json => cu_collection_state(@edit[:new]).merge(
+      :success => true,
+      :message => _("Capacity and Utilization Collection settings saved")
+    )
   rescue MiqException::RbacPrivilegeException
     raise
   rescue => e
@@ -56,23 +54,27 @@ module OpsController::Settings::CapAndU
 
     cu_build_collection_data
 
-    # Cluster hosts are stored under their cluster's integer ID key in @edit[:current].
+    render :json => cu_collection_state(@edit[:current])
+  end
+
+  private
+
+  def cu_collection_state(edit_data)
+    # Cluster hosts are stored under their cluster's integer ID key in the edit hash.
     # Iterate numeric keys to collect all per-cluster host arrays.
-    hosts = @edit[:current].each_with_object([]) do |(key, value), arr|
+    hosts = edit_data.each_with_object([]) do |(key, value), arr|
       next unless key.kind_of?(Numeric)
 
       value.each { |host| arr << host }
     end
 
-    render :json => {
+    {
       :hosts          => hosts,
-      :datastores     => @edit[:current][:storages].values,
-      :all_clusters   => @edit[:current][:all_clusters],
-      :all_datastores => @edit[:current][:all_storages]
+      :datastores     => edit_data[:storages].values,
+      :all_clusters   => edit_data[:all_clusters],
+      :all_datastores => edit_data[:all_storages]
     }
   end
-
-  private
 
   def cu_build_edit_screen
     cu_build_collection_data
@@ -83,8 +85,13 @@ module OpsController::Settings::CapAndU
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:key] = "cu_edit__collection"
-    @edit[:current][:all_clusters] = Metric::Targets.perf_capture_always[:host_and_cluster]
-    @edit[:current][:all_storages] = Metric::Targets.perf_capture_always[:storage]
+    # These flags are cached per process; bypass the cache so saves from other UI workers are seen,
+    # including by the perf_capture_enabled? checks below.
+    MiqRegion.my_region(true)
+    Metric::Targets.perf_capture_always_clear_cache
+    perf_capture_always = Metric::Targets.perf_capture_always
+    @edit[:current][:all_clusters] = perf_capture_always[:host_and_cluster]
+    @edit[:current][:all_storages] = perf_capture_always[:storage]
     @edit[:current][:clusters] = []
     @cl_hash = EmsCluster.get_perf_collection_object_list
     @cl_hash.each_with_index do |h, j|

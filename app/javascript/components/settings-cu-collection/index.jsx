@@ -4,7 +4,7 @@ import {
   Db2Database, BareMetalServer,
 } from '@carbon/react/icons';
 import PropTypes from 'prop-types';
-import { InlineNotification } from '@carbon/react';
+import { InlineNotification, Loading } from '@carbon/react';
 import createSchema from './settings-cu-collection-tab.schema';
 
 const CU_COLLECTION_URL = '/ops/cu_collection_update';
@@ -19,6 +19,7 @@ const SettingsCUCollectionTab = ({
   const idCounter = useRef(0);
   const [notification, setNotification] = useState(null); // { kind, title }
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({
     clustersNodes: [],
     datastoresNodes: [],
@@ -84,6 +85,54 @@ const SettingsCUCollectionTab = ({
     return nodeObject;
   };
 
+  // Loads the form state (checked nodes and the "all" toggles) from a fetch/save response.
+  const applyState = (result, clustersNodes, datastoresNodes) => {
+    const {
+      hosts, datastores, all_clusters: fetchedAllClusters, all_datastores: fetchedAllDatastores,
+    } = result;
+
+    const hostsChecked = hosts
+      .filter((host) => host.capture === true)
+      .map((host) => `h-${host.id}`);
+
+    const datastoresChecked = datastores
+      .filter((ds) => ds.capture === true)
+      .map((ds) => `ds-${ds.id}`);
+
+    const hostsCheckedWithId = clustersNodes.flatMap((node) => {
+      if (!node.children) {
+        return [];
+      }
+      return node.children
+        .filter((host) => hostsChecked.includes(host.value.split('#')[0]))
+        .map((host) => host.value);
+    });
+
+    const datastoresCheckedWithId = datastoresNodes.flatMap((node) => {
+      if (node.children) {
+        const dsValue = node.value.split('#')[0];
+        const dsId = dsValue.split('-')[1];
+        const foundObject = datastores.find((item) => item.id === Number(dsId));
+        if (datastoresChecked.includes(dsValue) && foundObject && foundObject.capture === true) {
+          return node.children.map((child) => child.value);
+        }
+        return [];
+      }
+      return datastoresChecked.includes(node.value.split('#')[0]) ? [node.value] : [];
+    });
+
+    setData((prev) => ({
+      ...prev,
+      clustersNodes,
+      datastoresNodes,
+      hostsCheckedWithId,
+      datastoresCheckedWithId,
+      allClusters: fetchedAllClusters ?? prev.allClusters,
+      allDatastores: fetchedAllDatastores ?? prev.allDatastores,
+      callNumber: prev.callNumber + 1,
+    }));
+  };
+
   const getNodeValues = () => {
     let clustersNodes = [];
     let datastoresNodes = [];
@@ -97,52 +146,15 @@ const SettingsCUCollectionTab = ({
       datastoresNodes = datastoresBsTree.map((node) => transformTree(node, true, 0));
     }
 
-    http.get(CU_COLLECTION_FETCH_URL).then((result) => {
-      const {
-        hosts, datastores, all_clusters: fetchedAllClusters, all_datastores: fetchedAllDatastores,
-      } = result;
-
-      const hostsChecked = hosts
-        .filter((host) => host.capture === true)
-        .map((host) => `h-${host.id}`);
-
-      const datastoresChecked = datastores
-        .filter((ds) => ds.capture === true)
-        .map((ds) => `ds-${ds.id}`);
-
-      const hostsCheckedWithId = clustersNodes.flatMap((node) => {
-        if (!node.children) {
-          return [];
-        }
-        return node.children
-          .filter((host) => hostsChecked.includes(host.value.split('#')[0]))
-          .map((host) => host.value);
+    http.get(CU_COLLECTION_FETCH_URL)
+      .then((result) => {
+        applyState(result, clustersNodes, datastoresNodes);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setNotification({ kind: 'error', title: error.message || __('Failed to load C & U collection settings') });
       });
-
-      const datastoresCheckedWithId = datastoresNodes.flatMap((node) => {
-        if (node.children) {
-          const dsValue = node.value.split('#')[0];
-          const dsId = dsValue.split('-')[1];
-          const foundObject = datastores.find((item) => item.id === Number(dsId));
-          if (datastoresChecked.includes(dsValue) && foundObject && foundObject.capture === true) {
-            return node.children.map((child) => child.value);
-          }
-          return [];
-        }
-        return datastoresChecked.includes(node.value.split('#')[0]) ? [node.value] : [];
-      });
-
-      setData((prev) => ({
-        ...prev,
-        clustersNodes,
-        datastoresNodes,
-        hostsCheckedWithId,
-        datastoresCheckedWithId,
-        allClusters: fetchedAllClusters ?? prev.allClusters,
-        allDatastores: fetchedAllDatastores ?? prev.allDatastores,
-        callNumber: prev.callNumber + 1,
-      }));
-    });
   };
 
   useEffect(() => {
@@ -217,7 +229,8 @@ const SettingsCUCollectionTab = ({
       .then((result) => {
         setIsSubmitting(false);
         setNotification({ kind: 'success', title: result.message });
-        getNodeValues();
+        // Use the save response; a re-fetch could hit a worker with a stale cache.
+        applyState(result, data.clustersNodes, data.datastoresNodes);
       })
       .catch((error) => {
         setIsSubmitting(false);
@@ -230,6 +243,10 @@ const SettingsCUCollectionTab = ({
   const handleReset = () => {
     getNodeValues();
   };
+
+  if (isLoading) {
+    return <Loading active withOverlay={false} />;
+  }
 
   return (
     <>
