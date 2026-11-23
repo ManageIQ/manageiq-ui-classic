@@ -88,6 +88,13 @@ namespace :webpack do
   def run_webpack(task)
     if %w(spec spec:jest).include? ENV['TEST_SUITE']
       warn "Skipping webpack:#{task} on travis #{ENV['TEST_SUITE']}"
+      # jest needs paths.json to discover the plugin specs
+      if ENV['TEST_SUITE'] == 'spec:jest'
+        require Rails.root.join("lib/tasks/evm_rake_helper")
+        EvmRakeHelper.with_dummy_database_url_configuration do
+          Rake::Task["webpack:paths"].invoke
+        end
+      end
       return
     end
 
