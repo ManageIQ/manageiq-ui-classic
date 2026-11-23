@@ -38,7 +38,8 @@ module.exports = {
         rootDir: '.',
       },
     }],
-    '^.+\\.jsx?$': 'babel-jest',
+    // Explicit configFile so that plugin files outside this repo are also transpiled with .babelrc.js
+    '^.+\\.jsx?$': ['babel-jest', { configFile: resolve(__dirname, '.babelrc.js') }],
   },
   moduleFileExtensions: [
     'js',
