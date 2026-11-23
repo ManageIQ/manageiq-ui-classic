@@ -1,5 +1,20 @@
 // jest.config.js
+const { existsSync } = require('fs');
+const { join, resolve } = require('path');
+
 const resolveModule = (name) => `<rootDir>/node_modules/${name}`;
+
+// Plugin (engine) javascript directories, taken from the same paths.json that webpack uses
+const pluginRoots = (() => {
+  try {
+    const { engines } = require('./config/webpack/paths.json');
+    return Object.values(engines)
+      .map(({ root }) => join(root, 'app/javascript'))
+      .filter((dir) => resolve(dir) !== resolve(__dirname, 'app/javascript') && existsSync(dir));
+  } catch (_e) {
+    return [];
+  }
+})();
 
 module.exports = {
   verbose: true,
@@ -11,7 +26,7 @@ module.exports = {
     __testing__: true,
     getJSONFixture: true,
   },
-  roots: ['app/javascript'],
+  roots: ['app/javascript', ...pluginRoots],
   setupFilesAfterEnv: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
   // TODO: Try removing this and use babel-jest itself once Jest moves to Babel v8
