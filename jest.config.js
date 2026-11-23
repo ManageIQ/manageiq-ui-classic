@@ -27,6 +27,8 @@ module.exports = {
     getJSONFixture: true,
   },
   roots: ['app/javascript', ...pluginRoots],
+  // Plugins have no node_modules of their own, so resolve packages from ui-classic
+  modulePaths: ['<rootDir>/node_modules'],
   setupFilesAfterEnv: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
   // TODO: Try removing this and use babel-jest itself once Jest moves to Babel v8
