@@ -54,6 +54,7 @@ module.exports = {
     '^angular-mocks$': resolveModule('angular/angular-mocks.js'), // bundled in @brickhouse-tech/angular-lts
     '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
     '@@ddf': '<rootDir>/app/javascript/forms/data-driven-form',
+    '^@@miq-redux/(.*)$': '<rootDir>/app/javascript/redux/$1',
     '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
     '^temporal-polyfill/global$': '<rootDir>/node_modules/temporal-polyfill/global.js', // Jest's CJS transform can't handle ESM
   },
