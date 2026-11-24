@@ -24,6 +24,14 @@ describe MiqAeCustomizationController, "ApplicationController::Automate" do
       controller.send(:resolve_button_simulate)
       expect(assigns(:resolve)[:targets]).to eq([[host.name, host.id.to_s]])
     end
+
+    it "does not resolve a target class that is not a custom button class" do
+      session[:resolve][:new][:target_class] = "Kernel"
+      controller.instance_variable_set(:@edit, :new => {:target_class => "Kernel"})
+      allow(controller).to receive(:render)
+      controller.send(:resolve_button_simulate)
+      expect(assigns(:resolve)[:targets]).to eq([])
+    end
   end
 end
 

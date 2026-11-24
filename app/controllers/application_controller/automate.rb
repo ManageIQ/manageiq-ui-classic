@@ -10,9 +10,8 @@ module ApplicationController::Automate
       @resolve[:new][:attrs].each do |a|
         @sb[:attrs][a[0].to_sym] = a[1] if a[0].present?
       end
-      @sb[:obj] = if @resolve[:new][:target_id] && @resolve[:new][:target_class]
-                    @resolve[:new][:target_class].safe_constantize.find(@resolve[:new][:target_id])
-                  end
+      target_class = @resolve[:new][:target_class]&.safe_constantize(:allowlist => CustomButton.button_classes)
+      @sb[:obj] = target_class.find(@resolve[:new][:target_id]) if target_class && @resolve[:new][:target_id]
       @resolve[:button_class] = @resolve[:new][:target_class]
       @resolve[:button_number] ||= 1
       @sb[:attrs][:request] = @resolve[:new][:object_request] # Add the request attribute value entered by the user
@@ -44,8 +43,8 @@ module ApplicationController::Automate
       @resolve[:new][:other_name] = @edit[:new][:other_name]
     end
     if @edit[:new][:target_class]
-      targets = @resolve[:new][:target_class].safe_constantize.all
-      @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+      targets = @resolve[:new][:target_class].to_s.safe_constantize(:allowlist => CustomButton.button_classes)&.all || []
+      @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.map { |t| [t.name, t.id.to_s] }
       @resolve[:new][:target_id] = nil
       @resolve[:new][:object_message] = @edit[:new][:object_message]
       @resolve[:lastaction] = "simulate"
