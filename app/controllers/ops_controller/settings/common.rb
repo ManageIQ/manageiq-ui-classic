@@ -25,8 +25,6 @@ module OpsController::Settings::Common
         @refresh_div     = 'settings_server' # Replace main area
         @refresh_partial = 'settings_server_tab'
       end
-    when 'settings_advanced' # Advanced yaml edit
-      @changed = (@edit[:new] != @edit[:current])
     end
 
     render :update do |page|
@@ -85,6 +83,24 @@ module OpsController::Settings::Common
 
       page << javascript_for_miq_button_visibility(@changed || @login_text_changed)
     end
+  end
+
+  def settings_advanced_tab_data
+    assert_privileges("ops_settings")
+
+    resource = advanced_settings_resource(params[:resource_type], params[:resource_id])
+    render :json => {:file_data => resource.settings_for_resource_yaml}
+  end
+
+  def settings_advanced_save
+    assert_privileges("ops_settings")
+
+    resource = advanced_settings_resource(params[:resource_type], params[:resource_id])
+    resource.add_settings_for_resource_yaml(params[:file_data])
+    render :json => {:success => true, :message => _("Configuration changes saved")}
+  rescue Vmdb::Settings::ConfigurationInvalid => err
+    messages = err.errors.map { |e| "#{e.attribute.to_s.titleize}: #{e.message}" }
+    render :json => {:success => false, :message => messages.join(", ")}, :status => 422
   end
 
   def settings_update
@@ -197,29 +213,6 @@ module OpsController::Settings::Common
     return to_save, to_remove
   end
 
-  def fetch_advanced_settings(resource)
-    @edit = {}
-    @edit[:current] = {:file_data => resource.settings_for_resource_yaml}
-    @edit[:new] = copy_hash(@edit[:current])
-    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-    @in_a_form = true
-  end
-
-  def save_advanced_settings(resource)
-    resource.add_settings_for_resource_yaml(@edit[:new][:file_data])
-  rescue Vmdb::Settings::ConfigurationInvalid => err
-    err.errors.each do |error|
-      add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
-    end
-    @changed = (@edit[:new] != @edit[:current])
-    javascript_flash
-  else
-    add_flash(_("Configuration changes saved"))
-    @changed = false
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => @nodetype)
-  end
-
   def find_or_new_subscription(id = nil)
     id.nil? ? PglogicalSubscription.new : PglogicalSubscription.find(id)
   end
@@ -324,20 +317,8 @@ module OpsController::Settings::Common
     when "settings_custom_logos" # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current])
       @update = ::Settings.to_hash
-    when "settings_advanced" # Advanced manual yaml editor tab
-      nodes = x_node.downcase.split("-")
-      resource = if selected?(x_node, "z")
-                   Zone.find(nodes.last)
-                 elsif selected?(x_node, "svr")
-                   MiqServer.find(@sb[:selected_server_id])
-                 else
-                   MiqRegion.my_region
-                 end
-      save_advanced_settings(resource)
-      return
     end
-    if !%w[settings_advanced].include?(@sb[:active_tab]) &&
-       x_node.split("-").first != "z"
+    if x_node.split("-").first != "z"
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
       end
@@ -589,16 +570,10 @@ module OpsController::Settings::Common
       agent_log[:level] = params[:agent_log_level] if params[:agent_log_level]
       agent_log[:wrap_size] = params[:agent_log_wrapsize] if params[:agent_log_wrapsize]
       agent_log[:wrap_time] = @sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24 + @sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600 if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
-    when "settings_advanced"                          # Advanced tab
-      if params[:file_data]                           # If save sent in the file data
-        new[:file_data] = params[:file_data]          # Put into @edit[:new] hash
-      else
-        new[:file_data] += "..."                      # Update the new data to simulate a change
-      end
     end
 
     # This section scoops up the config second level keys changed in the UI
-    unless %w[settings_advanced settings_smartproxy_affinity].include?(@sb[:active_tab])
+    unless %w[settings_smartproxy_affinity].include?(@sb[:active_tab])
       @edit[:current].each_key do |category|
         @edit[:current][category].symbolize_keys.each_key do |key|
           if category == :smtp && key == :enable_starttls_auto # Checkbox is handled differently
@@ -613,13 +588,13 @@ module OpsController::Settings::Common
 
   # Load the @edit object from session based on which config screen we are on
   def settings_load_edit
-    if selected?(x_node, "z") && @sb[:active_tab] != "settings_advanced"
+    if selected?(x_node, "z")
       # if zone node is selected
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
 
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif %w[settings_server settings_authentication
-             settings_custom_logos settings_advanced].include?(@sb[:active_tab])
+             settings_custom_logos].include?(@sb[:active_tab])
       return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
   end
@@ -716,8 +691,6 @@ module OpsController::Settings::Common
       smartproxy_affinity_set_form_vars
     when 'settings_custom_logos' # Custom Logo tab
       settings_set_form_vars_logos
-    when "settings_advanced" # Advanced yaml editor
-      fetch_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
     end
     if %w[settings_server settings_authentication settings_custom_logos].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
@@ -780,8 +753,6 @@ module OpsController::Settings::Common
         when "settings_map_tags"
           label_tag_mapping_get_all
         end
-      when "settings_advanced"
-        fetch_advanced_settings(MiqRegion.my_region)
       end
     when "xx"
       case nodes[1]
@@ -825,7 +796,14 @@ module OpsController::Settings::Common
         end
       end
       smartproxy_affinity_set_form_vars if @sb[:active_tab] == "settings_smartproxy_affinity"
-      fetch_advanced_settings(@record) if @sb[:active_tab] == "settings_advanced"
+    end
+  end
+
+  def advanced_settings_resource(resource_type, resource_id)
+    case resource_type
+    when 'zone'   then Zone.find(resource_id)
+    when 'server' then MiqServer.find(resource_id)
+    else               MiqRegion.my_region
     end
   end
 
