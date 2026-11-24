@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     # web service worker processes.
     protect_from_forgery(:secret => SecureRandom.hex(64),
                          :except => %i[authenticate external_authenticate kerberos_authenticate saml_login initiate_saml_login oidc_login initiate_oidc_login csp_report],
-                         :with   => :reset_session)
+                         :with   => :exception)
 
   end
 
@@ -123,6 +123,12 @@ class ApplicationController < ActionController::Base
   # See the error_handler method to see how we try to generically rescue exceptions.                 *
   # **************************************************************************************************
   rescue_from StandardError, :with => :error_handler
+
+  # A failed CSRF token check resets the session and sends the user to the login page.
+  # This must be declared after the StandardError handler, since handlers are checked last to first.
+  rescue_from ActionController::InvalidAuthenticityToken do
+    handle_invalid_session(false)
+  end
 
   def allow_websocket
     override_content_security_policy_directives(:connect_src => ["'self'", 'https://fonts.gstatic.com', websocket_origin])
