@@ -171,6 +171,17 @@ describe OpsController do
       automate_vars = controller.send(:build_attrs_from_params, params)
       expect(automate_vars).to be_empty
     end
+
+    it "returns an empty hash if invalid target class is passed in" do
+      filter_params = {
+        :target_class => "InvalidClass",
+        :target_id    => vm.id.to_s
+      }
+      params.merge!(filter_params)
+      allow(controller).to receive(:params).and_return(params)
+      automate_vars = controller.send(:build_attrs_from_params, params)
+      expect(automate_vars).to be_empty
+    end
   end
 
   context "#build_filtered_item_list" do
@@ -259,6 +270,43 @@ describe OpsController do
       let(:amount) { 10 }
 
       include_examples "creates queue items", "The selected Schedules have been queued to run"
+    end
+  end
+
+  describe "#schedule_show" do
+    let(:vm) { FactoryBot.create(:vm_vmware, :name => "Test VM") }
+    let(:schedule) do
+      FactoryBot.create(:miq_schedule,
+                        :sched_action => {:method => "automation_request"},
+                        :filter       => {
+                          :ui => {
+                            :ui_object => {:target_class => target_class, :target_id => vm.id}
+                          }
+                        })
+    end
+
+    before do
+      EvmSpecHelper.local_miq_server
+      controller.instance_variable_set(:@selected_schedule, schedule)
+      allow(controller).to receive(:record_no_longer_exists?).and_return(false)
+    end
+
+    context "with valid target_class" do
+      let(:target_class) { "Vm" }
+
+      it "resolves object_name" do
+        controller.send(:schedule_show)
+        expect(controller.instance_variable_get(:@object_name)).to eq("Test VM")
+      end
+    end
+
+    context "with invalid target_class" do
+      let(:target_class) { "InvalidClass" }
+
+      it "sets object_name to nil" do
+        controller.send(:schedule_show)
+        expect(controller.instance_variable_get(:@object_name)).to be_nil
+      end
     end
   end
 end

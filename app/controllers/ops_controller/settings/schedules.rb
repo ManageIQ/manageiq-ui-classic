@@ -22,7 +22,8 @@ module OpsController::Settings::Schedules
     if @selected_schedule.sched_action[:method] == 'automation_request'
       params = @selected_schedule.filter[:ui][:ui_object]
       @object_class = ui_lookup(:model => params[:target_class])
-      @object_name = params[:target_class].constantize.find_by(:id => params[:target_id]).name if params[:target_class]
+      target_class = params[:target_class].presence&.safe_constantize(:allowlist => ActiveRecord::Base.descendants)
+      @object_name = target_class&.find_by(:id => params[:target_id])&.name if target_class
     end
 
     if @selected_schedule.filter.kind_of?(MiqExpression)
@@ -478,11 +479,15 @@ module OpsController::Settings::Schedules
   end
 
   def build_attrs_from_params(params)
-    return {} if params[:target_class].empty?
+    return {} if params[:target_class].blank?
 
-    klass = params[:target_class].constantize
-    object = klass.find(params[:target_id])
-    { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
+    klass = params[:target_class].safe_constantize(:allowlist => ActiveRecord::Base.descendants)
+    return {} unless klass
+
+    object = klass.find_by(:id => params[:target_id])
+    return {} unless object
+
+    {MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object)}
   end
 
   def parse_filter_value(filter_value)
