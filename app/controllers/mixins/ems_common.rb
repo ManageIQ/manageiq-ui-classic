@@ -369,8 +369,10 @@ module Mixins
           return
         end
 
-        if @display && @display != 'main'
-          model_class = @display.camelize.singularize.safe_constantize
+        # Only resolve a model class for display values listed in display_methods
+        if self.class.display_methods.include?(@display)
+          allowlist = self.class.display_methods.map { |display| display.camelize.singularize }
+          model_class = @display.camelize.singularize.safe_constantize(:allowlist => allowlist)
           display_s = @display.singularize
 
           case params[:pressed]
