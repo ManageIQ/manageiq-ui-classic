@@ -25,6 +25,16 @@ describe OpsController do
         expect(controller).to receive(:find_records_with_rbac).with(Tenant, Tenant.all.ids).and_return(Tenant.all)
         controller.send(:rbac_edit_tags_reset, "Tenant")
       end
+
+      it "raises for a class that is not user, group or tenant" do
+        expect(controller).not_to receive(:find_records_with_rbac)
+        expect { controller.send(:rbac_edit_tags_reset, "Vm") }.to raise_error(NameError, /not found in allowlist/)
+      end
+
+      it "raises for a nil tagging value" do
+        expect(controller).not_to receive(:find_records_with_rbac)
+        expect { controller.send(:rbac_edit_tags_reset, nil) }.to raise_error(NameError, /not found in allowlist/)
+      end
     end
     let(:four_terabytes) { 4096 * 1024 * 1024 * 1024 }
 
