@@ -50,7 +50,7 @@ module ApplicationController::Tags
 
   def get_tag_items
     record_ids = find_records_with_rbac(
-      @tagging.instance_of?(String) ? @tagging.safe_constantize : @tagging,
+      @tagging.instance_of?(String) ? @tagging.safe_constantize(:allowlist => ActiveRecord::Base.descendants) : @tagging,
       checked_or_params
     ).map(&:id)
     session[:tag_items] = record_ids
@@ -170,7 +170,7 @@ module ApplicationController::Tags
       end
     end
 
-    @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
+    @tagitems = @tagging.to_s.constantize(:allowlist => ActiveRecord::Base.descendants).where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
 
     @view = get_db_view(@tagging, :clickable => false, :no_checkboxes => true) # Instantiate the MIQ Report view object
 
