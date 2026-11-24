@@ -15,7 +15,7 @@ module MiqAeCustomizationController::OldDialogs
     dialog.name = @edit[:new][:name]
     dialog.description = @edit[:new][:description]
     dialog.dialog_type = @edit[:new][:dialog_type]
-    dialog.content = YAML.load(@edit[:new][:content])
+    dialog.content = YAML.safe_load(@edit[:new][:content], :permitted_classes => [Symbol])
   end
 
   # Common Schedule button handler routines

@@ -74,5 +74,24 @@ describe MiqAeCustomizationController do
         expect(controller.send(:flash_errors?)).to be_truthy
       end
     end
+
+    context '#old_dialogs_set_record_vars' do
+      let(:dialog) { MiqDialog.new }
+      let(:content) { {:buttons => %i[submit cancel], :dialogs => {:requester => {:description => 'Request'}}} }
+
+      before do
+        controller.instance_variable_set(:@edit, :new => {:name => 'name', :description => 'description', :dialog_type => 'MiqProvisionWorkflow', :content => YAML.dump(content)})
+      end
+
+      it 'loads dialog content that has symbols' do
+        controller.send(:old_dialogs_set_record_vars, dialog)
+        expect(dialog.content).to eq(content)
+      end
+
+      it 'does not instantiate arbitrary ruby objects from the content' do
+        controller.instance_variable_get(:@edit)[:new][:content] = "--- !ruby/object:OpenStruct\ntable:\n  :a: 1\n"
+        expect { controller.send(:old_dialogs_set_record_vars, dialog) }.to raise_error(Psych::DisallowedClass)
+      end
+    end
   end
 end
