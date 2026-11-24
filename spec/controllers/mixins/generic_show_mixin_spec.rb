@@ -26,4 +26,23 @@ describe Mixins::GenericShowMixin do
       end
     end
   end
+
+  describe '#display_nested_generic' do
+    let(:controller) { HostController.new }
+
+    it 'lists the nested model when the display is in display_methods' do
+      expect(controller).to receive(:nested_list).with(Storage)
+      controller.send(:display_nested_generic, 'storages')
+    end
+
+    it 'does not list anything when the display is not in display_methods' do
+      expect(controller).not_to receive(:nested_list)
+      controller.send(:display_nested_generic, 'kernels')
+    end
+
+    it 'does not resolve a class that is not listed in display_methods' do
+      expect(controller).not_to receive(:nested_list)
+      expect { controller.send(:display_nested_generic, 'Kernel') }.not_to raise_error
+    end
+  end
 end

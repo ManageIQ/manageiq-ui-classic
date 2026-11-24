@@ -135,7 +135,10 @@ module Mixins
     end
 
     def display_nested_generic(display)
-      nested_list(display.camelize.singularize.constantize)
+      return unless self.class.display_methods.include?(display)
+
+      allowlist = self.class.display_methods.map { |method| method.camelize.singularize }
+      nested_list(display.camelize.singularize.constantize(:allowlist => allowlist))
     end
 
     def display_all_vms
