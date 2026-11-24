@@ -28,6 +28,22 @@ class ApplicationHelper::Toolbar::ContainerProjectCenter < ApplicationHelper::To
       ]
     ),
   ])
+  button_group('container_project_vmdb', [
+    select(
+      :container_project_vmdb_choice,
+      nil,
+      t = N_('Configuration'),
+      t,
+      :items => [
+        button(
+          :container_project_ownership,
+          'pficon pficon-user fa-lg',
+          N_('Set Ownership for this Project'),
+          N_('Set Ownership'),
+          :klass => ApplicationHelper::Button::SetOwnership),
+      ]
+    ),
+  ])
   button_group('container_project_policy', [
     select(
       :container_project_policy_choice,
