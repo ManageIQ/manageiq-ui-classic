@@ -135,7 +135,11 @@ module Mixins
     end
 
     def display_nested_generic(display)
-      nested_list(display.camelize.singularize.constantize)
+      # Only constantize a value taken from the display_methods allowlist, never the raw param
+      allowed_display = nested_list_method(display)
+      return if allowed_display.nil?
+
+      nested_list(allowed_display.camelize.singularize.constantize)
     end
 
     def display_all_vms
