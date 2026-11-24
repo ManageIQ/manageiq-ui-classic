@@ -1400,6 +1400,25 @@ describe CatalogController do
     end
   end
 
+  describe '#available_orchestration_managers_for_template_type' do
+    it 'returns the eligible managers for an orchestration template type' do
+      manager = FactoryBot.create(:ems_amazon)
+      allow(ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate).to receive(:eligible_managers).and_return([manager])
+
+      result = controller.send(:available_orchestration_managers_for_template_type, 'ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate')
+      expect(result).to eq([[manager.name, manager.id]])
+    end
+
+    it 'returns an empty list for a class that is not an orchestration template' do
+      expect(controller.send(:available_orchestration_managers_for_template_type, 'Vm')).to eq([])
+    end
+
+    it 'returns an empty list for a blank or unknown type' do
+      expect(controller.send(:available_orchestration_managers_for_template_type, nil)).to eq([])
+      expect(controller.send(:available_orchestration_managers_for_template_type, 'DoesNotExist')).to eq([])
+    end
+  end
+
   describe '#common_st_record_vars' do
     let(:st) { FactoryBot.create(:service_template) }
 
