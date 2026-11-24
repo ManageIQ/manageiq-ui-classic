@@ -1234,4 +1234,74 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe '#columns_for_klass' do
+    it 'returns [:name] for models with name attribute' do
+      expect(helper.columns_for_klass(Vm)).to eq([:name])
+      expect(helper.columns_for_klass('Vm')).to eq([:name])
+      expect(helper.columns_for_klass('Host')).to eq([:name])
+    end
+
+    it 'returns [:description] for MiqGroup' do
+      expect(helper.columns_for_klass(MiqGroup)).to eq([:description])
+      expect(helper.columns_for_klass('MiqGroup')).to eq([:description])
+    end
+
+    it 'handles nil or unknown class strings safely' do
+      expect(helper.columns_for_klass(nil)).to eq([:name])
+      expect(helper.columns_for_klass('UnknownClass')).to eq([:name])
+    end
+  end
+
+  describe '#safe_model_class' do
+    it 'returns the class for valid ActiveRecord models' do
+      expect(helper.safe_model_class('Vm')).to eq(Vm)
+      expect(helper.safe_model_class('Storage')).to eq(Storage)
+    end
+
+    it 'returns nil for non-ActiveRecord classes, invalid strings, or nil' do
+      expect(helper.safe_model_class('Kernel')).to be_nil
+      expect(helper.safe_model_class('ApplicationController')).to be_nil
+      expect(helper.safe_model_class('NonExistentModel')).to be_nil
+      expect(helper.safe_model_class(nil)).to be_nil
+      expect(helper.safe_model_class('')).to be_nil
+    end
+  end
+
+  describe '#from_additional_options' do
+    let(:storage) { FactoryBot.create(:storage) }
+
+    it 'resolves valid parent and match_via_descendants' do
+      opts = helper.from_additional_options(
+        :parent_class_name     => 'Storage',
+        :parent_id             => storage.id,
+        :match_via_descendants => 'Vm'
+      )
+      expect(opts[:parent]).to eq(storage)
+      expect(opts[:match_via_descendants]).to eq(Vm)
+    end
+
+    it 'ignores invalid parent_class_name or match_via_descendants safely' do
+      opts = helper.from_additional_options(
+        :parent_class_name     => 'Kernel',
+        :parent_id             => 1,
+        :match_via_descendants => 'NonExistent'
+      )
+      expect(opts[:parent]).to be_nil
+      expect(opts[:match_via_descendants]).to eq('NonExistent')
+    end
+  end
+
+  describe '#model_string_to_constant' do
+    it 'returns mapped constants and valid ActiveRecord models' do
+      expect(helper.model_string_to_constant('vms')).to eq(VmOrTemplate)
+      expect(helper.model_string_to_constant('hosts')).to eq(Host)
+      expect(helper.model_string_to_constant('manageiq/providers/cloud_manager/vms')).to eq(ManageIQ::Providers::CloudManager::Vm)
+    end
+
+    it 'returns nil for invalid model strings' do
+      expect(helper.model_string_to_constant('non_existent_models')).to be_nil
+      expect(helper.model_string_to_constant('kernel')).to be_nil
+    end
+  end
 end

@@ -298,13 +298,12 @@ class MiqAeToolsController < ApplicationController
 
   def get_form_targets
     assert_privileges('miq_ae_class_simulation')
-    if params.key?(:target_class) && params[:target_class] != "undefined"
-      targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class])) if params[:target_class].present?
+    if params[:target_class].present? && params[:target_class] != "undefined"
+      target_class = target_class_from_name(params[:target_class])
+      targets = Rbac.filtered(target_class).select(:id, *columns_for_klass(target_class)) if target_class
       unless targets.nil?
-        @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-        if !@resolve[:target_id]
-          @resolve[:target_id] = nil
-        end
+        @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.map { |t| [t.name, t.id.to_s] }
+        @resolve[:target_id] ||= nil
       end
     end
 
@@ -314,6 +313,10 @@ class MiqAeToolsController < ApplicationController
   end
 
   private ###########################
+
+  def target_class_from_name(class_name)
+    class_name.to_s.safe_constantize(:allowlist => CustomButton.button_classes)
+  end
 
   def automate_import_json_serializer
     @automate_import_json_serializer ||= AutomateImportJsonSerializerService.new

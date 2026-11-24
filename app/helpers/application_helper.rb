@@ -184,7 +184,7 @@ module ApplicationHelper
   end
 
   def model_string_to_constant(model_string)
-    MODEL_STRING[model_string] || model_string.singularize.classify.constantize
+    MODEL_STRING[model_string] || safe_model_class(model_string.singularize.classify)
   end
 
   def restful_routed?(record_or_model)
@@ -1215,18 +1215,22 @@ module ApplicationHelper
 
   def from_additional_options(additional_options)
     if additional_options[:match_via_descendants].present?
-      additional_options[:match_via_descendants] = additional_options[:match_via_descendants].constantize
+      descendant_class = safe_model_class(additional_options[:match_via_descendants])
+      additional_options[:match_via_descendants] = descendant_class if descendant_class
     end
     if additional_options[:parent_id].present? && additional_options[:parent_class_name].present?
-      parent_id = additional_options[:parent_id]
-      parent_class = additional_options[:parent_class_name].constantize
-      additional_options[:parent] = parent_class.find(parent_id) if parent_class < ActiveRecord::Base
+      parent_class = safe_model_class(additional_options[:parent_class_name])
+      additional_options[:parent] = parent_class.find_by(:id => additional_options[:parent_id]) if parent_class
     end
 
     @row_button = additional_options[:row_button]
     @no_checkboxes = additional_options[:no_checkboxes]
 
     additional_options
+  end
+
+  def safe_model_class(model_name)
+    model_name.to_s.safe_constantize(:allowlist => ActiveRecord::Base.descendants)
   end
 
   # Restore instance variables necessary for proper rendering of quadicons.
@@ -1338,11 +1342,8 @@ module ApplicationHelper
 
   # Return a proper column for an appropriate target klass
   def columns_for_klass(klass)
-    if klass.safe_constantize.column_names.include?('name')
-      [:name]
-    else
-      [:description]
-    end
+    target = klass.kind_of?(Class) ? klass : klass.to_s.safe_constantize(:allowlist => CustomButton.button_classes)
+    target&.column_names&.exclude?('name') ? [:description] : [:name]
   end
 
   def safe_right_cell_text
