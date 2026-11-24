@@ -502,6 +502,14 @@ describe ApplicationController do
         expect(subject.send(:process_params_model_view, {:model_name => "instances"}, {})).to eq(Vm)
       end
 
+      it "with options[:model_name] that is not a model raises NameError" do
+        expect { subject.send(:process_params_model_view, {}, {:model_name => "Kernel"}) }.to raise_error(NameError)
+      end
+
+      it "with options[:model_name] for a namespaced model" do
+        expect(subject.send(:process_params_model_view, {}, {:model_name => "ManageIQ::Providers::Openstack::CloudManager::Vm"})).to eq(ManageIQ::Providers::Openstack::CloudManager::Vm)
+      end
+
       it "with empty params and options will use the model method" do
         expect(ApplicationController).to receive(:model).and_return(Vm)
         expect(subject.send(:process_params_model_view, {}, {})).to eq(Vm)
