@@ -4,6 +4,7 @@ import { StackedAreaChart } from '@carbon/charts-react';
 const StackAreaChart = ({
   data = null,
   title = '',
+  dualYAxis = null,
 }) => {
   const options = {
     title,
@@ -17,6 +18,14 @@ const StackAreaChart = ({
         scaleType: 'linear',
         mapsTo: 'key',
       },
+      ...(dualYAxis && {
+        right: {
+          mapsTo: dualYAxis.mapsTo,
+          scaleType: 'linear',
+          title: dualYAxis.title,
+          correspondingDatasets: dualYAxis.correspondingDatasets,
+        },
+      }),
     },
     curve: 'curveMonotoneX',
     height: '400px',
@@ -35,6 +44,11 @@ const StackAreaChart = ({
 StackAreaChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
   title: PropTypes.string,
+  dualYAxis: PropTypes.shape({
+    mapsTo: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    correspondingDatasets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
 };
 
 export default StackAreaChart;
