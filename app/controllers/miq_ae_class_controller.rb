@@ -755,35 +755,29 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
     @edit[:new][:data] = params[:method_data] if params[:method_data]
     res = MiqAeMethod.validate_syntax(@edit[:new][:data])
-    line = 0
-    if !res
+    if res.blank?
       add_flash(_("Data validated successfully"))
     else
-      res.each do |err|
-        line = err[0] if line.zero?
-        add_flash(_("Error on line %{line_num}: %{err_txt}") % {:line_num => err[0], :err_txt => err[1]}, :error)
-      end
+      count = res.size
+      add_flash(
+        n_("Syntax validation failed with %{count} error. See highlighted line in the editor.",
+           "Syntax validation failed with %{count} errors. See highlighted lines in the editor.",
+           count) % {:count => count},
+        :error
+      )
     end
+    errors_json = (res || []).map { |err| {:line => err[0], :message => err[1]} }.to_json
     render :update do |page|
       page << javascript_prologue
-      page << "if (miqDomElementExists('cls_method_data')){"
-      page << "var ta = document.getElementById('cls_method_data');"
-      page << "} else {"
-      page << "var ta = document.getElementById('method_data');"
-      page << "}"
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "miqScrollTop();" if @flash_array.present?
-      page << "var lineHeight = ta.clientHeight / ta.rows;"
-      page << "ta.scrollTop = (#{line.to_i}-1) * lineHeight;"
-      if line.positive?
-        if @sb[:row_selected]
-          page << "$('#cls_method_data_lines').scrollTop(ta.scrollTop);"
-          page << "$('#cls_method_data').scrollTop(ta.scrollTop);"
-        else
-          page << "$('#method_data_lines').scrollTop(ta.scrollTop);"
-          page << "$('#method_data').scrollTop(ta.scrollTop);"
-        end
-      end
+      # Highlight errors in the AeMethodDataEditor (only the inline method editor defines these functions)
+      page << if res.present?
+                "if (ManageIQ.editor && ManageIQ.editor.setSyntaxErrors) " \
+                  "{ ManageIQ.editor.setSyntaxErrors(#{errors_json}); }"
+              else
+                "if (ManageIQ.editor && ManageIQ.editor.clearSyntaxErrors) { ManageIQ.editor.clearSyntaxErrors(); }"
+              end
     end
   end
 

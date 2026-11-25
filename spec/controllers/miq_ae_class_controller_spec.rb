@@ -1821,4 +1821,61 @@ describe MiqAeClassController do
       end
     end
   end
+
+  describe "#validate_method_data" do
+    before do
+      stub_user(:features => :all)
+      session[:edit] = {
+        :key => "aemethod_edit__new",
+        :new => {:data => ""}
+      }
+      @page = double("page", :replace => nil)
+      @scripts = []
+      allow(@page).to receive(:<<) { |script| @scripts << script }
+      allow(controller).to receive(:render).with(:update).and_yield(@page)
+    end
+
+    it "adds success flash and clears errors when data is valid" do
+      allow(MiqAeMethod).to receive(:validate_syntax).and_return(nil)
+      controller.params = {:id => "new", :method_data => "puts 'hello'"}
+      controller.send(:validate_method_data)
+
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to eq("Data validated successfully")
+      expect(flash_messages.first[:level]).to eq(:success)
+      expect(@scripts).to include("if (ManageIQ.editor && ManageIQ.editor.clearSyntaxErrors) { ManageIQ.editor.clearSyntaxErrors(); }")
+      expect(@scripts.join).not_to include("setSyntaxErrors")
+    end
+
+    it "adds error flash with error count and highlights errors when data is invalid" do
+      errors = [[2, "syntax error, unexpected end-of-input"], [4, "syntax error, unexpected ')'"]]
+      allow(MiqAeMethod).to receive(:validate_syntax).and_return(errors)
+      controller.params = {:id => "new", :method_data => "a = (\nb = 2 2\n"}
+      controller.send(:validate_method_data)
+
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to eq("Syntax validation failed with 2 errors. See highlighted lines in the editor.")
+      expect(flash_messages.first[:level]).to eq(:error)
+
+      expected_errors = [
+        {:line => 2, :message => "syntax error, unexpected end-of-input"},
+        {:line => 4, :message => "syntax error, unexpected ')'"}
+      ]
+      editor_script = @scripts.detect { |script| script.include?("setSyntaxErrors") }
+      expect(editor_script).to eq(
+        "if (ManageIQ.editor && ManageIQ.editor.setSyntaxErrors) " \
+        "{ ManageIQ.editor.setSyntaxErrors(#{expected_errors.to_json}); }"
+      )
+      expect(@scripts.join).not_to include("clearSyntaxErrors")
+    end
+
+    it "sends a single error with the singular flash message" do
+      allow(MiqAeMethod).to receive(:validate_syntax).and_return([[3, "unexpected end-of-input"]])
+      controller.params = {:id => "new", :method_data => "a = ("}
+      controller.send(:validate_method_data)
+
+      expect(assigns(:flash_array).first[:message]).to eq("Syntax validation failed with 1 error. See highlighted line in the editor.")
+      expect(@scripts.join).to include("setSyntaxErrors([{\"line\":3,")
+    end
+  end
 end
