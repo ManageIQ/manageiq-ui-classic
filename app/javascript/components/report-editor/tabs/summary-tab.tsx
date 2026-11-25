@@ -17,7 +17,8 @@ import { useFormApi, useFieldApi } from '@@ddf';
 import { FormRow } from '../form-row';
 import { NOTHING, buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
-import type { ColOptions, ReportFormValues } from '../report-editor-types';
+import type { ColOptions, FieldMetadata, ReportFormValues } from '../report-editor-types';
+import type { DataType } from '../../../types/common';
 
 // The calculations core knows: MiqReport::GROUPINGS (break rows) and MiqReport::PIVOTS (consolidation)
 const GROUPING_OPTIONS = ['min', 'avg', 'max', 'total'];
@@ -26,7 +27,7 @@ const ROW_LIMIT_OPTIONS = ['', '5', '10', '20', '50', '100'];
 
 type NumericColumn = { fieldId: string; label: string };
 
-const normalizeSelected = (items: unknown[] = []): string[] => items.map((item) => String(item));
+const normalizeSelected = (items: DataType[] = []): string[] => items.map((item) => String(item));
 
 const getSortOptions = (colOrder: string[] = [], labelMap: Record<string, string> = {}): [string, string][] => [
   [__('Nothing'), NOTHING],
@@ -35,10 +36,10 @@ const getSortOptions = (colOrder: string[] = [], labelMap: Record<string, string
 
 const getNumericColumns = (
   colOrder: string[] = [],
-  fieldMetadata: Record<string, unknown> = {},
+  fieldMetadata: FieldMetadata = {},
   labelMap: Record<string, string> = {},
 ): NumericColumn[] => colOrder
-  .filter((fieldId) => getColumnMeta(fieldMetadata as Parameters<typeof getColumnMeta>[0], fieldId).numeric)
+  .filter((fieldId) => getColumnMeta(fieldMetadata, fieldId).numeric)
   .map((fieldId) => ({ fieldId, label: labelMap[fieldId] || fieldId }));
 
 const getSuffixOptions = (

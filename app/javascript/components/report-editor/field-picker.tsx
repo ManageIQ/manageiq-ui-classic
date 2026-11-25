@@ -6,6 +6,7 @@ import {
 } from '@carbon/react';
 import SortableList from '../sortable-list';
 import { useFieldMetadata } from './field-metadata-context';
+import type { GenericDataType } from '../../types/common';
 import type { AvailableField, FieldMetadata } from './report-editor-types';
 import { MAX_COLUMNS, WARN_COLUMNS } from './validation';
 
@@ -85,8 +86,8 @@ const FieldPicker = (props: UseFieldApiConfig) => {
     }
 
     const { values, initialValues } = formOptions.getState() as {
-      values: Record<string, unknown>;
-      initialValues: Record<string, unknown>;
+      values: GenericDataType;
+      initialValues: GenericDataType;
     };
     const currentColOrder = (values.col_order as string[]) || [];
     const initialColOrder = (initialValues.col_order as string[]) || [];

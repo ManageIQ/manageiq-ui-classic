@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+import type { RuleGroupType } from 'react-querybuilder';
 import type { MiqFormSchemaType } from '../../types/forms';
+import type { GenericDataType } from '../../types/common';
 
 export type { MiqFormSchemaType };
 
@@ -99,8 +101,9 @@ export type ReportFormValues = {
   cumulative_rate_calculation?: boolean;
 };
 
-// Either a MiqExpression hash or an RQB query; the expression tree is not mirrored in types.
-export type ReportFilter = Record<string, unknown>;
+// Either a MiqExpression hash (plain JSON from the server; the expression tree is not mirrored in types)
+// or an RQB query produced by the expression editor.
+export type ReportFilter = RuleGroupType | GenericDataType;
 
 export type ReportRecord = {
   name?: string;
@@ -191,7 +194,7 @@ export type ChargebackOptions = {
 };
 
 export type FormOptions = {
-  change: (field: string, value: string | boolean | string[] | Record<string, unknown> | null | undefined) => void;
+  change: (field: string, value: string | boolean | string[] | ReportFilter | null | undefined) => void;
   getState: () => { values: ReportFormValues };
 };
 

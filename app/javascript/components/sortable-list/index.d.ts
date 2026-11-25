@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
+import type { GenericDataType } from '../../types/common';
 
-export type SortableListItem = string | Record<string, unknown>;
+export type SortableListItem = string | GenericDataType;
 
 export type SortableListInput = {
   value: SortableListItem[];
