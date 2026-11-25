@@ -87,6 +87,35 @@ describe ApplicationController do
       expect(convert_to_region_id(assigns(:tags)[:tags].first[:id]))
         .to eq(convert_to_region_id(assigns(:tags)[:tags].first[:values].first[:id]))
     end
+
+    it "raises NameError for a tagging class that is not a model" do
+      controller.instance_variable_set(:@edit, :new => {})
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@tagging, 'Kernel')
+      controller.instance_variable_set(:@object_ids, [@st.id])
+      session[:assigned_filters] = {}
+
+      expect { controller.send(:tag_edit_build_screen) }.to raise_error(NameError, /not found in allowlist/)
+    end
+  end
+
+  describe '#get_tag_items' do
+    before do
+      allow(controller).to receive(:checked_or_params).and_return([])
+      allow(controller).to receive(:assigned_filters).and_return([])
+    end
+
+    it 'resolves a tagging class name that is a model' do
+      controller.instance_variable_set(:@tagging, 'Host')
+      expect(controller).to receive(:find_records_with_rbac).with(Host, []).and_return([])
+      controller.send(:get_tag_items)
+    end
+
+    it 'does not resolve a tagging class name that is not a model' do
+      controller.instance_variable_set(:@tagging, 'Kernel')
+      expect(controller).to receive(:find_records_with_rbac).with(nil, []).and_return([])
+      controller.send(:get_tag_items)
+    end
   end
 
   describe '#tagging_edit' do
