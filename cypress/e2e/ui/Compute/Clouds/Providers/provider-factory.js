@@ -21,6 +21,7 @@ export const FIELD_LABELS = {
   PUBLIC_KEY: 'Public Key',
   PRIVATE_KEY: 'Private Key',
   IBM_CLOUD: 'IBM Cloud',
+  IBM_CLOUD_MONITORING_GUID: 'IBM Cloud Monitoring Instance GUID',
   SERVICE: 'Service',
   PROJECT_ID: 'Project ID',
   SUBSCRIPTION_ID: 'Subscription ID',
@@ -278,12 +279,18 @@ export function getProviderFactoryConfig(providerConfig) {
         },
       };
     default:
-      cy.logAndThrowError(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
+      throw new Error(`getProviderFactoryConfig: Provider type "${providerType}" does not have a factory configuration`);
   }
 }
 
 /**
  * Creates a provider configuration object with all necessary properties
+ *
+ * Optional config keys (defaults in baseConfig below):
+ *  - className: Ruby provider class, used by the Jest suite to synthesise the form schema.
+ *  - hasTabs (true): whether the endpoints sub-form renders a tab strip.
+ *  - endpointsTitle ('Endpoints'): heading of the endpoints sub-form ("Endpoint" for some gems).
+ *  hasTabs and endpointsTitle are asserted by both the Cypress and Jest suites.
  * @param {string} type - The provider type
  * @param {Object} config - Additional configuration options
  * @returns {Object} - The provider configuration object
@@ -291,6 +298,8 @@ export function getProviderFactoryConfig(providerConfig) {
 function createProviderConfig(type, config = {}) {
   const baseConfig = {
     type,
+    hasTabs: true,
+    endpointsTitle: 'Endpoints',
     validationError: VALIDATION_ERRORS[type.replace(/\s+/g, '_').toUpperCase()],
     formFields: {
       common: [
@@ -343,6 +352,7 @@ function createProviderConfig(type, config = {}) {
  */
 function getVMwareVcloudProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.VMWARE_VCLOUD, {
+    className: 'ManageIQ::Providers::Vmware::CloudManager',
     formFields: {
       default: [
         {
@@ -441,6 +451,8 @@ function getVMwareVcloudProviderConfig() {
  */
 function getOracleCloudProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.ORACLE_CLOUD, {
+    className: 'ManageIQ::Providers::OracleCloud::CloudManager',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -495,6 +507,8 @@ function getOracleCloudProviderConfig() {
  */
 function getIBMCloudVPCProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CLOUD_VPC, {
+    className: 'ManageIQ::Providers::IbmCloud::VPC::CloudManager',
+    endpointsTitle: 'Endpoint',
     formFields: {
       default: [
         {
@@ -564,6 +578,7 @@ function getIBMCloudVPCProviderConfig() {
  */
 function getIBMPowerSystemsProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_POWER_SYSTEMS, {
+    className: 'ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager',
     formFields: {
       default: [
         {
@@ -580,6 +595,20 @@ function getIBMPowerSystemsProviderConfig() {
           required: true,
         },
       ],
+      metrics: [
+        {
+          label: FIELD_LABELS.TYPE,
+          id: 'metrics_selection',
+          type: 'select',
+          required: false,
+        },
+        {
+          label: FIELD_LABELS.IBM_CLOUD_MONITORING_GUID,
+          id: 'endpoints.metrics.options.monitoring_instance_id',
+          type: 'password',
+          required: false,
+        },
+      ],
     },
     formValues: {
       default: {
@@ -587,7 +616,12 @@ function getIBMPowerSystemsProviderConfig() {
         uid_ems: FIELD_VALUES.GUID,
       },
     },
-    tabs: [TAB_LABELS.DEFAULT],
+    fieldSelectionValues: {
+      metrics: {
+        metrics_selection: SELECT_OPTIONS.ENABLED,
+      },
+    },
+    tabs: [TAB_LABELS.DEFAULT, TAB_LABELS.METRICS],
   });
 }
 
@@ -597,6 +631,9 @@ function getIBMPowerSystemsProviderConfig() {
  */
 function getGoogleComputeEngineProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.GOOGLE_COMPUTE, {
+    className: 'ManageIQ::Providers::Google::CloudManager',
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -630,6 +667,9 @@ function getGoogleComputeEngineProviderConfig() {
  */
 function getAzureStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE_STACK, {
+    className: 'ManageIQ::Providers::AzureStack::CloudManager',
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -706,6 +746,9 @@ function getAzureStackProviderConfig() {
  */
 function getAzureProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AZURE, {
+    className: 'ManageIQ::Providers::Azure::CloudManager',
+    endpointsTitle: 'Endpoint',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -766,6 +809,7 @@ function getAzureProviderConfig() {
  */
 function getAmazonEC2ProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.AMAZON_EC2, {
+    className: 'ManageIQ::Providers::Amazon::CloudManager',
     formFields: {
       default: [
         {
@@ -833,6 +877,7 @@ function getAmazonEC2ProviderConfig() {
  */
 function getIBMPowerVCProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_POWERVC, {
+    className: 'ManageIQ::Providers::IbmPowerVc::CloudManager',
     formFields: {
       default: [
         {
@@ -961,6 +1006,8 @@ function getIBMPowerVCProviderConfig() {
  */
 function getIBMCICProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.IBM_CIC, {
+    className: 'ManageIQ::Providers::IbmCic::CloudManager',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -1096,6 +1143,8 @@ function getIBMCICProviderConfig() {
  */
 function getOpenStackProviderConfig() {
   return createProviderConfig(PROVIDER_TYPES.OPENSTACK, {
+    className: 'ManageIQ::Providers::Openstack::CloudManager',
+    hasTabs: false,
     formFields: {
       default: [
         {
@@ -1256,7 +1305,7 @@ const PROVIDER_REGISTRY = {
  */
 export function getProviderConfig(type) {
   if (!PROVIDER_REGISTRY[type]) {
-    cy.logAndThrowError(`Provider type "${type}" is not supported`);
+    throw new Error(`Provider type "${type}" is not supported`);
   }
   return PROVIDER_REGISTRY[type]();
 }

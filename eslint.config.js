@@ -1172,6 +1172,7 @@ module.exports = [
             'test/**',
             'tests/**',
             'spec/**',
+            'app/javascript/spec/**',
             '**/__tests__/**',
             '**/__mocks__/**',
             'test.{js,jsx}',
@@ -1228,6 +1229,13 @@ module.exports = [
           classes: false,
         },
       ],
+    },
+  },
+  {
+    // Specs: allow `for...of` so awaited user-event interactions run sequentially
+    files: ['app/javascript/spec/**/*.js', 'app/javascript/spec/**/*.jsx'],
+    rules: {
+      'no-restricted-syntax': 'off',
     },
   },
   {
