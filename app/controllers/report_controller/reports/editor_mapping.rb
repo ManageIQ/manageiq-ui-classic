@@ -134,7 +134,7 @@ module ReportController::Reports::EditorMapping
     # Core sets the static columns (dates, group-by column), their headers and the
     # sorting here; assign_columns then appends the columns the user selected.
     tag_header = groupby_tag.present? ? Classification.lookup_by_name(groupby_tag.first)&.description : nil
-    rpt.db.constantize.set_chargeback_report_options(rpt, groupby, tag_header, groupby_label, report_data[:tz].presence)
+    rpt.db.to_s.constantize(:allowlist => Chargeback.descendants).set_chargeback_report_options(rpt, groupby, tag_header, groupby_label, report_data[:tz].presence)
   end
 
   # Only the filter for the chosen "Show Costs by" type (owner, tenant, tag or entity)
@@ -677,8 +677,7 @@ module ReportController::Reports::EditorMapping
   end
 
   def chargeback_report_model?(model)
-    klass = model.to_s.safe_constantize
-    klass.kind_of?(Class) && klass < Chargeback
+    model.to_s.safe_constantize(:allowlist => Chargeback.descendants).present?
   end
 
   # What is recorded in the audit log about a report

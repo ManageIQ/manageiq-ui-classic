@@ -960,4 +960,18 @@ describe ReportController do
       expect(special - report_type_examples.values.flatten).to be_empty
     end
   end
+
+  describe "#chargeback_report_model?" do
+    it "returns true for chargeback and metering models" do
+      %w[ChargebackVm ChargebackContainerImage ChargebackContainerProject ChargebackConfiguredSystem MeteringVm MeteringContainerImage MeteringContainerProject].each do |model|
+        expect(controller.send(:chargeback_report_model?, model)).to be(true)
+      end
+    end
+
+    it "returns false for non-chargeback models, invalid strings, and nil" do
+      [nil, "", "Vm", "User", "Kernel", "NonExistentModel", "Object"].each do |model|
+        expect(controller.send(:chargeback_report_model?, model)).to be(false)
+      end
+    end
+  end
 end
