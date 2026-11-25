@@ -1599,16 +1599,11 @@ module.exports = [
       'no-restricted-syntax': [
         ...sharedAirbnbBaseRules['no-restricted-syntax'],
         {
-          // Catches explicit type assertions like "data as unknown" or "<unknown>data"
-          selector: "TSAsExpression[typeAnnotation.type='TSUnknownKeyword']",
+          // Catches every use of the 'unknown' keyword, wherever it appears: annotations ("data: unknown"),
+          // nested generics ("Record<string, unknown>", "unknown[]"), type aliases and assertions ("x as unknown").
+          selector: 'TSUnknownKeyword',
           message:
-            "Avoid casting values directly to 'unknown'. Use a type guard or an explicit schema validation instead.",
-        },
-        {
-          // Catches explicit variable/property type annotations like "data: unknown"
-          selector: "TSTypeAnnotation[typeAnnotation.type='TSUnknownKeyword']",
-          message:
-            "Explicitly declaring variables as 'unknown' is restricted. Narrow down the type or define a domain-specific layout.",
+            "Do not use 'unknown'. Define a domain-specific type, or use 'DataType' / 'GenericDataType' from '@app/javascript/types/common.d.ts' when the shape of the data is not known.",
         },
       ],
 
