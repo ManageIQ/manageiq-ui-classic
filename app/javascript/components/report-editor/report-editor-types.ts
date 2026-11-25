@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { RuleGroupType } from 'react-querybuilder';
-import type { MiqFormSchemaType } from '../../types/forms';
-import type { GenericDataType } from '../../types/common';
+import type { MiqFormSchemaType } from '@@miq-types/forms';
+import type { GenericDataType } from '@@miq-types/common';
 
 export type { MiqFormSchemaType };
 

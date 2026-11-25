@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { GenericDataType } from '../../types/common';
+import type { GenericDataType } from '@@miq-types/common';
 
 export type ChartDatum = GenericDataType;
 

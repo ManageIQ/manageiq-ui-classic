@@ -1,8 +1,8 @@
 import type { ComponentType } from 'react';
 import type { RuleGroupType } from 'react-querybuilder';
 import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
+import type { DataType } from '@@miq-types/common';
 import ExpressionEditorRaw from '../../../expression-editor';
-import type { DataType } from '../../../../types/common';
 import type { ReportFilter } from '../../report-editor-types';
 
 /** A tag value option as cached by the expression editor (read back by expression-human.js). */

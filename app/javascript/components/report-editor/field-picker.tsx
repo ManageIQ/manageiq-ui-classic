@@ -4,9 +4,9 @@ import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
 import {
   FilterableMultiSelect, InlineNotification, Loading, Modal,
 } from '@carbon/react';
+import type { GenericDataType } from '@@miq-types/common';
 import SortableList from '../sortable-list';
 import { useFieldMetadata } from './field-metadata-context';
-import type { GenericDataType } from '../../types/common';
 import type { AvailableField, FieldMetadata } from './report-editor-types';
 import { MAX_COLUMNS, WARN_COLUMNS } from './validation';
 

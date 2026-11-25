@@ -14,11 +14,11 @@ import {
   Toggle,
 } from '@carbon/react';
 import { useFormApi, useFieldApi } from '@@ddf';
+import type { DataType } from '@@miq-types/common';
 import { FormRow } from '../form-row';
 import { NOTHING, buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
 import type { ColOptions, FieldMetadata, ReportFormValues } from '../report-editor-types';
-import type { DataType } from '../../../types/common';
 
 // The calculations core knows: MiqReport::GROUPINGS (break rows) and MiqReport::PIVOTS (consolidation)
 const GROUPING_OPTIONS = ['min', 'avg', 'max', 'total'];

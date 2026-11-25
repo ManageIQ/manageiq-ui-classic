@@ -1,6 +1,6 @@
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
-import type { GenericDataType } from '../../../types/common';
+import type { GenericDataType } from '@@miq-types/common';
 import type { ReportFormValues, ReportType } from '../report-editor-types';
 import StandardFilter from './filter/standard-filter';
 import { PerformanceFilter, TrendFilter } from './filter/performance-filter';

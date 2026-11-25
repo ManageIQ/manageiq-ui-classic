@@ -8,7 +8,7 @@ import {
 } from '@carbon/react';
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
-import type { GenericDataType } from '../../../types/common';
+import type { GenericDataType } from '@@miq-types/common';
 import { FormRow } from '../form-row';
 import { buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';

@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import type { MiqFormSchemaType, BaseFieldType } from '../../types/forms';
-import type { GenericDataType } from '../../types/common';
+import type { MiqFormSchemaType, BaseFieldType } from '@@miq-types/forms';
+import type { GenericDataType } from '@@miq-types/common';
 import type { FormDataWithType } from './report-editor-types';
 import { MAX_COLUMNS } from './validation';
 
