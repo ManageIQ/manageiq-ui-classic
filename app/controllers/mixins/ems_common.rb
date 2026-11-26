@@ -68,7 +68,6 @@ module Mixins
           cloud_volume_snapshots
           cloud_volume_backups
           cloud_volume_types
-          configuration_jobs
           container_builds
           container_groups
           container_image_registries
@@ -101,7 +100,6 @@ module Mixins
           physical_servers
           physical_racks
           physical_chassis
-          physical_servers_with_host
           physical_switches
           physical_storages
           placement_groups
