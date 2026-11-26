@@ -172,15 +172,14 @@ describe OpsController do
       expect(automate_vars).to be_empty
     end
 
-    it "returns an empty hash if invalid target class is passed in" do
+    it "raises NameError if invalid target class is passed in" do
       filter_params = {
         :target_class => "InvalidClass",
         :target_id    => vm.id.to_s
       }
       params.merge!(filter_params)
       allow(controller).to receive(:params).and_return(params)
-      automate_vars = controller.send(:build_attrs_from_params, params)
-      expect(automate_vars).to be_empty
+      expect { controller.send(:build_attrs_from_params, params) }.to raise_error(NameError)
     end
   end
 
@@ -303,9 +302,8 @@ describe OpsController do
     context "with invalid target_class" do
       let(:target_class) { "InvalidClass" }
 
-      it "sets object_name to nil" do
-        controller.send(:schedule_show)
-        expect(controller.instance_variable_get(:@object_name)).to be_nil
+      it "raises NameError" do
+        expect { controller.send(:schedule_show) }.to raise_error(NameError)
       end
     end
   end
