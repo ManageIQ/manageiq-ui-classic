@@ -22,7 +22,16 @@ describe MiqAeCustomizationController, "ApplicationController::Automate" do
       host = FactoryBot.create(:host)
       expect(controller).to receive(:render)
       controller.send(:resolve_button_simulate)
-      expect(assigns(:resolve)[:targets]).to eq([[host.name, host.id.to_s]])
+      expect(assigns(:resolve)[:targets]).to eq([[host.name, host.id]])
+    end
+
+    it "targets use the description for classes without a name column" do
+      group = FactoryBot.create(:miq_group)
+      session[:resolve][:new][:target_class] = "MiqGroup"
+      controller.instance_variable_set(:@edit, :new => {:target_class => "MiqGroup"})
+      allow(controller).to receive(:render)
+      controller.send(:resolve_button_simulate)
+      expect(assigns(:resolve)[:targets]).to include([group.description, group.id])
     end
 
     it "does not resolve a target class that is not a custom button class" do

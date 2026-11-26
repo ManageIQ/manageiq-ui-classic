@@ -43,8 +43,9 @@ module ApplicationController::Automate
       @resolve[:new][:other_name] = @edit[:new][:other_name]
     end
     if @edit[:new][:target_class]
-      targets = @resolve[:new][:target_class].to_s.safe_constantize(:allowlist => CustomButton.button_classes)&.all || []
-      @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.map { |t| [t.name, t.id.to_s] }
+      target_class = @resolve[:new][:target_class].to_s.safe_constantize(:allowlist => CustomButton.button_classes)
+      name_column = columns_for_klass(target_class).first if target_class
+      @resolve[:targets] = target_class ? target_class.order("LOWER(#{name_column})").pluck(name_column, :id) : []
       @resolve[:new][:target_id] = nil
       @resolve[:new][:object_message] = @edit[:new][:object_message]
       @resolve[:lastaction] = "simulate"
