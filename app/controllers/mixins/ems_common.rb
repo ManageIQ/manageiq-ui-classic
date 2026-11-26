@@ -68,7 +68,6 @@ module Mixins
           cloud_volume_snapshots
           cloud_volume_backups
           cloud_volume_types
-          configuration_jobs
           container_builds
           container_groups
           container_image_registries
@@ -101,7 +100,6 @@ module Mixins
           physical_servers
           physical_racks
           physical_chassis
-          physical_servers_with_host
           physical_switches
           physical_storages
           placement_groups
@@ -371,8 +369,9 @@ module Mixins
           return
         end
 
-        if @display && @display != 'main'
-          model_class = @display.camelize.singularize.safe_constantize
+        # Only resolve a model class for display values listed in display_methods
+        if self.class.display_methods.include?(@display)
+          model_class = @display.camelize.singularize.safe_constantize(:allowlist => self.class.display_models)
           display_s = @display.singularize
 
           case params[:pressed]

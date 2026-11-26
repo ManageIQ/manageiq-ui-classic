@@ -268,6 +268,18 @@ describe EmsContainerController do
             end
           end
         end
+
+        context 'displaying a value that is not in display_methods' do
+          let(:item) { FactoryBot.create(:container_image) }
+          let(:display) { 'kernels' }
+          let(:press) { 'kernel_tag' }
+
+          it 'does not resolve a model class or call tag' do
+            expect(controller).not_to receive(:tag)
+            expect(controller).not_to receive(:assign_policies)
+            controller.send(:button)
+          end
+        end
       end
     end
 
