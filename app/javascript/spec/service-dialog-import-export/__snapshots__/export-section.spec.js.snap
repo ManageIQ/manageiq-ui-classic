@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Service dialog ExportSection component should render the export section 1`] = `
+<div>
+  <div
+    class="service-dialog-export-section"
+  >
+    <h3>
+      Export
+    </h3>
+    <div
+      class="cds--multi-select__wrapper cds--multi-select--filterable__wrapper cds--list-box__wrapper"
+    >
+      <label
+        class="cds--label"
+        for="service-dialog-export-select-input"
+        id="service-dialog-export-select-label"
+      >
+        Service Dialogs
+        <span
+          class="cds--visually-hidden"
+        >
+          Total items selected:  0.
+        </span>
+      </label>
+      <div
+        class="cds--multi-select cds--combo-box cds--multi-select--filterable cds--list-box"
+        id="service-dialog-export-select"
+      >
+        <div
+          class="cds--list-box__field"
+        >
+          <input
+            aria-activedescendant=""
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            autocomplete="off"
+            class="cds--text-input cds--text-input--empty"
+            id="service-dialog-export-select-input"
+            placeholder="Select service dialogs to export"
+            role="combobox"
+            value=""
+          />
+          <button
+            aria-controls="service-dialog-export-select__menu"
+            aria-expanded="false"
+            aria-label="Open"
+            class="cds--list-box__menu-icon"
+            id="service-dialog-export-select-toggle-button"
+            tabindex="-1"
+            title="Open"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+          </button>
+        </div>
+        <ul
+          aria-labelledby="service-dialog-export-select-label"
+          class="cds--list-box__menu"
+          hidden=""
+          id="service-dialog-export-select__menu"
+          role="listbox"
+        />
+      </div>
+    </div>
+    <div
+      class="export-button-wrapper"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        id="export-service-dialogs"
+        type="button"
+      >
+        Export
+      </button>
+    </div>
+  </div>
+</div>
+`;
