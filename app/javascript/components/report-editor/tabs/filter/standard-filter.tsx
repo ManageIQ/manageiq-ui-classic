@@ -6,7 +6,7 @@ import { LabeledSection } from '../../form-row';
 import type { ReportFormValues } from '../../report-editor-types';
 import { hasChildTableColumns } from '../../utils';
 import { useFieldMetadata } from '../../field-metadata-context';
-import { ExpressionEditor, type FormOptionsApi } from './shared';
+import { ExpressionEditor, type FormOptionsApi, type TagValuesCache } from './shared';
 
 type StandardFilterProps = {
   formValues: ReportFormValues;
@@ -22,28 +22,28 @@ const StandardFilter = ({ formValues, formOptions }: StandardFilterProps) => {
   // so that tag lookups always read the latest values without re-firing the callback.
   // We store the ref object itself, then read .current when we need the Map.
   const recordLabelMapRef = useRef<Map<string, string>>(new Map());
-  const recordTagCacheRefObj = useRef<{ current: Map<string, unknown> } | null>(null);
+  const recordTagCacheRefObj = useRef<{ current: TagValuesCache } | null>(null);
   const displayLabelMapRef = useRef<Map<string, string>>(new Map());
-  const displayTagCacheRefObj = useRef<{ current: Map<string, unknown> } | null>(null);
+  const displayTagCacheRefObj = useRef<{ current: TagValuesCache } | null>(null);
   const [recordPreview, setRecordPreview] = useState('');
   const [displayPreview, setDisplayPreview] = useState('');
 
-  const handleRecordContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
+  const handleRecordContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: TagValuesCache } | null) => {
     recordLabelMapRef.current = labelMap;
     recordTagCacheRefObj.current = tagValuesCache;
     const initial = (formOptions.getState().values as ReportFormValues).record_filter;
-    if (initial && (initial as Record<string, unknown>).combinator === undefined) {
+    if (initial && initial.combinator === undefined) {
       // It's a MiqExpression hash (not yet touched by the user) — render it directly.
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
       setRecordPreview(miqExpressionToHuman(initial, labelMap, tagMap));
     }
   }, [formOptions]);
 
-  const handleDisplayContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: Map<string, unknown> } | null) => {
+  const handleDisplayContextReady = useCallback((labelMap: Map<string, string>, tagValuesCache: { current: TagValuesCache } | null) => {
     displayLabelMapRef.current = labelMap;
     displayTagCacheRefObj.current = tagValuesCache;
     const initial = (formOptions.getState().values as ReportFormValues).display_filter;
-    if (initial && (initial as Record<string, unknown>).combinator === undefined) {
+    if (initial && initial.combinator === undefined) {
       const tagMap = tagValuesCache ? tagValuesCache.current : new Map();
       setDisplayPreview(miqExpressionToHuman(initial, displayLabelMapRef.current, tagMap));
     }

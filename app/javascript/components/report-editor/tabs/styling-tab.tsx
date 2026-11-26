@@ -8,6 +8,7 @@ import {
 } from '@carbon/react';
 import { useFormApi, useFieldApi } from '@@ddf';
 import type { FormOptions } from '@data-driven-forms/react-form-renderer/renderer-context';
+import type { GenericDataType } from '@@miq-types/common';
 import { FormRow } from '../form-row';
 import { buildLabelMap, getColumnMeta } from '../utils';
 import { useFieldMetadata } from '../field-metadata-context';
@@ -52,7 +53,7 @@ const getOperatorLabels = (): Record<string, string> => ({
   'IS NOT NULL': __('IS NOT NULL'),
 });
 
-type FormOptionsApi = FormOptions<Record<string, unknown>>;
+type FormOptionsApi = FormOptions<GenericDataType>;
 
 const getColumnStyles = (formValues: ReportFormValues, fieldId: string): StyleRule[] =>
   formValues.col_options?.[fieldId]?.style || [];

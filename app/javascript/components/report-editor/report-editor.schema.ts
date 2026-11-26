@@ -1,5 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import type { MiqFormSchemaType, BaseFieldType } from '../../types/forms';
+import type { MiqFormSchemaType, BaseFieldType } from '@@miq-types/forms';
+import type { GenericDataType } from '@@miq-types/common';
 import type { FormDataWithType } from './report-editor-types';
 import { MAX_COLUMNS } from './validation';
 
@@ -9,7 +10,7 @@ const REDUCED_TABS = ['columns', 'filter', 'preview'] as const;
 
 type TabName = typeof STANDARD_TABS[number];
 
-type TabField = BaseFieldType & Record<string, unknown>;
+type TabField = BaseFieldType & GenericDataType;
 
 const columnsTab = (formData: FormDataWithType): TabField => {
   const isPerformance = formData.report_type === 'performance';

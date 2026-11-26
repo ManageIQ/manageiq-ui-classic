@@ -4,6 +4,7 @@ import type { UseFieldApiConfig } from '@data-driven-forms/react-form-renderer';
 import {
   FilterableMultiSelect, InlineNotification, Loading, Modal,
 } from '@carbon/react';
+import type { GenericDataType } from '@@miq-types/common';
 import SortableList from '../sortable-list';
 import { useFieldMetadata } from './field-metadata-context';
 import type { AvailableField, FieldMetadata } from './report-editor-types';
@@ -85,8 +86,8 @@ const FieldPicker = (props: UseFieldApiConfig) => {
     }
 
     const { values, initialValues } = formOptions.getState() as {
-      values: Record<string, unknown>;
-      initialValues: Record<string, unknown>;
+      values: GenericDataType;
+      initialValues: GenericDataType;
     };
     const currentColOrder = (values.col_order as string[]) || [];
     const initialColOrder = (initialValues.col_order as string[]) || [];
