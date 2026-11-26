@@ -1,0 +1,56 @@
+.empty-state-carbon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+  text-align: center;
+  background-color: #f4f4f4;
+  border: 0;
+  min-height: 400px;
+
+  &__icon {
+    margin-bottom: 1.5rem;
+    color: #8d8d8d;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #161616;
+  }
+
+  &__description {
+    font-size: 1rem;
+    color: #525252;
+    margin-bottom: 0.5rem;
+    max-width: 600px;
+  }
+
+  &__documentation {
+    font-size: 1rem;
+    color: #525252;
+    margin-bottom: 2rem;
+  }
+
+  &__link {
+    color: #0f62fe;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__action {
+    margin-top: 1rem;
+  }
+}
+
+// Made with Bob
