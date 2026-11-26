@@ -27,6 +27,23 @@ describe Mixins::GenericShowMixin do
     end
   end
 
+  describe '.display_models' do
+    it 'defaults to the model names derived from display_methods' do
+      expect(HostController.display_models).to include('Storage', 'ResourcePool', 'CloudNetwork')
+    end
+
+    it 'can be overridden by the controller' do
+      controller_class = Class.new(HostController) do
+        def self.display_models
+          %w[Storage]
+        end
+      end
+      controller = controller_class.new
+      expect(controller).not_to receive(:nested_list)
+      expect { controller.send(:display_nested_generic, 'vms') }.to raise_error(NameError)
+    end
+  end
+
   describe '#display_nested_generic' do
     let(:controller) { HostController.new }
 
