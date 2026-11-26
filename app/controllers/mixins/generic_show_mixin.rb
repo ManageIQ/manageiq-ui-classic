@@ -1,5 +1,15 @@
 module Mixins
   module GenericShowMixin
+    extend ActiveSupport::Concern
+
+    class_methods do
+      # Model class names that nested lists in 'display_methods' resolve to.
+      # Override in a controller when an entry's model name does not match its display name.
+      def display_models
+        display_methods.map { |display| display.camelize.singularize }
+      end
+    end
+
     def show
       return if perfmenu_click?
       return unless init_show
@@ -135,7 +145,9 @@ module Mixins
     end
 
     def display_nested_generic(display)
-      nested_list(display.camelize.singularize.constantize)
+      return unless self.class.display_methods.include?(display)
+
+      nested_list(display.camelize.singularize.constantize(:allowlist => self.class.display_models))
     end
 
     def display_all_vms

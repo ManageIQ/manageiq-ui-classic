@@ -19,6 +19,10 @@ class EmsPhysicalInfraController < ApplicationController
     @table_name ||= "ems_physical_infra"
   end
 
+  def self.display_methods
+    super + %w[physical_servers_with_host]
+  end
+
   def display_physical_servers_with_host
     nested_list(PhysicalServer, :named_scope => :with_hosts, :breadcrumb_title => _("Physical Servers with Host"))
   end
