@@ -76,7 +76,10 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def targets_from_class(klass)
-    targets = Rbac.filtered(klass).select(:id, *columns_for_klass(klass))
-    targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+    target_class = klass.to_s.presence&.safe_constantize(:allowlist => CustomButton.button_classes)
+    return [] unless target_class
+
+    targets = Rbac.filtered(target_class).select(:id, *columns_for_klass(target_class))
+    targets.sort_by { |t| t.name.downcase }.map { |t| [t.name, t.id.to_s] }
   end
 end

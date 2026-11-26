@@ -520,4 +520,25 @@ describe MiqAeToolsController do
       expect(controller.data_for_breadcrumbs.pluck(:title)[3]).to eq(nil) # no additional title
     end
   end
+
+  describe "#get_form_targets" do
+    before do
+      controller.instance_variable_set(:@resolve, {})
+    end
+
+    it "returns targets for valid target_class" do
+      vm = FactoryBot.create(:vm_vmware, :name => "Test VM")
+      get :get_form_targets, :params => {:target_class => "Vm"}
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["targets"]).to include(["Test VM", vm.id.to_s])
+    end
+
+    it "returns empty targets for invalid target_class" do
+      get :get_form_targets, :params => {:target_class => "InvalidModel"}
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["targets"]).to be_nil
+    end
+  end
 end
