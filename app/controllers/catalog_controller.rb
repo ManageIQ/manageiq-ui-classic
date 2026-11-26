@@ -1601,7 +1601,7 @@ class CatalogController < ApplicationController
 
   def available_orchestration_managers_for_template_type(template_type)
     template_type = template_type.to_s.safe_constantize(:allowlist => OrchestrationTemplate.descendants)
-    return [] unless template_type && template_type < OrchestrationTemplate
+    return [] unless template_type
 
     template_type.eligible_managers.collect { |m| [m.name, m.id] }.sort
   end
