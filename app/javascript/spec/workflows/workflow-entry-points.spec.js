@@ -130,4 +130,47 @@ describe('WorkflowEntryPoints component', () => {
     await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
     expect(applyButton).toBeDisabled();
   });
+
+  it('renders inside its container in legacy mode so clearing the container removes the modal', async() => {
+    const { container } = render(<WorkflowEntryPoints {...defaultProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+    });
+
+    expect(container).toContainElement(screen.getByPlaceholderText('Search'));
+  });
+
+  it('titles the modal by automation type and falls back to a generic title for other types', async() => {
+    const { unmount } = render(<WorkflowEntryPoints {...defaultProps} />);
+    await waitFor(() => expect(screen.getByPlaceholderText('Search')).toBeInTheDocument());
+    expect(screen.getByText('Select Embedded Workflow - Provision Entry Point')).toBeInTheDocument();
+    unmount();
+
+    fetchMock.postOnce('/catalog/ae_tree_select_toggle?typ=DialogField', {});
+    render(<WorkflowEntryPoints {...defaultProps} type="DialogField" />);
+    await waitFor(() => expect(screen.getByPlaceholderText('Search')).toBeInTheDocument());
+    expect(screen.getByText('Select Embedded Workflow Entry Point')).toBeInTheDocument();
+  });
+
+  it('renders in document.body in React mode and closes through setShowModal', async() => {
+    const setShowModal = jest.fn();
+    const setSelectedValue = jest.fn();
+    const { container } = render(
+      <WorkflowEntryPoints {...defaultProps} setShowModal={setShowModal} setSelectedValue={setSelectedValue} />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+    });
+
+    expect(container).not.toContainElement(screen.getByPlaceholderText('Search'));
+    expect(window.miqJqueryRequest).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByText('provision-vm-service/provision-vm.asl'));
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+
+    expect(setShowModal).toHaveBeenCalledWith(false);
+    expect(setSelectedValue).toHaveBeenCalledWith(expect.objectContaining({ id: '1' }));
+  });
 });

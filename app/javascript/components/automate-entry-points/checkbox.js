@@ -24,6 +24,7 @@ const Checkbox = ({
 Checkbox.propTypes = {
   defaultState: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  /* eslint-disable-next-line react/forbid-prop-types */
   children: PropTypes.arrayOf(PropTypes.any),
 };
 

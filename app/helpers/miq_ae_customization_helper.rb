@@ -10,19 +10,15 @@ module MiqAeCustomizationHelper
   end
 
   def dialog_tab_content(key_name, &)
-    if DIALOG_TAB_IDS.include?(key_name.to_s)
-      class_name = key_name == :sample_tab ? 'tab_content active' : 'tab_content'
-      tag.div(:id => key_name, :class => class_name, &)
-    end
+    return unless DIALOG_TAB_IDS.include?(key_name.to_s)
+
+    class_name = key_name == :sample_tab ? 'tab_content active' : 'tab_content'
+    tag.div(:id => key_name, :class => class_name, &)
   end
 
   def dialog_tab_index(active_tab)
     index = DIALOG_TAB_IDS.index(active_tab.to_s)
     index || 0
-  end
-
-  def editor_automation_types
-    AUTOMATION_TYPES.to_json
   end
 
   def dialog_id_action
