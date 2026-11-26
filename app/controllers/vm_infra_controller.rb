@@ -19,6 +19,49 @@ class VmInfraController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
+  def vm_live_logs
+    require 'net/http'
+    require 'uri'
+    require 'json'
+
+    @record = identify_record(params[:id], VmOrTemplate)
+    return if performed?
+
+    lines = (params[:lines] || 200).to_i.clamp(1, 2000)
+
+    begin
+      # Mint a short-lived API token for the current ManageIQ user
+      api_token = Api::UserTokenService.new.generate_token(User.current_userid, "ui")
+
+      uri = URI("#{request.base_url}/api/vms/#{@record.id}")
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = (uri.scheme == "https")
+
+      req = Net::HTTP::Post.new(
+        uri.path,
+        {
+          "Content-Type" => "application/json",
+          "Accept"       => "application/json",
+          "X-Auth-Token" => api_token
+        }
+      )
+      req.body = {"action" => "fetch_logs", "resource" => {"lines" => lines}}.to_json
+
+      res  = http.request(req)
+      body = JSON.parse(res.body)
+
+      @vm_log_output = if body["success"]
+                         body.dig("result", "logs") || body["logs"]
+                       else
+                         "API Error: #{body['message'] || body.dig('error', 'message')}"
+                       end
+    rescue StandardError => e
+      @vm_log_output = "Unable to fetch VM logs via ManageIQ API: #{e.message}"
+    end
+
+    render "vm_common/vm_live_logs" unless performed?
+  end
+
   private
 
   def features
@@ -96,5 +139,6 @@ class VmInfraController < ApplicationController
   feature_for_actions ['vm_protect', 'miq_template_protect'], :protect
   feature_for_actions ['vm_timeline', 'miq_template_timeline'], :tl_chooser
   feature_for_actions ['vm_perf', 'miq_template_perf'], :perf_top_chart
+  feature_for_actions ['vm_live_logs'], :vm_live_logs
   has_custom_buttons
 end

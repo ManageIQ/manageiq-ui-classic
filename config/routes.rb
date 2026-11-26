@@ -3307,6 +3307,8 @@ Rails.application.routes.draw do
 
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
+  get 'vm_infra/vm_live_logs/:id',       :to => 'vm_infra#vm_live_logs'
+  get 'vm_or_template/vm_live_logs/:id', :to => 'vm_infra#vm_live_logs'
 
   # Expression editor metadata endpoints (used by the React ExpressionEditor component)
   scope '/expression_editor' do
