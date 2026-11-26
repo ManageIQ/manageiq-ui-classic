@@ -44,6 +44,22 @@ describe ApplicationController do
     end
   end
 
+  describe "invalid authenticity token handling" do
+    it "resets the session instead of using the generic error handler" do
+      expect(controller).to receive(:handle_invalid_session).with(false)
+      expect(controller).not_to receive(:error_handler)
+
+      expect(controller.rescue_with_handler(ActionController::InvalidAuthenticityToken.new)).to be_truthy
+    end
+
+    it "still uses the generic error handler for other errors" do
+      expect(controller).to receive(:error_handler).with(kind_of(StandardError))
+      expect(controller).not_to receive(:handle_invalid_session)
+
+      controller.rescue_with_handler(StandardError.new)
+    end
+  end
+
   describe "#find_record_with_rbac" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
