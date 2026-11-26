@@ -1,0 +1,11 @@
+#main_div
+  %h3
+    = _("Live OS Logs for %{name}") % {:name => @record.name}
+    .pull-right
+      %a.btn.btn-primary{:href => "/vm_infra/vm_live_logs/#{@record.id}"}
+        = _("Refresh")
+      %a.btn.btn-default{:href => "/vm_infra/show/#{@record.id}"}
+        = _("Back to VM Summary")
+  %pre{:style => "background:#1e1e1e;color:#e6e6e6;padding:14px;max-height:650px;overflow:auto;font-size:12px;margin-top:12px;"}
+    = @vm_log_output.presence || _("No logs returned. Ensure the VM is powered on and qemu-guest-agent is running.")
+    

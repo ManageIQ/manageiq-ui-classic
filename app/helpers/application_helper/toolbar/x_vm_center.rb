@@ -197,6 +197,15 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Chargeback Preview'),
           :klass => ApplicationHelper::Button::VmPerf
         ),
+        button(
+          :vm_live_logs,
+          'pficon pficon-catalog fa-lg',
+          N_('Fetch live OS logs via ManageIQ REST API'),
+          N_('Live OS Logs'),
+          :url       => "/vm_live_logs",
+          :url_parms => "?display=vm_live_logs",
+          :feature   => 'vm_fetch_logs'
+        ),
       ]
     ),
   ])
