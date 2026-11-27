@@ -63,9 +63,7 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
 
   const connect = (connectionParams, containerName) => {
     const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const ws = new window.WebSocket(
-      `${proto}://${window.location.host}/${connectionParams.url}`
-    );
+    const ws = new window.WebSocket(`${proto}://${window.location.host}/${connectionParams.url}`);
 
     ws.binaryType = 'arraybuffer';
     wsRef.current = ws;
@@ -133,14 +131,8 @@ const ContainerGroupConsole = ({ podId, containers: initialContainers = [] }) =>
     termRef.current.clear();
     termRef.current.writeln(`Connecting to ${selectedContainer}...`);
 
-    fetch(
-      `/container_group/kube_exec_console/${podId}?container=${encodeURIComponent(
-        selectedContainer
-      )}`,
-      {
-        headers: { Accept: 'application/json' },
-      }
-    )
+    fetch(`/container_group/kube_exec_console/${podId}?container=${encodeURIComponent(selectedContainer)}`,
+      { headers: { Accept: 'application/json' } })
       .then((r) => r.json())
       .then((data) => {
         if (data.error) {
